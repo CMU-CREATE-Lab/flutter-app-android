@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Flutter-Android</string>
     <string name="scanning">Scanning...</string>
+    <string name="connection_status">Status:</string>
 </resources>

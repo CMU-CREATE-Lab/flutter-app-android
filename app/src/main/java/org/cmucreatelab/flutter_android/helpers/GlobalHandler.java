@@ -7,11 +7,18 @@ import android.content.Context;
  */
 public class GlobalHandler {
 
+
+    public SessionHandler sessionHandler;
+
+
+    // Singleton Implementation
+
+
     private static GlobalHandler classInstance;
     private Context appContext;
 
 
-    public static GlobalHandler newInstance(Context context) {
+    public static synchronized GlobalHandler newInstance(Context context) {
         if (classInstance == null) {
             classInstance = new GlobalHandler(context);
         }
@@ -21,6 +28,7 @@ public class GlobalHandler {
 
     private GlobalHandler(Context context) {
         this.appContext = context;
+        this.sessionHandler = new SessionHandler();
     }
 
 }

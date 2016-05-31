@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.ScanResult;
+import org.cmucreatelab.flutter_android.classes.Device;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class LeDeviceListAdapter extends BaseAdapter {
 
-    private ArrayList<ScanResult> mScanResults;
+    private ArrayList<Device> mDevices;
     private LayoutInflater mInflater;
 
 
@@ -32,39 +32,32 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
     public LeDeviceListAdapter(LayoutInflater inflater) {
         super();
-        mScanResults = new ArrayList<>();
+        mDevices = new ArrayList<>();
         mInflater = inflater;
     }
 
 
-    public void addDevice(ScanResult scanResult) {
-        for (ScanResult result : mScanResults) {
-            if (result.device.equals(scanResult.device)) {
-                result.device = scanResult.device;
-                notifyDataSetChanged();
-                return;
-            }
-        }
-        Log.d(Constants.LOG_TAG, "Found device " + scanResult.device.getName());
-        mScanResults.add(scanResult);
+    public void addDevice(Device device) {
+        Log.d(Constants.LOG_TAG, "Found device " + device.getDevice().getName());
+        mDevices.add(device);
         notifyDataSetChanged();
     }
 
 
     public void clearDevices() {
-        mScanResults.clear();
+        mDevices.clear();
         notifyDataSetChanged();
     }
 
 
     @Override
     public int getCount() {
-        return mScanResults.size();
+        return mDevices.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mScanResults.get(position);
+        return mDevices.get(position);
     }
 
     @Override
@@ -87,7 +80,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        BluetoothDevice device = mScanResults.get(position).device;
+        BluetoothDevice device = mDevices.get(position).getDevice();
 
         final String deviceName = device.getName();
         if (deviceName != null && deviceName.length() > 0) {

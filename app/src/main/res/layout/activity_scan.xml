@@ -19,6 +19,7 @@
             android:layout_margin="2dp"/>
 
         <ProgressBar
+            android:id="@+id/progress_scanning"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignRight="@id/text_scanning"
