@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Flutter-Android</string>
+    <string name="scanning">Scanning...</string>
+</resources>
