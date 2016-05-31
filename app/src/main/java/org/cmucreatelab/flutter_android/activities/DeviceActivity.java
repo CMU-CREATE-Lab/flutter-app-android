@@ -4,71 +4,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bluecreation.melodysmart.BLEError;
-import com.bluecreation.melodysmart.BondingListener;
-import com.bluecreation.melodysmart.DeviceDatabase;
-import com.bluecreation.melodysmart.MelodySmartDevice;
-import com.bluecreation.melodysmart.MelodySmartListener;
-
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-public class DeviceActivity extends AppCompatActivity {
+public class DeviceActivity extends AppCompatActivity implements DeviceListener {
 
+    private DeviceListener thisInstance;
     private GlobalHandler globalHandler;
-    private MelodySmartDevice mMelodySmartDevice;
-    private boolean isConnected;
 
-
-    // Listeners
-
-
-    private MelodySmartListener melodySmartListener = new MelodySmartListener() {
-        @Override
-        public void onDeviceConnected() {
-            // TODO - handle connection status
-            Log.d(Constants.LOG_TAG, "Connected to " + globalHandler.sessionHandler.getBlueToothDevice().getName());
-            invalidateOptionsMenu();
-            isConnected = true;
-        }
-
-        @Override
-        public void onDeviceDisconnected(BLEError bleError) {
-            // TODO - handle disconnect
-            Log.d(Constants.LOG_TAG, "Disconnected from " + globalHandler.sessionHandler.getBlueToothDevice().getName());
-            invalidateOptionsMenu();
-            isConnected = false;
-            finish();
-        }
-
-        @Override
-        public void onOtauAvailable() {
-
-        }
-
-        @Override
-        public void onOtauRecovery(DeviceDatabase.DeviceData deviceData) {
-
-        }
-    };
-
-
-    private BondingListener bondingListener = new BondingListener() {
-        @Override
-        public void onBondingStarted() {
-            // TODO - add some sort of please wait element here
-        }
-
-        @Override
-        public void onBondingFinished(boolean b) {
-            // TODO - remove the please wait element
-        }
-    };
+    private TextView guidedInput;
+    private EditText dataToSend;
+    private EditText dataToReceive;
 
 
     @Override
@@ -79,19 +33,22 @@ public class DeviceActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
         toolbar.setTitle(globalHandler.sessionHandler.getBlueToothDevice().getName());
         setSupportActionBar(toolbar);
+        thisInstance = this;
 
-        isConnected = false;
-        mMelodySmartDevice = MelodySmartDevice.getInstance();
-        mMelodySmartDevice.registerListener(bondingListener);
-        mMelodySmartDevice.registerListener(melodySmartListener);
-        mMelodySmartDevice.connect(globalHandler.sessionHandler.getBlueToothDevice().getAddress());
-    }
+        guidedInput = (TextView) findViewById(R.id.guided_input);
+        dataToSend = (EditText) findViewById(R.id.data_to_send);
+        dataToReceive = (EditText) findViewById(R.id.data_to_receive);
+        dataToSend.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                globalHandler.sessionHandler.setMessageInput(textView.getText().toString());
+                globalHandler.sessionHandler.sendMessage();
+                textView.setText("");
+                return true;
+            }
+        });
 
-
-    @Override
-    protected void onResume() {
-        Log.d(Constants.LOG_TAG, "onResume - DeviceActivity");
-        super.onResume();
+        globalHandler.sessionHandler.setDeviceListener(this);
     }
 
 
@@ -105,7 +62,7 @@ public class DeviceActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (isConnected) {
+        if (globalHandler.sessionHandler.isBluetoothConnected) {
             menu.getItem(1).setTitle("Connected");
         } else {
             menu.getItem(1).setTitle("Disconnected");
@@ -116,10 +73,35 @@ public class DeviceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d(Constants.LOG_TAG, "onDestroy - DeviceActivity");
-        mMelodySmartDevice.unregisterListener(melodySmartListener);
-        mMelodySmartDevice.unregisterListener(bondingListener);
-        mMelodySmartDevice.disconnect();
+        globalHandler.sessionHandler.release();
         super.onDestroy();
+    }
+
+
+    // Listeners
+
+
+    @Override
+    public void onConnected(final boolean connected) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dataToSend.setEnabled(connected);
+            }
+        });
+        invalidateOptionsMenu();
+    }
+
+
+    @Override
+    public void onMessageSent(final String output) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dataToReceive.setText("");
+                dataToReceive.setText(output);
+            }
+        });
     }
 
 }

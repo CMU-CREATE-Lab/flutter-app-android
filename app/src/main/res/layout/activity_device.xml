@@ -15,4 +15,26 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/guided_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/data_to_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input"
+        android:inputType="text"
+        android:imeOptions="actionSend"
+        android:imeActionLabel="Send"
+        android:enabled="false"/>
+
+    <EditText
+        android:id="@+id/data_to_receive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Output"
+        android:enabled="false"/>
+
 </LinearLayout>
