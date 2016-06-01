@@ -3,35 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linear_scanning_container"
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scan_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_scanning"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/scanning"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_margin="2dp"/>
-
-        <ProgressBar
-            android:id="@+id/progress_scanning"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignRight="@id/text_scanning"
-            android:layout_margin="2dp"/>
-
-    </LinearLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/scan_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear_scanning_container"
+        android:layout_below="@id/scan_toolbar"
         android:layout_margin="2dp"></ListView>
 
 </RelativeLayout>
