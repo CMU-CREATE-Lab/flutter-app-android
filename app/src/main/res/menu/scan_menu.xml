@@ -12,11 +12,11 @@
         android:id="@+id/menu_scan"
         android:orderInCategory="100"
         app:showAsAction="ifRoom|withText"
-        android:title="Scan"/>
+        android:title="@string/scan"/>
     <item
         android:id="@+id/menu_stop"
         android:orderInCategory="101"
         app:showAsAction="ifRoom|withText"
-        android:title="Stop"/>
+        android:title="@string/stop"/>
 
 </menu>

@@ -2,8 +2,11 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -100,6 +103,21 @@ public class ScanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Just in case someone got a hold of the app without BLE support
+        PackageManager pm = getApplicationContext().getPackageManager();
+        boolean isSupported = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+        if (!isSupported) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            adb.setMessage(R.string.ble_unsupported);
+            adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    finish();
+                }
+            });
+            AlertDialog dialog = adb.create();
+            dialog.show();
+        }
     }
 
 

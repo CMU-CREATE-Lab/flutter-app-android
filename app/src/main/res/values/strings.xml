@@ -1,5 +1,11 @@
 <resources>
+
     <string name="app_name">Flutter-Android</string>
-    <string name="scanning">Scanning...</string>
     <string name="connection_status">Status:</string>
+    <string name="scan">Scan</string>
+    <string name="stop">Stop</string>
+    <string name="positive_response">OK</string>
+
+    <!-- Errors -->
+    <string name="ble_unsupported">Your device does not support Bluetooth LE - Closing application</string>
 </resources>
