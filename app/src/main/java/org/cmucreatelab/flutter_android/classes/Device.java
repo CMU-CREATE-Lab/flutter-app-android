@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothDevice;
 public class Device {
 
     // TODO - We can add in more attributes for more details on the device if need be.
+    // For example, in the example app, they store 'byte[] scanRecord' (whatever that is)
 
     private BluetoothDevice mDevice;
 

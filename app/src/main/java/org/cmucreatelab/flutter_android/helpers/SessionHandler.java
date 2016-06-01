@@ -25,6 +25,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  */
 public class SessionHandler {
 
+    private GlobalHandler globalHandler;
     private DeviceListener deviceListener;
     private Device mDevice;
     private MelodySmartDevice mMelodySmartDevice;
@@ -35,12 +36,12 @@ public class SessionHandler {
     private BondingListener bondingListener = new BondingListener() {
         @Override
         public void onBondingStarted() {
-            // TODO - add some sort of please wait element here
+            // TODO - add a 'please wait' element here
         }
 
         @Override
         public void onBondingFinished(boolean b) {
-            // TODO - remove the please wait element
+            // TODO - remove the 'please wait' element
         }
     };
 
@@ -48,15 +49,14 @@ public class SessionHandler {
     private MelodySmartListener melodySmartListener = new MelodySmartListener() {
         @Override
         public void onDeviceConnected() {
-            // TODO - handle connection status
-            Log.d(Constants.LOG_TAG, "Connected to " + mDevice.getDevice().getName());
+            // TODO - we may need to handle more here
+            Log.d(Constants.LOG_TAG, "Connecting to " + mDevice.getDevice().getName());
             isBluetoothConnected = true;
-            deviceListener.onConnected(isBluetoothConnected);
         }
 
         @Override
         public void onDeviceDisconnected(BLEError bleError) {
-            // TODO - handle disconnect
+            // TODO - we may need to handle more here
             Log.d(Constants.LOG_TAG, "Disconnected from " + mDevice.getDevice().getName());
             isBluetoothConnected = false;
             deviceListener.onConnected(isBluetoothConnected);
@@ -79,8 +79,10 @@ public class SessionHandler {
         public void onConnected(final boolean isFound) {
             // TODO - handle something here
             if (isFound) {
+                Log.d(Constants.LOG_TAG, "Connected to " + mDevice.getDevice().getName());
                 mMelodySmartDevice.getDataService().enableNotifications(true);
             }
+            deviceListener.onConnected(isBluetoothConnected);
         }
 
         @Override
@@ -91,6 +93,7 @@ public class SessionHandler {
     };
 
 
+    // TODO - we may need to call this...cant really test it out without my flutter :(
     public void connect() {
         if (!isBluetoothConnected) {
             mMelodySmartDevice.connect(mDevice.getDevice().getAddress());
@@ -99,14 +102,14 @@ public class SessionHandler {
 
 
     public SessionHandler() {
-        mDevice = null;
-        mMessage = new Message();
+        // empty
     }
 
 
     public void startSession(Device device) {
         Log.d(Constants.LOG_TAG, "Starting session with " + device.getDevice().getName());
         mDevice = device;
+        mMessage = new Message();
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.registerListener(bondingListener);
         mMelodySmartDevice.registerListener(melodySmartListener);

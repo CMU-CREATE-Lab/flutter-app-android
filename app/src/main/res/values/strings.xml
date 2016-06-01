@@ -8,4 +8,6 @@
 
     <!-- Errors -->
     <string name="ble_unsupported">Your device does not support Bluetooth LE - Closing application</string>
+    <string name ="unknown_device">Unknown Device</string>
+
 </resources>

@@ -16,12 +16,14 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 public class DeviceActivity extends AppCompatActivity implements DeviceListener {
 
-    private DeviceListener thisInstance;
     private GlobalHandler globalHandler;
 
     private TextView guidedInput;
     private EditText dataToSend;
     private EditText dataToReceive;
+
+
+    // Listeners
 
 
     @Override
@@ -30,9 +32,12 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         setContentView(R.layout.activity_device);
         globalHandler = GlobalHandler.newInstance(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
-        toolbar.setTitle(globalHandler.sessionHandler.getBlueToothDevice().getName());
+        String deviceName = globalHandler.sessionHandler.getBlueToothDevice().getName();
+        if (deviceName != null && deviceName.length() > 0)
+            toolbar.setTitle(globalHandler.sessionHandler.getBlueToothDevice().getName());
+        else
+            toolbar.setTitle(R.string.unknown_device);
         setSupportActionBar(toolbar);
-        thisInstance = this;
 
         guidedInput = (TextView) findViewById(R.id.guided_input);
         dataToSend = (EditText) findViewById(R.id.data_to_send);
@@ -82,9 +87,6 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         super.onBackPressed();  // optional depending on your needs
         finish();
     }
-
-
-    // Listeners
 
 
     @Override

@@ -8,6 +8,7 @@ import android.content.Context;
 public class GlobalHandler {
 
 
+    public Context appContext;
     public SessionHandler sessionHandler;
 
 
@@ -15,7 +16,6 @@ public class GlobalHandler {
 
 
     private static GlobalHandler classInstance;
-    private Context appContext;
 
 
     public static synchronized GlobalHandler newInstance(Context context) {

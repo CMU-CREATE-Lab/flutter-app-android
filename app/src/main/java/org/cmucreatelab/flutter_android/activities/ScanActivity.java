@@ -170,6 +170,7 @@ public class ScanActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d(Constants.LOG_TAG, "onDestroy - ScanActivity");
         scanForDevice(false);
+        mMelodySmartDevice.close(this);
         super.onDestroy();
     }
 
