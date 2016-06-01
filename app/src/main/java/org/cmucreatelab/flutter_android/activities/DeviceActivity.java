@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,8 +53,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.device_menu, menu);
+        getMenuInflater().inflate(R.menu.device_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -75,6 +73,14 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         Log.d(Constants.LOG_TAG, "onDestroy - DeviceActivity");
         globalHandler.sessionHandler.release();
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        globalHandler.sessionHandler.release();
+        super.onBackPressed();  // optional depending on your needs
+        finish();
     }
 
 

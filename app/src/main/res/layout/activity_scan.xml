@@ -18,6 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/scan_toolbar"
-        android:layout_margin="2dp"></ListView>
+        android:layout_margin="2dp"/>
 
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,14 +35,21 @@ public class ScanActivity extends AppCompatActivity {
     // Class methods
 
 
+    private void clearAll() {
+        mDevices.clear();
+        mLeDeviceAdapter.clearDevices();
+    }
+
+
     private synchronized void scanForDevice(final boolean isScanning) {
         mScanning = isScanning;
         if (isScanning) {
-            mDevices.clear();
+            clearAll();
             mMelodySmartDevice.startLeScan(mLeScanCallBack);
         } else {
             mMelodySmartDevice.stopLeScan(mLeScanCallBack);
         }
+        invalidateOptionsMenu();
     }
 
 
@@ -93,7 +98,6 @@ public class ScanActivity extends AppCompatActivity {
                 globalHandler.sessionHandler.startSession(mDevices.get(i));
                 Intent intent = new Intent(getApplicationContext(), DeviceActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -102,6 +106,12 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.scan_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
@@ -119,7 +129,7 @@ public class ScanActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_scan:
-                mLeDeviceAdapter.clearDevices();
+                clearAll();
                 scanForDevice(true);
                 break;
 
@@ -127,7 +137,6 @@ public class ScanActivity extends AppCompatActivity {
                 scanForDevice(false);
                 break;
         }
-        invalidateOptionsMenu();
         return true;
     }
 
@@ -135,6 +144,7 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         Log.d(Constants.LOG_TAG, "onResume - ScanActivity");
+        clearAll();
         super.onResume();
     }
 

@@ -91,6 +91,13 @@ public class SessionHandler {
     };
 
 
+    public void connect() {
+        if (!isBluetoothConnected) {
+            mMelodySmartDevice.connect(mDevice.getDevice().getAddress());
+        }
+    }
+
+
     public SessionHandler() {
         mDevice = null;
         mMessage = new Message();
@@ -104,7 +111,6 @@ public class SessionHandler {
         mMelodySmartDevice.registerListener(bondingListener);
         mMelodySmartDevice.registerListener(melodySmartListener);
         mMelodySmartDevice.getDataService().registerListener(dataServiceListener);
-        mMelodySmartDevice.connect(mDevice.getDevice().getAddress());
         isBluetoothConnected = false;
     }
 
