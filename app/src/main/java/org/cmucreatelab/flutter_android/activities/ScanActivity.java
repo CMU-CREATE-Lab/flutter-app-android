@@ -70,9 +70,14 @@ public class ScanActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    Device endResult = new Device(device);
-                    mDevices.add(endResult);
-                    mLeDeviceAdapter.addDevice(endResult);
+                    // Check if the device is a flutter or not
+                    String address = device.getAddress();
+                    address = address.substring(0,8);
+                    if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
+                        Device endResult = new Device(device);
+                        mDevices.add(endResult);
+                        mLeDeviceAdapter.addDevice(endResult);
+                    }
                 }
             });
         }

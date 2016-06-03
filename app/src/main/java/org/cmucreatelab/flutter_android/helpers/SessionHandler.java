@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.bluecreation.melodysmart.BLEError;
@@ -10,6 +12,7 @@ import com.bluecreation.melodysmart.DeviceDatabase;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 import com.bluecreation.melodysmart.MelodySmartListener;
 
+import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.classes.Device;
 import org.cmucreatelab.flutter_android.classes.Message;
@@ -59,7 +62,23 @@ public class SessionHandler {
             // TODO - we may need to handle more here
             Log.d(Constants.LOG_TAG, "Disconnected from " + mDevice.getDevice().getName());
             isBluetoothConnected = false;
-            deviceListener.onConnected(isBluetoothConnected);
+
+            // Check for errors
+            if (bleError.getType() != BLEError.Type.NO_ERROR) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(globalHandler.appContext);
+                adb.setMessage(bleError.getMessage());
+                adb.setTitle("Disconnected");
+                adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deviceListener.onConnected(isBluetoothConnected);
+                    }
+                });
+                AlertDialog dialog = adb.create();
+                dialog.show();
+            } else {
+                deviceListener.onConnected(isBluetoothConnected);
+            }
         }
 
         @Override
@@ -93,7 +112,7 @@ public class SessionHandler {
     };
 
 
-    // TODO - we may need to call this...cant really test it out without my flutter :(
+    // TODO - possibly add a connect button
     public void connect() {
         if (!isBluetoothConnected) {
             mMelodySmartDevice.connect(mDevice.getDevice().getAddress());
@@ -115,6 +134,7 @@ public class SessionHandler {
         mMelodySmartDevice.registerListener(melodySmartListener);
         mMelodySmartDevice.getDataService().registerListener(dataServiceListener);
         isBluetoothConnected = false;
+        connect();
     }
 
 
