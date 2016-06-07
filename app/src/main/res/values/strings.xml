@@ -9,5 +9,19 @@
     <!-- Errors -->
     <string name="ble_unsupported">Your device does not support Bluetooth LE - Closing application</string>
     <string name ="unknown_device">Unknown Device</string>
+    <string name="main_prompt">What would you like to do?</string>
+    <string name="stream_sensor">\'R\': stream sensor readings for 10 seconds</string>
+    <string name="set_an_input">\'s\': set an input</string>
+    <string name="set_proportional">\'p\':: set a proportional relationship</string>
+    <string name="remove_relationship">\'x\': remove a relationship</string>
+    <string name="remove_all">\'X\': remove relationships for all outputs</string>
+    <string name="read_sensors">\'r\': read sensors</string>
+    <string name="output_prompt">What type of output?</string>
+    <string name="servo">\'s\': servo</string>
+    <string name="red_led">\'r\': red LED</string>
+    <string name="green_led">\'g\': green LED</string>
+    <string name="blue_led">\'b\': blue LED</string>
+    <string name="volume_buzzer">\'v\': volume of the buzzer</string>
+    <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
 
 </resources>

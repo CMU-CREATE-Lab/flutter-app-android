@@ -14,9 +14,25 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
-        android:id="@+id/guided_input"
+        android:id="@+id/prompt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/guided_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:padding="2dp"/>
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/data_to_send"

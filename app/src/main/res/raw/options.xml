@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Guide>
+
+	<GuideOptions>
+	
+		<Node>
+			<Name>main_prompt</Name>
+			<Title>What would you like to do?</Title>
+			<Option>'r': read sensors</Option>
+			<Option>'R': stream sensor readings for 10 seconds</Option>
+			<Option>'s': set an output</Option>
+			<Option>'p': set a proportional relationship</Option>
+			<Option>'x': remove a relationship</Option>
+			<Option>'X': remove relationships for all outputs</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_prompt</Name>
+			<Title>What type of output?</Title>
+			<Option>'s': servo</Option>
+			<Option>'r': red LED</Option>
+			<Option>'g': green LED</Option>
+			<Option>'b': blue LED</Option>
+			<Option>'v': volume of the buzzer</Option>
+			<Option>'f': frequency of the buzzer</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_a_v</Name>
+			<Title>What would you like to set the volume to?</Title>
+			<Option>0-100</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_a_f</Name>
+			<Title>What would you like to set the frequency to?</Title>
+			<Option>0-20000</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_b</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_b_s</Name>
+			<Title>What would you like to set the servo to?</Title>
+			<Option>0-180</Option>
+		</Node>
+		
+		<Node>
+			<Name>output_b_led</Name>
+			<Title>What would you like to the LED to?</Title>
+			<Option>0-100</Option>
+		</Node>
+		
+	</GuideOptions>
+	
+	<Linking>
+	
+		<Node>
+			<Parent>main_prompt</Parent>
+			<Child>output_a_v</Child>
+			<Child>output_a_f</Child>
+			<Child>output_b</Child>
+		</Node>
+		
+		<Node>
+			<Parent>output_b</Parent>
+			<Child>output_b_s</Child>
+			<Child>output_b_led</Child>
+		</Node>
+		
+	</Linking>
+	
+</Guide>

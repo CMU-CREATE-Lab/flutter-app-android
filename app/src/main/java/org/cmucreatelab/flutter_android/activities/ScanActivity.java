@@ -166,17 +166,16 @@ public class ScanActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         Log.d(Constants.LOG_TAG, "onResume - ScanActivity");
         clearAll();
-        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         Log.d(Constants.LOG_TAG, "onDestroy - ScanActivity");
         scanForDevice(false);
-        mMelodySmartDevice.close(this);
-        super.onDestroy();
     }
 
 }
