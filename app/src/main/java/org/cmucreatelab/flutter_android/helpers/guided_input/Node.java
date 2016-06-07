@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Node {
 
 
+    protected Node parent;
     protected ArrayList<Node> children;
     private String name;
 
@@ -20,6 +21,7 @@ public class Node {
     public void link(Node node) {
         if (!children.contains(node)) {
             children.add(node);
+            node.setParent(this);
         }
     }
 
@@ -29,6 +31,12 @@ public class Node {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    private void setParent(Node node) {
+        parent = node;
+    }
+    public Node getParent() {
+        return parent;
     }
     public Node getChild(int index) {
         return children.get(index);

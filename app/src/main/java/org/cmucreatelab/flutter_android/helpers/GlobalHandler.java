@@ -10,9 +10,10 @@ import org.cmucreatelab.flutter_android.helpers.guided_input.OptionsXMLHandler;
 public class GlobalHandler {
 
 
+    private OptionsXMLHandler optionsXMLHandler;
     public Context appContext;
     public SessionHandler sessionHandler;
-    public OptionsXMLHandler optionsXMLHandler;
+    public GuidedInputHandler guidedInputHandler;
 
 
     // Singleton Implementation
@@ -32,12 +33,12 @@ public class GlobalHandler {
     private GlobalHandler(Context context) {
         this.appContext = context;
         this.sessionHandler = new SessionHandler();
-
         try {
             this.optionsXMLHandler = new OptionsXMLHandler(appContext);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.guidedInputHandler = new GuidedInputHandler(optionsXMLHandler.getStart());
     }
 
 }

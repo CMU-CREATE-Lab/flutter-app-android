@@ -20,7 +20,6 @@ import java.util.Hashtable;
 public class OptionsXMLHandler {
 
 
-    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ?:'_-";
     public static final String NAME = "Name";
     public static final String TITLE = "Title";
     public static final String OPTION = "Option";
@@ -48,29 +47,25 @@ public class OptionsXMLHandler {
             } else if(eventType == XmlPullParser.TEXT) {
                 String text = xpp.getText();
 
+                // I do not know why but i get strings containing "\t"..so I'm filtering them out
                 if (!text.contains("\t")) {
                     switch (currentTag) {
                         case NAME:
                             tempOptionsNode = new OptionsNode();
                             tempOptionsNode.setName(text);
-                            //Log.d(Constants.LOG_TAG, text);
                             break;
                         case TITLE:
                             tempOptionsNode.setTitle(text);
                             table.put(tempOptionsNode.getName(), tempOptionsNode);
-                            //Log.d(Constants.LOG_TAG, text);
                             break;
                         case OPTION:
                             tempOptionsNode.addOption(text);
-                            //Log.d(Constants.LOG_TAG, text);
                             break;
                         case PARENT:
                             tempOptionsNode = table.get(text);
-                            //Log.d(Constants.LOG_TAG, text);
                             break;
                         case CHILD:
                             tempOptionsNode.link(table.get(text));
-                            //Log.d(Constants.LOG_TAG, text);
                             break;
                         default:
                             break;

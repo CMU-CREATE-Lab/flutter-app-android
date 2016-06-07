@@ -15,6 +15,16 @@
 		</Node>
 		
 		<Node>
+			<Name>read_sensors</Name>
+			<Title>Let's read the sensors</Title>
+		</Node>
+		
+		<Node>
+			<Name>stream_sensors</Name>
+			<Title>Streaming sensors for 10 seconds</Title>
+		</Node>
+		
+		<Node>
 			<Name>output_prompt</Name>
 			<Title>What type of output?</Title>
 			<Option>'s': servo</Option>
@@ -24,6 +34,28 @@
 			<Option>'v': volume of the buzzer</Option>
 			<Option>'f': frequency of the buzzer</Option>
 		</Node>
+
+		<!--TODO figure out how to link to nodes multiple times
+		 	maybe add a 3rd element called 'Link'-->
+
+		<!-- TODO - add a type element to denote text vs. number -->
+		
+		<Node>
+			<Name>set_proportion</Name>
+			<Title>Lets set a proportional relationship!</Title>
+		</Node>
+		
+		<Node>
+			<Name>remove_relationship</Name>
+			<Title>Lets remove a relationship!</Title>
+		</Node>
+		
+		<Node>
+			<Name>remove_all_relationships</Name>
+			<Title>Lets remove all the relationship!</Title>
+		</Node>
+
+		<!-- separation -->
 		
 		<Node>
 			<Name>output_a_v</Name>
@@ -63,6 +95,16 @@
 	
 		<Node>
 			<Parent>main_prompt</Parent>
+			<Child>read_sensors</Child>
+			<Child>stream_sensors</Child>
+			<Child>output_prompt</Child>
+			<Child>set_proportion</Child>
+			<Child>remove_relationship</Child>
+			<Child>remove_all_relationships</Child>
+		</Node>
+	
+		<Node>
+			<Parent>output_prompt</Parent>
 			<Child>output_a_v</Child>
 			<Child>output_a_f</Child>
 			<Child>output_b</Child>

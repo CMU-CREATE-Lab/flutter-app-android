@@ -32,6 +32,9 @@ public class OptionsNode extends Node{
     public void setTitle(String title) {
         this.title = title;
     }
+    public ArrayList<String> getOptions() {
+        return this.options;
+    }
 
 
 }

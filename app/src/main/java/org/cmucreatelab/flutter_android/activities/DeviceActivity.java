@@ -16,10 +16,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
+import org.cmucreatelab.flutter_android.helpers.guided_input.Node;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 public class DeviceActivity extends AppCompatActivity implements DeviceListener {
@@ -53,20 +56,36 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     private final TextWatcher textWatcher = new TextWatcher() {
 
         private boolean isValid;
+        private int previousSize;
+        private int count = 0;
+
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            // empty
+            previousSize = charSequence.length();
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            // TODO - update the guided prompt
+            String temp = "";
+            if (charSequence.length() > 0) {
+                temp = charSequence.toString().substring(charSequence.length()-1, charSequence.length());
+            }
+            isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, temp, guidedInputContainer, promptTitle);
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            // empty
+            Log.d(Constants.LOG_TAG, String.valueOf(count));
+            if (!isValid && previousSize < editable.length()) {
+                count++;
+            }
+            if (!isValid && count <= 0) {
+                globalHandler.guidedInputHandler.choosePrompt(thisActivity, "empty", guidedInputContainer, promptTitle);
+            }
+            if (previousSize > editable.length() && count > 0) {
+                count--;
+            }
         }
     };
 
@@ -97,6 +116,9 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(5, Color.BLACK);
         guidedInputContainer.setBackground(drawable);
+
+        // initialize the prompt
+        globalHandler.guidedInputHandler.choosePrompt(this, "empty", guidedInputContainer, promptTitle);
     }
 
 
