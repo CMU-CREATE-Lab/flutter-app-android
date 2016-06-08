@@ -57,7 +57,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
 
         private boolean isValid;
         private int previousSize;
-        private int count = 0;
+        private int badEntryCounter = 0;
 
 
         @Override
@@ -71,20 +71,32 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
             if (charSequence.length() > 0) {
                 temp = charSequence.toString().substring(charSequence.length()-1, charSequence.length());
             }
-            isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, temp, guidedInputContainer, promptTitle);
+
+            Log.d(Constants.LOG_TAG, String.valueOf(previousSize));
+            Log.d(Constants.LOG_TAG, String.valueOf(charSequence.length()));
+
+            if (previousSize < charSequence.length()) {
+                isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, temp, guidedInputContainer, promptTitle);
+            } else {
+                Log.d(Constants.LOG_TAG, String.valueOf(badEntryCounter));
+                if (badEntryCounter == 0) {
+                    isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.PARENT_PROMPT, guidedInputContainer, promptTitle);
+                }
+            }
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-            Log.d(Constants.LOG_TAG, String.valueOf(count));
-            if (!isValid && previousSize < editable.length()) {
-                count++;
-            }
-            if (!isValid && count <= 0) {
-                globalHandler.guidedInputHandler.choosePrompt(thisActivity, "empty", guidedInputContainer, promptTitle);
-            }
-            if (previousSize > editable.length() && count > 0) {
-                count--;
+            if (!isValid) {
+                if(previousSize > editable.length()) {
+                    if (badEntryCounter > 0) {
+                        badEntryCounter--;
+                    }
+                } else {
+                    badEntryCounter++;
+                }
+            } else {
+                badEntryCounter = 0;
             }
         }
     };
@@ -118,7 +130,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         guidedInputContainer.setBackground(drawable);
 
         // initialize the prompt
-        globalHandler.guidedInputHandler.choosePrompt(this, "empty", guidedInputContainer, promptTitle);
+        globalHandler.guidedInputHandler.choosePrompt(this, GuidedInputHandler.PARENT_PROMPT, guidedInputContainer, promptTitle);
     }
 
 

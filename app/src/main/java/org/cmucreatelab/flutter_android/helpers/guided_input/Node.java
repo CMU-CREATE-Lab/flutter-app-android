@@ -41,5 +41,8 @@ public class Node {
     public Node getChild(int index) {
         return children.get(index);
     }
+    public int getChildCount() {
+        return children.size();
+    }
 
 }

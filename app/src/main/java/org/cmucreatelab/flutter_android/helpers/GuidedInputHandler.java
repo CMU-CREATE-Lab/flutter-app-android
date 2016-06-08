@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public class GuidedInputHandler {
 
 
+    public static final String PARENT_PROMPT = "parent";
+
     private OptionsNode finger;
 
 
@@ -27,8 +29,8 @@ public class GuidedInputHandler {
 
     private void displayOptions(Activity activity, LinearLayout container, TextView title) {
         container.removeAllViews();
+        title.setText(finger.getTitle());
         for (String option : finger.getOptions()) {
-            title.setText(finger.getTitle());
             TextView textView = (TextView) activity.getLayoutInflater().inflate(R.layout.base_guided_input, null);
             textView.setText(option);
             container.addView(textView);
@@ -45,16 +47,18 @@ public class GuidedInputHandler {
         boolean result = false;
 
         Log.d(Constants.LOG_TAG, "from input: " + input);
-        if (input.equals("empty")) {
-            if (finger.getParent() != null)
+        if (input.equals(PARENT_PROMPT)) {
+            if (finger.getParent() != null){
                 updateFinger((OptionsNode) finger.getParent());
+            }
             displayOptions(activity, container, title);
         }
 
-        if (input.length() > 0 && !input.equals("empty")) {
+        if (input.length() > 0 && !input.equals(PARENT_PROMPT)) {
             ArrayList<String> options = finger.getOptions();
             for (int i = 0; i < options.size(); i++) {
                 String s = options.get(i);
+                Log.d(Constants.LOG_TAG, s);
                 s = s.substring(1,2);
                 Log.d(Constants.LOG_TAG, "from options: " + s);
                 if (input.equals(s)) {
