@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -125,8 +126,9 @@ public class SessionHandler {
     }
 
 
-    public void startSession(Device device) {
+    public void startSession(Context context, Device device) {
         Log.d(Constants.LOG_TAG, "Starting session with " + device.getDevice().getName());
+        globalHandler = GlobalHandler.newInstance(context);
         mDevice = device;
         mMessage = new Message();
         mMelodySmartDevice = MelodySmartDevice.getInstance();

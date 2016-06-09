@@ -18,11 +18,23 @@ public class Node {
     }
 
 
-    public void link(Node node) {
-        if (!children.contains(node)) {
-            children.add(node);
-            node.setParent(this);
+    // deep copy
+    public Node(Node other) {
+        if (other.parent != null) {
+            this.parent = new Node(parent);
         }
+        if (other.children != null) {
+            this.children = new ArrayList<>(other.children);
+        }
+        if (other.name != null) {
+            this.name = new String(other.name);
+        }
+    }
+
+
+    public void link(Node node) {
+        children.add(node);
+        node.setParent(this);
     }
 
 
@@ -43,6 +55,9 @@ public class Node {
     }
     public int getChildCount() {
         return children.size();
+    }
+    public ArrayList<Node> getChildren() {
+        return children;
     }
 
 }

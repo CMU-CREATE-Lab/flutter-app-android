@@ -72,15 +72,13 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                 temp = charSequence.toString().substring(charSequence.length()-1, charSequence.length());
             }
 
-            Log.d(Constants.LOG_TAG, String.valueOf(previousSize));
-            Log.d(Constants.LOG_TAG, String.valueOf(charSequence.length()));
-
             if (previousSize < charSequence.length()) {
                 isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, temp, guidedInputContainer, promptTitle);
             } else {
-                Log.d(Constants.LOG_TAG, String.valueOf(badEntryCounter));
-                if (badEntryCounter == 0) {
+                if (badEntryCounter == 0 && (previousSize-charSequence.length()) == 1) {
                     isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.PARENT_PROMPT, guidedInputContainer, promptTitle);
+                } else if (previousSize-charSequence.length() > 1) {
+                    isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.MAIN_PROMPT, guidedInputContainer, promptTitle);
                 }
             }
         }

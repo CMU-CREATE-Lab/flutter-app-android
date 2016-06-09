@@ -47,11 +47,13 @@
 		<Node>
 			<Name>read_sensors</Name>
 			<Title>Let's read the sensors!</Title>
+			<Option>Click Send!</Option>
 		</Node>
 
 		<Node>
 			<Name>stream_sensors</Name>
-			<Title>Streaming sensors for 10 seconds!</Title>
+			<Title>Stream the sensors for 10 seconds!</Title>
+			<Option>Click Send!</Option>
 		</Node>
 
 		<Node>
@@ -75,6 +77,7 @@
 		<Node>
 			<Name>remove_all_relationships</Name>
 			<Title>Let's remove all relationships!</Title>
+			<Option>Click Send!</Option>
 		</Node>
 
 		<!-- Second Generation -->
@@ -82,25 +85,7 @@
 			<!-- set_output -->
 
 			<Node>
-				<Name>output_servo</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>output_red</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>output_green</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-			<Node>
-
-				<Name>output_blue</Name>
+				<Name>output_which_one</Name>
 				<Title>Which one?</Title>
 				<Option>which_one</Option>
 			</Node>
@@ -120,37 +105,7 @@
 			<!-- set_proportion -->
 
 			<Node>
-				<Name>proportion_servo</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>proportion_red</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>proportion_green</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>proportion_blue</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>proportion_volume</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>proportion_frequency</Name>
+				<Name>proportion_which_one</Name>
 				<Title>Which one?</Title>
 				<Option>which_one</Option>
 			</Node>
@@ -158,39 +113,28 @@
 			<!-- remove_relationship -->
 
 			<Node>
-				<Name>remove_servo</Name>
+				<Name>remove_which_one</Name>
 				<Title>Which one?</Title>
 				<Option>which_one</Option>
 			</Node>
 
+		<!-- Third Generation -->
+
+			<!-- output_which_one -->
+
 			<Node>
-				<Name>remove_red</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
+				<Name>output_number</Name>
+				<Title>TODO</Title>
 			</Node>
 
 			<Node>
-				<Name>remove_green</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
+				<Name>proportion_number</Name>
+				<Title>TODO</Title>
 			</Node>
 
 			<Node>
-				<Name>remove_blue</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>remove_volume</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>remove_frequency</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
+				<Name>remove_number</Name>
+				<Title>Click Send!</Title>
 			</Node>
 		
 	</GuideOptions>
@@ -213,225 +157,57 @@
 
 		<Node>
 			<Parent>set_output</Parent>
-			<Child>output_servo</Child>
-			<Child>output_red</Child>
-			<Child>output_green</Child>
-			<Child>output_blue</Child>
+			<Child>output_which_one</Child>
+			<Child>output_which_one</Child>
+			<Child>output_which_one</Child>
+			<Child>output_which_one</Child>
 			<Child>output_volume</Child>
 			<Child>output_frequency</Child>
 		</Node>
 
 		<Node>
 			<Parent>set_proportion</Parent>
-			<Child>proportion_servo</Child>
-			<Child>proportion_red</Child>
-			<Child>proportion_green</Child>
-			<Child>proportion_blue</Child>
-			<Child>proportion_volume</Child>
-			<Child>proportion_frequency</Child>
+			<Child>proportion_which_one</Child>
+			<Child>proportion_which_one</Child>
+			<Child>proportion_which_one</Child>
+			<Child>proportion_which_one</Child>
+			<Child>proportion_which_one</Child>
+			<Child>proportion_which_one</Child>
 		</Node>
 
 		<Node>
 			<Parent>remove_relationship</Parent>
-			<Child>remove_servo</Child>
-			<Child>remove_red</Child>
-			<Child>remove_green</Child>
-			<Child>remove_blue</Child>
-			<Child>remove_volume</Child>
-			<Child>remove_frequency</Child>
+			<Child>remove_which_one</Child>
+			<Child>remove_which_one</Child>
+			<Child>remove_which_one</Child>
+			<Child>remove_which_one</Child>
+			<Child>remove_which_one</Child>
+			<Child>remove_which_one</Child>
+		</Node>
+
+		<!-- Third Linking -->
+
+		<Node>
+			<Parent>output_which_one</Parent>
+			<Child>output_number</Child>
+			<Child>output_number</Child>
+			<Child>output_number</Child>
+		</Node>
+
+		<Node>
+			<Parent>proportion_which_one</Parent>
+			<Child>proportion_number</Child>
+			<Child>proportion_number</Child>
+			<Child>proportion_number</Child>
+		</Node>
+
+		<Node>
+			<Parent>remove_which_one</Parent>
+			<Child>remove_number</Child>
+			<Child>remove_number</Child>
+			<Child>remove_number</Child>
 		</Node>
 		
 	</Linking>
 	
 </Guide>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!--<Node>
-                <Name>main_prompt</Name>
-                <Title>What would you like to do?</Title>
-                <Option>'r': read sensors</Option>
-                <Option>'R': stream sensor readings for 10 seconds</Option>
-                <Option>'s': set an output</Option>
-                <Option>'p': set a proportional relationship</Option>
-                <Option>'x': remove a relationship</Option>
-                <Option>'X': remove relationships for all outputs</Option>
-            </Node>
-
-            <Node>
-                <Name>read_sensors</Name>
-                <Title>Let's read the sensors</Title>
-            </Node>
-
-            <Node>
-                <Name>stream_sensors</Name>
-                <Title>Streaming sensors for 10 seconds</Title>
-            </Node>
-
-            <Node>
-                <Name>output_prompt</Name>
-                <Title>What type of output?</Title>
-                <Option>'s': servo</Option>
-                <Option>'r': red LED</Option>
-                <Option>'g': green LED</Option>
-                <Option>'b': blue LED</Option>
-                <Option>'v': volume of the buzzer</Option>
-                <Option>'f': frequency of the buzzer</Option>
-            </Node>
-
-            <Node>
-                <Name>output_choose</Name>
-                <Title>Which one?</Title>
-                <Option>1-3</Option>
-            </Node>
-
-            <Node>output_</Node>
-
-            <Node>
-                <Name>input_prompt</Name>
-                <Title>Which one?</Title>
-                <Option>1-3</Option>
-            </Node>
-
-            <Node>
-                <Name>input_value_prompt_min</Name>
-                <Title>What would you like to set the minimum to?</Title>
-                <Option>0-100</Option>
-            </Node>
-
-            <Node>
-                <Name>input_value_prompt_max</Name>
-                <Title>What would you like to set the maximum to?</Title>
-                <Option>0-100</Option>
-            </Node>
-
-            <Node>
-                <Name>set_proportion</Name>
-                <Title>Lets set a proportional relationship!</Title>
-            </Node>
-
-            <Node>
-                <Name>remove_relationship</Name>
-                <Title>Lets remove a relationship!</Title>
-            </Node>
-
-            <Node>
-                <Name>remove_all_relationships</Name>
-                <Title>Lets remove all the relationship!</Title>
-            </Node>
-
-            <Node>
-                <Name>output_b_s_min</Name>
-                <Title>What would you like to set the minimum value servo to?</Title>
-                <Option>0-180</Option>
-            </Node>
-
-            <Node>
-                <Name>output_b_s_max</Name>
-                <Title>What would you like to set the maximum value servo to?</Title>
-                <Option>0-180</Option>
-            </Node>
-
-            <Node>
-                <Name>output_b_led_min</Name>
-                <Title>What would you like to set the LED minimum value to?</Title>
-                <Option>0-100</Option>
-            </Node>
-
-            <Node>
-                <Name>output_b_led_max</Name>
-                <Title>What would you like to set the LED maximum value to?</Title>
-                <Option>0-100</Option>
-            </Node>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!--<Node>
-                <Parent>main_prompt</Parent>
-                <Child>read_sensors</Child>
-                <Child>stream_sensors</Child>
-                <Child>output_prompt</Child>
-                <Child>set_proportion</Child>
-                <Child>remove_relationship</Child>
-                <Child>remove_all_relationships</Child>
-            </Node>
-
-            <Node>
-                <Parent>output_prompt</Parent>
-                <Child>output_choose</Child>
-                <Child>output_choose</Child>
-                <Child>output_choose</Child>
-                <Child>output_choose</Child>
-                <Child>output_volume</Child>
-                <Child>output_frequency</Child>
-            </Node>
-
-            <Node>
-                <Parent>output_b_s_min</Parent>
-                <Child>output_b_s_max</Child>
-            </Node>
-
-            <Node>
-                <Parent>output_b_led_min</Parent>
-                <Child>output_b_led_max</Child>
-            </Node>
-
-            <Node>
-                <Parent>output_b_s_max</Parent>
-                <Child>input_prompt</Child>
-            </Node>
-
-            <Node>
-                <Parent>output_b_led_max</Parent>
-                <Child>input_prompt</Child>
-            </Node>
-
-            <Node>
-                <Parent>input_prompt</Parent>
-                <Child>input_value_prompt_min</Child>
-            </Node>
-
-            <Node>
-                <Parent>input_value_prompt_min</Parent>
-                <Child>input_value_prompt_max</Child>
-            </Node>-->

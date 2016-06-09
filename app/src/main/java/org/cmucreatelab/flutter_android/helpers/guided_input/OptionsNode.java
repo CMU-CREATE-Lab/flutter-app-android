@@ -18,6 +18,18 @@ public class OptionsNode extends Node{
     }
 
 
+    // deep copy
+    public OptionsNode(OptionsNode other) {
+        super(other);
+        if (other.title != null) {
+            this.title = new String(other.title);
+        }
+        if (other.options != null) {
+            this.options = new ArrayList<>(other.options);
+        }
+    }
+
+
     public void addOption(String string) {
         if (!options.contains(string)) {
             options.add(string);
