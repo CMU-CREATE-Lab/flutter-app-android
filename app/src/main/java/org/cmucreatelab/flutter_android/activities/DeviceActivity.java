@@ -105,11 +105,12 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device);
+
         globalHandler = GlobalHandler.newInstance(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
-        String deviceName = globalHandler.sessionHandler.getBlueToothDevice().getName();
+        String deviceName = globalHandler.sessionHandler.getName();
         if (deviceName != null && deviceName.length() > 0)
-            toolbar.setTitle(globalHandler.sessionHandler.getBlueToothDevice().getName());
+            toolbar.setTitle(deviceName);
         else
             toolbar.setTitle(R.string.unknown_device);
         setSupportActionBar(toolbar);

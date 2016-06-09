@@ -11,4 +11,6 @@ public class Constants {
 
     public static final String FLUTTER_MAC_ADDRESS = "20:FA:BB";
 
+    public static final String NAMES_TABLE_FILE = "names_table.txt";
+
 }

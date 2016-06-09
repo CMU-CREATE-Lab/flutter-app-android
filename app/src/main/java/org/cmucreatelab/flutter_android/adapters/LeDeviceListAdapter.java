@@ -38,7 +38,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
 
     public void addDevice(Device device) {
-        Log.d(Constants.LOG_TAG, "Found device " + device.getDevice().getName());
+        Log.d(Constants.LOG_TAG, "Found device " + device.getName());
         mDevices.add(device);
         notifyDataSetChanged();
     }
@@ -80,7 +80,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        BluetoothDevice device = mDevices.get(position).getDevice();
+        Device device = mDevices.get(position);
 
         final String deviceName = device.getName();
         if (deviceName != null && deviceName.length() > 0) {
@@ -88,7 +88,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
         } else {
             viewHolder.deviceName.setText(R.string.unknown_device);
         }
-        viewHolder.deviceAddress.setText(device.getAddress());
+        viewHolder.deviceAddress.setText(device.getDevice().getAddress());
 
         return convertView;
     }

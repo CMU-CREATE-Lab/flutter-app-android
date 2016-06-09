@@ -11,15 +11,20 @@ public class Device {
     // For example, in the example app, they store 'byte[] scanRecord' (whatever that is)
 
     private BluetoothDevice mDevice;
+    private String name;
 
 
-    public Device(BluetoothDevice device) {
+    public Device(BluetoothDevice device, String name) {
         this.mDevice = device;
+        this.name = name;
     }
 
 
     public BluetoothDevice getDevice() {
         return mDevice;
+    }
+    public String getName() {
+        return name;
     }
 
 }

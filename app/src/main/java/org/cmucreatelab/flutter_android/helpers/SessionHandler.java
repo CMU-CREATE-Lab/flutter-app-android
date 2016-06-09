@@ -160,6 +160,9 @@ public class SessionHandler {
     public BluetoothDevice getBlueToothDevice() {
         return mDevice.getDevice();
     }
+    public String getName() {
+        return mDevice.getName();
+    }
     public String getMessageOutput() {
         return mMessage.getOutput();
     }

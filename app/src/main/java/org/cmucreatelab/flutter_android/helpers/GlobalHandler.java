@@ -12,6 +12,7 @@ public class GlobalHandler {
 
     private OptionsXMLHandler optionsXMLHandler;
     public Context appContext;
+    public NamingHandler namingHandler;
     public SessionHandler sessionHandler;
     public GuidedInputHandler guidedInputHandler;
 
@@ -33,6 +34,7 @@ public class GlobalHandler {
     private GlobalHandler(Context context) {
         this.appContext = context;
         this.sessionHandler = new SessionHandler();
+        this.namingHandler = new NamingHandler(appContext);
         try {
             this.optionsXMLHandler = new OptionsXMLHandler(appContext);
         } catch (Exception e) {
