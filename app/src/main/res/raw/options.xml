@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Guide>
 
+	<!--
+	I may restructure this so that the Nodes do not have a parent node...but instead a caller node.
+	Each node will have a strict set of children but not just one parent...many parents but the key is that
+	it will only have one caller node which is an element in its set of parents
+
+	The reason being is because I have to keep typing in the same type of objects but just giving it
+	a different name. because I need each node to only have one parent....but if I had a caller node,
+	I could just go to the previous prompt by calling the caller node.  This would greatly decrease
+	the density and complexity of this file.
+	-->
+
 	<GlobalOptions>
 		<Node>
 			<Id>output_options</Id>
@@ -120,8 +131,6 @@
 
 		<!-- Third Generation -->
 
-			<!-- output_which_one -->
-
 			<Node>
 				<Name>output_number</Name>
 				<Title>TODO</Title>
@@ -136,6 +145,10 @@
 				<Name>remove_number</Name>
 				<Title>Click Send!</Title>
 			</Node>
+
+		<!-- Fourth Generation -->
+
+
 		
 	</GuideOptions>
 	
@@ -207,6 +220,8 @@
 			<Child>remove_number</Child>
 			<Child>remove_number</Child>
 		</Node>
+
+		<!-- Fourth Linking -->
 		
 	</Linking>
 	
