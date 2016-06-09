@@ -71,7 +71,145 @@
 
 		<!-- Second Generation -->
 
+		<Node>
+			<Name>s_servo</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>s_red_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>s_green_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>s_blue_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>s_volume</Name>
+			<Title>What would you like to set the volume value to?</Title>
+			<Option>Range: 1-100</Option>
+		</Node>
+		<Node>
+			<Name>s_frequency</Name>
+			<Title>What would you like to set the frequency value to?</Title>
+			<Option>Range: 1-20000</Option>
+		</Node>
 
+		<Node>
+			<Name>p_servo</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>p_red_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>p_green_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>p_blue_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>p_volume</Name>
+			<Title>What would you like to set the volume minimum value to?</Title>
+			<Option>Range: 1-100</Option>
+		</Node>
+		<Node>
+			<Name>p_frequency</Name>
+			<Title>What would you like to set the frequency minimum value to?</Title>
+			<Option>Range: 1-20000</Option>
+		</Node>
+
+		<Node>
+			<Name>r_servo</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>r_red_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>r_green_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>r_blue_led</Name>
+			<Title>Which one?</Title>
+			<Option>1</Option>
+			<Option>2</Option>
+			<Option>3</Option>
+		</Node>
+		<Node>
+			<Name>r_volume</Name>
+			<Title>Done</Title>
+			<Option>Click Send!</Option>
+		</Node>
+		<Node>
+			<Name>r_frequency</Name>
+			<Title>Done</Title>
+			<Option>Click Send!</Option>
+		</Node>
+
+		<!-- Third Generation -->
+
+		<Node>
+			<Name>s_chose_servo</Name>
+			<Title>What would you like to set the servo value to?</Title>
+			<Option>Range: 0-180</Option>
+		</Node>
+		<Node>
+			<Name>s_chose_red</Name>
+			<Title>What would you like to set the servo value to?</Title>
+			<Option>Range: 0-100</Option>
+		</Node>
+		<Node>
+			<Name>s_chose_green</Name>
+			<Title>What would you like to set the servo value to?</Title>
+			<Option>Range: 0-100</Option>
+		</Node>
+		<Node>
+			<Name>s_chose_blue</Name>
+			<Title>What would you like to set the servo value to?</Title>
+			<Option>Range: 0-100</Option>
+		</Node>
 		
 	</GuideOptions>
 
@@ -85,6 +223,64 @@
 			<Child>set_proportion</Child>
 			<Child>remove_relationship</Child>
 			<Child>remove_all_relationships</Child>
+		</Node>
+
+		<Node>
+			<Parent>set_output</Parent>
+			<Child>s_servo</Child>
+			<Child>s_red_led</Child>
+			<Child>s_green_led</Child>
+			<Child>s_blue_led</Child>
+			<Child>s_volume</Child>
+			<Child>s_frequency</Child>
+		</Node>
+
+		<Node>
+			<Parent>set_proportion</Parent>
+			<Child>p_servo</Child>
+			<Child>p_red_led</Child>
+			<Child>p_green_led</Child>
+			<Child>p_blue_led</Child>
+			<Child>p_volume</Child>
+			<Child>p_frequency</Child>
+		</Node>
+
+		<Node>
+			<Parent>remove_relationship</Parent>
+			<Child>r_servo</Child>
+			<Child>r_red_led</Child>
+			<Child>r_green_led</Child>
+			<Child>r_blue_led</Child>
+			<Child>r_volume</Child>
+			<Child>r_frequency</Child>
+		</Node>
+
+		<Node>
+			<Parent>s_servo</Parent>
+			<Child>s_chose_servo</Child>
+			<Child>s_chose_servo</Child>
+			<Child>s_chose_servo</Child>
+		</Node>
+
+		<Node>
+			<Parent>s_red_led</Parent>
+			<Child>s_chose_red</Child>
+			<Child>s_chose_red</Child>
+			<Child>s_chose_red</Child>
+		</Node>
+
+		<Node>
+			<Parent>s_green_led</Parent>
+			<Child>s_chose_green</Child>
+			<Child>s_chose_green</Child>
+			<Child>s_chose_green</Child>
+		</Node>
+
+		<Node>
+			<Parent>s_blue_led</Parent>
+			<Child>s_chose_blue</Child>
+			<Child>s_chose_blue</Child>
+			<Child>s_chose_blue</Child>
 		</Node>
 
 	</Linking>

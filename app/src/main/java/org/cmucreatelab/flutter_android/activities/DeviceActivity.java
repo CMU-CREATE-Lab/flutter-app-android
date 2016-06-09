@@ -81,6 +81,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                     isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.MAIN_PROMPT, guidedInputContainer, promptTitle);
                 }
             }
+            Log.d(Constants.LOG_TAG, String.valueOf(isValid));
         }
 
         @Override

@@ -71,7 +71,16 @@ public class GuidedInputHandler {
                 String s = options.get(i);
 
                 if (s.contains("-")) {
-                    // TODO - figure out what to do with a range of values
+                    String minS = s.substring(7, 7+1);
+                    String maxS = s.substring(9, s.length());
+                    Integer in = new Integer(input);
+                    Integer min = new Integer(minS);
+                    Integer max = new Integer(maxS);
+                    if (in >= min && in <= max) {
+                        result = true;
+                        updateFinger((OptionsNode) finger.getChild(i));
+                        displayOptions(activity, container, title);
+                    }
                 } else if (s.length() > 1) {
                     s = s.substring(1,2);
                 }
