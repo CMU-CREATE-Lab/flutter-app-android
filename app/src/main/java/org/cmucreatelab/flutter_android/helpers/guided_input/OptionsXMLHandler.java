@@ -22,16 +22,7 @@ import java.util.Set;
  */
 public class OptionsXMLHandler {
 
-
-    // our option keys
-    private static final String KEY_OUTPUT = "output_options";
-    private static final String KEY_WHICH_ONE = "which_one";
-    private static final String KEY_RANGE_V = "range_v";
-    private static final String KEY_RANGE_F = "range_f";
-
     // our main object keys
-    private static final String ID = "Id";
-    private static final String TEXT = "Text";
     public static final String NAME = "Name";
     public static final String TITLE = "Title";
     public static final String OPTION = "Option";
@@ -41,14 +32,11 @@ public class OptionsXMLHandler {
     private Hashtable<String, OptionsNode> table;
     private XmlPullParser xpp;
 
-    private Hashtable<String, ArrayList<String>> optionsTable;
-
 
     private Hashtable<String, OptionsNode> generate() throws XmlPullParserException, IOException {
         int eventType = xpp.getEventType();
         String currentTag = "";
         OptionsNode tempOptionsNode = null;
-        ArrayList<String> tempList = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if(eventType == XmlPullParser.START_DOCUMENT) {
@@ -56,7 +44,7 @@ public class OptionsXMLHandler {
             } else if(eventType == XmlPullParser.START_TAG) {
 
                 String tag = xpp.getName();
-                if (tag.equals(NAME) || tag.equals(TITLE) || tag.equals(OPTION) || tag.equals(PARENT) || tag.equals(CHILD) || tag.equals(ID) || tag.equals(TEXT)) {
+                if (tag.equals(NAME) || tag.equals(TITLE) || tag.equals(OPTION) || tag.equals(PARENT) || tag.equals(CHILD)) {
                     currentTag = tag;
                 }
             } else if(eventType == XmlPullParser.TEXT) {
@@ -65,21 +53,6 @@ public class OptionsXMLHandler {
                 // filter out empty text elements
                 if (!text.contains("\t")) {
                     switch (currentTag) {
-                        case ID:
-                            tempList = new ArrayList<>();
-                            // You can add as many global options as you want...just add another conditional
-                            if (text.equals(KEY_OUTPUT))
-                                optionsTable.put(KEY_OUTPUT, tempList);
-                            else if (text.equals(KEY_WHICH_ONE))
-                                optionsTable.put(KEY_WHICH_ONE, tempList);
-                            else if (text.equals(KEY_RANGE_V))
-                                optionsTable.put(KEY_RANGE_V, tempList);
-                            else if (text.equals(KEY_RANGE_F))
-                                optionsTable.put(KEY_RANGE_F, tempList);
-                            break;
-                        case TEXT:
-                            tempList.add(text);
-                            break;
                         case NAME:
                             tempOptionsNode = new OptionsNode();
                             tempOptionsNode.setName(text);
@@ -89,26 +62,7 @@ public class OptionsXMLHandler {
                             table.put(tempOptionsNode.getName(), tempOptionsNode);
                             break;
                         case OPTION:
-                            // You can add as many global options as you want...just add another conditional
-                            if (text.equals(KEY_OUTPUT)) {
-                                for (String string : optionsTable.get(KEY_OUTPUT)) {
-                                    tempOptionsNode.addOption(string);
-                                }
-                            } else if (text.equals(KEY_WHICH_ONE)) {
-                                for (String string : optionsTable.get(KEY_WHICH_ONE)) {
-                                    tempOptionsNode.addOption(string);
-                                }
-                            } else if (text.equals(KEY_RANGE_V)) {
-                                for (String string : optionsTable.get(KEY_RANGE_V)) {
-                                    tempOptionsNode.addOption(string);
-                                }
-                            }  else if (text.equals(KEY_RANGE_F)) {
-                                for (String string : optionsTable.get(KEY_RANGE_F)) {
-                                    tempOptionsNode.addOption(string);
-                                }
-                            }else {
-                                tempOptionsNode.addOption(text);
-                            }
+                            tempOptionsNode.addOption(text);
                             break;
                         case PARENT:
                             tempOptionsNode = table.get(text);
@@ -148,7 +102,6 @@ public class OptionsXMLHandler {
         InputStream is = context.getResources().openRawResource(R.raw.options);
         xpp.setInput(new InputStreamReader(is));
         table = new Hashtable<>();
-        optionsTable = new Hashtable<>();
         generate();
     }
 

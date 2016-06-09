@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Guide>
 
-	<!--
-	I may restructure this so that the Nodes do not have a parent node...but instead a caller node.
-	Each node will have a strict set of children but not just one parent...many parents but the key is that
-	it will only have one caller node which is an element in its set of parents
-
-	The reason being is because I have to keep typing in the same type of objects but just giving it
-	a different name. because I need each node to only have one parent....but if I had a caller node,
-	I could just go to the previous prompt by calling the caller node.  This would greatly decrease
-	the density and complexity of this file.
-	-->
-
-	<GlobalOptions>
-		<Node>
-			<Id>output_options</Id>
-			<Text>'s': servo</Text>
-			<Text>'r': red LED</Text>
-			<Text>'g': green LED</Text>
-			<Text>'b': blue LED</Text>
-			<Text>'v': volume of the buzzer</Text>
-			<Text>'f': frequency of the buzzer</Text>
-		</Node>
-		<Node>
-			<Id>which_one</Id>
-			<Text>1</Text>
-			<Text>2</Text>
-			<Text>3</Text>
-		</Node>
-		<Node>
-			<Id>range_v</Id>
-			<Text>range: 0-100</Text>
-		</Node>
-		<Node>
-			<Id>range_f</Id>
-			<Text>range: 0-20000</Text>
-		</Node>
-	</GlobalOptions>
-
 	<GuideOptions>
 
 		<!-- Root -->
@@ -70,19 +33,34 @@
 		<Node>
 			<Name>set_output</Name>
 			<Title>What type of output?</Title>
-			<Option>output_options</Option>
+			<Option>'s': servo</Option>
+			<Option>'r': red LED</Option>
+			<Option>'g': green LED</Option>
+			<Option>'b': blue LED</Option>
+			<Option>'v': volume of the buzzer</Option>
+			<Option>'f': frequency of the buzzer</Option>
 		</Node>
 
 		<Node>
 			<Name>set_proportion</Name>
 			<Title>What type of output?</Title>
-			<Option>output_options</Option>
+			<Option>'s': servo</Option>
+			<Option>'r': red LED</Option>
+			<Option>'g': green LED</Option>
+			<Option>'b': blue LED</Option>
+			<Option>'v': volume of the buzzer</Option>
+			<Option>'f': frequency of the buzzer</Option>
 		</Node>
 
 		<Node>
 			<Name>remove_relationship</Name>
 			<Title>Choose one</Title>
-			<Option>output_options</Option>
+			<Option>'s': servo</Option>
+			<Option>'r': red LED</Option>
+			<Option>'g': green LED</Option>
+			<Option>'b': blue LED</Option>
+			<Option>'v': volume of the buzzer</Option>
+			<Option>'f': frequency of the buzzer</Option>
 		</Node>
 
 		<Node>
@@ -93,69 +71,12 @@
 
 		<!-- Second Generation -->
 
-			<!-- set_output -->
-
-			<Node>
-				<Name>output_which_one</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<Node>
-				<Name>output_volume</Name>
-				<Title>What would you like to set the volume value to?</Title>
-				<Option>range_v</Option>
-			</Node>
-
-			<Node>
-				<Name>output_frequency</Name>
-				<Title>What would you like to set the frequency value to?</Title>
-				<Option>range_f</Option>
-			</Node>
-
-			<!-- set_proportion -->
-
-			<Node>
-				<Name>proportion_which_one</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-			<!-- remove_relationship -->
-
-			<Node>
-				<Name>remove_which_one</Name>
-				<Title>Which one?</Title>
-				<Option>which_one</Option>
-			</Node>
-
-		<!-- Third Generation -->
-
-			<Node>
-				<Name>output_number</Name>
-				<Title>TODO</Title>
-			</Node>
-
-			<Node>
-				<Name>proportion_number</Name>
-				<Title>TODO</Title>
-			</Node>
-
-			<Node>
-				<Name>remove_number</Name>
-				<Title>Click Send!</Title>
-			</Node>
-
-		<!-- Fourth Generation -->
-
 
 		
 	</GuideOptions>
-	
+
 	<Linking>
 
-		<!-- First Linking -->
-	
 		<Node>
 			<Parent>main_prompt</Parent>
 			<Child>read_sensors</Child>
@@ -166,63 +87,6 @@
 			<Child>remove_all_relationships</Child>
 		</Node>
 
-		<!-- Second Linking -->
-
-		<Node>
-			<Parent>set_output</Parent>
-			<Child>output_which_one</Child>
-			<Child>output_which_one</Child>
-			<Child>output_which_one</Child>
-			<Child>output_which_one</Child>
-			<Child>output_volume</Child>
-			<Child>output_frequency</Child>
-		</Node>
-
-		<Node>
-			<Parent>set_proportion</Parent>
-			<Child>proportion_which_one</Child>
-			<Child>proportion_which_one</Child>
-			<Child>proportion_which_one</Child>
-			<Child>proportion_which_one</Child>
-			<Child>proportion_which_one</Child>
-			<Child>proportion_which_one</Child>
-		</Node>
-
-		<Node>
-			<Parent>remove_relationship</Parent>
-			<Child>remove_which_one</Child>
-			<Child>remove_which_one</Child>
-			<Child>remove_which_one</Child>
-			<Child>remove_which_one</Child>
-			<Child>remove_which_one</Child>
-			<Child>remove_which_one</Child>
-		</Node>
-
-		<!-- Third Linking -->
-
-		<Node>
-			<Parent>output_which_one</Parent>
-			<Child>output_number</Child>
-			<Child>output_number</Child>
-			<Child>output_number</Child>
-		</Node>
-
-		<Node>
-			<Parent>proportion_which_one</Parent>
-			<Child>proportion_number</Child>
-			<Child>proportion_number</Child>
-			<Child>proportion_number</Child>
-		</Node>
-
-		<Node>
-			<Parent>remove_which_one</Parent>
-			<Child>remove_number</Child>
-			<Child>remove_number</Child>
-			<Child>remove_number</Child>
-		</Node>
-
-		<!-- Fourth Linking -->
-		
 	</Linking>
 	
 </Guide>
