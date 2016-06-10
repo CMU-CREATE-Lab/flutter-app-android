@@ -74,7 +74,7 @@ public class ScanActivity extends AppCompatActivity {
                     String address = device.getAddress();
                     address = address.substring(0,8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
-                        String name = globalHandler.namingHandler.generateName(device.getAddress().hashCode());
+                        String name = globalHandler.namingHandler.generateName(device.getAddress());
                         Device endResult = new Device(device, name);
                         mDevices.add(endResult);
                         mLeDeviceAdapter.addDevice(endResult);
