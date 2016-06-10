@@ -39,9 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Input"
-        android:inputType="text"
-        android:imeOptions="actionSend"
-        android:imeActionLabel="Send"
+        android:inputType="text|textNoSuggestions"
+        android:imeOptions="actionNext"
+        android:imeActionLabel="Next"
         android:enabled="false"/>
 
     <EditText

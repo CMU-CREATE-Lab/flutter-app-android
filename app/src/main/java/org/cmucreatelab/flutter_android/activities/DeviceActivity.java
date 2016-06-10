@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,19 +17,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
-import org.cmucreatelab.flutter_android.helpers.guided_input.Node;
+import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 public class DeviceActivity extends AppCompatActivity implements DeviceListener {
 
     private Activity thisActivity;
     private GlobalHandler globalHandler;
+    private GuidedInputHandler guidedInputHandler;
 
     private TextView promptTitle;
     private LinearLayout guidedInputContainer;
@@ -42,61 +43,15 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     private final TextView.OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-            globalHandler.sessionHandler.setMessageInput(textView.getText().toString());
-            globalHandler.sessionHandler.sendMessage();
-            textView.setText("");
-            // TODO - do we want the keyboard to disappear when a message has been sent?
-            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            mgr.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+            if (globalHandler.appState.currentState != GuidedInputStates.READY_TO_SEND) {
+                Editable editable = dataToSend.getText();
+                guidedInputHandler.choosePrompt(thisActivity, editable);
+                editable.clear();
+            } else {
+                globalHandler.sessionHandler.setMessageInput(guidedInputHandler.getFinalString());
+                globalHandler.sessionHandler.sendMessage();
+            }
             return true;
-        }
-    };
-
-
-    private final TextWatcher textWatcher = new TextWatcher() {
-
-        private boolean isValid;
-        private int previousSize;
-        private int badEntryCounter = 0;
-
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            previousSize = charSequence.length();
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String temp = "";
-            if (charSequence.length() > 0) {
-                temp = charSequence.toString().substring(charSequence.length()-1, charSequence.length());
-            }
-
-            if (previousSize < charSequence.length()) {
-                isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, temp, guidedInputContainer, promptTitle);
-            } else {
-                if (badEntryCounter == 0 && (previousSize-charSequence.length()) == 1) {
-                    isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.PARENT_PROMPT, guidedInputContainer, promptTitle);
-                } else if (previousSize-charSequence.length() > 1) {
-                    isValid = globalHandler.guidedInputHandler.choosePrompt(thisActivity, GuidedInputHandler.MAIN_PROMPT, guidedInputContainer, promptTitle);
-                }
-            }
-            Log.d(Constants.LOG_TAG, String.valueOf(isValid));
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            if (!isValid) {
-                if(previousSize > editable.length()) {
-                    if (badEntryCounter > 0) {
-                        badEntryCounter--;
-                    }
-                } else {
-                    badEntryCounter++;
-                }
-            } else {
-                badEntryCounter = 0;
-            }
         }
     };
 
@@ -121,7 +76,6 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         dataToSend = (EditText) findViewById(R.id.data_to_send);
         dataToReceive = (EditText) findViewById(R.id.data_to_receive);
         dataToSend.setOnEditorActionListener(onEditorActionListener);
-        dataToSend.addTextChangedListener(textWatcher);
         globalHandler.sessionHandler.setDeviceListener(this);
 
         GradientDrawable drawable = new GradientDrawable();
@@ -129,8 +83,11 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         drawable.setStroke(5, Color.BLACK);
         guidedInputContainer.setBackground(drawable);
 
-        // initialize the prompt
-        globalHandler.guidedInputHandler.choosePrompt(this, GuidedInputHandler.PARENT_PROMPT, guidedInputContainer, promptTitle);
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(1);
+        dataToSend.setFilters(filters);
+        guidedInputHandler = new GuidedInputHandler(promptTitle, guidedInputContainer);
+        guidedInputHandler.choosePrompt(this, null);
     }
 
 
@@ -153,7 +110,6 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
 
     @Override
     protected void onDestroy() {
-        Log.d(Constants.LOG_TAG, "onDestroy - DeviceActivity");
         globalHandler.sessionHandler.release();
         super.onDestroy();
     }
