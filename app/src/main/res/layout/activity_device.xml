@@ -13,6 +13,12 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <Button
+        android:id="@+id/restart_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restart Input"/>
+
     <TextView
         android:id="@+id/prompt_title"
         android:layout_width="wrap_content"

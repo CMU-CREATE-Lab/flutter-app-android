@@ -227,6 +227,7 @@ public class GuidedInputHandler {
                 globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
                 mTitle.setText("Lets stream the sensors for 10 seconds! Click 'Next'");
                 mContainer.removeAllViews();
+                mContainer.setVisibility(View.INVISIBLE);
                 // TODO - add sensor readings somewhere
             } else if (entry.equals("s")) {
                 mResult = mResult.concat(entry);
@@ -246,6 +247,7 @@ public class GuidedInputHandler {
                 globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
                 mTitle.setText("Lets remove all of the relationships! Click 'Next'");
                 mContainer.removeAllViews();
+                mContainer.setVisibility(View.INVISIBLE);
             } else {
                 // TODO - handle wrong command
             }
@@ -376,7 +378,6 @@ public class GuidedInputHandler {
                             mTitle.setText("Lets set the relationship! Click 'Next'");
                             mContainer.removeAllViews();
                             mContainer.setVisibility(View.INVISIBLE);
-                            Log.d(Constants.LOG_TAG, mResult);
                         }
                     }
                 }

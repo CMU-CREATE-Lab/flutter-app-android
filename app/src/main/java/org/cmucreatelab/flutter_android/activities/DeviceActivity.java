@@ -1,7 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -9,11 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.inputmethod.InputMethodManager;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +21,9 @@ import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DeviceActivity extends AppCompatActivity implements DeviceListener {
 
@@ -35,6 +35,17 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     private LinearLayout guidedInputContainer;
     private EditText dataToSend;
     private EditText dataToReceive;
+
+
+    private void fromBeginning() {
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter.LengthFilter(1);
+        dataToSend.setText(null);
+        guidedInputContainer.setVisibility(View.VISIBLE);
+        dataToSend.setFilters(filters);
+        guidedInputHandler = new GuidedInputHandler(promptTitle, guidedInputContainer);
+        guidedInputHandler.choosePrompt(this, null);
+    }
 
 
     // Listeners
@@ -60,6 +71,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device);
+        ButterKnife.bind(this);
 
         globalHandler = GlobalHandler.newInstance(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
@@ -83,11 +95,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         drawable.setStroke(5, Color.BLACK);
         guidedInputContainer.setBackground(drawable);
 
-        InputFilter[] filters = new InputFilter[1];
-        filters[0] = new InputFilter.LengthFilter(1);
-        dataToSend.setFilters(filters);
-        guidedInputHandler = new GuidedInputHandler(promptTitle, guidedInputContainer);
-        guidedInputHandler.choosePrompt(this, null);
+        fromBeginning();
     }
 
 
@@ -144,6 +152,12 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                 dataToReceive.setText(output);
             }
         });
+    }
+
+
+    @OnClick(R.id.restart_input)
+    public void onRestartInput() {
+        fromBeginning();
     }
 
 }
