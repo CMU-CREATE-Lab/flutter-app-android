@@ -181,4 +181,10 @@ public class ScanActivity extends AppCompatActivity {
         scanForDevice(false);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
 }

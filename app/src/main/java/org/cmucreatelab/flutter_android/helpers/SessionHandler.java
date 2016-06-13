@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 
 import com.bluecreation.melodysmart.BLEError;
@@ -72,7 +73,7 @@ public class SessionHandler {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        AlertDialog.Builder adb = new AlertDialog.Builder(globalHandler.appContext);
+                        AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(mActivity, R.style.AppTheme));
                         adb.setMessage(bleError.getMessage());
                         adb.setTitle("Disconnected");
                         adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
