@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -92,6 +93,7 @@ public class ScanActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.scan_toolbar);
         setSupportActionBar(toolbar);
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
+        final Activity activity = this;
 
         mDevices = new ArrayList<>();
 
@@ -104,7 +106,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 scanForDevice(false);
-                globalHandler.sessionHandler.startSession(globalHandler.appContext, mDevices.get(i));
+                globalHandler.sessionHandler.startSession(activity, mDevices.get(i));
                 Intent intent = new Intent(getApplicationContext(), DeviceActivity.class);
                 startActivity(intent);
             }

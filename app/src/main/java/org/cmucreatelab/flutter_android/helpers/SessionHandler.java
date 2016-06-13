@@ -1,8 +1,10 @@
 package org.cmucreatelab.flutter_android.helpers;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -30,6 +32,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 public class SessionHandler {
 
     private GlobalHandler globalHandler;
+    private Activity mActivity;
     private DeviceListener deviceListener;
     private Device mDevice;
     private MelodySmartDevice mMelodySmartDevice;
@@ -59,24 +62,29 @@ public class SessionHandler {
         }
 
         @Override
-        public void onDeviceDisconnected(BLEError bleError) {
+        public void onDeviceDisconnected(final BLEError bleError) {
             // TODO - we may need to handle more here
             Log.d(Constants.LOG_TAG, "Disconnected from " + mDevice.getDevice().getName());
             isBluetoothConnected = false;
 
             // Check for errors
             if (bleError.getType() != BLEError.Type.NO_ERROR) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(globalHandler.appContext);
-                adb.setMessage(bleError.getMessage());
-                adb.setTitle("Disconnected");
-                adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                mActivity.runOnUiThread(new Runnable() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        deviceListener.onConnected(isBluetoothConnected);
+                    public void run() {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(globalHandler.appContext);
+                        adb.setMessage(bleError.getMessage());
+                        adb.setTitle("Disconnected");
+                        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deviceListener.onConnected(isBluetoothConnected);
+                            }
+                        });
+                        AlertDialog dialog = adb.create();
+                        dialog.show();
                     }
                 });
-                AlertDialog dialog = adb.create();
-                dialog.show();
             } else {
                 deviceListener.onConnected(isBluetoothConnected);
             }
@@ -126,9 +134,10 @@ public class SessionHandler {
     }
 
 
-    public void startSession(Context context, Device device) {
+    public void startSession(Activity activity, Device device) {
         Log.d(Constants.LOG_TAG, "Starting session with " + device.getDevice().getName());
-        globalHandler = GlobalHandler.newInstance(context);
+        globalHandler = GlobalHandler.newInstance(activity.getApplicationContext());
+        mActivity = activity;
         mDevice = device;
         mMessage = new Message();
         mMelodySmartDevice = MelodySmartDevice.getInstance();
