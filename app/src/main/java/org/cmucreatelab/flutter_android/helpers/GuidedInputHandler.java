@@ -35,6 +35,17 @@ public class GuidedInputHandler {
     // Class methods
 
 
+    private void readyToSend() {
+        GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity.getApplicationContext());
+        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+        mTitle.setText("Click 'Next' to go back to the main prompt.");
+        mContainer.removeAllViews();
+        mContainer.setVisibility(View.INVISIBLE);
+        globalHandler.sessionHandler.setMessageInput(mResult);
+        globalHandler.sessionHandler.sendMessage();
+    }
+
+
     private String decToHex(String in) {
         String result = "";
 
@@ -56,7 +67,33 @@ public class GuidedInputHandler {
         if (result.length() == 0) {
             result = "0";
         }
+        result = result.toLowerCase();
         return result;
+    }
+
+
+    private InputFilter[] changeMaxCharLength(int length) {
+        InputFilter[] result = new InputFilter[1];
+        result[0] = new InputFilter.LengthFilter(length);
+        return result;
+    }
+
+
+    private InputFilter[] onlyNumericInput(int length) {
+        InputFilter numbers = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!Character.isDigit(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        InputFilter l = new InputFilter.LengthFilter(length);
+
+        return new InputFilter[]{numbers, l};
     }
 
 
@@ -201,38 +238,12 @@ public class GuidedInputHandler {
     }
 
 
-    private InputFilter[] changeMaxCharLength(int length) {
-        InputFilter[] result = new InputFilter[1];
-        result[0] = new InputFilter.LengthFilter(length);
-        return result;
-    }
-
-
-    private InputFilter[] onlyNumericInput(int length) {
-        InputFilter numbers = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end,
-                                       Spanned dest, int dstart, int dend) {
-                for (int i = start; i < end; i++) {
-                    if (!Character.isDigit(source.charAt(i))) {
-                        return "";
-                    }
-                }
-                return null;
-            }
-        };
-        InputFilter l = new InputFilter.LengthFilter(length);
-
-        return new InputFilter[]{numbers, l};
-    }
-
-
     private int proportionalOutputCount = 0;
     private int proportionalInputCount = 0;
     public void choosePrompt(Activity activity, Editable editable) {
         String entry = null;
         if (editable != null) {
-             entry = editable.toString();
-            Log.d(Constants.LOG_TAG, entry);
+            entry = editable.toString();
         }
         mActivity = activity;
         final GlobalHandler globalHandler = GlobalHandler.newInstance(activity);
@@ -243,21 +254,15 @@ public class GuidedInputHandler {
 
         if (entry != null) {
             if (!entry.equals("")) {
-                if (globalHandler.appState.rootState == null){
+                if (globalHandler.appState.rootState == GuidedInputStates.MAIN_PROMPT){
                     if (entry.equals("r")) {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.READ_SENSORS;
-                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                        mTitle.setText("Lets read the sensors! Click 'Next'");
-                        mContainer.removeAllViews();
-                        mContainer.setVisibility(View.INVISIBLE);
+                        readyToSend();
                     } else if (entry.equals("R")) {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.STREAM_SENSORS;
-                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                        mTitle.setText("Lets stream the sensors for 10 seconds! Click 'Next'");
-                        mContainer.removeAllViews();
-                        mContainer.setVisibility(View.INVISIBLE);
+                        readyToSend();
                         // TODO - add sensor readings somewhere
                     } else if (entry.equals("s")) {
                         mResult = mResult.concat(entry);
@@ -274,10 +279,7 @@ public class GuidedInputHandler {
                     } else if (entry.equals("X")) {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.REMOVE_ALL_RELATIONSHIPS;
-                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                        mTitle.setText("Lets remove all of the relationships! Click 'Next'");
-                        mContainer.removeAllViews();
-                        mContainer.setVisibility(View.INVISIBLE);
+                        readyToSend();
                     } else {
                         // TODO - handle wrong command
                     }
@@ -308,10 +310,7 @@ public class GuidedInputHandler {
                         } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
                             String hexVal = decToHex(entry);
                             mResult = mResult.concat(hexVal);
-                            globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                            mTitle.setText("Lets set the output! Click 'Next'");
-                            mContainer.removeAllViews();
-                            mContainer.setVisibility(View.INVISIBLE);
+                            readyToSend();
                         }
 
                     } else if (globalHandler.appState.rootState == GuidedInputStates.SET_PROPORTION) {
@@ -413,10 +412,7 @@ public class GuidedInputHandler {
                                 if (test >= 0 && test <= 100) {
                                     String hexVal = decToHex(entry);
                                     mResult = mResult.concat(hexVal);
-                                    globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                                    mTitle.setText("Lets set the relationship! Click 'Next'");
-                                    mContainer.removeAllViews();
-                                    mContainer.setVisibility(View.INVISIBLE);
+                                    readyToSend();
                                 }
                             }
                         }
@@ -428,18 +424,12 @@ public class GuidedInputHandler {
                                 showWhichOnePrompt();
                             } else if ((entry.equals("v") || entry.equals("f")) ) {
                                 mResult = mResult.concat(entry);
-                                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                                mTitle.setText("Lets remove the relationship! Click 'Next'");
-                                mContainer.removeAllViews();
-                                mContainer.setVisibility(View.INVISIBLE);
+                                readyToSend();
                             }
                         } else if (current == GuidedInputStates.WHICH_ONE) {
                             if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
                                 mResult = mResult.concat(entry);
-                                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                                mTitle.setText("Lets remove the relationship! Click 'Next'");
-                                mContainer.removeAllViews();
-                                mContainer.setVisibility(View.INVISIBLE);
+                                readyToSend();
                             }
                         }
                     } else {

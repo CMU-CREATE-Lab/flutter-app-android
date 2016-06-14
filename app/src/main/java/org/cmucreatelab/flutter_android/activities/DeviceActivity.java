@@ -46,6 +46,8 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         dataToSend.setFilters(filters);
         guidedInputHandler = new GuidedInputHandler(promptTitle, guidedInputContainer);
         guidedInputHandler.choosePrompt(this, null);
+        globalHandler.appState.rootState = GuidedInputStates.MAIN_PROMPT;
+        globalHandler.appState.currentState = GuidedInputStates.MAIN_PROMPT;
     }
 
 
@@ -60,9 +62,9 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                 guidedInputHandler.choosePrompt(thisActivity, editable);
                 editable.clear();
             } else {
-                Log.d(Constants.LOG_TAG, guidedInputHandler.getFinalString());
-                globalHandler.sessionHandler.setMessageInput(guidedInputHandler.getFinalString());
-                globalHandler.sessionHandler.sendMessage();
+                dataToSend.setText("");
+                dataToSend.getText().clear();
+                fromBeginning();
             }
             return true;
         }
