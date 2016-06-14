@@ -308,9 +308,28 @@ public class GuidedInputHandler {
                                 showOutputValuePrompt("value");
                             }
                         } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
-                            String hexVal = decToHex(entry);
-                            mResult = mResult.concat(hexVal);
-                            readyToSend();
+                            String test = mResult.substring(mResult.length()-2, mResult.length()-1);
+                            String extraCharacter = mResult.substring(mResult.length()-3, mResult.length()-1);
+                            Integer numTest = Integer.valueOf(entry);
+                            if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
+                                if (numTest >= 0 && numTest <= 100) {
+                                    String hexVal = decToHex(entry);
+                                    mResult = mResult.concat(hexVal);
+                                    readyToSend();
+                                }
+                            } else if (test.equals("f")) {
+                                if (numTest >= 0 && numTest <= 20000) {
+                                    String hexVal = decToHex(entry);
+                                    mResult = mResult.concat(hexVal);
+                                    readyToSend();
+                                }
+                            } else if (extraCharacter.equals("s1") || extraCharacter.equals("s2") || extraCharacter.equals("s3")){
+                                if (numTest >= 0 && numTest <= 180) {
+                                    String hexVal = decToHex(entry);
+                                    mResult = mResult.concat(hexVal);
+                                    readyToSend();
+                                }
+                            }
                         }
 
                     } else if (globalHandler.appState.rootState == GuidedInputStates.SET_PROPORTION) {
@@ -360,8 +379,6 @@ public class GuidedInputHandler {
                                         mResult = mResult.concat(hexVal + ",");
                                         showOutputValuePrompt("maximum");
                                     }
-                                } else {
-                                    // TODO - incorrect input
                                 }
                             } else {
                                 Integer numTest = Integer.valueOf(entry);
