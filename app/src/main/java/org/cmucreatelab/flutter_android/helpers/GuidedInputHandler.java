@@ -229,225 +229,223 @@ public class GuidedInputHandler {
     private int proportionalOutputCount = 0;
     private int proportionalInputCount = 0;
     public void choosePrompt(Activity activity, Editable editable) {
-        String entry = "";
+        String entry = null;
         if (editable != null) {
              entry = editable.toString();
+            Log.d(Constants.LOG_TAG, entry);
         }
         mActivity = activity;
         final GlobalHandler globalHandler = GlobalHandler.newInstance(activity);
 
         if (editable == null) {
             showMainPrompt();
-        } else if (globalHandler.appState.rootState == null){
-            if (entry.equals("r")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.READ_SENSORS;
-                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                mTitle.setText("Lets read the sensors! Click 'Next'");
-                mContainer.removeAllViews();
-                mContainer.setVisibility(View.INVISIBLE);
-            } else if (entry.equals("R")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.STREAM_SENSORS;
-                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                mTitle.setText("Lets stream the sensors for 10 seconds! Click 'Next'");
-                mContainer.removeAllViews();
-                mContainer.setVisibility(View.INVISIBLE);
-                // TODO - add sensor readings somewhere
-            } else if (entry.equals("s")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.SET_OUTPUT;
-                showOutputPrompt();
-            } else if (entry.equals("p")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.SET_PROPORTION;
-                showOutputPrompt();
-            } else if (entry.equals("x")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.REMOVE_RELATIONSHIP;
-                showOutputPrompt();
-            } else if (entry.equals("X")) {
-                mResult = mResult.concat(entry);
-                globalHandler.appState.rootState = GuidedInputStates.REMOVE_ALL_RELATIONSHIPS;
-                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                mTitle.setText("Lets remove all of the relationships! Click 'Next'");
-                mContainer.removeAllViews();
-                mContainer.setVisibility(View.INVISIBLE);
-            } else {
-                // TODO - handle wrong command
-            }
-        } else {
-            GuidedInputStates current = globalHandler.appState.currentState;
+        }
 
-            if (globalHandler.appState.rootState == GuidedInputStates.SET_OUTPUT) {
-                if (current == GuidedInputStates.OUTPUT_PROMPT) {
-                    if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
+        if (entry != null) {
+            if (!entry.equals("")) {
+                if (globalHandler.appState.rootState == null){
+                    if (entry.equals("r")) {
                         mResult = mResult.concat(entry);
-                        editable.setFilters(onlyNumericInput(1));
-                        showWhichOnePrompt();
-                    } else if (entry.equals("v")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(changeMaxCharLength(3));
-                        showOutputValuePrompt("value");
-                    } else if(entry.equals("f")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(changeMaxCharLength(5));
-                        showOutputValuePrompt("value");
+                        globalHandler.appState.rootState = GuidedInputStates.READ_SENSORS;
+                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                        mTitle.setText("Lets read the sensors! Click 'Next'");
+                        mContainer.removeAllViews();
+                        mContainer.setVisibility(View.INVISIBLE);
+                    } else if (entry.equals("R")) {
+                        mResult = mResult.concat(entry);
+                        globalHandler.appState.rootState = GuidedInputStates.STREAM_SENSORS;
+                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                        mTitle.setText("Lets stream the sensors for 10 seconds! Click 'Next'");
+                        mContainer.removeAllViews();
+                        mContainer.setVisibility(View.INVISIBLE);
+                        // TODO - add sensor readings somewhere
+                    } else if (entry.equals("s")) {
+                        mResult = mResult.concat(entry);
+                        globalHandler.appState.rootState = GuidedInputStates.SET_OUTPUT;
+                        showOutputPrompt();
+                    } else if (entry.equals("p")) {
+                        mResult = mResult.concat(entry);
+                        globalHandler.appState.rootState = GuidedInputStates.SET_PROPORTION;
+                        showOutputPrompt();
+                    } else if (entry.equals("x")) {
+                        mResult = mResult.concat(entry);
+                        globalHandler.appState.rootState = GuidedInputStates.REMOVE_RELATIONSHIP;
+                        showOutputPrompt();
+                    } else if (entry.equals("X")) {
+                        mResult = mResult.concat(entry);
+                        globalHandler.appState.rootState = GuidedInputStates.REMOVE_ALL_RELATIONSHIPS;
+                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                        mTitle.setText("Lets remove all of the relationships! Click 'Next'");
+                        mContainer.removeAllViews();
+                        mContainer.setVisibility(View.INVISIBLE);
+                    } else {
+                        // TODO - handle wrong command
                     }
-                } else if (current == GuidedInputStates.WHICH_ONE) {
-                    if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(onlyNumericInput(3));
-                        showOutputValuePrompt("value");
-                    }
-                } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
-                    // TODO - may need to convert decimal to hexadecimal
-                    // TODO - check to make sure they entered numbers in
-                    String hexVal = decToHex(entry);
-                    Log.d(Constants.LOG_TAG, hexVal);
-                    mResult = mResult.concat(hexVal);
-                    globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                    mTitle.setText("Lets set the output! Click 'Next'");
-                    mContainer.removeAllViews();
-                    mContainer.setVisibility(View.INVISIBLE);
-                }
+                } else {
+                    GuidedInputStates current = globalHandler.appState.currentState;
 
-            } else if (globalHandler.appState.rootState == GuidedInputStates.SET_PROPORTION) {
-                // TODO - finish handling proportion.
-                if (current == GuidedInputStates.OUTPUT_PROMPT) {
-                    if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
-                        mResult = mResult.concat(entry);
-                        editable.setFilters(onlyNumericInput(1));
-                        showWhichOnePrompt();
-                    }  else if (entry.equals("v")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(changeMaxCharLength(3));
-                        showOutputValuePrompt("minimum");
-                    } else if(entry.equals("f")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(changeMaxCharLength(5));
-                        showOutputValuePrompt("minimum");
-                    }
-                } else if (current == GuidedInputStates.WHICH_ONE) {
-                    if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(onlyNumericInput(3));
-                        showOutputValuePrompt("minimum");
-                    }
-                } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
-                    // TODO - may need to convert decimal to hexadecimal
-                    if (proportionalOutputCount == 0) {
-                        proportionalOutputCount++;
-                        String test = mResult.substring(mResult.length()-2, mResult.length()-1);
-                        String extraCharacter = mResult.substring(mResult.length()-3, mResult.length()-1);
-                        Integer numTest = Integer.valueOf(entry);
-                        if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
-                            if (numTest >= 0 && numTest <= 100) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
-                                showOutputValuePrompt("maximum");
-                            }
-                        } else if (test.equals("f")) {
-                            if (numTest >= 0 && numTest <= 20000) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
-                                showOutputValuePrompt("maximum");
-                            }
-                        } else if (extraCharacter.equals("s1") || extraCharacter.equals("s2") || extraCharacter.equals("s3")){
-                            if (numTest >= 0 && numTest <= 180) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
-                                showOutputValuePrompt("maximum");
-                            }
-                        } else {
-                            // TODO - incorrect input
-                        }
-                    } else {
-                        Integer numTest = Integer.valueOf(entry);
-                        if (outputType.equals("v") || outputType.equals("r1") || outputType.equals("r2") || outputType.equals("r3")) {
-                            if (numTest >= 0 && numTest <= 100) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
+                    if (globalHandler.appState.rootState == GuidedInputStates.SET_OUTPUT) {
+                        if (current == GuidedInputStates.OUTPUT_PROMPT) {
+                            if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
+                                mResult = mResult.concat(entry);
                                 editable.setFilters(onlyNumericInput(1));
-                                showInputPrompt();
+                                showWhichOnePrompt();
+                            } else if (entry.equals("v")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(onlyNumericInput(3));
+                                showOutputValuePrompt("value");
+                            } else if(entry.equals("f")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(onlyNumericInput(5));
+                                showOutputValuePrompt("value");
                             }
-                        } else if (outputType.equals("f")) {
-                            if (numTest >= 0 && numTest <= 20000) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
-                                editable.setFilters(onlyNumericInput(1));
-                                showInputPrompt();
+                        } else if (current == GuidedInputStates.WHICH_ONE) {
+                            if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(onlyNumericInput(3));
+                                showOutputValuePrompt("value");
                             }
-                        } else if (outputType.equals("s1") || outputType.equals("s2") || outputType.equals("s3")){
-                            if (numTest >= 0 && numTest <= 180) {
-                                String hexVal = decToHex(entry);
-                                Log.d(Constants.LOG_TAG, hexVal);
-                                mResult = mResult.concat(hexVal + ",");
-                                editable.setFilters(onlyNumericInput(1));
-                                showInputPrompt();
-                            }
-                        } else {
-                            // TODO - incorrect input
-                        }
-                    }
-                } else if (current == GuidedInputStates.INPUT_PROMPT) {
-                    if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
-                        mResult = mResult.concat(entry + ",");
-                        editable.setFilters(onlyNumericInput(3));
-                        showInputValuePrompt("minimum");
-                    }
-                } else if (current == GuidedInputStates.INPUT_VALUE_PROMPT) {
-                    if (proportionalInputCount == 0) {
-                        proportionalInputCount++;
-                        Integer test = Integer.valueOf(entry);
-                        if (test >= 0 && test <= 100) {
+                        } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
                             String hexVal = decToHex(entry);
-                            Log.d(Constants.LOG_TAG, hexVal);
-                            mResult = mResult.concat(hexVal + ",");
-                            showInputValuePrompt("maximum");
-                        }
-                    } else {
-                        Integer test = Integer.valueOf(entry);
-                        if (test >= 0 && test <= 100) {
-                            String hexVal = decToHex(entry);
-                            Log.d(Constants.LOG_TAG, hexVal);
                             mResult = mResult.concat(hexVal);
                             globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                            mTitle.setText("Lets set the relationship! Click 'Next'");
+                            mTitle.setText("Lets set the output! Click 'Next'");
                             mContainer.removeAllViews();
                             mContainer.setVisibility(View.INVISIBLE);
                         }
+
+                    } else if (globalHandler.appState.rootState == GuidedInputStates.SET_PROPORTION) {
+                        // TODO - finish handling proportion.
+                        if (current == GuidedInputStates.OUTPUT_PROMPT) {
+                            if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
+                                mResult = mResult.concat(entry);
+                                editable.setFilters(onlyNumericInput(1));
+                                showWhichOnePrompt();
+                            }  else if (entry.equals("v")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(changeMaxCharLength(3));
+                                showOutputValuePrompt("minimum");
+                            } else if(entry.equals("f")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(changeMaxCharLength(5));
+                                showOutputValuePrompt("minimum");
+                            }
+                        } else if (current == GuidedInputStates.WHICH_ONE) {
+                            if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(onlyNumericInput(3));
+                                showOutputValuePrompt("minimum");
+                            }
+                        } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
+                            // TODO - may need to convert decimal to hexadecimal
+                            if (proportionalOutputCount == 0) {
+                                proportionalOutputCount++;
+                                String test = mResult.substring(mResult.length()-2, mResult.length()-1);
+                                String extraCharacter = mResult.substring(mResult.length()-3, mResult.length()-1);
+                                Integer numTest = Integer.valueOf(entry);
+                                if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
+                                    if (numTest >= 0 && numTest <= 100) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        showOutputValuePrompt("maximum");
+                                    }
+                                } else if (test.equals("f")) {
+                                    if (numTest >= 0 && numTest <= 20000) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        showOutputValuePrompt("maximum");
+                                    }
+                                } else if (extraCharacter.equals("s1") || extraCharacter.equals("s2") || extraCharacter.equals("s3")){
+                                    if (numTest >= 0 && numTest <= 180) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        showOutputValuePrompt("maximum");
+                                    }
+                                } else {
+                                    // TODO - incorrect input
+                                }
+                            } else {
+                                Integer numTest = Integer.valueOf(entry);
+
+                                if (outputType.equals("v") || outputType.equals("r1") || outputType.equals("r2") || outputType.equals("r3")) {
+                                    if (numTest >= 0 && numTest <= 100) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        editable.setFilters(onlyNumericInput(1));
+                                        showInputPrompt();
+                                    }
+                                } else if (outputType.equals("f")) {
+                                    if (numTest >= 0 && numTest <= 20000) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        editable.setFilters(onlyNumericInput(1));
+                                        showInputPrompt();
+                                    }
+                                } else if (outputType.equals("s1") || outputType.equals("s2") || outputType.equals("s3")){
+                                    if (numTest >= 0 && numTest <= 180) {
+                                        String hexVal = decToHex(entry);
+                                        mResult = mResult.concat(hexVal + ",");
+                                        editable.setFilters(onlyNumericInput(1));
+                                        showInputPrompt();
+                                    }
+                                } else {
+                                    // TODO - incorrect input
+                                }
+                            }
+                        } else if (current == GuidedInputStates.INPUT_PROMPT) {
+                            if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
+                                mResult = mResult.concat(entry + ",");
+                                editable.setFilters(onlyNumericInput(3));
+                                showInputValuePrompt("minimum");
+                            }
+                        } else if (current == GuidedInputStates.INPUT_VALUE_PROMPT) {
+                            if (proportionalInputCount == 0) {
+                                proportionalInputCount++;
+                                Integer test = Integer.valueOf(entry);
+                                if (test >= 0 && test <= 100) {
+                                    String hexVal = decToHex(entry);
+                                    mResult = mResult.concat(hexVal + ",");
+                                    showInputValuePrompt("maximum");
+                                }
+
+                            } else {
+                                Integer test = Integer.valueOf(entry);
+                                if (test >= 0 && test <= 100) {
+                                    String hexVal = decToHex(entry);
+                                    mResult = mResult.concat(hexVal);
+                                    globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                                    mTitle.setText("Lets set the relationship! Click 'Next'");
+                                    mContainer.removeAllViews();
+                                    mContainer.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+                    } else if (globalHandler.appState.rootState == GuidedInputStates.REMOVE_RELATIONSHIP) {
+                        if (current == GuidedInputStates.OUTPUT_PROMPT) {
+                            if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
+                                mResult = mResult.concat(entry);
+                                editable.setFilters(onlyNumericInput(1));
+                                showWhichOnePrompt();
+                            } else if ((entry.equals("v") || entry.equals("f")) ) {
+                                mResult = mResult.concat(entry);
+                                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                                mTitle.setText("Lets remove the relationship! Click 'Next'");
+                                mContainer.removeAllViews();
+                                mContainer.setVisibility(View.INVISIBLE);
+                            }
+                        } else if (current == GuidedInputStates.WHICH_ONE) {
+                            if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
+                                mResult = mResult.concat(entry);
+                                globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
+                                mTitle.setText("Lets remove the relationship! Click 'Next'");
+                                mContainer.removeAllViews();
+                                mContainer.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    } else {
+                        // TODO - handle bad state
                     }
                 }
-            } else if (globalHandler.appState.rootState == GuidedInputStates.REMOVE_RELATIONSHIP) {
-                if (current == GuidedInputStates.OUTPUT_PROMPT) {
-                    if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
-                        mResult = mResult.concat(entry);
-                        editable.setFilters(onlyNumericInput(1));
-                        showWhichOnePrompt();
-                    } else if ((entry.equals("v") || entry.equals("f")) ) {
-                        mResult = mResult.concat(entry);
-                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                        mTitle.setText("Lets remove the relationship! Click 'Next'");
-                        mContainer.removeAllViews();
-                        mContainer.setVisibility(View.INVISIBLE);
-                    }
-                } else if (current == GuidedInputStates.WHICH_ONE) {
-                    if (entry.equals("1") || entry.equals("2") || entry.equals("3")) {
-                        mResult = mResult.concat(entry);
-                        globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
-                        mTitle.setText("Lets remove the relationship! Click 'Next'");
-                        mContainer.removeAllViews();
-                        mContainer.setVisibility(View.INVISIBLE);
-                    }
-                }
-            } else {
-                // TODO - handle bad state
             }
         }
     }
