@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.adapters;
 
-import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

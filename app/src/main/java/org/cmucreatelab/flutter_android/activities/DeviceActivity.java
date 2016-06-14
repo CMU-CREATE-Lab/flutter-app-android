@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
