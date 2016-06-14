@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.helpers;
 import android.content.Context;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import java.util.Hashtable;
 public class NamingHandler {
 
 
-    private final String[] HEX_ALPHABET = {"0","1","2","3","4","5","6","7","8", "9", "A","B","C","D","E","F"};
     private Context context;
     private Hashtable<String, String> firstNames;
     private Hashtable<String, String> middleNames;
@@ -37,9 +37,11 @@ public class NamingHandler {
         BufferedReader brMiddle = new BufferedReader(new InputStreamReader(middle));
         BufferedReader brLast = new BufferedReader(new InputStreamReader(last));
         try {
-            for (String i : HEX_ALPHABET) {
-                for (String j : HEX_ALPHABET) {
-                    String hexString = i.concat(j);
+            for (char i : Constants.HEX_ALPHABET) {
+                for (char j : Constants.HEX_ALPHABET) {
+                    String ith = Character.toString(i);
+                    String jth = Character.toString(j);
+                    String hexString = ith.concat(jth);
                     String name;
                     try {
                         if ((name = brFirst.readLine()) != null) {

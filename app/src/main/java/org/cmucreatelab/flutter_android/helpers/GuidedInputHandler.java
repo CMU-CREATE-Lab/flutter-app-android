@@ -35,6 +35,31 @@ public class GuidedInputHandler {
     // Class methods
 
 
+    private String decToHex(String in) {
+        String result = "";
+
+        Integer dec = Integer.valueOf(in);
+        StringBuilder hexBuilder = new StringBuilder(8);
+        hexBuilder.setLength(8);
+        for (int i = 8 - 1; i >= 0; --i)
+        {
+            int j = dec & 0x0f;
+            hexBuilder.setCharAt(i, Constants.HEX_ALPHABET[j]);
+            dec >>= 4;
+        }
+
+        for (char c : hexBuilder.toString().toCharArray()) {
+            if (c != '0') {
+                result = result.concat(Character.toString(c));
+            }
+        }
+        if (result.length() == 0) {
+            result = "0";
+        }
+        return result;
+    }
+
+
     private void showMainPrompt() {
         final GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity);
         mContainer.removeAllViews();
@@ -278,7 +303,9 @@ public class GuidedInputHandler {
                 } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
                     // TODO - may need to convert decimal to hexadecimal
                     // TODO - check to make sure they entered numbers in
-                    mResult = mResult.concat(entry);
+                    String hexVal = decToHex(entry);
+                    Log.d(Constants.LOG_TAG, hexVal);
+                    mResult = mResult.concat(hexVal);
                     globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
                     mTitle.setText("Lets set the output! Click 'Next'");
                     mContainer.removeAllViews();
@@ -316,17 +343,23 @@ public class GuidedInputHandler {
                         Integer numTest = Integer.valueOf(entry);
                         if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
                             if (numTest >= 0 && numTest <= 100) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 showOutputValuePrompt("maximum");
                             }
                         } else if (test.equals("f")) {
                             if (numTest >= 0 && numTest <= 20000) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 showOutputValuePrompt("maximum");
                             }
                         } else if (extraCharacter.equals("s1") || extraCharacter.equals("s2") || extraCharacter.equals("s3")){
                             if (numTest >= 0 && numTest <= 180) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 showOutputValuePrompt("maximum");
                             }
                         } else {
@@ -336,19 +369,25 @@ public class GuidedInputHandler {
                         Integer numTest = Integer.valueOf(entry);
                         if (outputType.equals("v") || outputType.equals("r1") || outputType.equals("r2") || outputType.equals("r3")) {
                             if (numTest >= 0 && numTest <= 100) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 editable.setFilters(onlyNumericInput(1));
                                 showInputPrompt();
                             }
                         } else if (outputType.equals("f")) {
                             if (numTest >= 0 && numTest <= 20000) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 editable.setFilters(onlyNumericInput(1));
                                 showInputPrompt();
                             }
                         } else if (outputType.equals("s1") || outputType.equals("s2") || outputType.equals("s3")){
                             if (numTest >= 0 && numTest <= 180) {
-                                mResult = mResult.concat(entry + ",");
+                                String hexVal = decToHex(entry);
+                                Log.d(Constants.LOG_TAG, hexVal);
+                                mResult = mResult.concat(hexVal + ",");
                                 editable.setFilters(onlyNumericInput(1));
                                 showInputPrompt();
                             }
@@ -367,13 +406,17 @@ public class GuidedInputHandler {
                         proportionalInputCount++;
                         Integer test = Integer.valueOf(entry);
                         if (test >= 0 && test <= 100) {
-                            mResult = mResult.concat(entry + ",");
+                            String hexVal = decToHex(entry);
+                            Log.d(Constants.LOG_TAG, hexVal);
+                            mResult = mResult.concat(hexVal + ",");
                             showInputValuePrompt("maximum");
                         }
                     } else {
                         Integer test = Integer.valueOf(entry);
                         if (test >= 0 && test <= 100) {
-                            mResult = mResult.concat(entry);
+                            String hexVal = decToHex(entry);
+                            Log.d(Constants.LOG_TAG, hexVal);
+                            mResult = mResult.concat(hexVal);
                             globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
                             mTitle.setText("Lets set the relationship! Click 'Next'");
                             mContainer.removeAllViews();

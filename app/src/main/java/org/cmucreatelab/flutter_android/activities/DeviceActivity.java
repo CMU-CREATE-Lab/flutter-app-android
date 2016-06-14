@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -21,6 +22,7 @@ import org.cmucreatelab.flutter_android.classes.DeviceListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,6 +61,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                 guidedInputHandler.choosePrompt(thisActivity, editable);
                 editable.clear();
             } else {
+                Log.d(Constants.LOG_TAG, guidedInputHandler.getFinalString());
                 globalHandler.sessionHandler.setMessageInput(guidedInputHandler.getFinalString());
                 globalHandler.sessionHandler.sendMessage();
             }
