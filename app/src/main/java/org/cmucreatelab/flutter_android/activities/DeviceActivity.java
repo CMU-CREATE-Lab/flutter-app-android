@@ -44,6 +44,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         dataToSend.setText(null);
         guidedInputContainer.setVisibility(View.VISIBLE);
         dataToSend.setFilters(filters);
+        dataToReceive.setText("");
         guidedInputHandler = new GuidedInputHandler(promptTitle, guidedInputContainer);
         guidedInputHandler.choosePrompt(this, null);
         globalHandler.appState.rootState = GuidedInputStates.MAIN_PROMPT;

@@ -13,13 +13,13 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Steve on 6/7/2016.
  */
 public class GuidedInputHandler {
-
-    // TODO - when about to send...display the string you are going to send in the container
 
     private ArrayList<String> mTextMainPrompt;
     private ArrayList<String> mTextOutputPrompt;
@@ -36,13 +36,32 @@ public class GuidedInputHandler {
 
 
     private void readyToSend() {
-        GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity.getApplicationContext());
+        final GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity.getApplicationContext());
         globalHandler.appState.currentState = GuidedInputStates.READY_TO_SEND;
         mTitle.setText("Click 'Next' to go back to the main prompt.");
         mContainer.removeAllViews();
         mContainer.setVisibility(View.INVISIBLE);
-        globalHandler.sessionHandler.setMessageInput(mResult);
-        globalHandler.sessionHandler.sendMessage();
+
+        if (!mResult.equals("R")) {
+            globalHandler.sessionHandler.setMessageInput(mResult);
+            globalHandler.sessionHandler.sendMessage();
+        } else {
+            final Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                private int count = 0;
+                @Override
+                public void run() {
+                    count++;
+                    globalHandler.sessionHandler.setMessageInput("r");
+                    globalHandler.sessionHandler.sendMessage();
+                    if (count == 20) {
+                        timer.cancel();
+                        timer.purge();
+                    }
+                }
+            };
+            timer.schedule(task, 0, 500);
+        }
     }
 
 
@@ -100,7 +119,6 @@ public class GuidedInputHandler {
     private void showMainPrompt() {
         final GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity);
         mContainer.removeAllViews();
-        // TODO
         mTitle.setText("What would you like to do?");
         for (String s : mTextMainPrompt) {
             TextView textView = (TextView) mActivity.getLayoutInflater().inflate(R.layout.base_guided_input, null);
@@ -115,7 +133,6 @@ public class GuidedInputHandler {
     private void showOutputPrompt() {
         final GlobalHandler globalHandler = GlobalHandler.newInstance(mActivity);
         mContainer.removeAllViews();
-        // TODO
         mTitle.setText("What type of output?");
         for (String s : mTextOutputPrompt) {
             TextView textView = (TextView) mActivity.getLayoutInflater().inflate(R.layout.base_guided_input, null);
@@ -263,7 +280,6 @@ public class GuidedInputHandler {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.STREAM_SENSORS;
                         readyToSend();
-                        // TODO - add sensor readings somewhere
                     } else if (entry.equals("s")) {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.SET_OUTPUT;
@@ -280,8 +296,6 @@ public class GuidedInputHandler {
                         mResult = mResult.concat(entry);
                         globalHandler.appState.rootState = GuidedInputStates.REMOVE_ALL_RELATIONSHIPS;
                         readyToSend();
-                    } else {
-                        // TODO - handle wrong command
                     }
                 } else {
                     GuidedInputStates current = globalHandler.appState.currentState;
@@ -311,7 +325,10 @@ public class GuidedInputHandler {
                             String test = mResult.substring(mResult.length()-2, mResult.length()-1);
                             String extraCharacter = mResult.substring(mResult.length()-3, mResult.length()-1);
                             Integer numTest = Integer.valueOf(entry);
-                            if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
+                            Log.d(Constants.LOG_TAG, extraCharacter);
+                            if (test.equals("v") || outputType.equals("r1") || outputType.equals("g1") || outputType.equals("b1")
+                                    || outputType.equals("r2") || outputType.equals("g2") || outputType.equals("b2")
+                                    || outputType.equals("r3") || outputType.equals("g3") || outputType.equals("b3")) {
                                 if (numTest >= 0 && numTest <= 100) {
                                     String hexVal = decToHex(entry);
                                     mResult = mResult.concat(hexVal);
@@ -333,7 +350,6 @@ public class GuidedInputHandler {
                         }
 
                     } else if (globalHandler.appState.rootState == GuidedInputStates.SET_PROPORTION) {
-                        // TODO - finish handling proportion.
                         if (current == GuidedInputStates.OUTPUT_PROMPT) {
                             if (entry.equals("s") || entry.equals("r") || entry.equals("g") || entry.equals("b")) {
                                 mResult = mResult.concat(entry);
@@ -355,13 +371,14 @@ public class GuidedInputHandler {
                                 showOutputValuePrompt("minimum");
                             }
                         } else if (current == GuidedInputStates.OUTPUT_VALUE_PROMPT) {
-                            // TODO - may need to convert decimal to hexadecimal
                             if (proportionalOutputCount == 0) {
                                 proportionalOutputCount++;
                                 String test = mResult.substring(mResult.length()-2, mResult.length()-1);
                                 String extraCharacter = mResult.substring(mResult.length()-3, mResult.length()-1);
                                 Integer numTest = Integer.valueOf(entry);
-                                if (test.equals("v") || extraCharacter.equals("r1") || extraCharacter.equals("r2") || extraCharacter.equals("r3")) {
+                                if (test.equals("v") || outputType.equals("r1") || outputType.equals("g1") || outputType.equals("b1")
+                                        || outputType.equals("r2") || outputType.equals("g2") || outputType.equals("b2")
+                                        || outputType.equals("r3") || outputType.equals("g3") || outputType.equals("b3")) {
                                     if (numTest >= 0 && numTest <= 100) {
                                         String hexVal = decToHex(entry);
                                         mResult = mResult.concat(hexVal + ",");
@@ -383,7 +400,9 @@ public class GuidedInputHandler {
                             } else {
                                 Integer numTest = Integer.valueOf(entry);
 
-                                if (outputType.equals("v") || outputType.equals("r1") || outputType.equals("r2") || outputType.equals("r3")) {
+                                if (outputType.equals("v") || outputType.equals("r1") || outputType.equals("g1") || outputType.equals("b1")
+                                        || outputType.equals("r2") || outputType.equals("g2") || outputType.equals("b2")
+                                        || outputType.equals("r3") || outputType.equals("g3") || outputType.equals("b3")) {
                                     if (numTest >= 0 && numTest <= 100) {
                                         String hexVal = decToHex(entry);
                                         mResult = mResult.concat(hexVal + ",");
@@ -404,8 +423,6 @@ public class GuidedInputHandler {
                                         editable.setFilters(onlyNumericInput(1));
                                         showInputPrompt();
                                     }
-                                } else {
-                                    // TODO - incorrect input
                                 }
                             }
                         } else if (current == GuidedInputStates.INPUT_PROMPT) {
@@ -449,17 +466,10 @@ public class GuidedInputHandler {
                                 readyToSend();
                             }
                         }
-                    } else {
-                        // TODO - handle bad state
                     }
                 }
             }
         }
-    }
-
-
-    public String getFinalString() {
-        return mResult;
     }
 
 }
