@@ -42,12 +42,12 @@ public class SessionHandler {
     private BondingListener bondingListener = new BondingListener() {
         @Override
         public void onBondingStarted() {
-            // TODO - add a 'please wait' element here
+            // not sure if we need anything here
         }
 
         @Override
         public void onBondingFinished(boolean b) {
-            // TODO - remove the 'please wait' element
+            // not sure if we need anything here
         }
     };
 
@@ -55,14 +55,12 @@ public class SessionHandler {
     private MelodySmartListener melodySmartListener = new MelodySmartListener() {
         @Override
         public void onDeviceConnected() {
-            // TODO - we may need to handle more here
             Log.d(Constants.LOG_TAG, "Connecting to " + mDevice.getDevice().getName());
             isBluetoothConnected = true;
         }
 
         @Override
         public void onDeviceDisconnected(final BLEError bleError) {
-            // TODO - we may need to handle more here
             Log.d(Constants.LOG_TAG, "Disconnected from " + mDevice.getDevice().getName());
             isBluetoothConnected = false;
 
@@ -91,12 +89,12 @@ public class SessionHandler {
 
         @Override
         public void onOtauAvailable() {
-            // TODO - Learn what this is
+            // I don't think this applies to us
         }
 
         @Override
         public void onOtauRecovery(DeviceDatabase.DeviceData deviceData) {
-            // TODO - Learn what this is
+            // I don't think this applies to us
         }
     };
 
@@ -104,7 +102,6 @@ public class SessionHandler {
     private DataService.Listener dataServiceListener = new DataService.Listener() {
         @Override
         public void onConnected(final boolean isFound) {
-            // TODO - handle something here
             if (isFound) {
                 Log.d(Constants.LOG_TAG, "Connected to " + mDevice.getDevice().getName());
                 mMelodySmartDevice.getDataService().enableNotifications(true);
@@ -120,7 +117,6 @@ public class SessionHandler {
     };
 
 
-    // TODO - possibly add a connect button
     public void connect() {
         if (!isBluetoothConnected) {
             mMelodySmartDevice.connect(mDevice.getDevice().getAddress());
