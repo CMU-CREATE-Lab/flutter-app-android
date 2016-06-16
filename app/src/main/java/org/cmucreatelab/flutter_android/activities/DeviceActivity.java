@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -36,6 +38,8 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
     private LinearLayout guidedInputContainer;
     private EditText dataToSend;
     private EditText dataToReceive;
+    private AlertDialog connectingDialog;
+    private AlertDialog.Builder builder;
 
 
     private void fromBeginning() {
@@ -99,8 +103,13 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(5, Color.BLACK);
         guidedInputContainer.setBackground(drawable);
-
         fromBeginning();
+
+        builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
+        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", deviceName, "If it is taking awhile, click the button to make the flutter start searching again."));
+        builder.setTitle(R.string.app_name);
+        connectingDialog = builder.create();
+        connectingDialog.show();
     }
 
 
@@ -142,6 +151,9 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
             @Override
             public void run() {
                 dataToSend.setEnabled(connected);
+                if (connected && connectingDialog != null  && connectingDialog.isShowing()) {
+                    connectingDialog.dismiss();
+                }
             }
         });
         invalidateOptionsMenu();
