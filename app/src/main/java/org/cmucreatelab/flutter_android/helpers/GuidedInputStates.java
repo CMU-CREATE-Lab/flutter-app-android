@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.helpers;
 /**
  * Created by Steve on 6/10/2016.
  */
+// TODO - scrap this eventually
 public enum GuidedInputStates {
     // chooses what to actually display
     MAIN_PROMPT,

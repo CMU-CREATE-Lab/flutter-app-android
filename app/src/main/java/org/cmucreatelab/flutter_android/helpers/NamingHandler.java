@@ -13,6 +13,11 @@ import java.util.Hashtable;
 
 /**
  * Created by Steve on 6/9/2016.
+ *
+ * NamingHandler
+ *
+ * A class that handles naming flutters.
+ *
  */
 public class NamingHandler {
 

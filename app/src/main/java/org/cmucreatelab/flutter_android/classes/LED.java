@@ -2,7 +2,13 @@ package org.cmucreatelab.flutter_android.classes;
 
 /**
  * Created by Steve on 6/20/2016.
+ *
+ * LED
+ *
+ * A class that represents an LED.
+ *
  */
+// TODO - we probably want to refactor this class because the LED can be set to rbb values, not a specific type. (I think)
 public class LED {
 
 

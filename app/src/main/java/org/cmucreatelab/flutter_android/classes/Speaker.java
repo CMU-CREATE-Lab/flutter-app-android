@@ -2,8 +2,13 @@ package org.cmucreatelab.flutter_android.classes;
 
 /**
  * Created by Steve on 6/20/2016.
+ *
+ * Speaker
+ *
+ * A class that represents the speaker on a flutter.
+ *
  */
-public class Buzzer {
+public class Speaker {
 
 
     private static final int MINIMUM_VOLUME = 0;
@@ -15,7 +20,7 @@ public class Buzzer {
     private int frequency;
 
 
-    public Buzzer(int volume, int frequency) {
+    public Speaker(int volume, int frequency) {
         this.setVolume(volume);
         this.setFrequency(frequency);
     }

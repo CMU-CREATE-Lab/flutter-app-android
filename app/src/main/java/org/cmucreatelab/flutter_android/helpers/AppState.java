@@ -9,6 +9,7 @@ package org.cmucreatelab.flutter_android.helpers;
  * if your root is 'set_output,' whereas in 'set_proportion,' the guide will continue moving on past the
  * output_prompt. So just knowing you are in the output_prompt is not good enough...
  */
+// TODO - this was used for the gross text based guided input. We won't need this for much longer.
 public class AppState {
 
 

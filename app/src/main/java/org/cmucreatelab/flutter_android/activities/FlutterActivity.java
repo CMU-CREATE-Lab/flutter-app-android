@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.DeviceListener;
+import org.cmucreatelab.flutter_android.classes.FlutterListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
@@ -26,7 +26,15 @@ import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DeviceActivity extends AppCompatActivity implements DeviceListener {
+/**
+ * Created by Steve on 5/26/2016.
+ *
+ * FlutterActivity
+ *
+ * An activity that is shown as soon as a flutter is selected.
+ *
+ */
+public class FlutterActivity extends AppCompatActivity implements FlutterListener {
 
     private Activity thisActivity;
     private GlobalHandler globalHandler;
@@ -64,6 +72,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
                 Editable editable = dataToSend.getText();
                 guidedInputHandler.choosePrompt(thisActivity, editable);
                 editable.clear();
+                dataToSend.setTextColor(Color.BLACK);
             } else {
                 dataToSend.setText("");
                 dataToSend.getText().clear();
@@ -82,9 +91,9 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
 
         globalHandler = GlobalHandler.newInstance(getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
-        String deviceName = globalHandler.sessionHandler.getName();
-        if (deviceName != null && deviceName.length() > 0)
-            toolbar.setTitle(deviceName);
+        String flutterName = globalHandler.sessionHandler.getFlutterName();
+        if (flutterName != null && flutterName.length() > 0)
+            toolbar.setTitle(flutterName);
         else
             toolbar.setTitle(R.string.unknown_device);
         setSupportActionBar(toolbar);
@@ -95,7 +104,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         dataToSend = (EditText) findViewById(R.id.data_to_send);
         dataToReceive = (EditText) findViewById(R.id.data_to_receive);
         dataToSend.setOnEditorActionListener(onEditorActionListener);
-        globalHandler.sessionHandler.setDeviceListener(this);
+        globalHandler.sessionHandler.setFlutterListener(this);
 
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
@@ -104,7 +113,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceListener 
         fromBeginning();
 
         builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
-        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", deviceName, "If it is taking awhile, click the button to make the flutter start searching again."));
+        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the button to make the flutter start searching again."));
         builder.setTitle(R.string.app_name);
         connectingDialog = builder.create();
         connectingDialog.show();

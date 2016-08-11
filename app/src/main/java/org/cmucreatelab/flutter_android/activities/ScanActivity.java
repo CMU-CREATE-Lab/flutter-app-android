@@ -21,18 +21,26 @@ import com.bluecreation.melodysmart.MelodySmartDevice;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
-import org.cmucreatelab.flutter_android.classes.Device;
+import org.cmucreatelab.flutter_android.classes.Flutter;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Steve on 5/26/2016.
+ *
+ * ScanActivity
+ *
+ * An activity that can scan for flutters nearby.
+ *
+ */
 public class ScanActivity extends AppCompatActivity {
 
     private GlobalHandler globalHandler;
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
-    private ArrayList<Device> mDevices;
+    private ArrayList<Flutter> mFlutters;
     private boolean mScanning;
 
 
@@ -40,7 +48,7 @@ public class ScanActivity extends AppCompatActivity {
 
 
     private void clearAll() {
-        mDevices.clear();
+        mFlutters.clear();
         mLeDeviceAdapter.clearDevices();
     }
 
@@ -66,7 +74,7 @@ public class ScanActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    for (Device result : mDevices) {
+                    for (Flutter result : mFlutters) {
                         if (result.getDevice().equals(device)) {
                             return;
                         }
@@ -76,8 +84,8 @@ public class ScanActivity extends AppCompatActivity {
                     address = address.substring(0,8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
                         String name = globalHandler.namingHandler.generateName(device.getAddress());
-                        Device endResult = new Device(device, name);
-                        mDevices.add(endResult);
+                        Flutter endResult = new Flutter(device, name);
+                        mFlutters.add(endResult);
                         mLeDeviceAdapter.addDevice(endResult);
                     }
                 }
@@ -95,7 +103,7 @@ public class ScanActivity extends AppCompatActivity {
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
         final Activity activity = this;
 
-        mDevices = new ArrayList<>();
+        mFlutters = new ArrayList<>();
 
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.init(this.getApplicationContext());
@@ -106,8 +114,8 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 scanForDevice(false);
-                globalHandler.sessionHandler.startSession(activity, mDevices.get(i));
-                Intent intent = new Intent(getApplicationContext(), DeviceActivity.class);
+                globalHandler.sessionHandler.startSession(activity, mFlutters.get(i));
+                Intent intent = new Intent(getApplicationContext(), FlutterActivity.class);
                 startActivity(intent);
             }
         });

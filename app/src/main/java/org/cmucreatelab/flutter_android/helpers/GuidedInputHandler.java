@@ -19,6 +19,7 @@ import java.util.TimerTask;
 /**
  * Created by Steve on 6/7/2016.
  */
+// TODO - We will not need this class once we get rolling.
 public class GuidedInputHandler {
 
     private ArrayList<String> mTextMainPrompt;

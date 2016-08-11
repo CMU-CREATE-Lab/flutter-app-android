@@ -4,6 +4,11 @@ import android.content.Context;
 
 /**
  * Created by Steve on 5/26/2016.
+ *
+ * GlobalHandler
+ *
+ * A class that gives access to needed elements throughout various activities.
+ *
  */
 public class GlobalHandler {
 

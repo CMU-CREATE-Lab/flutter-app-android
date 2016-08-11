@@ -2,6 +2,11 @@ package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 /**
  * Created by Steve on 5/26/2016.
+ *
+ * Constants
+ *
+ * A class that handles global constants that is used throughout the app.
+ *
  */
 public class Constants {
 
