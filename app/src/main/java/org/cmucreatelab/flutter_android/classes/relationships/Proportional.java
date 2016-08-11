@@ -8,5 +8,15 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * A class that represents a proportional relationship.
  *
  */
-public class Proportional {
+public class Proportional implements Relationship {
+
+    private static final Relationship.Type relationshipType = Type.PROPORTIONAL;
+
+
+
+    @Override
+    public Type getRelationshipType() {
+        return relationshipType;
+    }
+
 }

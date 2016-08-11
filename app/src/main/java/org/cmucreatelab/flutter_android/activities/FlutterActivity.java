@@ -113,7 +113,7 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
         fromBeginning();
 
         builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
-        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the button to make the flutter start searching again."));
+        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the search button to make the flutter start searching again."));
         builder.setTitle(R.string.app_name);
         connectingDialog = builder.create();
         connectingDialog.show();

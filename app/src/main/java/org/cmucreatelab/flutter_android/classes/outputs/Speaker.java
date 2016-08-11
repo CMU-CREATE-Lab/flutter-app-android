@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.classes;
+package org.cmucreatelab.flutter_android.classes.outputs;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -8,9 +8,10 @@ package org.cmucreatelab.flutter_android.classes;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker {
+public class Speaker extends A_Output implements Output {
 
 
+    private static final Output.Type outputType = Type.SPEAKER;
     private static final int MINIMUM_VOLUME = 0;
     private static final int MAXIMUM_VOLUME = 100;
     private static final int MINIMUM_FREQUENCY = 0;
@@ -41,5 +42,11 @@ public class Speaker {
     }
     public int getFrequency() {
         return this.frequency;
+    }
+
+
+    @Override
+    public Type getOutputType() {
+        return outputType;
     }
 }

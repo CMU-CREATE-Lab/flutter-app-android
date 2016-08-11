@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.classes;
+package org.cmucreatelab.flutter_android.classes.outputs;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -8,30 +8,27 @@ package org.cmucreatelab.flutter_android.classes;
  * A class that represents an LED.
  *
  */
-// TODO - we probably want to refactor this class because the LED can be set to rbb values, not a specific type. (I think)
-public class LED {
+public class LED extends A_Output implements Output {
 
 
-    public static enum LED_TYPE{ RED, GREEN, BLUE };
+    private static final Output.Type outputType = Type.LED;
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 180;
 
-    private LED_TYPE type;
+    private int red;
+    private int green;
+    private int blue;
     private int intensity;
 
 
-    public LED(LED_TYPE type, int intensity) {
-        this.type = type;
+    public LED(int red, int green, int blue, int intensity) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
         this.setIntensity(intensity);
     }
 
 
-    public void setType(LED_TYPE type) {
-        this.type = type;
-    }
-    public LED_TYPE getType() {
-        return this.type;
-    }
     public void setIntensity(int intensity) {
         if (intensity >= MINIMUM && intensity <= MAXIMUM) {
             this.intensity = intensity;
@@ -39,5 +36,11 @@ public class LED {
     }
     public int getIntensity() {
         return this.intensity;
+    }
+
+
+    @Override
+    public Type getOutputType() {
+        return outputType;
     }
 }

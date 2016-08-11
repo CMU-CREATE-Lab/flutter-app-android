@@ -1,7 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.relationships;
 
-import android.hardware.Sensor;
-
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -20,6 +18,6 @@ public interface Relationship {
         CHANGE
     }
 
-    Sensor getConnection();
+    Type getRelationshipType();
 
 }

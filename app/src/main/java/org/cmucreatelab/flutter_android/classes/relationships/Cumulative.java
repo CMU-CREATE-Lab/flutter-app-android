@@ -8,5 +8,15 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * A class that represents a cumulative relationship.
  *
  */
-public class Cumulative {
+public class Cumulative implements Relationship {
+
+    private static final Relationship.Type relationshipType = Type.CUMULATIVE;
+
+
+
+    @Override
+    public Type getRelationshipType() {
+        return relationshipType;
+    }
+
 }

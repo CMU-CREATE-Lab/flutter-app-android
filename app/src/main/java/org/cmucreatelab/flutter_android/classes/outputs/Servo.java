@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.classes;
+package org.cmucreatelab.flutter_android.classes.outputs;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -8,9 +8,10 @@ package org.cmucreatelab.flutter_android.classes;
  * A class that represents a servo on the flutter.
  *
  */
-public class Servo {
+public class Servo extends A_Output implements Output {
 
 
+    private static final Output.Type outputType = Type.SERVO;
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 180;
 
@@ -29,5 +30,11 @@ public class Servo {
     }
     public int getCurrentValue() {
         return this.currentValue;
+    }
+
+
+    @Override
+    public Type getOutputType() {
+        return outputType;
     }
 }

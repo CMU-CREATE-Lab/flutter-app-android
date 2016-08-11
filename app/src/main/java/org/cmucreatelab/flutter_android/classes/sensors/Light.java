@@ -10,16 +10,18 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  */
 public class Light implements Sensor {
 
+    private static final Sensor.Type sensorType = Type.LIGHT;
+
 
     @Override
     public Type getSensorType() {
-        return null;
+        return sensorType;
     }
 
 
     @Override
-    public void getSensorReading() {
-
+    public int getSensorReading() {
+        return 0;
     }
 
 }

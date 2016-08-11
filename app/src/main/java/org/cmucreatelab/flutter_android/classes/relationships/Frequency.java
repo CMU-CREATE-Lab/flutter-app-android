@@ -8,5 +8,15 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * A class that represents a frequency relationship.
  *
  */
-public class Frequency {
+public class Frequency implements Relationship {
+
+    private static final Relationship.Type relationshipType = Type.FREQUENCY;
+
+
+
+    @Override
+    public Type getRelationshipType() {
+        return relationshipType;
+    }
+
 }

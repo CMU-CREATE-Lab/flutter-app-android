@@ -28,6 +28,6 @@ interface Sensor {
 
     Type getSensorType();
 
-    void getSensorReading();
+    int getSensorReading();
 
 }

@@ -10,16 +10,18 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  */
 public class BarometricPressure implements Sensor {
 
+    private static final Sensor.Type sensorType = Type.BAROMETRIC_PRESSURE;
+
 
     @Override
     public Type getSensorType() {
-        return null;
+        return sensorType;
     }
 
 
     @Override
-    public void getSensorReading() {
-
+    public int getSensorReading() {
+        return 0;
     }
 
 }

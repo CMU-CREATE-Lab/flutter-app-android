@@ -8,5 +8,15 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * A class that represents a change relationship.
  *
  */
-public class Change {
+public class Change implements Relationship {
+
+    private static final Relationship.Type relationshipType = Type.CHANGE;
+
+
+
+    @Override
+    public Type getRelationshipType() {
+        return relationshipType;
+    }
+
 }
