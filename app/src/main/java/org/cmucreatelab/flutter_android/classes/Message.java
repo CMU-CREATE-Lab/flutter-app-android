@@ -5,7 +5,7 @@ package org.cmucreatelab.flutter_android.classes;
  *
  * Message
  *
- * A class that represents a message that can be sent to a Flutter from a Device.
+ * A class that represents a message that can be sent to a FlutterOG from a Device.
  *
  */
 public class Message {

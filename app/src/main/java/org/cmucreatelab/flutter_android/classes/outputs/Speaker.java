@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.outputs;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker implements Output {
+public class Speaker extends A_Output  implements Output {
 
 
     private static final Output.Type outputType = Type.SPEAKER;
@@ -19,6 +19,11 @@ public class Speaker implements Output {
 
     private int volume;
     private int frequency;
+
+    public Speaker() {
+        this.volume = MAXIMUM_VOLUME / 2;
+        this.frequency = MAXIMUM_FREQUENCY / 2;
+    }
 
 
     public Speaker(int volume, int frequency) {

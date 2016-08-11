@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.classes.Link;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -10,7 +11,6 @@ import org.cmucreatelab.flutter_android.classes.Link;
  * Interface for the anything is a sensor. There are various types of sensors defined in the enum 'Type'
  *
  */
-// TODO - we may want some abstract sensor classes that can implement these methods if there are some overlaps.
 public interface Sensor {
 
     // I am unsure of the use of an Analog or Unknown Sensor.
@@ -29,6 +29,7 @@ public interface Sensor {
     }
 
     void addLink(Link link);
+    void clearLink(Output output);
     void clearLinks();
 
     Type getSensorType();

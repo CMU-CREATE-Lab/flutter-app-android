@@ -8,7 +8,9 @@
 
     <!-- Errors -->
     <string name="ble_unsupported">Your device does not support Bluetooth LE - Closing application</string>
-    <string name ="unknown_device">Unknown Device</string>
+    <string name="unknown_device">Unknown Device</string>
+
+    <!-- Prompts -->
     <string name="main_prompt">What would you like to do?</string>
     <string name="stream_sensor">\'R\': stream sensor readings for 10 seconds</string>
     <string name="set_an_input">\'s\': set an input</string>

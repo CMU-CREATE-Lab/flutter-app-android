@@ -18,4 +18,7 @@ public interface Output {
 
     Type getOutputType();
 
+    void setIsLinked(boolean isLinked);
+    boolean isLinked();
+
 }

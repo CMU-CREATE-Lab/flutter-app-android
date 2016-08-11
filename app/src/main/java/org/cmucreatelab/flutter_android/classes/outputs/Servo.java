@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.outputs;
  * A class that represents a servo on the flutter.
  *
  */
-public class Servo implements Output {
+public class Servo extends A_Output  implements Output {
 
 
     private static final Output.Type outputType = Type.SERVO;

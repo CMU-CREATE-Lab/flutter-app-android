@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterListener;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;

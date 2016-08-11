@@ -5,6 +5,11 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
 /**
  * Created by Steve on 8/11/2016.
+ *
+ * Link
+ *
+ * A class that handles linking a sensor to an output.
+ *
  */
 public class Link {
 
@@ -12,17 +17,19 @@ public class Link {
     private Relationship mRelationship;
 
 
-    public Link(Output output, Relationship relationship) {
-        this.mOutput = output;
-        this.mRelationship = relationship;
+    public Link(Output output, Relationship relationship) throws Exception {
+        if (!output.isLinked()) {
+            this.mOutput = output;
+            this.mOutput.setIsLinked(true);
+            this.mRelationship = relationship;
+            System.out.println("Link created with " + this.mOutput.getClass().getSimpleName());
+        } else {
+            throw new Exception("Cannot create link, a link already created with the output");
+        }
     }
 
 
-    // getters/setters
-
+    // getters
     public Output getOutput() { return this.mOutput; }
-    public void setOutput(Output output) { this.mOutput = output;}
     public Relationship getRelationship() { return this.mRelationship; }
-    public void setRelationship(Relationship relationship) { this.mRelationship = relationship; }
-
 }
