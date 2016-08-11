@@ -10,7 +10,7 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  */
 public interface Relationship {
 
-    public enum Type {
+    enum Type {
         PROPORTIONAL,
         AMPLITUDE,
         FREQUENCY,

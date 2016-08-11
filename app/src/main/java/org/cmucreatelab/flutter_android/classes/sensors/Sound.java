@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a sound sensor.
  *
  */
-public class Sound implements Sensor {
+public class Sound extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.SOUND;
 

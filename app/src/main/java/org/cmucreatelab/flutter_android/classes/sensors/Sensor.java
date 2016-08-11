@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import org.cmucreatelab.flutter_android.classes.Link;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -9,11 +11,11 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  *
  */
 // TODO - we may want some abstract sensor classes that can implement these methods if there are some overlaps.
-interface Sensor {
+public interface Sensor {
 
     // I am unsure of the use of an Analog or Unknown Sensor.
     // Is this for error checking? Should the user always have a sensor that is defined?
-    public enum Type {
+    enum Type {
         LIGHT,
         SOIL_MOISTURE,
         DISTANCE,
@@ -25,6 +27,9 @@ interface Sensor {
         ANALOG_OR_UNKNOWN,
         NO_SENSOR
     }
+
+    void addLink(Link link);
+    void clearLinks();
 
     Type getSensorType();
 

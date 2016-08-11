@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a wind speed sensor.
  *
  */
-public class WindSpeed implements Sensor {
+public class WindSpeed extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.WIND_SPEED;
 

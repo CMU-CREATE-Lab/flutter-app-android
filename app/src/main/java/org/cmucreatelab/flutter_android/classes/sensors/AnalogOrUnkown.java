@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing an analog or unknown sensor.
  *
  */
-public class AnalogOrUnkown implements Sensor{
+public class AnalogOrUnkown extends A_Sensor implements Sensor{
 
     private static final Sensor.Type sensorType = Type.ANALOG_OR_UNKNOWN;
 

@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a temperature sensor.
  *
  */
-public class Temperature implements Sensor {
+public class Temperature extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.TEMPERATURE;
 

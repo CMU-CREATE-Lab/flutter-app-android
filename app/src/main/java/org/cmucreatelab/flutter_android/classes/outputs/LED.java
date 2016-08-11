@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.outputs;
  * A class that represents an LED.
  *
  */
-public class LED extends A_Output implements Output {
+public class LED implements Output {
 
 
     private static final Output.Type outputType = Type.LED;

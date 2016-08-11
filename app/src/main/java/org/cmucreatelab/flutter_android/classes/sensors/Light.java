@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a light sensor.
  *
  */
-public class Light implements Sensor {
+public class Light extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.LIGHT;
 

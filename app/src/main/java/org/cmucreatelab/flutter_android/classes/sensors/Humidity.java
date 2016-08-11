@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a humidity sensor.
  *
  */
-public class Humidity implements Sensor {
+public class Humidity extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.HUMIDITY;
 

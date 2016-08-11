@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a soil moisture sensor.
  *
  */
-public class SoilMoisture implements Sensor{
+public class SoilMoisture extends A_Sensor implements Sensor{
 
     private static final Sensor.Type sensorType = Type.SOIL_MOISTURE;
 

@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.outputs;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker extends A_Output implements Output {
+public class Speaker implements Output {
 
 
     private static final Output.Type outputType = Type.SPEAKER;

@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a barometric pressure sensor.
  *
  */
-public class BarometricPressure implements Sensor {
+public class BarometricPressure extends A_Sensor implements Sensor {
 
     private static final Sensor.Type sensorType = Type.BAROMETRIC_PRESSURE;
 
