@@ -1,5 +1,8 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -16,9 +19,13 @@ public interface Output {
         SPEAKER
     }
 
+    // getters
     Type getOutputType();
+    Sensor getSensor();
+    Relationship getRelationship();
 
-    void setIsLinked(boolean isLinked);
-    boolean isLinked();
+    // setters
+    void setSensor(Sensor sensor);
+    void setRelationship(Relationship relationship);
 
 }

@@ -1,7 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
-import org.cmucreatelab.flutter_android.classes.Link;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
 import java.util.ArrayList;
 
@@ -15,32 +15,30 @@ import java.util.ArrayList;
  */
 public abstract class A_Sensor implements Sensor {
 
-    protected ArrayList<Link> mLinks;
+    protected ArrayList<Output> mOutputs;
 
 
     public A_Sensor() {
-        this.mLinks = new ArrayList<>();
+        this.mOutputs = new ArrayList<>();
     }
 
 
     @Override
-    public void addLink(Link link) {
-        mLinks.add(link);
+    public void addLink(Output output, Relationship relationship) {
+        output.setSensor(this);
+        output.setRelationship(relationship);
+        mOutputs.add(output);
     }
 
 
     @Override
-    public void clearLink(Output output) {
-        mLinks.remove(output);
-        output.setIsLinked(false);
+    public void removeLink(Output output) {
+        mOutputs.remove(output);
     }
 
     @Override
     public void clearLinks() {
-        for (Link link : mLinks) {
-            link.getOutput().setIsLinked(false);
-        }
-        mLinks.clear();
+        mOutputs.clear();
     }
 
 }

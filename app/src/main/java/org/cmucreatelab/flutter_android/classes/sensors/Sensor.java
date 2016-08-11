@@ -1,7 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
-import org.cmucreatelab.flutter_android.classes.Link;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -28,8 +28,8 @@ public interface Sensor {
         NO_SENSOR
     }
 
-    void addLink(Link link);
-    void clearLink(Output output);
+    void addLink(Output output, Relationship relationship);
+    void removeLink(Output output);
     void clearLinks();
 
     Type getSensorType();
