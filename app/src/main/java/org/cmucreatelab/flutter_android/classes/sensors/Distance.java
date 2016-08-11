@@ -3,12 +3,12 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 /**
  * Created by Steve on 8/11/2016.
  *
- * DistanceSensor
+ * Distance
  *
  * A class representing a distance sensor.
  *
  */
-public class DistanceSensor implements Sensor {
+public class Distance implements Sensor {
 
 
     @Override

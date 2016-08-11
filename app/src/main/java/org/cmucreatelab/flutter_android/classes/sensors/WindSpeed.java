@@ -3,12 +3,12 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 /**
  * Created by Steve on 8/11/2016.
  *
- * LightSensor
+ * WindSpeed
  *
- * A class representing a light sensor.
+ * A class representing a wind speed sensor.
  *
  */
-public class LightSensor implements Sensor {
+public class WindSpeed implements Sensor {
 
 
     @Override

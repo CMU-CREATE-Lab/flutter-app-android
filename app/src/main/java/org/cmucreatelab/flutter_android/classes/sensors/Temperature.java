@@ -3,12 +3,12 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 /**
  * Created by Steve on 8/11/2016.
  *
- * SoilMoistureSensor
+ * Temperature
  *
- * A class representing a soil moisture sensor.
+ * A class representing a temperature sensor.
  *
  */
-public class SoilMoistureSensor implements Sensor{
+public class Temperature implements Sensor {
 
 
     @Override

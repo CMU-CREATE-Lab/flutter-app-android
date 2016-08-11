@@ -3,12 +3,12 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 /**
  * Created by Steve on 8/11/2016.
  *
- * HumiditySensor
+ * Sound
  *
- * A class representing a humidity sensor.
+ * A class representing a sound sensor.
  *
  */
-public class HumiditySensor implements Sensor {
+public class Sound implements Sensor {
 
 
     @Override

@@ -3,12 +3,12 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 /**
  * Created by Steve on 8/11/2016.
  *
- * BarometricPressureSensor
+ * Light
  *
- * A class representing a barometric pressure sensor.
+ * A class representing a light sensor.
  *
  */
-public class BarometricPressureSensor implements Sensor {
+public class Light implements Sensor {
 
 
     @Override
