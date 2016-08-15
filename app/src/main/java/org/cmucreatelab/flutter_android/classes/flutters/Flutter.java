@@ -16,10 +16,10 @@ public abstract class Flutter {
     protected String name;
 
 
-    protected BluetoothDevice getDevice() {
+    public BluetoothDevice getDevice() {
         return mDevice;
     }
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
