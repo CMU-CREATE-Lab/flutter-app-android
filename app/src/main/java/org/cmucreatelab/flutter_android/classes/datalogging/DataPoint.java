@@ -9,4 +9,22 @@ package org.cmucreatelab.flutter_android.classes.datalogging;
  *
  */
 public class DataPoint {
+
+    // temporary
+    private int value;
+
+
+    public DataPoint(int value) {
+        this.value = value;
+    }
+
+
+    // getters
+
+    public int getValue() { return this.value; }
+
+    // setters
+
+    public void setValue(int value) { this.value = value; }
+
 }
