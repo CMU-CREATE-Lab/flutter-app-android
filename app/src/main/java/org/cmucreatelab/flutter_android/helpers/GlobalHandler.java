@@ -16,7 +16,6 @@ public class GlobalHandler {
     public NamingHandler namingHandler;
     public SessionHandler sessionHandler;
     public EmailHandler emailHandler;
-    public AppState appState;
 
 
     // Singleton Implementation
@@ -38,7 +37,6 @@ public class GlobalHandler {
         this.sessionHandler = new SessionHandler();
         this.namingHandler = new NamingHandler(appContext);
         this.emailHandler = new EmailHandler(this);
-        this.appState = new AppState(GuidedInputStates.MAIN_PROMPT, null);
     }
 
 }

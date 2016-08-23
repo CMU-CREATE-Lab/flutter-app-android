@@ -25,10 +25,4 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
         return sensorType;
     }
 
-
-    @Override
-    public int getSensorReading() {
-        return 0;
-    }
-
 }

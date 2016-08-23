@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.DialogSelectorFragment;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ import java.util.TimerTask;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SensorsActivity extends BaseNavigationActivity implements DialogSelectorFragment.DialogSensorListener, FlutterConnectListener, FlutterMessageListener, Serializable {
+public class SensorsActivity extends BaseFlutterActivity implements DialogSelectorFragment.DialogSensorListener, FlutterConnectListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -75,7 +76,7 @@ public class SensorsActivity extends BaseNavigationActivity implements DialogSel
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                globalHandler.sessionHandler.setMessageInput("r");
+                globalHandler.sessionHandler.setMessageInput(MessageConstructor.READ_SENSOR);
                 globalHandler.sessionHandler.sendMessage();
             }
         };
@@ -115,11 +116,13 @@ public class SensorsActivity extends BaseNavigationActivity implements DialogSel
         sensors = globalHandler.sessionHandler.getFlutter().getSensors();
         updateViews();
 
-        builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
-        builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the search button to make the flutter start searching again."));
-        builder.setTitle(R.string.app_name);
-        connectingDialog = builder.create();
-        connectingDialog.show();
+        if (!globalHandler.sessionHandler.isBluetoothConnected) {
+            builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
+            builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the search button to make the flutter start searching again."));
+            builder.setTitle(R.string.app_name);
+            connectingDialog = builder.create();
+            connectingDialog.show();
+        }
     }
 
 
@@ -167,23 +170,31 @@ public class SensorsActivity extends BaseNavigationActivity implements DialogSel
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
         updateViews();
 
-        // show correct view
+        // TODO - show correct view
         switch (sensors[index].getSensorType()) {
             case LIGHT:
+                startSensorReading();
                 break;
             case SOIL_MOISTURE:
+                startSensorReading();
                 break;
             case DISTANCE:
+                startSensorReading();
                 break;
             case SOUND:
+                startSensorReading();
                 break;
             case WIND_SPEED:
+                startSensorReading();
                 break;
             case HUMIDITY:
+                startSensorReading();
                 break;
             case TEMPERATURE:
+                startSensorReading();
                 break;
             case BAROMETRIC_PRESSURE:
+                startSensorReading();
                 break;
             case ANALOG_OR_UNKNOWN:
                 startSensorReading();
