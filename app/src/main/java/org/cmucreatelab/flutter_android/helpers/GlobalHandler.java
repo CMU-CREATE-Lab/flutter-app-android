@@ -15,6 +15,7 @@ public class GlobalHandler {
     public Context appContext;
     public NamingHandler namingHandler;
     public SessionHandler sessionHandler;
+    public EmailHandler emailHandler;
     public AppState appState;
 
 
@@ -36,6 +37,7 @@ public class GlobalHandler {
         this.appContext = context;
         this.sessionHandler = new SessionHandler();
         this.namingHandler = new NamingHandler(appContext);
+        this.emailHandler = new EmailHandler(this);
         this.appState = new AppState(GuidedInputStates.MAIN_PROMPT, null);
     }
 

@@ -25,5 +25,14 @@
     <string name="blue_led">\'b\': blue LED</string>
     <string name="volume_buzzer">\'v\': volume of the buzzer</string>
     <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
+    <string name="scanning">Scanning...</string>
+    <string name="rescan">Rescan</string>
+    <string name="connect_flutter">CONNECT FLUTER</string>
+    <string name="data_los">DATA LOGS</string>
+    <string name="speaker">SPEAKER</string>
+    <string name="leds">LEDs</string>
+    <string name="servos">SERVOS</string>
+    <string name="sensors">SENSORS</string>
+    <string name="dialog_sensor">What sensor is connected to</string>
 
 </resources>

@@ -26,6 +26,11 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -35,16 +40,38 @@ import java.util.ArrayList;
  * An activity that can scan for flutters nearby.
  *
  */
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends BaseNavigationActivity {
 
-    private GlobalHandler globalHandler;
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
     private ArrayList<FlutterOG> mFlutterOGs;
     private boolean mScanning;
 
 
+    private Timer timer;
+    private static int FIRST_SCAN_ID;
+    private static int SECOND_SCAN_ID;
+
+
     // Class methods
+
+
+    private void startTimer(final int ms) {
+        timer.cancel();
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        };
+        timer.schedule(timerTask, ms);
+    }
 
 
     private void clearAll() {
@@ -61,7 +88,6 @@ public class ScanActivity extends AppCompatActivity {
         } else {
             mMelodySmartDevice.stopLeScan(mLeScanCallBack);
         }
-        invalidateOptionsMenu();
     }
 
 
@@ -87,6 +113,16 @@ public class ScanActivity extends AppCompatActivity {
                         FlutterOG endResult = new FlutterOG(device, name);
                         mFlutterOGs.add(endResult);
                         mLeDeviceAdapter.addDevice(endResult);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                timer.cancel();
+                                findViewById(FIRST_SCAN_ID).setVisibility(View.GONE);
+                                findViewById(SECOND_SCAN_ID).setVisibility(View.VISIBLE);
+                                startTimer(7500);
+                            }
+                        });
                     }
                 }
             });
@@ -98,12 +134,15 @@ public class ScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.scan_toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+
+        Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(mainToolbar);
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
         final Activity activity = this;
 
         mFlutterOGs = new ArrayList<>();
+        timer = new Timer();
 
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.init(this.getApplicationContext());
@@ -113,9 +152,10 @@ public class ScanActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                timer.cancel();
                 scanForDevice(false);
                 globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
-                Intent intent = new Intent(getApplicationContext(), FlutterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SensorsActivity.class);
                 startActivity(intent);
             }
         });
@@ -139,22 +179,7 @@ public class ScanActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.scan_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!mScanning) {
-            menu.findItem(R.id.menu_stop).setVisible(false);
-            menu.findItem(R.id.menu_scan).setVisible(true);
-            menu.findItem(R.id.menu_refresh).setActionView(null);
-        } else {
-            menu.findItem(R.id.menu_stop).setVisible(true);
-            menu.findItem(R.id.menu_scan).setVisible(false);
-            menu.findItem(R.id.menu_refresh).setActionView(R.layout.progress_bar);
-        }
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -162,13 +187,17 @@ public class ScanActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_scan:
-                clearAll();
-                scanForDevice(true);
+            case R.id.item_connect_flutter:
                 break;
-
-            case R.id.menu_stop:
-                scanForDevice(false);
+            case R.id.item_data_los:
+                break;
+            case R.id.item_leds:
+                break;
+            case R.id.item_sensors:
+                break;
+            case R.id.item_servos:
+                break;
+            case R.id.item_speaker:
                 break;
         }
         return true;
@@ -179,7 +208,14 @@ public class ScanActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(Constants.LOG_TAG, "onResume - ScanActivity");
+        FIRST_SCAN_ID = R.id.frame_first_scan;
+        SECOND_SCAN_ID = R.id.frame_second_scan;
         clearAll();
+        findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
+        findViewById(FIRST_SCAN_ID).setVisibility(View.VISIBLE);
+        findViewById(SECOND_SCAN_ID).setVisibility(View.GONE);
+        scanForDevice(true);
+        startTimer(7500);
     }
 
     @Override
@@ -187,12 +223,6 @@ public class ScanActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(Constants.LOG_TAG, "onDestroy - ScanActivity");
         scanForDevice(false);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
     }
 
 }

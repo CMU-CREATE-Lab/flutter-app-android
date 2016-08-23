@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -8,9 +10,14 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * A class representing a temperature sensor.
  *
  */
-public class Temperature extends A_Sensor implements Sensor {
+public class Temperature extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.TEMPERATURE;
+
+
+    public Temperature() {
+        // empty
+    }
 
 
     @Override

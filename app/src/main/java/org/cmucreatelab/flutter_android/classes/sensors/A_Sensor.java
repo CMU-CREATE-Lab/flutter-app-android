@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public abstract class A_Sensor implements Sensor {
 
     protected ArrayList<Output> mOutputs;
+    private int reading;
 
 
     public A_Sensor() {
         this.mOutputs = new ArrayList<>();
+        reading = 0;
     }
 
 
@@ -36,9 +39,20 @@ public abstract class A_Sensor implements Sensor {
         mOutputs.remove(output);
     }
 
+
     @Override
     public void clearLinks() {
         mOutputs.clear();
+    }
+
+
+    @Override
+    public int getSensorReading() {
+        return reading;
+    }
+    @Override
+    public void setSensorReading(int value) {
+        reading = value;
     }
 
 }

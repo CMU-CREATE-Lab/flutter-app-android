@@ -2,11 +2,8 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -18,13 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterListener;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputHandler;
 import org.cmucreatelab.flutter_android.helpers.GuidedInputStates;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -34,7 +31,7 @@ import butterknife.OnClick;
  * An activity that is shown as soon as a flutter is selected.
  *
  */
-public class FlutterActivity extends AppCompatActivity implements FlutterListener {
+public class FlutterActivity extends BaseNavigationActivity implements FlutterConnectListener, FlutterMessageListener {
 
     private Activity thisActivity;
     private GlobalHandler globalHandler;
@@ -86,11 +83,11 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device);
+        setContentView(R.layout.activity_flutter);
         ButterKnife.bind(this);
 
         globalHandler = GlobalHandler.newInstance(getApplicationContext());
-        Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         String flutterName = globalHandler.sessionHandler.getFlutterName();
         if (flutterName != null && flutterName.length() > 0)
             toolbar.setTitle(flutterName);
@@ -99,7 +96,10 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
         setSupportActionBar(toolbar);
         thisActivity = this;
 
-        promptTitle = (TextView) findViewById(R.id.prompt_title);
+        globalHandler.sessionHandler.setFlutterConnectListener(this);
+        globalHandler.sessionHandler.setFlutterMessageListener(this);
+
+        /*promptTitle = (TextView) findViewById(R.id.prompt_title);
         guidedInputContainer = (LinearLayout) findViewById(R.id.guided_input_container);
         dataToSend = (EditText) findViewById(R.id.data_to_send);
         dataToReceive = (EditText) findViewById(R.id.data_to_receive);
@@ -116,13 +116,13 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
         builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the search button to make the flutter start searching again."));
         builder.setTitle(R.string.app_name);
         connectingDialog = builder.create();
-        connectingDialog.show();
+        connectingDialog.show();*/
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.device_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_device, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -157,10 +157,10 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dataToSend.setEnabled(connected);
+                /*dataToSend.setEnabled(connected);
                 if (connected && connectingDialog != null  && connectingDialog.isShowing()) {
                     connectingDialog.dismiss();
-                }
+                }*/
             }
         });
         invalidateOptionsMenu();
@@ -172,16 +172,17 @@ public class FlutterActivity extends AppCompatActivity implements FlutterListene
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dataToReceive.setText("");
-                dataToReceive.setText(output);
+                /*dataToReceive.setText("");
+                dataToReceive.setText(output);*/
+
             }
         });
     }
 
 
-    @OnClick(R.id.restart_input)
+    /*@OnClick(R.id.restart_input)
     public void onRestartInput() {
         fromBeginning();
-    }
+    }*/
 
 }

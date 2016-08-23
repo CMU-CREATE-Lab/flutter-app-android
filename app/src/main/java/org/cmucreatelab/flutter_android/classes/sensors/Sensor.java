@@ -13,6 +13,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
  */
 public interface Sensor {
 
+    public static final String SENSOR_KEY = "sensor_key";
+
     // I am unsure of the use of an Analog or Unknown Sensor.
     // Is this for error checking? Should the user always have a sensor that is defined?
     enum Type {
@@ -33,7 +35,7 @@ public interface Sensor {
     void clearLinks();
 
     Type getSensorType();
-
     int getSensorReading();
+    void setSensorReading(int value);
 
 }

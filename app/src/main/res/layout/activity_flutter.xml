@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.FlutterActivity">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/AppTheme"
+        android:layout_alignParentTop="true"/>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar_flutter"
+        android:layout_above="@+id/flutter_main_navigation">
+
+        <Button
+            android:id="@+id/restart_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restart Input"/>
+
+        <TextView
+            android:id="@+id/prompt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/guided_input_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:padding="2dp"/>
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/data_to_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Input"
+            android:inputType="text|textNoSuggestions"
+            android:imeOptions="actionNext"
+            android:imeActionLabel="Next"
+            android:enabled="false"/>
+
+        <EditText
+            android:id="@+id/data_to_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Output"
+            android:enabled="false"/>
+
+    </LinearLayout>-->
+
+    <include
+        android:id="@+id/flutter_main_navigation"
+        layout="@layout/main_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

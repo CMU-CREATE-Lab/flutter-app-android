@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.adapters;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,8 @@ public class LeDeviceListAdapter extends BaseAdapter {
     private ArrayList<FlutterOG> mFlutterOGs;
     private LayoutInflater mInflater;
 
-
     private static class ViewHolder {
         public TextView deviceName;
-        public TextView deviceAddress;
-        public TextView scanRecord;
     }
 
 
@@ -77,7 +75,6 @@ public class LeDeviceListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.list_item_device, null);
             viewHolder = new ViewHolder();
             viewHolder.deviceName = (TextView) convertView.findViewById(R.id.device_name);
-            viewHolder.deviceAddress = (TextView) convertView.findViewById(R.id.device_address);
 
             convertView.setTag(viewHolder);
         } else {
@@ -92,7 +89,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
         } else {
             viewHolder.deviceName.setText(R.string.unknown_device);
         }
-        viewHolder.deviceAddress.setText(flutterOG.getDevice().getAddress());
+        viewHolder.deviceName.setGravity(Gravity.CENTER);
 
         return convertView;
     }

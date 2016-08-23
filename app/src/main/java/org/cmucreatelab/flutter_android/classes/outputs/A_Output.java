@@ -15,8 +15,8 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  */
 public abstract class A_Output implements Output{
 
-    Sensor mSensor;
-    Relationship mRelationship;
+    protected Sensor mSensor;
+    protected Relationship mRelationship;
 
 
     public A_Output() {

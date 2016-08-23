@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import org.cmucreatelab.flutter_android.classes.outputs.LED;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
 /**
@@ -40,6 +42,29 @@ public class FlutterOG extends Flutter {
         this.mLeds = new LED[NUMBER_OF_LEDS];
         this.mSpeaker = new Speaker();
         this.mSensors = new Sensor[NUMBER_OF_SENSORS];
+
+        for (int i = 0; i < mServos.length; i++) {
+            mServos[i] = new Servo(0);
+        }
+        for (int i = 0; i < mLeds.length; i++) {
+            mLeds[i] = new LED(0,0,0,0);
+        }
+        for (int i = 0; i < mSensors.length; i++) {
+            mSensors[i] = new NoSensor();
+        }
+    }
+
+
+    // getters
+
+    public Servo[] getServos() { return mServos; }
+    public LED[] getLeds() { return mLeds; }
+    public Speaker getSpeaker() { return mSpeaker; }
+    public Sensor[] getSensors() { return mSensors; }
+
+    // setters
+    public void setSensors(Sensor[] sensors) {
+        mSensors = sensors;
     }
 
 }
