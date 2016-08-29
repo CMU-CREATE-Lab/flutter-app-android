@@ -49,9 +49,17 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensor_1"
+                    android:layout_gravity="center"/>
+
+                <TextView
                     android:id="@+id/text_sensor_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -78,9 +86,17 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensor_2"
+                    android:layout_gravity="center"/>
+
+                <TextView
                     android:id="@+id/text_sensor_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -105,9 +121,17 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensor_3"
+                    android:layout_gravity="center"/>
+
+                <TextView
                     android:id="@+id/text_sensor_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:layout_gravity="center"/>
 
             </LinearLayout>

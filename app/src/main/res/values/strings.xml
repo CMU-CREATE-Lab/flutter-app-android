@@ -34,5 +34,9 @@
     <string name="servos">SERVOS</string>
     <string name="sensors">SENSORS</string>
     <string name="dialog_sensor">What sensor is connected to</string>
+    <string name="select_sensor">Select Sensor</string>
+    <string name="sensor_1">Sensor 1</string>
+    <string name="sensor_3">Sensor 3</string>
+    <string name="sensor_2">Sensor 2</string>
 
 </resources>

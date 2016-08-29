@@ -51,22 +51,30 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogSelect
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                textSensor1.setText(sensors[0].getSensorType().toString());
-                textSensor2.setText(sensors[1].getSensorType().toString());
-                textSensor3.setText(sensors[2].getSensorType().toString());
-                Log.d(Constants.LOG_TAG, sensors[0].getSensorType().toString());
-                if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR)
+                if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    textSensor1.setText(sensors[0].getSensorType().toString());
                     textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
-                else
+                }
+                else{
+                    textSensor1.setText(R.string.select_sensor);
                     textSensor1Reading.setText("");
-                if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR)
+                }
+                if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    textSensor2.setText(sensors[1].getSensorType().toString());
                     textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
-                else
+                }
+                else{
+                    textSensor2.setText(R.string.select_sensor);
                     textSensor2Reading.setText("");
-                if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR)
+                }
+                if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    textSensor3.setText(sensors[2].getSensorType().toString());
                     textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
-                else
+                }
+                else {
+                    textSensor3.setText(R.string.select_sensor);
                     textSensor3Reading.setText("");
+                }
             }
         });
     }

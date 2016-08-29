@@ -12,8 +12,17 @@ import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
+import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
+import org.cmucreatelab.flutter_android.classes.sensors.Distance;
+import org.cmucreatelab.flutter_android.classes.sensors.Humidity;
+import org.cmucreatelab.flutter_android.classes.sensors.Light;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.classes.sensors.SensorFactory;
+import org.cmucreatelab.flutter_android.classes.sensors.SoilMoisture;
+import org.cmucreatelab.flutter_android.classes.sensors.Sound;
+import org.cmucreatelab.flutter_android.classes.sensors.Temperature;
+import org.cmucreatelab.flutter_android.classes.sensors.WindSpeed;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -24,7 +33,6 @@ import java.io.Serializable;
 public class DialogSelectorFragment extends DialogFragment implements View.OnClickListener {
 
     private String sensorText;
-    private Sensor sensor;
     DialogSensorListener sensorListener;
 
 
@@ -65,67 +73,53 @@ public class DialogSelectorFragment extends DialogFragment implements View.OnCli
         return builder.create();
     }
 
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        sensorListener.onSensorChosen(sensor);
-    }
-
     @Override
     public void onClick(View view) {
+        Sensor sensor = new NoSensor();
         switch (view.getId()) {
             case R.id.image_light:
                 Log.d(Constants.LOG_TAG, "onClickLightSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.LIGHT);
-                this.dismiss();
+                sensor = new Light();
                 break;
             case R.id.image_soil_moisture:
                 Log.d(Constants.LOG_TAG, "onClickSoilMoistureSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.SOIL_MOISTURE);
-                this.dismiss();
+                sensor = new SoilMoisture();
                 break;
             case R.id.image_distance:
                 Log.d(Constants.LOG_TAG, "onClickDistanceSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.DISTANCE);
-                this.dismiss();
+                sensor = new Distance();
                 break;
             case R.id.image_sound:
                 Log.d(Constants.LOG_TAG, "onClickSoundSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.SOUND);
-                this.dismiss();
+                sensor = new Sound();
                 break;
             case R.id.image_wind_speed:
                 Log.d(Constants.LOG_TAG, "onClickWindSpeedSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.WIND_SPEED);
-                this.dismiss();
+                sensor = new WindSpeed();
                 break;
             case R.id.image_humidity:
                 Log.d(Constants.LOG_TAG, "onClickHumiditySensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.HUMIDITY);
-                this.dismiss();
+                sensor = new Humidity();
                 break;
             case R.id.image_temperature:
                 Log.d(Constants.LOG_TAG, "onClickTemperatureSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.TEMPERATURE);
-                this.dismiss();
+                sensor = new Temperature();
                 break;
             case R.id.image_barometric_pressure:
                 Log.d(Constants.LOG_TAG, "onClickBarometricPressureSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.BAROMETRIC_PRESSURE);
-                this.dismiss();
+                sensor = new BarometricPressure();
                 break;
             case R.id.image_analog_unknown:
                 Log.d(Constants.LOG_TAG, "onClickAnalogUnknownSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.ANALOG_OR_UNKNOWN);
-                this.dismiss();
+                sensor = new AnalogOrUnknown();
                 break;
             case R.id.image_no_sensor:
                 Log.d(Constants.LOG_TAG, "onClickNoSensor");
-                sensor = SensorFactory.getSensorType(Sensor.Type.NO_SENSOR);
-                this.dismiss();
+                sensor = new NoSensor();
                 break;
         }
+        sensorListener.onSensorChosen(sensor);
+        this.dismiss();
     }
 
 
