@@ -8,6 +8,14 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServo
 
 import butterknife.ButterKnife;
 
+/**
+ * Created by Steve on 8/31/2016.
+ *
+ * LedsActivity
+ *
+ * An activity which handles the LEDs tab on the navigation bar.
+ *
+ */
 public class LedsActivity extends BaseServoLedActivity {
 
 

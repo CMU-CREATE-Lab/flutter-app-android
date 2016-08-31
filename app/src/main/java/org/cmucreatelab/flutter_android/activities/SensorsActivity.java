@@ -24,6 +24,14 @@ import java.util.TimerTask;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Steve on dunno...it wasn't automatically generated. (I wonder what I did differently.)
+ *
+ * SensorsActivity
+ *
+ * An activity which handles the Sensors tab on the navigation bar.
+ *
+ */
 public class SensorsActivity extends BaseFlutterActivity implements DialogSelectorFragment.DialogSensorListener, FlutterConnectListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";

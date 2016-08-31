@@ -7,11 +7,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 8/31/2016.
+ *
+ * BaseServoLedActivity
+ *
+ * An abstract activity used for the extremely similar operations of the Servo and Led activities.
+ *
  */
 public abstract class BaseServoLedActivity extends BaseNavigationActivity {
 

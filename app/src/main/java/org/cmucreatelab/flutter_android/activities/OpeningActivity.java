@@ -9,6 +9,14 @@ import org.cmucreatelab.flutter_android.R;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Steve on dunno...it wasn't automatically generated. (I wonder what I did differently.)
+ *
+ * OpeningActivity
+ *
+ * An activity which handles the opening screen.
+ *
+ */
 public class OpeningActivity extends AppCompatActivity {
 
 

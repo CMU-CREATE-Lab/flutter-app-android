@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothDevice;
 import org.cmucreatelab.flutter_android.classes.outputs.LED;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 

@@ -17,6 +17,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 8/22/2016.
+ *
+ * BaseNavigationActivity
+ *
+ * An abstract activity used for the basic navigation bar on the bottom of most activities.
+ *
  */
 // TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
     // TODO - I may change the base navigation to a toolbar now that I figured out how to use multiple toolbars in one activity.
