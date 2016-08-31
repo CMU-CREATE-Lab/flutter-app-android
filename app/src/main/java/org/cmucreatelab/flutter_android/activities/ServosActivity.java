@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServo
 
 import butterknife.ButterKnife;
 
-// TODO - may make another abstract activity for this toolbar menu clicking
 public class ServosActivity extends BaseServoLedActivity {
 
 

@@ -2,37 +2,14 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 
 import butterknife.ButterKnife;
 
 // TODO - may make another abstract activity for this toolbar menu clicking
-public class LedsActivity extends BaseNavigationActivity {
-
-
-    private static final String HELP = "help";
-    private static final String ADVANCED = "advanced";
-
-
-    private Toolbar.OnMenuItemClickListener toolbarClick = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            Log.d(Constants.LOG_TAG, "onClick " + item.toString());
-            switch (item.toString()) {
-                case HELP:
-                    return false;
-                case ADVANCED:
-                    return false;
-                default:
-                    return false;
-            }
-        }
-    };
+public class LedsActivity extends BaseServoLedActivity {
 
 
     @Override
