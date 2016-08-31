@@ -8,11 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,6 +17,7 @@ import android.widget.ListView;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -30,7 +28,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -174,33 +171,6 @@ public class ScanActivity extends BaseNavigationActivity {
             AlertDialog dialog = adb.create();
             dialog.show();
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_connect_flutter:
-                break;
-            case R.id.item_data_los:
-                break;
-            case R.id.item_leds:
-                break;
-            case R.id.item_sensors:
-                break;
-            case R.id.item_servos:
-                break;
-            case R.id.item_speaker:
-                break;
-        }
-        return true;
     }
 
 

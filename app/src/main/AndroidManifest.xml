@@ -17,15 +17,27 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:icon">
-        <activity android:name=".activities.OpeningActivity">
+        <activity
+            android:name=".activities.OpeningActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ScanActivity"></activity>
-        <activity android:name=".activities.SensorsActivity"></activity>
+        <activity
+            android:name=".activities.ScanActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.SensorsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activities.ServosActivity"
+            android:screenOrientation="landscape" />
+
+        <activity android:name=".activities.LedsActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

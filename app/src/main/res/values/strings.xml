@@ -38,5 +38,16 @@
     <string name="sensor_1">Sensor 1</string>
     <string name="sensor_3">Sensor 3</string>
     <string name="sensor_2">Sensor 2</string>
+    <string name="help">help</string>
+    <string name="advanced">advanced</string>
+    <string name="servo_1">Servo 1</string>
+    <string name="servo_2">Servo 2</string>
+    <string name="servo_3">Servo 3</string>
+    <string name="led_3">LED 3</string>
+    <string name="led_2">LED 2</string>
+    <string name="led_1">LED 1</string>
+    <string name="select_low_value">Select Low Value</string>
+    <string name="select_high_value">Select High Value</string>
+    <string name="select_relationship">Select Relationship</string>
 
 </resources>

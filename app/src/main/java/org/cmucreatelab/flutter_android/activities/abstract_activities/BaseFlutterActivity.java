@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.activities;
+package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
 /**
  * Created by Steve on 8/23/2016.

@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.activities;
+package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.LedsActivity;
+import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.activities.ServosActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -15,6 +18,8 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 8/22/2016.
  */
+// TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
+    // TODO - I may change the base navigation to a toolbar now that I figured out how to use multiple toolbars in one activity.
 public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     protected GlobalHandler globalHandler;
@@ -43,11 +48,15 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @OnClick(R.id.image_servos)
     public void onClickServos() {
         Log.d(Constants.LOG_TAG, "onClickServos");
+        Intent intent = new Intent(this, ServosActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.image_leds)
     public void onClickLeds() {
         Log.d(Constants.LOG_TAG, "onClickLeds");
+        Intent intent = new Intent(this, LedsActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.image_speaker)

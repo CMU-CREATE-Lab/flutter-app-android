@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseFlutterActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -96,15 +97,16 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors);
-        Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        ButterKnife.bind(this);
 
+        Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         String flutterName = globalHandler.sessionHandler.getFlutterName();
         if (flutterName != null && flutterName.length() > 0)
             mainToolbar.setTitle(flutterName);
         else
             mainToolbar.setTitle(R.string.unknown_device);
         setSupportActionBar(mainToolbar);
-        ButterKnife.bind(this);
+
         globalHandler.sessionHandler.setFlutterConnectListener(this);
         globalHandler.sessionHandler.setFlutterMessageListener(this);
 

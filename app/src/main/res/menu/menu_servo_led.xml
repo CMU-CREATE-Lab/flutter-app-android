@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/device_menu_connection_status"
+        android:title="@string/help"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:checkable="false"/>
+
+    <item
+        android:id="@+id/device_menu_connection"
+        android:title="@string/advanced"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:checkable="false"/>
+
+</menu>
