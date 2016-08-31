@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServo
 
 import butterknife.ButterKnife;
 
-// TODO - may make another abstract activity for this toolbar menu clicking
 public class LedsActivity extends BaseServoLedActivity {
 
 
@@ -36,4 +35,5 @@ public class LedsActivity extends BaseServoLedActivity {
         toolbar3.inflateMenu(R.menu.menu_servo_led);
         toolbar3.setOnMenuItemClickListener(toolbarClick);
     }
+
 }
