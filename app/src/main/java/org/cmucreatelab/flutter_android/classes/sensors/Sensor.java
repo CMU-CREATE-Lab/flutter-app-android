@@ -11,6 +11,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
  * Interface for the anything is a sensor. There are various types of sensors defined in the enum 'Type'
  *
  */
+// TODO - I may make a static image id reference to whatever image is associated with the type of sensor
 public interface Sensor {
 
     public static final String SENSOR_KEY = "sensor_key";

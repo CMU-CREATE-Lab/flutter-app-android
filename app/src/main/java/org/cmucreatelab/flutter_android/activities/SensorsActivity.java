@@ -15,7 +15,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
+import org.cmucreatelab.flutter_android.ui.DialogFragmentSensorType;
 
 import java.io.Serializable;
 import java.util.Timer;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseFlutterActivity implements DialogFragmentSensor.DialogSensorListener, FlutterConnectListener, FlutterMessageListener, Serializable {
+public class SensorsActivity extends BaseFlutterActivity implements DialogFragmentSensorType.DialogSensorTypeListener, FlutterConnectListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -146,8 +146,8 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     public void onClickSensor1() {
         Log.d(Constants.LOG_TAG, "onClickSensor1");
         currentSensor = sensors[0];
-        DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance("Sensor Port 1?", this);
-        dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 1?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -155,8 +155,8 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
         currentSensor = sensors[1];
-        DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance("Sensor Port 2?", this);
-        dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 2?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -164,14 +164,14 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     public void onClickSensor3() {
         Log.d(Constants.LOG_TAG, "onClickSensor3");
         currentSensor = sensors[2];
-        DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance("Sensor Port 3?", this);
-        dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 3?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
     }
 
 
     @Override
-    public void onSensorChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorChosen");
+    public void onSensorTypeChosen(Sensor sensor) {
+        Log.d(Constants.LOG_TAG, "onSensorTypeChosen");
         int index = -1;
         int i = 0;
         while(index == -1) {

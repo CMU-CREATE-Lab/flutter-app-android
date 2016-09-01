@@ -50,5 +50,6 @@
     <string name="select_high_value">Select High Value</string>
     <string name="select_relationship">Select Relationship</string>
     <string name="choose_relationship">Choose Relationship</string>
+    <string name="choose_sensor">Choose Sensor</string>
 
 </resources>

@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
+import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
 
 import java.io.Serializable;
 
@@ -21,13 +23,11 @@ import java.io.Serializable;
  * An abstract activity used for the extremely similar operations of the Servo and Led activities.
  *
  */
-public abstract class BaseServoLedActivity extends BaseNavigationActivity implements DialogFragmentRelationship.DialogRelationshipListener, Serializable {
+public abstract class BaseServoLedActivity extends BaseNavigationActivity implements DialogFragmentRelationship.DialogRelationshipListener, DialogFragmentSensor.DialogSensorListener, Serializable {
 
     public static final String BASE_SERVO_LED_ACTIVITY_KEY = "base_servo_led_activity_key";
     private static final String HELP = "help";
     private static final String ADVANCED = "advanced";
-
-    private DialogFragmentRelationship dialogFragmentRelationship;
 
 
     protected Toolbar.OnMenuItemClickListener toolbarClick = new Toolbar.OnMenuItemClickListener() {
@@ -58,7 +58,8 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     // TODO - keep track of the selected views so we can update them on selection
     public void onClickSelectSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectSensor");
-        Log.d(Constants.LOG_TAG, view.toString());
+        DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance(this);
+        dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -78,6 +79,12 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     public void onClickSelectLowValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
         Log.d(Constants.LOG_TAG, view.toString());
+    }
+
+
+    @Override
+    public void onSensorChosen(Sensor sensor) {
+        Log.d(Constants.LOG_TAG, "onSensorChosen " + sensor.getClass().getSimpleName());
     }
 
 

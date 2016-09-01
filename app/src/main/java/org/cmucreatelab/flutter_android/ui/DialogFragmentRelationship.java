@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
@@ -19,7 +18,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -34,13 +32,13 @@ public class DialogFragmentRelationship extends DialogFragment implements View.O
 
 
     public static DialogFragmentRelationship newInstance(Serializable serializable) {
-        DialogFragmentRelationship dialogFragmentSensor = new DialogFragmentRelationship();
+        DialogFragmentRelationship dialogFragmentRelationship = new DialogFragmentRelationship();
 
         Bundle args = new Bundle();
         args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
-        dialogFragmentSensor.setArguments(args);
+        dialogFragmentRelationship.setArguments(args);
 
-        return dialogFragmentSensor;
+        return dialogFragmentRelationship;
     }
 
     @Override

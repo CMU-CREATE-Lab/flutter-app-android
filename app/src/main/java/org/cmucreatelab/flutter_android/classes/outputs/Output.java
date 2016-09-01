@@ -11,6 +11,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * An interface defining the various types of outputs.
  *
  */
+// TODO - I may make a static image id reference to whatever image is associated with the type of output
 public interface Output {
 
     enum Type {

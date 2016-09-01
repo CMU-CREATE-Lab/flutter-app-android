@@ -8,6 +8,7 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * An interface which defines the base type of relationship.
  *
  */
+// TODO - I may make a static image id reference to whatever image is associated with the type of relationship
 public interface Relationship {
 
     public static final String RELATIONSHIP_KEY = "relationship_key";
