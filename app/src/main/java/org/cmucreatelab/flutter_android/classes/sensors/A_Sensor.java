@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 

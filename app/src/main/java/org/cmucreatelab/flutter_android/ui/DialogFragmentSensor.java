@@ -29,21 +29,21 @@ import java.io.Serializable;
 /**
  * Created by Steve on 8/22/2016.
  */
-public class DialogSelectorFragment extends DialogFragment implements View.OnClickListener {
+public class DialogFragmentSensor extends DialogFragment implements View.OnClickListener {
 
     private String sensorText;
     DialogSensorListener sensorListener;
 
 
-    public static DialogSelectorFragment newInstance(String sensor, Serializable serializable) {
-        DialogSelectorFragment dialogSelectorFragment = new DialogSelectorFragment();
+    public static DialogFragmentSensor newInstance(String sensor, Serializable serializable) {
+        DialogFragmentSensor dialogFragmentSensor = new DialogFragmentSensor();
 
         Bundle args = new Bundle();
         args.putString(Sensor.SENSOR_KEY, sensor);
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
-        dialogSelectorFragment.setArguments(args);
+        dialogFragmentSensor.setArguments(args);
 
-        return dialogSelectorFragment;
+        return dialogFragmentSensor;
     }
 
 
