@@ -37,9 +37,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
     // views
-    private ImageView imageSensor1;
-    private ImageView imageSensor2;
-    private ImageView imageSensor3;
+    private ImageView selectedView;
     private TextView textSensor1;
     private TextView textSensor2;
     private TextView textSensor3;
@@ -119,9 +117,6 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         timer = new Timer();
 
         // init views
-        imageSensor1 = (ImageView) findViewById(R.id.image_sensor_1);
-        imageSensor2 = (ImageView) findViewById(R.id.image_sensor_2);
-        imageSensor3 = (ImageView) findViewById(R.id.image_sensor_3);
         textSensor1 = (TextView) findViewById(R.id.text_sensor_1);
         textSensor2 = (TextView) findViewById(R.id.text_sensor_2);
         textSensor3 = (TextView) findViewById(R.id.text_sensor_3);
@@ -145,6 +140,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     @OnClick(R.id.image_sensor_1)
     public void onClickSensor1() {
         Log.d(Constants.LOG_TAG, "onClickSensor1");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
         currentSensor = sensors[0];
         DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 1?", this);
         dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
@@ -154,6 +150,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     @OnClick(R.id.image_sensor_2)
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
         currentSensor = sensors[1];
         DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 2?", this);
         dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
@@ -163,6 +160,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     @OnClick(R.id.image_sensor_3)
     public void onClickSensor3() {
         Log.d(Constants.LOG_TAG, "onClickSensor3");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
         currentSensor = sensors[2];
         DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 3?", this);
         dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
@@ -184,6 +182,8 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         // update references
         sensors[index] = sensor;
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
+        this.selectedView.setImageResource(sensor.getSensorImageId());
+        Log.d(Constants.LOG_TAG, "Image resource id: " + String.valueOf(sensor.getSensorImageId()));
         updateViews();
 
         // TODO - show correct view

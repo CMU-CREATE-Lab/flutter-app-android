@@ -20,4 +20,10 @@ public class NoRelationship implements Relationship {
         return relationshipType;
     }
 
+
+    @Override
+    public int getRelationshipImageId() {
+        return imageId;
+    }
+
 }

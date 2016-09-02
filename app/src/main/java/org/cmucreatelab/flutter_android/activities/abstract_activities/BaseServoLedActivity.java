@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -28,6 +31,8 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     public static final String BASE_SERVO_LED_ACTIVITY_KEY = "base_servo_led_activity_key";
     private static final String HELP = "help";
     private static final String ADVANCED = "advanced";
+
+    private ImageView selectedView;
 
 
     protected Toolbar.OnMenuItemClickListener toolbarClick = new Toolbar.OnMenuItemClickListener() {
@@ -58,6 +63,7 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     // TODO - keep track of the selected views so we can update them on selection
     public void onClickSelectSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectSensor");
+        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
         DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance(this);
         dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
     }
@@ -65,6 +71,7 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
 
     public void onClickSelectRelationship(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectRelationship");
+        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
         DialogFragmentRelationship dialogFragmentRelationship = DialogFragmentRelationship.newInstance(this);
         dialogFragmentRelationship.show(getSupportFragmentManager(), "tag");
     }
@@ -72,12 +79,14 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
 
     public void onClickSelectHighValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectHighValue");
+        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
         Log.d(Constants.LOG_TAG, view.toString());
     }
 
 
     public void onClickSelectLowValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
+        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
         Log.d(Constants.LOG_TAG, view.toString());
     }
 
@@ -85,12 +94,14 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     @Override
     public void onSensorChosen(Sensor sensor) {
         Log.d(Constants.LOG_TAG, "onSensorChosen " + sensor.getClass().getSimpleName());
+        this.selectedView.setImageResource(sensor.getSensorImageId());
     }
 
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen " + relationship.getClass().getSimpleName());
+        this.selectedView.setImageResource(relationship.getRelationshipImageId());
     }
 
 }

@@ -35,6 +35,7 @@ public interface Sensor {
     void clearLinks();
 
     Type getSensorType();
+    int getSensorImageId();
     int getSensorReading();
     void setSensorReading(int value);
 

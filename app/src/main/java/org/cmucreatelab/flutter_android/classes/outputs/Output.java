@@ -21,6 +21,7 @@ public interface Output {
 
     // getters
     Type getOutputType();
+    int getOutputImageId();
     Sensor getSensor();
     Relationship getRelationship();
 

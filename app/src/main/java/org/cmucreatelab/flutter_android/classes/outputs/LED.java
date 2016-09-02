@@ -47,4 +47,11 @@ public class LED extends A_Output implements Output {
     public Type getOutputType() {
         return outputType;
     }
+
+
+    @Override
+    public int getOutputImageId() {
+        return imageId;
+    }
+
 }

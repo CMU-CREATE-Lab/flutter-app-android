@@ -22,4 +22,10 @@ public class Change implements Relationship {
         return relationshipType;
     }
 
+
+    @Override
+    public int getRelationshipImageId() {
+        return imageId;
+    }
+
 }

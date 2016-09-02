@@ -28,4 +28,10 @@ public class AnalogOrUnknown extends A_Sensor implements Sensor, Serializable {
         return sensorType;
     }
 
+
+    @Override
+    public int getSensorImageId() {
+        return imageId;
+    }
+
 }

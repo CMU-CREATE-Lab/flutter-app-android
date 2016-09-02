@@ -30,6 +30,12 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
+    public int getSensorImageId() {
+        return imageId;
+    }
+
+
+    @Override
     public int getSensorReading() {
         return 0;
     }

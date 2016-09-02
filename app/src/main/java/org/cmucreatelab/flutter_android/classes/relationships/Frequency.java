@@ -22,4 +22,10 @@ public class Frequency implements Relationship {
         return relationshipType;
     }
 
+
+    @Override
+    public int getRelationshipImageId() {
+        return imageId;
+    }
+
 }
