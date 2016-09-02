@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.R;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -16,6 +18,8 @@ public class Speaker extends A_Output implements Output {
     private static final int MAXIMUM_VOLUME = 100;
     private static final int MINIMUM_FREQUENCY = 0;
     private static final int MAXIMUM_FREQUENCY = 20000;
+
+    public static final int imageId = R.mipmap.ic_launcher;
 
     private int volume;
     private int frequency;

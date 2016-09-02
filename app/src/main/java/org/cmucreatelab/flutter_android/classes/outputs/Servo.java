@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.R;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -14,6 +16,8 @@ public class Servo extends A_Output implements Output {
     private static final Output.Type outputType = Type.SERVO;
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 180;
+
+    public static final int imageId = R.mipmap.ic_launcher;
 
     private int currentValue;
 
