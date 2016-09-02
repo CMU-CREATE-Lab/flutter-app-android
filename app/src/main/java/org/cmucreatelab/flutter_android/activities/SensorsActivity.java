@@ -182,41 +182,12 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         // update references
         sensors[index] = sensor;
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
-        this.selectedView.setImageResource(sensor.getSensorImageId());
-        Log.d(Constants.LOG_TAG, "Image resource id: " + String.valueOf(sensor.getSensorImageId()));
+        
+        selectedView.setImageResource(sensor.getSensorImageId());
         updateViews();
 
-        // TODO - show correct view
-        switch (sensors[index].getSensorType()) {
-            case LIGHT:
-                startSensorReading();
-                break;
-            case SOIL_MOISTURE:
-                startSensorReading();
-                break;
-            case DISTANCE:
-                startSensorReading();
-                break;
-            case SOUND:
-                startSensorReading();
-                break;
-            case WIND_SPEED:
-                startSensorReading();
-                break;
-            case HUMIDITY:
-                startSensorReading();
-                break;
-            case TEMPERATURE:
-                startSensorReading();
-                break;
-            case BAROMETRIC_PRESSURE:
-                startSensorReading();
-                break;
-            case ANALOG_OR_UNKNOWN:
-                startSensorReading();
-                break;
-            case NO_SENSOR:
-                break;
+        if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
+            startSensorReading();
         }
     }
 
