@@ -28,9 +28,16 @@ public class OpeningActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.image_connectFlutter)
+    @OnClick(R.id.image_connect_flutter)
     public void onClickConnectFlutter() {
         Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+        startActivity(intent);
+    }
+
+
+    @OnClick(R.id.image_view_data_logs)
+    public void onClickViewDataLogs() {
+        Intent intent = new Intent(getApplicationContext(), DataLogsActivity.class);
         startActivity(intent);
     }
 
