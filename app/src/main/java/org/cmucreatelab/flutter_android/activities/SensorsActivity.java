@@ -99,13 +99,21 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
                 globalHandler.sessionHandler.sendMessage();
             }
         };
+
+        timer = new Timer();
         timer.schedule(timerTask, 0, 500);
+    }
+
+
+    private void stopSensorReading() {
+        timer.cancel();
     }
 
 
     private void onClickPlaySensors() {
         Log.d(Constants.LOG_TAG, "onClickPlaySensors");
         isPlayingSensors = true;
+        startSensorReading();
         invalidateOptionsMenu();
     }
 
@@ -113,6 +121,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     private void onClickPauseSensors() {
         Log.d(Constants.LOG_TAG, "onClickPauseSensors");
         isPlayingSensors = false;
+        stopSensorReading();
         invalidateOptionsMenu();
     }
 
@@ -139,8 +148,6 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
 
         globalHandler.sessionHandler.setFlutterConnectListener(this);
         globalHandler.sessionHandler.setFlutterMessageListener(this);
-
-        timer = new Timer();
 
         // init views
         textSensor1 = (TextView) findViewById(R.id.text_sensor_1);
