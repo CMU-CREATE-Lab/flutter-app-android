@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.DialogFragmentHighValue;
+import org.cmucreatelab.flutter_android.ui.DialogFragmentLowValue;
 import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
 import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
 
@@ -26,7 +28,12 @@ import java.io.Serializable;
  * An abstract activity used for the extremely similar operations of the Servo and Led activities.
  *
  */
-public abstract class BaseServoLedActivity extends BaseNavigationActivity implements DialogFragmentRelationship.DialogRelationshipListener, DialogFragmentSensor.DialogSensorListener, Serializable {
+// TODO - use the seekbar as a slider
+public abstract class BaseServoLedActivity extends BaseNavigationActivity implements    DialogFragmentRelationship.DialogRelationshipListener,
+                                                                                        DialogFragmentSensor.DialogSensorListener,
+                                                                                        DialogFragmentHighValue.DialogHighValueListener,
+                                                                                        DialogFragmentLowValue.DialogLowValueListener,
+                                                                                        Serializable {
 
     public static final String BASE_SERVO_LED_ACTIVITY_KEY = "base_servo_led_activity_key";
     private static final String HELP = "help";
@@ -104,4 +111,15 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
         this.selectedView.setImageResource(relationship.getRelationshipImageId());
     }
 
+
+    @Override
+    public void onHighValueChosen(int highValue) {
+        Log.d(Constants.LOG_TAG, "onHighValueChosen");
+    }
+
+
+    @Override
+    public void onLowValueChosen(int lowValue) {
+        Log.d(Constants.LOG_TAG, "onLowValueChosen");
+    }
 }

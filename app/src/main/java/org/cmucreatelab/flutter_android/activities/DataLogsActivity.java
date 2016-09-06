@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import butterknife.ButterKnife;
 
+// TODO - make an adapter for loading the data logs
 public class DataLogsActivity extends BaseNavigationActivity {
 
 

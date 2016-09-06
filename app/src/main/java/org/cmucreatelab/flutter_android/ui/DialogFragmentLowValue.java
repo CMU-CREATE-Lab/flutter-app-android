@@ -36,4 +36,10 @@ public class DialogFragmentLowValue extends DialogFragment implements View.OnCli
         Log.d(Constants.LOG_TAG, view.toString());
     }
 
+
+    // interface for an activity to listen for a choice
+    public interface DialogLowValueListener {
+        public void onLowValueChosen(int lowValue);
+    }
+
 }

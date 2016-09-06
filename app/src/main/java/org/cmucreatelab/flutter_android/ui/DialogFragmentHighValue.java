@@ -36,4 +36,10 @@ public class DialogFragmentHighValue extends DialogFragment implements View.OnCl
         Log.d(Constants.LOG_TAG, view.toString());
     }
 
+
+    // interface for an activity to listen for a choice
+    public interface DialogHighValueListener {
+        public void onHighValueChosen(int highValue);
+    }
+
 }
