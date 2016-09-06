@@ -5,6 +5,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +55,9 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     private Sensor[] sensors;
     private Sensor currentSensor;
 
+    private boolean isPlayingSensors;
+
+
     private void updateViews() {
         runOnUiThread(new Runnable() {
             @Override
@@ -97,6 +103,25 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     }
 
 
+    private void onClickPlaySensors() {
+        Log.d(Constants.LOG_TAG, "onClickPlaySensors");
+        isPlayingSensors = true;
+        invalidateOptionsMenu();
+    }
+
+
+    private void onClickPauseSensors() {
+        Log.d(Constants.LOG_TAG, "onClickPauseSensors");
+        isPlayingSensors = false;
+        invalidateOptionsMenu();
+    }
+
+
+    private void onClickRecordData() {
+        Log.d(Constants.LOG_TAG, "onClickRecordData");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +134,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
             mainToolbar.setTitle(flutterName);
         else
             mainToolbar.setTitle(R.string.unknown_device);
+        isPlayingSensors = true;
         setSupportActionBar(mainToolbar);
 
         globalHandler.sessionHandler.setFlutterConnectListener(this);
@@ -133,6 +159,45 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
             builder.setTitle(R.string.app_name);
             connectingDialog = builder.create();
             connectingDialog.show();
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sensors, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!isPlayingSensors) {
+            menu.findItem(R.id.item_play_sensors).setVisible(true);
+            menu.findItem(R.id.item_pause_sensors).setVisible(false);
+        } else {
+            menu.findItem(R.id.item_play_sensors).setVisible(false);
+            menu.findItem(R.id.item_pause_sensors).setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_play_sensors:
+                onClickPlaySensors();
+                return true;
+            case R.id.item_pause_sensors:
+                onClickPauseSensors();
+                return true;
+            case R.id.item_record_data:
+                onClickRecordData();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -170,6 +235,8 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     @Override
     public void onSensorTypeChosen(Sensor sensor) {
         Log.d(Constants.LOG_TAG, "onSensorTypeChosen");
+
+        // find the index of the sensor chosen
         int index = -1;
         int i = 0;
         while(index == -1) {
@@ -182,7 +249,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         // update references
         sensors[index] = sensor;
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
-        
+
         selectedView.setImageResource(sensor.getSensorImageId());
         updateViews();
 

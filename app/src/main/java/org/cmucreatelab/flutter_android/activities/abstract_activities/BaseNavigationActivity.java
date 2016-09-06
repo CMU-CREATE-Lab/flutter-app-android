@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.activities.LedsActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.activities.ServosActivity;
+import org.cmucreatelab.flutter_android.activities.SpeakerActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -67,11 +69,15 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @OnClick(R.id.image_speaker)
     public void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
+        Intent intent = new Intent(this, SpeakerActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.image_data_logs)
     public void onClickDataLogs() {
         Log.d(Constants.LOG_TAG, "onClickDataLogs");
+        Intent intent = new Intent(this, DataLogsActivity.class);
+        startActivity(intent);
     }
 
 }

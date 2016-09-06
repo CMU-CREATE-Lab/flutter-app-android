@@ -3,16 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_help"
-        android:title="@string/help"
+        android:id="@+id/item_play_sensors"
+        android:title="@string/play_sensors"
         android:icon="@mipmap/ic_launcher"
         app:showAsAction="ifRoom|collapseActionView"
         android:actionProviderClass="android.widget.ShareActionProvider"
         android:checkable="false"/>
 
     <item
-        android:id="@+id/item_advanced"
-        android:title="@string/advanced"
+        android:id="@+id/item_pause_sensors"
+        android:title="@string/pause_sensors"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:checkable="false"/>
+
+    <item
+        android:id="@+id/item_record_data"
+        android:title="@string/record_data"
         android:icon="@mipmap/ic_launcher"
         app:showAsAction="ifRoom|collapseActionView"
         android:actionProviderClass="android.widget.ShareActionProvider"

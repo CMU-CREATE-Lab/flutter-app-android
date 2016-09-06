@@ -51,5 +51,13 @@
     <string name="select_relationship">Select Relationship</string>
     <string name="choose_relationship">Choose Relationship</string>
     <string name="choose_sensor">Choose Sensor</string>
+    <string name="choose_position">Choose Position</string>
+    <string name="clean_up_logs">Clean Up Logs</string>
+    <string name="get_log">Get Log</string>
+    <string name="open_log">Open Log</string>
+    <string name="send_log">Send Log</string>
+    <string name="play_sensors">Play Sensors</string>
+    <string name="record_data">Record Data</string>
+    <string name="pause_sensors">Pause Sensors</string>
 
 </resources>
