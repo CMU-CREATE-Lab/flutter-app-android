@@ -18,24 +18,32 @@ import java.io.File;
  */
 public class EmailHandler {
 
-    private GlobalHandler globalHandler;
+    private File currentDataLog;
 
 
-    public EmailHandler(GlobalHandler globalHandler) {
-        this.globalHandler = globalHandler;
+    public EmailHandler() {
+        this.currentDataLog = null;
     }
 
 
-    // TODO - populate address correctly
-    public void sendEmail(Activity activity, File file) {
-        Intent i = new Intent(Intent.ACTION_SENDTO);
-        i.setData(Uri.parse("mailto: sf.fulton.steve@gmail.com"));
-        i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        i.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
-        i.putExtra(Intent.EXTRA_TEXT, globalHandler.sessionHandler.getFlutterName() + Constants.EMAIL_CONTENT);
-        if (i.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivity(Intent.createChooser(i, "Send Email"));
+    public void sendEmail(Activity activity, String email, String message) {
+        if (currentDataLog != null) {
+            Intent i = new Intent(Intent.ACTION_SENDTO);
+            i.setData(Uri.parse("mailto: " + email));
+            i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(currentDataLog));
+            i.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            if (i.resolveActivity(activity.getPackageManager()) != null) {
+                activity.startActivity(Intent.createChooser(i, "Send Email"));
+            }
+        } else {
+            // TODO - alert user to select a data log
         }
+    }
+
+
+    public void setCurrentDataLog(File file) {
+        this.currentDataLog = file;
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.DialogFragmentEmail;
 
 import butterknife.ButterKnife;
 
@@ -29,6 +30,8 @@ public class DataLogsActivity extends BaseNavigationActivity {
 
     private void onClickSendLog() {
         Log.d(Constants.LOG_TAG, "onClickSendLog");
+        DialogFragmentEmail dialogFragmentEmail = new DialogFragmentEmail();
+        dialogFragmentEmail.show(getSupportFragmentManager(), "tag");
     }
 
 

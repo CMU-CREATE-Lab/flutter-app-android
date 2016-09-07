@@ -59,5 +59,10 @@
     <string name="play_sensors">Play Sensors</string>
     <string name="record_data">Record Data</string>
     <string name="pause_sensors">Pause Sensors</string>
+    <string name="send">Send</string>
+    <string name="hint_email_address">email address</string>
+    <string name="send_to">Send to:</string>
+    <string name="message">Message:</string>
+    <string name="send_data_log">Send Data Log</string>
 
 </resources>

@@ -22,8 +22,6 @@ public class Constants {
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
 
-    public static final String EMAIL_CONTENT = "\nData log is attached.";
-
     public static final char[] HEX_ALPHABET = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
 }
