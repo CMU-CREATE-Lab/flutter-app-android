@@ -12,11 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.helpers.EmailHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-
-import java.io.File;
 
 /**
  * Created by Steve on 9/7/2016.

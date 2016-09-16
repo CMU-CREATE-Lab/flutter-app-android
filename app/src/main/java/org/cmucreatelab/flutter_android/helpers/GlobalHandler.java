@@ -36,7 +36,7 @@ public class GlobalHandler {
         this.appContext = context;
         this.sessionHandler = new SessionHandler();
         this.namingHandler = new NamingHandler(appContext);
-        this.emailHandler = new EmailHandler(this);
+        this.emailHandler = new EmailHandler();
     }
 
 }

@@ -64,5 +64,12 @@
     <string name="send_to">Send to:</string>
     <string name="message">Message:</string>
     <string name="send_data_log">Send Data Log</string>
+    <string name="set_color">Set Color</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="final_color">Final Color:</string>
+    <string name="vibrance">Vibrance</string>
+    <string name="color">Color</string>
+    <string name="darkness">Darkness</string>
+    <string name="pre_mixed">Pre-Mixed:</string>
 
 </resources>

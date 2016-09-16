@@ -8,13 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentHighValue;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentLowValue;
 import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
 import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
 
@@ -31,15 +26,14 @@ import java.io.Serializable;
 // TODO - use the seekbar as a slider
 public abstract class BaseServoLedActivity extends BaseNavigationActivity implements    DialogFragmentRelationship.DialogRelationshipListener,
                                                                                         DialogFragmentSensor.DialogSensorListener,
-                                                                                        DialogFragmentHighValue.DialogHighValueListener,
-                                                                                        DialogFragmentLowValue.DialogLowValueListener,
                                                                                         Serializable {
 
     public static final String BASE_SERVO_LED_ACTIVITY_KEY = "base_servo_led_activity_key";
     private static final String HELP = "help";
     private static final String ADVANCED = "advanced";
 
-    private ImageView selectedView;
+    protected ImageView selectedView;
+    protected Sensor[] currentSensors;
 
 
     protected Toolbar.OnMenuItemClickListener toolbarClick = new Toolbar.OnMenuItemClickListener() {
@@ -64,10 +58,9 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     }
 
 
-    // listeners
+    // onClickSelectSensor and onClickSelect Relationship are no different on LedsActivity or ServosActivity
 
 
-    // TODO - keep track of the selected views so we can update them on selection
     public void onClickSelectSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectSensor");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
@@ -83,43 +76,4 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
         dialogFragmentRelationship.show(getSupportFragmentManager(), "tag");
     }
 
-
-    public void onClickSelectHighValue(View view) {
-        Log.d(Constants.LOG_TAG, "onClickSelectHighValue");
-        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        Log.d(Constants.LOG_TAG, view.toString());
-    }
-
-
-    public void onClickSelectLowValue(View view) {
-        Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
-        this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        Log.d(Constants.LOG_TAG, view.toString());
-    }
-
-
-    @Override
-    public void onSensorChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorChosen " + sensor.getClass().getSimpleName());
-        this.selectedView.setImageResource(sensor.getSensorImageId());
-    }
-
-
-    @Override
-    public void onRelationshipChosen(Relationship relationship) {
-        Log.d(Constants.LOG_TAG, "onRelationshipChosen " + relationship.getClass().getSimpleName());
-        this.selectedView.setImageResource(relationship.getRelationshipImageId());
-    }
-
-
-    @Override
-    public void onHighValueChosen(int highValue) {
-        Log.d(Constants.LOG_TAG, "onHighValueChosen");
-    }
-
-
-    @Override
-    public void onLowValueChosen(int lowValue) {
-        Log.d(Constants.LOG_TAG, "onLowValueChosen");
-    }
 }
