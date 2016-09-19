@@ -1,11 +1,10 @@
-package org.cmucreatelab.flutter_android.ui;
+package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 

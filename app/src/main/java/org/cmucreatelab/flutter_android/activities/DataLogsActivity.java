@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentEmail;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentEmail;
 
 import butterknife.ButterKnife;
 

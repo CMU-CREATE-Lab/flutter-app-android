@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui;
+package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

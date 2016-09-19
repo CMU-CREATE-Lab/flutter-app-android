@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui;
+package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -15,13 +15,13 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 /**
  * Created by Steve on 9/2/2016.
  */
-public class DialogFragmentLowValue extends DialogFragment implements View.OnClickListener {
+public class DialogFragmentHighValue extends DialogFragment implements View.OnClickListener {
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_low_value, null);
+        final View view = inflater.inflate(R.layout.dialog_high_value, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setMessage(getString(R.string.choose_position)).setView(view);
 
@@ -38,8 +38,8 @@ public class DialogFragmentLowValue extends DialogFragment implements View.OnCli
 
 
     // interface for an activity to listen for a choice
-    public interface DialogLowValueListener {
-        public void onLowValueChosen(int lowValue);
+    public interface DialogHighValueListener {
+        public void onHighValueChosen(int highValue);
     }
 
 }

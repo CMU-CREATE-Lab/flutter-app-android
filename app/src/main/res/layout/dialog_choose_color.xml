@@ -13,7 +13,7 @@
     <FrameLayout
         android:id="@+id/frame_final_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="10"/>
+            android:max="359"/>
 
     </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="255"/>
+            android:max="100"/>
 
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="255"/>
+            android:max="100" />
 
     </LinearLayout>
 
@@ -87,7 +87,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="6">
 

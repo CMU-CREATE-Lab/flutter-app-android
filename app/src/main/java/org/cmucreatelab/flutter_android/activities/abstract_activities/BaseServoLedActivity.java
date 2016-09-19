@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentRelationship;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentSensor;
 
 import java.io.Serializable;
 

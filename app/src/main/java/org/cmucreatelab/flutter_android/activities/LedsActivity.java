@@ -13,11 +13,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentChooseColor;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentColorHigh;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentHighValue;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentColorHigh;
 
 import butterknife.ButterKnife;
 
@@ -30,38 +26,6 @@ import butterknife.ButterKnife;
  *
  */
 public class LedsActivity extends BaseServoLedActivity implements DialogFragmentColorHigh.DialogHighColorListener {
-
-
-    private float hueToRgb(float p, float q, float t) {
-        if (t < 0f)
-            t += 1f;
-        if (t > 1f)
-            t -= 1f;
-        if (t < 1f/6f)
-            return p + (q - p) * 6f * t;
-        if (t < 1f/2f)
-            return q;
-        if (t < 2f/3f)
-            return p + (q - p) * (2f/3f - t) * 6f;
-        return p;
-    }
-
-
-    private int[] hslToRgb(float h, float s, float l) {
-        float r,g,b;
-
-        if (s == 0f) {
-            r = g = b = 1;
-        } else {
-            float q = l < 0.5f ? l * (1 + s) : l + s - l * s;
-            float p = 2 * l - q;
-            r = hueToRgb(p, q, h + 1f/3f);
-            g = hueToRgb(p, q, h);
-            b = hueToRgb(p, q, h - 1f/3f);
-        }
-        int[] result = {(int) (r * 255), (int) (g * 255), (int) (b * 255)};
-        return result;
-    }
 
 
     @Override

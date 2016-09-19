@@ -13,9 +13,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentChooseColor;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentRelationship;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentSensor;
 
 import butterknife.ButterKnife;
 

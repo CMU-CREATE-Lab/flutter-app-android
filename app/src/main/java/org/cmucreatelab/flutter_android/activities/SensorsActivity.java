@@ -18,7 +18,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.DialogFragmentSensorType;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentSensorType;
 
 import java.io.Serializable;
 import java.util.Timer;
