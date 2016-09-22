@@ -23,7 +23,6 @@ import java.io.Serializable;
  * An abstract activity used for the extremely similar operations of the Servo and Led activities.
  *
  */
-// TODO - use the seekbar as a slider
 public abstract class BaseServoLedActivity extends BaseNavigationActivity implements    DialogFragmentRelationship.DialogRelationshipListener,
                                                                                         DialogFragmentSensor.DialogSensorListener,
                                                                                         Serializable {

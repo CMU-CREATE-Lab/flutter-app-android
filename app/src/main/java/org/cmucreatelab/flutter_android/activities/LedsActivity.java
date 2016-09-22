@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -86,7 +88,7 @@ public class LedsActivity extends BaseServoLedActivity implements DialogFragment
 
     @Override
     public void onHighColorChosen(int[] color) {
-        // TODO
+        Log.d(Constants.LOG_TAG, "onHighColorChosen");
     }
 
 }

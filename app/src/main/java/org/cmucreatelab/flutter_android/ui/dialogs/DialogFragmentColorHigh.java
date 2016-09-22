@@ -39,7 +39,7 @@ public class DialogFragmentColorHigh extends DialogFragmentChooseColor {
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSetColor");
-        highColorListener.onHighColorChosen(new int[3]);
+        highColorListener.onHighColorChosen(finalRGB);
     }
 
 
