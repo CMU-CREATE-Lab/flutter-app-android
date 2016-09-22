@@ -1,7 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +14,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentColorHigh;
+import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentColorLow;
 
 import butterknife.ButterKnife;
 
@@ -27,7 +26,9 @@ import butterknife.ButterKnife;
  * An activity which handles the LEDs tab on the navigation bar.
  *
  */
-public class LedsActivity extends BaseServoLedActivity implements DialogFragmentColorHigh.DialogHighColorListener {
+public class LedsActivity extends BaseServoLedActivity implements
+        DialogFragmentColorHigh.DialogHighColorListener,
+        DialogFragmentColorLow.DialogLowColorListener{
 
 
     @Override
@@ -69,6 +70,8 @@ public class LedsActivity extends BaseServoLedActivity implements DialogFragment
     public void onClickSelectLowValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        DialogFragmentColorLow dialogFragmentColorLow = DialogFragmentColorLow.newInstance(this);
+        dialogFragmentColorLow.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -89,6 +92,12 @@ public class LedsActivity extends BaseServoLedActivity implements DialogFragment
     @Override
     public void onHighColorChosen(int[] color) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
+    }
+
+
+    @Override
+    public void onLowColorChosen(int[] color) {
+        Log.d(Constants.LOG_TAG, "onLowColorChosen");
     }
 
 }
