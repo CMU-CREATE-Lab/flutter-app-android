@@ -34,7 +34,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="359"/>
+            android:max="359"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:thumbOffset="1dp"/>
 
     </LinearLayout>
 
@@ -55,7 +58,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="100"/>
+            android:max="99"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:thumbOffset="1dp"/>
 
     </LinearLayout>
 
@@ -72,11 +78,14 @@
             android:layout_weight="2"/>
 
         <SeekBar
-            android:id="@+id/seek_lightness"
+            android:id="@+id/seek_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:max="100" />
+            android:max="99"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:thumbOffset="1dp"/>
 
     </LinearLayout>
 
