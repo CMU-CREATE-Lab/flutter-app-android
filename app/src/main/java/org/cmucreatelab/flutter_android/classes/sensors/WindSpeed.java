@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class WindSpeed extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.WIND_SPEED;
-    private static final int imageId = R.mipmap.ic_launcher;
+    private static final int imageId = R.drawable.sensor_wind_speed;
 
 
     public WindSpeed() {

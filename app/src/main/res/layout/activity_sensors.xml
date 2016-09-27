@@ -14,42 +14,101 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme"
         app:popupTheme="@style/AppTheme"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentStart="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/sensors_main_navigation"
+        android:layout_above="@+id/linear_play_record"
         android:layout_below="@id/toolbar_main">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/linear_sensor_2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:weightSum="3"
-            android:padding="5dp">
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/image_sensor_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/image_sensor_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="20dp"
-                    android:src="@mipmap/ic_launcher"/>
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/text_sensor_1_reading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/sensor_2"
                     android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/text_sensor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_sensor"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_sensor_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/progress_horizontal_blue"
+                android:max="99"
+                android:padding="10dp"/>
+
+            <TextView
+                android:id="@+id/text_sensor_2_reading"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_sensor_1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal"
+            android:layout_above="@id/linear_sensor_2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/image_sensor_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:src="@mipmap/ic_launcher"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,69 +120,57 @@
                     android:id="@+id/text_sensor_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
+                    android:text="@string/set_sensor"
                     android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:gravity="center"/>
 
             </LinearLayout>
 
+            <ProgressBar
+                android:id="@+id/progress_sensor_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/progress_horizontal_blue"
+                android:max="99"
+                android:padding="10dp"/>
 
+            <TextView
+                android:id="@+id/text_sensor_1_reading"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_sensor_3"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/linear_sensor_2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:weightSum="10">
+
+            <ImageView
+                android:id="@+id/image_sensor_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/image_sensor_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="20dp"
-                    android:src="@mipmap/ic_launcher"/>
-
-                <TextView
-                    android:id="@+id/text_sensor_2_reading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sensor_2"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:id="@+id/text_sensor_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/image_sensor_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="20dp"
-                    android:src="@mipmap/ic_launcher"/>
-
-                <TextView
-                    android:id="@+id/text_sensor_3_reading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,21 +182,65 @@
                     android:id="@+id/text_sensor_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
+                    android:text="@string/set_sensor"
                     android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:gravity="center"/>
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_sensor_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressDrawable="@drawable/progress_horizontal_blue"
+                android:max="99"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/text_sensor_3_reading"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-    <include
+    <LinearLayout
+        android:id="@+id/linear_play_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/image_play_pause"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_launcher"
+            android:padding="10dp"/>
+
+        <ImageView
+            android:id="@+id/image_record_data"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_launcher"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+    <!--<include
         android:id="@+id/sensors_main_navigation"
         layout="@layout/main_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true" />-->
 
 </RelativeLayout>

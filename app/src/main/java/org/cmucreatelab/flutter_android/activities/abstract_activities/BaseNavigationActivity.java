@@ -38,7 +38,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         globalHandler = GlobalHandler.newInstance(this);
     }
 
-    @OnClick(R.id.image_connect_flutter)
+    /*@OnClick(R.id.image_connect_flutter)
     public void onClickConnectFlutter() {
         Log.d(Constants.LOG_TAG, "onClickConnectFlutter");
     }
@@ -78,6 +78,6 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "onClickDataLogs");
         Intent intent = new Intent(this, DataLogsActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 }

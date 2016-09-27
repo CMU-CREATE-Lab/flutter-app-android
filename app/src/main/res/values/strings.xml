@@ -71,5 +71,16 @@
     <string name="color">Color</string>
     <string name="darkness">Darkness</string>
     <string name="pre_mixed">Pre-Mixed:</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="sound">Sound</string>
+    <string name="distance">Distance</string>
+    <string name="soil_moisture">Soild Moister</string>
+    <string name="light">Light</string>
+    <string name="no_sensor">No Sensor</string>
+    <string name="analog">Analog</string>
+    <string name="barometric_pressure">Barometric Pressure</string>
+    <string name="temperature">Temperature</string>
+    <string name="set_sensor">Set Sensor</string>
 
 </resources>

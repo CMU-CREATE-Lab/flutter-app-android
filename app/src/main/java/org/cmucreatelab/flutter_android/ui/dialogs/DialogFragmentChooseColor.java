@@ -114,6 +114,7 @@ public abstract class DialogFragmentChooseColor extends DialogFragment implement
             }
         };
         frameFinalColor.setBackground(drawable);
+
     }
 
 

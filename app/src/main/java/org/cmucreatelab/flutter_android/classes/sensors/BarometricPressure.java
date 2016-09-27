@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class BarometricPressure extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.BAROMETRIC_PRESSURE;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int imageId = R.drawable.sensor_barometric_pressure;
 
 
     public BarometricPressure() {

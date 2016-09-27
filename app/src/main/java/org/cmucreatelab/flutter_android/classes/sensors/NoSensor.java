@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class NoSensor extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.NO_SENSOR;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int imageId = R.drawable.sensor_no_sensor;
 
 
     public NoSensor() {

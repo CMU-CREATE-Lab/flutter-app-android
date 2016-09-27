@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.SOIL_MOISTURE;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int imageId = R.drawable.sensor_soil_moisture;
 
 
     public SoilMoisture() {

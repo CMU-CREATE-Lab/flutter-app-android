@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -8,7 +9,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -47,6 +52,10 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     private TextView textSensor1Reading;
     private TextView textSensor2Reading;
     private TextView textSensor3Reading;
+    private ProgressBar progress1;
+    private ProgressBar progress2;
+    private ProgressBar progress3;
+
     private AlertDialog connectingDialog;
     private AlertDialog.Builder builder;
 
@@ -62,30 +71,49 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
                     textSensor1.setText(sensors[0].getSensorType().toString());
                     textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
-                }
-                else{
+                    progress1.setProgress(sensors[0].getSensorReading());
+                } else if (sensors[0].getSensorType() == Sensor.Type.NO_SENSOR){
+                    textSensor1.setText(R.string.no_sensor);
+                    textSensor1Reading.setText("");
+                    progress1.setProgress(0);
+                } else {
                     textSensor1.setText(R.string.select_sensor);
                     textSensor1Reading.setText("");
+                    progress1.setProgress(0);
                 }
+
                 if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
                     textSensor2.setText(sensors[1].getSensorType().toString());
                     textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
-                }
-                else{
+                    progress2.setProgress(sensors[1].getSensorReading());
+                } else if (sensors[1].getSensorType() == Sensor.Type.NO_SENSOR) {
+                    textSensor2.setText(R.string.no_sensor);
+                    textSensor2Reading.setText("");
+                    progress2.setProgress(0);
+                } else {
                     textSensor2.setText(R.string.select_sensor);
                     textSensor2Reading.setText("");
+                    progress2.setProgress(0);
                 }
+
                 if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
                     textSensor3.setText(sensors[2].getSensorType().toString());
                     textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
-                }
-                else {
+                    progress3.setProgress(sensors[2].getSensorReading());
+                } else if (sensors[2].getSensorType() == Sensor.Type.NO_SENSOR) {
+                    textSensor3.setText(R.string.no_sensor);
+                    textSensor3Reading.setText("");
+                    progress3.setProgress(0);
+                } else {
                     textSensor3.setText(R.string.select_sensor);
                     textSensor3Reading.setText("");
+                    progress3.setProgress(0);
                 }
+
             }
         });
     }
@@ -156,6 +184,9 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
         textSensor2Reading = (TextView) findViewById(R.id.text_sensor_2_reading);
         textSensor3Reading = (TextView) findViewById(R.id.text_sensor_3_reading);
+        progress1 = (ProgressBar) findViewById(R.id.progress_sensor_1);
+        progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
+        progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
         sensors = globalHandler.sessionHandler.getFlutter().getSensors();
         updateViews();
@@ -222,7 +253,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     @OnClick(R.id.image_sensor_2)
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
-        this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
         currentSensor = sensors[1];
         DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 2?", this);
         dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
