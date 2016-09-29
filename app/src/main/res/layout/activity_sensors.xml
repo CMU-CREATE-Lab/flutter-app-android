@@ -5,22 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".activities.SensorsActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/AppTheme"
-        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:id="@+id/linear_toolbar_container"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTheme"
+            app:popupTheme="@style/AppTheme" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linear_play_record"
-        android:layout_below="@id/toolbar_main">
+        android:layout_toEndOf="@id/linear_toolbar_container"
+        android:layout_above="@+id/linear_play_record">
 
         <LinearLayout
             android:id="@+id/linear_sensor_2"
@@ -30,14 +37,14 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:weightSum="10">
+            android:weightSum="85">
 
             <ImageView
                 android:id="@+id/image_sensor_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="2"
+                android:layout_weight="10"
                 android:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
@@ -46,7 +53,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="15">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +75,7 @@
                 android:id="@+id/progress_sensor_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="55"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:progressDrawable="@drawable/progress_horizontal_blue"
                 android:max="99"
@@ -79,7 +86,8 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:gravity="center"
+                android:layout_weight="5"/>
 
         </LinearLayout>
 
@@ -92,14 +100,14 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:weightSum="10">
+            android:weightSum="85">
 
             <ImageView
                 android:id="@+id/image_sensor_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="2"
+                android:layout_weight="10"
                 android:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
@@ -108,7 +116,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="15">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,7 +138,7 @@
                 android:id="@+id/progress_sensor_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="55"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:progressDrawable="@drawable/progress_horizontal_blue"
                 android:max="99"
@@ -141,7 +149,8 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:gravity="center"
+                android:layout_weight="5"/>
 
         </LinearLayout>
 
@@ -154,14 +163,14 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:weightSum="10">
+            android:weightSum="85">
 
             <ImageView
                 android:id="@+id/image_sensor_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="2"
+                android:layout_weight="10"
                 android:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
@@ -170,7 +179,7 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="15">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,7 +201,7 @@
                 android:id="@+id/progress_sensor_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="55"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:progressDrawable="@drawable/progress_horizontal_blue"
                 android:max="99"
@@ -203,7 +212,8 @@
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"/>
+                android:gravity="center"
+                android:layout_weight="5" />
 
         </LinearLayout>
 

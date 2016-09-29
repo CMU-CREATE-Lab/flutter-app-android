@@ -13,7 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 public class Proportional implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.PROPORTIONAL;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int greenImageId = R.drawable.relationship_green_amplitude;
 
 
 
@@ -24,8 +24,8 @@ public class Proportional implements Relationship {
 
 
     @Override
-    public int getRelationshipImageId() {
-        return imageId;
+    public int getGreenImageId() {
+        return greenImageId;
     }
 
 }

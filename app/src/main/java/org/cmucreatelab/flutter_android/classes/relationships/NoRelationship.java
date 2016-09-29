@@ -9,7 +9,7 @@ public class NoRelationship implements Relationship {
 
 
     private static final Relationship.Type relationshipType = Type.NO_RELATIONSHIP;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int greenImageId = R.mipmap.ic_launcher;
 
 
     public NoRelationship() {}
@@ -22,8 +22,8 @@ public class NoRelationship implements Relationship {
 
 
     @Override
-    public int getRelationshipImageId() {
-        return imageId;
+    public int getGreenImageId() {
+        return greenImageId;
     }
 
 }

@@ -13,7 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 public class Amplitutude implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.AMPLITUDE;
-    public static final int imageId = R.mipmap.ic_launcher;
+    public static final int greenImageId = R.drawable.relationship_green_amplitude;
 
 
 
@@ -24,8 +24,8 @@ public class Amplitutude implements Relationship {
 
 
     @Override
-    public int getRelationshipImageId() {
-        return imageId;
+    public int getGreenImageId() {
+        return 0;
     }
 
 }

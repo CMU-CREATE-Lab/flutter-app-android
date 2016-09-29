@@ -120,6 +120,10 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
 
 
     private void startSensorReading() {
+        if (timer != null) {
+            timer.cancel();
+        }
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -127,7 +131,6 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
                 globalHandler.sessionHandler.sendMessage();
             }
         };
-
         timer = new Timer();
         timer.schedule(timerTask, 0, 500);
     }
@@ -138,25 +141,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     }
 
 
-    private void onClickPlaySensors() {
-        Log.d(Constants.LOG_TAG, "onClickPlaySensors");
-        isPlayingSensors = true;
-        startSensorReading();
-        invalidateOptionsMenu();
-    }
-
-
-    private void onClickPauseSensors() {
-        Log.d(Constants.LOG_TAG, "onClickPauseSensors");
-        isPlayingSensors = false;
-        stopSensorReading();
-        invalidateOptionsMenu();
-    }
-
-
-    private void onClickRecordData() {
-        Log.d(Constants.LOG_TAG, "onClickRecordData");
-    }
+    // Event Listeners
 
 
     @Override
@@ -226,10 +211,10 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_play_sensors:
-                onClickPlaySensors();
+                //onClickPlaySensors();
                 return true;
             case R.id.item_pause_sensors:
-                onClickPauseSensors();
+                //onClickPauseSensors();
                 return true;
             case R.id.item_record_data:
                 onClickRecordData();
@@ -237,36 +222,6 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-
-    @OnClick(R.id.image_sensor_1)
-    public void onClickSensor1() {
-        Log.d(Constants.LOG_TAG, "onClickSensor1");
-        this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
-        currentSensor = sensors[0];
-        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 1?", this);
-        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
-    }
-
-
-    @OnClick(R.id.image_sensor_2)
-    public void onClickSensor2() {
-        Log.d(Constants.LOG_TAG, "onClickSensor2");
-        this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
-        currentSensor = sensors[1];
-        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 2?", this);
-        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
-    }
-
-
-    @OnClick(R.id.image_sensor_3)
-    public void onClickSensor3() {
-        Log.d(Constants.LOG_TAG, "onClickSensor3");
-        this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
-        currentSensor = sensors[2];
-        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 3?", this);
-        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -288,7 +243,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         sensors[index] = sensor;
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
 
-        selectedView.setImageResource(sensor.getSensorImageId());
+        selectedView.setImageResource(sensor.getBlueImageId());
         updateViews();
 
         if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
@@ -321,6 +276,61 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         if (connected && connectingDialog != null  && connectingDialog.isShowing()) {
             connectingDialog.dismiss();
         }
+    }
+
+
+    // Button Events
+
+
+    @OnClick(R.id.image_sensor_1)
+    public void onClickSensor1() {
+        Log.d(Constants.LOG_TAG, "onClickSensor1");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
+        currentSensor = sensors[0];
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 1?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
+    }
+
+
+    @OnClick(R.id.image_sensor_2)
+    public void onClickSensor2() {
+        Log.d(Constants.LOG_TAG, "onClickSensor2");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
+        currentSensor = sensors[1];
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 2?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
+    }
+
+
+    @OnClick(R.id.image_sensor_3)
+    public void onClickSensor3() {
+        Log.d(Constants.LOG_TAG, "onClickSensor3");
+        this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
+        currentSensor = sensors[2];
+        DialogFragmentSensorType dialogFragmentSensorType = DialogFragmentSensorType.newInstance("Sensor Port 3?", this);
+        dialogFragmentSensorType.show(getSupportFragmentManager(), "tag");
+    }
+
+
+    @OnClick(R.id.image_play_pause)
+    public void onClickPlayPause() {
+        Log.d(Constants.LOG_TAG, "onClickPlayPause");
+        ImageView image = (ImageView) findViewById(R.id.image_play_pause);
+        if (isPlayingSensors) {
+            image.setImageResource(R.mipmap.ic_launcher);
+            isPlayingSensors = false;
+            stopSensorReading();
+        } else {
+            image.setImageResource(R.mipmap.ic_launcher);
+            isPlayingSensors = true;
+            startSensorReading();
+        }
+    }
+
+
+    @OnClick(R.id.image_record_data)
+    public void onClickRecordData() {
+        Log.d(Constants.LOG_TAG, "onClickRecordData");
     }
 
 }

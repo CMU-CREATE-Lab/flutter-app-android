@@ -15,7 +15,9 @@ import java.io.Serializable;
 public class AnalogOrUnknown extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.ANALOG_OR_UNKNOWN;
-    public static final int imageId = R.drawable.sensor_analog;
+    public static final int blueImageId = R.drawable.sensor_blue_analog;
+    public static final int greenImageId = R.drawable.sensor_green_analog;
+    public static final int orangeImageId = R.drawable.sensor_orange_analog;
 
 
     public AnalogOrUnknown() {
@@ -30,8 +32,20 @@ public class AnalogOrUnknown extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getSensorImageId() {
-        return imageId;
+    public int getBlueImageId() {
+        return blueImageId;
+    }
+
+
+    @Override
+    public int getGreenImageId() {
+        return greenImageId;
+    }
+
+
+    @Override
+    public int getOrangeImageId() {
+        return orangeImageId;
     }
 
 }

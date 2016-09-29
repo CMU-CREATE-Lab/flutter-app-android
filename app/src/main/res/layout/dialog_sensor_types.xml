@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/light"
-            android:drawableTop="@drawable/sensor_light"/>
+            android:drawableTop="@drawable/sensor_blue_light"/>
 
         <TextView
             android:id="@+id/image_soil_moisture"
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/distance"
-            android:drawableTop="@drawable/sensor_distance"/>
+            android:drawableTop="@drawable/sensor_blue_distance"/>
 
         <TextView
             android:id="@+id/image_sound"
@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/sound"
-            android:drawableTop="@drawable/sensor_sound"/>
+            android:drawableTop="@drawable/sensor_blue_sound"/>
 
         <TextView
             android:id="@+id/image_wind_speed"
@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/wind_speed"
-            android:drawableTop="@drawable/sensor_wind_speed"/>
+            android:drawableTop="@drawable/sensor_blue_windspeed"/>
 
     </LinearLayout>
 
@@ -63,7 +63,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/humidity"
-            android:drawableTop="@drawable/sensor_humidity"/>
+            android:drawableTop="@drawable/sensor_blue_humidity"/>
 
         <TextView
             android:id="@+id/image_temperature"
@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/temperature"
-            android:drawableTop="@drawable/sensor_temperature"/>
+            android:drawableTop="@drawable/sensor_blue_temperature"/>
 
         <TextView
             android:id="@+id/image_barometric_pressure"
@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/barometric_pressure"
-            android:drawableTop="@drawable/sensor_barometric_pressure"/>
+            android:drawableTop="@drawable/sensor_blue_barometric"/>
 
         <TextView
             android:id="@+id/image_analog_unknown"
@@ -87,7 +87,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/analog"
-            android:drawableTop="@drawable/sensor_analog"/>
+            android:drawableTop="@drawable/sensor_blue_analog"/>
 
         <TextView
             android:id="@+id/image_no_sensor"
@@ -95,7 +95,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/no_sensor"
-            android:drawableTop="@drawable/sensor_no_sensor"/>
+            android:drawableTop="@drawable/sensor_blue_nosensor"/>
 
     </LinearLayout>
 

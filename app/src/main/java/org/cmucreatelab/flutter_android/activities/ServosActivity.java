@@ -73,14 +73,14 @@ public class ServosActivity extends BaseServoLedActivity {
     @Override
     public void onSensorChosen(Sensor sensor) {
         Log.d(Constants.LOG_TAG, "onSensorChosen " + sensor.getClass().getSimpleName());
-        this.selectedView.setImageResource(sensor.getSensorImageId());
+        this.selectedView.setImageResource(sensor.getGreenImageId());
     }
 
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen " + relationship.getClass().getSimpleName());
-        this.selectedView.setImageResource(relationship.getRelationshipImageId());
+        this.selectedView.setImageResource(relationship.getGreenImageId());
     }
 
 

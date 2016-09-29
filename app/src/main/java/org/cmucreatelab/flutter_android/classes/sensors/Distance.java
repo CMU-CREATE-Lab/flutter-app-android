@@ -15,7 +15,9 @@ import java.io.Serializable;
 public class Distance extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.DISTANCE;
-    public static final int imageId = R.drawable.sensor_distance;
+    public static final int blueImageId = R.drawable.sensor_blue_distance;
+    public static final int greenImageId = R.drawable.sensor_green_distance;
+    public static final int orangeImageId = R.drawable.sensor_orange_distance;
 
 
     public Distance() {
@@ -30,8 +32,20 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getSensorImageId() {
-        return imageId;
+    public int getBlueImageId() {
+        return blueImageId;
+    }
+
+
+    @Override
+    public int getGreenImageId() {
+        return greenImageId;
+    }
+
+
+    @Override
+    public int getOrangeImageId() {
+        return orangeImageId;
     }
 
 }

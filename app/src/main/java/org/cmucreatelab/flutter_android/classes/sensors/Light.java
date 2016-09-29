@@ -15,7 +15,9 @@ import java.io.Serializable;
 public class Light extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.LIGHT;
-    public static final int imageId = R.drawable.sensor_light;
+    public static final int blueImageId = R.drawable.sensor_blue_light;
+    public static final int greenImageId = R.drawable.sensor_green_light;
+    public static final int orangeImageId = R.drawable.sensor_orange_light;
 
 
     public Light() {
@@ -30,8 +32,20 @@ public class Light extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getSensorImageId() {
-        return imageId;
+    public int getBlueImageId() {
+        return blueImageId;
+    }
+
+
+    @Override
+    public int getGreenImageId() {
+        return greenImageId;
+    }
+
+
+    @Override
+    public int getOrangeImageId() {
+        return orangeImageId;
     }
 
 }
