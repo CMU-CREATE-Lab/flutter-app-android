@@ -6,96 +6,249 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="5"
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/image_light"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/light"
-            android:drawableTop="@drawable/sensor_blue_light"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_soil_moisture"
+            <ImageView
+                android:id="@+id/image_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_light"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/light"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/soil_moisture"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_distance"
+            <ImageView
+                android:id="@+id/image_soil_moisture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_soilmoisture"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/soil_moisture" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/distance"
-            android:drawableTop="@drawable/sensor_blue_distance"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_sound"
+            <ImageView
+                android:id="@+id/image_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_distance"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/distance"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/sound"
-            android:drawableTop="@drawable/sensor_blue_sound"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_wind_speed"
+            <ImageView
+                android:id="@+id/image_sound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_sound"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/sound"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/wind_speed"
-            android:drawableTop="@drawable/sensor_blue_windspeed"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_wind_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_windspeed"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/wind_speed"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="5"
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/image_humidity"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/humidity"
-            android:drawableTop="@drawable/sensor_blue_humidity"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_temperature"
+            <ImageView
+                android:id="@+id/image_humidity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_humidity"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/humidity"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/temperature"
-            android:drawableTop="@drawable/sensor_blue_temperature"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_barometric_pressure"
+            <ImageView
+                android:id="@+id/image_temperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_temperature"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/temperature"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/barometric_pressure"
-            android:drawableTop="@drawable/sensor_blue_barometric"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_analog_unknown"
+            <ImageView
+                android:id="@+id/image_barometric_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_barometric"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/barometric_pressure"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/analog"
-            android:drawableTop="@drawable/sensor_blue_analog"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/image_no_sensor"
+            <ImageView
+                android:id="@+id/image_analog_unknown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_analog"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/analog"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/no_sensor"
-            android:drawableTop="@drawable/sensor_blue_nosensor"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_no_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/sensor_blue_nosensor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@string/no_sensor"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
