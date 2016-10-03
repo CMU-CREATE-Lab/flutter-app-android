@@ -82,5 +82,6 @@
     <string name="barometric_pressure">Barometric Pressure</string>
     <string name="temperature">Temperature</string>
     <string name="set_sensor">Set Sensor</string>
+    <string name="choose_flutter">Choose Flutter</string>
 
 </resources>

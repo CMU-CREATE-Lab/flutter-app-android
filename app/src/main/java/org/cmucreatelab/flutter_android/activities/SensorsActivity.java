@@ -151,6 +151,7 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
         ButterKnife.bind(this);
 
         Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        mainToolbar.setContentInsetsAbsolute(0,0);
         String flutterName = globalHandler.sessionHandler.getFlutterName();
         if (flutterName != null && flutterName.length() > 0)
             mainToolbar.setTitle(flutterName);
@@ -182,45 +183,6 @@ public class SensorsActivity extends BaseFlutterActivity implements DialogFragme
             builder.setTitle(R.string.app_name);
             connectingDialog = builder.create();
             connectingDialog.show();
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_sensors, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!isPlayingSensors) {
-            menu.findItem(R.id.item_play_sensors).setVisible(true);
-            menu.findItem(R.id.item_pause_sensors).setVisible(false);
-        } else {
-            menu.findItem(R.id.item_play_sensors).setVisible(false);
-            menu.findItem(R.id.item_pause_sensors).setVisible(true);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_play_sensors:
-                //onClickPlaySensors();
-                return true;
-            case R.id.item_pause_sensors:
-                //onClickPauseSensors();
-                return true;
-            case R.id.item_record_data:
-                onClickRecordData();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 

@@ -5,28 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".activities.SensorsActivity">
 
-    <LinearLayout
-        android:id="@+id/linear_toolbar_container"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme"
-            app:popupTheme="@style/AppTheme" />
-
-    </LinearLayout>
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/main_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/linear_toolbar_container"
+        android:layout_toEndOf="@id/include_toolbar"
         android:layout_above="@+id/linear_play_record">
 
         <LinearLayout

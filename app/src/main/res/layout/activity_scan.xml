@@ -5,23 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".activities.ScanActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/AppTheme"
-        android:layout_alignParentTop="true"/>
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/main_toolbar" />
 
     <RelativeLayout
         android:id="@+id/relative_scanning"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/toolbar_main"
-        android:layout_above="@+id/scan_main_navigation"
+        android:layout_toEndOf="@id/include_toolbar"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
@@ -57,14 +50,6 @@
             android:visibility="invisible"
             android:src="@mipmap/ic_launcher"/>
 
-
     </RelativeLayout>
-
-    <include
-        android:id="@+id/scan_main_navigation"
-        layout="@layout/main_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

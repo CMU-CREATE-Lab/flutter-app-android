@@ -43,15 +43,6 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "onClickConnectFlutter");
     }
 
-    @OnClick(R.id.image_sensors)
-    public void onClickSensors() {
-        Log.d(Constants.LOG_TAG, "onClickSensors");
-        if (globalHandler.sessionHandler.isBluetoothConnected) {
-            Intent intent = new Intent(this, SensorsActivity.class);
-            startActivity(intent);
-        }
-    }
-
     @OnClick(R.id.image_servos)
     public void onClickServos() {
         Log.d(Constants.LOG_TAG, "onClickServos");
@@ -71,13 +62,30 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Intent intent = new Intent(this, SpeakerActivity.class);
         startActivity(intent);
+    }*/
+
+    @OnClick(R.id.image_sensors_menu)
+    public void onClickSensorsMenu() {
+        Log.d(Constants.LOG_TAG, "onClickSensors");
+        if (globalHandler.sessionHandler.isBluetoothConnected) {
+            Intent intent = new Intent(this, SensorsActivity.class);
+            startActivity(intent);
+        }
     }
 
-    @OnClick(R.id.image_data_logs)
-    public void onClickDataLogs() {
-        Log.d(Constants.LOG_TAG, "onClickDataLogs");
+
+    @OnClick(R.id.image_robot_menu)
+    public void onClickRobotMenu() {
+        Log.d(Constants.LOG_TAG, "onClickRobotMenu");
+        // TODO - make the robot landing activity
+    }
+
+
+    @OnClick(R.id.image_data_log_menu)
+    public void onClickDataLogMenu() {
+        Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);
         startActivity(intent);
-    }*/
+    }
 
 }
