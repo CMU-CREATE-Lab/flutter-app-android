@@ -9,6 +9,7 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.activities.LedsActivity;
+import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.activities.ServosActivity;
 import org.cmucreatelab.flutter_android.activities.SpeakerActivity;
@@ -77,7 +78,10 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @OnClick(R.id.image_robot_menu)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
-        // TODO - make the robot landing activity
+        if (globalHandler.sessionHandler.isBluetoothConnected) {
+            Intent intent = new Intent(this, RobotActivity.class);
+            startActivity(intent);
+        }
     }
 
 

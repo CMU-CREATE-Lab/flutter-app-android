@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.cmucreatelab.flutter_android.activities.DataLogsActivity">
+    tools:context="org.cmucreatelab.flutter_android.activities.RobotActivity">
 
     <include
-        android:id="@+id/include_toolbar_data_logs"
+        android:id="@+id/include_toolbar_robot"
         layout="@layout/main_toolbar" />
 
 </RelativeLayout>
