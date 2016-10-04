@@ -68,20 +68,16 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @OnClick(R.id.image_sensors_menu)
     public void onClickSensorsMenu() {
         Log.d(Constants.LOG_TAG, "onClickSensors");
-        if (globalHandler.sessionHandler.isBluetoothConnected) {
-            Intent intent = new Intent(this, SensorsActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, SensorsActivity.class);
+        startActivity(intent);
     }
 
 
     @OnClick(R.id.image_robot_menu)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
-        if (globalHandler.sessionHandler.isBluetoothConnected) {
-            Intent intent = new Intent(this, RobotActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, RobotActivity.class);
+        startActivity(intent);
     }
 
 

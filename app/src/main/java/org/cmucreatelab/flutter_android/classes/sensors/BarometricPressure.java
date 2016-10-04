@@ -15,6 +15,9 @@ import java.io.Serializable;
 public class BarometricPressure extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.BAROMETRIC_PRESSURE;
+    private static final int highTextId = R.string.high;
+    private static final int lowTextId = R.string.low;
+
     public static final int blueImageId = R.drawable.sensor_blue_barometric;
     public static final int greenImageId = R.drawable.sensor_green_barometric;
     public static final int orangeImageId = R.drawable.sensor_orange_barometric;
@@ -28,6 +31,18 @@ public class BarometricPressure extends A_Sensor implements Sensor, Serializable
     @Override
     public Type getSensorType() {
         return sensorType;
+    }
+
+
+    @Override
+    public int getHighTextId() {
+        return highTextId;
+    }
+
+
+    @Override
+    public int getLowTextId() {
+        return lowTextId;
     }
 
 

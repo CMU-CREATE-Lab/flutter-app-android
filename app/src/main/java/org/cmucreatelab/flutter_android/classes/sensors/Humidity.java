@@ -15,6 +15,9 @@ import java.io.Serializable;
 public class Humidity extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.HUMIDITY;
+    private static final int highTextId = R.string.high;
+    private static final int lowTextId = R.string.low;
+
     public static final int blueImageId = R.drawable.sensor_blue_humidity;
     public static final int greenImageId = R.drawable.sensor_green_humidity;
     public static final int orangeImageId = R.drawable.sensor_orange_humidity;
@@ -28,6 +31,18 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     @Override
     public Type getSensorType() {
         return sensorType;
+    }
+
+
+    @Override
+    public int getHighTextId() {
+        return highTextId;
+    }
+
+
+    @Override
+    public int getLowTextId() {
+        return lowTextId;
     }
 
 

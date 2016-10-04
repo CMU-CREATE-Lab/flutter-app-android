@@ -16,6 +16,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import java.io.Serializable;
@@ -145,37 +146,36 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
         Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         mainToolbar.setContentInsetsAbsolute(0,0);
-        String flutterName = globalHandler.sessionHandler.getFlutterName();
-        if (flutterName != null && flutterName.length() > 0)
-            mainToolbar.setTitle(flutterName);
-        else
-            mainToolbar.setTitle(R.string.unknown_device);
-        isPlayingSensors = true;
-        setSupportActionBar(mainToolbar);
-
-        globalHandler.sessionHandler.setFlutterConnectListener(this);
-        globalHandler.sessionHandler.setFlutterMessageListener(this);
-
-        // init views
-        textSensor1 = (TextView) findViewById(R.id.text_sensor_1);
-        textSensor2 = (TextView) findViewById(R.id.text_sensor_2);
-        textSensor3 = (TextView) findViewById(R.id.text_sensor_3);
-        textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
-        textSensor2Reading = (TextView) findViewById(R.id.text_sensor_2_reading);
-        textSensor3Reading = (TextView) findViewById(R.id.text_sensor_3_reading);
-        progress1 = (ProgressBar) findViewById(R.id.progress_sensor_1);
-        progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
-        progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
-
-        sensors = globalHandler.sessionHandler.getFlutter().getSensors();
-        updateViews();
 
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
-            builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
-            builder.setMessage(String.format("Connecting to:\n%s\n\n(%s)", flutterName, "If it is taking awhile, click the search button to make the flutter start searching again."));
-            builder.setTitle(R.string.app_name);
-            connectingDialog = builder.create();
-            connectingDialog.show();
+            NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
+            noFlutterConnectedDialog.setCancelable(false);
+            noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+        } else {
+            String flutterName = globalHandler.sessionHandler.getFlutterName();
+            if (flutterName != null && flutterName.length() > 0)
+                mainToolbar.setTitle(flutterName);
+            else
+                mainToolbar.setTitle(R.string.unknown_device);
+            isPlayingSensors = true;
+            setSupportActionBar(mainToolbar);
+
+            globalHandler.sessionHandler.setFlutterConnectListener(this);
+            globalHandler.sessionHandler.setFlutterMessageListener(this);
+
+            // init views
+            textSensor1 = (TextView) findViewById(R.id.text_sensor_1);
+            textSensor2 = (TextView) findViewById(R.id.text_sensor_2);
+            textSensor3 = (TextView) findViewById(R.id.text_sensor_3);
+            textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
+            textSensor2Reading = (TextView) findViewById(R.id.text_sensor_2_reading);
+            textSensor3Reading = (TextView) findViewById(R.id.text_sensor_3_reading);
+            progress1 = (ProgressBar) findViewById(R.id.progress_sensor_1);
+            progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
+            progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
+
+            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
+            updateViews();
         }
     }
 
