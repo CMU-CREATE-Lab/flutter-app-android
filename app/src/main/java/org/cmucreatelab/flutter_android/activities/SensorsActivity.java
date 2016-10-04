@@ -40,12 +40,12 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
     // views
     private ImageView selectedView;
-    private TextView textSensor1;
-    private TextView textSensor2;
-    private TextView textSensor3;
+    private TextView currentSensorType;
     private TextView textSensor1Reading;
     private TextView textSensor2Reading;
     private TextView textSensor3Reading;
+    private TextView currentHigh;
+    private TextView currentLow;
     private ProgressBar progress1;
     private ProgressBar progress2;
     private ProgressBar progress3;
@@ -64,43 +64,25 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
             public void run() {
 
                 if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor1.setText(sensors[0].getSensorType().toString());
                     textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
                     progress1.setProgress(sensors[0].getSensorReading());
-                } else if (sensors[0].getSensorType() == Sensor.Type.NO_SENSOR){
-                    textSensor1.setText(R.string.no_sensor);
-                    textSensor1Reading.setText("");
-                    progress1.setProgress(0);
                 } else {
-                    textSensor1.setText(R.string.select_sensor);
                     textSensor1Reading.setText("");
                     progress1.setProgress(0);
                 }
 
                 if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor2.setText(sensors[1].getSensorType().toString());
                     textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
                     progress2.setProgress(sensors[1].getSensorReading());
-                } else if (sensors[1].getSensorType() == Sensor.Type.NO_SENSOR) {
-                    textSensor2.setText(R.string.no_sensor);
-                    textSensor2Reading.setText("");
-                    progress2.setProgress(0);
                 } else {
-                    textSensor2.setText(R.string.select_sensor);
                     textSensor2Reading.setText("");
                     progress2.setProgress(0);
                 }
 
                 if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor3.setText(sensors[2].getSensorType().toString());
                     textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
                     progress3.setProgress(sensors[2].getSensorReading());
-                } else if (sensors[2].getSensorType() == Sensor.Type.NO_SENSOR) {
-                    textSensor3.setText(R.string.no_sensor);
-                    textSensor3Reading.setText("");
-                    progress3.setProgress(0);
                 } else {
-                    textSensor3.setText(R.string.select_sensor);
                     textSensor3Reading.setText("");
                     progress3.setProgress(0);
                 }
@@ -160,9 +142,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
             globalHandler.sessionHandler.setFlutterMessageListener(this);
 
             // init views
-            textSensor1 = (TextView) findViewById(R.id.text_sensor_1);
-            textSensor2 = (TextView) findViewById(R.id.text_sensor_2);
-            textSensor3 = (TextView) findViewById(R.id.text_sensor_3);
             textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
             textSensor2Reading = (TextView) findViewById(R.id.text_sensor_2_reading);
             textSensor3Reading = (TextView) findViewById(R.id.text_sensor_3_reading);
@@ -195,11 +174,17 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
 
         selectedView.setImageResource(sensor.getBlueImageId());
-        updateViews();
+        currentSensorType.setText(sensor.getSensorType().toString());
 
         if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
+            currentHigh.setText(getString(sensor.getHighTextId()));
+            currentLow.setText(getString(sensor.getLowTextId()));
             startSensorReading();
+        } else {
+            currentHigh.setText("");
+            currentLow.setText("");
         }
+        updateViews();
     }
 
 
@@ -229,6 +214,9 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         Log.d(Constants.LOG_TAG, "onClickSensor1");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
         currentSensor = sensors[0];
+        currentHigh = (TextView) findViewById(R.id.text_high_1);
+        currentLow = (TextView) findViewById(R.id.text_low_1);
+        currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
         SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 1?", this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
@@ -239,6 +227,9 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         Log.d(Constants.LOG_TAG, "onClickSensor2");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
         currentSensor = sensors[1];
+        currentHigh = (TextView) findViewById(R.id.text_high_2);
+        currentLow = (TextView) findViewById(R.id.text_low_2);
+        currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
         SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 2?", this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
@@ -249,6 +240,9 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         Log.d(Constants.LOG_TAG, "onClickSensor3");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
         currentSensor = sensors[2];
+        currentHigh = (TextView) findViewById(R.id.text_high_3);
+        currentLow = (TextView) findViewById(R.id.text_low_3);
+        currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
         SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 3?", this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
