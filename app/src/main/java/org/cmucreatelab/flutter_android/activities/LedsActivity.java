@@ -13,8 +13,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentColorHigh;
-import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentColorLow;
+import org.cmucreatelab.flutter_android.ui.dialogs.ColorHighDialogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.ColorLowDialogDialog;
 
 import butterknife.ButterKnife;
 
@@ -27,8 +27,8 @@ import butterknife.ButterKnife;
  *
  */
 public class LedsActivity extends BaseServoLedActivity implements
-        DialogFragmentColorHigh.DialogHighColorListener,
-        DialogFragmentColorLow.DialogLowColorListener{
+        ColorHighDialogDialog.DialogHighColorListener,
+        ColorLowDialogDialog.DialogLowColorListener{
 
 
     @Override
@@ -62,16 +62,16 @@ public class LedsActivity extends BaseServoLedActivity implements
     public void onClickSelectHighValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectHighValue");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        DialogFragmentColorHigh dialogFragmentColorHigh = DialogFragmentColorHigh.newInstance(this);
-        dialogFragmentColorHigh.show(getSupportFragmentManager(), "tag");
+        ColorHighDialogDialog colorHighDialog = ColorHighDialogDialog.newInstance(this);
+        colorHighDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     public void onClickSelectLowValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        DialogFragmentColorLow dialogFragmentColorLow = DialogFragmentColorLow.newInstance(this);
-        dialogFragmentColorLow.show(getSupportFragmentManager(), "tag");
+        ColorLowDialogDialog colorLowDialog = ColorLowDialogDialog.newInstance(this);
+        colorLowDialog.show(getSupportFragmentManager(), "tag");
     }
 
 

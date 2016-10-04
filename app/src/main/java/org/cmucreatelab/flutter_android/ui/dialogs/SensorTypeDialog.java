@@ -8,7 +8,6 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
@@ -30,21 +29,21 @@ import java.io.Serializable;
 /**
  * Created by Steve on 8/22/2016.
  */
-public class DialogFragmentSensorType extends DialogFragment implements View.OnClickListener {
+public class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
 
     private String sensorText;
     DialogSensorTypeListener sensorListener;
 
 
-    public static DialogFragmentSensorType newInstance(String sensor, Serializable serializable) {
-        DialogFragmentSensorType dialogFragmentSensorType = new DialogFragmentSensorType();
+    public static SensorTypeDialog newInstance(String sensor, Serializable serializable) {
+        SensorTypeDialog sensorTypeDialog = new SensorTypeDialog();
 
         Bundle args = new Bundle();
         args.putString(Sensor.SENSOR_KEY, sensor);
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
-        dialogFragmentSensorType.setArguments(args);
+        sensorTypeDialog.setArguments(args);
 
-        return dialogFragmentSensorType;
+        return sensorTypeDialog;
     }
 
 

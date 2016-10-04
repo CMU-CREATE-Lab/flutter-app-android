@@ -25,20 +25,20 @@ import java.io.Serializable;
 /**
  * Created by Steve on 9/1/2016.
  */
-public class DialogFragmentRelationship extends DialogFragment implements View.OnClickListener {
+public class RelationshipDialog extends DialogFragment implements View.OnClickListener {
 
 
     private DialogRelationshipListener relationshipListener;
 
 
-    public static DialogFragmentRelationship newInstance(Serializable serializable) {
-        DialogFragmentRelationship dialogFragmentRelationship = new DialogFragmentRelationship();
+    public static RelationshipDialog newInstance(Serializable serializable) {
+        RelationshipDialog relationshipDialog = new RelationshipDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
-        dialogFragmentRelationship.setArguments(args);
+        relationshipDialog.setArguments(args);
 
-        return dialogFragmentRelationship;
+        return relationshipDialog;
     }
 
     @Override

@@ -83,5 +83,7 @@
     <string name="temperature">Temperature</string>
     <string name="set_sensor">Set Sensor</string>
     <string name="choose_flutter">Choose Flutter</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
 
 </resources>

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentRelationship;
-import org.cmucreatelab.flutter_android.ui.dialogs.DialogFragmentSensor;
+import org.cmucreatelab.flutter_android.ui.dialogs.RelationshipDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorDialog;
 
 import java.io.Serializable;
 
@@ -23,8 +23,8 @@ import java.io.Serializable;
  * An abstract activity used for the extremely similar operations of the Servo and Led activities.
  *
  */
-public abstract class BaseServoLedActivity extends BaseNavigationActivity implements    DialogFragmentRelationship.DialogRelationshipListener,
-                                                                                        DialogFragmentSensor.DialogSensorListener,
+public abstract class BaseServoLedActivity extends BaseNavigationActivity implements    RelationshipDialog.DialogRelationshipListener,
+                                                                                        SensorDialog.DialogSensorListener,
                                                                                         Serializable {
 
     public static final String BASE_SERVO_LED_ACTIVITY_KEY = "base_servo_led_activity_key";
@@ -63,16 +63,16 @@ public abstract class BaseServoLedActivity extends BaseNavigationActivity implem
     public void onClickSelectSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectSensor");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        DialogFragmentSensor dialogFragmentSensor = DialogFragmentSensor.newInstance(this);
-        dialogFragmentSensor.show(getSupportFragmentManager(), "tag");
+        SensorDialog sensorDialog = SensorDialog.newInstance(this);
+        sensorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     public void onClickSelectRelationship(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectRelationship");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        DialogFragmentRelationship dialogFragmentRelationship = DialogFragmentRelationship.newInstance(this);
-        dialogFragmentRelationship.show(getSupportFragmentManager(), "tag");
+        RelationshipDialog relationshipDialog = RelationshipDialog.newInstance(this);
+        relationshipDialog.show(getSupportFragmentManager(), "tag");
     }
 
 }

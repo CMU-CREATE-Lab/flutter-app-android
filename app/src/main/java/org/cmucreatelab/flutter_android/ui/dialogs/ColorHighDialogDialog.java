@@ -11,29 +11,28 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import java.io.Serializable;
 
 /**
- * Created by Steve on 9/22/2016.
+ * Created by Steve on 9/16/2016.
  */
-public class DialogFragmentColorLow extends DialogFragmentChooseColor {
+public class ColorHighDialogDialog extends ChooseColorDialog {
+
+    private DialogHighColorListener highColorListener;
 
 
-    private DialogLowColorListener lowColorListener;
-
-
-    public static DialogFragmentColorLow newInstance(Serializable serializable) {
-        DialogFragmentColorLow dialogFragmentColorLow = new DialogFragmentColorLow();
+    public static ColorHighDialogDialog newInstance(Serializable serializable) {
+        ColorHighDialogDialog colorHighDialog = new ColorHighDialogDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
-        dialogFragmentColorLow.setArguments(args);
+        colorHighDialog.setArguments(args);
 
-        return dialogFragmentColorLow;
+        return colorHighDialog;
     }
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        lowColorListener = (DialogLowColorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
+        highColorListener = (DialogHighColorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
         return super.onCreateDialog(savedInstanceState);
     }
 
@@ -41,12 +40,12 @@ public class DialogFragmentColorLow extends DialogFragmentChooseColor {
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSetColor");
-        lowColorListener.onLowColorChosen(finalRGB);
+        highColorListener.onHighColorChosen(finalRGB);
     }
 
 
-    public interface DialogLowColorListener {
-        public void onLowColorChosen(int[] color);
+    public interface DialogHighColorListener {
+        public void onHighColorChosen(int[] color);
     }
 
 }

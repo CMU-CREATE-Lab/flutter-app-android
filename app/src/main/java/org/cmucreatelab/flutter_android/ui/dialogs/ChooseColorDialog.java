@@ -29,7 +29,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 /**
  * Created by Steve on 9/7/2016.
  */
-public abstract class DialogFragmentChooseColor extends DialogFragment implements DialogInterface.OnClickListener {
+public abstract class ChooseColorDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private static final int PREMIXED_COLORS[] = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN, Color.rgb(255, 128, 0), Color.MAGENTA};
 

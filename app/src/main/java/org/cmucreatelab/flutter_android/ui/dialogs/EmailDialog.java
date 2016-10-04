@@ -18,7 +18,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 /**
  * Created by Steve on 9/7/2016.
  */
-public class DialogFragmentEmail extends DialogFragment implements DialogInterface.OnClickListener {
+public class EmailDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private GlobalHandler globalHandler;
     private EditText email;

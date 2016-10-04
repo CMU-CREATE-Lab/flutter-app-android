@@ -19,20 +19,20 @@ import java.io.Serializable;
 /**
  * Created by Steve on 9/1/2016.
  */
-public class DialogFragmentSensor extends DialogFragment implements View.OnClickListener  {
+public class SensorDialog extends DialogFragment implements View.OnClickListener  {
 
 
     private DialogSensorListener dialogSensorListener;
 
 
-    public static DialogFragmentSensor newInstance(Serializable serializable) {
-        DialogFragmentSensor dialogFragmentSensor = new DialogFragmentSensor();
+    public static SensorDialog newInstance(Serializable serializable) {
+        SensorDialog sensorDialog = new SensorDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
-        dialogFragmentSensor.setArguments(args);
+        sensorDialog.setArguments(args);
 
-        return dialogFragmentSensor;
+        return sensorDialog;
     }
 
 

@@ -57,15 +57,38 @@
 
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_sensor_2"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="55"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progressDrawable="@drawable/progress_horizontal_blue"
-                android:max="99"
-                android:padding="10dp"/>
+                android:layout_weight="55">
+
+                <TextView
+                    android:id="@+id/text_low_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_sensor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:max="99"
+                    android:padding="10dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_blue" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_sensor_2_reading"
@@ -120,15 +143,38 @@
 
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_sensor_1"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="55"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progressDrawable="@drawable/progress_horizontal_blue"
-                android:max="99"
-                android:padding="10dp"/>
+                android:layout_weight="55">
+
+                <TextView
+                    android:id="@+id/text_low_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_sensor_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:max="99"
+                    android:padding="10dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_blue" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_sensor_1_reading"
@@ -183,15 +229,38 @@
 
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_sensor_3"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="55"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:progressDrawable="@drawable/progress_horizontal_blue"
-                android:max="99"
-                android:padding="10dp" />
+                android:layout_weight="55">
+
+                <TextView
+                    android:id="@+id/text_low_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_sensor_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:max="99"
+                    android:padding="10dp"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_blue" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_sensor_3_reading"
