@@ -38,6 +38,7 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
+        super.onCreateDialog(savedInstances);
         dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors, null);

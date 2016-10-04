@@ -217,7 +217,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 1?", this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_1, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -230,7 +230,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 2?", this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_2, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -243,7 +243,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance("Sensor Port 3?", this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_3, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 

@@ -78,7 +78,6 @@
     <string name="soil_moisture">Soil Moisture</string>
     <string name="light">Light</string>
     <string name="no_sensor">No Sensor</string>
-    <string name="analog">Analog</string>
     <string name="barometric_pressure">Barometric Pressure</string>
     <string name="temperature">Temperature</string>
     <string name="set_sensor">Set Sensor</string>
@@ -92,5 +91,8 @@
     <string name="dry">Dry</string>
     <string name="wet">Wet</string>
     <string name="analog_or_unknown">Analog / Unknown</string>
+    <string name="sensor_port_1">Sensor Port 1</string>
+    <string name="sensor_port_2">Sensor Port 2</string>
+    <string name="sensor_port_3">Sensor Port 3</string>
 
 </resources>

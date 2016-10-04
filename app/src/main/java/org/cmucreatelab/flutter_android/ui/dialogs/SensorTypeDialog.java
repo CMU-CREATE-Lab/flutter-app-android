@@ -35,11 +35,11 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
     DialogSensorTypeListener sensorListener;
 
 
-    public static SensorTypeDialog newInstance(String sensor, Serializable serializable) {
+    public static SensorTypeDialog newInstance(int sensor, Serializable serializable) {
         SensorTypeDialog sensorTypeDialog = new SensorTypeDialog();
 
         Bundle args = new Bundle();
-        args.putString(Sensor.SENSOR_KEY, sensor);
+        args.putInt(Sensor.SENSOR_KEY, sensor);
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
         sensorTypeDialog.setArguments(args);
 
@@ -49,13 +49,14 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        sensorText = getArguments().getString(Sensor.SENSOR_KEY);
+        super.onCreateDialog(savedInstanceState);
+        sensorText = getString(getArguments().getInt(Sensor.SENSOR_KEY));
         sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensor_types, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(getString(R.string.dialog_sensor) + " " + sensorText).setView(view);
+        builder.setMessage(sensorText).setView(view);
 
         // bind click listeners
         view.findViewById(R.id.image_light).setOnClickListener(this);
