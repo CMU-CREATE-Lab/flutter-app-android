@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterConnectListener, FlutterMessageListener, Serializable {
+public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -49,9 +49,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     private ProgressBar progress1;
     private ProgressBar progress2;
     private ProgressBar progress3;
-
-    private AlertDialog connectingDialog;
-    private AlertDialog.Builder builder;
 
     private Timer timer;
 
@@ -160,7 +157,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
             isPlayingSensors = true;
             setSupportActionBar(mainToolbar);
 
-            globalHandler.sessionHandler.setFlutterConnectListener(this);
             globalHandler.sessionHandler.setFlutterMessageListener(this);
 
             // init views
@@ -221,15 +217,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
             sensors[1].setSensorReading(Integer.valueOf(sensor2));
             sensors[2].setSensorReading(Integer.valueOf(sensor3));
             updateViews();
-        }
-    }
-
-
-    @Override
-    public void onConnected(boolean connected) {
-        Log.d(Constants.LOG_TAG, "Is connected: " + connected);
-        if (connected && connectingDialog != null  && connectingDialog.isShowing()) {
-            connectingDialog.dismiss();
         }
     }
 

@@ -19,6 +19,7 @@ import com.bluecreation.melodysmart.MelodySmartDevice;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
  * An activity that can scan for flutters nearby.
  *
  */
-public class ScanActivity extends BaseNavigationActivity {
+public class ScanActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
@@ -136,6 +137,7 @@ public class ScanActivity extends BaseNavigationActivity {
         Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(mainToolbar);
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
+        globalHandler.sessionHandler.setFlutterConnectListener(this);
         final Activity activity = this;
 
         mFlutterOGs = new ArrayList<>();
@@ -152,8 +154,6 @@ public class ScanActivity extends BaseNavigationActivity {
                 timer.cancel();
                 scanForDevice(false);
                 globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
-                Intent intent = new Intent(getApplicationContext(), SensorsActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -193,6 +193,16 @@ public class ScanActivity extends BaseNavigationActivity {
         super.onDestroy();
         Log.d(Constants.LOG_TAG, "onDestroy - ScanActivity");
         scanForDevice(false);
+    }
+
+
+    @Override
+    public void onConnected(boolean connected) {
+        Log.d(Constants.LOG_TAG, "Is connected: " + connected);
+        if (connected) {
+            Intent intent = new Intent(this, SensorsActivity.class);
+            startActivity(intent);
+        }
     }
 
 }
