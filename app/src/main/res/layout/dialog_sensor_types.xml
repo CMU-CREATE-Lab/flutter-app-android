@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +26,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/light"/>
 
         </LinearLayout>
@@ -48,8 +49,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/soil_moisture" />
 
         </LinearLayout>
@@ -69,8 +72,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/distance"/>
 
         </LinearLayout>
@@ -90,8 +95,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/sound"/>
 
         </LinearLayout>
@@ -111,8 +118,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/wind_speed"/>
 
         </LinearLayout>
@@ -141,8 +150,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/humidity"/>
 
         </LinearLayout>
@@ -162,8 +173,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/temperature"/>
 
         </LinearLayout>
@@ -183,8 +196,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/barometric_pressure"/>
 
         </LinearLayout>
@@ -204,8 +219,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/analog_or_unknown"/>
 
         </LinearLayout>
@@ -225,8 +242,10 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="@string/no_sensor"/>
 
         </LinearLayout>
