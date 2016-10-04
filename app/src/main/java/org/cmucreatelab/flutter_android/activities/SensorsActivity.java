@@ -174,7 +174,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         globalHandler.sessionHandler.getFlutter().setSensors(sensors);
 
         selectedView.setImageResource(sensor.getBlueImageId());
-        currentSensorType.setText(sensor.getSensorType().toString());
+        currentSensorType.setText(getString(sensor.getSensorTypeId()));
 
         if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
             currentHigh.setText(getString(sensor.getHighTextId()));

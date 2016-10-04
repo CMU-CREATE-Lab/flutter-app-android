@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class Temperature extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.TEMPERATURE;
+    private static final int sensorTypeId = R.string.temperature;
     private static final int highTextId = R.string.high;
     private static final int lowTextId = R.string.low;
 
@@ -31,6 +32,12 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
     @Override
     public Type getSensorType() {
         return sensorType;
+    }
+
+
+    @Override
+    public int getSensorTypeId() {
+        return sensorTypeId;
     }
 
 

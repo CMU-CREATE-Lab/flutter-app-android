@@ -87,5 +87,10 @@
     <string name="low">Low</string>
     <string name="no_flutter_robot">To set up your robot, please first connect your Flutter.</string>
     <string name="no_flutter_sensor">To set up sensors, please first connect your Flutter.</string>
+    <string name="bright">Bright</string>
+    <string name="dark">Dark</string>
+    <string name="dry">Dry</string>
+    <string name="wet">Wet</string>
+    <string name="analog_or_unknown">Analog / Unknown</string>
 
 </resources>

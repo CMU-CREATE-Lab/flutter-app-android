@@ -15,8 +15,9 @@ import java.io.Serializable;
 public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.SOIL_MOISTURE;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
+    private static final int sensorTypeId = R.string.soil_moisture;
+    private static final int highTextId = R.string.wet;
+    private static final int lowTextId = R.string.dry;
 
     public static final int blueImageId = R.drawable.sensor_blue_soilmoisture;
     public static final int greenImageId = R.drawable.sensor_green_soilmoisture;
@@ -31,6 +32,12 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
     @Override
     public Type getSensorType() {
         return sensorType;
+    }
+
+
+    @Override
+    public int getSensorTypeId() {
+        return sensorTypeId;
     }
 
 
