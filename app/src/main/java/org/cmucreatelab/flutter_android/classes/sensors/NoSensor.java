@@ -19,7 +19,7 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
     private static final int highTextId = R.string.high;
     private static final int lowTextId = R.string.low;
 
-    public static final int blueImageId = R.drawable.sensor_blue_nosensor;
+    public static final int blueImageId = R.drawable.sensor_blue_no_sensor;
     public static final int greenImageId = R.drawable.sensor_green_nosensor;
     public static final int orangeImageId = R.drawable.sensor_orange_nosensor;
 
