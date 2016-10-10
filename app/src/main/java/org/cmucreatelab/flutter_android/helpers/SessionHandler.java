@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothProfile;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -90,6 +92,11 @@ public class SessionHandler {
             } else {
                 flutterConnectListener.onConnected(isBluetoothConnected);
             }
+
+            isBluetoothConnected = false;
+            mMelodySmartDevice.unregisterListener(melodySmartListener);
+            mMelodySmartDevice.unregisterListener(bondingListener);
+            mMelodySmartDevice.getDataService().unregisterListener(dataServiceListener);
         }
 
         @Override
@@ -155,9 +162,6 @@ public class SessionHandler {
 
 
     public void release() {
-        mMelodySmartDevice.unregisterListener(melodySmartListener);
-        mMelodySmartDevice.unregisterListener(bondingListener);
-        mMelodySmartDevice.getDataService().unregisterListener(dataServiceListener);
         mMelodySmartDevice.disconnect();
     }
 
