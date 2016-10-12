@@ -20,8 +20,10 @@ public class RobotActivity extends BaseNavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
         ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.debug_border));
+        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_robot));
+        toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
         globalHandler = GlobalHandler.newInstance(this);

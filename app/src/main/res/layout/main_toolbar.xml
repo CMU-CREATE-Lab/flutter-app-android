@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="56dp"
+    android:orientation="vertical" android:layout_width="99dp"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
@@ -17,28 +17,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/image_robot_menu"
+            <TextView
+                android:id="@+id/text_robot_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher" />
+                android:text="@string/robot"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/sensor_analog_s_m_20"
+                android:layout_marginBottom="150dp"/>
 
-            <ImageView
-                android:id="@+id/image_sensors_menu"
+            <TextView
+                android:id="@+id/text_sensors_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/image_robot_menu"
+                android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher" />
+                android:text="@string/sensors"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/sensor_analog_s_m_20"
+                android:layout_marginTop="131dp"/>
 
-            <ImageView
-                android:id="@+id/image_data_log_menu"
+            <TextView
+                android:id="@+id/text_data_log_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image_robot_menu"
+                android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/ic_launcher" />
+                android:text="@string/data_log"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/sensor_analog_s_m_20"
+                android:layout_marginBottom="118dp"/>
 
         </RelativeLayout>
 

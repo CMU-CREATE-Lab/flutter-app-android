@@ -3,7 +3,9 @@ package org.cmucreatelab.flutter_android.activities.abstract_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
@@ -16,6 +18,7 @@ import org.cmucreatelab.flutter_android.activities.SpeakerActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -37,35 +40,12 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         globalHandler = GlobalHandler.newInstance(this);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+      //  toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
     }
 
-    /*@OnClick(R.id.image_connect_flutter)
-    public void onClickConnectFlutter() {
-        Log.d(Constants.LOG_TAG, "onClickConnectFlutter");
-    }
 
-    @OnClick(R.id.image_servos)
-    public void onClickServos() {
-        Log.d(Constants.LOG_TAG, "onClickServos");
-        Intent intent = new Intent(this, ServosActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.image_leds)
-    public void onClickLeds() {
-        Log.d(Constants.LOG_TAG, "onClickLeds");
-        Intent intent = new Intent(this, LedsActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.image_speaker)
-    public void onClickSpeaker() {
-        Log.d(Constants.LOG_TAG, "onClickSpeaker");
-        Intent intent = new Intent(this, SpeakerActivity.class);
-        startActivity(intent);
-    }*/
-
-    @OnClick(R.id.image_sensors_menu)
+    @OnClick(R.id.text_sensors_menu)
     public void onClickSensorsMenu() {
         Log.d(Constants.LOG_TAG, "onClickSensors");
         Intent intent = new Intent(this, SensorsActivity.class);
@@ -73,7 +53,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.image_robot_menu)
+    @OnClick(R.id.text_robot_menu)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
         Intent intent = new Intent(this, RobotActivity.class);
@@ -81,7 +61,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.image_data_log_menu)
+    @OnClick(R.id.text_data_log_menu)
     public void onClickDataLogMenu() {
         Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);

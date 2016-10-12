@@ -28,7 +28,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  *
  * Session Handler
  *
- * A class that handles your session (when you select a specific device on ScanActivity)
+ * A class that handles your session (when you select a specific device on AppLandingActivity)
  * - connect
  * - disconnect
  * - message sending

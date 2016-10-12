@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * LeDeviceListAdapter
  *
- * An adapter that handles displaying a various amount of flutters to the ScanActivity.
+ * An adapter that handles displaying a various amount of flutters to the AppLandingActivity.
  *
  */
 public class LeDeviceListAdapter extends BaseAdapter {

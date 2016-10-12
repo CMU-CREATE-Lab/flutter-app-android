@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
@@ -123,8 +124,9 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         setContentView(R.layout.activity_sensors);
         ButterKnife.bind(this);
 
-        Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        mainToolbar.setContentInsetsAbsolute(0,0);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_sensor));
+        toolbar.setContentInsetsAbsolute(0,0);
 
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
@@ -133,11 +135,11 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         } else {
             String flutterName = globalHandler.sessionHandler.getFlutterName();
             if (flutterName != null && flutterName.length() > 0)
-                mainToolbar.setTitle(flutterName);
+                toolbar.setTitle(flutterName);
             else
-                mainToolbar.setTitle(R.string.unknown_device);
+                toolbar.setTitle(R.string.unknown_device);
             isPlayingSensors = true;
-            setSupportActionBar(mainToolbar);
+            setSupportActionBar(toolbar);
 
             globalHandler.sessionHandler.setFlutterMessageListener(this);
 

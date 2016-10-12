@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ScanActivity">
+    tools:context=".activities.AppLandingActivity">
 
     <include
         android:id="@+id/include_toolbar_scan"
@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="visible">
 
-            <include layout="@layout/content_first_scan"/>
+            <include layout="@layout/content_scan"/>
 
         </FrameLayout>
 
@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="gone">
 
-            <include layout="@layout/content_second_scan"/>
+            <include layout="@layout/content_scan"/>
 
         </FrameLayout>
 

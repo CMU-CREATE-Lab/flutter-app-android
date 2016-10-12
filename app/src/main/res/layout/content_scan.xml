@@ -3,22 +3,12 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_choose_flutter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_flutter"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
-
     <ListView
         android:id="@+id/scan_list"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/text_choose_flutter"
         android:padding="20dp"/>
 
 </RelativeLayout>

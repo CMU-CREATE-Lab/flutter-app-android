@@ -8,12 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
@@ -30,29 +32,36 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Steve on 5/26/2016.
  *
- * ScanActivity
+ * AppLandingActivity
  *
  * An activity that can scan for flutters nearby.
  *
  */
-public class ScanActivity extends BaseNavigationActivity implements FlutterConnectListener {
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
     private ArrayList<FlutterOG> mFlutterOGs;
     private boolean mScanning;
 
-
     private Timer timer;
-    private static int FIRST_SCAN_ID;
     private static int SECOND_SCAN_ID;
+
+    private TextView title;
 
 
     // Class methods
+
+
+    private void startScan() {
+        scanForDevice(true);
+        startTimer(7500);
+    }
 
 
     private void startTimer(final int ms) {
@@ -84,8 +93,10 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
         if (isScanning) {
             clearAll();
             mMelodySmartDevice.startLeScan(mLeScanCallBack);
+            // TODO - update scanning image
         } else {
             mMelodySmartDevice.stopLeScan(mLeScanCallBack);
+            // TODO - update scanning image
         }
     }
 
@@ -108,6 +119,7 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
                     String address = device.getAddress();
                     address = address.substring(0,8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
+                        findViewById(R.id.image_flutter).setVisibility(View.GONE);
                         String name = globalHandler.namingHandler.generateName(device.getAddress());
                         FlutterOG endResult = new FlutterOG(device, name);
                         mFlutterOGs.add(endResult);
@@ -117,7 +129,6 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
                             @Override
                             public void run() {
                                 timer.cancel();
-                                findViewById(FIRST_SCAN_ID).setVisibility(View.GONE);
                                 findViewById(SECOND_SCAN_ID).setVisibility(View.VISIBLE);
                                 startTimer(7500);
                             }
@@ -132,11 +143,14 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
 
         Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        mainToolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
         setSupportActionBar(mainToolbar);
+        title = (TextView) findViewById(R.id.text_app_landing_title);
+
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
         globalHandler.sessionHandler.setFlutterConnectListener(this);
         final Activity activity = this;
@@ -178,21 +192,17 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(Constants.LOG_TAG, "onResume - ScanActivity");
-        FIRST_SCAN_ID = R.id.frame_first_scan;
+        Log.d(Constants.LOG_TAG, "onResume - AppLandingActivity");
         SECOND_SCAN_ID = R.id.frame_second_scan;
         clearAll();
         findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
-        findViewById(FIRST_SCAN_ID).setVisibility(View.VISIBLE);
         findViewById(SECOND_SCAN_ID).setVisibility(View.GONE);
-        scanForDevice(true);
-        startTimer(7500);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(Constants.LOG_TAG, "onDestroy - ScanActivity");
+        Log.d(Constants.LOG_TAG, "onDestroy - AppLandingActivity");
         scanForDevice(false);
     }
 
@@ -204,6 +214,13 @@ public class ScanActivity extends BaseNavigationActivity implements FlutterConne
             Intent intent = new Intent(this, SensorsActivity.class);
             startActivity(intent);
         }
+    }
+
+
+    @OnClick(R.id.image_scan)
+    public void onClickScan() {
+        Log.d(Constants.LOG_TAG, "onClickScan");
+        startScan();
     }
 
 }

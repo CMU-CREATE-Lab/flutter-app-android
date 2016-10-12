@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.ScanActivity;
+import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 
 /**
  * Created by Steve on 10/4/2016.
@@ -44,7 +44,7 @@ public class NoFlutterConnectedDialog extends DialogFragment {
         builder.setPositiveButton(R.string.connect_flutter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getActivity(), ScanActivity.class);
+                Intent intent = new Intent(getActivity(), AppLandingActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }
