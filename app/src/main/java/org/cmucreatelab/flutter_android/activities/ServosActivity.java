@@ -80,7 +80,7 @@ public class ServosActivity extends BaseServoLedActivity {
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen " + relationship.getClass().getSimpleName());
-        this.selectedView.setImageResource(relationship.getGreenImageId());
+        this.selectedView.setImageResource(relationship.getGreenImageIdLg());
     }
 
 

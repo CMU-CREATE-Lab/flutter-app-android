@@ -19,9 +19,10 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     private static final int highTextId = R.string.high;
     private static final int lowTextId = R.string.low;
 
-    public static final int blueImageId = R.drawable.sensor_blue_humidity;
-    public static final int greenImageId = R.drawable.sensor_green_humidity;
-    public static final int orangeImageId = R.drawable.sensor_orange_humidity;
+    public static final int blueImageId = R.drawable.sensor_blue_humidity_l_g_68;
+    public static final int greenImageId = R.drawable.sensor_green_humidity_l_g_68;
+    public static final int orangeImageIdMd = R.drawable.sensor_orange_humidity_m_d_40;
+    public static final int orangeImageIdSm = R.drawable.sensor_orange_humidity_s_m_22;
 
 
     public Humidity() {
@@ -66,8 +67,14 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getOrangeImageId() {
-        return orangeImageId;
+    public int getOrangeImageIdMd() {
+        return orangeImageIdMd;
+    }
+
+
+    @Override
+    public int getOrangeImageIdSm() {
+        return orangeImageIdSm;
     }
 
 }

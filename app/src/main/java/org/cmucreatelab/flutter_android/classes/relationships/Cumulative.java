@@ -13,7 +13,8 @@ import org.cmucreatelab.flutter_android.R;
 public class Cumulative implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.CUMULATIVE;
-    public static final int greenImageId = R.drawable.relationship_green_cumulative;
+    public static final int greenImageIdLg = R.drawable.relationship_green_cumulative_l_g_68;
+    public static final int greenImageIdMd = R.drawable.relationship_green_cumulative_m_d_56;
 
 
 
@@ -24,8 +25,14 @@ public class Cumulative implements Relationship {
 
 
     @Override
-    public int getGreenImageId() {
-        return greenImageId;
+    public int getGreenImageIdLg() {
+        return greenImageIdLg;
+    }
+
+
+    @Override
+    public int getGreenImageIdMd() {
+        return greenImageIdMd;
     }
 
 }

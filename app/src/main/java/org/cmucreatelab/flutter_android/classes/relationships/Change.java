@@ -13,7 +13,8 @@ import org.cmucreatelab.flutter_android.R;
 public class Change implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.CHANGE;
-    public static final int greenImageId = R.drawable.relationship_green_change;
+    public static final int greenImageIdLg = R.drawable.relationship_green_change_l_g_68;
+    public static final int greenImageIdMd = R.drawable.relationship_green_change_m_d_56;
 
 
 
@@ -22,9 +23,16 @@ public class Change implements Relationship {
         return relationshipType;
     }
 
+
     @Override
-    public int getGreenImageId() {
-        return greenImageId;
+    public int getGreenImageIdLg() {
+        return greenImageIdLg;
+    }
+
+
+    @Override
+    public int getGreenImageIdMd() {
+        return greenImageIdMd;
     }
 
 }

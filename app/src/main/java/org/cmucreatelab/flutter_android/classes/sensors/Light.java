@@ -19,9 +19,10 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     private static final int highTextId = R.string.bright;
     private static final int lowTextId = R.string.dark;
 
-    public static final int blueImageId = R.drawable.sensor_blue_light;
-    public static final int greenImageId = R.drawable.sensor_green_light;
-    public static final int orangeImageId = R.drawable.sensor_orange_light;
+    public static final int blueImageId = R.drawable.sensor_blue_light_l_g_68;
+    public static final int greenImageId = R.drawable.sensor_green_light_l_g_68;
+    public static final int orangeImageIdMd = R.drawable.sensor_orange_light_m_d_40;
+    public static final int orangeImageIdSm = R.drawable.sensor_orange_light_s_m_22;
 
 
     public Light() {
@@ -66,8 +67,14 @@ public class Light extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getOrangeImageId() {
-        return orangeImageId;
+    public int getOrangeImageIdMd() {
+        return orangeImageIdMd;
+    }
+
+
+    @Override
+    public int getOrangeImageIdSm() {
+        return orangeImageIdSm;
     }
 
 }

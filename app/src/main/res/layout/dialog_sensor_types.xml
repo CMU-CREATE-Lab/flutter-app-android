@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_light"/>
+                android:src="@drawable/sensor_blue_light_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_soil_moisture"/>
+                android:src="@drawable/sensor_blue_soil_moisture_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_distance"/>
+                android:src="@drawable/sensor_blue_distance_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_sound"/>
+                android:src="@drawable/sensor_blue_sound_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_wind_speed"/>
+                android:src="@drawable/sensor_blue_wind_speed_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_humidity"/>
+                android:src="@drawable/sensor_blue_humidity_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_temperature"/>
+                android:src="@drawable/sensor_blue_temperature_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_barometric"/>
+                android:src="@drawable/sensor_blue_barometric_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_analog"/>
+                android:src="@drawable/sensor_blue_analog_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"

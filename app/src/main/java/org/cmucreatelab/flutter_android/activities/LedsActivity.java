@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -85,7 +86,7 @@ public class LedsActivity extends BaseServoLedActivity implements
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen " + relationship.getClass().getSimpleName());
-        this.selectedView.setImageResource(relationship.getGreenImageId());
+        this.selectedView.setImageResource(relationship.getGreenImageIdLg());
     }
 
 

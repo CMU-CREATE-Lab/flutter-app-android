@@ -19,9 +19,10 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
     private static final int highTextId = R.string.wet;
     private static final int lowTextId = R.string.dry;
 
-    public static final int blueImageId = R.drawable.sensor_blue_soil_moisture;
-    public static final int greenImageId = R.drawable.sensor_green_soilmoisture;
-    public static final int orangeImageId = R.drawable.sensor_orange_soilmoisture;
+    public static final int blueImageId = R.drawable.sensor_blue_soil_moisture_l_g_68;
+    public static final int greenImageId = R.drawable.sensor_green_soil_moisture_l_g_68;
+    public static final int orangeImageIdMd = R.drawable.sensor_orange_soil_moisture_m_d_40;
+    public static final int orangeImageIdSm = R.drawable.sensor_orange_soil_moisture_s_m_22;
 
 
     public SoilMoisture() {
@@ -66,8 +67,14 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getOrangeImageId() {
-        return orangeImageId;
+    public int getOrangeImageIdMd() {
+        return orangeImageIdMd;
+    }
+
+
+    @Override
+    public int getOrangeImageIdSm() {
+        return orangeImageIdSm;
     }
 
 }

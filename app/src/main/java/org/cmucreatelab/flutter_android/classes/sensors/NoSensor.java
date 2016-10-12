@@ -20,8 +20,9 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
     private static final int lowTextId = R.string.low;
 
     public static final int blueImageId = R.drawable.sensor_blue_no_sensor;
-    public static final int greenImageId = R.drawable.sensor_green_nosensor;
-    public static final int orangeImageId = R.drawable.sensor_orange_nosensor;
+    public static final int greenImageId = R.drawable.sensor_green_no_sensor_l_g_68;
+    public static final int orangeImageIdMd = R.drawable.sensor_orange_no_sensor;
+    public static final int orangeImageIdSm = R.drawable.sensor_orange_no_sensor_s_m_22;
 
 
     public NoSensor() {
@@ -66,8 +67,14 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public int getOrangeImageId() {
-        return orangeImageId;
+    public int getOrangeImageIdMd() {
+        return orangeImageIdMd;
+    }
+
+
+    @Override
+    public int getOrangeImageIdSm() {
+        return orangeImageIdSm;
     }
 
 

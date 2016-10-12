@@ -40,7 +40,8 @@ public interface Sensor {
     int getLowTextId();
     int getBlueImageId();
     int getGreenImageId();
-    int getOrangeImageId();
+    int getOrangeImageIdMd();
+    int getOrangeImageIdSm();
     int getSensorReading();
     void setSensorReading(int value);
 
