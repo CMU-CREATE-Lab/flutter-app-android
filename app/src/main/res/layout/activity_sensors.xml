@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toEndOf="@id/include_toolbar_sensors"
-        android:layout_above="@+id/linear_play_record">
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:id="@+id/linear_sensor_2"
@@ -272,40 +273,40 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_play_record"
+            android:layout_width="386dp"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/button_play_pause"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/button_icon_pause"
+                android:layout_margin="5dp"
+                android:text="@string/pause_sensors"
+                android:textColor="@color/white"
+                android:background="@drawable/buttonshape"/>
+
+
+            <Button
+                android:id="@+id/button_record"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/button_icon_record"
+                android:layout_margin="5dp"
+                android:text="@string/record_data"
+                android:textColor="@color/white"
+                android:background="@drawable/buttonshape" />
+
+        </LinearLayout>
+
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_play_record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:id="@+id/image_play_pause"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"
-            android:padding="10dp"/>
-
-        <ImageView
-            android:id="@+id/image_record_data"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"
-            android:padding="10dp"/>
-
-    </LinearLayout>
-
-    <!--<include
-        android:id="@+id/sensors_main_navigation"
-        layout="@layout/main_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />-->
 
 </RelativeLayout>

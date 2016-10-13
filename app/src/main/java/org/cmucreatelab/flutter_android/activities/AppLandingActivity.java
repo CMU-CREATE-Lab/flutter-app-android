@@ -146,9 +146,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
 
-        Toolbar mainToolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        mainToolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
-        setSupportActionBar(mainToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar.setContentInsetsAbsolute(0,0);
+        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
+        setSupportActionBar(toolbar);
         title = (TextView) findViewById(R.id.text_app_landing_title);
 
         globalHandler = GlobalHandler.newInstance(this.getApplicationContext());

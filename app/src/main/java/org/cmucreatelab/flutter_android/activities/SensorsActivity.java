@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -63,30 +64,12 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
-                    progress1.setProgress(sensors[0].getSensorReading());
-                } else {
-                    textSensor1Reading.setText("");
-                    progress1.setProgress(0);
-                }
-
-                if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
-                    progress2.setProgress(sensors[1].getSensorReading());
-                } else {
-                    textSensor2Reading.setText("");
-                    progress2.setProgress(0);
-                }
-
-                if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
-                    textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
-                    progress3.setProgress(sensors[2].getSensorReading());
-                } else {
-                    textSensor3Reading.setText("");
-                    progress3.setProgress(0);
-                }
+                textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
+                progress1.setProgress(sensors[0].getSensorReading());
+                textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
+                progress2.setProgress(sensors[1].getSensorReading());
+                textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
+                progress3.setProgress(sensors[2].getSensorReading());
 
             }
         });
@@ -152,6 +135,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
             progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
             sensors = globalHandler.sessionHandler.getFlutter().getSensors();
+            startSensorReading();
             updateViews();
         }
     }
@@ -181,7 +165,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
             currentHigh.setText(getString(sensor.getHighTextId()));
             currentLow.setText(getString(sensor.getLowTextId()));
-            startSensorReading();
         } else {
             currentHigh.setText("");
             currentLow.setText("");
@@ -250,23 +233,25 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     }
 
 
-    @OnClick(R.id.image_play_pause)
+    @OnClick(R.id.button_play_pause)
     public void onClickPlayPause() {
         Log.d(Constants.LOG_TAG, "onClickPlayPause");
-        ImageView image = (ImageView) findViewById(R.id.image_play_pause);
+        Button button = (Button) findViewById(R.id.button_play_pause);
         if (isPlayingSensors) {
-            image.setImageResource(R.mipmap.ic_launcher);
+            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
+            button.setText(R.string.play_sensors);
             isPlayingSensors = false;
             stopSensorReading();
         } else {
-            image.setImageResource(R.mipmap.ic_launcher);
+            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
+            button.setText(R.string.pause_sensors);
             isPlayingSensors = true;
             startSensorReading();
         }
     }
 
 
-    @OnClick(R.id.image_record_data)
+    @OnClick(R.id.button_record)
     public void onClickRecordData() {
         Log.d(Constants.LOG_TAG, "onClickRecordData");
     }
