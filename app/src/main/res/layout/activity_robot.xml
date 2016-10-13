@@ -9,4 +9,115 @@
         android:id="@+id/include_toolbar_robot"
         layout="@layout/main_toolbar" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/include_toolbar_robot"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/image_flutter_illustration"
+            android:layout_width="350dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/flutter_illustration_robot_page"/>
+        
+        <LinearLayout
+            android:id="@+id/linear_servos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toStartOf="@+id/image_flutter_illustration"
+            android:layout_marginTop="60dp"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_leds"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_above="@+id/image_flutter_illustration"
+            android:layout_toEndOf="@id/linear_servos"
+            android:layout_marginTop="30dp"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@id/linear_leds"
+            android:layout_marginTop="45dp"
+            android:padding="2dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/question_icon" />
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="49dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+
+            
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>
