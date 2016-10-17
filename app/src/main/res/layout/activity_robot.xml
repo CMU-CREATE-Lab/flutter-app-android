@@ -34,18 +34,21 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/image_servo_3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="2dp"
                 android:src="@drawable/question_icon"/>
 
             <ImageView
+                android:id="@+id/image_servo_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="2dp"
                 android:src="@drawable/question_icon"/>
 
             <ImageView
+                android:id="@+id/image_servo_1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="2dp"
@@ -65,6 +68,7 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/image_led_1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -72,6 +76,7 @@
                 android:src="@drawable/question_icon"/>
 
             <ImageView
+                android:id="@+id/image_led_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -79,6 +84,7 @@
                 android:src="@drawable/question_icon"/>
 
             <ImageView
+                android:id="@+id/image_led_3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -88,6 +94,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/image_speaker"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toEndOf="@id/linear_leds"
