@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothGatt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -194,6 +195,26 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
         Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
+
+
+        int screenSize = getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        String toastMsg;
+        switch(screenSize) {
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                toastMsg = "Large screen";
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                toastMsg = "Normal screen";
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                toastMsg = "Small screen";
+                break;
+            default:
+                toastMsg = "Screen size is neither large, normal or small";
+        }
+        Log.d(Constants.LOG_TAG, toastMsg);
     }
 
 

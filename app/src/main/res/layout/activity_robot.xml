@@ -30,8 +30,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toStartOf="@+id/image_flutter_illustration"
-            android:layout_marginTop="60dp"
-            android:padding="5dp">
+            android:layout_alignTop="@+id/image_flutter_illustration"
+            android:padding="5dp"
+            android:background="@drawable/debug_border">
 
             <ImageView
                 android:id="@+id/image_servo_3"
@@ -65,7 +66,8 @@
             android:layout_above="@+id/image_flutter_illustration"
             android:layout_toEndOf="@id/linear_servos"
             android:layout_marginTop="30dp"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:background="@drawable/debug_border">
 
             <ImageView
                 android:id="@+id/image_led_1"
@@ -98,7 +100,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toEndOf="@id/linear_leds"
-            android:layout_marginTop="45dp"
+            android:layout_alignBottom="@+id/linear_leds"
             android:padding="2dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/question_icon" />
