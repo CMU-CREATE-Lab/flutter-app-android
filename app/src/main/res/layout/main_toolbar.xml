@@ -13,41 +13,43 @@
         android:theme="@style/AppTheme"
         app:popupTheme="@style/AppTheme">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/text_robot_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="@string/robot"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/sensor_analog_s_m_20"
-                android:layout_marginBottom="150dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="530">
 
             <TextView
                 android:id="@+id/text_sensors_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:text="@string/sensors"
                 android:textColor="@color/white"
                 android:drawableStart="@drawable/sensor_analog_s_m_20"
-                android:layout_marginTop="131dp"/>
+                android:layout_weight="250"
+                android:gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/text_robot_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/robot"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/sensor_analog_s_m_20"
+                android:layout_weight="56"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/text_data_log_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:text="@string/data_log"
                 android:textColor="@color/white"
                 android:drawableStart="@drawable/sensor_analog_s_m_20"
-                android:layout_marginBottom="118dp"/>
+                android:layout_weight="224"
+                android:gravity="top"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

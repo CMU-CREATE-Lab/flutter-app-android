@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -187,6 +188,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             AlertDialog dialog = adb.create();
             dialog.show();
         }
+
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
+        Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
     }
 
 
