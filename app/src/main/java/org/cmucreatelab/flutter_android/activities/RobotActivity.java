@@ -10,6 +10,9 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavig
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,45 +41,60 @@ public class RobotActivity extends BaseNavigationActivity {
     }
 
 
+    // TODO - make a current output reference for when the callback function gets called
     @OnClick(R.id.image_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
+        ServoDialog dialog = ServoDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_servo_2)
     public void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
+        ServoDialog dialog = ServoDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_servo_3)
     public void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
+        ServoDialog dialog = ServoDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_led_1)
     public void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
+        LedDialog dialog = LedDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_led_2)
     public void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
+        LedDialog dialog = LedDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_led_3)
     public void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
+        LedDialog dialog = LedDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     @OnClick(R.id.image_speaker)
     public void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
+        SpeakerDialog dialog = SpeakerDialog.newInstance();
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 }

@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +13,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.ColorHighDialogDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.ColorLowDialogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorHighDialogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorLowDialogDialog;
 
 import butterknife.ButterKnife;
 

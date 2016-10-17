@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.RelationshipDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorDialog;
 
 import java.io.Serializable;
 
