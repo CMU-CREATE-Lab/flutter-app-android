@@ -148,6 +148,21 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
 
+        // Just in case someone got a hold of the app without BLE support
+        PackageManager pm = getApplicationContext().getPackageManager();
+        boolean isSupported = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+        if (!isSupported) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            adb.setMessage(R.string.ble_unsupported);
+            adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    finish();
+                }
+            });
+            AlertDialog dialog = adb.create();
+            dialog.show();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setContentInsetsAbsolute(0,0);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
@@ -174,21 +189,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
             }
         });
-
-        // Just in case someone got a hold of the app without BLE support
-        PackageManager pm = getApplicationContext().getPackageManager();
-        boolean isSupported = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
-        if (!isSupported) {
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            adb.setMessage(R.string.ble_unsupported);
-            adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            AlertDialog dialog = adb.create();
-            dialog.show();
-        }
 
         DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
