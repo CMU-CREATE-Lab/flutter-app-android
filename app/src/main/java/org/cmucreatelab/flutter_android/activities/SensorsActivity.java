@@ -177,7 +177,8 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     @Override
     protected void onPause() {
         super.onPause();
-        stopSensorReading();
+        if (globalHandler.sessionHandler.isBluetoothConnected)
+            stopSensorReading();
     }
 
     @Override

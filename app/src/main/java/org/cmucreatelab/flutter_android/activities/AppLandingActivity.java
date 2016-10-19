@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -226,6 +228,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         clearAll();
         findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
         findViewById(SECOND_SCAN_ID).setVisibility(View.GONE);
+        Button scan = (Button) findViewById(R.id.button_scan);
+        scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
+        scan.setText(R.string.scan);
+        scan.setTextColor(Color.WHITE);
     }
 
     @Override
@@ -246,9 +252,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
-    @OnClick(R.id.image_scan)
+    @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
+        Button scan = (Button) findViewById(R.id.button_scan);
+        scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
+        scan.setText(R.string.scanning);
+        scan.setTextColor(Color.BLACK);
         startScan();
     }
 
