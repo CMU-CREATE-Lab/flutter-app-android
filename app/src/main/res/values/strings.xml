@@ -98,5 +98,7 @@
     <string name="no_flutter">No Flutters Found</string>
     <string name="robot">Robot</string>
     <string name="data_log">Data Log</string>
+    <string name="enable_bluetooth">Enable Bluetooth</string>
+    <string name="enable_bluetooth_msg">Bluetooth is currently off, please turn it on to continue.</string>
 
 </resources>
