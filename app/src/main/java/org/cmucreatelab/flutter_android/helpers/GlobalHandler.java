@@ -24,7 +24,7 @@ public class GlobalHandler {
     private static GlobalHandler classInstance;
 
 
-    public static synchronized GlobalHandler newInstance(Context context) {
+    public static synchronized GlobalHandler getInstance(Context context) {
         if (classInstance == null) {
             classInstance = new GlobalHandler(context);
         }
