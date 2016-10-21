@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -196,7 +195,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             setSupportActionBar(toolbar);
             title = (TextView) findViewById(R.id.text_app_landing_title);
 
-            globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
+            globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
             globalHandler.sessionHandler.setFlutterConnectListener(this);
             final Activity activity = this;
 

@@ -28,6 +28,7 @@ import java.io.Serializable;
  * Created by Steve on 9/1/2016.
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
+// TODO - limit the dimensions so when you choose different images the dimensions remain constant
 public class RelationshipDialog extends DialogFragment implements View.OnClickListener {
 
 

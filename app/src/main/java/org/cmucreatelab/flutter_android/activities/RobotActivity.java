@@ -7,7 +7,6 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.outputs.LED;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -37,7 +36,7 @@ public class RobotActivity extends BaseNavigationActivity {
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        globalHandler = GlobalHandler.newInstance(this);
+        globalHandler = GlobalHandler.getInstance(this);
         servos = globalHandler.sessionHandler.getFlutter().getServos();
         leds = globalHandler.sessionHandler.getFlutter().getLeds();
         if (!globalHandler.sessionHandler.isBluetoothConnected) {

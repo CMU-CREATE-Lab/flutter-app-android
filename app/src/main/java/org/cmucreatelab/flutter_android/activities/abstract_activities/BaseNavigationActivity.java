@@ -3,22 +3,16 @@ package org.cmucreatelab.flutter_android.activities.abstract_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.LedsActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
-import org.cmucreatelab.flutter_android.activities.ServosActivity;
-import org.cmucreatelab.flutter_android.activities.SpeakerActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,7 +33,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        globalHandler = GlobalHandler.newInstance(this);
+        globalHandler = GlobalHandler.getInstance(this);
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
       //  toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
     }

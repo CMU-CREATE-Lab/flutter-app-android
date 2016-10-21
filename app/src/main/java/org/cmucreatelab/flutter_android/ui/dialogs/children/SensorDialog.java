@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
@@ -19,6 +21,8 @@ import java.io.Serializable;
 /**
  * Created by Steve on 9/1/2016.
  */
+// TODO - refactor the onClickListeners to look like the ServoDialog
+// TODO - limit the dimensions so when you choose different images the dimensions remain constant
 public class SensorDialog extends DialogFragment implements View.OnClickListener  {
 
 
@@ -43,12 +47,28 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(getString(R.string.choose_sensor)).setView(view);
+        builder.setTitle(getString(R.string.choose_sensor)).setView(view);
+
+        Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getFlutter().getSensors();
 
         // bind click listeners
-        view.findViewById(R.id.image_sensor_1).setOnClickListener(this);
-        view.findViewById(R.id.image_sensor_2).setOnClickListener(this);
-        view.findViewById(R.id.image_sensor_3).setOnClickListener(this);
+        ImageView sensor1 = (ImageView) view.findViewById(R.id.image_sensor_1);
+        ImageView sensor2 = (ImageView) view.findViewById(R.id.image_sensor_2);
+        ImageView sensor3 = (ImageView) view.findViewById(R.id.image_sensor_3);
+        TextView textSensor1 = (TextView) view.findViewById(R.id.text_sensor_1);
+        TextView textSensor2 = (TextView) view.findViewById(R.id.text_sensor_2);
+        TextView textSensor3 = (TextView) view.findViewById(R.id.text_sensor_3);
+
+        sensor1.setOnClickListener(this);
+        sensor2.setOnClickListener(this);
+        sensor3.setOnClickListener(this);
+
+        sensor1.setImageResource(sensors[0].getGreenImageId());
+        sensor2.setImageResource(sensors[1].getGreenImageId());
+        sensor3.setImageResource(sensors[2].getGreenImageId());
+        textSensor1.setText(sensors[0].getSensorType().toString());
+        textSensor2.setText(sensors[1].getSensorType().toString());
+        textSensor3.setText(sensors[2].getSensorType().toString());
 
         return builder.create();
     }
@@ -56,7 +76,7 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        GlobalHandler globalHandler = GlobalHandler.newInstance(view.getContext());
+        GlobalHandler globalHandler = GlobalHandler.getInstance(view.getContext());
         Sensor sensor = new NoSensor();
         switch (view.getId()) {
             case R.id.image_sensor_1:

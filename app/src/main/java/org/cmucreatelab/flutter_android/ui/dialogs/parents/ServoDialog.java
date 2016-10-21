@@ -18,15 +18,19 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorDialog;
 
 import java.io.Serializable;
 
 /**
  * Created by Steve on 10/17/2016.
  */
-public class ServoDialog extends DialogFragment implements Serializable, DialogInterface.OnClickListener, RelationshipDialog.DialogRelationshipListener {
+public class ServoDialog extends DialogFragment implements Serializable, DialogInterface.OnClickListener,
+        SensorDialog.DialogSensorListener,
+        RelationshipDialog.DialogRelationshipListener {
 
 
     private Serializable serializable;
@@ -39,6 +43,8 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
 
     private ImageView currentImageView;
     private TextView currentTextView;
+    private Sensor currentSensor;
+    private Relationship currentRelationship;
 
 
     public static ServoDialog newInstance(Servo servo, String servoNumber) {
@@ -99,6 +105,8 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
             Log.d(Constants.LOG_TAG, "onClickSetLinkedSensor");
             currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
             currentTextView = (TextView) ((ViewGroup) view).getChildAt(1);
+            DialogFragment dialog = SensorDialog.newInstance(serializable);
+            dialog.show(dialogFragment.getFragmentManager(), "tag");
         }
     };
 
@@ -132,10 +140,20 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
 
 
     @Override
+    public void onSensorChosen(Sensor sensor) {
+        Log.d(Constants.LOG_TAG, "onSensorChosen");
+        currentImageView.setImageResource(sensor.getGreenImageId());
+        currentTextView.setText(sensor.getSensorType().toString());
+        currentSensor = sensor;
+    }
+
+
+    @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextView.setText(relationship.getRelationshipType().toString());
+        currentRelationship = relationship;
     }
 
 }

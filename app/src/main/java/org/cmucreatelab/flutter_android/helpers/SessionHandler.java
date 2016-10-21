@@ -2,8 +2,6 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothProfile;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -143,7 +141,7 @@ public class SessionHandler {
 
     public void startSession(Activity activity, FlutterOG flutterOG) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
-        globalHandler = GlobalHandler.newInstance(activity.getApplicationContext());
+        globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
         mActivity = activity;
         mFlutterOG = flutterOG;
         mMessage = new Message();

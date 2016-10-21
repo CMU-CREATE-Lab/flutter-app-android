@@ -27,7 +27,7 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        globalHandler = GlobalHandler.newInstance(this.getActivity());
+        globalHandler = GlobalHandler.getInstance(this.getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_email, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
