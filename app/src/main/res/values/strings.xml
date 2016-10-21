@@ -100,5 +100,18 @@
     <string name="data_log">Data Log</string>
     <string name="enable_bluetooth">Enable Bluetooth</string>
     <string name="enable_bluetooth_msg">Bluetooth is currently off, please turn it on to continue.</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="set_linked_sensor">Set Linked Sensor</string>
+    <string name="set_relationship">Set Relationship</string>
+    <string name="set_maximum_position">Set Maximum Position</string>
+    <string name="set_minimum_position">Set Minimum Position</string>
+    <string name="set_up_servo">Set Up Servo</string>
+    <string name="proportional">Proportional</string>
+    <string name="cumulative">Cumulative</string>
+    <string name="change">Change</string>
+    <string name="frequency">Frequency</string>
+    <string name="amplitude">Amplitude</string>
+    <string name="constant">Constant</string>
+    <string name="switch_relationship">Switch</string>
 
 </resources>

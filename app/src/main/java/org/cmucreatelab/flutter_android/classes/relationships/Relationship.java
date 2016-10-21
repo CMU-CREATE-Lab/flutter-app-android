@@ -18,7 +18,9 @@ public interface Relationship {
         AMPLITUDE,
         FREQUENCY,
         CUMULATIVE,
-        CHANGE
+        CHANGE,
+        SWITCH,
+        CONSTANT
     }
 
     Type getRelationshipType();

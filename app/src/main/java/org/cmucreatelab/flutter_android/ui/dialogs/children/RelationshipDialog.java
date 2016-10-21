@@ -13,11 +13,13 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
 import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ import java.io.Serializable;
 /**
  * Created by Steve on 9/1/2016.
  */
+// TODO - refactor the onClickListeners to look like the ServoDialog
 public class RelationshipDialog extends DialogFragment implements View.OnClickListener {
 
 
@@ -48,14 +51,16 @@ public class RelationshipDialog extends DialogFragment implements View.OnClickLi
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_relationships, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(getString(R.string.choose_relationship)).setView(view);
+        builder.setTitle(getString(R.string.choose_relationship)).setView(view);
 
         // bind click listeners
-        view.findViewById(R.id.image_proportional).setOnClickListener(this);
-        view.findViewById(R.id.image_frequency).setOnClickListener(this);
-        view.findViewById(R.id.image_amplitude).setOnClickListener(this);
-        view.findViewById(R.id.image_cumulative).setOnClickListener(this);
-        view.findViewById(R.id.image_change).setOnClickListener(this);
+        view.findViewById(R.id.linear_proportional).setOnClickListener(this);
+        view.findViewById(R.id.linear_frequency).setOnClickListener(this);
+        view.findViewById(R.id.linear_amplitude).setOnClickListener(this);
+        view.findViewById(R.id.linear_cumulative).setOnClickListener(this);
+        view.findViewById(R.id.linear_change).setOnClickListener(this);
+        view.findViewById(R.id.linear_switch).setOnClickListener(this);
+        view.findViewById(R.id.linear_constant).setOnClickListener(this);
 
         return builder.create();
     }
@@ -65,25 +70,33 @@ public class RelationshipDialog extends DialogFragment implements View.OnClickLi
     public void onClick(View view) {
         Relationship relationship = new NoRelationship();
         switch (view.getId()) {
-            case R.id.image_proportional:
-                Log.d(Constants.LOG_TAG, "onClickLightSensor");
+            case R.id.linear_proportional:
+                Log.d(Constants.LOG_TAG, "onClickProportional");
                 relationship = new Proportional();
                 break;
-            case R.id.image_frequency:
-                Log.d(Constants.LOG_TAG, "onClickSoilMoistureSensor");
+            case R.id.linear_frequency:
+                Log.d(Constants.LOG_TAG, "onClickFrequency");
                 relationship = new Frequency();
                 break;
-            case R.id.image_amplitude:
-                Log.d(Constants.LOG_TAG, "onClickDistanceSensor");
+            case R.id.linear_amplitude:
+                Log.d(Constants.LOG_TAG, "onClickAmplitude");
                 relationship = new Amplitutude();
                 break;
-            case R.id.image_cumulative:
-                Log.d(Constants.LOG_TAG, "onClickSoundSensor");
+            case R.id.linear_cumulative:
+                Log.d(Constants.LOG_TAG, "onClickImageCumulative");
                 relationship = new Cumulative();
                 break;
-            case R.id.image_change:
-                Log.d(Constants.LOG_TAG, "onClickWindSpeedSensor");
+            case R.id.linear_change:
+                Log.d(Constants.LOG_TAG, "onClickChange");
                 relationship = new Change();
+                break;
+            case R.id.linear_switch:
+                Log.d(Constants.LOG_TAG, "onClickSwitch");
+                relationship = new Switch();
+                break;
+            case R.id.linear_constant:
+                Log.d(Constants.LOG_TAG, "onClickConstant");
+                relationship = new Constant();
                 break;
         }
         relationshipListener.onRelationshipChosen(relationship);

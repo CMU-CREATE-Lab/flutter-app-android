@@ -7,6 +7,9 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.outputs.LED;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -20,6 +23,8 @@ import butterknife.OnClick;
 public class RobotActivity extends BaseNavigationActivity {
 
     private GlobalHandler globalHandler;
+    private Servo[] servos;
+    private LED[] leds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,8 @@ public class RobotActivity extends BaseNavigationActivity {
         setSupportActionBar(toolbar);
 
         globalHandler = GlobalHandler.newInstance(this);
+        servos = globalHandler.sessionHandler.getFlutter().getServos();
+        leds = globalHandler.sessionHandler.getFlutter().getLeds();
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
@@ -45,7 +52,7 @@ public class RobotActivity extends BaseNavigationActivity {
     @OnClick(R.id.image_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[0], "1");
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -53,7 +60,7 @@ public class RobotActivity extends BaseNavigationActivity {
     @OnClick(R.id.image_servo_2)
     public void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[1], "2");
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -61,7 +68,7 @@ public class RobotActivity extends BaseNavigationActivity {
     @OnClick(R.id.image_servo_3)
     public void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[2], "3");
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
