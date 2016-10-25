@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.classes.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -15,28 +16,29 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  */
 public abstract class A_Output implements Output{
 
-    protected Sensor mSensor;
-    protected Relationship mRelationship;
+    private Settings settings;
 
 
     public A_Output() {
-        this.mSensor = new NoSensor();
-        this.mRelationship = new Proportional();
+        /*this.mSensor = new NoSensor();
+        this.mRelationship = new Proportional();*/
     }
 
 
     public A_Output(Sensor sensor, Relationship relationship) {
-        this.mSensor = sensor;
-        this.mRelationship = relationship;
+        /*this.mSensor = sensor;
+        this.mRelationship = relationship;*/
     }
 
     // getters
-    public Sensor getSensor() { return this.mSensor; }
-    public Relationship getRelationship() { return this.mRelationship; }
-
+    @Override
+    public Settings getSettings() {
+        return settings;
+    }
 
     // setters
-    public void setSensor(Sensor sensor) { this.mSensor = sensor; }
-    public void setRelationship(Relationship relationship) { this.mRelationship = relationship; }
+    @Override
+    public void setSettings(Settings settings) {
 
+    }
 }
