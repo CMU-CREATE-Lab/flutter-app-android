@@ -20,14 +20,7 @@ public abstract class A_Output implements Output{
 
 
     public A_Output() {
-        /*this.mSensor = new NoSensor();
-        this.mRelationship = new Proportional();*/
-    }
-
-
-    public A_Output(Sensor sensor, Relationship relationship) {
-        /*this.mSensor = sensor;
-        this.mRelationship = relationship;*/
+        settings = new Settings();
     }
 
     // getters
