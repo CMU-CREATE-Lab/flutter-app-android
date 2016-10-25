@@ -17,18 +17,18 @@ public abstract class A_Sensor implements Sensor {
 
     protected ArrayList<Output> mOutputs;
     private int reading;
+    private int portNumber;
 
 
-    public A_Sensor() {
+    public A_Sensor(int portNumber) {
         this.mOutputs = new ArrayList<>();
         reading = 0;
+        this.portNumber = portNumber;
     }
 
 
     @Override
-    public void addLink(Output output, Relationship relationship) {
-        output.setSensor(this);
-        output.setRelationship(relationship);
+    public void addLink(Output output) {
         mOutputs.add(output);
     }
 
@@ -49,6 +49,13 @@ public abstract class A_Sensor implements Sensor {
     public int getSensorReading() {
         return reading;
     }
+
+
+    @Override
+    public int getPortNumber() {
+        return portNumber;
+    }
+
     @Override
     public void setSensorReading(int value) {
         reading = value;

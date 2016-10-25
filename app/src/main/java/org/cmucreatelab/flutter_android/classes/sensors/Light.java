@@ -25,8 +25,8 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_light_s_m_22;
 
 
-    public Light() {
-        // empty
+    public Light(int portNumber) {
+        super(portNumber);
     }
 
 

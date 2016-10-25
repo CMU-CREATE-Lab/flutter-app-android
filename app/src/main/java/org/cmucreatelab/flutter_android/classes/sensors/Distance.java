@@ -25,8 +25,8 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_distance_s_m_22;
 
 
-    public Distance() {
-        // empty
+    public Distance(int portNumber) {
+        super(portNumber);
     }
 
 

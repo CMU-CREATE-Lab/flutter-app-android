@@ -25,8 +25,8 @@ public class AnalogOrUnknown extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_analog_copy;
 
 
-    public AnalogOrUnknown() {
-        // empty
+    public AnalogOrUnknown(int portNumber) {
+        super(portNumber);
     }
 
 

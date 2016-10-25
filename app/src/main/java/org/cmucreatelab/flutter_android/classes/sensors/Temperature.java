@@ -25,8 +25,8 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_temperature_s_m_22;
 
 
-    public Temperature() {
-        // empty
+    public Temperature(int portNumber) {
+        super(portNumber);
     }
 
 

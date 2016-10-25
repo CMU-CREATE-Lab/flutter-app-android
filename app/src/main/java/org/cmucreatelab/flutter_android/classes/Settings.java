@@ -18,7 +18,7 @@ public class Settings extends AdvancedSettings {
 
 
     public Settings() {
-        sensor = new NoSensor();
+        sensor = new NoSensor(0);
         relationship = new NoRelationship();
         outputMax = 100;
         outputMin = 0;

@@ -30,7 +30,7 @@ public interface Sensor {
         NO_SENSOR
     }
 
-    void addLink(Output output, Relationship relationship);
+    void addLink(Output output);
     void removeLink(Output output);
     void clearLinks();
 
@@ -43,6 +43,7 @@ public interface Sensor {
     int getOrangeImageIdMd();
     int getOrangeImageIdSm();
     int getSensorReading();
+    int getPortNumber();
     void setSensorReading(int value);
 
 }

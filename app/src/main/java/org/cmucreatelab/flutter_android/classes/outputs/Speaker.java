@@ -65,4 +65,16 @@ public class Speaker extends A_Output implements Output {
         return imageId;
     }
 
+
+    @Override
+    public int getMax() {
+        return MAXIMUM_VOLUME;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM_VOLUME;
+    }
+
 }

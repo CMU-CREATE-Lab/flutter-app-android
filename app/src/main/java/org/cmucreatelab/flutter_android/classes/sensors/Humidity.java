@@ -25,8 +25,8 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_humidity_s_m_22;
 
 
-    public Humidity() {
-        // empty
+    public Humidity(int portNumber) {
+        super(portNumber);
     }
 
 

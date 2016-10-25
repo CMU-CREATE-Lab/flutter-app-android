@@ -25,8 +25,8 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_no_sensor_s_m_22;
 
 
-    public NoSensor() {
-        // empty
+    public NoSensor(int portNumber) {
+        super(portNumber);
     }
 
 

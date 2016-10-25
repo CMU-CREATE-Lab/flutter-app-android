@@ -53,4 +53,16 @@ public class Servo extends A_Output implements Serializable, Output {
         return imageId;
     }
 
+
+    @Override
+    public int getMax() {
+        return MAXIMUM;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM;
+    }
+
 }

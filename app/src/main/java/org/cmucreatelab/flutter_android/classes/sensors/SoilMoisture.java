@@ -25,8 +25,8 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_soil_moisture_s_m_22;
 
 
-    public SoilMoisture() {
-        // empty
+    public SoilMoisture(int portNumber) {
+        super(portNumber);
     }
 
 

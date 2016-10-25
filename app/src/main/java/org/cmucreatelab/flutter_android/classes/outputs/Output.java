@@ -24,6 +24,8 @@ public interface Output {
     Type getOutputType();
     int getOutputImageId();
     Settings getSettings();
+    int getMax();
+    int getMin();
 
     // setters
     void setSettings(Settings settings);

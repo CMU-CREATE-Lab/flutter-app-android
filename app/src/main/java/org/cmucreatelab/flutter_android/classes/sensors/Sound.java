@@ -25,8 +25,8 @@ public class Sound extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_sound_s_m_22;
 
 
-    public Sound() {
-        // empty
+    public Sound(int portNumber) {
+        super(portNumber);
     }
 
 

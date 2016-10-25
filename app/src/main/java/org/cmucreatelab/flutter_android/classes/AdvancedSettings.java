@@ -10,6 +10,14 @@ public abstract class AdvancedSettings {
     private int inputMin;
     private int zeroValue;
 
+
+    protected String intToHex(int val) {
+        String result = "";
+
+        return result;
+    }
+
+
     public AdvancedSettings() {
         inputMax = 100;
         inputMin = 0;

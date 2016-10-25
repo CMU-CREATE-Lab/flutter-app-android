@@ -25,8 +25,8 @@ public class BarometricPressure extends A_Sensor implements Sensor, Serializable
     public static final int orangeImageIdSm = R.drawable.sensor_orange_barometric_s_m_22;
 
 
-    public BarometricPressure() {
-        // empty
+    public BarometricPressure(int portNumber) {
+        super(portNumber);
     }
 
 

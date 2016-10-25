@@ -25,8 +25,8 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     public static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
 
 
-    public WindSpeed() {
-        // empty
+    public WindSpeed(int portNumber) {
+        super(portNumber);
     }
 
 

@@ -15,7 +15,7 @@ public class LED extends A_Output implements Output {
 
     private static final Output.Type outputType = Type.LED;
     private static final int MINIMUM = 0;
-    private static final int MAXIMUM = 180;
+    private static final int MAXIMUM = 100;
 
     public static final int imageId = R.mipmap.ic_launcher;
 
@@ -52,6 +52,18 @@ public class LED extends A_Output implements Output {
     @Override
     public int getOutputImageId() {
         return imageId;
+    }
+
+
+    @Override
+    public int getMax() {
+        return MAXIMUM;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM;
     }
 
 }

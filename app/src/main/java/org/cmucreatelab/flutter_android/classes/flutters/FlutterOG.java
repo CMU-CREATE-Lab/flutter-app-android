@@ -49,7 +49,7 @@ public class FlutterOG extends Flutter {
             mLeds[i] = new LED(0,0,0,0);
         }
         for (int i = 0; i < mSensors.length; i++) {
-            mSensors[i] = new NoSensor();
+            mSensors[i] = new NoSensor(0);
         }
     }
 
