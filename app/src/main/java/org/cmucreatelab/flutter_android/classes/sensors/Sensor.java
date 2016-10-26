@@ -33,10 +33,6 @@ public interface Sensor {
         NO_SENSOR
     }
 
-    void addLink(Output output);
-    void removeLink(Output output);
-    void clearLinks();
-
     Type getSensorType();
     int getSensorTypeId();
     int getHighTextId();
@@ -47,7 +43,6 @@ public interface Sensor {
     int getOrangeImageIdSm();
     int getSensorReading();
     int getPortNumber();
-    ArrayList<Output> getLinks();
     void setSensorReading(int value);
 
 }

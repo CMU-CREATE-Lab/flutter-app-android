@@ -15,33 +15,13 @@ import java.util.ArrayList;
  */
 public abstract class A_Sensor implements Sensor {
 
-    private ArrayList<Output> mOutputs;
     private int reading;
     private int portNumber;
 
 
     public A_Sensor(int portNumber) {
-        this.mOutputs = new ArrayList<>();
         reading = 0;
         this.portNumber = portNumber;
-    }
-
-
-    @Override
-    public void addLink(Output output) {
-        mOutputs.add(output);
-    }
-
-
-    @Override
-    public void removeLink(Output output) {
-        mOutputs.remove(output);
-    }
-
-
-    @Override
-    public void clearLinks() {
-        mOutputs.clear();
     }
 
 
@@ -56,11 +36,6 @@ public abstract class A_Sensor implements Sensor {
         return portNumber;
     }
 
-
-    @Override
-    public ArrayList<Output> getLinks() {
-        return mOutputs;
-    }
 
     @Override
     public void setSensorReading(int value) {
