@@ -39,14 +39,14 @@ public class FlutterOG extends Flutter {
         this.name = name;
         this.mServos = new Servo[NUMBER_OF_SERVOS];
         this.mLeds = new LED[NUMBER_OF_LEDS];
-        this.mSpeaker = new Speaker();
+        this.mSpeaker = new Speaker(0);
         this.mSensors = new Sensor[NUMBER_OF_SENSORS];
 
         for (int i = 0; i < mServos.length; i++) {
             mServos[i] = new Servo(0);
         }
         for (int i = 0; i < mLeds.length; i++) {
-            mLeds[i] = new LED(0,0,0,0);
+            mLeds[i] = new LED(0);
         }
         for (int i = 0; i < mSensors.length; i++) {
             mSensors[i] = new NoSensor(0);

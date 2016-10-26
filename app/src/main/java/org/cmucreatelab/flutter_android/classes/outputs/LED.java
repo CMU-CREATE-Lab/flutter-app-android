@@ -43,12 +43,30 @@ public class LED extends A_Output implements Output {
     }
 
 
+    public void setRed(int red) {
+        this.red = red;
+    }
+    public void setGreen(int green) {
+        this.green = green;
+    }
+    public void setBlue(int blue) {
+        this.blue = blue;
+    }
     public void setIntensity(int intensity) {
         if (intensity >= MINIMUM && intensity <= MAXIMUM) {
             this.intensity = intensity;
         } else {
             this.intensity = 0;
         }
+    }
+    public int getRed() {
+        return this.red;
+    }
+    public int getGreen() {
+        return this.green;
+    }
+    public int getBlue() {
+        return this.blue;
     }
     public int getIntensity() {
         return this.intensity;
