@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public abstract class A_Sensor implements Sensor {
 
-    protected ArrayList<Output> mOutputs;
+    private ArrayList<Output> mOutputs;
     private int reading;
     private int portNumber;
 
@@ -54,6 +54,12 @@ public abstract class A_Sensor implements Sensor {
     @Override
     public int getPortNumber() {
         return portNumber;
+    }
+
+
+    @Override
+    public ArrayList<Output> getLinks() {
+        return mOutputs;
     }
 
     @Override

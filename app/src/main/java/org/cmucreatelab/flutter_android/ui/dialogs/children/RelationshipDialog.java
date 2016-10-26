@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
@@ -39,7 +38,7 @@ public class RelationshipDialog extends DialogFragment implements View.OnClickLi
         RelationshipDialog relationshipDialog = new RelationshipDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
+        args.putSerializable(Relationship.RELATIONSHIP_KEY, serializable);
         relationshipDialog.setArguments(args);
 
         return relationshipDialog;
@@ -47,7 +46,7 @@ public class RelationshipDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
-        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
+        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Relationship.RELATIONSHIP_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_relationships, null);

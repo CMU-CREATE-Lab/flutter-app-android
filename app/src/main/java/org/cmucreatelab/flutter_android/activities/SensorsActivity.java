@@ -175,11 +175,19 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        globalHandler.sessionHandler.setFlutterMessageListener(this);
+    }
+
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (globalHandler.sessionHandler.isBluetoothConnected)
             stopSensorReading();
     }
+
 
     @Override
     public void onSensorTypeChosen(Sensor sensor) {
@@ -242,7 +250,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_1, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(1, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -255,7 +263,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_2, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(2, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -268,7 +276,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_3, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(3, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 

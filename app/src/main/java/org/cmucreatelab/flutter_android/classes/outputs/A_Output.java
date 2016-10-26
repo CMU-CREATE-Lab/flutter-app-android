@@ -19,9 +19,7 @@ public abstract class A_Output implements Output{
     private Settings settings;
 
 
-    public A_Output() {
-        settings = new Settings();
-    }
+    public A_Output() {}
 
     // getters
     @Override
@@ -32,6 +30,6 @@ public abstract class A_Output implements Output{
     // setters
     @Override
     public void setSettings(Settings settings) {
-
+        this.settings = settings;
     }
 }

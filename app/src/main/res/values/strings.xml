@@ -113,5 +113,8 @@
     <string name="amplitude">Amplitude</string>
     <string name="constant">Constant</string>
     <string name="switch_relationship">Switch</string>
+    <string name="save">Save</string>
+    <string name="linked_sensor">Linked Sensor</string>
+    <string name="relationship">Relationship</string>
 
 </resources>

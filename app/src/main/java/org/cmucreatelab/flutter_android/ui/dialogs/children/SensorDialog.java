@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -33,7 +32,7 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
         SensorDialog sensorDialog = new SensorDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
+        args.putSerializable(Sensor.SENSOR_KEY, serializable);
         sensorDialog.setArguments(args);
 
         return sensorDialog;
@@ -43,7 +42,7 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
-        dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
+        dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Sensor.SENSOR_KEY);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
@@ -77,7 +76,7 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(view.getContext());
-        Sensor sensor = new NoSensor();
+        Sensor sensor = new NoSensor(0);
         switch (view.getId()) {
             case R.id.image_sensor_1:
                 sensor = globalHandler.sessionHandler.getFlutter().getSensors()[0];

@@ -12,6 +12,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * An interface defining the various types of outputs.
  *
  */
+// TODO - add a port number to the outputs like I did sensors
 public interface Output {
 
     enum Type {

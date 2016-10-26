@@ -30,7 +30,9 @@
             <TextView
                 android:id="@+id/text_sensor_1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"/>
 
         </LinearLayout>
 
@@ -61,7 +63,9 @@
             <TextView
                 android:id="@+id/text_sensor_2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"/>
 
         </LinearLayout>
 
@@ -92,7 +96,9 @@
             <TextView
                 android:id="@+id/text_sensor_3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"/>
 
         </LinearLayout>
 
