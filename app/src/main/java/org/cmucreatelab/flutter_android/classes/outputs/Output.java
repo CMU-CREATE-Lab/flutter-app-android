@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * An interface defining the various types of outputs.
  *
  */
-// TODO - add a port number to the outputs like I did sensors
 public interface Output {
 
     enum Type {
@@ -25,6 +24,7 @@ public interface Output {
     Type getOutputType();
     int getOutputImageId();
     Settings getSettings();
+    int getPortNumber();
     int getMax();
     int getMin();
 

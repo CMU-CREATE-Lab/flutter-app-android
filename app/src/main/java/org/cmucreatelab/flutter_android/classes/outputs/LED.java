@@ -25,7 +25,17 @@ public class LED extends A_Output implements Output {
     private int intensity;
 
 
-    public LED(int red, int green, int blue, int intensity) {
+    public LED(int portNumber) {
+        super(portNumber);
+        this.red = 0;
+        this.green = 0;
+        this.blue = 0;
+        this.intensity = MINIMUM;
+    }
+
+
+    public LED(int red, int green, int blue, int intensity, int portNumber) {
+        super(portNumber);
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -36,6 +46,8 @@ public class LED extends A_Output implements Output {
     public void setIntensity(int intensity) {
         if (intensity >= MINIMUM && intensity <= MAXIMUM) {
             this.intensity = intensity;
+        } else {
+            this.intensity = 0;
         }
     }
     public int getIntensity() {

@@ -24,13 +24,15 @@ public class Speaker extends A_Output implements Output {
     private int volume;
     private int frequency;
 
-    public Speaker() {
+    public Speaker(int portNumber) {
+        super(portNumber);
         this.volume = MAXIMUM_VOLUME / 2;
         this.frequency = MAXIMUM_FREQUENCY / 2;
     }
 
 
-    public Speaker(int volume, int frequency) {
+    public Speaker(int volume, int frequency, int portNumber) {
+        super(portNumber);
         this.setVolume(volume);
         this.setFrequency(frequency);
     }

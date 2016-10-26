@@ -27,8 +27,9 @@ public class Servo extends A_Output implements Serializable, Output {
     private int currentValue;
 
 
-    public Servo(int currentLocal) {
-        this.setCurrentValue(currentLocal);
+    public Servo(int portNumber) {
+        super(portNumber);
+        this.setCurrentValue(0);
     }
 
 
