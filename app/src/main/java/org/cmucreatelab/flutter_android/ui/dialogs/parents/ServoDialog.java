@@ -29,6 +29,9 @@ import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorDialog;
 
 import java.io.Serializable;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 10/17/2016.
  *
@@ -91,16 +94,7 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setTitle(getString(R.string.set_up_servo) +  " " + servoNumber).setView(view);
         builder.setPositiveButton(R.string.save_settings, this);
-
-        setLinkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
-        setRelationship = (LinearLayout) view.findViewById(R.id.linear_set_relationship);
-        setMaximumPos = (LinearLayout) view.findViewById(R.id.linear_set_max_pos);
-        setMinimumPos = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
-
-        setLinkedSensor.setOnClickListener(linkedSensorListener);
-        setRelationship.setOnClickListener(relationshipListener);
-        setMaximumPos.setOnClickListener(maximumPosListener);
-        setMinimumPos.setOnClickListener(minimumPosListener);
+        ButterKnife.bind(this, view);
 
         servoSettings = new Settings();
 
@@ -121,60 +115,52 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
     // OnClickListeners
 
     // TODO - change the textview structure
-    private View.OnClickListener linkedSensorListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickSetLinkedSensor");
-            currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-            View layout = ((ViewGroup) view).getChildAt(1);
-            currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-            currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-            DialogFragment dialog = SensorDialog.newInstance(serializable);
-            dialog.show(dialogFragment.getFragmentManager(), "tag");
-        }
-    };
+    @OnClick(R.id.linear_set_linked_sensor)
+    public void onClickSetLinkedSensor(View view) {
+        Log.d(Constants.LOG_TAG, "onClickSetLinkedSensor");
+        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+        DialogFragment dialog = SensorDialog.newInstance(serializable);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
-    private View.OnClickListener relationshipListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickSetRelationship");
-            currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-            View layout = ((ViewGroup) view).getChildAt(1);
-            currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-            currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-            DialogFragment dialog = RelationshipDialog.newInstance(serializable);
-            dialog.show(dialogFragment.getFragmentManager(), "tag");
-        }
-    };
+    @OnClick(R.id.linear_set_relationship)
+    public void onClickSetRelationship(View view) {
+        Log.d(Constants.LOG_TAG, "onClickSetRelationship");
+        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+        DialogFragment dialog = RelationshipDialog.newInstance(serializable);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
-    private View.OnClickListener maximumPosListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickSetMaximumPosition");
-            currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-            View layout = ((ViewGroup) view).getChildAt(1);
-            currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-            currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-            DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
-            dialog.show(dialogFragment.getFragmentManager(), "tag");
-        }
-    };
+    @OnClick(R.id.linear_set_max_pos)
+    public void onClickSetMaximumPosition(View view) {
+        Log.d(Constants.LOG_TAG, "onClickSetMaximumPosition");
+        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+        DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
-    private View.OnClickListener minimumPosListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickSetMinimumPosition");
-            currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-            View layout = ((ViewGroup) view).getChildAt(1);
-            currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-            currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-            DialogFragment dialog = MinPositionDialog.newInstance(serializable);
-            dialog.show(dialogFragment.getFragmentManager(), "tag");
-        }
-    };
+    @OnClick(R.id.linear_set_min_pos)
+    public void onclickSetMinimumPosition(View view) {
+        Log.d(Constants.LOG_TAG, "onClickSetMinimumPosition");
+        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+        DialogFragment dialog = MinPositionDialog.newInstance(serializable);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
     @Override

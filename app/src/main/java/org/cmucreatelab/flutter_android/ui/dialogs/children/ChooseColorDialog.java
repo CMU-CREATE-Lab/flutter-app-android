@@ -26,6 +26,9 @@ import android.widget.SeekBar;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 9/7/2016.
  *
@@ -201,6 +204,7 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setMessage(getString(R.string.choose_color)).setView(view);
         builder.setPositiveButton(R.string.set_color, this);
+        ButterKnife.bind(this, view);
 
         frameFinalColor = (FrameLayout) view.findViewById(R.id.frame_final_color);
         seekBarHue = (SeekBar) view.findViewById(R.id.seek_hue);
@@ -295,71 +299,51 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
             }
         });
 
-        view.findViewById(R.id.frame_red).setOnClickListener(onClickRed);
-        view.findViewById(R.id.frame_yellow).setOnClickListener(onClickYellow);
-        view.findViewById(R.id.frame_blue).setOnClickListener(onClickBlue);
-        view.findViewById(R.id.frame_green).setOnClickListener(onClickGreen);
-        view.findViewById(R.id.frame_orange).setOnClickListener(onClickOrange);
-        view.findViewById(R.id.frame_purple).setOnClickListener(onClickPurple);
-
         return builder.create();
     }
 
     // premixed click listeners
 
-    private View.OnClickListener onClickRed = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickRed");
+    @OnClick(R.id.frame_red)
+    public void onClickRed() {
+        Log.d(Constants.LOG_TAG, "onClickRed");
+        finalRGB = intToRGB(PREMIXED_COLORS[0]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[0]);
+    }
 
-            finalRGB = intToRGB(PREMIXED_COLORS[0]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[0]);
-        }
-    };
+    @OnClick(R.id.frame_yellow)
+    public void onClickYellow() {
+        Log.d(Constants.LOG_TAG, "onClickYellow");
+        finalRGB = intToRGB(PREMIXED_COLORS[1]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[1]);
+    }
 
-    private View.OnClickListener onClickYellow = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickYellow");
-            finalRGB = intToRGB(PREMIXED_COLORS[1]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[1]);
-        }
-    };
+    @OnClick(R.id.frame_blue)
+    public void onClickBlue() {
+        Log.d(Constants.LOG_TAG, "onClickBlue");
+        finalRGB = intToRGB(PREMIXED_COLORS[2]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[2]);
+    }
 
-    private View.OnClickListener onClickBlue = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickBlue");
-            finalRGB = intToRGB(PREMIXED_COLORS[2]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[2]);
-        }
-    };
+    @OnClick(R.id.frame_green)
+    public void onClickGreen() {
+        Log.d(Constants.LOG_TAG, "onClickGreen");
+        finalRGB = intToRGB(PREMIXED_COLORS[3]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[3]);
+    }
 
-    private View.OnClickListener onClickGreen = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickGreen");
-            finalRGB = intToRGB(PREMIXED_COLORS[3]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[3]);
-        }
-    };
+    @OnClick(R.id.frame_orange)
+    public void onClickOrange() {
+        Log.d(Constants.LOG_TAG, "onClickOrange");
+        finalRGB = intToRGB(PREMIXED_COLORS[4]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[4]);
+    }
 
-    private View.OnClickListener onClickOrange = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickOrange");
-            finalRGB = intToRGB(PREMIXED_COLORS[4]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[4]);
-        }
-    };
-
-    private View.OnClickListener onClickPurple = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "onClickPurple");
-            finalRGB = intToRGB(PREMIXED_COLORS[5]);
-            frameFinalColor.setBackgroundColor(PREMIXED_COLORS[5]);
-        }
-    };
+    @OnClick(R.id.frame_purple)
+    public void onClickPurple() {
+        Log.d(Constants.LOG_TAG, "onClickPurple");
+        finalRGB = intToRGB(PREMIXED_COLORS[5]);
+        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[5]);
+    }
 
 }

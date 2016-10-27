@@ -33,8 +33,6 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         globalHandler = GlobalHandler.getInstance(this);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-      //  toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
     }
 
 

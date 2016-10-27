@@ -75,7 +75,6 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     }
 
 
-    // TODO - make a current output reference for when the callback function gets called
     @OnClick(R.id.image_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
