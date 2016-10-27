@@ -43,11 +43,12 @@ import butterknife.OnClick;
  *
  * AppLandingActivity
  *
- * An activity that can scan for flutters nearby.
+ * An activity that can scan for flutters nearby and connect to them.
  *
  */
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
+    // MelodySmartDevice is used, in this activity, for scanning for bluetooth devices and connecting to a device.
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
     private ArrayList<FlutterOG> mFlutterOGs;

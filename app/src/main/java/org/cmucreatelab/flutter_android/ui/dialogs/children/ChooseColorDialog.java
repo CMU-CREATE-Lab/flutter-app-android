@@ -28,6 +28,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 9/7/2016.
+ *
+ * ChooseColorDialog
+ *
+ * An abstract Dialog that handles the color picking.
  */
 public abstract class ChooseColorDialog extends DialogFragment implements DialogInterface.OnClickListener {
 

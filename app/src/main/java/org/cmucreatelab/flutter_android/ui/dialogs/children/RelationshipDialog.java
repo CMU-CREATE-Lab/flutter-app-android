@@ -25,6 +25,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 9/1/2016.
+ *
+ * RelationshipDialog
+ *
+ * A Dialog that shows which relationship is to be linked between sensor and output.
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant

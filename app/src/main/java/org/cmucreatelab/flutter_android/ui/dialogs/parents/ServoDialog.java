@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -19,7 +18,6 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -33,6 +31,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 10/17/2016.
+ *
+ * ServoDialog
+ *
+ * A Dialog that shows the options for creating a link between Servo and a Sensor
  */
 public class ServoDialog extends DialogFragment implements Serializable, DialogInterface.OnClickListener,
         SensorDialog.DialogSensorListener,

@@ -13,8 +13,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorHighDialogDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorLowDialogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorHighDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorLowDialog;
 
 import butterknife.ButterKnife;
 
@@ -27,8 +27,8 @@ import butterknife.ButterKnife;
  *
  */
 public class LedsActivity extends BaseServoLedActivity implements
-        ColorHighDialogDialog.DialogHighColorListener,
-        ColorLowDialogDialog.DialogLowColorListener{
+        ColorHighDialog.DialogHighColorListener,
+        ColorLowDialog.DialogLowColorListener{
 
 
     @Override
@@ -62,7 +62,7 @@ public class LedsActivity extends BaseServoLedActivity implements
     public void onClickSelectHighValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectHighValue");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        ColorHighDialogDialog colorHighDialog = ColorHighDialogDialog.newInstance(this);
+        ColorHighDialog colorHighDialog = ColorHighDialog.newInstance(this);
         colorHighDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -70,7 +70,7 @@ public class LedsActivity extends BaseServoLedActivity implements
     public void onClickSelectLowValue(View view) {
         Log.d(Constants.LOG_TAG, "onClickSelectLowValue");
         this.selectedView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        ColorLowDialogDialog colorLowDialog = ColorLowDialogDialog.newInstance(this);
+        ColorLowDialog colorLowDialog = ColorLowDialog.newInstance(this);
         colorLowDialog.show(getSupportFragmentManager(), "tag");
     }
 

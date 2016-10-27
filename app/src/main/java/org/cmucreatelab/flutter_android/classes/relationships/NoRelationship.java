@@ -2,6 +2,10 @@ package org.cmucreatelab.flutter_android.classes.relationships;
 
 /**
  * Created by Steve on 9/1/2016.
+ *
+ *
+ *
+ * A class that represents there is no current Relationship set.
  */
 public class NoRelationship implements Relationship {
 

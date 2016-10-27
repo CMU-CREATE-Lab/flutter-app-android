@@ -11,29 +11,32 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import java.io.Serializable;
 
 /**
- * Created by Steve on 9/22/2016.
+ * Created by Steve on 9/16/2016.
+ *
+ * ColorHighDialog
+ *
+ * A Dialog that prompts the user to choose a high color.
  */
-public class ColorLowDialogDialog extends ChooseColorDialog {
+public class ColorHighDialog extends ChooseColorDialog {
+
+    private DialogHighColorListener highColorListener;
 
 
-    private DialogLowColorListener lowColorListener;
-
-
-    public static ColorLowDialogDialog newInstance(Serializable serializable) {
-        ColorLowDialogDialog colorLowDialog = new ColorLowDialogDialog();
+    public static ColorHighDialog newInstance(Serializable serializable) {
+        ColorHighDialog colorHighDialog = new ColorHighDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
-        colorLowDialog.setArguments(args);
+        colorHighDialog.setArguments(args);
 
-        return colorLowDialog;
+        return colorHighDialog;
     }
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        lowColorListener = (DialogLowColorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
+        highColorListener = (DialogHighColorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
         return super.onCreateDialog(savedInstanceState);
     }
 
@@ -41,12 +44,12 @@ public class ColorLowDialogDialog extends ChooseColorDialog {
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSetColor");
-        lowColorListener.onLowColorChosen(finalRGB);
+        highColorListener.onHighColorChosen(finalRGB);
     }
 
 
-    public interface DialogLowColorListener {
-        public void onLowColorChosen(int[] color);
+    public interface DialogHighColorListener {
+        public void onHighColorChosen(int[] color);
     }
 
 }

@@ -11,7 +11,6 @@ import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
 import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
 import org.cmucreatelab.flutter_android.classes.sensors.Distance;
@@ -29,6 +28,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 8/22/2016.
+ *
+ * SensorTypeDialog
+ *
+ * A Dialog that prompts the user to choose what kind of sensors are in the ports. (SensorsActivity)
  */
 public class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
 

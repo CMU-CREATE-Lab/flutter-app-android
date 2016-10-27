@@ -1,20 +1,15 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
-import android.util.Log;
-
 import org.cmucreatelab.flutter_android.classes.Settings;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
 /**
  * Created by Steve on 8/23/2016.
  *
  * MessageConstructor
  *
- * A static class which will hold the strings associated with the flutter boards protocol.
+ * A static class which will generate the strings depending on the output passed into the appropriate methods
  *
  */
 public class MessageConstructor {

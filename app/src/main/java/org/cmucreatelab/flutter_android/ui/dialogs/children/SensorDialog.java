@@ -19,6 +19,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 9/1/2016.
+ *
+ * SensorDialog
+ *
+ * A Dialog that shows which sensor is to be linked with an output.
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant

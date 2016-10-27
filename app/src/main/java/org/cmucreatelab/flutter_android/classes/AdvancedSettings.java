@@ -2,6 +2,10 @@ package org.cmucreatelab.flutter_android.classes;
 
 /**
  * Created by Steve on 10/25/2016.
+ *
+ * AdvancedSettings
+ *
+ * An abstract class representing the advanced settings options when creating links between sensor and output
  */
 public abstract class AdvancedSettings {
 

@@ -1,10 +1,4 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
-
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-
-import java.util.ArrayList;
-
 /**
  * Created by Steve on 6/20/2016.
  *

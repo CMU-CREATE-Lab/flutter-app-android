@@ -17,6 +17,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 9/7/2016.
+ *
+ * EmailDialog
+ *
+ * A dialog that prompts the user to send an email of a data log.
  */
 public class EmailDialog extends DialogFragment implements DialogInterface.OnClickListener {
 

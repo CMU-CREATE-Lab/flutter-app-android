@@ -4,6 +4,11 @@ import org.cmucreatelab.flutter_android.R;
 
 /**
  * Created by Steve on 10/21/2016.
+ *
+ * Switch
+ *
+ * A class that represents the Switch relationship.
+ *
  */
 public class Switch implements Relationship {
 

@@ -6,6 +6,10 @@ import android.support.v4.app.DialogFragment;
 
 /**
  * Created by Steve on 10/17/2016.
+ *
+ * SpeakerDialog
+ *
+ * A Dialog that shows the options for creating a link between Speaker and a Sensor
  */
 public class SpeakerDialog extends DialogFragment {
 

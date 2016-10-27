@@ -11,6 +11,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 10/21/2016.
+ *
+ * MinPosition Dialog
+ *
+ * A Dialog that prompts the user to select a minimum Position of a servo.
  */
 public class MinPositionDialog extends MaxMinPositionDialog {
 

@@ -1,16 +1,11 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-
-import java.util.ArrayList;
-
 /**
  * Created by Steve on 8/11/2016.
  *
  * A_Sensor
  *
- * An abstract class that implements the process of linking a sensor with an output.
+ * An abstract class that implements the sensor readings values and the port number.
  *
  */
 public abstract class A_Sensor implements Sensor {

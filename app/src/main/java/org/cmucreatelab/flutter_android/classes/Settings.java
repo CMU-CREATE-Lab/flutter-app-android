@@ -7,6 +7,10 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
 /**
  * Created by Steve on 10/25/2016.
+ *
+ * Settings
+ *
+ * A class that extends off of AdvancedSettings and represents the generic settings made when creating links between sensor and output
  */
 public class Settings extends AdvancedSettings {
 

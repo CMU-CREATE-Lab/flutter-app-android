@@ -2,7 +2,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -20,6 +19,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 10/21/2016.
+ *
+ * MaxMinPositionDialog
+ *
+ * An abstract dialog that Max and Min Position Dialog extends off of since they are similar.
  */
 public abstract class MaxMinPositionDialog extends DialogFragment implements DialogInterface.OnClickListener {
 

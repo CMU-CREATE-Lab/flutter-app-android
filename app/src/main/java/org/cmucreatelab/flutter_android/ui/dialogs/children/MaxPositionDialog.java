@@ -11,6 +11,10 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 10/21/2016.
+ *
+ * MaxPositionDialog
+ *
+ * A Dialog that prompts the user to choose a max position for a servo.
  */
 public class MaxPositionDialog extends MaxMinPositionDialog {
 

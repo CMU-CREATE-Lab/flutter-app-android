@@ -24,7 +24,6 @@ import butterknife.OnClick;
  *
  */
 // TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
-    // TODO - I may change the base navigation to a toolbar now that I figured out how to use multiple toolbars in one activity.
 public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     protected GlobalHandler globalHandler;

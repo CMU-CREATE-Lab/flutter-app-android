@@ -36,10 +36,10 @@ public class SessionHandler {
 
     private GlobalHandler globalHandler;
     private Activity mActivity;
-    private FlutterConnectListener flutterConnectListener;
-    private FlutterMessageListener flutterMessageListener;
+    private FlutterConnectListener flutterConnectListener;  // an interface that an activity will implement so we can have a method to callback after a connection/disconnection happened
+    private FlutterMessageListener flutterMessageListener;  // an interface that an activity will implement so we can have a method to callback once a message has been sent
     private FlutterOG mFlutterOG;
-    private MelodySmartDevice mMelodySmartDevice;
+    private MelodySmartDevice mMelodySmartDevice;           // used for connecting/disconnecting to a device and sending messages to the bluetooth device and back
     private Message mMessage;
     public boolean isBluetoothConnected;
 

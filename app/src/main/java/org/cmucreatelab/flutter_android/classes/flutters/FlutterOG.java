@@ -13,7 +13,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  *
  * Device
  *
- * A class representing a FlutterOG.
+ * A class representing the original gangsta Flutter. One with 3 servos, 3 leds, 1 speaker and 3 sensors.
  *
  */
 public class FlutterOG extends Flutter {
