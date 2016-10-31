@@ -116,5 +116,8 @@
     <string name="save">Save</string>
     <string name="linked_sensor">Linked Sensor</string>
     <string name="relationship">Relationship</string>
+    <string name="set_up_led">Set Up LED</string>
+    <string name="sensor_data">Sensor Data</string>
+    <string name="simulate_data">Simulate Data</string>
 
 </resources>
