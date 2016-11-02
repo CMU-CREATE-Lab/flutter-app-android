@@ -2,10 +2,12 @@ package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +67,12 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
     private Servo servo;
 
 
+    private int convertDpToPx(int dp){
+        return Math.round(dp*(getResources().getDisplayMetrics().xdpi/DisplayMetrics.DENSITY_DEFAULT));
+
+    }
+
+
     public static ServoDialog newInstance(Servo servo, String servoNumber, Serializable activity) {
         ServoDialog servoDialog = new ServoDialog();
 
@@ -102,6 +110,12 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
         return builder.create();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
