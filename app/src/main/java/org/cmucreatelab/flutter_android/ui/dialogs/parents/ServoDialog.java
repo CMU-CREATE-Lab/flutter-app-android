@@ -42,7 +42,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Servo and a Sensor
  */
-public class ServoDialog extends DialogFragment implements Serializable, DialogInterface.OnClickListener,
+public class ServoDialog extends BaseDialogFragment implements Serializable, DialogInterface.OnClickListener,
         SensorDialog.DialogSensorListener,
         RelationshipDialog.DialogRelationshipListener,
         MaxPositionDialog.DialogMaxPositionListener,
@@ -66,12 +66,6 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
 
     private Settings servoSettings;
     private Servo servo;
-
-
-    private int convertDpToPx(int dp){
-        return Math.round(dp*(getResources().getDisplayMetrics().xdpi/DisplayMetrics.DENSITY_DEFAULT));
-
-    }
 
 
     public static ServoDialog newInstance(Servo servo, String servoNumber, Serializable activity) {

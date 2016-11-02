@@ -8,6 +8,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
@@ -20,6 +21,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.parents.BaseDialogFragment;
 
 import java.io.Serializable;
 
@@ -32,7 +34,7 @@ import java.io.Serializable;
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant
-public class RelationshipDialog extends DialogFragment implements View.OnClickListener {
+public class RelationshipDialog extends BaseDialogFragment implements View.OnClickListener {
 
 
     private DialogRelationshipListener relationshipListener;
@@ -67,6 +69,13 @@ public class RelationshipDialog extends DialogFragment implements View.OnClickLi
         view.findViewById(R.id.linear_constant).setOnClickListener(this);
 
         return builder.create();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

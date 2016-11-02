@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.parents.BaseDialogFragment;
 
 import java.io.Serializable;
 
@@ -26,7 +28,7 @@ import java.io.Serializable;
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant
-public class SensorDialog extends DialogFragment implements View.OnClickListener  {
+public class SensorDialog extends BaseDialogFragment implements View.OnClickListener  {
 
 
     private DialogSensorListener dialogSensorListener;
@@ -74,6 +76,13 @@ public class SensorDialog extends DialogFragment implements View.OnClickListener
         textSensor3.setText(sensors[2].getSensorType().toString());
 
         return builder.create();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
