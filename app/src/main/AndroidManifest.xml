@@ -34,18 +34,6 @@
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".activities.ServosActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name=".activities.LedsActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name=".activities.SpeakerActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".activities.DataLogsActivity"
             android:screenOrientation="landscape" />
 

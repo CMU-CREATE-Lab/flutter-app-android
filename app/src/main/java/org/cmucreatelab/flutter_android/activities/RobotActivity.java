@@ -25,8 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RobotActivity extends BaseNavigationActivity implements Serializable, FlutterMessageListener,
-    ServoDialog.DialogServoListener,
-    LedDialog.DialogLEDListener {
+    ServoDialog.DialogServoListener {
 
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
@@ -81,12 +80,6 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     }
 
 
-    @Override
-    public void onLEDLinkCreated(String message) {
-        Log.d(Constants.LOG_TAG, "onLEDLinkCreated");
-    }
-
-
     @OnClick(R.id.image_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
@@ -114,7 +107,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_1)
     public void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
-        LedDialog dialog = LedDialog.newInstance(leds[0], this);
+        LedDialog dialog = LedDialog.newInstance();
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -122,7 +115,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_2)
     public void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
-        LedDialog dialog = LedDialog.newInstance(leds[1], this);
+        LedDialog dialog = LedDialog.newInstance();
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -130,7 +123,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_3)
     public void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
-        LedDialog dialog = LedDialog.newInstance(leds[2], this);
+        LedDialog dialog = LedDialog.newInstance();
         dialog.show(getSupportFragmentManager(), "tag");
     }
 

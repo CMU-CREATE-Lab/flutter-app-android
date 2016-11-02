@@ -19,7 +19,7 @@
 
         <include android:id="@+id/toolbar1" layout="@layout/toolbar_servos_led" />
 
-        <include layout="@layout/list_servo_led" />
+        <include layout="@layout/list_output_dialog" />
 
     </LinearLayout>
 
@@ -34,7 +34,7 @@
 
         <include android:id="@+id/toolbar2" layout="@layout/toolbar_servos_led" />
 
-        <include layout="@layout/list_servo_led" />
+        <include layout="@layout/list_output_dialog" />
 
     </LinearLayout>
 
@@ -49,7 +49,7 @@
 
         <include android:id="@+id/toolbar3" layout="@layout/toolbar_servos_led" />
 
-        <include layout="@layout/list_servo_led" />
+        <include layout="@layout/list_output_dialog" />
 
     </LinearLayout>
 

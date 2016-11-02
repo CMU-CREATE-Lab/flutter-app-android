@@ -92,8 +92,9 @@ public class ServoDialog extends DialogFragment implements Serializable, DialogI
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_servos, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setTitle(getString(R.string.set_up_servo) +  " " + servoNumber).setView(view);
+        builder.setView(view);
         builder.setPositiveButton(R.string.save_settings, this);
+        ((TextView) view.findViewById(R.id.text_servo_title)).setText(getString(R.string.set_up_servo) + servoNumber);
         ButterKnife.bind(this, view);
 
         servoSettings = new Settings();

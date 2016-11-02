@@ -2,39 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:weightSum="4">
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/advanced_settings" />
-
-            <TextView
-                android:id="@+id/text_servo_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textStyle="bold"
-                android:textSize="24sp"/>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.Toolbar>
-
-    <include layout="@layout/list_output_dialog" />
+    android:weightSum="2">
 
     <LinearLayout
-        android:id="@+id/linear_set_max_pos"
+        android:id="@+id/linear_set_linked_sensor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -46,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/link_servo_b_g_sm"/>
+            android:src="@drawable/grey_question_mark" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/set_maximum_position"/>
+                android:text="@string/set_linked_sensor"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +41,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linear_set_min_pos"
+        android:id="@+id/linear_set_relationship"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -82,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/link_servo_b_g_sm"/>
+            android:src="@drawable/grey_question_mark"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -90,14 +61,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_min_descr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/set_minimum_position"/>
+                android:text="@string/set_relationship"/>
 
             <TextView
-                android:id="@+id/text_servo_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
