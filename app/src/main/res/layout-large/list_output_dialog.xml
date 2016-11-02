@@ -13,8 +13,8 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="center"
             android:src="@drawable/grey_question_mark" />
 
@@ -52,8 +52,8 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="center"
             android:src="@drawable/grey_question_mark"/>
 
