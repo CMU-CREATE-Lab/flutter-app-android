@@ -2,12 +2,10 @@ package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,27 +13,26 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.BaseDialogFragment;
-
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import java.io.Serializable;
 
 /**
  * Created by Steve on 9/1/2016.
  *
- * SensorDialog
+ * SensorOutputDialog
  *
  * A Dialog that shows which sensor is to be linked with an output.
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant
-public class SensorDialog extends BaseDialogFragment implements View.OnClickListener  {
+public class SensorOutputDialog extends BaseResizableDialog implements View.OnClickListener  {
 
 
     private DialogSensorListener dialogSensorListener;
 
 
-    public static SensorDialog newInstance(Serializable serializable) {
-        SensorDialog sensorDialog = new SensorDialog();
+    public static SensorOutputDialog newInstance(Serializable serializable) {
+        SensorOutputDialog sensorDialog = new SensorOutputDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(Sensor.SENSOR_KEY, serializable);
@@ -76,13 +73,6 @@ public class SensorDialog extends BaseDialogFragment implements View.OnClickList
         textSensor3.setText(sensors[2].getSensorType().toString());
 
         return builder.create();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

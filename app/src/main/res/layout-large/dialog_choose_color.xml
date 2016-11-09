@@ -7,7 +7,7 @@
     <FrameLayout
         android:id="@+id/frame_final_color"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:padding="2dp"/>
 
@@ -70,7 +70,7 @@
     <LinearLayout
         android:id="@+id/linear_pre_mixed_top"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:padding="2dp"
         android:weightSum="4">
@@ -112,11 +112,10 @@
     <LinearLayout
         android:id="@+id/linear_pre_mixed_bottom"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:padding="2dp"
-        android:weightSum="4"
-        android:background="@drawable/debug_border">
+        android:weightSum="4">
 
         <View
             android:id="@+id/frame_green"

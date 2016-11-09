@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -10,7 +12,10 @@ import org.cmucreatelab.flutter_android.R;
  * A class that represents an LED.
  *
  */
-public class LED extends A_Output implements Output {
+public class LED extends A_Output implements Serializable, Output {
+
+
+    public static final String LED_KEY = "led_key";
 
 
     private static final Output.Type outputType = Type.LED;

@@ -16,7 +16,6 @@ public class Servo extends A_Output implements Serializable, Output {
 
 
     public static final String SERVO_KEY = "servo_key";
-    public static final String SERVO_NUMBER_KEY = "servo_number_key";
 
     private static final Output.Type outputType = Type.SERVO;
     private static final int MINIMUM = 0;

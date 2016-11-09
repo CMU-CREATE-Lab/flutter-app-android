@@ -12,19 +12,19 @@ import java.io.Serializable;
 /**
  * Created by Steve on 10/21/2016.
  *
- * MaxPositionDialog
+ * MaxPositionOutputDialog
  *
  * A Dialog that prompts the user to choose a max position for a servo.
  */
-public class MaxPositionDialog extends MaxMinPositionDialog {
+public class MaxPositionOutputDialog extends MaxMinPositionOutputDialog {
 
 
     private static String POSITION_KEY = "position_key";
     private DialogMaxPositionListener maxPositionListener;
 
 
-    public static MaxPositionDialog newInstance(Serializable serializable) {
-        MaxPositionDialog maxPositionDialog = new MaxPositionDialog();
+    public static MaxPositionOutputDialog newInstance(Serializable serializable) {
+        MaxPositionOutputDialog maxPositionDialog = new MaxPositionOutputDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(POSITION_KEY, serializable);

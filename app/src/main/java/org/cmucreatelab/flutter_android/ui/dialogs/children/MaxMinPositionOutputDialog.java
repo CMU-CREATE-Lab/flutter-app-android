@@ -4,29 +4,27 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.BaseDialogFragment;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 /**
  * Created by Steve on 10/21/2016.
  *
- * MaxMinPositionDialog
+ * MaxMinPositionOutputDialog
  *
  * An abstract dialog that Max and Min Position Dialog extends off of since they are similar.
  */
-public abstract class MaxMinPositionDialog extends BaseDialogFragment implements DialogInterface.OnClickListener {
+public abstract class MaxMinPositionOutputDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
 
 
     private ImageView pointer;
@@ -80,12 +78,6 @@ public abstract class MaxMinPositionDialog extends BaseDialogFragment implements
         curentPosition.setText("0" + (char) 0x00B0);
 
         return builder.create();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 }

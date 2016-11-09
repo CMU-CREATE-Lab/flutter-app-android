@@ -2,19 +2,15 @@ package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -25,10 +21,12 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPositionDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionOutputDialog.DialogMaxPositionListener;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPositionOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorOutputDialog;
 
 import java.io.Serializable;
 
@@ -42,23 +40,17 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Servo and a Sensor
  */
-public class ServoDialog extends BaseDialogFragment implements Serializable, DialogInterface.OnClickListener,
-        SensorDialog.DialogSensorListener,
-        RelationshipDialog.DialogRelationshipListener,
-        MaxPositionDialog.DialogMaxPositionListener,
-        MinPositionDialog.DialogMinPositionListener {
+public class ServoDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+        SensorOutputDialog.DialogSensorListener,
+        RelationshipOutputDialog.DialogRelationshipListener,
+        DialogMaxPositionListener,
+        MinPositionOutputDialog.DialogMinPositionListener {
 
 
     private DialogServoListener dialogServoListener;
-    private String servoNumber;
 
     private Serializable serializable;
     private DialogFragment dialogFragment;
-
-    private LinearLayout setLinkedSensor;
-    private LinearLayout setRelationship;
-    private LinearLayout setMaximumPos;
-    private LinearLayout setMinimumPos;
 
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
@@ -68,12 +60,11 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
     private Servo servo;
 
 
-    public static ServoDialog newInstance(Servo servo, String servoNumber, Serializable activity) {
+    public static ServoDialog newInstance(Servo servo, Serializable activity) {
         ServoDialog servoDialog = new ServoDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(Servo.SERVO_KEY, servo);
-        args.putString(Servo.SERVO_NUMBER_KEY, servoNumber);
         args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
         servoDialog.setArguments(args);
 
@@ -85,11 +76,11 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
+
         serializable = this;
         dialogFragment = this;
 
         servo = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-        servoNumber = getArguments().getString(Servo.SERVO_NUMBER_KEY);
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -97,7 +88,7 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         builder.setPositiveButton(R.string.save_settings, this);
-        ((TextView) view.findViewById(R.id.text_servo_title)).setText(getString(R.string.set_up_servo) + servoNumber);
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
 
         servoSettings = new Settings();
@@ -107,16 +98,10 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
-
-    @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSave");
         servo.setSettings(servoSettings);
-        String msg = MessageConstructor.getServoLinkMessage(servo, servoNumber);
+        String msg = MessageConstructor.getServoLinkMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
         dialogServoListener.onServoLinkCreated(msg);
     }
@@ -124,7 +109,7 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
 
     // OnClickListeners
 
-    // TODO - change the textview structure
+
     @OnClick(R.id.linear_set_linked_sensor)
     public void onClickSetLinkedSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetLinkedSensor");
@@ -132,7 +117,7 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = SensorDialog.newInstance(serializable);
+        DialogFragment dialog = SensorOutputDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -144,7 +129,7 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = RelationshipDialog.newInstance(serializable);
+        DialogFragment dialog = RelationshipOutputDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -156,7 +141,7 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
+        DialogFragment dialog = MaxPositionOutputDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -168,9 +153,12 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinPositionDialog.newInstance(serializable);
+        DialogFragment dialog = MinPositionOutputDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
+
+
+    // Option listeners
 
 
     @Override
@@ -181,7 +169,6 @@ public class ServoDialog extends BaseDialogFragment implements Serializable, Dia
         currentTextViewItem.setText(sensor.getSensorType().toString());
         servoSettings.setSensor(sensor);
     }
-
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {

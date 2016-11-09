@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseServoLedActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import java.io.Serializable;
  */
 public class ColorHighDialog extends ChooseColorDialog {
 
+
     private DialogHighColorListener highColorListener;
 
 
@@ -26,7 +26,7 @@ public class ColorHighDialog extends ChooseColorDialog {
         ColorHighDialog colorHighDialog = new ColorHighDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY, serializable);
+        args.putSerializable(COLOR_KEY, serializable);
         colorHighDialog.setArguments(args);
 
         return colorHighDialog;
@@ -36,7 +36,7 @@ public class ColorHighDialog extends ChooseColorDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        highColorListener = (DialogHighColorListener) getArguments().getSerializable(BaseServoLedActivity.BASE_SERVO_LED_ACTIVITY_KEY);
+        highColorListener = (DialogHighColorListener) getArguments().getSerializable(COLOR_KEY);
         return super.onCreateDialog(savedInstanceState);
     }
 
@@ -49,7 +49,7 @@ public class ColorHighDialog extends ChooseColorDialog {
 
 
     public interface DialogHighColorListener {
-        public void onHighColorChosen(int[] color);
+        public void onHighColorChosen(int[] rgb);
     }
 
 }

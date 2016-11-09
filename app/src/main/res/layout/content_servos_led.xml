@@ -17,7 +17,7 @@
         android:padding="2dp"
         android:background="@drawable/debug_border">
 
-        <include android:id="@+id/toolbar1" layout="@layout/toolbar_servos_led" />
+        <include android:id="@+id/toolbar1" layout="@layout/toolbar_outputs" />
 
         <include layout="@layout/list_output_dialog" />
 
@@ -32,7 +32,7 @@
         android:padding="2dp"
         android:background="@drawable/debug_border">
 
-        <include android:id="@+id/toolbar2" layout="@layout/toolbar_servos_led" />
+        <include android:id="@+id/toolbar2" layout="@layout/toolbar_outputs" />
 
         <include layout="@layout/list_output_dialog" />
 
@@ -47,7 +47,7 @@
         android:padding="2dp"
         android:background="@drawable/debug_border">
 
-        <include android:id="@+id/toolbar3" layout="@layout/toolbar_servos_led" />
+        <include android:id="@+id/toolbar3" layout="@layout/toolbar_outputs" />
 
         <include layout="@layout/list_output_dialog" />
 

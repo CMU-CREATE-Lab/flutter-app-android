@@ -25,7 +25,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RobotActivity extends BaseNavigationActivity implements Serializable, FlutterMessageListener,
-    ServoDialog.DialogServoListener {
+    ServoDialog.DialogServoListener,
+    LedDialog.DialogLedListener {
 
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
@@ -80,10 +81,18 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     }
 
 
+    @Override
+    public void onLedLinkListener(String message) {
+        Log.d(Constants.LOG_TAG, "onLedLinkCreated");
+        globalHandler.sessionHandler.setMessageInput(message);
+        globalHandler.sessionHandler.sendMessage();
+    }
+
+
     @OnClick(R.id.image_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
-        ServoDialog dialog = ServoDialog.newInstance(servos[0], "1", this);
+        ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -91,7 +100,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_servo_2)
     public void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
-        ServoDialog dialog = ServoDialog.newInstance(servos[1], "2", this);
+        ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -99,7 +108,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_servo_3)
     public void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
-        ServoDialog dialog = ServoDialog.newInstance(servos[2], "3", this);
+        ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -107,7 +116,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_1)
     public void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -115,7 +124,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_2)
     public void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -123,7 +132,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_led_3)
     public void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -150,9 +159,6 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
 
             isSensorData = true;
             // TODO - update the sensor readings
-            // TODO - I am going to refactor the message sending so there is a message Sending handler.
-            // TODO   This way the activity will call what kind of message it wants to send, and will
-            // TODO   implement callbacks if necessary.
         }
     }
 

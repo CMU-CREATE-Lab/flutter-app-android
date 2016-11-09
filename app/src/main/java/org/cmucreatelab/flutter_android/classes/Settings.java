@@ -17,8 +17,16 @@ public class Settings extends AdvancedSettings {
 
     private Sensor sensor;
     private Relationship relationship;
+
+    // TODO - we may want to improve this so one settings class hold the settings for servos and the other for leds
+
+    // used for servos
     private int outputMax;
     private int outputMin;
+
+    // used for leds
+    private int[] outputMaxColor;
+    private int[] outputMinColor;
 
 
     public Settings() {
@@ -26,6 +34,8 @@ public class Settings extends AdvancedSettings {
         relationship = new NoRelationship();
         outputMax = 100;
         outputMin = 0;
+        outputMaxColor = new int[3];
+        outputMinColor = new int[3];
     }
 
 
@@ -42,6 +52,12 @@ public class Settings extends AdvancedSettings {
     public int getOutputMin() {
         return outputMin;
     }
+    public int[] getOutputMaxColor() {
+        return outputMaxColor;
+    }
+    public int[] getOutputMinColor() {
+        return outputMinColor;
+    }
 
 
     // setters
@@ -56,6 +72,12 @@ public class Settings extends AdvancedSettings {
     }
     public void setOutputMin(int min) {
         outputMin = min;
+    }
+    public void setOutputMaxColor(int[] outputMaxColor) {
+        this.outputMaxColor = outputMaxColor;
+    }
+    public void setOutputMinColor(int[] outputMinColor) {
+        this.outputMinColor = outputMinColor;
     }
 
 }

@@ -2,13 +2,11 @@ package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
@@ -21,27 +19,27 @@ import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.BaseDialogFragment;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 import java.io.Serializable;
 
 /**
  * Created by Steve on 9/1/2016.
  *
- * RelationshipDialog
+ * RelationshipOutputDialog
  *
  * A Dialog that shows which relationship is to be linked between sensor and output.
  */
 // TODO - refactor the onClickListeners to look like the ServoDialog
 // TODO - limit the dimensions so when you choose different images the dimensions remain constant
-public class RelationshipDialog extends BaseDialogFragment implements View.OnClickListener {
+public class RelationshipOutputDialog extends BaseResizableDialog implements View.OnClickListener {
 
 
     private DialogRelationshipListener relationshipListener;
 
 
-    public static RelationshipDialog newInstance(Serializable serializable) {
-        RelationshipDialog relationshipDialog = new RelationshipDialog();
+    public static RelationshipOutputDialog newInstance(Serializable serializable) {
+        RelationshipOutputDialog relationshipDialog = new RelationshipOutputDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(Relationship.RELATIONSHIP_KEY, serializable);
@@ -69,13 +67,6 @@ public class RelationshipDialog extends BaseDialogFragment implements View.OnCli
         view.findViewById(R.id.linear_constant).setOnClickListener(this);
 
         return builder.create();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(350), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

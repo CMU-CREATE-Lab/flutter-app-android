@@ -6,9 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import android.widget.SeekBar;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,9 +39,13 @@ import butterknife.OnClick;
  *
  * An abstract Dialog that handles the color picking.
  */
-public abstract class ChooseColorDialog extends DialogFragment implements DialogInterface.OnClickListener {
+public abstract class ChooseColorDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
 
-    private static final int PREMIXED_COLORS[] = { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN, Color.rgb(255, 128, 0), Color.MAGENTA};
+
+    protected static final String COLOR_KEY = "color_key";
+
+    private static final int PREMIXED_TOP[] = { Color.rgb(208,2,27), Color.rgb(248,231,28), Color.rgb(74,189,226), Color.rgb(255,128,0)};
+    private static final int PREMIXED_BOTTOM[] = { Color.rgb(99,189,107), Color.rgb(166,103,222), Color.WHITE, Color.BLACK};
 
     private float h,s, v;
     private FrameLayout frameFinalColor;
@@ -133,12 +140,12 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
             updateColor();
 
             // update the thumb
-            Drawable thumb = seekBar.getThumb();
-            thumb.setColorFilter(Color.HSVToColor(new float[] {h,s, v}), PorterDuff.Mode.SRC_IN);
+            //Drawable thumb = seekBar.getThumb();
+            //thumb.setColorFilter(Color.HSVToColor(new float[] {h,s, v}), PorterDuff.Mode.SRC_IN);
 
             // update the saturation
             LinearGradient linearGradient = new LinearGradient(0.f, 0.f, seekBarSaturation.getWidth(), 0.0f,
-                    Color.WHITE, Color.HSVToColor(new float[] {h, 100, 100}), Shader.TileMode.CLAMP);
+                    Color.HSVToColor(new float[] {h, 100, 100}), Color.WHITE, Shader.TileMode.CLAMP);
             ShapeDrawable shape = new ShapeDrawable(new RectShape());
             shape.getPaint().setShader(linearGradient);
             seekBarSaturation.setProgressDrawable(shape);
@@ -160,7 +167,7 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.d(Constants.LOG_TAG, "onSaturationChanged");
-            s = i;
+            s = 99 - i;
             updateColor();
         }
 
@@ -202,7 +209,7 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_choose_color, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(getString(R.string.choose_color)).setView(view);
+        builder.setView(view);
         builder.setPositiveButton(R.string.set_color, this);
         ButterKnife.bind(this, view);
 
@@ -214,7 +221,7 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
         seekBarSaturation.setOnSeekBarChangeListener(saturationSeekBarChangeListener);
         seekBarValue.setOnSeekBarChangeListener(valueSeekBarChangeListener);
 
-        seekBarSaturation.setProgress(99);
+        seekBarSaturation.setProgress(0);
         seekBarValue.setProgress(99);
 
         h = 0;
@@ -245,7 +252,7 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
             public void onGlobalLayout() {
                 seekBarSaturation.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 LinearGradient linearGradient = new LinearGradient(0.f, 0.f, seekBarSaturation.getWidth(), 0.0f,
-                        Color.WHITE, Color.HSVToColor(new float[] {h,s, v}), Shader.TileMode.CLAMP);
+                        Color.HSVToColor(new float[] {h,s, v}), Color.WHITE, Shader.TileMode.CLAMP);
                 ShapeDrawable shape = new ShapeDrawable(new RectShape());
                 shape.getPaint().setShader(linearGradient);
                 seekBarSaturation.setProgressDrawable(shape);
@@ -266,84 +273,66 @@ public abstract class ChooseColorDialog extends DialogFragment implements Dialog
             }
         });
 
-        final LinearLayout preMixed = (LinearLayout) view.findViewById(R.id.linear_pre_mixed);
-        preMixed.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                preMixed.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                for (int i = 0; i < preMixed.getChildCount(); i++) {
-                    final int index = i;
-                    FrameLayout temp = (FrameLayout) preMixed.getChildAt(i);
-                    temp.setBackground(new Drawable() {
-                        @Override
-                        public void draw(Canvas canvas) {
-                            canvas.drawColor(PREMIXED_COLORS[index]);
-                        }
-
-                        @Override
-                        public void setAlpha(int i) {
-
-                        }
-
-                        @Override
-                        public void setColorFilter(ColorFilter colorFilter) {
-
-                        }
-
-                        @Override
-                        public int getOpacity() {
-                            return 0;
-                        }
-                    });
-                }
-            }
-        });
-
         return builder.create();
     }
 
     // premixed click listeners
 
     @OnClick(R.id.frame_red)
-    public void onClickRed() {
+    public void onClickRed(View view) {
         Log.d(Constants.LOG_TAG, "onClickRed");
-        finalRGB = intToRGB(PREMIXED_COLORS[0]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[0]);
+        finalRGB = intToRGB(PREMIXED_TOP[0]);
+        frameFinalColor.setBackgroundColor(PREMIXED_TOP[0]);
     }
 
     @OnClick(R.id.frame_yellow)
-    public void onClickYellow() {
+    public void onClickYellow(View view) {
         Log.d(Constants.LOG_TAG, "onClickYellow");
-        finalRGB = intToRGB(PREMIXED_COLORS[1]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[1]);
+        finalRGB = intToRGB(PREMIXED_TOP[1]);
+        frameFinalColor.setBackgroundColor(PREMIXED_TOP[1]);
     }
 
     @OnClick(R.id.frame_blue)
-    public void onClickBlue() {
+    public void onClickBlue(View view) {
         Log.d(Constants.LOG_TAG, "onClickBlue");
-        finalRGB = intToRGB(PREMIXED_COLORS[2]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[2]);
+        finalRGB = intToRGB(PREMIXED_TOP[2]);
+        frameFinalColor.setBackgroundColor(PREMIXED_TOP[2]);
+    }
+
+
+    @OnClick(R.id.frame_orange)
+    public void onClickOrange(View view) {
+        Log.d(Constants.LOG_TAG, "onClickOrange");
+        finalRGB = intToRGB(PREMIXED_TOP[3]);
+        frameFinalColor.setBackgroundColor(PREMIXED_TOP[3]);
     }
 
     @OnClick(R.id.frame_green)
-    public void onClickGreen() {
+    public void onClickGreen(View view) {
         Log.d(Constants.LOG_TAG, "onClickGreen");
-        finalRGB = intToRGB(PREMIXED_COLORS[3]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[3]);
-    }
-
-    @OnClick(R.id.frame_orange)
-    public void onClickOrange() {
-        Log.d(Constants.LOG_TAG, "onClickOrange");
-        finalRGB = intToRGB(PREMIXED_COLORS[4]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[4]);
+        finalRGB = intToRGB(PREMIXED_BOTTOM[0]);
+        frameFinalColor.setBackgroundColor(PREMIXED_BOTTOM[0]);
     }
 
     @OnClick(R.id.frame_purple)
-    public void onClickPurple() {
+    public void onClickPurple(View view) {
         Log.d(Constants.LOG_TAG, "onClickPurple");
-        finalRGB = intToRGB(PREMIXED_COLORS[5]);
-        frameFinalColor.setBackgroundColor(PREMIXED_COLORS[5]);
+        finalRGB = intToRGB(PREMIXED_BOTTOM[1]);
+        frameFinalColor.setBackgroundColor(PREMIXED_BOTTOM[1]);
+    }
+
+    @OnClick(R.id.frame_white)
+    public void onClickWhite(View view) {
+        Log.d(Constants.LOG_TAG, "onClickWhite");
+        finalRGB = intToRGB(PREMIXED_BOTTOM[2]);
+        frameFinalColor.setBackgroundColor(PREMIXED_BOTTOM[2]);
+    }
+
+    @OnClick(R.id.frame_black)
+    public void onClickBlack(View view) {
+        Log.d(Constants.LOG_TAG, "onClickBlack");
+        finalRGB = intToRGB(PREMIXED_BOTTOM[3]);
+        frameFinalColor.setBackgroundColor(PREMIXED_BOTTOM[3]);
     }
 
 }
