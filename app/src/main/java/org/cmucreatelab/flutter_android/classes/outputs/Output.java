@@ -1,6 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import org.cmucreatelab.flutter_android.classes.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 /**
  * Created by Steve on 8/11/2016.

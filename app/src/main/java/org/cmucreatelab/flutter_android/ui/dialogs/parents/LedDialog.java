@@ -3,7 +3,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,8 +17,9 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
-import org.cmucreatelab.flutter_android.classes.Settings;
-import org.cmucreatelab.flutter_android.classes.outputs.LED;
+import org.cmucreatelab.flutter_android.classes.outputs.Led;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -31,6 +31,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDi
 import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorOutputDialog;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
  *
  * LedDialog
  *
- * A Dialog that shows the options for creating a link between LED and a Sensor
+ * A Dialog that shows the options for creating a link between Led and a Sensor
  */
 public class LedDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
         SensorOutputDialog.DialogSensorListener,
@@ -61,15 +62,28 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
     private View maxColor;
     private View minColor;
 
-    private Settings ledSettings;
-    private LED led;
+    private Settings redSettings;
+    private Settings greenSettings;
+    private Settings blueSettings;
+    private Led led;
 
 
-    public static LedDialog newInstance(LED led, Serializable activity) {
+    private int getProportionalValue(float value, float maxValue, float newMaxValue) {
+        int result = 0;
+
+        float ratio = value / maxValue;
+        float temp = ratio*newMaxValue;
+        result = (int) (ratio*newMaxValue);
+
+        return result;
+    }
+
+
+    public static LedDialog newInstance(Led led, Serializable activity) {
         LedDialog ledDialog = new LedDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(LED.LED_KEY, led);
+        args.putSerializable(Led.LED_KEY, led);
         args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
         ledDialog.setArguments(args);
 
@@ -85,7 +99,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         serializable = this;
         dialogFragment = this;
 
-        led = (LED) getArguments().getSerializable(LED.LED_KEY);
+        led = (Led) getArguments().getSerializable(Led.LED_KEY);
         dialogLedListener = (DialogLedListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -96,7 +110,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(led.getPortNumber()));
         ButterKnife.bind(this, view);
 
-        ledSettings = new Settings();
+        redSettings = new Settings("r");
+        greenSettings = new Settings("g");
+        blueSettings = new Settings("b");
         maxColor = view.findViewById(R.id.view_max_color);
         minColor = view.findViewById(R.id.view_min_color);
 
@@ -107,9 +123,19 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSave");
-        led.setSettings(ledSettings);
-        String msg = MessageConstructor.getLedLinkMessage(led);
-        Log.d(Constants.LOG_TAG, msg);
+        ArrayList<String> msg = new ArrayList<>();
+        led.setSettings(redSettings);
+        msg.add(MessageConstructor.getRemoveLinkMessage(led));
+        led.setSettings(greenSettings);
+        msg.add(MessageConstructor.getRemoveLinkMessage(led));
+        led.setSettings(blueSettings);
+        msg.add(MessageConstructor.getRemoveLinkMessage(led));
+        led.setSettings(redSettings);
+        msg.add(MessageConstructor.getLinkedMessage(led));
+        led.setSettings(greenSettings);
+        msg.add(MessageConstructor.getLinkedMessage(led));
+        led.setSettings(blueSettings);
+        msg.add(MessageConstructor.getLinkedMessage(led));
         dialogLedListener.onLedLinkListener(msg);
     }
 
@@ -176,7 +202,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         currentImageView.setImageResource(sensor.getGreenImageId());
         currentTextViewDescrp.setText(R.string.linked_sensor);
         currentTextViewItem.setText(sensor.getSensorType().toString());
-        ledSettings.setSensor(sensor);
+        redSettings.setSensor(sensor);
+        greenSettings.setSensor(sensor);
+        blueSettings.setSensor(sensor);
     }
 
     @Override
@@ -185,7 +213,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        ledSettings.setRelationship(relationship);
+        redSettings.setRelationship(relationship);
+        greenSettings.setRelationship(relationship);
+        blueSettings.setRelationship(relationship);
     }
 
 
@@ -197,7 +227,12 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
         currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
-        ledSettings.setOutputMaxColor(rgb);
+        int max = getProportionalValue(rgb[0], 255, Led.MAXIMUM);
+        redSettings.setOutputMax(max);
+        max = getProportionalValue(rgb[1], 255, Led.MAXIMUM);
+        greenSettings.setOutputMax(max);
+        max = getProportionalValue(rgb[2], 255, Led.MAXIMUM);
+        blueSettings.setOutputMax(max);
     }
 
 
@@ -209,12 +244,17 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
         currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
-        ledSettings.setOutputMinColor(rgb);
+        int min = getProportionalValue(rgb[0], 255, Led.MAXIMUM);
+        redSettings.setOutputMin(min);
+        min = getProportionalValue(rgb[1], 255, Led.MAXIMUM);
+        greenSettings.setOutputMin(min);
+        min = getProportionalValue(rgb[2], 255, Led.MAXIMUM);
+        blueSettings.setOutputMin(min);
     }
 
 
     public interface DialogLedListener {
-        public void onLedLinkListener(String message);
+        public void onLedLinkListener(ArrayList<String> messages);
     }
 
 }

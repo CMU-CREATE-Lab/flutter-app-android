@@ -21,38 +21,9 @@ public class Speaker extends A_Output implements Output {
 
     public static final int imageId = R.mipmap.ic_launcher;
 
-    private int volume;
-    private int frequency;
 
     public Speaker(int portNumber) {
         super(portNumber);
-        this.volume = MAXIMUM_VOLUME / 2;
-        this.frequency = MAXIMUM_FREQUENCY / 2;
-    }
-
-
-    public Speaker(int volume, int frequency, int portNumber) {
-        super(portNumber);
-        this.setVolume(volume);
-        this.setFrequency(frequency);
-    }
-
-
-    public void setVolume(int volume) {
-        if (volume >= MINIMUM_VOLUME && volume <= MAXIMUM_VOLUME) {
-            this.volume = volume;
-        }
-    }
-    public int getVolume() {
-        return volume;
-    }
-    public void setFrequency(int frequency) {
-        if (frequency >= MINIMUM_FREQUENCY && frequency <= MAXIMUM_FREQUENCY) {
-            this.frequency = frequency;
-        }
-    }
-    public int getFrequency() {
-        return this.frequency;
     }
 
 

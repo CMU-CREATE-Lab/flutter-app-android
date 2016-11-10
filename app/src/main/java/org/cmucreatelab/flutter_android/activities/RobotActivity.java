@@ -10,7 +10,7 @@ import android.widget.Button;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.classes.outputs.LED;
+import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +34,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
 
     private GlobalHandler globalHandler;
     private Servo[] servos;
-    private LED[] leds;
+    private Led[] leds;
 
     private boolean isSensorData;
 
@@ -76,16 +77,16 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @Override
     public void onServoLinkCreated(String message) {
         Log.d(Constants.LOG_TAG, "onServoLinkCreated");
-        globalHandler.sessionHandler.setMessageInput(message);
-        globalHandler.sessionHandler.sendMessage();
+        globalHandler.sessionHandler.addMessage(message);
+        globalHandler.sessionHandler.sendMessages();
     }
 
 
     @Override
-    public void onLedLinkListener(String message) {
+    public void onLedLinkListener(ArrayList<String> msgs) {
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        globalHandler.sessionHandler.setMessageInput(message);
-        globalHandler.sessionHandler.sendMessage();
+        globalHandler.sessionHandler.addMessages(msgs);
+        globalHandler.sessionHandler.sendMessages();
     }
 
 

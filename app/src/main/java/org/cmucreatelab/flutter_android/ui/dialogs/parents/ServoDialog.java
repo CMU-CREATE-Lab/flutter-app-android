@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
-import org.cmucreatelab.flutter_android.classes.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -56,7 +56,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
 
-    private Settings servoSettings;
+    private Settings settings;
     private Servo servo;
 
 
@@ -91,7 +91,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
 
-        servoSettings = new Settings();
+        settings = new Settings("s");
 
         return builder.create();
     }
@@ -100,8 +100,8 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSave");
-        servo.setSettings(servoSettings);
-        String msg = MessageConstructor.getServoLinkMessage(servo);
+        servo.setSettings(settings);
+        String msg = MessageConstructor.getLinkedMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
         dialogServoListener.onServoLinkCreated(msg);
     }
@@ -167,7 +167,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         currentImageView.setImageResource(sensor.getGreenImageId());
         currentTextViewDescrp.setText(R.string.linked_sensor);
         currentTextViewItem.setText(sensor.getSensorType().toString());
-        servoSettings.setSensor(sensor);
+        settings.setSensor(sensor);
     }
 
     @Override
@@ -176,25 +176,25 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        servoSettings.setRelationship(relationship);
+        settings.setRelationship(relationship);
     }
 
 
     @Override
     public void onMaxPosChosen(int max) {
         Log.d(Constants.LOG_TAG, "onMaxPosChosen");
-        currentTextViewDescrp.setText(servoSettings.getSensor().getHighTextId());
+        currentTextViewDescrp.setText(settings.getSensor().getHighTextId());
         currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
-        servoSettings.setOutputMax(max);
+        settings.setOutputMax(max);
     }
 
 
     @Override
     public void onMinPosChosen(int min) {
         Log.d(Constants.LOG_TAG, "onMinPosChosen");
-        currentTextViewDescrp.setText(servoSettings.getSensor().getLowTextId());
+        currentTextViewDescrp.setText(settings.getSensor().getLowTextId());
         currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
-        servoSettings.setOutputMin(min);
+        settings.setOutputMin(min);
 
     }
 

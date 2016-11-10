@@ -1,4 +1,7 @@
-package org.cmucreatelab.flutter_android.classes;
+package org.cmucreatelab.flutter_android.classes.settings;
+
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
 /**
  * Created by Steve on 10/25/2016.
@@ -13,6 +16,9 @@ public abstract class AdvancedSettings {
     private int inputMax;
     private int inputMin;
     private int zeroValue;
+
+    protected Sensor sensor;
+    protected Relationship relationship;
 
 
     protected String intToHex(int val) {
@@ -39,7 +45,12 @@ public abstract class AdvancedSettings {
     public int getZeroValue() {
         return zeroValue;
     }
-
+    public Relationship getRelationship() {
+        return relationship;
+    }
+    public Sensor getSensor() {
+        return sensor;
+    }
 
     // setters
     public void setInputMax(int max) {
@@ -51,5 +62,10 @@ public abstract class AdvancedSettings {
     public void setZeroValue(int zero) {
         zeroValue = zero;
     }
-
+    public void setRelationship(Relationship relationship) {
+        this.relationship = relationship;
+    }
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
 }

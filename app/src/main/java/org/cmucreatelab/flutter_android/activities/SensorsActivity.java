@@ -116,8 +116,8 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                globalHandler.sessionHandler.setMessageInput(MessageConstructor.READ_SENSOR);
-                globalHandler.sessionHandler.sendMessage();
+                globalHandler.sessionHandler.addMessage(MessageConstructor.READ_SENSOR);
+                globalHandler.sessionHandler.sendMessages();
             }
         };
         timer = new Timer();
@@ -223,7 +223,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
     @Override
     public void onMessageSent(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageSent");
+        Log.d(Constants.LOG_TAG, output);
         if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
             output = output.substring(2, output.length());
             String sensor1 = output.substring(0, output.indexOf(','));

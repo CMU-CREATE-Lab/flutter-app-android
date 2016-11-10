@@ -23,22 +23,9 @@ public class Servo extends A_Output implements Serializable, Output {
 
     public static final int imageId = R.mipmap.ic_launcher;
 
-    private int currentValue;
-
 
     public Servo(int portNumber) {
         super(portNumber);
-        this.setCurrentValue(0);
-    }
-
-
-    public void setCurrentValue(int currentLocal) {
-        if (currentLocal >= MINIMUM && currentLocal <= MAXIMUM) {
-            this.currentValue = currentLocal;
-        }
-    }
-    public int getCurrentValue() {
-        return this.currentValue;
     }
 
 

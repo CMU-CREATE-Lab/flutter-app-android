@@ -21,6 +21,11 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.Message;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import java.util.AbstractQueue;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * Created by Steve on 5/31/2016.
  *
@@ -40,8 +45,8 @@ public class SessionHandler {
     private FlutterMessageListener flutterMessageListener;  // an interface that an activity will implement so we can have a method to callback once a message has been sent
     private FlutterOG mFlutterOG;
     private MelodySmartDevice mMelodySmartDevice;           // used for connecting/disconnecting to a device and sending messages to the bluetooth device and back
-    private Message mMessage;
     public boolean isBluetoothConnected;
+    private ConcurrentLinkedQueue<String> messages;
 
 
     private BondingListener bondingListener = new BondingListener() {
@@ -121,8 +126,22 @@ public class SessionHandler {
 
         @Override
         public void onReceived(final byte[] bytes) {
-            mMessage.setOutput(new String(bytes));
-            flutterMessageListener.onMessageSent(mMessage.getOutput());
+            flutterMessageListener.onMessageSent(new String(bytes));
+            if (!messages.isEmpty()) {
+                String msg = messages.poll();
+                // So even though there is a callback so I do not send messages on top of each other,
+                // the flutter still seems to need some time in order to send all of the messages successfully.
+                // For example, making an led relationship we need to send three separate messages for each color (rgb)
+                // This is why I put a simple sleep to give the flutter some time.
+                // Without this, only the last color would be set, blue.
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d(Constants.LOG_TAG, msg);
+                mMelodySmartDevice.getDataService().send(msg.getBytes());
+            }
         }
     };
 
@@ -144,18 +163,32 @@ public class SessionHandler {
         globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
         mActivity = activity;
         mFlutterOG = flutterOG;
-        mMessage = new Message();
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.registerListener(bondingListener);
         mMelodySmartDevice.registerListener(melodySmartListener);
         mMelodySmartDevice.getDataService().registerListener(dataServiceListener);
         isBluetoothConnected = false;
+        messages = new ConcurrentLinkedQueue<>();
         connect();
     }
 
 
-    public void sendMessage() {
-        mMelodySmartDevice.getDataService().send(mMessage.getInput().getBytes());
+    public void addMessage(String msg) {
+        messages.add(msg);
+    }
+
+
+    public void addMessages(ArrayList<String> msgs) {
+        messages.addAll(msgs);
+    }
+
+
+    public void sendMessages() {
+        if (!messages.isEmpty()) {
+            String msg = messages.poll();
+            Log.d(Constants.LOG_TAG, msg);
+            mMelodySmartDevice.getDataService().send(msg.getBytes());
+        }
     }
 
 
@@ -174,18 +207,6 @@ public class SessionHandler {
     }
     public String getFlutterName() {
         return mFlutterOG.getName();
-    }
-    public String getMessageOutput() {
-        return mMessage.getOutput();
-    }
-    public String getMessageInput() {
-        return mMessage.getInput();
-    }
-    public void setMessageOutput(String output) {
-        mMessage.setOutput(output);
-    }
-    public void setMessageInput(String input) {
-        mMessage.setInput(input);
     }
     public void setFlutterConnectListener(final FlutterConnectListener flutterConnectListener) {
         this.flutterConnectListener = flutterConnectListener;

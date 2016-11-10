@@ -1,8 +1,8 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
-import org.cmucreatelab.flutter_android.classes.Settings;
-import org.cmucreatelab.flutter_android.classes.outputs.LED;
+import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
@@ -18,6 +18,8 @@ public class MessageConstructor {
 
 
     public static final String READ_SENSOR = "r";
+    public static final String REMOVE_ALL_LINKS = "X";
+
     private static final int sizeOfIntInHalfBytes = 2;
     private static final int numberOfBitsInAHalfByte = 4;
     private static final int halfByte = 0x0F;
@@ -26,7 +28,7 @@ public class MessageConstructor {
             '8', '9', 'a', 'b', 'c', 'd', 'e', 'e'
     };
 
-    public static String decToHex(int dec) {
+    private static String decToHex(int dec) {
         StringBuilder hexBuilder = new StringBuilder(sizeOfIntInHalfBytes);
         hexBuilder.setLength(sizeOfIntInHalfBytes);
         for (int i = sizeOfIntInHalfBytes - 1; i >= 0; --i)
@@ -39,52 +41,17 @@ public class MessageConstructor {
     }
 
 
-    public static String getRemoveAllLinksMessage() {
-        return "X";
-    }
-
-
-    public static String getServoLinkMessage(Servo servo) {
+    public static String getRemoveLinkMessage(Output output) {
         StringBuilder result = new StringBuilder();
-        Settings settings = servo.getSettings();
-        String servoNumber = String.valueOf(servo.getPortNumber());
-
-        Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
-        String inputMax = decToHex(settings.getInputMax());
-        String inputMin = decToHex(settings.getInputMin());
-        String outputMax = decToHex(settings.getOutputMax());
-        String outputMin = decToHex(settings.getOutputMin());
-
-        switch (relationshipType) {
-            case AMPLITUDE:
-                break;
-            case CHANGE:
-                break;
-            case CONSTANT:
-                break;
-            case CUMULATIVE:
-                break;
-            case FREQUENCY:
-                break;
-            case NO_RELATIONSHIP:
-                break;
-            case PROPORTIONAL:
-                result.append("ps");
-                break;
-            case SWITCH:
-                break;
-        }
-
-        result.append(servoNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
-
+        result.append("x" + output.getSettings().getType() + output.getPortNumber());
         return result.toString();
     }
 
 
-    public static String getLedLinkMessage(LED led) {
+    public static String getLinkedMessage(Output output) {
         StringBuilder result = new StringBuilder();
-        Settings settings = led.getSettings();
-        String ledNumber = String.valueOf(led.getPortNumber());
+        Settings settings = output.getSettings();
+        String servoNumber = String.valueOf(output.getPortNumber());
 
         Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
         String inputMax = decToHex(settings.getInputMax());
@@ -112,7 +79,7 @@ public class MessageConstructor {
                 break;
         }
 
-        result.append(ledNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
+        result.append(settings.getType() + servoNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
 
         return result.toString();
     }
