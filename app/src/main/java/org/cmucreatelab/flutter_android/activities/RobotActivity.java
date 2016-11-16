@@ -12,6 +12,7 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavig
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -27,7 +28,8 @@ import butterknife.OnClick;
 
 public class RobotActivity extends BaseNavigationActivity implements Serializable, FlutterMessageListener,
     ServoDialog.DialogServoListener,
-    LedDialog.DialogLedListener {
+    LedDialog.DialogLedListener,
+    SpeakerDialog.DialogSpeakerListener {
 
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
@@ -35,6 +37,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     private GlobalHandler globalHandler;
     private Servo[] servos;
     private Led[] leds;
+    private Speaker speaker;
 
     private boolean isSensorData;
 
@@ -52,6 +55,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         globalHandler = GlobalHandler.getInstance(this);
         servos = globalHandler.sessionHandler.getFlutter().getServos();
         leds = globalHandler.sessionHandler.getFlutter().getLeds();
+        speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
@@ -85,6 +89,14 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @Override
     public void onLedLinkListener(ArrayList<String> msgs) {
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
+        globalHandler.sessionHandler.addMessages(msgs);
+        globalHandler.sessionHandler.sendMessages();
+    }
+
+
+    @Override
+    public void onSpeakerLinkListener(ArrayList<String> msgs) {
+        Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
         globalHandler.sessionHandler.addMessages(msgs);
         globalHandler.sessionHandler.sendMessages();
     }
@@ -141,7 +153,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     @OnClick(R.id.image_speaker)
     public void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
-        SpeakerDialog dialog = SpeakerDialog.newInstance();
+        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -151,11 +163,11 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onClickSensorData");
         if (!isSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
             sensorData.setTextColor(Color.WHITE);
 
             Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white_right));
             simulateData.setTextColor(Color.BLACK);
 
             isSensorData = true;
@@ -169,11 +181,11 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onclickSimulateData");
         if (isSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white_left));
             sensorData.setTextColor(Color.BLACK);
 
             Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
             simulateData.setTextColor(Color.WHITE);
 
             isSensorData = false;

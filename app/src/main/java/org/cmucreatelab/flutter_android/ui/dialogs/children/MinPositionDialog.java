@@ -16,15 +16,15 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to select a minimum Position of a servo.
  */
-public class MinPositionOutputDialog extends MaxMinPositionOutputDialog {
+public class MinPositionDialog extends ChoosePositionDialog {
 
 
     private static String POSITION_KEY = "position_key";
     private DialogMinPositionListener minPositionListener;
 
 
-    public static MinPositionOutputDialog newInstance(Serializable serializable) {
-        MinPositionOutputDialog minPositionDialog = new MinPositionOutputDialog();
+    public static MinPositionDialog newInstance(Serializable serializable) {
+        MinPositionDialog minPositionDialog = new MinPositionDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(POSITION_KEY, serializable);

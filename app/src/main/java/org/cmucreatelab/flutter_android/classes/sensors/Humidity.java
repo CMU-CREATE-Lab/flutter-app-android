@@ -16,8 +16,8 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.HUMIDITY;
     private static final int sensorTypeId = R.string.humidity;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
+    private static final int highTextId = R.string.humid;
+    private static final int lowTextId = R.string.dry;
 
     public static final int blueImageId = R.drawable.sensor_blue_humidity_l_g_68;
     public static final int greenImageId = R.drawable.sensor_green_humidity_l_g_68;

@@ -22,9 +22,9 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionOutputDialog.DialogMaxPositionListener;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPositionOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog.DialogMaxPositionListener;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPositionDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorOutputDialog;
 
@@ -44,7 +44,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
         DialogMaxPositionListener,
-        MinPositionOutputDialog.DialogMinPositionListener {
+        MinPositionDialog.DialogMinPositionListener {
 
 
     private DialogServoListener dialogServoListener;
@@ -141,7 +141,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxPositionOutputDialog.newInstance(serializable);
+        DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -153,7 +153,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinPositionOutputDialog.newInstance(serializable);
+        DialogFragment dialog = MinPositionDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 

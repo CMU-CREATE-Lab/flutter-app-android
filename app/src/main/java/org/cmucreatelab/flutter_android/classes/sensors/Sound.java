@@ -16,8 +16,8 @@ public class Sound extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.SOUND;
     private static final int sensorTypeId = R.string.sound;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
+    private static final int highTextId = R.string.loud;
+    private static final int lowTextId = R.string.quiet;
 
     public static final int blueImageId = R.drawable.sensor_blue_sound_l_g_68;
     public static final int greenImageId = R.drawable.sensor_green_sound_l_g_68;

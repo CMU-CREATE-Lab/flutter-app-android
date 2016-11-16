@@ -1,9 +1,9 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
-import org.cmucreatelab.flutter_android.classes.outputs.Led;
+import android.util.Log;
+
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
 /**
@@ -30,13 +30,12 @@ public class MessageConstructor {
 
     private static String decToHex(int dec) {
         StringBuilder hexBuilder = new StringBuilder(sizeOfIntInHalfBytes);
-        hexBuilder.setLength(sizeOfIntInHalfBytes);
-        for (int i = sizeOfIntInHalfBytes - 1; i >= 0; --i)
-        {
-            int j = dec & halfByte;
-            hexBuilder.setCharAt(i, hexDigits[j]);
-            dec >>= numberOfBitsInAHalfByte;
+
+        hexBuilder.append(Integer.toHexString(dec));
+        if (hexBuilder.length() > 2) {
+            hexBuilder.replace(1,2,"x");
         }
+
         return hexBuilder.toString();
     }
 
@@ -51,7 +50,11 @@ public class MessageConstructor {
     public static String getLinkedMessage(Output output) {
         StringBuilder result = new StringBuilder();
         Settings settings = output.getSettings();
-        String servoNumber = String.valueOf(output.getPortNumber());
+        String portNumber = String.valueOf(output.getPortNumber());
+
+        if (portNumber.equals("0")) {
+            portNumber = "";
+        }
 
         Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
         String inputMax = decToHex(settings.getInputMax());
@@ -79,7 +82,7 @@ public class MessageConstructor {
                 break;
         }
 
-        result.append(settings.getType() + servoNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
+        result.append(settings.getType() + portNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
 
         return result.toString();
     }

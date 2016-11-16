@@ -18,15 +18,14 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorHighDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.children.ColorLowDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxColorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MinColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorOutputDialog;
 
@@ -46,8 +45,8 @@ import butterknife.OnClick;
 public class LedDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
-        ColorHighDialog.DialogHighColorListener,
-        ColorLowDialog.DialogLowColorListener {
+        MaxColorDialog.DialogHighColorListener,
+        MinColorDialog.DialogLowColorListener {
 
 
     private DialogLedListener dialogLedListener;
@@ -113,6 +112,10 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         redSettings = new Settings("r");
         greenSettings = new Settings("g");
         blueSettings = new Settings("b");
+        led.setRedSettings(redSettings);
+        led.setGreenSettings(greenSettings);
+        led.setBlueSettings(blueSettings);
+
         maxColor = view.findViewById(R.id.view_max_color);
         minColor = view.findViewById(R.id.view_min_color);
 
@@ -175,7 +178,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = ColorHighDialog.newInstance(serializable);
+        DialogFragment dialog = MaxColorDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -188,7 +191,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = ColorLowDialog.newInstance(serializable);
+        DialogFragment dialog = MinColorDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -254,7 +257,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
 
 
     public interface DialogLedListener {
-        public void onLedLinkListener(ArrayList<String> messages);
+        public void onLedLinkListener(ArrayList<String> msgs);
     }
 
 }

@@ -10,33 +10,33 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import java.io.Serializable;
 
 /**
- * Created by Steve on 9/22/2016.
+ * Created by Steve on 9/16/2016.
  *
- * ColorLowDialog
+ * MaxColorDialog
  *
- * A Dialog that prompts the user to choose a low color.
+ * A Dialog that prompts the user to choose a high color.
  */
-public class ColorLowDialog extends ChooseColorDialog {
+public class MaxColorDialog extends ChooseColorDialog {
 
 
-    private DialogLowColorListener lowColorListener;
+    private DialogHighColorListener highColorListener;
 
 
-    public static ColorLowDialog newInstance(Serializable serializable) {
-        ColorLowDialog colorLowDialog = new ColorLowDialog();
+    public static MaxColorDialog newInstance(Serializable serializable) {
+        MaxColorDialog maxColorDialog = new MaxColorDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(COLOR_KEY, serializable);
-        colorLowDialog.setArguments(args);
+        maxColorDialog.setArguments(args);
 
-        return colorLowDialog;
+        return maxColorDialog;
     }
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        lowColorListener = (DialogLowColorListener) getArguments().getSerializable(COLOR_KEY);
+        highColorListener = (DialogHighColorListener) getArguments().getSerializable(COLOR_KEY);
         return super.onCreateDialog(savedInstanceState);
     }
 
@@ -44,12 +44,12 @@ public class ColorLowDialog extends ChooseColorDialog {
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSetColor");
-        lowColorListener.onLowColorChosen(finalRGB);
+        highColorListener.onHighColorChosen(finalRGB);
     }
 
 
-    public interface DialogLowColorListener {
-        public void onLowColorChosen(int[] rgb);
+    public interface DialogHighColorListener {
+        public void onHighColorChosen(int[] rgb);
     }
 
 }

@@ -123,5 +123,23 @@
     <string name="set_minimum_color">Set Minimum Color</string>
     <string name="maximum_color">Maximum Color</string>
     <string name="minimum_color">Minimum Color</string>
+    <string name="set_up_speaker">Set Up Speaker</string>
+    <string name="volume">Volume</string>
+    <string name="set_maximum_volume">Set Maximum Volume</string>
+    <string name="set_minimum_volume">Set Minimum Volume</string>
+    <string name="set_minimum_pitch">Set Minimum Pitch</string>
+    <string name="set_maximum_pitch">Set Maximum Pitch</string>
+    <string name="pitch">Pitch</string>
+    <string name="zero">0</string>
+    <string name="one_hundred">100</string>
+    <string name="far">Far</string>
+    <string name="near">Near</string>
+    <string name="humid">Humid</string>
+    <string name="loud">Loud</string>
+    <string name="quiet">Quiet</string>
+    <string name="cold">Cold</string>
+    <string name="hot">Hot</string>
+    <string name="slow">Slow</string>
+    <string name="fast">Fast</string>
 
 </resources>

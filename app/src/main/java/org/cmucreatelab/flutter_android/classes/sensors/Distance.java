@@ -16,8 +16,8 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.DISTANCE;
     private static final int sensorTypeId = R.string.distance;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
+    private static final int highTextId = R.string.far;
+    private static final int lowTextId = R.string.near;
 
     public static final int blueImageId = R.drawable.sensor_blue_distance_l_g_68;
     public static final int greenImageId = R.drawable.sensor_green_distance_l_g_68;

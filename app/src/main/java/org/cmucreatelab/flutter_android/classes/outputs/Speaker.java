@@ -1,6 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+
+import java.io.Serializable;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -10,8 +13,10 @@ import org.cmucreatelab.flutter_android.R;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker extends A_Output implements Output {
+public class Speaker extends A_Output implements Serializable, Output {
 
+
+    public static final String SPEAKER_KEY = "speaker_key";
 
     private static final Output.Type outputType = Type.SPEAKER;
     private static final int MINIMUM_VOLUME = 0;
@@ -20,6 +25,9 @@ public class Speaker extends A_Output implements Output {
     private static final int MAXIMUM_FREQUENCY = 20000;
 
     public static final int imageId = R.mipmap.ic_launcher;
+
+    private Settings frequencySettings;
+    private Settings volumeSettings;
 
 
     public Speaker(int portNumber) {
@@ -49,5 +57,13 @@ public class Speaker extends A_Output implements Output {
     public int getMin() {
         return MINIMUM_VOLUME;
     }
+
+
+    public Settings getFrequencySettings() { return frequencySettings; }
+    public Settings getVolumeSettings() { return volumeSettings; }
+
+
+    public void setFrequencySettings(Settings settings) { this.frequencySettings = settings; }
+    public void setVolumeSettings (Settings settings) { this.volumeSettings = settings; }
 
 }
