@@ -22,6 +22,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog.DialogMaxPositionListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPositionDialog;
@@ -41,6 +42,7 @@ import butterknife.OnClick;
  * A Dialog that shows the options for creating a link between Servo and a Sensor
  */
 public class ServoDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+        AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
         DialogMaxPositionListener,
@@ -92,6 +94,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         ButterKnife.bind(this, view);
 
         settings = new Settings("s");
+        servo.setSettings(settings);
 
         return builder.create();
     }
@@ -103,11 +106,20 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         servo.setSettings(settings);
         String msg = MessageConstructor.getLinkedMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
+        servo.setIsLinked(true);
         dialogServoListener.onServoLinkCreated(msg);
     }
 
 
     // OnClickListeners
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, servo);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
     @OnClick(R.id.linear_set_linked_sensor)
@@ -159,6 +171,13 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
 
 
     // Option listeners
+
+
+    @Override
+    public void onAdvancedSettingsSet() {
+        Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
+        // believe me
+    }
 
 
     @Override

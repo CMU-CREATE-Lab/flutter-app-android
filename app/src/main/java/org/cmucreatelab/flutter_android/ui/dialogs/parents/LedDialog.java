@@ -18,12 +18,14 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDialog;
@@ -43,6 +45,7 @@ import butterknife.OnClick;
  * A Dialog that shows the options for creating a link between Led and a Sensor
  */
 public class LedDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+        AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
         MaxColorDialog.DialogHighColorListener,
@@ -115,6 +118,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         led.setRedSettings(redSettings);
         led.setGreenSettings(greenSettings);
         led.setBlueSettings(blueSettings);
+        led.setSettings(redSettings);
 
         maxColor = view.findViewById(R.id.view_max_color);
         minColor = view.findViewById(R.id.view_min_color);
@@ -139,11 +143,20 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         msg.add(MessageConstructor.getLinkedMessage(led));
         led.setSettings(blueSettings);
         msg.add(MessageConstructor.getLinkedMessage(led));
+        led.setIsLinked(true);
         dialogLedListener.onLedLinkListener(msg);
     }
 
 
     // onClick listeners
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, led);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
     @OnClick(R.id.linear_set_linked_sensor)
@@ -197,6 +210,13 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
 
 
     // option listeners
+
+
+    @Override
+    public void onAdvancedSettingsSet() {
+        Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
+        // believe me
+    }
 
 
     @Override

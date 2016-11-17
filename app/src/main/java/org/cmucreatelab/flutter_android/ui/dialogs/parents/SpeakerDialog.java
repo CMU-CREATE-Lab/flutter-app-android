@@ -26,6 +26,7 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPitchDialog;
@@ -47,6 +48,7 @@ import butterknife.OnClick;
  * A Dialog that shows the options for creating a link between Speaker and a Sensor
  */
 public class SpeakerDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+        AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
         MaxVolumeDialog.DialogMaxVolumeListener,
@@ -115,12 +117,21 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         volumeSettings = new Settings("v");
         speaker.setFrequencySettings(pitchSettings);
         speaker.setVolumeSettings(volumeSettings);
+        speaker.setSettings(volumeSettings);
 
         return builder.create();
     }
 
 
     // onClick Listeners
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker);
+        dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
 
 
     @Override
@@ -131,6 +142,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
         speaker.setSettings(pitchSettings);
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
+        speaker.setIsLinked(true);
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
     }
 
@@ -236,6 +248,16 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = MinPitchDialog.newInstance(serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
+    }
+
+
+    // Option Listeners
+
+
+    @Override
+    public void onAdvancedSettingsSet() {
+        Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
+        // believe me
     }
 
 

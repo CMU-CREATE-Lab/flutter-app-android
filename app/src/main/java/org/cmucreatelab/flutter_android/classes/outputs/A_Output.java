@@ -12,12 +12,14 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  */
 public abstract class A_Output implements Output{
 
+    private boolean isLinked;
     private Settings settings;
     private int portNumber;
 
 
     public A_Output(int portNumber) {
         this.portNumber = portNumber;
+        isLinked = false;
     }
 
     // getters
@@ -33,9 +35,21 @@ public abstract class A_Output implements Output{
     }
 
 
+    @Override
+    public boolean isLinked() {
+        return isLinked;
+    }
+
+
     // setters
     @Override
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+
+    @Override
+    public void setIsLinked(boolean bool) {
+        isLinked = bool;
     }
 }

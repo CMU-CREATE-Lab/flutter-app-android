@@ -30,4 +30,10 @@ public class NoRelationship implements Relationship {
         return 0;
     }
 
+
+    @Override
+    public int getGreyImageIdSm() {
+        return 0;
+    }
+
 }

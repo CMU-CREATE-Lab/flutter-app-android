@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
@@ -41,6 +45,85 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
 
     private boolean isSensorData;
 
+
+    private void updateLinkedViews() {
+        Log.d(Constants.LOG_TAG, "updateLinkedViews");
+        // servos link check
+        for (int i = 0; i < servos.length; i++) {
+            if (servos[i].isLinked()) {
+                RelativeLayout currentLayout = null;
+                ViewGroup linkAndSensor;
+                ImageView link;
+                ImageView sensor;
+
+                // TODO - we can make the outputs have methods to get the associated relative layout and image view ids, similar to the drawable ids
+                // TODO - or come up with a better way entirely :)
+                switch (i) {
+                    case 0:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_1);
+                        findViewById(R.id.image_servo_1).setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_2);
+                        findViewById(R.id.image_servo_2).setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_3);
+                        findViewById(R.id.image_servo_3).setVisibility(View.INVISIBLE);
+                        break;
+                }
+                if (currentLayout != null) {
+                    currentLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.link_active_servo_b_g));
+                    currentLayout.getChildAt(2).setVisibility(View.VISIBLE);
+                    linkAndSensor = ((ViewGroup)currentLayout.getChildAt(1));
+                    linkAndSensor.setVisibility(View.VISIBLE);
+                    link = (ImageView) linkAndSensor.getChildAt(0);
+                    sensor = (ImageView) linkAndSensor.getChildAt(1);
+                    link.setImageResource(servos[i].getSettings().getRelationship().getGreyImageIdSm());
+                    sensor.setImageResource(servos[i].getSettings().getSensor().getGreyImageIdSm());
+                }
+            }
+        } // servos link check
+
+        // led link check
+        /*for (int i = 0; i < leds.length; i++) {
+            if (leds[i].isLinked()) {
+                RelativeLayout currentLayout = null;
+                ViewGroup linkAndSensor;
+                ImageView link;
+                ImageView sensor;
+
+                // TODO - we can make the outputs have methods to get the associated relative layout and image view ids, similar to the drawable ids
+                // TODO - or come up with a better way entirely :)
+                switch (i) {
+                    case 0:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_led_1);
+                        findViewById(R.id.image_led_1).setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_2);
+                        findViewById(R.id.image_led_2).setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_3);
+                        findViewById(R.id.image_led_3).setVisibility(View.INVISIBLE);
+                        break;
+                }
+                if (currentLayout != null) {
+                    currentLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.link_active_servo_b_g));
+                    currentLayout.getChildAt(2).setVisibility(View.VISIBLE);
+                    linkAndSensor = ((ViewGroup)currentLayout.getChildAt(1));
+                    linkAndSensor.setVisibility(View.VISIBLE);
+                    link = (ImageView) linkAndSensor.getChildAt(0);
+                    sensor = (ImageView) linkAndSensor.getChildAt(1);
+                    link.setImageResource(leds[i].getSettings().getRelationship().getGreyImageIdSm());
+                    sensor.setImageResource(leds[i].getSettings().getSensor().getGreyImageIdSm());
+                }
+            }
+        }*/ // led link check
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +152,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     protected void onResume() {
         super.onResume();
         globalHandler.sessionHandler.setFlutterMessageListener(this);
+        updateLinkedViews();
     }
 
 
@@ -83,6 +167,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onServoLinkCreated");
         globalHandler.sessionHandler.addMessage(message);
         globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
     }
 
 
@@ -91,6 +176,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
         globalHandler.sessionHandler.addMessages(msgs);
         globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
     }
 
 
@@ -99,10 +185,11 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
         globalHandler.sessionHandler.addMessages(msgs);
         globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
     }
 
 
-    @OnClick(R.id.image_servo_1)
+    @OnClick(R.id.relative_servo_1)
     public void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
         ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
@@ -110,7 +197,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     }
 
 
-    @OnClick(R.id.image_servo_2)
+    @OnClick(R.id.relative_servo_2)
     public void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
         ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
@@ -118,7 +205,7 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
     }
 
 
-    @OnClick(R.id.image_servo_3)
+    @OnClick(R.id.relative_servo_3)
     public void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
         ServoDialog dialog = ServoDialog.newInstance(servos[2], this);

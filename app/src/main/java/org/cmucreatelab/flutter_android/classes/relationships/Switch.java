@@ -14,8 +14,9 @@ public class Switch implements Relationship {
 
 
     private static final Relationship.Type relationshipType = Type.SWITCH;
-    public static final int greenImageIdLg = R.drawable.relationship_green_switch_l_g_68;
-    public static final int greenImageIdMd = R.drawable.relationship_green_switch_m_d_56;
+    private static final int greenImageIdLg = R.drawable.relationship_green_switch_l_g_68;
+    private static final int greenImageIdMd = R.drawable.relationship_green_switch_m_d_56;
+    private static final int greyImageIdSm = R.drawable.relationship_grey_switch_s_m_20;
 
 
     @Override
@@ -33,6 +34,12 @@ public class Switch implements Relationship {
     @Override
     public int getGreenImageIdMd() {
         return greenImageIdMd;
+    }
+
+
+    @Override
+    public int getGreyImageIdSm() {
+        return greyImageIdSm;
     }
 
 }

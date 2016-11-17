@@ -141,5 +141,12 @@
     <string name="hot">Hot</string>
     <string name="slow">Slow</string>
     <string name="fast">Fast</string>
+    <string name="advanced_settings">Advanced Settings</string>
+    <string name="sensor_settings">Sensor Settings:</string>
+    <string name="link_settings">Link Settings:</string>
+    <string name="time_constant">Time Constant:</string>
+    <string name="zero_point">Zero Point:</string>
+    <string name="max_input">Max</string>
+    <string name="min_input">Min</string>
 
 </resources>

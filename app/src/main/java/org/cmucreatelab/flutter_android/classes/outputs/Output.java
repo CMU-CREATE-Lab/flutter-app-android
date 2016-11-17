@@ -25,8 +25,10 @@ public interface Output {
     int getPortNumber();
     int getMax();
     int getMin();
+    boolean isLinked();
 
     // setters
     void setSettings(Settings settings);
+    void setIsLinked(boolean bool);
 
 }

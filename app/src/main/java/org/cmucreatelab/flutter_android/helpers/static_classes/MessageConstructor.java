@@ -33,7 +33,7 @@ public class MessageConstructor {
 
         hexBuilder.append(Integer.toHexString(dec));
         if (hexBuilder.length() > 2) {
-            hexBuilder.replace(1,2,"x");
+            hexBuilder.replace(1,2,"");
         }
 
         return hexBuilder.toString();
