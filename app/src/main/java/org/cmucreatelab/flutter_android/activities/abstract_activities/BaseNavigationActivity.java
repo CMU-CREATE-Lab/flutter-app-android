@@ -36,7 +36,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_sensors_menu)
+    @OnClick(R.id.linear_sensors_menu)
     public void onClickSensorsMenu() {
         Log.d(Constants.LOG_TAG, "onClickSensors");
         Intent intent = new Intent(this, SensorsActivity.class);
@@ -44,7 +44,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_robot_menu)
+    @OnClick(R.id.linear_robot_menu)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
         Intent intent = new Intent(this, RobotActivity.class);
@@ -52,7 +52,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_data_log_menu)
+    @OnClick(R.id.linear_data_log_menu)
     public void onClickDataLogMenu() {
         Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);

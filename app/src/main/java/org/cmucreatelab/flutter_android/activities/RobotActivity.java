@@ -38,7 +38,6 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
 
-    private GlobalHandler globalHandler;
     private Servo[] servos;
     private Led[] leds;
     private Speaker speaker;
@@ -135,24 +134,27 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        globalHandler = GlobalHandler.getInstance(this);
-        servos = globalHandler.sessionHandler.getFlutter().getServos();
-        leds = globalHandler.sessionHandler.getFlutter().getLeds();
-        speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
+        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected));
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+        } else {
+            servos = globalHandler.sessionHandler.getFlutter().getServos();
+            leds = globalHandler.sessionHandler.getFlutter().getLeds();
+            speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
+            isSensorData = true;
         }
-        isSensorData = true;
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        globalHandler.sessionHandler.setFlutterMessageListener(this);
-        updateLinkedViews();
+        if (globalHandler.sessionHandler.isBluetoothConnected) {
+            globalHandler.sessionHandler.setFlutterMessageListener(this);
+            updateLinkedViews();
+        }
     }
 
 
