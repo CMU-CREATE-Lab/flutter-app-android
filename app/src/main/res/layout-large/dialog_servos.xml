@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp">
+    android:layout_height="match_parent">
 
     <include android:id="@+id/include_toolbar_dialog"
         layout="@layout/toolbar_outputs"/>
 
     <RelativeLayout
+        android:id="@+id/relative_position_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/include_toolbar_dialog"
@@ -98,5 +98,10 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <include layout="@layout/link_buttons"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/relative_position_container"/>
 
 </RelativeLayout>

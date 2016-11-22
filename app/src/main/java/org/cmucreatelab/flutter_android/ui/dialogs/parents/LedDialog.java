@@ -44,7 +44,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Led and a Sensor
  */
-public class LedDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+public class LedDialog extends BaseResizableDialog implements Serializable,
         AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
@@ -108,7 +108,6 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         final View view = inflater.inflate(R.layout.dialog_leds, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        builder.setPositiveButton(R.string.save_settings, this);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(led.getPortNumber()));
         ButterKnife.bind(this, view);
 
@@ -127,9 +126,12 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSave");
+    // onClick listeners
+
+
+    @OnClick(R.id.button_save_settings)
+    public void onClickSaveSettings() {
+        Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         ArrayList<String> msg = new ArrayList<>();
         led.setSettings(redSettings);
         msg.add(MessageConstructor.getRemoveLinkMessage(led));
@@ -145,10 +147,24 @@ public class LedDialog extends BaseResizableDialog implements Serializable, Dial
         msg.add(MessageConstructor.getLinkedMessage(led));
         led.setIsLinked(true);
         dialogLedListener.onLedLinkListener(msg);
+        this.dismiss();
     }
 
 
-    // onClick listeners
+    @OnClick(R.id.button_remove_link)
+    public void onClickRemoveLink() {
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        ArrayList<String> msg = new ArrayList<>();
+        led.setSettings(led.getRedSettings());
+        msg.add( MessageConstructor.getRemoveLinkMessage(led));
+        led.setSettings(led.getGreenSettings());
+        msg.add( MessageConstructor.getRemoveLinkMessage(led));
+        led.setSettings(led.getBlueSettings());
+        msg.add( MessageConstructor.getRemoveLinkMessage(led));
+        led.setIsLinked(false);
+        dialogLedListener.onLedLinkListener(msg);
+        this.dismiss();
+    }
 
 
     @OnClick(R.id.image_advanced_settings)

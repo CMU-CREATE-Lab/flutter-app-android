@@ -47,7 +47,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Speaker and a Sensor
  */
-public class SpeakerDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
@@ -104,7 +104,6 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         final View view = inflater.inflate(R.layout.dialog_speakers, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        builder.setPositiveButton(R.string.save_settings, this);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
         ButterKnife.bind(this, view);
 
@@ -134,9 +133,9 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSave");
+    @OnClick(R.id.button_save_settings)
+    public void onClickSaveSettings() {
+        Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         ArrayList<String> msgs = new ArrayList<>();
         speaker.setSettings(volumeSettings);
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
@@ -144,6 +143,22 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
         speaker.setIsLinked(true);
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
+        this.dismiss();
+    }
+
+
+    @OnClick(R.id.button_remove_link)
+    public void onClickRemoveLink() {
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        ArrayList<String> msgs = new ArrayList<>();
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        speaker.setSettings(volumeSettings);
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
+        speaker.setSettings(pitchSettings);
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
+        speaker.setIsLinked(false);
+        dialogSpeakerListener.onSpeakerLinkListener(msgs);
+        this.dismiss();
     }
 
 
@@ -153,9 +168,9 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
         if (!isVolume) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_left));
             buttonVolume.setTextColor(Color.WHITE);
-            buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_white_right));
-            buttonPitch.setTextColor(Color.BLACK);
-            relativePitch.setVisibility(View.INVISIBLE);
+            buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_right));
+            buttonPitch.setTextColor(Color.GRAY);
+            relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
             isVolume = true;
 
@@ -168,12 +183,12 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable, 
     public void onClickPitch() {
         Log.d(Constants.LOG_TAG, "onClickPitch");
         if (isVolume) {
-            buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_white_left));
-            buttonVolume.setTextColor(Color.BLACK);
+            buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_left));
+            buttonVolume.setTextColor(Color.GRAY);
             buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_right));
             buttonPitch.setTextColor(Color.WHITE);
             relativePitch.setVisibility(View.VISIBLE);
-            relativeVolume.setVisibility(View.INVISIBLE);
+            relativeVolume.setVisibility(View.GONE);
             isVolume = false;
         }
     }

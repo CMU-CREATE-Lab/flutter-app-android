@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp">
+    android:layout_height="match_parent">
 
     <include android:id="@+id/include_toolbar_dialog"
         layout="@layout/toolbar_outputs"/>
@@ -29,8 +28,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/round_green_white_right"
-            android:text="@string/pitch" />
+            android:background="@drawable/round_gray_white_right"
+            android:text="@string/pitch"
+            android:textColor="@color/gray"/>
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         <RelativeLayout
             android:id="@+id/relative_volume"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/include_layout"
             android:visibility="visible">
 
@@ -132,9 +132,9 @@
         <RelativeLayout
             android:id="@+id/relative_pitch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/include_layout"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/linear_set_max_pitch"
@@ -216,5 +216,7 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <include layout="@layout/link_buttons" />
 
 </LinearLayout>

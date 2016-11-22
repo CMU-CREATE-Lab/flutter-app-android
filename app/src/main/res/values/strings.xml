@@ -148,5 +148,6 @@
     <string name="zero_point">Zero Point:</string>
     <string name="max_input">Max</string>
     <string name="min_input">Min</string>
+    <string name="remove_link">Remove Link</string>
 
 </resources>

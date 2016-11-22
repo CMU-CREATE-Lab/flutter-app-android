@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -41,7 +40,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Servo and a Sensor
  */
-public class ServoDialog extends BaseResizableDialog implements Serializable, DialogInterface.OnClickListener,
+public class ServoDialog extends BaseResizableDialog implements Serializable,
         AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
@@ -89,7 +88,6 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
         final View view = inflater.inflate(R.layout.dialog_servos, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        builder.setPositiveButton(R.string.save_settings, this);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
 
@@ -100,18 +98,30 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSave");
+    // OnClickListeners
+
+
+    @OnClick(R.id.button_save_settings)
+    public void onClickSaveSettings() {
+        Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         servo.setSettings(settings);
         String msg = MessageConstructor.getLinkedMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
         servo.setIsLinked(true);
-        dialogServoListener.onServoLinkCreated(msg);
+        dialogServoListener.onServoLinkListener(msg);
+        this.dismiss();
     }
 
 
-    // OnClickListeners
+    @OnClick(R.id.button_remove_link)
+    public void onClickRemoveLink() {
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        String msg = MessageConstructor.getRemoveLinkMessage(servo);
+        Log.d(Constants.LOG_TAG, msg);
+        servo.setIsLinked(false);
+        dialogServoListener.onServoLinkListener(msg);
+        this.dismiss();
+    }
 
 
     @OnClick(R.id.image_advanced_settings)
@@ -219,7 +229,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable, Di
 
 
     public interface DialogServoListener {
-        public void onServoLinkCreated(String message);
+        public void onServoLinkListener(String message);
     }
 
 }

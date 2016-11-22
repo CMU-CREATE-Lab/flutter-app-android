@@ -17,7 +17,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
@@ -49,37 +48,41 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
         // servos link check
         for (int i = 0; i < servos.length; i++) {
+            RelativeLayout currentLayout = null;
+            ViewGroup linkAndSensor;
+            ImageView questionMark = null;
+            ImageView link;
+            ImageView sensor;
+            // TODO - we can make the outputs have methods to get the associated relative layout and image view ids, similar to the drawable ids
+            // TODO - or come up with a better way entirely :)
+            switch (i) {
+                case 0:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_1);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_1);
+                    break;
+                case 1:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_2);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_2);
+                    break;
+                case 2:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_3);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_3);
+                    break;
+            }
             if (servos[i].isLinked()) {
-                RelativeLayout currentLayout = null;
-                ViewGroup linkAndSensor;
-                ImageView link;
-                ImageView sensor;
-
-                // TODO - we can make the outputs have methods to get the associated relative layout and image view ids, similar to the drawable ids
-                // TODO - or come up with a better way entirely :)
-                switch (i) {
-                    case 0:
-                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_1);
-                        findViewById(R.id.image_servo_1).setVisibility(View.INVISIBLE);
-                        break;
-                    case 1:
-                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_2);
-                        findViewById(R.id.image_servo_2).setVisibility(View.INVISIBLE);
-                        break;
-                    case 2:
-                        currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_3);
-                        findViewById(R.id.image_servo_3).setVisibility(View.INVISIBLE);
-                        break;
-                }
-                if (currentLayout != null) {
-                    currentLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.link_active_servo_b_g));
-                    currentLayout.getChildAt(2).setVisibility(View.VISIBLE);
-                    linkAndSensor = ((ViewGroup)currentLayout.getChildAt(1));
-                    linkAndSensor.setVisibility(View.VISIBLE);
+                if (currentLayout != null && questionMark != null) {
+                    currentLayout.setVisibility(View.VISIBLE);
+                    questionMark.setVisibility(View.INVISIBLE);
+                    linkAndSensor = ((ViewGroup)currentLayout.getChildAt(0));
                     link = (ImageView) linkAndSensor.getChildAt(0);
                     sensor = (ImageView) linkAndSensor.getChildAt(1);
                     link.setImageResource(servos[i].getSettings().getRelationship().getGreyImageIdSm());
                     sensor.setImageResource(servos[i].getSettings().getSensor().getGreyImageIdSm());
+                }
+            } else {
+                if (currentLayout != null && questionMark != null) {
+                    currentLayout.setVisibility(View.INVISIBLE);
+                    questionMark.setVisibility(View.VISIBLE);
                 }
             }
         } // servos link check
@@ -165,8 +168,8 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
 
 
     @Override
-    public void onServoLinkCreated(String message) {
-        Log.d(Constants.LOG_TAG, "onServoLinkCreated");
+    public void onServoLinkListener(String message) {
+        Log.d(Constants.LOG_TAG, "onServoLinkListener");
         globalHandler.sessionHandler.addMessage(message);
         globalHandler.sessionHandler.sendMessages();
         updateLinkedViews();
@@ -190,28 +193,51 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         updateLinkedViews();
     }
 
+    // onClick listeners
 
-    @OnClick(R.id.relative_servo_1)
-    public void onClickServo1() {
+
+    private void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
         ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
+    @OnClick(R.id.image_servo_1)
+    public void onClickServo1Image() {
+        onClickServo1();
+    }
+    @OnClick(R.id.relative_servo_1)
+    public void onClickServo1Relative() {
+        onClickServo1();
+    }
 
 
-    @OnClick(R.id.relative_servo_2)
-    public void onClickServo2() {
+    private void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
         ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
+    @OnClick(R.id.image_servo_2)
+    public void onClickServo2Image() {
+        onClickServo2();
+    }
+    @OnClick(R.id.relative_servo_2)
+    public void onClickServo2Relative() {
+        onClickServo2();
+    }
 
 
-    @OnClick(R.id.relative_servo_3)
-    public void onClickServo3() {
+    private void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
         ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_servo_3)
+    public void onClickServo3Image() {
+        onClickServo3();
+    }
+    @OnClick(R.id.relative_servo_3)
+    public void onclickServo3Relative() {
+        onClickServo3();
     }
 
 
@@ -256,8 +282,8 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
             sensorData.setTextColor(Color.WHITE);
 
             Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white_right));
-            simulateData.setTextColor(Color.BLACK);
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
+            simulateData.setTextColor(Color.GRAY);
 
             isSensorData = true;
             // TODO - update the sensor readings
@@ -270,8 +296,8 @@ public class RobotActivity extends BaseNavigationActivity implements Serializabl
         Log.d(Constants.LOG_TAG, "onclickSimulateData");
         if (isSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white_left));
-            sensorData.setTextColor(Color.BLACK);
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
+            sensorData.setTextColor(Color.GRAY);
 
             Button simulateData = (Button) findViewById(R.id.button_simulate_data);
             simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));

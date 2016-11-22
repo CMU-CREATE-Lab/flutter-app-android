@@ -32,29 +32,31 @@
             android:layout_alignTop="@+id/image_flutter_illustration"
             android:padding="5dp">
 
+            <ImageView
+                android:id="@+id/image_servo_3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"/>
+
             <RelativeLayout
                 android:id="@+id/relative_servo_3"
                 android:layout_width="155dp"
-                android:layout_height="75dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true">
-
-                <ImageView
-                    android:id="@+id/image_servo_3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="2dp"
-                    android:src="@drawable/question_icon"
-                    android:layout_alignParentEnd="true"/>
+                android:layout_alignParentTop="true"
+                android:background="@drawable/link_active_servo_b_g"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="9dp"
-                    android:gravity="center"
-                    android:visibility="gone">
+                    android:layout_margin="12dp"
+                    android:gravity="center">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -75,34 +77,35 @@
                     android:layout_height="match_parent"
                     android:layout_margin="9dp"
                     android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"
-                    android:visibility="gone"/>
+                    android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relative_servo_2"
-                android:layout_width="155dp"
-                android:layout_height="75dp"
+            <ImageView
+                android:id="@+id/image_servo_2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/relative_servo_3">
+                android:layout_below="@+id/image_servo_3"/>
 
-                <ImageView
-                    android:id="@+id/image_servo_2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="9dp"
-                    android:src="@drawable/question_icon"
-                    android:layout_alignParentEnd="true"/>
+           <RelativeLayout
+               android:id="@+id/relative_servo_2"
+               android:layout_width="155dp"
+               android:layout_height="60dp"
+               android:layout_alignParentEnd="true"
+               android:layout_below="@id/relative_servo_3"
+               android:background="@drawable/link_active_servo_b_g"
+               android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="9dp"
-                    android:gravity="center"
-                    android:visibility="gone">
+                    android:layout_margin="12dp"
+                    android:gravity="center">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -123,25 +126,27 @@
                     android:layout_height="match_parent"
                     android:layout_margin="9dp"
                     android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"
-                    android:visibility="gone"/>
+                    android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_servo_1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="2dp"
+                android:src="@drawable/question_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/image_servo_2"/>
 
             <RelativeLayout
                 android:id="@+id/relative_servo_1"
                 android:layout_width="155dp"
-                android:layout_height="75dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/relative_servo_2">
-
-                <ImageView
-                    android:id="@+id/image_servo_1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="2dp"
-                    android:src="@drawable/question_icon"
-                    android:layout_alignParentEnd="true"/>
+                android:layout_below="@id/relative_servo_2"
+                android:background="@drawable/link_active_servo_b_g"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:id="@+id/linear_sensor_link_1"
@@ -150,8 +155,7 @@
                     android:orientation="vertical"
                     android:layout_alignParentStart="true"
                     android:gravity="center"
-                    android:layout_margin="9dp"
-                    android:visibility="gone">
+                    android:layout_margin="12dp">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -170,8 +174,7 @@
                     android:layout_height="51dp"
                     android:layout_margin="9dp"
                     android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"
-                    android:visibility="gone"/>
+                    android:layout_alignParentEnd="true"/>
 
             </RelativeLayout>
 
@@ -247,8 +250,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/round_green_white_right"
-                android:text="@string/simulate_data" />
+                android:background="@drawable/round_gray_white_right"
+                android:text="@string/simulate_data"
+                android:textColor="@color/gray"/>
 
         </LinearLayout>
 

@@ -8,6 +8,7 @@
         layout="@layout/toolbar_outputs"/>
 
     <RelativeLayout
+        android:id="@+id/relative_color_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/include_toolbar_dialog"
@@ -125,5 +126,10 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <include layout="@layout/link_buttons"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/relative_color_container"/>
 
 </RelativeLayout>
