@@ -135,7 +135,7 @@ public class SessionHandler {
                 // This is why I put a simple sleep to give the flutter some time.
                 // Without this, only the last color would be set, blue.
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

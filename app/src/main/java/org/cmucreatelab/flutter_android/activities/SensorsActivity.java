@@ -10,17 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseFlutterActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import java.io.Serializable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +30,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -48,8 +45,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     private ProgressBar progress1;
     private ProgressBar progress2;
     private ProgressBar progress3;
-
-    private Timer timer;
 
     private Sensor[] sensors;
     private Sensor currentSensor;
@@ -108,28 +103,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     }
 
 
-    private void startSensorReading() {
-        if (timer != null) {
-            timer.cancel();
-        }
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                globalHandler.sessionHandler.addMessage(MessageConstructor.READ_SENSOR);
-                globalHandler.sessionHandler.sendMessages();
-            }
-        };
-        timer = new Timer();
-        timer.schedule(timerTask, 0, 500);
-    }
-
-
-    private void stopSensorReading() {
-        timer.cancel();
-    }
-
-
     // Event Listeners
 
 
@@ -177,15 +150,16 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     @Override
     protected void onResume() {
         super.onResume();
-        globalHandler.sessionHandler.setFlutterMessageListener(this);
+        if (globalHandler.sessionHandler.isBluetoothConnected)
+            globalHandler.sessionHandler.setFlutterMessageListener(this);
     }
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (globalHandler.sessionHandler.isBluetoothConnected)
-            stopSensorReading();
+    public void onBackPressed() {
+        globalHandler.sessionHandler.release();
+        super.onBackPressed();
+        finish();
     }
 
 
