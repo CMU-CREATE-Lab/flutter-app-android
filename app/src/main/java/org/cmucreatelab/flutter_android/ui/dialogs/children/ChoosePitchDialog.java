@@ -21,6 +21,8 @@ import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 public abstract class ChoosePitchDialog extends BaseResizableDialog implements DialogInterface.OnClickListener{
 
 
+    private static int MINIMUM_PITCH = 260;
+
     private TextView currentPitch;
     private SeekBar seekBarPitch;
 
@@ -31,8 +33,8 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.d(Constants.LOG_TAG, "onProgressChanged");
-            finalPitch = i;
-            currentPitch.setText(String.valueOf(finalPitch));
+            finalPitch = i + MINIMUM_PITCH;
+            currentPitch.setText(String.valueOf(finalPitch) + " " + getString(R.string.hz));
         }
 
         @Override
@@ -56,10 +58,11 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
         builder.setPositiveButton(R.string.save, this);
         builder.setView(view);
 
+        finalPitch = MINIMUM_PITCH;
         currentPitch = (TextView) view.findViewById(R.id.text_current_pitch);
         seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
         seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
-        currentPitch.setText("0");
+        currentPitch.setText(String.valueOf(MINIMUM_PITCH) + " " + getString(R.string.hz));
 
         return builder.create();
     }

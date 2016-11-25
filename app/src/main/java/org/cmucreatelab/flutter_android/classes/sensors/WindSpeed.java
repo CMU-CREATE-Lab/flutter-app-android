@@ -18,6 +18,7 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     private static final int sensorTypeId = R.string.wind_speed;
     private static final int highTextId = R.string.fast;
     private static final int lowTextId = R.string.slow;
+    private static final int typeTextId = R.string.wind_speed;
 
     private static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
     private static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
@@ -52,6 +53,12 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getLowTextId() {
         return lowTextId;
+    }
+
+
+    @Override
+    public int getTypeTextId() {
+        return typeTextId;
     }
 
 

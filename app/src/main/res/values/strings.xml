@@ -27,7 +27,7 @@
     <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
     <string name="scanning">Scanning...</string>
     <string name="rescan">Rescan</string>
-    <string name="connect_flutter">CONNECT FLUTER</string>
+    <string name="connect_flutter">CONNECT FLUTTER</string>
     <string name="data_los">DATA LOGS</string>
     <string name="speaker">SPEAKER</string>
     <string name="leds">LEDs</string>
@@ -149,5 +149,8 @@
     <string name="max_input">Max</string>
     <string name="min_input">Min</string>
     <string name="remove_link">Remove Link</string>
+    <string name="minimum_pitch">260 Hz</string>
+    <string name="maximum_pitch">1050 Hz</string>
+    <string name="hz">Hz</string>
 
 </resources>

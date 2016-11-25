@@ -320,8 +320,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @Override
     public void onMaxPitchChosen(int max) {
         Log.d(Constants.LOG_TAG, "onMinVolumeChosen");
-        currentTextViewDescrp.setText(getString(pitchSettings.getSensor().getHighTextId()) + " " + getString(R.string.volume));
-        currentTextViewItem.setText(String.valueOf(max));
+        currentTextViewDescrp.setText(getString(pitchSettings.getSensor().getHighTextId()) + " " + getString(R.string.pitch));
+        currentTextViewItem.setText(String.valueOf(max) + " " + getString(R.string.hz));
         currentImageView.setImageResource(R.drawable.link_icon_pitch);
         pitchSettings.setOutputMax(max);
     }
@@ -330,8 +330,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @Override
     public void onMinPitchChosen(int min) {
         Log.d(Constants.LOG_TAG, "onMinVolumeChosen");
-        currentTextViewDescrp.setText(getString(pitchSettings.getSensor().getLowTextId()) + " " + getString(R.string.volume));
-        currentTextViewItem.setText(String.valueOf(min));
+        currentTextViewDescrp.setText(getString(pitchSettings.getSensor().getLowTextId()) + " " + getString(R.string.pitch));
+        currentTextViewItem.setText(String.valueOf(min) + " " + getString(R.string.hz));
         currentImageView.setImageResource(R.drawable.link_icon_pitch);
         pitchSettings.setOutputMin(min);
     }

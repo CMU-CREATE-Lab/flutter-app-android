@@ -18,6 +18,7 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
     private static final int sensorTypeId = R.string.soil_moisture;
     private static final int highTextId = R.string.wet;
     private static final int lowTextId = R.string.dry;
+    private static final int typeTextId = R.string.soil_moisture;
 
     private static final int blueImageId = R.drawable.sensor_blue_soil_moisture_l_g_68;
     private static final int greenImageId = R.drawable.sensor_green_soil_moisture_l_g_68;
@@ -52,6 +53,12 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getLowTextId() {
         return lowTextId;
+    }
+
+
+    @Override
+    public int getTypeTextId() {
+        return typeTextId;
     }
 
 

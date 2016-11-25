@@ -27,7 +27,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 500);
+        timer.schedule(timerTask, 0, 750);
     }
 
 

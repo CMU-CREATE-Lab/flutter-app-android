@@ -18,6 +18,7 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
     private static final int sensorTypeId = R.string.temperature;
     private static final int highTextId = R.string.hot;
     private static final int lowTextId = R.string.cold;
+    private static final int typeTextId = R.string.temperature;
 
     private static final int blueImageId = R.drawable.sensor_blue_temperature_l_g_68;
     private static final int greenImageId = R.drawable.sensor_green_temperature_l_g_68;
@@ -52,6 +53,12 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getLowTextId() {
         return lowTextId;
+    }
+
+
+    @Override
+    public int getTypeTextId() {
+        return typeTextId;
     }
 
 

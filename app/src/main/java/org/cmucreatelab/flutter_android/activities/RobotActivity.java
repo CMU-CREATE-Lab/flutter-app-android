@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -50,21 +51,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void updateStaticViews() {
         TextView sensorText;
-        if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
-            sensorText = (TextView) findViewById(R.id.text_sensor_1);
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getGreyImageIdSm()), null, null);
-            sensorText.setText(sensors[0].getSensorType().toString());
-        }
-        if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
-            sensorText = (TextView) findViewById(R.id.text_sensor_2);
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getGreyImageIdSm()), null, null);
-            sensorText.setText(sensors[1].getSensorType().toString());
-        }
-        if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
-            sensorText = (TextView) findViewById(R.id.text_sensor_3);
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getGreyImageIdSm()), null, null);
-            sensorText.setText(sensors[2].getSensorType().toString());
-        }
+        sensorText = (TextView) findViewById(R.id.text_sensor_1);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[0].getTypeTextId());
+        sensorText = (TextView) findViewById(R.id.text_sensor_2);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[1].getTypeTextId());
+        sensorText = (TextView) findViewById(R.id.text_sensor_3);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[2].getTypeTextId());
     }
 
 
@@ -158,6 +153,42 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     }
 
 
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
+            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    TextView sensorReadingText;
+                    if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,6 +211,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
             sensors = globalHandler.sessionHandler.getFlutter().getSensors();
             isSensorData = true;
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
         }
         startSensorReading();
         updateStaticViews();
@@ -200,6 +233,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     @Override
     public void onMessageSent(String output) {
         Log.d(Constants.LOG_TAG, "onMessageSent: " + output);
+
+        // sensor reading
         if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
             output = output.substring(2, output.length());
             String sensor1 = output.substring(0, output.indexOf(','));
@@ -362,7 +397,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulateData.setTextColor(Color.GRAY);
 
             isSensorData = true;
-            // TODO - update the sensor readings
+            startSensorReading();
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -380,6 +418,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulateData.setTextColor(Color.WHITE);
 
             isSensorData = false;
+            stopSensorReading();
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.VISIBLE);
+            simulatedSeekbar.setProgress(0);
         }
     }
 

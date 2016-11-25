@@ -18,6 +18,7 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     private static final int sensorTypeId = R.string.light;
     private static final int highTextId = R.string.bright;
     private static final int lowTextId = R.string.dark;
+    private static final int typeTextId = R.string.light;
 
     private static final int blueImageId = R.drawable.sensor_blue_light_l_g_68;
     private static final int greenImageId = R.drawable.sensor_green_light_l_g_68;
@@ -52,6 +53,12 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getLowTextId() {
         return lowTextId;
+    }
+
+
+    @Override
+    public int getTypeTextId() {
+        return typeTextId;
     }
 
 

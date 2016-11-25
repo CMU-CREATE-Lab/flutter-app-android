@@ -31,6 +31,7 @@ public interface Sensor {
     int getSensorTypeId();
     int getHighTextId();
     int getLowTextId();
+    int getTypeTextId();
     int getBlueImageId();
     int getGreenImageId();
     int getOrangeImageIdMd();
