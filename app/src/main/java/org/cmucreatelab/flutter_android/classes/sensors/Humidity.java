@@ -25,6 +25,7 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     private static final int orangeImageIdMd = R.drawable.sensor_orange_humidity_m_d_40;
     private static final int orangeImageIdSm = R.drawable.sensor_orange_humidity_s_m_22;
     private static final int greyImageIdSm = R.drawable.sensor_humidity_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_humidity_s_m_20;
 
 
     public Humidity(int portNumber) {
@@ -89,6 +90,11 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getGreyImageIdSm() {
         return greyImageIdSm;
+    }
+
+    @Override
+    public int getWhiteImageIdSm() {
+        return whiteImageIdSm;
     }
 
 }

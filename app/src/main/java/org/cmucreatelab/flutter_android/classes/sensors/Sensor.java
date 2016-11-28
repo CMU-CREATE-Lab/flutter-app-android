@@ -37,6 +37,7 @@ public interface Sensor {
     int getOrangeImageIdMd();
     int getOrangeImageIdSm();
     int getGreyImageIdSm();
+    int getWhiteImageIdSm();
     int getSensorReading();
     int getPortNumber();
     void setSensorReading(int value);

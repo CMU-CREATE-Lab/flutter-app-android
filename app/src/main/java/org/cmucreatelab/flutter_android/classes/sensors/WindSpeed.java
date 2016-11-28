@@ -25,6 +25,7 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     private static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
     private static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
     private static final int greyImageIdSm = R.drawable.sensor_wind_speed_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_wind_speed_s_m_20;
 
 
     public WindSpeed(int portNumber) {
@@ -89,6 +90,12 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getGreyImageIdSm() {
         return greyImageIdSm;
+    }
+
+
+    @Override
+    public int getWhiteImageIdSm() {
+        return whiteImageIdSm;
     }
 
 }
