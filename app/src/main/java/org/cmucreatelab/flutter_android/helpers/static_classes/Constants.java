@@ -24,4 +24,20 @@ public class Constants {
 
     public static final char[] HEX_ALPHABET = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
+    public static final int C_4 = 262;
+    public static final int D_4 = 294;
+    public static final int E_4 = 330;
+    public static final int F_4 = 349;
+    public static final int G_4 = 392;
+    public static final int A_4 = 440;
+    public static final int B_4 = 494;
+    public static final int C_5 = 523;
+    public static final int D_5 = 587;
+    public static final int E_5 = 659;
+    public static final int F_5 = 698;
+    public static final int G_5 = 784;
+    public static final int A_5 = 880;
+    public static final int B_5 = 988;
+    public static final int C_6 = 1047;
+
 }

@@ -1,25 +1,195 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.outputs.Led;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RobotActivity extends BaseNavigationActivity {
+// TODO - make a message reconstruct class to determine what kind of message it is
+// TODO - then call the appropriate method depending on what kind of message was received
+public class RobotActivity extends BaseSensorReadingActivity implements Serializable, FlutterMessageListener,
+    ServoDialog.DialogServoListener,
+    LedDialog.DialogLedListener,
+    SpeakerDialog.DialogSpeakerListener {
 
-    private GlobalHandler globalHandler;
+
+    public static final String SERIALIZABLE_KEY = "serializable_key";
+
+    private Servo[] servos;
+    private Led[] leds;
+    private Speaker speaker;
+    private Sensor[] sensors;
+
+    private boolean isSensorData;
+
+
+    private void updateStaticViews() {
+        TextView sensorText;
+        sensorText = (TextView) findViewById(R.id.text_sensor_1);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[0].getTypeTextId());
+        sensorText = (TextView) findViewById(R.id.text_sensor_2);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[1].getTypeTextId());
+        sensorText = (TextView) findViewById(R.id.text_sensor_3);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getGreyImageIdSm()), null, null);
+        sensorText.setText(sensors[2].getTypeTextId());
+    }
+
+
+    private void updateDynamicViews() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView sensorReadingText;
+                if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                    sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
+                }
+                if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                    sensorReadingText.setText(String.valueOf(sensors[1].getSensorReading()));
+                }
+                if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                    sensorReadingText.setText(String.valueOf(sensors[2].getSensorReading()));
+                }
+            }
+        });
+    }
+
+
+    private void updateLinkedViews() {
+        Log.d(Constants.LOG_TAG, "updateLinkedViews");
+        // servos link check
+        for (int i = 0; i < servos.length + leds.length + 1; i++) {
+            Output[] outputs = new Output[7];
+            RelativeLayout currentLayout = null;
+            ViewGroup linkAndSensor;
+            ImageView questionMark = null;
+            ImageView link;
+            ImageView sensor;
+
+            switch (i) {
+                case 0:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_1);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_1);
+                    outputs[0] = servos[0];
+                    break;
+                case 1:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_2);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_2);
+                    outputs[1] = servos[1];
+                    break;
+                case 2:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_servo_3);
+                    questionMark = (ImageView) findViewById(R.id.image_servo_3);
+                    outputs[2] = servos[2];
+                    break;
+                case 3:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_led_1);
+                    questionMark = (ImageView) findViewById(R.id.image_led_1);
+                    outputs[3] = leds[0];
+                    break;
+                case 4:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_led_2);
+                    questionMark = (ImageView) findViewById(R.id.image_led_2);
+                    outputs[4] = leds[1];
+                    break;
+                case 5:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_led_3);
+                    questionMark = (ImageView) findViewById(R.id.image_led_3);
+                    outputs[5] = leds[2];
+                    break;
+                case 6:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker);
+                    questionMark = (ImageView) findViewById(R.id.image_speaker);
+                    outputs[6] = speaker;
+                    break;
+            }
+            if (outputs[i].isLinked()) {
+                if (currentLayout != null && questionMark != null) {
+                    currentLayout.setVisibility(View.VISIBLE);
+                    questionMark.setVisibility(View.INVISIBLE);
+                    linkAndSensor = ((ViewGroup)currentLayout.getChildAt(0));
+                    link = (ImageView) linkAndSensor.getChildAt(0);
+                    sensor = (ImageView) linkAndSensor.getChildAt(1);
+                    link.setImageResource(outputs[i].getSettings().getRelationship().getGreyImageIdSm());
+                    sensor.setImageResource(outputs[i].getSettings().getSensor().getGreyImageIdSm());
+                }
+            } else {
+                if (currentLayout != null && questionMark != null) {
+                    currentLayout.setVisibility(View.INVISIBLE);
+                    questionMark.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
+            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    TextView sensorReadingText;
+                    if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,69 +202,229 @@ public class RobotActivity extends BaseNavigationActivity {
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        globalHandler = GlobalHandler.newInstance(this);
+        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected));
         if (!globalHandler.sessionHandler.isBluetoothConnected) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+        } else {
+            servos = globalHandler.sessionHandler.getFlutter().getServos();
+            leds = globalHandler.sessionHandler.getFlutter().getLeds();
+            speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
+            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
+            isSensorData = true;
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
+        }
+        startSensorReading();
+        updateStaticViews();
+        updateDynamicViews();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (globalHandler.sessionHandler.isBluetoothConnected) {
+            globalHandler.sessionHandler.setFlutterMessageListener(this);
+            updateLinkedViews();
         }
     }
 
 
-    // TODO - make a current output reference for when the callback function gets called
-    @OnClick(R.id.image_servo_1)
-    public void onClickServo1() {
+    @Override
+    public void onMessageReceived(String output) {
+        Log.d(Constants.LOG_TAG, "onMessageReceived: " + output);
+
+        // sensor reading
+        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
+            output = output.substring(2, output.length());
+            String sensor1 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor2 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor3 = output;
+            sensors[0].setSensorReading(Integer.valueOf(sensor1));
+            sensors[1].setSensorReading(Integer.valueOf(sensor2));
+            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateDynamicViews();
+        }
+    }
+
+
+    @Override
+    public void onServoLinkListener(String message) {
+        Log.d(Constants.LOG_TAG, "onServoLinkListener");
+        globalHandler.sessionHandler.addMessage(message);
+        globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
+    }
+
+
+    @Override
+    public void onLedLinkListener(ArrayList<String> msgs) {
+        Log.d(Constants.LOG_TAG, "onLedLinkCreated");
+        globalHandler.sessionHandler.addMessages(msgs);
+        globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
+    }
+
+
+    @Override
+    public void onSpeakerLinkListener(ArrayList<String> msgs) {
+        Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
+        globalHandler.sessionHandler.addMessages(msgs);
+        globalHandler.sessionHandler.sendMessages();
+        updateLinkedViews();
+    }
+
+    // onClick listeners
+
+
+    private void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_servo_1)
+    public void onClickServo1Image() {
+        onClickServo1();
+    }
+    @OnClick(R.id.relative_servo_1)
+    public void onClickServo1Relative() {
+        onClickServo1();
     }
 
 
-    @OnClick(R.id.image_servo_2)
-    public void onClickServo2() {
+    private void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_servo_2)
+    public void onClickServo2Image() {
+        onClickServo2();
+    }
+    @OnClick(R.id.relative_servo_2)
+    public void onClickServo2Relative() {
+        onClickServo2();
     }
 
 
-    @OnClick(R.id.image_servo_3)
-    public void onClickServo3() {
+    private void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
-        ServoDialog dialog = ServoDialog.newInstance();
+        ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_servo_3)
+    public void onClickServo3Image() {
+        onClickServo3();
+    }
+    @OnClick(R.id.relative_servo_3)
+    public void onclickServo3Relative() {
+        onClickServo3();
     }
 
 
-    @OnClick(R.id.image_led_1)
-    public void onClickLed1() {
+    private void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_led_1)
+    public void onClickLed1Image() {
+        onClickLed1();
+    }
+    @OnClick(R.id.relative_led_1)
+    public void onClickLed1Relative() {
+        onClickLed1();
     }
 
 
-    @OnClick(R.id.image_led_2)
-    public void onClickLed2() {
+    private void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_led_2)
+    public void onClickLed2Image() {
+        onClickLed2();
+    }
+    @OnClick(R.id.relative_led_2)
+    public void onClickLed2Relative() {
+        onClickLed2();
     }
 
 
-    @OnClick(R.id.image_led_3)
-    public void onClickLed3() {
+    private void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
-        LedDialog dialog = LedDialog.newInstance();
+        LedDialog dialog = LedDialog.newInstance(leds[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
+    }
+    @OnClick(R.id.image_led_3)
+    public void onClickLed3Image() {
+        onClickLed3();
+    }
+    @OnClick(R.id.relative_led_3)
+    public void onClickLed3Relative() {
+        onClickLed3();
     }
 
 
-    @OnClick(R.id.image_speaker)
-    public void onClickSpeaker() {
+    private void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
-        SpeakerDialog dialog = SpeakerDialog.newInstance();
+        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
+    @OnClick(R.id.image_speaker)
+    public void onClickSpeakerImage() {
+        onClickSpeaker();
+    }
+    @OnClick(R.id.relative_speaker)
+    public void onClickSpeakerRelative() {
+        onClickSpeaker();
+    }
 
+
+    @OnClick(R.id.button_sensor_data)
+    public void onClickSensorData() {
+        Log.d(Constants.LOG_TAG, "onClickSensorData");
+        if (!isSensorData) {
+            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
+            sensorData.setTextColor(Color.WHITE);
+
+            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
+            simulateData.setTextColor(Color.GRAY);
+
+            isSensorData = true;
+            startSensorReading();
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    @OnClick(R.id.button_simulate_data)
+    public void onClickSimulateData() {
+        Log.d(Constants.LOG_TAG, "onClickSimulateData");
+        if (isSensorData) {
+            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
+            sensorData.setTextColor(Color.GRAY);
+
+            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
+            simulateData.setTextColor(Color.WHITE);
+
+            isSensorData = false;
+            stopSensorReading();
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.VISIBLE);
+            simulatedSeekbar.setProgress(0);
+        }
+    }
 }

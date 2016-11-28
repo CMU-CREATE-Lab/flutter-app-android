@@ -28,18 +28,42 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 8/22/2016.
+ *
+ * SensorTypeDialog
+ *
+ * A Dialog that prompts the user to choose what kind of sensors are in the ports. (SensorsActivity)
  */
 public class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
 
     private String sensorText;
+    private int portNumber;
     DialogSensorTypeListener sensorListener;
 
 
-    public static SensorTypeDialog newInstance(int sensor, Serializable serializable) {
+    private String getSensorText(int portNumber) {
+        String result = "";
+
+        switch (portNumber) {
+            case 1:
+                result = getString(R.string.sensor_port_1);
+                break;
+            case 2:
+                result = getString(R.string.sensor_port_2);
+                break;
+            case 3:
+                result = getString(R.string.sensor_port_3);
+                break;
+        }
+
+        return result;
+    }
+
+
+    public static SensorTypeDialog newInstance(int portNumber, Serializable serializable) {
         SensorTypeDialog sensorTypeDialog = new SensorTypeDialog();
 
         Bundle args = new Bundle();
-        args.putInt(Sensor.SENSOR_KEY, sensor);
+        args.putInt(Sensor.SENSOR_PORT_KEY, portNumber);
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
         sensorTypeDialog.setArguments(args);
 
@@ -50,7 +74,8 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        sensorText = getString(getArguments().getInt(Sensor.SENSOR_KEY));
+        portNumber = getArguments().getInt(Sensor.SENSOR_PORT_KEY);
+        sensorText = getSensorText(portNumber);
         sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -75,47 +100,47 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        Sensor sensor = new NoSensor();
+        Sensor sensor = new NoSensor(portNumber);
         switch (view.getId()) {
             case R.id.image_light:
                 Log.d(Constants.LOG_TAG, "onClickLightSensor");
-                sensor = new Light();
+                sensor = new Light(portNumber);
                 break;
             case R.id.image_soil_moisture:
                 Log.d(Constants.LOG_TAG, "onClickSoilMoistureSensor");
-                sensor = new SoilMoisture();
+                sensor = new SoilMoisture(portNumber);
                 break;
             case R.id.image_distance:
                 Log.d(Constants.LOG_TAG, "onClickDistanceSensor");
-                sensor = new Distance();
+                sensor = new Distance(portNumber);
                 break;
             case R.id.image_sound:
                 Log.d(Constants.LOG_TAG, "onClickSoundSensor");
-                sensor = new Sound();
+                sensor = new Sound(portNumber);
                 break;
             case R.id.image_wind_speed:
                 Log.d(Constants.LOG_TAG, "onClickWindSpeedSensor");
-                sensor = new WindSpeed();
+                sensor = new WindSpeed(portNumber);
                 break;
             case R.id.image_humidity:
                 Log.d(Constants.LOG_TAG, "onClickHumiditySensor");
-                sensor = new Humidity();
+                sensor = new Humidity(portNumber);
                 break;
             case R.id.image_temperature:
                 Log.d(Constants.LOG_TAG, "onClickTemperatureSensor");
-                sensor = new Temperature();
+                sensor = new Temperature(portNumber);
                 break;
             case R.id.image_barometric_pressure:
                 Log.d(Constants.LOG_TAG, "onClickBarometricPressureSensor");
-                sensor = new BarometricPressure();
+                sensor = new BarometricPressure(portNumber);
                 break;
             case R.id.image_analog_unknown:
                 Log.d(Constants.LOG_TAG, "onClickAnalogUnknownSensor");
-                sensor = new AnalogOrUnknown();
+                sensor = new AnalogOrUnknown(portNumber);
                 break;
             case R.id.image_no_sensor:
                 Log.d(Constants.LOG_TAG, "onClickNoSensor");
-                sensor = new NoSensor();
+                sensor = new NoSensor(portNumber);
                 break;
         }
         sensorListener.onSensorTypeChosen(sensor);

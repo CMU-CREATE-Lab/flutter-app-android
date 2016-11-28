@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -10,8 +12,10 @@ import org.cmucreatelab.flutter_android.R;
  * A class that represents a servo on the flutter.
  *
  */
-public class Servo extends A_Output implements Output {
+public class Servo extends A_Output implements Serializable, Output {
 
+
+    public static final String SERVO_KEY = "servo_key";
 
     private static final Output.Type outputType = Type.SERVO;
     private static final int MINIMUM = 0;
@@ -19,21 +23,9 @@ public class Servo extends A_Output implements Output {
 
     public static final int imageId = R.mipmap.ic_launcher;
 
-    private int currentValue;
 
-
-    public Servo(int currentLocal) {
-        this.setCurrentValue(currentLocal);
-    }
-
-
-    public void setCurrentValue(int currentLocal) {
-        if (currentLocal >= MINIMUM && currentLocal <= MAXIMUM) {
-            this.currentValue = currentLocal;
-        }
-    }
-    public int getCurrentValue() {
-        return this.currentValue;
+    public Servo(int portNumber) {
+        super(portNumber);
     }
 
 
@@ -46,6 +38,18 @@ public class Servo extends A_Output implements Output {
     @Override
     public int getOutputImageId() {
         return imageId;
+    }
+
+
+    @Override
+    public int getMax() {
+        return MAXIMUM;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM;
     }
 
 }

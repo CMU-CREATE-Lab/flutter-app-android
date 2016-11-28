@@ -4,139 +4,151 @@
     android:layout_height="match_parent"
     android:padding="5dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/final_color"/>
-
     <FrameLayout
         android:id="@+id/frame_final_color"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"/>
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:padding="2dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/color"
-            android:layout_weight="2"/>
-
-        <SeekBar
-            android:id="@+id/seek_hue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:max="359"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
-            android:thumbOffset="1dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/vibrance"
-            android:layout_weight="2"/>
-
-        <SeekBar
-            android:id="@+id/seek_saturation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:max="99"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
-            android:thumbOffset="1dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/darkness"
-            android:layout_weight="2"/>
-
-        <SeekBar
-            android:id="@+id/seek_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:max="99"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
-            android:thumbOffset="1dp"/>
-
-    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pre_mixed"/>
+        android:text="@string/color"
+        android:padding="2dp"/>
+
+    <SeekBar
+        android:id="@+id/seek_hue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="359"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:thumbOffset="1dp"
+        android:padding="2dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vibrance"
+        android:padding="2dp"/>
+
+    <SeekBar
+        android:id="@+id/seek_saturation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="99"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:thumbOffset="1dp"
+        android:padding="2dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/darkness"
+        android:padding="2dp"/>
+
+    <SeekBar
+        android:id="@+id/seek_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="99"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:thumbOffset="1dp"
+        android:padding="2dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pre_mixed"
+        android:padding="2dp"/>
 
     <LinearLayout
-        android:id="@+id/linear_pre_mixed"
+        android:id="@+id/linear_pre_mixed_top"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="25dp"
         android:orientation="horizontal"
-        android:weightSum="6">
+        android:padding="2dp"
+        android:weightSum="4">
 
-        <FrameLayout
+        <View
             android:id="@+id/frame_red"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_red" />
 
-        <FrameLayout
+        <View
             android:id="@+id/frame_yellow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_yellow" />
 
-        <FrameLayout
+        <View
             android:id="@+id/frame_blue"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_cyan" />
 
-        <FrameLayout
-            android:id="@+id/frame_green"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
-
-        <FrameLayout
+        <View
             android:id="@+id/frame_orange"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_orange" />
 
-        <FrameLayout
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_pre_mixed_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        android:weightSum="4"
+        android:background="@drawable/debug_border">
+
+        <View
+            android:id="@+id/frame_green"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_green" />
+
+        <View
             android:id="@+id/frame_purple"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></FrameLayout>
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_purple" />
 
+        <View
+            android:id="@+id/frame_white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_white" />
+
+        <View
+            android:id="@+id/frame_black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/circle_black" />
 
     </LinearLayout>
 

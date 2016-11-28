@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Flutter-Android</string>
+    <string name="app_name">Flutter Links</string>
     <string name="connection_status">Status:</string>
     <string name="scan">Scan</string>
     <string name="stop">Stop</string>
@@ -27,7 +27,7 @@
     <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
     <string name="scanning">Scanning...</string>
     <string name="rescan">Rescan</string>
-    <string name="connect_flutter">CONNECT FLUTER</string>
+    <string name="connect_flutter">CONNECT FLUTTER</string>
     <string name="data_los">DATA LOGS</string>
     <string name="speaker">SPEAKER</string>
     <string name="leds">LEDs</string>
@@ -98,5 +98,59 @@
     <string name="no_flutter">No Flutters Found</string>
     <string name="robot">Robot</string>
     <string name="data_log">Data Log</string>
+    <string name="enable_bluetooth">Enable Bluetooth</string>
+    <string name="enable_bluetooth_msg">Bluetooth is currently off, please turn it on to continue.</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="set_linked_sensor">Set Linked Sensor</string>
+    <string name="set_relationship">Set Relationship</string>
+    <string name="set_maximum_position">Set Maximum Position</string>
+    <string name="set_minimum_position">Set Minimum Position</string>
+    <string name="set_up_servo">Set Up Servo</string>
+    <string name="proportional">Proportional</string>
+    <string name="cumulative">Cumulative</string>
+    <string name="change">Change</string>
+    <string name="frequency">Frequency</string>
+    <string name="amplitude">Amplitude</string>
+    <string name="constant">Constant</string>
+    <string name="switch_relationship">Switch</string>
+    <string name="save">Save</string>
+    <string name="linked_sensor">Linked Sensor</string>
+    <string name="relationship">Relationship</string>
+    <string name="set_up_led">Set Up LED</string>
+    <string name="sensor_data">Sensor Data</string>
+    <string name="simulate_data">Simulate Data</string>
+    <string name="set_maximum_color">Set Maximum Color</string>
+    <string name="set_minimum_color">Set Minimum Color</string>
+    <string name="maximum_color">Maximum Color</string>
+    <string name="minimum_color">Minimum Color</string>
+    <string name="set_up_speaker">Set Up Speaker</string>
+    <string name="volume">Volume</string>
+    <string name="set_maximum_volume">Set Maximum Volume</string>
+    <string name="set_minimum_volume">Set Minimum Volume</string>
+    <string name="set_minimum_pitch">Set Minimum Pitch</string>
+    <string name="set_maximum_pitch">Set Maximum Pitch</string>
+    <string name="pitch">Pitch</string>
+    <string name="zero">0</string>
+    <string name="one_hundred">100</string>
+    <string name="far">Far</string>
+    <string name="near">Near</string>
+    <string name="humid">Humid</string>
+    <string name="loud">Loud</string>
+    <string name="quiet">Quiet</string>
+    <string name="cold">Cold</string>
+    <string name="hot">Hot</string>
+    <string name="slow">Slow</string>
+    <string name="fast">Fast</string>
+    <string name="advanced_settings">Advanced Settings</string>
+    <string name="sensor_settings">Sensor Settings:</string>
+    <string name="link_settings">Link Settings:</string>
+    <string name="time_constant">Time Constant:</string>
+    <string name="zero_point">Zero Point:</string>
+    <string name="max_input">Max</string>
+    <string name="min_input">Min</string>
+    <string name="remove_link">Remove Link</string>
+    <string name="minimum_pitch">260 Hz</string>
+    <string name="maximum_pitch">1050 Hz</string>
+    <string name="hz">Hz</string>
 
 </resources>

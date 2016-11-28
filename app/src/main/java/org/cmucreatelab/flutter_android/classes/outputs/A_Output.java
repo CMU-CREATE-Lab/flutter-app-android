@@ -1,42 +1,55 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 /**
  * Created by Steve on 8/11/2016.
  *
  * A_Output
  *
- * An abstract class that implements the linking between outputs, sensors and their relationship.
+ * An abstract class that holds a Settings object to represent the link between input and output
  *
  */
 public abstract class A_Output implements Output{
 
-    protected Sensor mSensor;
-    protected Relationship mRelationship;
+    private boolean isLinked;
+    private Settings settings;
+    private int portNumber;
 
 
-    public A_Output() {
-        this.mSensor = new NoSensor();
-        this.mRelationship = new Proportional();
-    }
-
-
-    public A_Output(Sensor sensor, Relationship relationship) {
-        this.mSensor = sensor;
-        this.mRelationship = relationship;
+    public A_Output(int portNumber) {
+        this.portNumber = portNumber;
+        isLinked = false;
     }
 
     // getters
-    public Sensor getSensor() { return this.mSensor; }
-    public Relationship getRelationship() { return this.mRelationship; }
+    @Override
+    public Settings getSettings() {
+        return settings;
+    }
+
+
+    @Override
+    public int getPortNumber() {
+        return portNumber;
+    }
+
+
+    @Override
+    public boolean isLinked() {
+        return isLinked;
+    }
 
 
     // setters
-    public void setSensor(Sensor sensor) { this.mSensor = sensor; }
-    public void setRelationship(Relationship relationship) { this.mRelationship = relationship; }
+    @Override
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
 
+
+    @Override
+    public void setIsLinked(boolean bool) {
+        isLinked = bool;
+    }
 }

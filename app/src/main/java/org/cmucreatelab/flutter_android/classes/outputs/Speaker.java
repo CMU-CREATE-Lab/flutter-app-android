@@ -1,6 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+
+import java.io.Serializable;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -10,8 +13,10 @@ import org.cmucreatelab.flutter_android.R;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker extends A_Output implements Output {
+public class Speaker extends A_Output implements Serializable, Output {
 
+
+    public static final String SPEAKER_KEY = "speaker_key";
 
     private static final Output.Type outputType = Type.SPEAKER;
     private static final int MINIMUM_VOLUME = 0;
@@ -21,36 +26,12 @@ public class Speaker extends A_Output implements Output {
 
     public static final int imageId = R.mipmap.ic_launcher;
 
-    private int volume;
-    private int frequency;
-
-    public Speaker() {
-        this.volume = MAXIMUM_VOLUME / 2;
-        this.frequency = MAXIMUM_FREQUENCY / 2;
-    }
+    private Settings frequencySettings;
+    private Settings volumeSettings;
 
 
-    public Speaker(int volume, int frequency) {
-        this.setVolume(volume);
-        this.setFrequency(frequency);
-    }
-
-
-    public void setVolume(int volume) {
-        if (volume >= MINIMUM_VOLUME && volume <= MAXIMUM_VOLUME) {
-            this.volume = volume;
-        }
-    }
-    public int getVolume() {
-        return volume;
-    }
-    public void setFrequency(int frequency) {
-        if (frequency >= MINIMUM_FREQUENCY && frequency <= MAXIMUM_FREQUENCY) {
-            this.frequency = frequency;
-        }
-    }
-    public int getFrequency() {
-        return this.frequency;
+    public Speaker(int portNumber) {
+        super(portNumber);
     }
 
 
@@ -64,5 +45,25 @@ public class Speaker extends A_Output implements Output {
     public int getOutputImageId() {
         return imageId;
     }
+
+
+    @Override
+    public int getMax() {
+        return MAXIMUM_VOLUME;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM_VOLUME;
+    }
+
+
+    public Settings getFrequencySettings() { return frequencySettings; }
+    public Settings getVolumeSettings() { return volumeSettings; }
+
+
+    public void setFrequencySettings(Settings settings) { this.frequencySettings = settings; }
+    public void setVolumeSettings (Settings settings) { this.volumeSettings = settings; }
 
 }

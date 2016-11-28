@@ -1,9 +1,9 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -43,11 +43,12 @@ import butterknife.OnClick;
  *
  * AppLandingActivity
  *
- * An activity that can scan for flutters nearby.
+ * An activity that can scan for flutters nearby and connect to them.
  *
  */
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
+    // MelodySmartDevice is used, in this activity, for scanning for bluetooth devices and connecting to a device.
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
     private ArrayList<FlutterOG> mFlutterOGs;
@@ -77,7 +78,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
+                        //findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -163,60 +164,85 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             });
             AlertDialog dialog = adb.create();
             dialog.show();
-        }
+        } else {
+            final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (!bluetoothAdapter.isEnabled()) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                adb.setMessage(R.string.enable_bluetooth_msg);
+                adb.setTitle(R.string.enable_bluetooth);
+                adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // nothing because we are overriding it
+                    }
+                });
+                final AlertDialog dialog = adb.create();
+                dialog.setCancelable(false);
+                dialog.show();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setContentInsetsAbsolute(0,0);
-        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
-        setSupportActionBar(toolbar);
-        title = (TextView) findViewById(R.id.text_app_landing_title);
-
-        globalHandler = GlobalHandler.newInstance(this.getApplicationContext());
-        globalHandler.sessionHandler.setFlutterConnectListener(this);
-        final Activity activity = this;
-
-        mFlutterOGs = new ArrayList<>();
-        timer = new Timer();
-
-        mMelodySmartDevice = MelodySmartDevice.getInstance();
-        mMelodySmartDevice.init(this.getApplicationContext());
-        mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());
-        ListView list = (ListView) findViewById(R.id.scan_list);
-        list.setAdapter(mLeDeviceAdapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                timer.cancel();
-                scanForDevice(false);
-                globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
+                dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(Constants.LOG_TAG, String.valueOf(bluetoothAdapter.isEnabled()));
+                        if (bluetoothAdapter.isEnabled()) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
             }
-        });
 
-        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
-        Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setContentInsetsAbsolute(0,0);
+            toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
+            setSupportActionBar(toolbar);
+            title = (TextView) findViewById(R.id.text_app_landing_title);
+
+            globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
+            globalHandler.sessionHandler.setFlutterConnectListener(this);
+            final Activity activity = this;
+
+            mFlutterOGs = new ArrayList<>();
+            timer = new Timer();
+
+            mMelodySmartDevice = MelodySmartDevice.getInstance();
+            mMelodySmartDevice.init(this.getApplicationContext());
+            mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());
+            ListView list = (ListView) findViewById(R.id.scan_list);
+            list.setAdapter(mLeDeviceAdapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    timer.cancel();
+                    scanForDevice(false);
+                    globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
+                }
+            });
+
+            DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+            float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+            float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+            Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
+            Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
 
 
-        int screenSize = getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK;
+            int screenSize = getResources().getConfiguration().screenLayout &
+                    Configuration.SCREENLAYOUT_SIZE_MASK;
 
-        String toastMsg;
-        switch(screenSize) {
-            case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                toastMsg = "Large screen";
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-                toastMsg = "Normal screen";
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                toastMsg = "Small screen";
-                break;
-            default:
-                toastMsg = "Screen size is neither large, normal or small";
+            String toastMsg;
+            switch(screenSize) {
+                case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                    toastMsg = "Large screen";
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                    toastMsg = "Normal screen";
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                    toastMsg = "Small screen";
+                    break;
+                default:
+                    toastMsg = "Screen size is neither large, normal or small";
+            }
+            Log.d(Constants.LOG_TAG, toastMsg);
         }
-        Log.d(Constants.LOG_TAG, toastMsg);
     }
 
 

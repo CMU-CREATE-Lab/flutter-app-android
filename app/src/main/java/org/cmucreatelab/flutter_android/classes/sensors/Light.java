@@ -18,15 +18,17 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     private static final int sensorTypeId = R.string.light;
     private static final int highTextId = R.string.bright;
     private static final int lowTextId = R.string.dark;
+    private static final int typeTextId = R.string.light;
 
-    public static final int blueImageId = R.drawable.sensor_blue_light_l_g_68;
-    public static final int greenImageId = R.drawable.sensor_green_light_l_g_68;
-    public static final int orangeImageIdMd = R.drawable.sensor_orange_light_m_d_40;
-    public static final int orangeImageIdSm = R.drawable.sensor_orange_light_s_m_22;
+    private static final int blueImageId = R.drawable.sensor_blue_light_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_light_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_light_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_light_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_light_grey_s_m_20;
 
 
-    public Light() {
-        // empty
+    public Light(int portNumber) {
+        super(portNumber);
     }
 
 
@@ -55,6 +57,12 @@ public class Light extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
+    public int getTypeTextId() {
+        return typeTextId;
+    }
+
+
+    @Override
     public int getBlueImageId() {
         return blueImageId;
     }
@@ -75,6 +83,12 @@ public class Light extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getOrangeImageIdSm() {
         return orangeImageIdSm;
+    }
+
+
+    @Override
+    public int getGreyImageIdSm() {
+        return greyImageIdSm;
     }
 
 }

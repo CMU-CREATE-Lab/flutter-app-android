@@ -1,45 +1,35 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+
+import java.io.Serializable;
 
 /**
  * Created by Steve on 6/20/2016.
  *
- * LED
+ * Led
  *
- * A class that represents an LED.
+ * A class that represents an Led.
  *
  */
-public class LED extends A_Output implements Output {
+public class Led extends A_Output implements Serializable, Output {
 
 
-    private static final Output.Type outputType = Type.LED;
-    private static final int MINIMUM = 0;
-    private static final int MAXIMUM = 180;
-
+    public static final String LED_KEY = "led_key";
+    public static final int MINIMUM = 0;
+    public static final int MAXIMUM = 100;
     public static final int imageId = R.mipmap.ic_launcher;
 
-    private int red;
-    private int green;
-    private int blue;
-    private int intensity;
+    private static final Output.Type outputType = Type.LED;
+
+    private Settings redSettings;
+    private Settings greenSettings;
+    private Settings blueSettings;
 
 
-    public LED(int red, int green, int blue, int intensity) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-        this.setIntensity(intensity);
-    }
-
-
-    public void setIntensity(int intensity) {
-        if (intensity >= MINIMUM && intensity <= MAXIMUM) {
-            this.intensity = intensity;
-        }
-    }
-    public int getIntensity() {
-        return this.intensity;
+    public Led(int portNumber) {
+        super(portNumber);
     }
 
 
@@ -53,5 +43,27 @@ public class LED extends A_Output implements Output {
     public int getOutputImageId() {
         return imageId;
     }
+
+
+    @Override
+    public int getMax() {
+        return MAXIMUM;
+    }
+
+
+    @Override
+    public int getMin() {
+        return MINIMUM;
+    }
+
+
+    public Settings getRedSettings() { return redSettings; }
+    public Settings getGreenSettings() { return greenSettings; }
+    public Settings getBlueSettings() { return blueSettings; }
+
+
+    public void setRedSettings(Settings settings) { this.redSettings = settings; }
+    public void setGreenSettings (Settings settings) { this.greenSettings = settings; }
+    public void setBlueSettings (Settings settings) { this.blueSettings = settings; }
 
 }

@@ -10,17 +10,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseFlutterActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import java.io.Serializable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +30,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -48,8 +45,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     private ProgressBar progress1;
     private ProgressBar progress2;
     private ProgressBar progress3;
-
-    private Timer timer;
 
     private Sensor[] sensors;
     private Sensor currentSensor;
@@ -108,28 +103,6 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
     }
 
 
-    private void startSensorReading() {
-        if (timer != null) {
-            timer.cancel();
-        }
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                globalHandler.sessionHandler.setMessageInput(MessageConstructor.READ_SENSOR);
-                globalHandler.sessionHandler.sendMessage();
-            }
-        };
-        timer = new Timer();
-        timer.schedule(timerTask, 0, 500);
-    }
-
-
-    private void stopSensorReading() {
-        timer.cancel();
-    }
-
-
     // Event Listeners
 
 
@@ -175,11 +148,20 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
         if (globalHandler.sessionHandler.isBluetoothConnected)
-            stopSensorReading();
+            globalHandler.sessionHandler.setFlutterMessageListener(this);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        globalHandler.sessionHandler.release();
+        super.onBackPressed();
+        finish();
+    }
+
 
     @Override
     public void onSensorTypeChosen(Sensor sensor) {
@@ -214,8 +196,8 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
 
 
     @Override
-    public void onMessageSent(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageSent");
+    public void onMessageReceived(String output) {
+        Log.d(Constants.LOG_TAG, output);
         if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
             output = output.substring(2, output.length());
             String sensor1 = output.substring(0, output.indexOf(','));
@@ -242,7 +224,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_1, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(1, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -255,7 +237,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_2, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(2, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -268,7 +250,7 @@ public class SensorsActivity extends BaseFlutterActivity implements SensorTypeDi
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(R.string.sensor_port_3, this);
+        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(3, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 

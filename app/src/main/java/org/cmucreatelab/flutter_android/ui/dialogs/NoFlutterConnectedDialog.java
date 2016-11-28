@@ -16,6 +16,10 @@ import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 
 /**
  * Created by Steve on 10/4/2016.
+ *
+ * NoFlutterConnectedDialog
+ *
+ * A Dialog that shows the user that they cannot navigate the app until they connect to a Flutter.
  */
 public class NoFlutterConnectedDialog extends DialogFragment {
 

@@ -3,22 +3,16 @@ package org.cmucreatelab.flutter_android.activities.abstract_activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.LedsActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
-import org.cmucreatelab.flutter_android.activities.ServosActivity;
-import org.cmucreatelab.flutter_android.activities.SpeakerActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -30,7 +24,6 @@ import butterknife.OnClick;
  *
  */
 // TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
-    // TODO - I may change the base navigation to a toolbar now that I figured out how to use multiple toolbars in one activity.
 public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     protected GlobalHandler globalHandler;
@@ -39,13 +32,11 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        globalHandler = GlobalHandler.newInstance(this);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-      //  toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
+        globalHandler = GlobalHandler.getInstance(this);
     }
 
 
-    @OnClick(R.id.text_sensors_menu)
+    @OnClick(R.id.linear_sensors_menu)
     public void onClickSensorsMenu() {
         Log.d(Constants.LOG_TAG, "onClickSensors");
         Intent intent = new Intent(this, SensorsActivity.class);
@@ -53,7 +44,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_robot_menu)
+    @OnClick(R.id.linear_robot_menu)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
         Intent intent = new Intent(this, RobotActivity.class);
@@ -61,7 +52,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_data_log_menu)
+    @OnClick(R.id.linear_data_log_menu)
     public void onClickDataLogMenu() {
         Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);

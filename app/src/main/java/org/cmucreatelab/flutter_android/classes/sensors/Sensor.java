@@ -1,8 +1,4 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
-
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -14,6 +10,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 public interface Sensor {
 
     public static final String SENSOR_KEY = "sensor_key";
+    public static final String SENSOR_PORT_KEY = "sensor_text_key";
 
     // I am unsure of the use of an Analog or Unknown Sensor.
     // Is this for error checking? Should the user always have a sensor that is defined?
@@ -30,19 +27,18 @@ public interface Sensor {
         NO_SENSOR
     }
 
-    void addLink(Output output, Relationship relationship);
-    void removeLink(Output output);
-    void clearLinks();
-
     Type getSensorType();
     int getSensorTypeId();
     int getHighTextId();
     int getLowTextId();
+    int getTypeTextId();
     int getBlueImageId();
     int getGreenImageId();
     int getOrangeImageIdMd();
     int getOrangeImageIdSm();
+    int getGreyImageIdSm();
     int getSensorReading();
+    int getPortNumber();
     void setSensorReading(int value);
 
 }

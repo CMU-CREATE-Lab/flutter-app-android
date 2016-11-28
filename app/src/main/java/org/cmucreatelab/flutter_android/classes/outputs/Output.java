@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 /**
  * Created by Steve on 8/11/2016.
@@ -22,11 +21,14 @@ public interface Output {
     // getters
     Type getOutputType();
     int getOutputImageId();
-    Sensor getSensor();
-    Relationship getRelationship();
+    Settings getSettings();
+    int getPortNumber();
+    int getMax();
+    int getMin();
+    boolean isLinked();
 
     // setters
-    void setSensor(Sensor sensor);
-    void setRelationship(Relationship relationship);
+    void setSettings(Settings settings);
+    void setIsLinked(boolean bool);
 
 }

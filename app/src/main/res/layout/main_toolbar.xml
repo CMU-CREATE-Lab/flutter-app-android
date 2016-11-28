@@ -19,35 +19,59 @@
             android:orientation="vertical"
             android:weightSum="530">
 
-            <TextView
-                android:id="@+id/text_sensors_menu"
+            <FrameLayout
+                android:id="@+id/linear_sensors_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sensors"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/menu_icon_sensor"
-                android:layout_weight="250"
-                android:gravity="bottom"/>
+                android:layout_weight="250">
 
-            <TextView
-                android:id="@+id/text_robot_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/robot"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/menu_icon_robot"
-                android:layout_weight="56"
-                android:gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensors"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/menu_icon_sensor"
+                    android:drawablePadding="6dp"
+                    android:layout_gravity="bottom"
+                    android:padding="6dp"/>
 
-            <TextView
-                android:id="@+id/text_data_log_menu"
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/linear_robot_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/data_log"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/menu_icon_datalog"
-                android:layout_weight="224"
-                android:gravity="top"/>
+                android:layout_weight="56">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/robot"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/menu_icon_robot"
+                    android:layout_gravity="center"
+                    android:drawablePadding="6dp"
+                    android:padding="6dp"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/linear_data_log_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="224">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_log"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/menu_icon_datalog"
+                    android:drawablePadding="6dp"
+                    android:layout_gravity="top"
+                    android:padding="6dp"/>
+
+            </FrameLayout>
 
         </LinearLayout>
 

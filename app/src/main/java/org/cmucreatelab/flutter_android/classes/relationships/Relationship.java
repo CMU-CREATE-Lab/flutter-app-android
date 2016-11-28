@@ -18,11 +18,14 @@ public interface Relationship {
         AMPLITUDE,
         FREQUENCY,
         CUMULATIVE,
-        CHANGE
+        CHANGE,
+        SWITCH,
+        CONSTANT
     }
 
     Type getRelationshipType();
     int getGreenImageIdLg();
     int getGreenImageIdMd();
+    int getGreyImageIdSm();
 
 }

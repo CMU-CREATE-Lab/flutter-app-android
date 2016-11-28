@@ -16,17 +16,19 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
 
     private static final Sensor.Type sensorType = Type.WIND_SPEED;
     private static final int sensorTypeId = R.string.wind_speed;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
+    private static final int highTextId = R.string.fast;
+    private static final int lowTextId = R.string.slow;
+    private static final int typeTextId = R.string.wind_speed;
 
-    public static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
-    public static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
-    public static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
-    public static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
+    private static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_wind_speed_grey_s_m_20;
 
 
-    public WindSpeed() {
-        // empty
+    public WindSpeed(int portNumber) {
+        super(portNumber);
     }
 
 
@@ -55,6 +57,12 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
+    public int getTypeTextId() {
+        return typeTextId;
+    }
+
+
+    @Override
     public int getBlueImageId() {
         return blueImageId;
     }
@@ -75,6 +83,12 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getOrangeImageIdSm() {
         return orangeImageIdSm;
+    }
+
+
+    @Override
+    public int getGreyImageIdSm() {
+        return greyImageIdSm;
     }
 
 }
