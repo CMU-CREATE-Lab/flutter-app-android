@@ -196,7 +196,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     @Override
-    public void onMessageSent(String output) {
+    public void onMessageReceived(String output) {
         Log.d(Constants.LOG_TAG, output);
         if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
             output = output.substring(2, output.length());

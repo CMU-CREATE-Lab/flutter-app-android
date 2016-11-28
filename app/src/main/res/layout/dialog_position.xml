@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/image_servo_bg"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="17dp"
             android:src="@drawable/link_servo_pointer_sm"/>
 
         <ImageView

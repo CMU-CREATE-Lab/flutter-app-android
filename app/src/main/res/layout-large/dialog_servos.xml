@@ -26,11 +26,27 @@
             android:layout_alignParentStart="true"
             android:layout_margin="5dp">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:src="@drawable/link_servo_b_g_sm"/>
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_servo_bg_max"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="17dp"
+                    android:src="@drawable/link_servo_pointer_sm"/>
+
+                <ImageView
+                    android:id="@+id/image_servo_bg_max"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/link_servo_b_g_sm"/>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -65,11 +81,27 @@
             android:layout_alignParentStart="true"
             android:layout_margin="5dp">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:src="@drawable/link_servo_b_g_sm"/>
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_servo_bg_min"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="17dp"
+                    android:src="@drawable/link_servo_pointer_sm"/>
+
+                <ImageView
+                    android:id="@+id/image_servo_bg_min"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/link_servo_b_g_sm"/>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"

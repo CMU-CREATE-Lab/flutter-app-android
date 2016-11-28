@@ -29,6 +29,61 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
     protected int finalPitch;
 
 
+    private int getFrequency(int progress) {
+        int result = 0;
+
+        switch (progress) {
+            case 0:
+                result = Constants.C_4;
+                break;
+            case 1:
+                result = Constants.D_4;
+                break;
+            case 2:
+                result = Constants.E_4;
+                break;
+            case 3:
+                result = Constants.F_4;
+                break;
+            case 4:
+                result = Constants.G_4;
+                break;
+            case 5:
+                result = Constants.A_4;
+                break;
+            case 6:
+                result = Constants.B_4;
+                break;
+            case 7:
+                result = Constants.C_5;
+                break;
+            case 8:
+                result = Constants.D_5;
+                break;
+            case 9:
+                result = Constants.E_5;
+                break;
+            case 10:
+                result = Constants.F_5;
+                break;
+            case 11:
+                result = Constants.G_5;
+                break;
+            case 12:
+                result = Constants.A_5;
+                break;
+            case 13:
+                result = Constants.B_5;
+                break;
+            case 14:
+                result = Constants.C_6;
+                break;
+        }
+
+        return result;
+    }
+
+
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

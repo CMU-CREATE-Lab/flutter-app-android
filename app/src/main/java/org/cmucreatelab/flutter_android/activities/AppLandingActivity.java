@@ -78,7 +78,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
+                        //findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
                     }
                 });
             }

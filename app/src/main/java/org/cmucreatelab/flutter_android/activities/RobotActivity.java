@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+// TODO - make a message reconstruct class to determine what kind of message it is
+// TODO - then call the appropriate method depending on what kind of message was received
 public class RobotActivity extends BaseSensorReadingActivity implements Serializable, FlutterMessageListener,
     ServoDialog.DialogServoListener,
     LedDialog.DialogLedListener,
@@ -231,8 +233,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
 
     @Override
-    public void onMessageSent(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageSent: " + output);
+    public void onMessageReceived(String output) {
+        Log.d(Constants.LOG_TAG, "onMessageReceived: " + output);
 
         // sensor reading
         if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
@@ -407,7 +409,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     @OnClick(R.id.button_simulate_data)
     public void onClickSimulateData() {
-        Log.d(Constants.LOG_TAG, "onclickSimulateData");
+        Log.d(Constants.LOG_TAG, "onClickSimulateData");
         if (isSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
             sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
@@ -425,5 +427,4 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulatedSeekbar.setProgress(0);
         }
     }
-
 }

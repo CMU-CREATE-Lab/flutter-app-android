@@ -18,12 +18,9 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
-import org.cmucreatelab.flutter_android.classes.Message;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-import java.util.AbstractQueue;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -126,7 +123,7 @@ public class SessionHandler {
 
         @Override
         public void onReceived(final byte[] bytes) {
-            flutterMessageListener.onMessageSent(new String(bytes));
+            flutterMessageListener.onMessageReceived(new String(bytes));
             if (!messages.isEmpty()) {
                 String msg = messages.poll();
                 // So even though there is a callback so I do not send messages on top of each other,

@@ -9,6 +9,8 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -34,10 +36,10 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog implement
     protected int finalPosition;
 
     private void updatePointer() {
-        Matrix matrix = new Matrix();
-        pointer.setScaleType(ImageView.ScaleType.MATRIX);   //required
-        matrix.postRotate((float) finalPosition, pointer.getWidth(), pointer.getHeight()/2);
-        pointer.setImageMatrix(matrix);
+        RotateAnimation rotateAnimation = new RotateAnimation(finalPosition-1, finalPosition, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setFillEnabled(true);
+        rotateAnimation.setFillAfter(true);
+        pointer.startAnimation(rotateAnimation);
     }
 
 

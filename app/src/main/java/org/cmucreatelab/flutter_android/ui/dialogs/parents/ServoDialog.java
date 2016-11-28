@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -159,8 +161,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.linear_set_max_pos)
     public void onClickSetMaximumPosition(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaximumPosition");
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
+        View layout = ((ViewGroup) view).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
@@ -171,8 +174,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.linear_set_min_pos)
     public void onclickSetMinimumPosition(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinimumPosition");
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
+        View layout = ((ViewGroup) view).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = MinPositionDialog.newInstance(serializable);
@@ -212,6 +216,11 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     @Override
     public void onMaxPosChosen(int max) {
         Log.d(Constants.LOG_TAG, "onMaxPosChosen");
+        RotateAnimation rotateAnimation = new RotateAnimation(0, max, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setFillEnabled(true);
+        rotateAnimation.setFillAfter(true);
+        rotateAnimation.setDuration(0);
+        currentImageView.startAnimation(rotateAnimation);
         currentTextViewDescrp.setText(settings.getSensor().getHighTextId());
         currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
         settings.setOutputMax(max);
@@ -221,6 +230,11 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     @Override
     public void onMinPosChosen(int min) {
         Log.d(Constants.LOG_TAG, "onMinPosChosen");
+        RotateAnimation rotateAnimation = new RotateAnimation(0, min, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setFillEnabled(true);
+        rotateAnimation.setFillAfter(true);
+        rotateAnimation.setDuration(0);
+        currentImageView.startAnimation(rotateAnimation);
         currentTextViewDescrp.setText(settings.getSensor().getLowTextId());
         currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
         settings.setOutputMin(min);
