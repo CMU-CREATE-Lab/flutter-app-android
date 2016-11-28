@@ -36,48 +36,40 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/link_pitch_staff"/>
 
-        <ImageView
-            android:layout_width="26dp"
-            android:layout_height="20dp"
-            android:background="@drawable/link_pitch_staff_note"
-            android:visibility="gone"/>
-
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <SeekBar
-            android:id="@+id/seek_pitch"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="15"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
-            android:thumbOffset="1dp"
-            android:padding="20dp"/>
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:text="@string/minimum_pitch"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_above="@id/seek_pitch">
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:gravity="end"
+            android:text="@string/maximum_pitch"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/minimum_pitch"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/maximum_pitch"/>
+    <SeekBar
+        android:id="@+id/seek_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:max="14"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:thumbOffset="1dp"/>
 
-        </LinearLayout>
-
-    </RelativeLayout>
 
 </LinearLayout>
