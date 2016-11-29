@@ -51,5 +51,7 @@ public abstract class A_Output implements Output{
     @Override
     public void setIsLinked(boolean bool) {
         isLinked = bool;
+        if (!isLinked)
+            settings = null;
     }
 }

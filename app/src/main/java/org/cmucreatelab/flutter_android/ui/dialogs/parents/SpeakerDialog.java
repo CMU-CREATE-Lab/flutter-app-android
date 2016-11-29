@@ -76,6 +76,43 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     private Speaker speaker;
 
 
+    private void updateViews(View view) {
+        if (speaker.getSettings() != null) {
+            pitchSettings = speaker.getFrequencySettings();
+            volumeSettings = speaker.getVolumeSettings();
+            updateViews(view, speaker);
+
+            // max Volume and max Pitch
+            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+            maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
+            maxPitch.setImageResource(R.drawable.link_icon_pitch);
+            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+            maxVolumeTxt.setText(getString(volumeSettings.getSensor().getHighTextId()) + " " + getString(R.string.volume));
+            maxPitchTxt.setText(getString(pitchSettings.getSensor().getHighTextId()) + " " + getString(R.string.pitch));
+            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+            maxVolumeValue.setText(String.valueOf(volumeSettings.getOutputMax()));
+            maxPitchValue.setText(String.valueOf(pitchSettings.getOutputMax()) + " " + getString(R.string.hz));
+
+            //min Volume and min Pitch
+            ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
+            ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
+            minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
+            minPitch.setImageResource(R.drawable.link_icon_pitch);
+            TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
+            TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
+            minVolumeTxt.setText(getString(volumeSettings.getSensor().getLowTextId()) + " " + getString(R.string.volume));
+            minPitchTxt.setText(getString(pitchSettings.getSensor().getLowTextId()) + " " + getString(R.string.pitch));
+            TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
+            TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
+            minVolumeValue.setText(String.valueOf(volumeSettings.getOutputMin()));
+            minPitchValue.setText(String.valueOf(pitchSettings.getOutputMin()) + " " + getString(R.string.hz));
+        }
+    }
+
+
     public static SpeakerDialog newInstance(Speaker speaker, Serializable activity) {
         SpeakerDialog ledDialog = new SpeakerDialog();
 
@@ -114,9 +151,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         pitchSettings = new Settings("f");
         volumeSettings = new Settings("v");
-        speaker.setFrequencySettings(pitchSettings);
-        speaker.setVolumeSettings(volumeSettings);
-        speaker.setSettings(volumeSettings);
+
+        updateViews(view);
 
         return builder.create();
     }
@@ -136,6 +172,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
+        speaker.setFrequencySettings(pitchSettings);
+        speaker.setVolumeSettings(volumeSettings);
         ArrayList<String> msgs = new ArrayList<>();
         speaker.setSettings(volumeSettings);
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
@@ -157,6 +195,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         speaker.setSettings(pitchSettings);
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
         speaker.setIsLinked(false);
+        speaker.setFrequencySettings(null);
+        speaker.setVolumeSettings(null);
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
@@ -173,8 +213,6 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
             isVolume = true;
-
-
         }
     }
 

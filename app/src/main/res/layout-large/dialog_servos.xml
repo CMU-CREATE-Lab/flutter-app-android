@@ -32,6 +32,7 @@
                 android:layout_gravity="center">
 
                 <ImageView
+                    android:id="@+id/image_max_pos"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/image_servo_bg_max"
@@ -57,12 +58,14 @@
                 android:layout_marginEnd="20dp">
 
                 <TextView
+                    android:id="@+id/text_max_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/set_maximum_position"/>
 
                 <TextView
+                    android:id="@+id/text_max_pos_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
@@ -87,6 +90,7 @@
                 android:layout_gravity="center">
 
                 <ImageView
+                    android:id="@+id/image_min_pos"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/image_servo_bg_min"
@@ -112,14 +116,14 @@
                 android:layout_marginEnd="20dp">
 
                 <TextView
-                    android:id="@+id/text_min_descr"
+                    android:id="@+id/text_min_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/set_minimum_position"/>
 
                 <TextView
-                    android:id="@+id/text_servo_min"
+                    android:id="@+id/text_min_pos_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"

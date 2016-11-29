@@ -63,6 +63,38 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     private Servo servo;
 
 
+    private void updateViews(View view) {
+        if (servo.getSettings() != null) {
+            updateViews(view, servo);
+            settings = servo.getSettings();
+
+            // max
+            ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, settings.getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setFillEnabled(true);
+            rotateAnimation.setFillAfter(true);
+            rotateAnimation.setDuration(0);
+            maxPosImg.startAnimation(rotateAnimation);
+            TextView maxPosTxt = (TextView) view.findViewById(R.id.text_max_pos);
+            TextView maxPosValue = (TextView) view.findViewById(R.id.text_max_pos_value);
+            maxPosTxt.setText(settings.getSensor().getHighTextId());
+            maxPosValue.setText(String.valueOf(settings.getOutputMax()));
+
+            // min
+            ImageView minPosImg = (ImageView) view.findViewById(R.id.image_min_pos);
+            rotateAnimation = new RotateAnimation(0, settings.getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setFillEnabled(true);
+            rotateAnimation.setFillAfter(true);
+            rotateAnimation.setDuration(0);
+            minPosImg.startAnimation(rotateAnimation);
+            TextView minPosTxt = (TextView) view.findViewById(R.id.text_min_pos);
+            TextView minPosValue = (TextView) view.findViewById(R.id.text_min_pos_value);
+            minPosTxt.setText(settings.getSensor().getLowTextId());
+            minPosValue.setText(String.valueOf(settings.getOutputMin()));
+        }
+    }
+
+
     public static ServoDialog newInstance(Servo servo, Serializable activity) {
         ServoDialog servoDialog = new ServoDialog();
 
@@ -94,7 +126,8 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         ButterKnife.bind(this, view);
 
         settings = new Settings("s");
-        servo.setSettings(settings);
+
+        updateViews(view);
 
         return builder.create();
     }
