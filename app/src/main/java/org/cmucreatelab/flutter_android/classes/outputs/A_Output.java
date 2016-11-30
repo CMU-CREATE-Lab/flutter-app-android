@@ -10,6 +10,12 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  * An abstract class that holds a Settings object to represent the link between input and output
  *
  */
+// Each output must have their own separate instance of Settings that will eventually be set to this setting.
+    // This is done because, if we want to keep the state of the current links that have been made,
+    // I check to see if the outputs settings are null.  If I were to make this instance of settings not null,
+    // then when trying to make a link, it will show the default options that settings declares, not the gray question marks.
+    // It is slightly ugly, but makes some sense.
+    // TODO - Eventually I'd like to explore refactoring how I handle the Settings.
 public abstract class A_Output implements Output{
 
     private boolean isLinked;
@@ -51,5 +57,7 @@ public abstract class A_Output implements Output{
     @Override
     public void setIsLinked(boolean bool) {
         isLinked = bool;
+        if (!isLinked)
+            settings = null;
     }
 }

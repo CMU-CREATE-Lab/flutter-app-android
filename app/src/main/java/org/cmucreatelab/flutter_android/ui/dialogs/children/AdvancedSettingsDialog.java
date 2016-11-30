@@ -14,7 +14,9 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
@@ -147,7 +149,13 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         seekBarMinInput.setProgress(minInput);
         seekBarZeroPoint.setProgress(zeroPoint);
 
-        sensorText = output.getSettings().getSensor().getSensorType().toString();
+        if (output.getOutputType() == Output.Type.SERVO)
+            sensorText = ((Servo) output).getServoSettings().getSensor().getSensorType().toString();
+        if (output.getOutputType() == Output.Type.LED)
+            sensorText = ((Led) output).getRedSettings().getSensor().getSensorType().toString();
+        if (output.getOutputType() == Output.Type.SPEAKER)
+            sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();
+
         sensorText = sensorText.toLowerCase();
         sensorText.replace('_', ' ');
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
@@ -161,31 +169,17 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClick");
-
-        if (output.getOutputType() == Output.Type.LED) {
-            ((Led) output).getRedSettings().setInputMax(maxInput);
-            ((Led) output).getBlueSettings().setInputMax(maxInput);
-            ((Led) output).getGreenSettings().setInputMax(maxInput);
-            ((Led) output).getRedSettings().setInputMin(minInput);
-            ((Led) output).getBlueSettings().setInputMin(minInput);
-            ((Led) output).getGreenSettings().setInputMin(minInput);
-        } else if (output.getOutputType() == Output.Type.SPEAKER) {
-            ((Speaker) output).getVolumeSettings().setInputMax(maxInput);
-            ((Speaker) output).getFrequencySettings().setInputMax(maxInput);
-            ((Speaker) output).getVolumeSettings().setInputMin(minInput);
-            ((Speaker) output).getFrequencySettings().setInputMin(minInput);
-        } else {
-            output.getSettings().setInputMax(maxInput);
-            output.getSettings().setInputMin(minInput);
-        }
-
-        dialogAdvancedSettingsListener.onAdvancedSettingsSet();
+        AdvancedSettings result = new AdvancedSettings();
+        result.setInputMax(maxInput);
+        result.setInputMin(minInput);
+        result.setZeroValue(zeroPoint);
+        dialogAdvancedSettingsListener.onAdvancedSettingsSet(result);
     }
 
 
     // interface for an activity to listen for a choice
     public interface DialogAdvancedSettingsListener {
-        public void onAdvancedSettingsSet();
+        public void onAdvancedSettingsSet(AdvancedSettings advancedSettings);
     }
 
 }

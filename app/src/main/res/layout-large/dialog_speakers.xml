@@ -59,6 +59,7 @@
                 android:layout_margin="5dp">
 
                 <ImageView
+                    android:id="@+id/image_max_volume"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
@@ -73,12 +74,14 @@
                     android:layout_marginEnd="20dp">
 
                     <TextView
+                        android:id="@+id/text_max_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/set_maximum_volume"/>
 
                     <TextView
+                        android:id="@+id/text_max_volume_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -98,6 +101,7 @@
                 android:layout_margin="5dp">
 
                 <ImageView
+                    android:id="@+id/image_min_volume"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
@@ -112,12 +116,14 @@
                     android:layout_marginEnd="20dp">
 
                     <TextView
+                        android:id="@+id/text_min_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/set_minimum_volume"/>
 
                     <TextView
+                        android:id="@+id/text_min_volume_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -145,6 +151,7 @@
                 android:layout_margin="5dp">
 
                 <ImageView
+                    android:id="@+id/image_max_pitch"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
@@ -159,12 +166,14 @@
                     android:layout_marginEnd="20dp">
 
                     <TextView
+                        android:id="@+id/text_max_pitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/set_maximum_pitch"/>
 
                     <TextView
+                        android:id="@+id/text_max_pitch_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -184,6 +193,7 @@
                 android:layout_margin="5dp">
 
                 <ImageView
+                    android:id="@+id/image_min_pitch"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
@@ -198,12 +208,14 @@
                     android:layout_marginEnd="20dp">
 
                     <TextView
+                        android:id="@+id/text_min_pitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/set_minimum_pitch"/>
 
                     <TextView
+                        android:id="@+id/text_min_pitch_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"

@@ -61,8 +61,8 @@ public class MessageConstructor {
         }
 
         Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
-        String inputMax = decToHex(settings.getInputMax());
-        String inputMin = decToHex(settings.getInputMin());
+        String inputMax = decToHex(settings.getAdvancedSettings().getInputMax());
+        String inputMin = decToHex(settings.getAdvancedSettings().getInputMin());
         String outputMax = decToHex(settings.getOutputMax());
         String outputMin = decToHex(settings.getOutputMin());
 

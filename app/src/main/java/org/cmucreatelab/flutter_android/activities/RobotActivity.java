@@ -54,13 +54,13 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     private void updateStaticViews() {
         TextView sensorText;
         sensorText = (TextView) findViewById(R.id.text_sensor_1);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getGreyImageIdSm()), null, null);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
         sensorText.setText(sensors[0].getTypeTextId());
         sensorText = (TextView) findViewById(R.id.text_sensor_2);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getGreyImageIdSm()), null, null);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
         sensorText.setText(sensors[1].getTypeTextId());
         sensorText = (TextView) findViewById(R.id.text_sensor_3);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getGreyImageIdSm()), null, null);
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
         sensorText.setText(sensors[2].getTypeTextId());
     }
 

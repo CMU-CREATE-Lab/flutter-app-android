@@ -25,6 +25,7 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
     private static final int orangeImageIdMd = R.drawable.sensor_orange_no_sensor;
     private static final int orangeImageIdSm = R.drawable.sensor_orange_no_sensor_s_m_22;
     private static final int greyImageIdSm = R.drawable.sensor_no_sensor_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_no_sensor_s_m_20;
 
 
     public NoSensor(int portNumber) {
@@ -89,6 +90,12 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getGreyImageIdSm() {
         return greyImageIdSm;
+    }
+
+
+    @Override
+    public int getWhiteImageIdSm() {
+        return whiteImageIdSm;
     }
 
 

@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/image_max_color"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
@@ -56,12 +57,14 @@
                 android:layout_marginEnd="20dp">
 
                 <TextView
+                    android:id="@+id/text_max_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/set_maximum_color"/>
 
                 <TextView
+                    android:id="@+id/text_max_color_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
@@ -85,6 +88,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/image_min_color"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:src="@drawable/grey_question_mark"
@@ -108,14 +112,14 @@
                 android:layout_marginEnd="20dp">
 
                 <TextView
-                    android:id="@+id/text_min_descr"
+                    android:id="@+id/text_min_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/set_minimum_color"/>
 
                 <TextView
-                    android:id="@+id/text_led_min"
+                    android:id="@+id/text_min_color_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
