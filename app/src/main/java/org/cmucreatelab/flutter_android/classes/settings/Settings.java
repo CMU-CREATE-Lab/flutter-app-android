@@ -12,15 +12,20 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  *
  * A class that extends off of AdvancedSettings and represents the generic settings made when creating links between sensor and output
  */
-public class Settings extends AdvancedSettings {
+public class Settings {
 
 
     private int outputMax;
     private int outputMin;
     private String type;
+    private Sensor sensor;
+    private Relationship relationship;
+    private AdvancedSettings advancedSettings;
+
 
 
     public Settings(String type) {
+        advancedSettings = new AdvancedSettings();
         sensor = new NoSensor(0);
         relationship = new NoRelationship();
         outputMax = 100;
@@ -38,6 +43,13 @@ public class Settings extends AdvancedSettings {
         return outputMin;
     }
     public String getType() { return type; }
+    public Relationship getRelationship() {
+        return relationship;
+    }
+    public Sensor getSensor() {
+        return sensor;
+    }
+    public AdvancedSettings getAdvancedSettings() { return advancedSettings; }
 
 
     // setters
@@ -49,5 +61,12 @@ public class Settings extends AdvancedSettings {
         outputMin = min;
     }
     public void setType(String type) { this.type = type; }
+    public void setRelationship(Relationship relationship) {
+        this.relationship = relationship;
+    }
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+    public void setAdvancedSettings (AdvancedSettings advancedSettings) { this.advancedSettings = advancedSettings; }
 
 }

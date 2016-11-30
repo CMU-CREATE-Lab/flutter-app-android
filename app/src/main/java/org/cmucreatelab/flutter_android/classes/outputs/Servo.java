@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 import java.io.Serializable;
 
@@ -22,6 +23,8 @@ public class Servo extends A_Output implements Serializable, Output {
     private static final int MAXIMUM = 180;
 
     public static final int imageId = R.mipmap.ic_launcher;
+
+    private Settings servoSettings;
 
 
     public Servo(int portNumber) {
@@ -50,6 +53,16 @@ public class Servo extends A_Output implements Serializable, Output {
     @Override
     public int getMin() {
         return MINIMUM;
+    }
+
+
+    public Settings getServoSettings() {
+        return this.servoSettings;
+    }
+
+
+    public void setServoSettings(Settings servoSettings) {
+        this.servoSettings = servoSettings;
     }
 
 }

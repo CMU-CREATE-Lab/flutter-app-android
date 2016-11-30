@@ -17,6 +17,7 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Led;
+import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -159,6 +160,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         redSettings = new Settings("r");
         greenSettings = new Settings("g");
         blueSettings = new Settings("b");
+        led.setRedSettings(redSettings);
+        led.setGreenSettings(greenSettings);
+        led.setBlueSettings(blueSettings);
 
         maxColor = view.findViewById(R.id.view_max_color);
         minColor = view.findViewById(R.id.view_min_color);
@@ -175,9 +179,6 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        led.setRedSettings(redSettings);
-        led.setGreenSettings(greenSettings);
-        led.setBlueSettings(blueSettings);
         ArrayList<String> msg = new ArrayList<>();
         led.setSettings(redSettings);
         msg.add(MessageConstructor.getRemoveLinkMessage(led));
@@ -280,9 +281,11 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
 
     @Override
-    public void onAdvancedSettingsSet() {
+    public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        // believe me
+        redSettings.setAdvancedSettings(advancedSettings);
+        greenSettings.setAdvancedSettings(advancedSettings);
+        blueSettings.setAdvancedSettings(advancedSettings);
     }
 
 

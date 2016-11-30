@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
+import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
@@ -59,38 +60,38 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
 
-    private Settings settings;
+    private Settings servoSettings;
     private Servo servo;
 
 
     private void updateViews(View view) {
         if (servo.getSettings() != null) {
             updateViews(view, servo);
-            settings = servo.getSettings();
+            servoSettings = servo.getSettings();
 
             // max
             ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, settings.getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, servoSettings.getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setDuration(0);
             maxPosImg.startAnimation(rotateAnimation);
             TextView maxPosTxt = (TextView) view.findViewById(R.id.text_max_pos);
             TextView maxPosValue = (TextView) view.findViewById(R.id.text_max_pos_value);
-            maxPosTxt.setText(settings.getSensor().getHighTextId());
-            maxPosValue.setText(String.valueOf(settings.getOutputMax()));
+            maxPosTxt.setText(servoSettings.getSensor().getHighTextId());
+            maxPosValue.setText(String.valueOf(servoSettings.getOutputMax()));
 
             // min
             ImageView minPosImg = (ImageView) view.findViewById(R.id.image_min_pos);
-            rotateAnimation = new RotateAnimation(0, settings.getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation = new RotateAnimation(0, servoSettings.getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setDuration(0);
             minPosImg.startAnimation(rotateAnimation);
             TextView minPosTxt = (TextView) view.findViewById(R.id.text_min_pos);
             TextView minPosValue = (TextView) view.findViewById(R.id.text_min_pos_value);
-            minPosTxt.setText(settings.getSensor().getLowTextId());
-            minPosValue.setText(String.valueOf(settings.getOutputMin()));
+            minPosTxt.setText(servoSettings.getSensor().getLowTextId());
+            minPosValue.setText(String.valueOf(servoSettings.getOutputMin()));
         }
     }
 
@@ -125,7 +126,8 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
 
-        settings = new Settings("s");
+        servoSettings = new Settings("s");
+        servo.setServoSettings(servoSettings);
 
         updateViews(view);
 
@@ -139,7 +141,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        servo.setSettings(settings);
+        servo.setSettings(servoSettings);
         String msg = MessageConstructor.getLinkedMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
         servo.setIsLinked(true);
@@ -223,9 +225,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
 
     @Override
-    public void onAdvancedSettingsSet() {
+    public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        // believe me
+        servoSettings.setAdvancedSettings(advancedSettings);
     }
 
 
@@ -235,7 +237,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         currentImageView.setImageResource(sensor.getGreenImageId());
         currentTextViewDescrp.setText(R.string.linked_sensor);
         currentTextViewItem.setText(sensor.getSensorType().toString());
-        settings.setSensor(sensor);
+        servoSettings.setSensor(sensor);
     }
 
     @Override
@@ -244,7 +246,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        settings.setRelationship(relationship);
+        servoSettings.setRelationship(relationship);
     }
 
 
@@ -256,9 +258,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         rotateAnimation.setFillAfter(true);
         rotateAnimation.setDuration(0);
         currentImageView.startAnimation(rotateAnimation);
-        currentTextViewDescrp.setText(settings.getSensor().getHighTextId());
+        currentTextViewDescrp.setText(servoSettings.getSensor().getHighTextId());
         currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
-        settings.setOutputMax(max);
+        servoSettings.setOutputMax(max);
     }
 
 
@@ -270,9 +272,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         rotateAnimation.setFillAfter(true);
         rotateAnimation.setDuration(0);
         currentImageView.startAnimation(rotateAnimation);
-        currentTextViewDescrp.setText(settings.getSensor().getLowTextId());
+        currentTextViewDescrp.setText(servoSettings.getSensor().getLowTextId());
         currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
-        settings.setOutputMin(min);
+        servoSettings.setOutputMin(min);
 
     }
 

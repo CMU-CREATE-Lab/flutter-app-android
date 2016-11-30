@@ -22,6 +22,7 @@ import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
@@ -151,6 +152,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         pitchSettings = new Settings("f");
         volumeSettings = new Settings("v");
+        speaker.setFrequencySettings(pitchSettings);
+        speaker.setVolumeSettings(volumeSettings);
 
         updateViews(view);
 
@@ -172,8 +175,6 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        speaker.setFrequencySettings(pitchSettings);
-        speaker.setVolumeSettings(volumeSettings);
         ArrayList<String> msgs = new ArrayList<>();
         speaker.setSettings(volumeSettings);
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
@@ -310,9 +311,10 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
 
     @Override
-    public void onAdvancedSettingsSet() {
+    public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        // believe me
+        volumeSettings.setAdvancedSettings(advancedSettings);
+        pitchSettings.setAdvancedSettings(advancedSettings);
     }
 
 
