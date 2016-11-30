@@ -150,11 +150,13 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        String msg = MessageConstructor.getRemoveLinkMessage(servo);
-        Log.d(Constants.LOG_TAG, msg);
-        servo.setIsLinked(false);
-        dialogServoListener.onServoLinkListener(msg);
+        if (servo.getSettings() != null) {
+            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+            String msg = MessageConstructor.getRemoveLinkMessage(servo);
+            Log.d(Constants.LOG_TAG, msg);
+            servo.setIsLinked(false);
+            dialogServoListener.onServoLinkListener(msg);
+        }
         this.dismiss();
     }
 

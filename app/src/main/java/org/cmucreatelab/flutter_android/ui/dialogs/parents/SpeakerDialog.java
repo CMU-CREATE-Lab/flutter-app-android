@@ -187,17 +187,19 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        ArrayList<String> msgs = new ArrayList<>();
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        speaker.setSettings(volumeSettings);
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
-        speaker.setSettings(pitchSettings);
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
-        speaker.setIsLinked(false);
-        speaker.setFrequencySettings(null);
-        speaker.setVolumeSettings(null);
-        dialogSpeakerListener.onSpeakerLinkListener(msgs);
+        if (speaker.getSettings() != null) {
+            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+            ArrayList<String> msgs = new ArrayList<>();
+            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+            speaker.setSettings(volumeSettings);
+            msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
+            speaker.setSettings(pitchSettings);
+            msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
+            speaker.setIsLinked(false);
+            speaker.setFrequencySettings(null);
+            speaker.setVolumeSettings(null);
+            dialogSpeakerListener.onSpeakerLinkListener(msgs);
+        }
         this.dismiss();
     }
 

@@ -199,19 +199,21 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        ArrayList<String> msg = new ArrayList<>();
-        led.setSettings(led.getRedSettings());
-        msg.add( MessageConstructor.getRemoveLinkMessage(led));
-        led.setSettings(led.getGreenSettings());
-        msg.add( MessageConstructor.getRemoveLinkMessage(led));
-        led.setSettings(led.getBlueSettings());
-        msg.add( MessageConstructor.getRemoveLinkMessage(led));
-        led.setIsLinked(false);
-        led.setRedSettings(null);
-        led.setGreenSettings(null);
-        led.setBlueSettings(null);
-        dialogLedListener.onLedLinkListener(msg);
+        if (led.getSettings() != null) {
+            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+            ArrayList<String> msg = new ArrayList<>();
+            led.setSettings(led.getRedSettings());
+            msg.add( MessageConstructor.getRemoveLinkMessage(led));
+            led.setSettings(led.getGreenSettings());
+            msg.add( MessageConstructor.getRemoveLinkMessage(led));
+            led.setSettings(led.getBlueSettings());
+            msg.add( MessageConstructor.getRemoveLinkMessage(led));
+            led.setIsLinked(false);
+            led.setRedSettings(null);
+            led.setGreenSettings(null);
+            led.setBlueSettings(null);
+            dialogLedListener.onLedLinkListener(msg);
+        }
         this.dismiss();
     }
 
