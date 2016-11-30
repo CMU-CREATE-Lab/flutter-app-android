@@ -59,12 +59,12 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
 
         // bind click listeners
         view.findViewById(R.id.linear_proportional).setOnClickListener(this);
-        view.findViewById(R.id.linear_frequency).setOnClickListener(this);
+        /*view.findViewById(R.id.linear_frequency).setOnClickListener(this);
         view.findViewById(R.id.linear_amplitude).setOnClickListener(this);
         view.findViewById(R.id.linear_cumulative).setOnClickListener(this);
         view.findViewById(R.id.linear_change).setOnClickListener(this);
         view.findViewById(R.id.linear_switch).setOnClickListener(this);
-        view.findViewById(R.id.linear_constant).setOnClickListener(this);
+        view.findViewById(R.id.linear_constant).setOnClickListener(this);*/
 
         return builder.create();
     }
