@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +60,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
+    private Button saveButton;
 
     private Settings servoSettings;
     private Servo servo;
@@ -66,7 +68,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
     private void updateViews(View view) {
         if (servo.getSettings() != null) {
-            updateViews(view, servo);
+            super.updateViews(view, servo);
             servoSettings = servo.getSettings();
 
             // max
@@ -126,10 +128,10 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
 
-        servoSettings = new Settings("s");
-        servo.setServoSettings(servoSettings);
+        servoSettings = servo.getServoSettings();
 
         updateViews(view);
+        saveButton = (Button) view.findViewById(R.id.button_save_settings);
 
         return builder.create();
     }
@@ -233,11 +235,14 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorChosen");
-        currentImageView.setImageResource(sensor.getGreenImageId());
-        currentTextViewDescrp.setText(R.string.linked_sensor);
-        currentTextViewItem.setText(sensor.getSensorType().toString());
-        servoSettings.setSensor(sensor);
+        if (sensor.getSensorType() != Sensor.Type.NO_SENSOR) {
+            Log.d(Constants.LOG_TAG, "onSensorChosen");
+            saveButton.setEnabled(true);
+            currentImageView.setImageResource(sensor.getGreenImageId());
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(sensor.getSensorType().toString());
+            servoSettings.setSensor(sensor);
+        }
     }
 
     @Override

@@ -71,6 +71,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     private Button buttonPitch;
     private RelativeLayout relativeVolume;
     private RelativeLayout relativePitch;
+    private Button saveButton;
 
     private Settings pitchSettings;
     private Settings volumeSettings;
@@ -150,12 +151,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
 
-        pitchSettings = new Settings("f");
-        volumeSettings = new Settings("v");
-        speaker.setFrequencySettings(pitchSettings);
-        speaker.setVolumeSettings(volumeSettings);
+        pitchSettings = speaker.getFrequencySettings();
+        volumeSettings = speaker.getVolumeSettings();
 
         updateViews(view);
+        saveButton = (Button) view.findViewById(R.id.button_save_settings);
 
         return builder.create();
     }
@@ -320,12 +320,15 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorChosen");
-        currentImageView.setImageResource(sensor.getGreenImageId());
-        currentTextViewDescrp.setText(R.string.linked_sensor);
-        currentTextViewItem.setText(sensor.getSensorType().toString());
-        volumeSettings.setSensor(sensor);
-        pitchSettings.setSensor(sensor);
+        if (sensor.getSensorType() != Sensor.Type.NO_SENSOR) {
+            Log.d(Constants.LOG_TAG, "onSensorChosen");
+            currentImageView.setImageResource(sensor.getGreenImageId());
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(sensor.getSensorType().toString());
+            volumeSettings.setSensor(sensor);
+            pitchSettings.setSensor(sensor);
+            saveButton.setEnabled(true);
+        }
     }
 
     @Override

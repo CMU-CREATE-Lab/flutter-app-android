@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +60,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
+    private Button saveButton;
 
     private View maxColor;
     private View minColor;
@@ -157,17 +159,15 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(led.getPortNumber()));
         ButterKnife.bind(this, view);
 
-        redSettings = new Settings("r");
-        greenSettings = new Settings("g");
-        blueSettings = new Settings("b");
-        led.setRedSettings(redSettings);
-        led.setGreenSettings(greenSettings);
-        led.setBlueSettings(blueSettings);
+        redSettings = led.getRedSettings();
+        greenSettings = led.getGreenSettings();
+        blueSettings = led.getBlueSettings();
 
         maxColor = view.findViewById(R.id.view_max_color);
         minColor = view.findViewById(R.id.view_min_color);
 
         updateViews(view);
+        saveButton = (Button) view.findViewById(R.id.button_save_settings);
 
         return builder.create();
     }
@@ -210,9 +210,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
             led.setSettings(led.getBlueSettings());
             msg.add( MessageConstructor.getRemoveLinkMessage(led));
             led.setIsLinked(false);
-            led.setRedSettings(null);
+            /*led.setRedSettings(null);
             led.setGreenSettings(null);
-            led.setBlueSettings(null);
+            led.setBlueSettings(null);*/
             dialogLedListener.onLedLinkListener(msg);
         }
         this.dismiss();
@@ -291,13 +291,16 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorChosen");
-        currentImageView.setImageResource(sensor.getGreenImageId());
-        currentTextViewDescrp.setText(R.string.linked_sensor);
-        currentTextViewItem.setText(sensor.getSensorType().toString());
-        redSettings.setSensor(sensor);
-        greenSettings.setSensor(sensor);
-        blueSettings.setSensor(sensor);
+        if (sensor.getSensorType() != Sensor.Type.NO_SENSOR) {
+            Log.d(Constants.LOG_TAG, "onSensorChosen");
+            currentImageView.setImageResource(sensor.getGreenImageId());
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(sensor.getSensorType().toString());
+            redSettings.setSensor(sensor);
+            greenSettings.setSensor(sensor);
+            blueSettings.setSensor(sensor);
+            saveButton.setEnabled(true);
+        }
     }
 
     @Override

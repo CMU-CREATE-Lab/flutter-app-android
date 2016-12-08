@@ -29,6 +29,8 @@ public class Servo extends A_Output implements Serializable, Output {
 
     public Servo(int portNumber) {
         super(portNumber);
+        servoSettings = new Settings("s", MAXIMUM, MINIMUM);
+        setSettings(servoSettings);
     }
 
 

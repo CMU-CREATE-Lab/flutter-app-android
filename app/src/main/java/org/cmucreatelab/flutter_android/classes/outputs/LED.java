@@ -30,6 +30,10 @@ public class Led extends A_Output implements Serializable, Output {
 
     public Led(int portNumber) {
         super(portNumber);
+        redSettings = new Settings("r", MAXIMUM, MINIMUM);
+        greenSettings = new Settings("g", MAXIMUM, MINIMUM);
+        blueSettings = new Settings("b", MAXIMUM, MINIMUM);
+        setSettings(redSettings);
     }
 
 

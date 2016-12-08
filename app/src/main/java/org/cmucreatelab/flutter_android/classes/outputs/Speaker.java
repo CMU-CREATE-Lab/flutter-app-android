@@ -22,7 +22,7 @@ public class Speaker extends A_Output implements Serializable, Output {
     private static final int MINIMUM_VOLUME = 0;
     private static final int MAXIMUM_VOLUME = 100;
     private static final int MINIMUM_FREQUENCY = 0;
-    private static final int MAXIMUM_FREQUENCY = 20000;
+    private static final int MAXIMUM_FREQUENCY = 1050;
 
     public static final int imageId = R.mipmap.ic_launcher;
 
@@ -32,6 +32,9 @@ public class Speaker extends A_Output implements Serializable, Output {
 
     public Speaker(int portNumber) {
         super(portNumber);
+        frequencySettings = new Settings("f", MAXIMUM_FREQUENCY, MINIMUM_FREQUENCY);
+        volumeSettings = new Settings("v", MAXIMUM_VOLUME, MINIMUM_VOLUME);
+        setSettings(frequencySettings);
     }
 
 

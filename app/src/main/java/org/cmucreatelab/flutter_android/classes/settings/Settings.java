@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.settings;
 
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -24,12 +25,13 @@ public class Settings {
 
 
 
-    public Settings(String type) {
+    // The type will be used by the message constructor to create messages for the flutter
+    public Settings(String type, int max, int min) {
         advancedSettings = new AdvancedSettings();
         sensor = new NoSensor(0);
-        relationship = new NoRelationship();
-        outputMax = 100;
-        outputMin = 0;
+        relationship = new Proportional();
+        outputMax = max;
+        outputMin = min;
         this.type = type;
     }
 
