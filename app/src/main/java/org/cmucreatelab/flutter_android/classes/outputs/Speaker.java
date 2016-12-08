@@ -19,8 +19,8 @@ public class Speaker extends A_Output implements Serializable, Output {
     public static final String SPEAKER_KEY = "speaker_key";
 
     private static final Output.Type outputType = Type.SPEAKER;
-    private static final int MINIMUM_VOLUME = 0;
-    private static final int MAXIMUM_VOLUME = 100;
+    public static final int MINIMUM_VOLUME = 0;
+    public static final int MAXIMUM_VOLUME = 100;
     private static final int MINIMUM_FREQUENCY = 262;
     private static final int MAXIMUM_FREQUENCY = 1047;
 
@@ -60,6 +60,12 @@ public class Speaker extends A_Output implements Serializable, Output {
     public int getMin() {
         return MINIMUM_VOLUME;
     }
+
+
+    public int getMaxFrequency() { return MAXIMUM_FREQUENCY; }
+
+
+    public int getMinFrequency() { return MINIMUM_FREQUENCY; }
 
 
     public Settings getFrequencySettings() { return frequencySettings; }

@@ -55,12 +55,12 @@ public abstract class A_Output implements Output{
 
 
     @Override
-    public void setIsLinked(boolean bool) {
+    public void setIsLinked(boolean bool, Output output) {
         isLinked = bool;
         if (!isLinked) {
             String type = settings.getType();
-            int max = settings.getOutputMax();
-            int min = settings.getOutputMin();
+            int max = output.getMax();
+            int min = output.getMin();
             settings = new Settings(type, max, min);
         }
     }

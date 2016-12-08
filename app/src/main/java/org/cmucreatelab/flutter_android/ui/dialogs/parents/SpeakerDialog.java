@@ -180,7 +180,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
         speaker.setSettings(pitchSettings);
         msgs.add(MessageConstructor.getLinkedMessage(speaker));
-        speaker.setIsLinked(true);
+        speaker.setIsLinked(true, speaker);
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
@@ -196,9 +196,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
             speaker.setSettings(pitchSettings);
             msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
-            speaker.setIsLinked(false);
-            speaker.setFrequencySettings(null);
-            speaker.setVolumeSettings(null);
+            speaker.setIsLinked(false, speaker);
+            volumeSettings.setOutputMax(speaker.getMax());
+            volumeSettings.setOutputMin(speaker.getMin());
+            pitchSettings.setOutputMax(speaker.getMaxFrequency());
+            pitchSettings.setOutputMin(speaker.getMinFrequency());
             dialogSpeakerListener.onSpeakerLinkListener(msgs);
         }
         this.dismiss();

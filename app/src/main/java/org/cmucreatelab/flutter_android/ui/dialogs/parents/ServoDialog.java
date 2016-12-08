@@ -146,7 +146,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         servo.setSettings(servoSettings);
         String msg = MessageConstructor.getLinkedMessage(servo);
         Log.d(Constants.LOG_TAG, msg);
-        servo.setIsLinked(true);
+        servo.setIsLinked(true, servo);
         dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
     }
@@ -158,7 +158,9 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
             Log.d(Constants.LOG_TAG, "onClickRemoveLink");
             String msg = MessageConstructor.getRemoveLinkMessage(servo);
             Log.d(Constants.LOG_TAG, msg);
-            servo.setIsLinked(false);
+            servo.setIsLinked(false, servo);
+            servoSettings.setOutputMax(servo.getMax());
+            servoSettings.setOutputMin(servo.getMin());
             dialogServoListener.onServoLinkListener(msg);
         }
         this.dismiss();

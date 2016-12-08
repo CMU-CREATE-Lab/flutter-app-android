@@ -192,7 +192,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         msg.add(MessageConstructor.getLinkedMessage(led));
         led.setSettings(blueSettings);
         msg.add(MessageConstructor.getLinkedMessage(led));
-        led.setIsLinked(true);
+        led.setIsLinked(true, led);
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
     }
@@ -209,10 +209,13 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
             msg.add( MessageConstructor.getRemoveLinkMessage(led));
             led.setSettings(led.getBlueSettings());
             msg.add( MessageConstructor.getRemoveLinkMessage(led));
-            led.setIsLinked(false);
-            /*led.setRedSettings(null);
-            led.setGreenSettings(null);
-            led.setBlueSettings(null);*/
+            led.setIsLinked(false, led);
+            redSettings.setOutputMax(led.getMax());
+            redSettings.setOutputMin(led.getMin());
+            greenSettings.setOutputMax(led.getMax());
+            greenSettings.setOutputMin(led.getMin());
+            blueSettings.setOutputMax(led.getMax());
+            blueSettings.setOutputMin(led.getMin());
             dialogLedListener.onLedLinkListener(msg);
         }
         this.dismiss();
@@ -323,11 +326,11 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
         currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
-        int max = getProportionalValue(rgb[0], 255, Led.MAXIMUM);
+        int max = getProportionalValue(rgb[0], 255, led.getMax());
         redSettings.setOutputMax(max);
-        max = getProportionalValue(rgb[1], 255, Led.MAXIMUM);
+        max = getProportionalValue(rgb[1], 255, led.getMax());
         greenSettings.setOutputMax(max);
-        max = getProportionalValue(rgb[2], 255, Led.MAXIMUM);
+        max = getProportionalValue(rgb[2], 255, led.getMax());
         blueSettings.setOutputMax(max);
     }
 
@@ -340,11 +343,11 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
         currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
-        int min = getProportionalValue(rgb[0], 255, Led.MAXIMUM);
+        int min = getProportionalValue(rgb[0], 255, led.getMax());
         redSettings.setOutputMin(min);
-        min = getProportionalValue(rgb[1], 255, Led.MAXIMUM);
+        min = getProportionalValue(rgb[1], 255, led.getMax());
         greenSettings.setOutputMin(min);
-        min = getProportionalValue(rgb[2], 255, Led.MAXIMUM);
+        min = getProportionalValue(rgb[2], 255, led.getMax());
         blueSettings.setOutputMin(min);
     }
 

@@ -17,11 +17,11 @@ public class Led extends A_Output implements Serializable, Output {
 
 
     public static final String LED_KEY = "led_key";
-    public static final int MINIMUM = 0;
-    public static final int MAXIMUM = 100;
     public static final int imageId = R.mipmap.ic_launcher;
 
     private static final Output.Type outputType = Type.LED;
+    private static final int MINIMUM = 0;
+    private static final int MAXIMUM = 100;
 
     private Settings redSettings;
     private Settings greenSettings;

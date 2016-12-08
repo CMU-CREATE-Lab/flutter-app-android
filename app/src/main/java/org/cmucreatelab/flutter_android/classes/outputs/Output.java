@@ -29,6 +29,6 @@ public interface Output {
 
     // setters
     void setSettings(Settings settings);
-    void setIsLinked(boolean bool);
+    void setIsLinked(boolean bool, Output output);
 
 }
