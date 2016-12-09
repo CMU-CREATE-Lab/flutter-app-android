@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="99dp"
+    android:orientation="vertical" android:layout_width="120dp"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
@@ -13,67 +13,56 @@
         android:theme="@style/AppTheme"
         app:popupTheme="@style/AppTheme">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="530">
+            android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/linear_sensors_menu"
+            <TextView
+                android:id="@+id/text_menu_robot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="250">
+                android:text="@string/robot"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/menu_icon_robot"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:paddingTop="23dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sensors"
-                    android:textColor="@color/white"
-                    android:drawableStart="@drawable/menu_icon_sensor"
-                    android:drawablePadding="6dp"
-                    android:layout_gravity="bottom"
-                    android:padding="6dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/linear_robot_menu"
+            <TextView
+                android:id="@+id/text_menu_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="56">
+                android:text="@string/sensors"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/menu_icon_sensor"
+                android:layout_above="@id/text_menu_robot"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/robot"
-                    android:textColor="@color/white"
-                    android:drawableStart="@drawable/menu_icon_robot"
-                    android:layout_gravity="center"
-                    android:drawablePadding="6dp"
-                    android:padding="6dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/linear_data_log_menu"
+            <TextView
+                android:id="@+id/text_menu_datalog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="224">
+                android:text="@string/data_log"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/menu_icon_datalog"
+                android:layout_below="@id/text_menu_robot"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/data_log"
-                    android:textColor="@color/white"
-                    android:drawableStart="@drawable/menu_icon_datalog"
-                    android:drawablePadding="6dp"
-                    android:layout_gravity="top"
-                    android:padding="6dp"/>
-
-            </FrameLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
