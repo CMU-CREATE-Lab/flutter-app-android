@@ -44,7 +44,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
 
     protected static final String COLOR_KEY = "color_key";
 
-    private static final int PREMIXED_TOP[] = { Color.rgb(208,2,27), Color.rgb(248,231,28), Color.rgb(74,189,226), Color.rgb(255,128,0)};
+    private static final int PREMIXED_TOP[] = { Color.rgb(208,2,27), Color.rgb(248,231,28), Color.rgb(74,189,226), Color.rgb(245,166,35)};
     private static final int PREMIXED_BOTTOM[] = { Color.rgb(99,189,107), Color.rgb(166,103,222), Color.WHITE, Color.BLACK};
 
     private float h,s, v;
@@ -96,12 +96,12 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
         int b = (color >> 0) & 0xFF;
-        return new int[] {r , g, b};
+        return new int[] {r, g, b};
     }
 
 
     private void updateColor() {
-        final int color = Color.HSVToColor(new float[] {h,s/99, v /99});
+        final int color = Color.HSVToColor(new float[] {h, s/99, v /99});
         finalRGB = intToRGB(color);
 
         Drawable drawable = new Drawable() {
