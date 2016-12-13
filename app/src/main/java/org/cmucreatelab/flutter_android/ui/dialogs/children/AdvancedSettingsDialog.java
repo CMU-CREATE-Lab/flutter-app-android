@@ -12,10 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -149,12 +146,14 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         seekBarMinInput.setProgress(minInput);
         seekBarZeroPoint.setProgress(zeroPoint);
 
-        if (output.getOutputType() == Output.Type.SERVO)
+        /*if (output.getOutputType() == Output.Type.SERVO)
             sensorText = ((Servo) output).getServoSettings().getSensor().getSensorType().toString();
         if (output.getOutputType() == Output.Type.LED)
             sensorText = ((Led) output).getRedSettings().getSensor().getSensorType().toString();
         if (output.getOutputType() == Output.Type.SPEAKER)
-            sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();
+            sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();*/
+
+        sensorText = output.getSettings().getSensor().getSensorType().toString();
 
         sensorText = sensorText.toLowerCase();
         sensorText.replace('_', ' ');

@@ -1,32 +1,21 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.settings.Settings;
-
-import java.io.Serializable;
 
 /**
- * Created by Steve on 6/20/2016.
- *
- * Servo
- *
- * A class that represents a servo on the flutter.
- *
+ * Created by Steve on 12/13/2016.
  */
-public class Servo extends A_Output implements Serializable, Output {
+public class GreenLed extends A_Output {
 
-
-    public static final String SERVO_KEY = "servo_key";
-
-    private static final Output.Type outputType = Type.SERVO;
     private static final int MINIMUM = 0;
-    private static final int MAXIMUM = 180;
-    private static final String TYPE = "s";
+    private static final int MAXIMUM = 100;
+    private static final String TYPE = "g";
+    private static final Output.Type outputType = Type.GREEN_LED;
 
+    public static final String LED_KEY = "green_led_key";
     public static final int imageId = R.mipmap.ic_launcher;
 
-
-    public Servo(int portNumber) {
+    public GreenLed(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
     }
 

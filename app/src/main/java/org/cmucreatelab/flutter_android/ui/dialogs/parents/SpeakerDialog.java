@@ -79,39 +79,37 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
 
     private void updateViews(View view) {
-        if (speaker.getSettings() != null) {
-            pitchSettings = speaker.getFrequencySettings();
-            volumeSettings = speaker.getVolumeSettings();
-            updateViews(view, speaker);
+        pitchSettings = speaker.getPitch().getSettings();
+        volumeSettings = speaker.getVolume().getSettings();
+        updateViews(view, speaker.getPitch());
 
-            // max Volume and max Pitch
-            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
-            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
-            maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
-            maxPitch.setImageResource(R.drawable.link_icon_pitch);
-            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
-            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
-            maxVolumeTxt.setText(getString(volumeSettings.getSensor().getHighTextId()) + " " + getString(R.string.volume));
-            maxPitchTxt.setText(getString(pitchSettings.getSensor().getHighTextId()) + " " + getString(R.string.pitch));
-            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
-            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
-            maxVolumeValue.setText(String.valueOf(volumeSettings.getOutputMax()));
-            maxPitchValue.setText(String.valueOf(pitchSettings.getOutputMax()) + " " + getString(R.string.hz));
+        // max Volume and max Pitch
+        ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+        ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+        maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
+        maxPitch.setImageResource(R.drawable.link_icon_pitch);
+        TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+        TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+        maxVolumeTxt.setText(getString(volumeSettings.getSensor().getHighTextId()) + " " + getString(R.string.volume));
+        maxPitchTxt.setText(getString(pitchSettings.getSensor().getHighTextId()) + " " + getString(R.string.pitch));
+        TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+        TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+        maxVolumeValue.setText(String.valueOf(volumeSettings.getOutputMax()));
+        maxPitchValue.setText(String.valueOf(pitchSettings.getOutputMax()) + " " + getString(R.string.hz));
 
-            //min Volume and min Pitch
-            ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
-            ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
-            minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
-            minPitch.setImageResource(R.drawable.link_icon_pitch);
-            TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
-            TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
-            minVolumeTxt.setText(getString(volumeSettings.getSensor().getLowTextId()) + " " + getString(R.string.volume));
-            minPitchTxt.setText(getString(pitchSettings.getSensor().getLowTextId()) + " " + getString(R.string.pitch));
-            TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
-            TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
-            minVolumeValue.setText(String.valueOf(volumeSettings.getOutputMin()));
-            minPitchValue.setText(String.valueOf(pitchSettings.getOutputMin()) + " " + getString(R.string.hz));
-        }
+        //min Volume and min Pitch
+        ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
+        ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
+        minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
+        minPitch.setImageResource(R.drawable.link_icon_pitch);
+        TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
+        TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
+        minVolumeTxt.setText(getString(volumeSettings.getSensor().getLowTextId()) + " " + getString(R.string.volume));
+        minPitchTxt.setText(getString(pitchSettings.getSensor().getLowTextId()) + " " + getString(R.string.pitch));
+        TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
+        TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
+        minVolumeValue.setText(String.valueOf(volumeSettings.getOutputMin()));
+        minPitchValue.setText(String.valueOf(pitchSettings.getOutputMin()) + " " + getString(R.string.hz));
     }
 
 
@@ -151,8 +149,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
 
-        pitchSettings = speaker.getFrequencySettings();
-        volumeSettings = speaker.getVolumeSettings();
+        pitchSettings = speaker.getPitch().getSettings();
+        volumeSettings = speaker.getVolume().getSettings();
 
         updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_settings);
@@ -176,11 +174,10 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         ArrayList<String> msgs = new ArrayList<>();
-        speaker.setSettings(volumeSettings);
-        msgs.add(MessageConstructor.getLinkedMessage(speaker));
-        speaker.setSettings(pitchSettings);
-        msgs.add(MessageConstructor.getLinkedMessage(speaker));
-        speaker.setIsLinked(true, speaker);
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
+        msgs.add(MessageConstructor.getLinkedMessage(speaker.getVolume()));
+        msgs.add(MessageConstructor.getLinkedMessage(speaker.getPitch()));
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
@@ -188,21 +185,18 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        if (speaker.getSettings() != null) {
-            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            ArrayList<String> msgs = new ArrayList<>();
-            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            speaker.setSettings(volumeSettings);
-            msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
-            speaker.setSettings(pitchSettings);
-            msgs.add(MessageConstructor.getRemoveLinkMessage(speaker));
-            speaker.setIsLinked(false, speaker);
-            volumeSettings.setOutputMax(speaker.getMax());
-            volumeSettings.setOutputMin(speaker.getMin());
-            pitchSettings.setOutputMax(speaker.getMaxFrequency());
-            pitchSettings.setOutputMin(speaker.getMinFrequency());
-            dialogSpeakerListener.onSpeakerLinkListener(msgs);
-        }
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        ArrayList<String> msgs = new ArrayList<>();
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
+        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
+        speaker.getPitch().setIsLinked(false, speaker.getPitch());
+        speaker.getVolume().setIsLinked(false, speaker.getVolume());
+        volumeSettings.setOutputMax(speaker.getVolume().getMax());
+        volumeSettings.setOutputMin(speaker.getVolume().getMin());
+        pitchSettings.setOutputMax(speaker.getPitch().getMax());
+        pitchSettings.setOutputMin(speaker.getPitch().getMin());
+        dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
 

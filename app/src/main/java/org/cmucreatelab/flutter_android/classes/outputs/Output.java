@@ -13,9 +13,12 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
 public interface Output {
 
     enum Type {
-        LED,
+        RED_LED,
+        GREEN_LED,
+        BLUE_LED,
         SERVO,
-        SPEAKER
+        PITCH,
+        VOLUME
     }
 
     // getters

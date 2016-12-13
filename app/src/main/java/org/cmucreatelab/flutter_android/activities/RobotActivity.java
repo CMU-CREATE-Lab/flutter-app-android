@@ -6,20 +6,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.classes.outputs.Led;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -44,7 +40,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     public static final String SERIALIZABLE_KEY = "serializable_key";
 
     private Servo[] servos;
-    private Led[] leds;
+    private TriColorLed[] triColorLeds;
     private Speaker speaker;
     private Sensor[] sensors;
 
@@ -90,7 +86,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     private void updateLinkedViews() {
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
         // servos link check
-        for (int i = 0; i < servos.length + leds.length + 1; i++) {
+       /* for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
             Output[] outputs = new Output[7];
             RelativeLayout currentLayout = null;
             ViewGroup linkAndSensor;
@@ -117,17 +113,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
                 case 3:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_1);
                     questionMark = (ImageView) findViewById(R.id.image_led_1);
-                    outputs[3] = leds[0];
+                    outputs[3] = triColorLeds[0];
                     break;
                 case 4:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_2);
                     questionMark = (ImageView) findViewById(R.id.image_led_2);
-                    outputs[4] = leds[1];
+                    outputs[4] = triColorLeds[1];
                     break;
                 case 5:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_3);
                     questionMark = (ImageView) findViewById(R.id.image_led_3);
-                    outputs[5] = leds[2];
+                    outputs[5] = triColorLeds[2];
                     break;
                 case 6:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker);
@@ -151,7 +147,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
                     questionMark.setVisibility(View.VISIBLE);
                 }
             }
-        }
+        }*/
     }
 
 
@@ -209,7 +205,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
         } else {
             servos = globalHandler.sessionHandler.getFlutter().getServos();
-            leds = globalHandler.sessionHandler.getFlutter().getLeds();
+            triColorLeds = globalHandler.sessionHandler.getFlutter().getTriColorLeds();
             speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
             sensors = globalHandler.sessionHandler.getFlutter().getSensors();
             isSensorData = true;
@@ -328,7 +324,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
-        LedDialog dialog = LedDialog.newInstance(leds[0], this);
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
     @OnClick(R.id.image_led_1)
@@ -343,7 +339,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
-        LedDialog dialog = LedDialog.newInstance(leds[1], this);
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
     @OnClick(R.id.image_led_2)
@@ -358,7 +354,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
-        LedDialog dialog = LedDialog.newInstance(leds[2], this);
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
     @OnClick(R.id.image_led_3)

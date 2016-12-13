@@ -42,7 +42,7 @@ public class MessageConstructor {
 
     public static String getRemoveLinkMessage(Output output) {
         StringBuilder result = new StringBuilder();
-        if (output.getOutputType() != Output.Type.SPEAKER) {
+        if (output.getOutputType() != Output.Type.PITCH && output.getOutputType() != Output.Type.VOLUME) {
             result.append("x" + output.getSettings().getType() + output.getPortNumber());
         } else {
             result.append("x" + output.getSettings().getType());

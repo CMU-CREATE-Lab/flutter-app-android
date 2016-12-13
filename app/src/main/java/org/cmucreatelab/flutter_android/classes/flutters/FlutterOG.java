@@ -2,9 +2,9 @@ package org.cmucreatelab.flutter_android.classes.flutters;
 
 import android.bluetooth.BluetoothDevice;
 
-import org.cmucreatelab.flutter_android.classes.outputs.Led;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
@@ -29,7 +29,7 @@ public class FlutterOG extends Flutter {
     // I did this because the flutter we are working with (OG) will always have those specific types of outputs,
     // whereas the type of sensors can change.
     private Servo[] mServos;
-    private Led[] mLeds;
+    private TriColorLed[] mTriColorLeds;
     private Speaker mSpeaker;
     private Sensor[] mSensors;
 
@@ -38,15 +38,15 @@ public class FlutterOG extends Flutter {
         this.mDevice = device;
         this.name = name;
         this.mServos = new Servo[NUMBER_OF_SERVOS];
-        this.mLeds = new Led[NUMBER_OF_LEDS];
+        this.mTriColorLeds = new TriColorLed[NUMBER_OF_LEDS];
         this.mSpeaker = new Speaker(0);
         this.mSensors = new Sensor[NUMBER_OF_SENSORS];
 
         for (int i = 0; i < mServos.length; i++) {
             mServos[i] = new Servo(i+1);
         }
-        for (int i = 0; i < mLeds.length; i++) {
-            mLeds[i] = new Led(i+1);
+        for (int i = 0; i < mTriColorLeds.length; i++) {
+            mTriColorLeds[i] = new TriColorLed(i+1);
         }
         for (int i = 0; i < mSensors.length; i++) {
             mSensors[i] = new NoSensor(i+1);
@@ -57,7 +57,7 @@ public class FlutterOG extends Flutter {
     // getters
 
     public Servo[] getServos() { return mServos; }
-    public Led[] getLeds() { return mLeds; }
+    public TriColorLed[] getTriColorLeds() { return mTriColorLeds; }
     public Speaker getSpeaker() { return mSpeaker; }
     public Sensor[] getSensors() { return mSensors; }
 
