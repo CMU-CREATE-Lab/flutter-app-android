@@ -7,6 +7,6 @@
 
     <include
         android:id="@+id/include_toolbar_data_logs"
-        layout="@layout/main_toolbar" />
+        layout="@layout/main_toolbar_data_logs"/>
 
 </RelativeLayout>
