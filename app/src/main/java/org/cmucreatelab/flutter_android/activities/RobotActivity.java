@@ -6,13 +6,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
@@ -86,7 +90,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     private void updateLinkedViews() {
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
         // servos link check
-       /* for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
+        for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
             Output[] outputs = new Output[7];
             RelativeLayout currentLayout = null;
             ViewGroup linkAndSensor;
@@ -113,22 +117,22 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
                 case 3:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_1);
                     questionMark = (ImageView) findViewById(R.id.image_led_1);
-                    outputs[3] = triColorLeds[0];
+                    outputs[3] = triColorLeds[0].getRedLed();
                     break;
                 case 4:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_2);
                     questionMark = (ImageView) findViewById(R.id.image_led_2);
-                    outputs[4] = triColorLeds[1];
+                    outputs[4] = triColorLeds[1].getRedLed();
                     break;
                 case 5:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_3);
                     questionMark = (ImageView) findViewById(R.id.image_led_3);
-                    outputs[5] = triColorLeds[2];
+                    outputs[5] = triColorLeds[2].getRedLed();
                     break;
                 case 6:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker);
                     questionMark = (ImageView) findViewById(R.id.image_speaker);
-                    outputs[6] = speaker;
+                    outputs[6] = speaker.getVolume();
                     break;
             }
             if (outputs[i].isLinked()) {
@@ -147,7 +151,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
                     questionMark.setVisibility(View.VISIBLE);
                 }
             }
-        }*/
+        }
     }
 
 

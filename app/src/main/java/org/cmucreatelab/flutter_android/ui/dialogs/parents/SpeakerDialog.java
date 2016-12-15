@@ -178,6 +178,8 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
         msgs.add(MessageConstructor.getLinkedMessage(speaker.getVolume()));
         msgs.add(MessageConstructor.getLinkedMessage(speaker.getPitch()));
+        speaker.getVolume().setIsLinked(true, speaker.getVolume());
+        speaker.getPitch().setIsLinked(true, speaker.getPitch());
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
