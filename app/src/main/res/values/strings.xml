@@ -152,5 +152,10 @@
     <string name="minimum_pitch">260 Hz</string>
     <string name="maximum_pitch">1050 Hz</string>
     <string name="hz">Hz</string>
+    <string name="clean_up">Clean Up</string>
+    <string name="data_points">data points</string>
+    <string name="saved_on_device">Saved On Device</string>
+    <string name="on">On</string>
+    <string name="flutter">Flutter</string>
 
 </resources>

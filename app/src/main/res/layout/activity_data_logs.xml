@@ -9,4 +9,63 @@
         android:id="@+id/include_toolbar_data_logs"
         layout="@layout/main_toolbar_data_logs"/>
 
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="100dp">
+
+        <TextView
+            android:id="@+id/text_open_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_log"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/data_menu_open_log"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/text_send_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_log"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/data_menu_email"
+            android:layout_below="@id/text_open_log"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/text_clean_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clean_up"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawableTop="@drawable/data_menu_trash"
+            android:layout_below="@id/text_send_log"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/text_record_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_data"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:minLines="2"
+            android:drawableTop="@drawable/data_menu_record"
+            android:layout_below="@id/text_clean_up"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"/>
+
+    </RelativeLayout>
+
+    <include android:id="@+id/include_open_log"
+        layout="@layout/data_log_landing"/>
+
 </RelativeLayout>
