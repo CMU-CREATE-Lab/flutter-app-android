@@ -118,7 +118,7 @@ public class SessionHandler {
                 Log.d(Constants.LOG_TAG, "Connected to " + mFlutterOG.getDevice().getName());
                 mMelodySmartDevice.getDataService().enableNotifications(true);
             }
-            flutterConnectListener.onConnected(isBluetoothConnected);
+            mFlutterOG.populateDataSet(mActivity, dataSetListener);
         }
 
         @Override
@@ -126,8 +126,9 @@ public class SessionHandler {
             flutterMessageListener.onMessageReceived(new String(bytes));
             if (!messages.isEmpty()) {
                 String msg = messages.poll();
-                // So even though there is a callback so I do not send messages on top of each other,
-                // the flutter still seems to need some time in order to send all of the messages successfully.
+                // I put this thread to sleep to ensure messages are sent to the Flutter successfully.
+                // Even though there is a call back (this method here) if I do not put this sleep in, messages
+                // seem to override the previous message.
                 // For example, making an led relationship we need to send three separate messages for each color (rgb)
                 // This is why I put a simple sleep to give the flutter some time.
                 // Without this, only the last color would be set, blue.
@@ -139,6 +140,14 @@ public class SessionHandler {
                 Log.d(Constants.LOG_TAG, msg);
                 mMelodySmartDevice.getDataService().send(msg.getBytes());
             }
+        }
+    };
+
+
+    private FlutterOG.DataSetListener dataSetListener = new FlutterOG.DataSetListener() {
+        @Override
+        public void onDataSetPopulated() {
+            flutterConnectListener.onConnected(isBluetoothConnected);
         }
     };
 
@@ -156,7 +165,7 @@ public class SessionHandler {
 
 
     public void startSession(Activity activity, FlutterOG flutterOG) {
-        Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
+        Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getName());
         globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
         mActivity = activity;
         mFlutterOG = flutterOG;
@@ -186,6 +195,12 @@ public class SessionHandler {
             Log.d(Constants.LOG_TAG, msg);
             mMelodySmartDevice.getDataService().send(msg.getBytes());
         }
+    }
+
+
+    public void sendMessage(String message) {
+        messages.add(message);
+        sendMessages();
     }
 
 

@@ -22,6 +22,14 @@ public class Constants {
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
 
+    public static final int NUMBER_OF_SENSORS = 3;
+
+    public static final int NUMBER_OF_SERVOS = 3;
+
+    public static final int NUMBER_OF_TRI_COLOR_LEDS = 3;
+
+    public static final int NUMBER_OF_SPEAKERS = 1;
+
     public static final char[] HEX_ALPHABET = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
     public static final int C_4 = 262;

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
-import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
@@ -27,9 +26,10 @@ import java.util.Set;
  * A helper class to handle saving and opening the data logs.
  *
  */
+// TODO - redo this since I refactored the DataSet class
 public class FileHandler {
 
-    public static void saveFile(GlobalHandler globalHandler, DataSet dataSet) throws IOException {
+    /*public static void saveFile(GlobalHandler globalHandler, DataSet dataSet) throws IOException {
         String name = globalHandler.sessionHandler.getFlutterName();
         if (name.contains(" ")) {
             name = name.replace(" ", "_");
@@ -61,10 +61,10 @@ public class FileHandler {
         }
         csvWriter.writeAll(data);
         csvWriter.close();
-    }
+    }*/
 
 
-    public static File getFile(GlobalHandler globalHandler, String fileName) throws IOException {
+    /*public static File getFile(GlobalHandler globalHandler, String fileName) throws IOException {
         String name = globalHandler.sessionHandler.getFlutterName();
         if (name.contains(" ")) {
             name = name.replace(" ", "_");
@@ -82,6 +82,6 @@ public class FileHandler {
         }
 
         return file;
-    }
+    }*/
 
 }

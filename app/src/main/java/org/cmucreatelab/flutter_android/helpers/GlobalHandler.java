@@ -16,6 +16,7 @@ public class GlobalHandler {
     public NamingHandler namingHandler;
     public SessionHandler sessionHandler;
     public EmailHandler emailHandler;
+    public DataLoggingHandler dataLoggingHandler;
 
 
     // Singleton Implementation
@@ -37,6 +38,7 @@ public class GlobalHandler {
         this.sessionHandler = new SessionHandler();
         this.namingHandler = new NamingHandler(appContext);
         this.emailHandler = new EmailHandler();
+        this.dataLoggingHandler = new DataLoggingHandler(appContext);
     }
 
 }

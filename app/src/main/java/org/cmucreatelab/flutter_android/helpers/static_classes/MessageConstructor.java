@@ -14,6 +14,9 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
  * A static class which will generate the strings depending on the output passed into the appropriate methods
  *
  */
+
+// TODO - I may get rid of this class and make handlers for this kind of thing.
+    // Similar to how the DataLoggingHandler is.
 public class MessageConstructor {
 
 
