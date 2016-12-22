@@ -66,9 +66,9 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         sensor1.setImageResource(sensors[0].getGreenImageId());
         sensor2.setImageResource(sensors[1].getGreenImageId());
         sensor3.setImageResource(sensors[2].getGreenImageId());
-        textSensor1.setText(sensors[0].getSensorType().toString());
-        textSensor2.setText(sensors[1].getSensorType().toString());
-        textSensor3.setText(sensors[2].getSensorType().toString());
+        textSensor1.setText(sensors[0].getSensorTypeId());
+        textSensor2.setText(sensors[1].getSensorTypeId());
+        textSensor3.setText(sensors[2].getSensorTypeId());
 
         return builder.create();
     }

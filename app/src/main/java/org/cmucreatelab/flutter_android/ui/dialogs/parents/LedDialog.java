@@ -298,7 +298,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(sensor.getSensorType().toString());
+            currentTextViewItem.setText(sensor.getSensorTypeId());
             redSettings.setSensor(sensor);
             greenSettings.setSensor(sensor);
             blueSettings.setSensor(sensor);
@@ -311,7 +311,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
-        currentTextViewItem.setText(relationship.getRelationshipType().toString());
+        currentTextViewItem.setText(relationship.getRelationshipTypeId());
         redSettings.setRelationship(relationship);
         greenSettings.setRelationship(relationship);
         blueSettings.setRelationship(relationship);

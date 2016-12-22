@@ -57,7 +57,7 @@ public abstract class BaseResizableDialog extends DialogFragment {
             TextView relationshipText = (TextView) view.findViewById(R.id.text_relationship);
             relationshipText.setText(R.string.relationship);
             TextView relationshipType = (TextView) view.findViewById(R.id.text_relationship_type);
-            relationshipType.setText(settings.getRelationship().getRelationshipType().toString());
+            relationshipType.setText(settings.getRelationship().getRelationshipTypeId());
         }
     }
 

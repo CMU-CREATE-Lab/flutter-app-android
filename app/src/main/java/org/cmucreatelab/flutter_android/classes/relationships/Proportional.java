@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 public class Proportional implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.PROPORTIONAL;
+    private static final int relationshipTypeId = R.string.proportional;
     private static final int greenImageIdLg = R.drawable.relationship_green_proportional_l_g_68;
     private static final int greenImageIdMd = R.drawable.relationship_green_proportional_m_d_56;
     private static final int greyImageIdSm = R.drawable.relationship_grey_proportional_s_m_20;
@@ -22,6 +23,12 @@ public class Proportional implements Relationship {
     @Override
     public Type getRelationshipType() {
         return relationshipType;
+    }
+
+
+    @Override
+    public int getRelationshipTypeId() {
+        return relationshipTypeId;
     }
 
 

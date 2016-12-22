@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.relationships;
 
+import org.cmucreatelab.flutter_android.R;
+
 /**
  * Created by Steve on 9/1/2016.
  *
@@ -10,6 +12,7 @@ package org.cmucreatelab.flutter_android.classes.relationships;
 public class NoRelationship implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.NO_RELATIONSHIP;
+    private static final int relationshipTypeId = R.string.no_relationship;
 
 
     public NoRelationship() {}
@@ -18,6 +21,12 @@ public class NoRelationship implements Relationship {
     @Override
     public Type getRelationshipType() {
         return relationshipType;
+    }
+
+
+    @Override
+    public int getRelationshipTypeId() {
+        return relationshipTypeId;
     }
 
     @Override

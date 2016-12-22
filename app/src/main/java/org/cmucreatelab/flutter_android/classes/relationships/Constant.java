@@ -9,6 +9,7 @@ public class Constant implements Relationship {
 
 
     private static final Relationship.Type relationshipType = Type.CONSTANT;
+    private static final int relationshipTypeId = R.string.constant;
     private static final int greenImageIdLg = R.drawable.relationship_green_constant_l_g_68;
     private static final int greenImageIdMd = R.drawable.relationship_green_constant_m_d_56;
     private static final int greyImageIdSm = R.drawable.relationship_grey_constant_s_m_20;
@@ -17,6 +18,12 @@ public class Constant implements Relationship {
     @Override
     public Type getRelationshipType() {
         return relationshipType;
+    }
+
+
+    @Override
+    public int getRelationshipTypeId() {
+        return relationshipTypeId;
     }
 
 

@@ -24,6 +24,7 @@ public interface Relationship {
     }
 
     Type getRelationshipType();
+    int getRelationshipTypeId();
     int getGreenImageIdLg();
     int getGreenImageIdMd();
     int getGreyImageIdSm();
