@@ -42,6 +42,8 @@ public class DataSet {
     public void setDataName(String name) { this.dataName = name; }
 
 
+    // TODO - We may want this somewhere since you can send data logs via email.
+    // Used to import a csv into the app someway
     public void loadFromFile(File file) throws IOException {
         /*CSVReader csvReader = new CSVReader(new FileReader(file.getPath()));
         ArrayList<String[]> list = (ArrayList<String[]>) csvReader.readAll();

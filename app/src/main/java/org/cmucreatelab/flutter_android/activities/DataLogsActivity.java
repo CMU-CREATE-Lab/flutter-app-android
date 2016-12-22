@@ -16,7 +16,8 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// TODO - make an adapter for loading the data logs
+// TODO - make an adapter for loading the data logs saved on kindle
+// TODO - We need to make a database to hold the data logs
 public class DataLogsActivity extends BaseNavigationActivity {
 
     private GlobalHandler globalHandler;

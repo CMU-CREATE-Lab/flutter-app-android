@@ -34,6 +34,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * - message sending
  *
  */
+// TODO - Too much is happening in here I think, I'd like to refactor it eventually -  split some things up
+// TODO - I would like this class to eventually be a container that holds the flutter instance, data logs, and any other object instances we need throughout the session of the app.
+// TODO - Refactor message sending and actually make use of the Message class
+// TODO - Separate class for handling connecting and disconnecting (the more we split this up the better)
+// I would like to have a message handler class that handles all of the messages
+// Maybe a MessageSender class that does the actual sending of messages and the Message Handler
+// will just handle which messages are being sent to the sender.
+// This would clean up the DataLoggingHandler and anywhere else we send messages.
+// Wish I thought of that before I wrote all of this.. :/
 public class SessionHandler {
 
     private GlobalHandler globalHandler;
