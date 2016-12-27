@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -44,7 +43,7 @@ import butterknife.OnClick;
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
     // MelodySmartDevice is used, in this activity, for scanning for bluetooth devices and connecting to a device.
-    // TODO pull out as its own handler
+    // TODO @tasota pull out as its own handler
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -76,6 +75,44 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
 
         mLeDeviceAdapter.clearDevices();
+    }
+
+
+    private void showAlertBleUnsupported() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage(R.string.ble_unsupported);
+        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        AlertDialog dialog = adb.create();
+        dialog.show();
+    }
+
+
+    private void showAlertBluetoothDisabled(final BluetoothAdapter bluetoothAdapter) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage(R.string.enable_bluetooth_msg);
+        adb.setTitle(R.string.enable_bluetooth);
+        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // nothing because we are overriding it
+            }
+        });
+
+        final AlertDialog dialog = adb.create();
+        dialog.setCancelable(false);
+        dialog.show();
+        dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(Constants.LOG_TAG, String.valueOf(bluetoothAdapter.isEnabled()));
+                if (bluetoothAdapter.isEnabled()) {
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
 
@@ -126,52 +163,27 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         PackageManager pm = getApplicationContext().getPackageManager();
         boolean isSupported = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
         if (!isSupported) {
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            adb.setMessage(R.string.ble_unsupported);
-            adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            AlertDialog dialog = adb.create();
-            dialog.show();
+            showAlertBleUnsupported();
         } else {
+            // TODO @tasota do we want this to keep popping up in this fashion?
             final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (!bluetoothAdapter.isEnabled()) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(this);
-                adb.setMessage(R.string.enable_bluetooth_msg);
-                adb.setTitle(R.string.enable_bluetooth);
-                adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // nothing because we are overriding it
-                    }
-                });
-                final AlertDialog dialog = adb.create();
-                dialog.setCancelable(false);
-                dialog.show();
-
-                dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(Constants.LOG_TAG, String.valueOf(bluetoothAdapter.isEnabled()));
-                        if (bluetoothAdapter.isEnabled()) {
-                            dialog.dismiss();
-                        }
-                    }
-                });
+                showAlertBluetoothDisabled(bluetoothAdapter);
             }
 
+            // construct toolbar
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
             toolbar.setContentInsetsAbsolute(0,0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
 
+            // TODO @tasota we can move/remove this later (see above)
             globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
             globalHandler.sessionHandler.setFlutterConnectListener(this);
-            final Activity activity = this;
-
             mMelodySmartDevice = MelodySmartDevice.getInstance();
             mMelodySmartDevice.init(this.getApplicationContext());
+
+            // setup adapter for LeScan
             mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());
             ListView list = (ListView) findViewById(R.id.scan_list);
             list.setAdapter(mLeDeviceAdapter);
@@ -180,20 +192,18 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     FlutterOG flutter = (FlutterOG)mLeDeviceAdapter.getItem(i);
                     scanForDevice(false);
-                    globalHandler.sessionHandler.startSession(activity, flutter);
+                    globalHandler.sessionHandler.startSession(AppLandingActivity.this, flutter);
                 }
             });
 
+            // TODO debugging screen size (can remove later)
             DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
             float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
             Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
             Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
-
-
             int screenSize = getResources().getConfiguration().screenLayout &
                     Configuration.SCREENLAYOUT_SIZE_MASK;
-
             String toastMsg;
             switch(screenSize) {
                 case Configuration.SCREENLAYOUT_SIZE_LARGE:
@@ -219,6 +229,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         Log.d(Constants.LOG_TAG, "onResume - AppLandingActivity");
         scanForDevice(false);
     }
+
 
     @Override
     protected void onDestroy() {
