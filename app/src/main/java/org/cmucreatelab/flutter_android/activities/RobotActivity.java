@@ -233,8 +233,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
 
     @Override
-    public void onMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived: " + output);
+    public void onFlutterMessageReceived(String output) {
+        Log.d(Constants.LOG_TAG, "onFlutterMessageReceived: " + output);
 
         // sensor reading
         if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {

@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
@@ -30,10 +29,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,60 +44,38 @@ import butterknife.OnClick;
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
     // MelodySmartDevice is used, in this activity, for scanning for bluetooth devices and connecting to a device.
+    // TODO pull out as its own handler
     private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
-    private ArrayList<FlutterOG> mFlutterOGs;
-    private boolean mScanning;
-
-    private Timer timer;
-    private static int SECOND_SCAN_ID;
-
-    private TextView title;
 
 
     // Class methods
 
 
-    private void startScan() {
-        scanForDevice(true);
-        startTimer(7500);
-    }
+    private synchronized void scanForDevice(boolean isScanning) {
+        Button scan = (Button) findViewById(R.id.button_scan);
+        ListView list = (ListView) findViewById(R.id.scan_list);
 
-
-    private void startTimer(final int ms) {
-        timer.cancel();
-        timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //findViewById(R.id.image_timed_prompt).setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        };
-        timer.schedule(timerTask, ms);
-    }
-
-
-    private void clearAll() {
-        mFlutterOGs.clear();
-        mLeDeviceAdapter.clearDevices();
-    }
-
-
-    private synchronized void scanForDevice(final boolean isScanning) {
-        mScanning = isScanning;
         if (isScanning) {
-            clearAll();
             mMelodySmartDevice.startLeScan(mLeScanCallBack);
-            // TODO - update scanning image
+
+            scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
+            scan.setText(R.string.scanning);
+            scan.setTextColor(Color.BLACK);
+            list.setVisibility(View.VISIBLE);
         } else {
             mMelodySmartDevice.stopLeScan(mLeScanCallBack);
-            // TODO - update scanning image
+
+            findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
+            findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
+            findViewById(R.id.image_flutter).setVisibility(View.VISIBLE);
+            scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
+            scan.setText(R.string.scan);
+            scan.setTextColor(Color.WHITE);
+            list.setVisibility(View.GONE);
         }
+
+        mLeDeviceAdapter.clearDevices();
     }
 
 
@@ -115,7 +88,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    for (FlutterOG result : mFlutterOGs) {
+                    for (int i=0; i<mLeDeviceAdapter.getCount(); i++) {
+                        FlutterOG result = (FlutterOG)mLeDeviceAdapter.getItem(i);
                         if (result.getDevice().equals(device)) {
                             return;
                         }
@@ -127,15 +101,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         findViewById(R.id.image_flutter).setVisibility(View.GONE);
                         String name = globalHandler.namingHandler.generateName(device.getAddress());
                         FlutterOG endResult = new FlutterOG(device, name);
-                        mFlutterOGs.add(endResult);
                         mLeDeviceAdapter.addDevice(endResult);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                timer.cancel();
-                                findViewById(SECOND_SCAN_ID).setVisibility(View.VISIBLE);
-                                startTimer(7500);
+                                findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
                             }
                         });
                     }
@@ -194,14 +165,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             toolbar.setContentInsetsAbsolute(0,0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
-            title = (TextView) findViewById(R.id.text_app_landing_title);
 
             globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
             globalHandler.sessionHandler.setFlutterConnectListener(this);
             final Activity activity = this;
-
-            mFlutterOGs = new ArrayList<>();
-            timer = new Timer();
 
             mMelodySmartDevice = MelodySmartDevice.getInstance();
             mMelodySmartDevice.init(this.getApplicationContext());
@@ -211,9 +178,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    timer.cancel();
+                    FlutterOG flutter = (FlutterOG)mLeDeviceAdapter.getItem(i);
                     scanForDevice(false);
-                    globalHandler.sessionHandler.startSession(activity, mFlutterOGs.get(i));
+                    globalHandler.sessionHandler.startSession(activity, flutter);
                 }
             });
 
@@ -250,14 +217,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     protected void onResume() {
         super.onResume();
         Log.d(Constants.LOG_TAG, "onResume - AppLandingActivity");
-        SECOND_SCAN_ID = R.id.frame_second_scan;
-        clearAll();
-        findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
-        findViewById(SECOND_SCAN_ID).setVisibility(View.GONE);
-        Button scan = (Button) findViewById(R.id.button_scan);
-        scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
-        scan.setText(R.string.scan);
-        scan.setTextColor(Color.WHITE);
+        scanForDevice(false);
     }
 
     @Override
@@ -269,7 +229,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     @Override
-    public void onConnected(boolean connected) {
+    public void onFlutterConnected(boolean connected) {
         Log.d(Constants.LOG_TAG, "Is connected: " + connected);
         if (connected) {
             Intent intent = new Intent(this, SensorsActivity.class);
@@ -281,11 +241,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
-        Button scan = (Button) findViewById(R.id.button_scan);
-        scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
-        scan.setText(R.string.scanning);
-        scan.setTextColor(Color.BLACK);
-        startScan();
+        scanForDevice(true);
     }
 
 }

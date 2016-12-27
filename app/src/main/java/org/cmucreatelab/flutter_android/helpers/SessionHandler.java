@@ -82,7 +82,7 @@ public class SessionHandler {
                         adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                flutterConnectListener.onConnected(isBluetoothConnected);
+                                flutterConnectListener.onFlutterConnected(isBluetoothConnected);
                             }
                         });
                         AlertDialog dialog = adb.create();
@@ -90,7 +90,7 @@ public class SessionHandler {
                     }
                 });
             } else {
-                flutterConnectListener.onConnected(isBluetoothConnected);
+                flutterConnectListener.onFlutterConnected(isBluetoothConnected);
             }
 
             isBluetoothConnected = false;
@@ -118,12 +118,12 @@ public class SessionHandler {
                 Log.d(Constants.LOG_TAG, "Connected to " + mFlutterOG.getDevice().getName());
                 mMelodySmartDevice.getDataService().enableNotifications(true);
             }
-            flutterConnectListener.onConnected(isBluetoothConnected);
+            flutterConnectListener.onFlutterConnected(isBluetoothConnected);
         }
 
         @Override
         public void onReceived(final byte[] bytes) {
-            flutterMessageListener.onMessageReceived(new String(bytes));
+            flutterMessageListener.onFlutterMessageReceived(new String(bytes));
             if (!messages.isEmpty()) {
                 String msg = messages.poll();
                 // So even though there is a callback so I do not send messages on top of each other,
