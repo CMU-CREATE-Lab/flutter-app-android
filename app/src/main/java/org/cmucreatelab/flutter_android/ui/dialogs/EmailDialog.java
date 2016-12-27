@@ -14,6 +14,7 @@ import android.widget.EditText;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 
 /**
  * Created by Steve on 9/7/2016.
@@ -46,7 +47,8 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSend");
-        globalHandler.emailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString());
+        // TODO @tasota include File currentDataLog in args
+        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), null);
     }
 
 }

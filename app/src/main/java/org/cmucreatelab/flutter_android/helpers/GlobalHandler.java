@@ -13,9 +13,7 @@ import android.content.Context;
 public class GlobalHandler {
 
     public Context appContext;
-    public NamingHandler namingHandler;
     public SessionHandler sessionHandler;
-    public EmailHandler emailHandler;
 
 
     // Singleton Implementation
@@ -35,8 +33,6 @@ public class GlobalHandler {
     private GlobalHandler(Context context) {
         this.appContext = context;
         this.sessionHandler = new SessionHandler();
-        this.namingHandler = new NamingHandler(appContext);
-        this.emailHandler = new EmailHandler();
     }
 
 }

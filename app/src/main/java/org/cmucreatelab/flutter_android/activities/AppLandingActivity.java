@@ -28,6 +28,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -136,7 +137,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     address = address.substring(0,8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
                         findViewById(R.id.image_flutter).setVisibility(View.GONE);
-                        String name = globalHandler.namingHandler.generateName(device.getAddress());
+                        String name = NamingHandler.generateName(getApplicationContext(),device.getAddress());
                         FlutterOG endResult = new FlutterOG(device, name);
                         mLeDeviceAdapter.addDevice(endResult);
 
