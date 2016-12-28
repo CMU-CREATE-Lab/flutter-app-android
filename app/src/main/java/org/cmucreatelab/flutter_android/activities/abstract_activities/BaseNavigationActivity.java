@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import butterknife.OnClick;
@@ -26,13 +25,10 @@ import butterknife.OnClick;
 // TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
 public abstract class BaseNavigationActivity extends AppCompatActivity {
 
-    protected GlobalHandler globalHandler;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        globalHandler = GlobalHandler.getInstance(this);
     }
 
 

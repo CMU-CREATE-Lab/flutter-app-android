@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +23,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+                GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
                 globalHandler.sessionHandler.addMessage(MessageConstructor.READ_SENSOR);
                 globalHandler.sessionHandler.sendMessages();
             }
@@ -39,7 +41,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (globalHandler.sessionHandler.isBluetoothConnected)
+        if (GlobalHandler.getInstance(getApplicationContext()).sessionHandler.isBluetoothConnected)
             stopSensorReading();
     }
 

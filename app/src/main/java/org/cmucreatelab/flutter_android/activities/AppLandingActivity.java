@@ -43,9 +43,6 @@ import butterknife.OnClick;
  */
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
-    // MelodySmartDevice is used, in this activity, for scanning for bluetooth devices and connecting to a device.
-    // TODO @tasota pull out as its own handler
-    private MelodySmartDevice mMelodySmartDevice;
     private LeDeviceListAdapter mLeDeviceAdapter;
 
 
@@ -55,16 +52,17 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private synchronized void scanForDevice(boolean isScanning) {
         Button scan = (Button) findViewById(R.id.button_scan);
         ListView list = (ListView) findViewById(R.id.scan_list);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         if (isScanning) {
-            mMelodySmartDevice.startLeScan(mLeScanCallBack);
+            globalHandler.melodySmartDeviceHandler.startLeScan(mLeScanCallBack);
 
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
             scan.setText(R.string.scanning);
             scan.setTextColor(Color.BLACK);
             list.setVisibility(View.VISIBLE);
         } else {
-            mMelodySmartDevice.stopLeScan(mLeScanCallBack);
+            globalHandler.melodySmartDeviceHandler.stopLeScan(mLeScanCallBack);
 
             findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
             findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
@@ -179,10 +177,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             setSupportActionBar(toolbar);
 
             // TODO @tasota we can move/remove this later (see above)
-            globalHandler = GlobalHandler.getInstance(this.getApplicationContext());
+            final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.sessionHandler.setFlutterConnectListener(this);
-            mMelodySmartDevice = MelodySmartDevice.getInstance();
-            mMelodySmartDevice.init(this.getApplicationContext());
 
             // setup adapter for LeScan
             mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());

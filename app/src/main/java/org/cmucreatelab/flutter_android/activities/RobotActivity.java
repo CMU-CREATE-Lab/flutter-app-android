@@ -21,6 +21,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
@@ -196,6 +197,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
         ButterKnife.bind(this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_robot));
@@ -225,6 +227,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     @Override
     protected void onResume() {
         super.onResume();
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         if (globalHandler.sessionHandler.isBluetoothConnected) {
             globalHandler.sessionHandler.setFlutterMessageListener(this);
             updateLinkedViews();
@@ -254,6 +257,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     @Override
     public void onServoLinkListener(String message) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
         globalHandler.sessionHandler.addMessage(message);
         globalHandler.sessionHandler.sendMessages();
@@ -263,6 +268,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     @Override
     public void onLedLinkListener(ArrayList<String> msgs) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
         globalHandler.sessionHandler.addMessages(msgs);
         globalHandler.sessionHandler.sendMessages();
@@ -272,6 +279,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     @Override
     public void onSpeakerLinkListener(ArrayList<String> msgs) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
         globalHandler.sessionHandler.addMessages(msgs);
         globalHandler.sessionHandler.sendMessages();

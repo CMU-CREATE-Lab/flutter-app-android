@@ -11,7 +11,6 @@ import com.bluecreation.melodysmart.BLEError;
 import com.bluecreation.melodysmart.BondingListener;
 import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.DeviceDatabase;
-import com.bluecreation.melodysmart.MelodySmartDevice;
 import com.bluecreation.melodysmart.MelodySmartListener;
 
 import org.cmucreatelab.flutter_android.R;
@@ -30,7 +29,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * A class that handles your session (when you select a specific device on AppLandingActivity)
  * - connect
- * - disconnect
+ * - disconnectFlutter
  * - message sending
  *
  */
@@ -41,7 +40,6 @@ public class SessionHandler {
     private FlutterConnectListener flutterConnectListener;  // an interface that an activity will implement so we can have a method to callback after a connection/disconnection happened
     private FlutterMessageListener flutterMessageListener;  // an interface that an activity will implement so we can have a method to callback once a message has been sent
     private FlutterOG mFlutterOG;
-    private MelodySmartDevice mMelodySmartDevice;           // used for connecting/disconnecting to a device and sending messages to the bluetooth device and back
     public boolean isBluetoothConnected;
     private ConcurrentLinkedQueue<String> messages;
 
@@ -94,9 +92,7 @@ public class SessionHandler {
             }
 
             isBluetoothConnected = false;
-            mMelodySmartDevice.unregisterListener(melodySmartListener);
-            mMelodySmartDevice.unregisterListener(bondingListener);
-            mMelodySmartDevice.getDataService().unregisterListener(dataServiceListener);
+            globalHandler.melodySmartDeviceHandler.unregisterListeners(bondingListener,melodySmartListener,dataServiceListener);
         }
 
         @Override
@@ -116,7 +112,7 @@ public class SessionHandler {
         public void onConnected(final boolean isFound) {
             if (isFound) {
                 Log.d(Constants.LOG_TAG, "Connected to " + mFlutterOG.getDevice().getName());
-                mMelodySmartDevice.getDataService().enableNotifications(true);
+                globalHandler.melodySmartDeviceHandler.getDataService().enableNotifications(true);
             }
             flutterConnectListener.onFlutterConnected(isBluetoothConnected);
         }
@@ -137,36 +133,25 @@ public class SessionHandler {
                     e.printStackTrace();
                 }
                 Log.d(Constants.LOG_TAG, msg);
-                mMelodySmartDevice.getDataService().send(msg.getBytes());
+                globalHandler.melodySmartDeviceHandler.getDataService().send(msg.getBytes());
             }
         }
     };
 
 
-    public void connect() {
-        if (!isBluetoothConnected) {
-            mMelodySmartDevice.connect(mFlutterOG.getDevice().getAddress());
-        }
-    }
-
-
-    public SessionHandler() {
-        // empty
+    public SessionHandler(GlobalHandler globalHandler) {
+        this.globalHandler = globalHandler;
     }
 
 
     public void startSession(Activity activity, FlutterOG flutterOG) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
-        globalHandler = GlobalHandler.getInstance(activity.getApplicationContext());
         mActivity = activity;
         mFlutterOG = flutterOG;
-        mMelodySmartDevice = MelodySmartDevice.getInstance();
-        mMelodySmartDevice.registerListener(bondingListener);
-        mMelodySmartDevice.registerListener(melodySmartListener);
-        mMelodySmartDevice.getDataService().registerListener(dataServiceListener);
+        globalHandler.melodySmartDeviceHandler.registerListeners(bondingListener,melodySmartListener,dataServiceListener);
         isBluetoothConnected = false;
         messages = new ConcurrentLinkedQueue<>();
-        connect();
+        globalHandler.melodySmartDeviceHandler.connectFlutter(mFlutterOG);
     }
 
 
@@ -184,13 +169,8 @@ public class SessionHandler {
         if (!messages.isEmpty()) {
             String msg = messages.poll();
             Log.d(Constants.LOG_TAG, msg);
-            mMelodySmartDevice.getDataService().send(msg.getBytes());
+            globalHandler.melodySmartDeviceHandler.getDataService().send(msg.getBytes());
         }
-    }
-
-
-    public void release() {
-        mMelodySmartDevice.disconnect();
     }
 
 

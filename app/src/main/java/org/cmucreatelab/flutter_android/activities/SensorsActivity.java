@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
@@ -111,6 +112,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors);
         ButterKnife.bind(this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_sensor));
@@ -150,6 +152,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @Override
     protected void onResume() {
         super.onResume();
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         if (globalHandler.sessionHandler.isBluetoothConnected)
             globalHandler.sessionHandler.setFlutterMessageListener(this);
     }
@@ -157,7 +161,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
     @Override
     public void onBackPressed() {
-        globalHandler.sessionHandler.release();
+        GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.disconnectFlutter();
         super.onBackPressed();
         finish();
     }
@@ -179,7 +183,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
         // update references
         sensors[index] = sensor;
-        globalHandler.sessionHandler.getFlutter().setSensors(sensors);
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getFlutter().setSensors(sensors);
 
         selectedView.setImageResource(sensor.getBlueImageId());
         currentSensorType.setText(getString(sensor.getSensorTypeId()));
