@@ -26,11 +26,31 @@ public class MelodySmartDeviceHandler {
     private MelodySmartDataListener melodySmartDataListener = null;
 
 
+    private void unregisterListeners() {
+        mMelodySmartDevice.unregisterListener(melodySmartDeviceListener);
+        mMelodySmartDevice.getDataService().unregisterListener(melodySmartDataListener);
+    }
+
+
+    private void registerListeners() {
+        mMelodySmartDevice.registerListener(melodySmartDeviceListener);
+        mMelodySmartDevice.getDataService().registerListener(melodySmartDataListener);
+    }
+
+
     public MelodySmartDeviceHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.init(globalHandler.appContext);
         messages = new ConcurrentLinkedQueue<>();
+    }
+
+
+    // message-sending
+
+
+    public DataService getDataService() {
+        return mMelodySmartDevice.getDataService();
     }
 
 
@@ -53,16 +73,7 @@ public class MelodySmartDeviceHandler {
     }
 
 
-    private void unregisterListeners() {
-        mMelodySmartDevice.unregisterListener(melodySmartDeviceListener);
-        mMelodySmartDevice.getDataService().unregisterListener(melodySmartDataListener);
-    }
-
-
-    private void registerListeners() {
-        mMelodySmartDevice.registerListener(melodySmartDeviceListener);
-        mMelodySmartDevice.getDataService().registerListener(melodySmartDataListener);
-    }
+    // connect/disconnect for a session
 
 
     public void connect(Session session) {
@@ -82,16 +93,14 @@ public class MelodySmartDeviceHandler {
     }
 
 
+    // BLE scanning
+
+
     public synchronized void setFlutterScanning(boolean isScanning, final BluetoothAdapter.LeScanCallback leScanCallback) {
         mMelodySmartDevice.stopLeScan(leScanCallback);
         if (isScanning) {
             mMelodySmartDevice.startLeScan(leScanCallback);
         }
-    }
-
-
-    public DataService getDataService() {
-        return mMelodySmartDevice.getDataService();
     }
 
 }
