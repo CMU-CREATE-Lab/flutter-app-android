@@ -204,8 +204,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected));
-        if (!globalHandler.sessionHandler.isBluetoothConnected) {
+        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected()));
+        if (!globalHandler.sessionHandler.isBluetoothConnected()) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
@@ -228,7 +228,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     protected void onResume() {
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (globalHandler.sessionHandler.isBluetoothConnected) {
+        if (globalHandler.sessionHandler.isBluetoothConnected()) {
             globalHandler.sessionHandler.setFlutterMessageListener(this);
             updateLinkedViews();
         }

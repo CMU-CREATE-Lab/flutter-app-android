@@ -8,5 +8,6 @@ package org.cmucreatelab.flutter_android.classes.flutters;
  * An interface for an activity that will be connecting or disconnecting from a flutter.
  */
 public interface FlutterConnectListener {
-    public void onFlutterConnected(final boolean connected);
+    public void onFlutterConnected();
+    public void onFlutterDisconnected();
 }

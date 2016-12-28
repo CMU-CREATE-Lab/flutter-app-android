@@ -41,7 +41,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (GlobalHandler.getInstance(getApplicationContext()).sessionHandler.isBluetoothConnected)
+        if (GlobalHandler.getInstance(getApplicationContext()).sessionHandler.isBluetoothConnected())
             stopSensorReading();
     }
 

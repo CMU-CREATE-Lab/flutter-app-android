@@ -118,12 +118,12 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_sensor));
         toolbar.setContentInsetsAbsolute(0,0);
 
-        if (!globalHandler.sessionHandler.isBluetoothConnected) {
+        if (!globalHandler.sessionHandler.isBluetoothConnected()) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
         } else {
-            String flutterName = globalHandler.sessionHandler.getFlutterName();
+            String flutterName = globalHandler.sessionHandler.session.flutter.getName();
             if (flutterName != null && flutterName.length() > 0)
                 toolbar.setTitle(flutterName);
             else
@@ -141,7 +141,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
             progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
-            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
+            sensors = globalHandler.sessionHandler.session.flutter.getSensors();
             startSensorReading();
             updateDynamicViews();
             updateStaticViews();
@@ -154,14 +154,14 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
-        if (globalHandler.sessionHandler.isBluetoothConnected)
+        if (globalHandler.sessionHandler.isBluetoothConnected())
             globalHandler.sessionHandler.setFlutterMessageListener(this);
     }
 
 
     @Override
     public void onBackPressed() {
-        GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.disconnectFlutter();
+        GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.disconnect();
         super.onBackPressed();
         finish();
     }
@@ -183,7 +183,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
         // update references
         sensors[index] = sensor;
-        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getFlutter().setSensors(sensors);
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.session.flutter.setSensors(sensors);
 
         selectedView.setImageResource(sensor.getBlueImageId());
         currentSensorType.setText(getString(sensor.getSensorTypeId()));

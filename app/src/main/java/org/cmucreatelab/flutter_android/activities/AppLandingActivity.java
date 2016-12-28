@@ -149,6 +149,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         // Just in case someone got a hold of the app without BLE support
         PackageManager pm = getApplicationContext().getPackageManager();
@@ -167,10 +168,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             toolbar.setContentInsetsAbsolute(0,0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
-
-            // TODO @tasota we can move/remove this later (see above)
-            final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-            globalHandler.sessionHandler.setFlutterConnectListener(this);
 
             // setup adapter for LeScan
             mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());
@@ -228,20 +225,28 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
-    @Override
-    public void onFlutterConnected(boolean connected) {
-        Log.d(Constants.LOG_TAG, "Is connected: " + connected);
-        if (connected) {
-            Intent intent = new Intent(this, SensorsActivity.class);
-            startActivity(intent);
-        }
-    }
-
-
     @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
+    }
+
+
+    // FlutterConnectListener implementation
+
+
+    @Override
+    public void onFlutterConnected() {
+        Log.d(Constants.LOG_TAG, "onFlutterConnected");
+        Intent intent = new Intent(this, SensorsActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onFlutterDisconnected() {
+        Log.d(Constants.LOG_TAG, "onFlutterDisconnected");
+        // TODO @tasota handle disconnected?
     }
 
 }
