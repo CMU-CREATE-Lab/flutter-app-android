@@ -19,8 +19,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.bluecreation.melodysmart.MelodySmartDevice;
-
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
@@ -45,6 +43,40 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
+    // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
+    private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
+        @Override
+        public void onLeScan(final BluetoothDevice device, int rssi, final byte[] scanRecord) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i=0; i<mLeDeviceAdapter.getCount(); i++) {
+                        FlutterOG result = (FlutterOG)mLeDeviceAdapter.getItem(i);
+                        if (result.getDevice().equals(device)) {
+                            return;
+                        }
+                    }
+                    // Check if the device is a flutter or not
+                    String address = device.getAddress();
+                    address = address.substring(0,8);
+                    if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
+                        findViewById(R.id.image_flutter).setVisibility(View.GONE);
+                        String name = NamingHandler.generateName(getApplicationContext(),device.getAddress());
+                        FlutterOG endResult = new FlutterOG(device, name);
+                        mLeDeviceAdapter.addDevice(endResult);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    };
+
 
     // Class methods
 
@@ -55,14 +87,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         if (isScanning) {
-            globalHandler.melodySmartDeviceHandler.startLeScan(mLeScanCallBack);
+            globalHandler.melodySmartDeviceHandler.startFlutterScan(mLeScanCallBack);
 
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
             scan.setText(R.string.scanning);
             scan.setTextColor(Color.BLACK);
             list.setVisibility(View.VISIBLE);
         } else {
-            globalHandler.melodySmartDeviceHandler.stopLeScan(mLeScanCallBack);
+            globalHandler.melodySmartDeviceHandler.stopFlutterScan(mLeScanCallBack);
 
             findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
             findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
@@ -113,43 +145,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             }
         });
     }
-
-
-    // Listeners
-
-
-    private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
-        @Override
-        public void onLeScan(final BluetoothDevice device, int rssi, final byte[] scanRecord) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i=0; i<mLeDeviceAdapter.getCount(); i++) {
-                        FlutterOG result = (FlutterOG)mLeDeviceAdapter.getItem(i);
-                        if (result.getDevice().equals(device)) {
-                            return;
-                        }
-                    }
-                    // Check if the device is a flutter or not
-                    String address = device.getAddress();
-                    address = address.substring(0,8);
-                    if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
-                        findViewById(R.id.image_flutter).setVisibility(View.GONE);
-                        String name = NamingHandler.generateName(getApplicationContext(),device.getAddress());
-                        FlutterOG endResult = new FlutterOG(device, name);
-                        mLeDeviceAdapter.addDevice(endResult);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }
-            });
-        }
-    };
 
 
     @Override

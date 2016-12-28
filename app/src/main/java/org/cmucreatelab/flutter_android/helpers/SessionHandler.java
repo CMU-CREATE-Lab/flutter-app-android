@@ -8,7 +8,6 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 
 import com.bluecreation.melodysmart.BLEError;
-import com.bluecreation.melodysmart.BondingListener;
 import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.DeviceDatabase;
 import com.bluecreation.melodysmart.MelodySmartListener;
@@ -42,19 +41,6 @@ public class SessionHandler {
     private FlutterOG mFlutterOG;
     public boolean isBluetoothConnected;
     private ConcurrentLinkedQueue<String> messages;
-
-
-    private BondingListener bondingListener = new BondingListener() {
-        @Override
-        public void onBondingStarted() {
-            // not sure if we need anything here
-        }
-
-        @Override
-        public void onBondingFinished(boolean b) {
-            // not sure if we need anything here
-        }
-    };
 
 
     private MelodySmartListener melodySmartListener = new MelodySmartListener() {
@@ -92,7 +78,7 @@ public class SessionHandler {
             }
 
             isBluetoothConnected = false;
-            globalHandler.melodySmartDeviceHandler.unregisterListeners(bondingListener,melodySmartListener,dataServiceListener);
+            globalHandler.melodySmartDeviceHandler.unregisterListeners(melodySmartListener,dataServiceListener);
         }
 
         @Override
@@ -148,7 +134,7 @@ public class SessionHandler {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
         mActivity = activity;
         mFlutterOG = flutterOG;
-        globalHandler.melodySmartDeviceHandler.registerListeners(bondingListener,melodySmartListener,dataServiceListener);
+        globalHandler.melodySmartDeviceHandler.registerListeners(melodySmartListener,dataServiceListener);
         isBluetoothConnected = false;
         messages = new ConcurrentLinkedQueue<>();
         globalHandler.melodySmartDeviceHandler.connectFlutter(mFlutterOG);
@@ -172,7 +158,6 @@ public class SessionHandler {
             globalHandler.melodySmartDeviceHandler.getDataService().send(msg.getBytes());
         }
     }
-
 
 
     // Getters and Setters

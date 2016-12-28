@@ -2,7 +2,6 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.bluetooth.BluetoothAdapter;
 
-import com.bluecreation.melodysmart.BondingListener;
 import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 import com.bluecreation.melodysmart.MelodySmartListener;
@@ -10,8 +9,9 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 
 /**
  * Created by mike on 12/27/16.
+ *
+ *  Handles interfacing with MelodySmart packages
  */
-
 public class MelodySmartDeviceHandler {
 
     private GlobalHandler globalHandler;
@@ -36,12 +36,12 @@ public class MelodySmartDeviceHandler {
     }
 
 
-    public void startLeScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
+    public void startFlutterScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
         mMelodySmartDevice.startLeScan(leScanCallback);
     }
 
 
-    public void stopLeScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
+    public void stopFlutterScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
         mMelodySmartDevice.stopLeScan(leScanCallback);
     }
 
@@ -51,15 +51,13 @@ public class MelodySmartDeviceHandler {
     }
 
 
-    public void registerListeners(BondingListener bondingListener, MelodySmartListener melodySmartListener, DataService.Listener dataServiceListener) {
-        mMelodySmartDevice.registerListener(bondingListener);
+    public void registerListeners(MelodySmartListener melodySmartListener, DataService.Listener dataServiceListener) {
         mMelodySmartDevice.registerListener(melodySmartListener);
         mMelodySmartDevice.getDataService().registerListener(dataServiceListener);
     }
 
 
-    public void unregisterListeners(BondingListener bondingListener, MelodySmartListener melodySmartListener, DataService.Listener dataServiceListener) {
-        mMelodySmartDevice.unregisterListener(bondingListener);
+    public void unregisterListeners(MelodySmartListener melodySmartListener, DataService.Listener dataServiceListener) {
         mMelodySmartDevice.unregisterListener(melodySmartListener);
         mMelodySmartDevice.getDataService().unregisterListener(dataServiceListener);
     }
