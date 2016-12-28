@@ -81,21 +81,18 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     // Class methods
 
 
-    private synchronized void scanForDevice(boolean isScanning) {
+    private void scanForDevice(boolean isScanning) {
         Button scan = (Button) findViewById(R.id.button_scan);
         ListView list = (ListView) findViewById(R.id.scan_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
+        globalHandler.melodySmartDeviceHandler.setFlutterScanning(isScanning, mLeScanCallBack);
         if (isScanning) {
-            globalHandler.melodySmartDeviceHandler.startFlutterScan(mLeScanCallBack);
-
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
             scan.setText(R.string.scanning);
             scan.setTextColor(Color.BLACK);
             list.setVisibility(View.VISIBLE);
         } else {
-            globalHandler.melodySmartDeviceHandler.stopFlutterScan(mLeScanCallBack);
-
             findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
             findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
             findViewById(R.id.image_flutter).setVisibility(View.VISIBLE);

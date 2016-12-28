@@ -36,13 +36,11 @@ public class MelodySmartDeviceHandler {
     }
 
 
-    public void startFlutterScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
-        mMelodySmartDevice.startLeScan(leScanCallback);
-    }
-
-
-    public void stopFlutterScan(final BluetoothAdapter.LeScanCallback leScanCallback) {
+    public synchronized void setFlutterScanning(boolean isScanning, final BluetoothAdapter.LeScanCallback leScanCallback) {
         mMelodySmartDevice.stopLeScan(leScanCallback);
+        if (isScanning) {
+            mMelodySmartDevice.startLeScan(leScanCallback);
+        }
     }
 
 
