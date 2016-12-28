@@ -1,16 +1,13 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.bluetooth.BluetoothAdapter;
-import android.util.Log;
 
 import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
 import org.cmucreatelab.flutter_android.classes.Session;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by mike on 12/27/16.
@@ -21,9 +18,9 @@ public class MelodySmartDeviceHandler {
 
     private GlobalHandler globalHandler;
     private MelodySmartDevice mMelodySmartDevice; // used for connecting/disconnecting to a device and sending messages to the bluetooth device and back
-    protected ConcurrentLinkedQueue<String> messages;
     public MelodySmartDeviceListener melodySmartDeviceListener = null;
     private MelodySmartDataListener melodySmartDataListener = null;
+    private MelodySmartMessageQueue messageQueue;
 
 
     private void unregisterListeners() {
@@ -42,7 +39,7 @@ public class MelodySmartDeviceHandler {
         this.globalHandler = globalHandler;
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.init(globalHandler.appContext);
-        messages = new ConcurrentLinkedQueue<>();
+        messageQueue = new MelodySmartMessageQueue(getDataService());
     }
 
 
@@ -55,21 +52,17 @@ public class MelodySmartDeviceHandler {
 
 
     public void addMessage(String msg) {
-        messages.add(msg);
+        messageQueue.addMessage(msg);
     }
 
 
     public void addMessages(ArrayList<String> msgs) {
-        messages.addAll(msgs);
+        messageQueue.addMessages(msgs);
     }
 
 
     public void sendMessages() {
-        if (!messages.isEmpty()) {
-            String msg = messages.poll();
-            Log.d(Constants.LOG_TAG, msg);
-            globalHandler.melodySmartDeviceHandler.getDataService().send(msg.getBytes());
-        }
+        // TODO @tasota delete me
     }
 
 

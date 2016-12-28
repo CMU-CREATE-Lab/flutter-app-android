@@ -39,22 +39,9 @@ public class MelodySmartDataListener implements DataService.Listener {
 
     @Override
     public void onReceived(final byte[] bytes) {
-        mSession.flutterMessageListener.onFlutterMessageReceived(new String(bytes));
-        if (!parent.messages.isEmpty()) {
-            String msg = parent.messages.poll();
-            // So even though there is a callback so I do not send messages on top of each other,
-            // the flutter still seems to need some time in order to send all of the messages successfully.
-            // For example, making an led relationship we need to send three separate messages for each color (rgb)
-            // This is why I put a simple sleep to give the flutter some time.
-            // Without this, only the last color would be set, blue.
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d(Constants.LOG_TAG, msg);
-            parent.getDataService().send(msg.getBytes());
-        }
+        String response = new String(bytes);
+        Log.v(Constants.LOG_TAG,"MelodySmartDataListener.onReceived="+response);
+        mSession.flutterMessageListener.onFlutterMessageReceived(response);
     }
 
 }
