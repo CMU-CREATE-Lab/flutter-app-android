@@ -24,8 +24,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
             @Override
             public void run() {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-                globalHandler.sessionHandler.addMessage(MessageConstructor.READ_SENSOR);
-                globalHandler.sessionHandler.sendMessages();
+                globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.READ_SENSOR);
             }
         };
         timer = new Timer();
@@ -41,7 +40,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (GlobalHandler.getInstance(getApplicationContext()).sessionHandler.isBluetoothConnected())
+        if (GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.isConnected())
             stopSensorReading();
     }
 

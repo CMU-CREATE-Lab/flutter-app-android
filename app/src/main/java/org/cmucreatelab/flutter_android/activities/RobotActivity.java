@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
@@ -204,16 +205,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected()));
-        if (!globalHandler.sessionHandler.isBluetoothConnected()) {
+        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.melodySmartDeviceHandler.isConnected()));
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
         } else {
-            servos = globalHandler.sessionHandler.getFlutter().getServos();
-            triColorLeds = globalHandler.sessionHandler.getFlutter().getTriColorLeds();
-            speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
-            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
+            FlutterOG flutter = globalHandler.sessionHandler.session.flutter;
+            servos = flutter.getServos();
+            triColorLeds = flutter.getTriColorLeds();
+            speaker = flutter.getSpeaker();
+            sensors = flutter.getSensors();
             isSensorData = true;
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
@@ -228,8 +230,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     protected void onResume() {
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (globalHandler.sessionHandler.isBluetoothConnected()) {
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            globalHandler.sessionHandler.session.flutterMessageListener = this;
             updateLinkedViews();
         }
     }
@@ -260,8 +262,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
-        globalHandler.sessionHandler.addMessage(message);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessage(message);
         updateLinkedViews();
     }
 
@@ -271,8 +272,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        globalHandler.sessionHandler.addMessages(msgs);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
         updateLinkedViews();
     }
 
@@ -282,8 +282,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
-        globalHandler.sessionHandler.addMessages(msgs);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
         updateLinkedViews();
     }
 

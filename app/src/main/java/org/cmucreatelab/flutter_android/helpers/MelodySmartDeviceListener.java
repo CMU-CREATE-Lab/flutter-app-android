@@ -19,12 +19,12 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 public class MelodySmartDeviceListener implements MelodySmartListener {
 
-    private Session mSession;
+    private Session session;
     public boolean deviceConnected;
 
 
     public MelodySmartDeviceListener(Session session) {
-        this.mSession = session;
+        this.session = session;
         deviceConnected = false;
     }
 
@@ -43,16 +43,16 @@ public class MelodySmartDeviceListener implements MelodySmartListener {
 
         // Check for errors
         if (bleError.getType() != BLEError.Type.NO_ERROR) {
-            mSession.currentActivity.runOnUiThread(new Runnable() {
+            session.currentActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(mSession.currentActivity, R.style.AppTheme));
+                    AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.currentActivity, R.style.AppTheme));
                     adb.setMessage(bleError.getMessage());
                     adb.setTitle("Disconnected");
                     adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            mSession.flutterConnectListener.onFlutterDisconnected();
+                            session.flutterConnectListener.onFlutterDisconnected();
                         }
                     });
                     AlertDialog dialog = adb.create();
@@ -60,10 +60,12 @@ public class MelodySmartDeviceListener implements MelodySmartListener {
                 }
             });
         } else {
-            mSession.flutterConnectListener.onFlutterDisconnected();
+            session.flutterConnectListener.onFlutterDisconnected();
         }
     }
 
+
+    // unused implementations
     public void onOtauAvailable() {}
     public void onOtauRecovery(DeviceDatabase.DeviceData deviceData) {}
 

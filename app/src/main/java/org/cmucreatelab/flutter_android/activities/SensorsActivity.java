@@ -118,7 +118,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_sensor));
         toolbar.setContentInsetsAbsolute(0,0);
 
-        if (!globalHandler.sessionHandler.isBluetoothConnected()) {
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
             noFlutterConnectedDialog.setCancelable(false);
             noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
@@ -131,7 +131,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             isPlayingSensors = true;
             setSupportActionBar(toolbar);
 
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
+            globalHandler.sessionHandler.session.flutterMessageListener = this;
 
             // init views
             textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
@@ -154,8 +154,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
-        if (globalHandler.sessionHandler.isBluetoothConnected())
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
+        if (globalHandler.melodySmartDeviceHandler.isConnected())
+            globalHandler.sessionHandler.session.flutterMessageListener = this;
     }
 
 

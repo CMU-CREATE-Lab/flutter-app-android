@@ -17,10 +17,11 @@ import java.util.ArrayList;
 public class MelodySmartDeviceHandler {
 
     private GlobalHandler globalHandler;
-    private MelodySmartDevice mMelodySmartDevice; // used for connecting/disconnecting to a device and sending messages to the bluetooth device and back
-    public MelodySmartDeviceListener melodySmartDeviceListener = null;
+    private MelodySmartDevice mMelodySmartDevice;
     private MelodySmartDataListener melodySmartDataListener = null;
-    private MelodySmartMessageQueue messageQueue;
+    private MelodySmartDeviceListener melodySmartDeviceListener = null;
+
+    public MelodySmartMessageQueue messageQueue;
 
 
     private void unregisterListeners() {
@@ -61,12 +62,12 @@ public class MelodySmartDeviceHandler {
     }
 
 
-    public void sendMessages() {
-        // TODO @tasota delete me
-    }
-
-
     // connect/disconnect for a session
+
+
+    public boolean isConnected() {
+        return melodySmartDataListener.serviceConnected && melodySmartDeviceListener.deviceConnected;
+    }
 
 
     public void connect(Session session) {

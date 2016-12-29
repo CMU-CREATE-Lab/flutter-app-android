@@ -30,7 +30,7 @@ import java.util.Set;
 public class FileHandler {
 
     public static void saveFile(GlobalHandler globalHandler, DataSet dataSet) throws IOException {
-        String name = globalHandler.sessionHandler.getFlutterName();
+        String name = globalHandler.sessionHandler.session.flutter.getName();
         if (name.contains(" ")) {
             name = name.replace(" ", "_");
         }
@@ -65,7 +65,7 @@ public class FileHandler {
 
 
     public static File getFile(GlobalHandler globalHandler, String fileName) throws IOException {
-        String name = globalHandler.sessionHandler.getFlutterName();
+        String name = globalHandler.sessionHandler.session.flutter.getName();
         if (name.contains(" ")) {
             name = name.replace(" ", "_");
         }
