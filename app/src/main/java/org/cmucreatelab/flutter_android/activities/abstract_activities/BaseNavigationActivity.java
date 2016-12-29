@@ -29,6 +29,28 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(Constants.LOG_TAG, "onCreate - " + getClass() );
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(Constants.LOG_TAG, "onResume - " + getClass() );
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(Constants.LOG_TAG, "onPause - " + getClass() );
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(Constants.LOG_TAG, "onDestroy - " + getClass() );
     }
 
 

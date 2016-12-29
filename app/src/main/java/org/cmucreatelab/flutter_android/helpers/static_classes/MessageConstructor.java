@@ -58,10 +58,10 @@ public class MessageConstructor {
         String inputMin = decToHex(settings.getAdvancedSettings().getInputMin());
         String outputMax = decToHex(settings.getOutputMax());
         String outputMin = decToHex(settings.getOutputMin());
-        Log.d(Constants.LOG_TAG, outputMax);
-        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMax()));
-        Log.d(Constants.LOG_TAG, outputMin);
-        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMin()));
+//        Log.d(Constants.LOG_TAG, outputMax);
+//        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMax()));
+//        Log.d(Constants.LOG_TAG, outputMin);
+//        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMin()));
 
         switch (relationshipType) {
             case AMPLITUDE:

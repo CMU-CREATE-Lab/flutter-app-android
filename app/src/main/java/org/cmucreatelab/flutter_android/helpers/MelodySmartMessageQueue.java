@@ -35,11 +35,9 @@ public class MelodySmartMessageQueue {
         messageSendingTimer = new Timer(TIMER_LENGTH_IN_MILLISECONDS) {
             @Override
             public void timerExpires() {
-                if (messages.isEmpty()) {
-                    Log.v(Constants.LOG_TAG,"MelodySmartMessageQueue timerExpires (empty tick)");
-                } else {
+                if (!messages.isEmpty()) {
                     String message = messages.poll();
-                    Log.d(Constants.LOG_TAG,"MelodySmartMessageQueue timerExpires: message="+message);
+                    Log.v(Constants.LOG_TAG,"MelodySmartMessageQueue timerExpires: SEND: '"+message+"'");
                     dataService.send(message.getBytes());
                     startTimer();
                 }

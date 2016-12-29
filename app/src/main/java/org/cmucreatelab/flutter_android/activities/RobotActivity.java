@@ -197,7 +197,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.melodySmartDeviceHandler.isConnected()));
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
         } else {
@@ -224,26 +223,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.sessionHandler.session.flutterMessageListener = this;
             updateLinkedViews();
-        }
-    }
-
-
-    @Override
-    public void onFlutterMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, "onFlutterMessageReceived: " + output);
-
-        // sensor reading
-        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
-            sensors[0].setSensorReading(Integer.valueOf(sensor1));
-            sensors[1].setSensorReading(Integer.valueOf(sensor2));
-            sensors[2].setSensorReading(Integer.valueOf(sensor3));
-            updateDynamicViews();
         }
     }
 
@@ -426,4 +405,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             simulatedSeekbar.setProgress(0);
         }
     }
+
+
+    // FlutterMessageListener implementation
+
+
+    @Override
+    public void onFlutterMessageReceived(String output) {
+        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
+            output = output.substring(2, output.length());
+            String sensor1 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor2 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor3 = output;
+            sensors[0].setSensorReading(Integer.valueOf(sensor1));
+            sensors[1].setSensorReading(Integer.valueOf(sensor2));
+            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateDynamicViews();
+        }
+    }
+
 }

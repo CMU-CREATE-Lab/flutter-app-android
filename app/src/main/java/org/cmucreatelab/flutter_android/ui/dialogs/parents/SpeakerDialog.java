@@ -187,7 +187,6 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     public void onClickRemoveLink() {
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
         ArrayList<String> msgs = new ArrayList<>();
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
         speaker.getPitch().setIsLinked(false, speaker.getPitch());

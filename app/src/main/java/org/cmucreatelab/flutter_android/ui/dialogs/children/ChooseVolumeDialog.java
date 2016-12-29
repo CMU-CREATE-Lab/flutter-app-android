@@ -31,7 +31,7 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog implements 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            Log.v(Constants.LOG_TAG, "onProgressChanged");
             finalVolume = i;
             currentVolume.setText(String.valueOf(finalVolume));
         }

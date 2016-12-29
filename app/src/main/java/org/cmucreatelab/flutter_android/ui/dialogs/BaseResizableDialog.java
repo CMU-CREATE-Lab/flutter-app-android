@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -36,7 +35,7 @@ public abstract class BaseResizableDialog extends DialogFragment {
 
     protected void updateViews(View view, Output output) {
         if (output.getSettings() != null) {
-            Log.d(Constants.LOG_TAG, "updateViews");
+            Log.v(Constants.LOG_TAG, "BaseResizableDialog.updateViews");
             Settings settings = output.getSettings();
 
             // sensor

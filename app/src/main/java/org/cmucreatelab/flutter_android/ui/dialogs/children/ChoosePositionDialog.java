@@ -46,7 +46,7 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog implement
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            Log.v(Constants.LOG_TAG, "onProgressChanged");
             finalPosition = i;
             curentPosition.setText(String.valueOf(finalPosition) + (char) 0x00B0);
             updatePointer();

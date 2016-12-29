@@ -40,7 +40,7 @@ public class FileHandler {
 
         if (!directory.exists()) {
             if (!directory.mkdirs()) {
-                Log.d(Constants.LOG_TAG, "failed to create directory");
+                Log.e(Constants.LOG_TAG, "failed to create directory");
                 return;
             }
         }
@@ -77,9 +77,12 @@ public class FileHandler {
         ArrayList<String[]> list = (ArrayList<String[]>) csvReader.readAll();
         csvReader.close();
 
+        String filesList = "";
         for (Object o : list) {
-            Log.d(Constants.LOG_TAG, o.toString());
+            filesList += o.toString();
+            filesList += ",";
         }
+        Log.d(Constants.LOG_TAG,"filesList="+filesList);
 
         return file;
     }

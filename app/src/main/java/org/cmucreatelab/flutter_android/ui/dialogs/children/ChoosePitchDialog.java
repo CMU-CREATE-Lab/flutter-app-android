@@ -120,7 +120,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            Log.v(Constants.LOG_TAG, "onProgressChanged");
             finalPitch = getFrequency(i);
             currentPitch.setText(String.valueOf(finalPitch) + " " + getString(R.string.hz));
         }

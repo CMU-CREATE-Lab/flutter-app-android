@@ -186,8 +186,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
             float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-            Log.d(Constants.LOG_TAG, String.valueOf(dpHeight));
-            Log.d(Constants.LOG_TAG, String.valueOf(dpWidth));
             int screenSize = getResources().getConfiguration().screenLayout &
                     Configuration.SCREENLAYOUT_SIZE_MASK;
             String toastMsg;
@@ -204,7 +202,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 default:
                     toastMsg = "Screen size is neither large, normal or small";
             }
-            Log.d(Constants.LOG_TAG, toastMsg);
+            toastMsg += " (dim="+String.valueOf(dpHeight)+"x"+String.valueOf(dpWidth)+")";
+            Log.v(Constants.LOG_TAG, toastMsg);
         }
     }
 
@@ -212,7 +211,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(Constants.LOG_TAG, "onResume - AppLandingActivity");
         scanForDevice(false);
     }
 
@@ -220,7 +218,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(Constants.LOG_TAG, "onDestroy - AppLandingActivity");
         scanForDevice(false);
     }
 
@@ -237,7 +234,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     @Override
     public void onFlutterConnected() {
-        Log.d(Constants.LOG_TAG, "onFlutterConnected");
+        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
     }
@@ -245,7 +242,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     @Override
     public void onFlutterDisconnected() {
-        Log.d(Constants.LOG_TAG, "onFlutterDisconnected");
+        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
         // TODO @tasota handle disconnected?
     }
 
