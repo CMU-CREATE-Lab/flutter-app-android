@@ -49,7 +49,7 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setTitle(getString(R.string.choose_sensor)).setView(view);
 
-        Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.session.flutter.getSensors();
+        Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
 
         // bind click listeners
         ImageView sensor1 = (ImageView) view.findViewById(R.id.image_sensor_1);
@@ -80,13 +80,13 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         Sensor sensor = new NoSensor(0);
         switch (view.getId()) {
             case R.id.image_sensor_1:
-                sensor = globalHandler.sessionHandler.session.flutter.getSensors()[0];
+                sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[0];
                 break;
             case R.id.image_sensor_2:
-                sensor = globalHandler.sessionHandler.session.flutter.getSensors()[1];
+                sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[1];
                 break;
             case R.id.image_sensor_3:
-                sensor = globalHandler.sessionHandler.session.flutter.getSensors()[2];
+                sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[2];
                 break;
 
         }

@@ -116,7 +116,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
         } else {
-            String flutterName = globalHandler.sessionHandler.session.flutter.getName();
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             if (flutterName != null && flutterName.length() > 0)
                 toolbar.setTitle(flutterName);
             else
@@ -124,7 +124,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             isPlayingSensors = true;
             setSupportActionBar(toolbar);
 
-            globalHandler.sessionHandler.session.flutterMessageListener = this;
+            globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
 
             // init views
             textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
@@ -134,7 +134,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
             progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
-            sensors = globalHandler.sessionHandler.session.flutter.getSensors();
+            sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
             startSensorReading();
             updateDynamicViews();
             updateStaticViews();
@@ -148,7 +148,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         if (globalHandler.melodySmartDeviceHandler.isConnected())
-            globalHandler.sessionHandler.session.flutterMessageListener = this;
+            globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
     }
 
 
@@ -242,7 +242,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
         // update references
         sensors[index] = sensor;
-        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.session.flutter.setSensors(sensors);
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().getFlutter().setSensors(sensors);
 
         selectedView.setImageResource(sensor.getBlueImageId());
         currentSensorType.setText(getString(sensor.getSensorTypeId()));

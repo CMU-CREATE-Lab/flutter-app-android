@@ -1,8 +1,10 @@
 package org.cmucreatelab.flutter_android.helpers;
 
+import android.app.Activity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -12,16 +14,13 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  *
  * Session Handler
  *
- * A class that handles your session (when you select a specific device on AppLandingActivity)
- * - connect
- * - disconnect
- * - message sending
+ * A class that handles your session after selecting a device on AppLandingActivity
  *
  */
 public class SessionHandler {
 
     private GlobalHandler globalHandler;
-    public Session session;
+    private Session session;
 
 
     public SessionHandler(GlobalHandler globalHandler) {
@@ -32,7 +31,19 @@ public class SessionHandler {
     public void startSession(AppLandingActivity activity, FlutterOG flutterOG) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
         this.session = new Session(activity,flutterOG,activity,null);
-        globalHandler.melodySmartDeviceHandler.connect(this.session);
+        globalHandler.melodySmartDeviceHandler.connect(this.getSession());
+    }
+
+
+    public void setCurrentActivity(BaseNavigationActivity activity) {
+        if (session != null) {
+            session.setCurrentActivity(activity);
+        }
+    }
+
+
+    public Session getSession() {
+        return session;
     }
 
 }

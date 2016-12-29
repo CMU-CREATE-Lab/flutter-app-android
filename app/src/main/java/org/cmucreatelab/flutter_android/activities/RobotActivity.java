@@ -200,7 +200,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
         } else {
-            FlutterOG flutter = globalHandler.sessionHandler.session.flutter;
+            FlutterOG flutter = globalHandler.sessionHandler.getSession().getFlutter();
             servos = flutter.getServos();
             triColorLeds = flutter.getTriColorLeds();
             speaker = flutter.getSpeaker();
@@ -221,7 +221,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            globalHandler.sessionHandler.session.flutterMessageListener = this;
+            globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
             updateLinkedViews();
         }
     }

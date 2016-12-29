@@ -12,8 +12,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by mike on 12/28/16.
+ *
+ * Uses MelodySmart's DataService to send messages. Messages are handled FIFO with a slight delay between sending.
  */
-
 public class MelodySmartMessageQueue {
 
     protected ConcurrentLinkedQueue<String> messages;

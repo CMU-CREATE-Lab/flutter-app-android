@@ -15,8 +15,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 12/28/16.
+ *
+ * Creates a MelodySmartListener instance using information from a Session.
+ *
  */
-
 public class MelodySmartDeviceListener implements MelodySmartListener {
 
     private Session session;
@@ -43,16 +45,16 @@ public class MelodySmartDeviceListener implements MelodySmartListener {
 
         // Check for errors
         if (bleError.getType() != BLEError.Type.NO_ERROR) {
-            session.currentActivity.runOnUiThread(new Runnable() {
+            session.getCurrentActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.currentActivity, R.style.AppTheme));
+                    AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.getCurrentActivity(), R.style.AppTheme));
                     adb.setMessage(bleError.getMessage());
                     adb.setTitle("Disconnected");
                     adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            session.flutterConnectListener.onFlutterDisconnected();
+                            session.getFlutterConnectListener().onFlutterDisconnected();
                         }
                     });
                     AlertDialog dialog = adb.create();
@@ -60,7 +62,7 @@ public class MelodySmartDeviceListener implements MelodySmartListener {
                 }
             });
         } else {
-            session.flutterConnectListener.onFlutterDisconnected();
+            session.getFlutterConnectListener().onFlutterDisconnected();
         }
     }
 

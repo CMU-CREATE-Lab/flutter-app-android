@@ -9,8 +9,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 12/28/16.
+ *
+ * Creates a DataService.Listener instance using information from a Session.
+ *
  */
-
 public class MelodySmartDataListener implements DataService.Listener {
 
     private Session mSession;
@@ -33,7 +35,7 @@ public class MelodySmartDataListener implements DataService.Listener {
         if (isFound) {
             parent.getDataService().enableNotifications(true);
         }
-        mSession.flutterConnectListener.onFlutterConnected();
+        mSession.getFlutterConnectListener().onFlutterConnected();
     }
 
 
@@ -41,7 +43,7 @@ public class MelodySmartDataListener implements DataService.Listener {
     public void onReceived(final byte[] bytes) {
         String response = new String(bytes);
         Log.v(Constants.LOG_TAG,"MelodySmartDataListener.onReceived="+response);
-        mSession.flutterMessageListener.onFlutterMessageReceived(response);
+        mSession.getFlutterMessageListener().onFlutterMessageReceived(response);
     }
 
 }

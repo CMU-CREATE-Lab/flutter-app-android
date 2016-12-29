@@ -10,6 +10,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import butterknife.OnClick;
@@ -37,6 +38,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(Constants.LOG_TAG, "onResume - " + getClass() );
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.setCurrentActivity(this);
     }
 
 

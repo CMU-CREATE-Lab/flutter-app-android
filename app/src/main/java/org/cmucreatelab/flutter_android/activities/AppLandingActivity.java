@@ -243,7 +243,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
-        // TODO @tasota handle disconnected?
+        Intent intent = new Intent(this, AppLandingActivity.class);
+        startActivity(intent);
     }
 
 }
