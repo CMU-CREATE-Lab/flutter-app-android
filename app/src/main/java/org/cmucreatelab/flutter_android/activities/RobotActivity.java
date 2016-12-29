@@ -209,10 +209,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             isSensorData = true;
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
+
+            startSensorReading();
+            updateStaticViews();
+            updateDynamicViews();
         }
-        startSensorReading();
-        updateStaticViews();
-        updateDynamicViews();
     }
 
 

@@ -66,6 +66,8 @@ public class MelodySmartDeviceHandler {
 
 
     public boolean isConnected() {
+        if (melodySmartDataListener == null || melodySmartDeviceListener == null)
+            return false;
         return melodySmartDataListener.serviceConnected && melodySmartDeviceListener.deviceConnected;
     }
 
