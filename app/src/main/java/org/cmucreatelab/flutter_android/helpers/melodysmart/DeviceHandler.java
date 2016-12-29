@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.helpers;
+package org.cmucreatelab.flutter_android.helpers.melodysmart;
 
 import android.bluetooth.BluetoothAdapter;
 
@@ -6,6 +6,9 @@ import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.melodysmart.listeners.DataListener;
+import org.cmucreatelab.flutter_android.helpers.melodysmart.listeners.DeviceListener;
 
 import java.util.ArrayList;
 
@@ -15,33 +18,32 @@ import java.util.ArrayList;
  * Handles interfacing with MelodySmart packages
  *
  */
-public class MelodySmartDeviceHandler {
+public class DeviceHandler {
 
     private GlobalHandler globalHandler;
     private MelodySmartDevice mMelodySmartDevice;
-    private MelodySmartDataListener melodySmartDataListener = null;
-    private MelodySmartDeviceListener melodySmartDeviceListener = null;
-
-    public MelodySmartMessageQueue messageQueue;
+    private DataListener dataListener = null;
+    private DeviceListener deviceListener = null;
+    private MessageQueue messageQueue;
 
 
     private void unregisterListeners() {
-        mMelodySmartDevice.unregisterListener(melodySmartDeviceListener);
-        mMelodySmartDevice.getDataService().unregisterListener(melodySmartDataListener);
+        mMelodySmartDevice.unregisterListener(deviceListener);
+        mMelodySmartDevice.getDataService().unregisterListener(dataListener);
     }
 
 
     private void registerListeners() {
-        mMelodySmartDevice.registerListener(melodySmartDeviceListener);
-        mMelodySmartDevice.getDataService().registerListener(melodySmartDataListener);
+        mMelodySmartDevice.registerListener(deviceListener);
+        mMelodySmartDevice.getDataService().registerListener(dataListener);
     }
 
 
-    public MelodySmartDeviceHandler(GlobalHandler globalHandler) {
+    public DeviceHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
         mMelodySmartDevice = MelodySmartDevice.getInstance();
         mMelodySmartDevice.init(globalHandler.appContext);
-        messageQueue = new MelodySmartMessageQueue(getDataService());
+        messageQueue = new MessageQueue(getDataService());
     }
 
 
@@ -72,9 +74,9 @@ public class MelodySmartDeviceHandler {
      * @return true if both the DataService listener and MelodySmart listeners exist and are still registered/connected.
      */
     public boolean isConnected() {
-        if (melodySmartDataListener == null || melodySmartDeviceListener == null)
+        if (dataListener == null || deviceListener == null)
             return false;
-        return melodySmartDataListener.serviceConnected && melodySmartDeviceListener.deviceConnected;
+        return dataListener.isServiceConnected() && deviceListener.isDeviceConnected();
     }
 
 
@@ -84,11 +86,11 @@ public class MelodySmartDeviceHandler {
      * @param session: used for listeners and to grab the Flutter's address.
      */
     public void connect(Session session) {
-        if (melodySmartDeviceListener != null || melodySmartDataListener != null) {
+        if (deviceListener != null || dataListener != null) {
             unregisterListeners();
         }
-        melodySmartDeviceListener = new MelodySmartDeviceListener(session);
-        melodySmartDataListener = new MelodySmartDataListener(session,this);
+        deviceListener = new DeviceListener(session);
+        dataListener = new DataListener(session,this);
 
         registerListeners();
         mMelodySmartDevice.connect(session.getFlutter().getDevice().getAddress());

@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.helpers;
+package org.cmucreatelab.flutter_android.helpers.melodysmart;
 
 import android.util.Log;
 
@@ -15,9 +15,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  *
  * Uses MelodySmart's DataService to send messages. Messages are handled FIFO with a slight delay between sending.
  */
-public class MelodySmartMessageQueue {
+class MessageQueue {
 
-    protected ConcurrentLinkedQueue<String> messages;
+    private ConcurrentLinkedQueue<String> messages;
     private DataService dataService;
     private Timer messageSendingTimer;
 
@@ -30,7 +30,7 @@ public class MelodySmartMessageQueue {
     private static final int TIMER_LENGTH_IN_MILLISECONDS = 300;
 
 
-    public MelodySmartMessageQueue(final DataService dataService) {
+    MessageQueue(final DataService dataService) {
         this.dataService = dataService;
         messages = new ConcurrentLinkedQueue<>();
         messageSendingTimer = new Timer(TIMER_LENGTH_IN_MILLISECONDS) {
@@ -38,7 +38,7 @@ public class MelodySmartMessageQueue {
             public void timerExpires() {
                 if (!messages.isEmpty()) {
                     String message = messages.poll();
-                    Log.v(Constants.LOG_TAG,"MelodySmartMessageQueue timerExpires: SEND: '"+message+"'");
+                    Log.v(Constants.LOG_TAG,"MessageQueue timerExpires: SEND: '"+message+"'");
                     dataService.send(message.getBytes());
                     startTimer();
                 }
@@ -50,14 +50,15 @@ public class MelodySmartMessageQueue {
     // message-sending
 
 
-    public void addMessage(String msg) {
+    void addMessage(String msg) {
         messages.add(msg);
         messageSendingTimer.startTimer();
     }
 
 
-    public void addMessages(ArrayList<String> msgs) {
+    void addMessages(ArrayList<String> msgs) {
         messages.addAll(msgs);
         messageSendingTimer.startTimer();
     }
+
 }

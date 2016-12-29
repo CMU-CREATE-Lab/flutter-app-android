@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.helpers;
+package org.cmucreatelab.flutter_android.helpers.melodysmart.listeners;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -19,13 +19,18 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  * Creates a MelodySmartListener instance using information from a Session.
  *
  */
-public class MelodySmartDeviceListener implements MelodySmartListener {
+public class DeviceListener implements MelodySmartListener {
 
     private Session session;
-    public boolean deviceConnected;
+    private boolean deviceConnected;
 
 
-    public MelodySmartDeviceListener(Session session) {
+    public boolean isDeviceConnected() {
+        return deviceConnected;
+    }
+
+
+    public DeviceListener(Session session) {
         this.session = session;
         deviceConnected = false;
     }
@@ -33,14 +38,14 @@ public class MelodySmartDeviceListener implements MelodySmartListener {
 
     @Override
     public void onDeviceConnected() {
-        Log.v(Constants.LOG_TAG, "MelodySmartDeviceListener.onDeviceConnected");
+        Log.v(Constants.LOG_TAG, "DeviceListener.onDeviceConnected");
         deviceConnected = true;
     }
 
 
     @Override
     public void onDeviceDisconnected(final BLEError bleError) {
-        Log.v(Constants.LOG_TAG, "MelodySmartDeviceListener.onDeviceDisconnected");
+        Log.v(Constants.LOG_TAG, "DeviceListener.onDeviceDisconnected");
         deviceConnected = false;
 
         // Check for errors
