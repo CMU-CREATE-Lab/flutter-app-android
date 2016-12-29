@@ -18,15 +18,8 @@ public class MessageConstructor {
 
 
     public static final String READ_SENSOR = "r";
-    public static final String REMOVE_ALL_LINKS = "X";
 
     private static final int sizeOfIntInHalfBytes = 2;
-    private static final int numberOfBitsInAHalfByte = 4;
-    private static final int halfByte = 0x0F;
-    private static final char[] hexDigits = {
-            '0', '1', '2', '3', '4', '5', '6', '7',
-            '8', '9', 'a', 'b', 'c', 'd', 'e', 'e'
-    };
 
     private static String decToHex(int dec) {
         StringBuilder hexBuilder = new StringBuilder(sizeOfIntInHalfBytes);

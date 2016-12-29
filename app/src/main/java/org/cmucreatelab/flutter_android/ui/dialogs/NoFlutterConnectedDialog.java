@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 
 /**
  * Created by Steve on 10/4/2016.
@@ -25,7 +26,8 @@ public class NoFlutterConnectedDialog extends DialogFragment {
 
     private static final String noFlutterKey = "NO_FLUTTER_KEY";
 
-    public static NoFlutterConnectedDialog newInstance(int description) {
+
+    private static NoFlutterConnectedDialog newInstance(int description) {
         NoFlutterConnectedDialog noFlutterConnectedDialog = new NoFlutterConnectedDialog();
 
         Bundle args = new Bundle();
@@ -58,6 +60,13 @@ public class NoFlutterConnectedDialog extends DialogFragment {
         text.setText(resourceId);
 
         return builder.create();
+    }
+
+
+    public static void displayDialog(BaseNavigationActivity activity, int description) {
+        NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(description);
+        noFlutterConnectedDialog.setCancelable(false);
+        noFlutterConnectedDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
 }

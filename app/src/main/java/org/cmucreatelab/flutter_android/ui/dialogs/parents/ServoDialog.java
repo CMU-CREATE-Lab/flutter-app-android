@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -103,7 +102,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Servo.SERVO_KEY, servo);
-        args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
         servoDialog.setArguments(args);
 
         return servoDialog;
@@ -119,7 +118,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         dialogFragment = this;
 
         servo = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-        dialogServoListener = (DialogServoListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
+        dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_servos, null);

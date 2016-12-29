@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.RobotActivity;
-import org.cmucreatelab.flutter_android.classes.outputs.RedLed;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -130,7 +128,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(TriColorLed.LED_KEY, led);
-        args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
         ledDialog.setArguments(args);
 
         return ledDialog;
@@ -146,7 +144,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         dialogFragment = this;
 
         triColorLed = (TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY);
-        dialogLedListener = (DialogLedListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
+        dialogLedListener = (DialogLedListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_leds, null);

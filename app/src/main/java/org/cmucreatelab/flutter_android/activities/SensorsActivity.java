@@ -11,14 +11,11 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
-
-import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,9 +28,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
-
-    public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener {
 
     // views
     private ImageView selectedView;
@@ -119,9 +114,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         toolbar.setContentInsetsAbsolute(0,0);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
-            noFlutterConnectedDialog.setCancelable(false);
-            noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
         } else {
             String flutterName = globalHandler.sessionHandler.session.flutter.getName();
             if (flutterName != null && flutterName.length() > 0)
@@ -165,59 +158,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onBackPressed();
         finish();
     }
-
-
-    @Override
-    public void onSensorTypeChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorTypeChosen");
-
-        // find the index of the sensor chosen
-        int index = -1;
-        int i = 0;
-        while(index == -1) {
-            if (currentSensor.equals(sensors[i])) {
-                index = i;
-            }
-            i++;
-        }
-
-        // update references
-        sensors[index] = sensor;
-        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.session.flutter.setSensors(sensors);
-
-        selectedView.setImageResource(sensor.getBlueImageId());
-        currentSensorType.setText(getString(sensor.getSensorTypeId()));
-
-        if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
-            currentHigh.setText(getString(sensor.getHighTextId()));
-            currentLow.setText(getString(sensor.getLowTextId()));
-        } else {
-            currentHigh.setText("");
-            currentLow.setText("");
-        }
-        updateDynamicViews();
-    }
-
-
-    @Override
-    public void onFlutterMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, output);
-        if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
-            sensors[0].setSensorReading(Integer.valueOf(sensor1));
-            sensors[1].setSensorReading(Integer.valueOf(sensor2));
-            sensors[2].setSensorReading(Integer.valueOf(sensor3));
-            updateDynamicViews();
-        }
-    }
-
-
-    // Button Events
 
 
     @OnClick(R.id.image_sensor_1)
@@ -280,6 +220,62 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_record)
     public void onClickRecordData() {
         Log.d(Constants.LOG_TAG, "onClickRecordData");
+    }
+
+
+    // SensorTypeDialog.DialogSensorTypeListener implementation
+
+
+    @Override
+    public void onSensorTypeChosen(Sensor sensor) {
+        Log.d(Constants.LOG_TAG, "onSensorTypeChosen");
+
+        // find the index of the sensor chosen
+        int index = -1;
+        int i = 0;
+        while(index == -1) {
+            if (currentSensor.equals(sensors[i])) {
+                index = i;
+            }
+            i++;
+        }
+
+        // update references
+        sensors[index] = sensor;
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.session.flutter.setSensors(sensors);
+
+        selectedView.setImageResource(sensor.getBlueImageId());
+        currentSensorType.setText(getString(sensor.getSensorTypeId()));
+
+        if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
+            currentHigh.setText(getString(sensor.getHighTextId()));
+            currentLow.setText(getString(sensor.getLowTextId()));
+        } else {
+            currentHigh.setText("");
+            currentLow.setText("");
+        }
+        updateDynamicViews();
+    }
+
+
+    // FlutterMessageListener implementation
+
+
+    @Override
+    public void onFlutterMessageReceived(String output) {
+        Log.d(Constants.LOG_TAG, output);
+        if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
+            output = output.substring(2, output.length());
+            String sensor1 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor2 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor3 = output;
+            sensors[0].setSensorReading(Integer.valueOf(sensor1));
+            sensors[1].setSensorReading(Integer.valueOf(sensor2));
+            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateDynamicViews();
+        }
     }
 
 }

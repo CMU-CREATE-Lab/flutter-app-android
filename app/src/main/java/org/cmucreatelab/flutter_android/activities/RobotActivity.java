@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -29,7 +28,6 @@ import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -37,13 +35,7 @@ import butterknife.OnClick;
 
 // TODO - make a message reconstruct class to determine what kind of message it is
 // TODO - then call the appropriate method depending on what kind of message was received
-public class RobotActivity extends BaseSensorReadingActivity implements Serializable, FlutterMessageListener,
-    ServoDialog.DialogServoListener,
-    LedDialog.DialogLedListener,
-    SpeakerDialog.DialogSpeakerListener {
-
-
-    public static final String SERIALIZABLE_KEY = "serializable_key";
+public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener {
 
     private Servo[] servos;
     private TriColorLed[] triColorLeds;
@@ -207,9 +199,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
         Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.melodySmartDeviceHandler.isConnected()));
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
-            noFlutterConnectedDialog.setCancelable(false);
-            noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
         } else {
             FlutterOG flutter = globalHandler.sessionHandler.session.flutter;
             servos = flutter.getServos();

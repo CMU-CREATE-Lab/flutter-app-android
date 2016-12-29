@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -118,7 +116,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Speaker.SPEAKER_KEY, speaker);
-        args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
         ledDialog.setArguments(args);
 
         return ledDialog;
@@ -135,7 +133,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         isVolume = true;
 
         speaker = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
+        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_speakers, null);
