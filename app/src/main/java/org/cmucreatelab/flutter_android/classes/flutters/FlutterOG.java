@@ -33,6 +33,8 @@ public class FlutterOG extends Flutter {
     private Speaker mSpeaker;
     private Sensor[] mSensors;
 
+    private String name;
+
 
     public FlutterOG(BluetoothDevice device, String name) {
         this.mDevice = device;
@@ -60,6 +62,7 @@ public class FlutterOG extends Flutter {
     public TriColorLed[] getTriColorLeds() { return mTriColorLeds; }
     public Speaker getSpeaker() { return mSpeaker; }
     public Sensor[] getSensors() { return mSensors; }
+    public String getName() { return name; }
 
     // setters
     public void setSensors(Sensor[] sensors) {
