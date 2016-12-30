@@ -36,7 +36,7 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/grey_question_mark"
+                    android:src="@drawable/question_icon"
                     android:visibility="visible"/>
 
                 <View
@@ -91,7 +91,7 @@
                     android:id="@+id/image_min_color"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:src="@drawable/grey_question_mark"
+                    android:src="@drawable/question_icon"
                     android:visibility="visible"/>
 
                 <View
