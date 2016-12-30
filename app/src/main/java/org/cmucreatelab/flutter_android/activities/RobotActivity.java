@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
@@ -37,16 +37,14 @@ import butterknife.OnClick;
 // TODO - then call the appropriate method depending on what kind of message was received
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener {
 
-    private Servo[] servos;
-    private TriColorLed[] triColorLeds;
-    private Speaker speaker;
-    private Sensor[] sensors;
-
-    private boolean isSensorData;
+    private Session session;
+    private boolean isUsingSensorData = true;
 
 
     private void updateStaticViews() {
+        Sensor[] sensors = session.getFlutter().getSensors();
         TextView sensorText;
+
         sensorText = (TextView) findViewById(R.id.text_sensor_1);
         sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
         sensorText.setText(sensors[0].getTypeTextId());
@@ -63,7 +61,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Sensor[] sensors = session.getFlutter().getSensors();
                 TextView sensorReadingText;
+
                 if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
                     sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                     sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
@@ -83,6 +83,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void updateLinkedViews() {
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
+        Servo[] servos = session.getFlutter().getServos();
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+        Speaker speaker = session.getFlutter().getSpeaker();
+
         // servos link check
         for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
             Output[] outputs = new Output[7];
@@ -156,7 +160,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Sensor[] sensors = session.getFlutter().getSensors();
                     TextView sensorReadingText;
+
                     if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                         sensorReadingText.setText(String.valueOf(i) + "%");
@@ -200,16 +206,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
         } else {
-            FlutterOG flutter = globalHandler.sessionHandler.getSession().getFlutter();
-            servos = flutter.getServos();
-            triColorLeds = flutter.getTriColorLeds();
-            speaker = flutter.getSpeaker();
-            sensors = flutter.getSensors();
-            isSensorData = true;
+            this.session = globalHandler.sessionHandler.getSession();
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
-            startSensorReading();
             updateStaticViews();
             updateDynamicViews();
         }
@@ -221,8 +221,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
+            this.session.setFlutterMessageListener(this);
             updateLinkedViews();
+            if (isUsingSensorData) startSensorReading();
         }
     }
 
@@ -261,6 +262,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -276,6 +279,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -291,6 +296,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -306,6 +313,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -321,6 +330,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -336,6 +347,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -351,6 +364,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
+        Speaker speaker = session.getFlutter().getSpeaker();
+
         SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -367,7 +382,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @OnClick(R.id.button_sensor_data)
     public void onClickSensorData() {
         Log.d(Constants.LOG_TAG, "onClickSensorData");
-        if (!isSensorData) {
+        if (!isUsingSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
             sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
             sensorData.setTextColor(Color.WHITE);
@@ -376,7 +391,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
             simulateData.setTextColor(Color.GRAY);
 
-            isSensorData = true;
+            isUsingSensorData = true;
             startSensorReading();
 
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
@@ -388,7 +403,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @OnClick(R.id.button_simulate_data)
     public void onClickSimulateData() {
         Log.d(Constants.LOG_TAG, "onClickSimulateData");
-        if (isSensorData) {
+        if (isUsingSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
             sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
             sensorData.setTextColor(Color.GRAY);
@@ -397,7 +412,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
             simulateData.setTextColor(Color.WHITE);
 
-            isSensorData = false;
+            isUsingSensorData = false;
             stopSensorReading();
 
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
@@ -412,6 +427,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     @Override
     public void onFlutterMessageReceived(String output) {
+        Sensor[] sensors = session.getFlutter().getSensors();
+
         if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
             output = output.substring(2, output.length());
             String sensor1 = output.substring(0, output.indexOf(','));
