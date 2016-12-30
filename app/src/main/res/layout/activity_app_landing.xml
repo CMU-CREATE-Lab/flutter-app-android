@@ -26,7 +26,8 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/text_app_landing_title"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_marginTop="50dp">
 
         <include layout="@layout/content_scan"/>
 
@@ -39,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/fluttersearchgraphic"/>
-    
+
     <Button
         android:id="@+id/button_scan"
         android:layout_width="wrap_content"
