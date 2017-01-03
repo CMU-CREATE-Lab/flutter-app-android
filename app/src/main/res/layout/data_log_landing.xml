@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="450dp"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:visibility="visible">
 
     <TextView
         android:layout_width="match_parent"
@@ -24,12 +25,15 @@
         android:background="@color/orange"/>
 
     <RelativeLayout
+        android:id="@+id/relative_flutter_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/text_current_log_name"

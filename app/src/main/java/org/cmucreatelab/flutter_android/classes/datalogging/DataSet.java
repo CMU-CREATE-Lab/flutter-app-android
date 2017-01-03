@@ -1,10 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.datalogging;
 
-import com.opencsv.CSVReader;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,8 +39,8 @@ public class DataSet {
 
     // TODO - We may want this somewhere since you can send data logs via email.
     // Used to import a csv into the app someway
-    public void loadFromFile(File file) throws IOException {
-        /*CSVReader csvReader = new CSVReader(new FileReader(file.getPath()));
+    /*public void loadFromFile(File file) throws IOException {
+        CSVReader csvReader = new CSVReader(new FileReader(file.getPath()));
         ArrayList<String[]> list = (ArrayList<String[]>) csvReader.readAll();
         csvReader.close();
 
@@ -59,7 +54,7 @@ public class DataSet {
             dataPoints.add(new DataPoint(Integer.valueOf(array[1])));
             previousArray = array;
         }
-        table.put(previousArray[0], dataPoints);*/
-    }
+        table.put(previousArray[0], dataPoints);
+    }*/
 
 }

@@ -36,7 +36,6 @@ public class DataLoggingHandler implements FlutterMessageListener{
     private int remainingPoints;
     private boolean isLogging;
     private boolean isSending;
-    private ArrayList<String> listMessages;
 
     private ArrayList<String> keys;
     private String dataName;
