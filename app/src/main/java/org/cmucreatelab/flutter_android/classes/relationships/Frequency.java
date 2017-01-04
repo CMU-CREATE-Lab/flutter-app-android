@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 public class Frequency implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.FREQUENCY;
+    private static final int relationshipTypeId = R.string.frequency;
     private static final int greenImageIdLg = R.drawable.relationship_green_frequency_l_g_68;
     private static final int greenImageIdMd = R.drawable.relationship_green_frequency_m_d_56;
     private static final int greyImageIdSm = R.drawable.relationship_grey_frequency_s_m_20;
@@ -22,6 +23,12 @@ public class Frequency implements Relationship {
     @Override
     public Type getRelationshipType() {
         return relationshipType;
+    }
+
+
+    @Override
+    public int getRelationshipTypeId() {
+        return relationshipTypeId;
     }
 
 

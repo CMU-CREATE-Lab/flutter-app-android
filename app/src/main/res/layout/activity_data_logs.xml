@@ -65,7 +65,17 @@
 
     </RelativeLayout>
 
-    <include android:id="@+id/include_open_log"
-        layout="@layout/data_log_landing"/>
+    <include android:id="@+id/include_data_log_landing"
+        layout="@layout/data_log_landing" />
+
+    <ProgressBar
+        android:id="@+id/progress_load_data_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <include android:id="@+id/include_data_log_selected"
+        layout="@layout/data_log_selected"/>
 
 </RelativeLayout>

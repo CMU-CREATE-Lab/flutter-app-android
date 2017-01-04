@@ -14,6 +14,7 @@ public class Switch implements Relationship {
 
 
     private static final Relationship.Type relationshipType = Type.SWITCH;
+    private static final int relationshipTypeId = R.string.switch_relationship;
     private static final int greenImageIdLg = R.drawable.relationship_green_switch_l_g_68;
     private static final int greenImageIdMd = R.drawable.relationship_green_switch_m_d_56;
     private static final int greyImageIdSm = R.drawable.relationship_grey_switch_s_m_20;
@@ -22,6 +23,12 @@ public class Switch implements Relationship {
     @Override
     public Type getRelationshipType() {
         return relationshipType;
+    }
+
+
+    @Override
+    public int getRelationshipTypeId() {
+        return relationshipTypeId;
     }
 
 

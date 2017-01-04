@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.helpers;
 import android.content.Context;
 
 import org.cmucreatelab.flutter_android.helpers.melodysmart.DeviceHandler;
+import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -17,6 +18,8 @@ public class GlobalHandler {
     public Context appContext;
     public SessionHandler sessionHandler;
     public DeviceHandler melodySmartDeviceHandler;
+    public EmailHandler emailHandler;
+    public DataLoggingHandler dataLoggingHandler;
 
 
     // Singleton Implementation
@@ -37,6 +40,8 @@ public class GlobalHandler {
         this.appContext = context;
         this.sessionHandler = new SessionHandler(this);
         this.melodySmartDeviceHandler = new DeviceHandler(this);
+        this.emailHandler = new EmailHandler();
+        this.dataLoggingHandler = new DataLoggingHandler(appContext);
     }
 
 }
