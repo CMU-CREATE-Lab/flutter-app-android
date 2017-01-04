@@ -15,13 +15,15 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="15dp"/>
-    
+
     <TextView
         android:id="@+id/text_current_device_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:background="@color/orange"/>
 
     <RelativeLayout
@@ -33,7 +35,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:clickable="true"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="?android:attr/selectableItemBackground"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/text_current_log_name"
@@ -71,6 +74,8 @@
         android:text="@string/saved_on_device"
         android:textColor="@color/white"
         android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:background="@color/orange"/>
 
     <ListView

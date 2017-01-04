@@ -57,8 +57,11 @@ public class DataLogsActivity extends BaseNavigationActivity {
         TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
 
         logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
-        textLogName.setText(dataSetOnFlutter.getDataName());
-        textLogPoints.setText(String.valueOf(dataSetOnFlutter.getData().size()));
+        if (dataSetOnFlutter != null) {
+            findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
+            textLogName.setText(dataSetOnFlutter.getDataName());
+            textLogPoints.setText(String.valueOf(dataSetOnFlutter.getData().size()));
+        }
 
         ListView list = (ListView) findViewById(R.id.list_data_logs);
         list.setAdapter(dataLogListAdapter);

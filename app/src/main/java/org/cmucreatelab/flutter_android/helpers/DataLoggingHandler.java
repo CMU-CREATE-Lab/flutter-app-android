@@ -83,6 +83,7 @@ public class DataLoggingHandler implements FlutterMessageListener{
 
 
     private void readNumberOfPoints(String output) {
+        output = "P,0,0,0";
         String temp = output.substring(2, output.length());
 
         // number of points
@@ -106,7 +107,12 @@ public class DataLoggingHandler implements FlutterMessageListener{
         for (int i = 0; i < numberOfPoints; i++) {
             messages[i] = READ_POINT + "," + i;
         }
-        messageSender.execute(messages);
+
+        if (numberOfPoints > 0) {
+            messageSender.execute(messages);
+        } else {
+            dataSetListener.onDataSetDetailsPopulated(null);
+        }
     }
 
 
