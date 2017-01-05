@@ -21,6 +21,12 @@ public class BlueLed extends A_Output{
 
 
     @Override
+    public String getProtocolString() {
+        return TYPE+getPortNumber();
+    }
+
+
+    @Override
     public Type getOutputType() {
         return outputType;
     }

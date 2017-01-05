@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
@@ -26,7 +27,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
             @Override
             public void run() {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-                globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.READ_SENSOR);
+                globalHandler.melodySmartDeviceHandler.addMessage(String.valueOf(FlutterProtocol.Commands.READ_SENSOR_VALUES));
             }
         };
         timer = new Timer();

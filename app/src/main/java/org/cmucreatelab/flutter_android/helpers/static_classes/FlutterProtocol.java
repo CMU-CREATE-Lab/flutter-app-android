@@ -11,17 +11,17 @@ package org.cmucreatelab.flutter_android.helpers.static_classes;
 public final class FlutterProtocol {
 
     public final class InputTypes {
-        public static final int NOT_SET = 255;
-        public static final int LIGHT = 0;
-        public static final int SOIL = 1;
-        public static final int SOUND = 2;
-        public static final int DISTANCE = 3;
-        public static final int TEMPERATURE = 4;
+        public static final short NOT_SET = 255;
+        public static final short LIGHT = 0;
+        public static final short SOIL = 1;
+        public static final short SOUND = 2;
+        public static final short DISTANCE = 3;
+        public static final short TEMPERATURE = 4;
         // **please add more**
     }
 
     public final class Commands {
-        public static final char READ_VALUES = 'r';
+        public static final char READ_SENSOR_VALUES = 'r';
         public static final char SET_OUTPUT = 's';
         public static final char REMOVE_RELATION = 'x';
         public static final char REMOVE_ALL_RELATIONS = 'X';
