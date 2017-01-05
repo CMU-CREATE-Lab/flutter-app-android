@@ -21,26 +21,6 @@ public class MessageConstructor {
 
 
     public static final String READ_SENSOR = "r";
-    public static final String REMOVE_ALL_LINKS = "X";
-
-    private static final int sizeOfIntInHalfBytes = 2;
-    private static final int numberOfBitsInAHalfByte = 4;
-    private static final int halfByte = 0x0F;
-    private static final char[] hexDigits = {
-            '0', '1', '2', '3', '4', '5', '6', '7',
-            '8', '9', 'a', 'b', 'c', 'd', 'e', 'e'
-    };
-
-    private static String decToHex(int dec) {
-        StringBuilder hexBuilder = new StringBuilder(sizeOfIntInHalfBytes);
-
-        hexBuilder.append(Integer.toHexString(dec));
-        if (hexBuilder.length() > 2) {
-            hexBuilder.replace(1,2,"");
-        }
-
-        return hexBuilder.toString();
-    }
 
 
     public static String getRemoveLinkMessage(Output output) {
@@ -64,14 +44,10 @@ public class MessageConstructor {
         }
 
         Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
-        String inputMax = decToHex(settings.getAdvancedSettings().getInputMax());
-        String inputMin = decToHex(settings.getAdvancedSettings().getInputMin());
-        String outputMax = decToHex(settings.getOutputMax());
-        String outputMin = decToHex(settings.getOutputMin());
-        Log.d(Constants.LOG_TAG, outputMax);
-        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMax()));
-        Log.d(Constants.LOG_TAG, outputMin);
-        Log.d(Constants.LOG_TAG, String.valueOf(settings.getOutputMin()));
+        String inputMax = Integer.toHexString(settings.getAdvancedSettings().getInputMax());
+        String inputMin = Integer.toHexString(settings.getAdvancedSettings().getInputMin());
+        String outputMax = Integer.toHexString(settings.getOutputMax());
+        String outputMin = Integer.toHexString(settings.getOutputMin());
 
         switch (relationshipType) {
             case AMPLITUDE:

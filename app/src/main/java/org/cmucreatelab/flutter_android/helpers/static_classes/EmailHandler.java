@@ -1,10 +1,8 @@
-package org.cmucreatelab.flutter_android.helpers;
+package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.File;
 
@@ -18,15 +16,8 @@ import java.io.File;
  */
 public class EmailHandler {
 
-    private File currentDataLog;
 
-
-    public EmailHandler() {
-        this.currentDataLog = null;
-    }
-
-
-    public void sendEmail(Activity activity, String email, String message) {
+    public static void sendEmail(Activity activity, String email, String message, File currentDataLog) {
         if (currentDataLog != null) {
             Intent i = new Intent(Intent.ACTION_SENDTO);
             i.setData(Uri.parse("mailto: " + email));
@@ -39,11 +30,6 @@ public class EmailHandler {
         } else {
             // TODO - alert user to select a data log
         }
-    }
-
-
-    public void setCurrentDataLog(File file) {
-        this.currentDataLog = file;
     }
 
 }

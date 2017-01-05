@@ -39,6 +39,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     private Speaker mSpeaker;
     private Sensor[] mSensors;
 
+    private String name;
     private DataSet mDataSet;
     private DataSetListener listener;
 
@@ -86,6 +87,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     public TriColorLed[] getTriColorLeds() { return mTriColorLeds; }
     public Speaker getSpeaker() { return mSpeaker; }
     public Sensor[] getSensors() { return mSensors; }
+    public String getName() { return name; }
     public DataSet getDataSet() { return mDataSet; }
 
     // setters

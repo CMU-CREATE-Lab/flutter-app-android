@@ -39,77 +39,77 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
             case 0:
                 currentNote.setText("C");
                 sheetMusic.setImageResource(R.drawable.c1);
-                result = Constants.C_4;
+                result = Constants.MusicNoteFrequencies.C_4;
                 break;
             case 1:
                 currentNote.setText("D");
                 sheetMusic.setImageResource(R.drawable.d1);
-                result = Constants.D_4;
+                result = Constants.MusicNoteFrequencies.D_4;
                 break;
             case 2:
                 currentNote.setText("E");
                 sheetMusic.setImageResource(R.drawable.e1);
-                result = Constants.E_4;
+                result = Constants.MusicNoteFrequencies.E_4;
                 break;
             case 3:
                 currentNote.setText("F");
                 sheetMusic.setImageResource(R.drawable.g1);
-                result = Constants.F_4;
+                result = Constants.MusicNoteFrequencies.F_4;
                 break;
             case 4:
                 currentNote.setText("G");
                 sheetMusic.setImageResource(R.drawable.g1);
-                result = Constants.G_4;
+                result = Constants.MusicNoteFrequencies.G_4;
                 break;
             case 5:
                 currentNote.setText("A");
                 sheetMusic.setImageResource(R.drawable.a1);
-                result = Constants.A_4;
+                result = Constants.MusicNoteFrequencies.A_4;
                 break;
             case 6:
                 currentNote.setText("B");
                 sheetMusic.setImageResource(R.drawable.b1);
-                result = Constants.B_4;
+                result = Constants.MusicNoteFrequencies.B_4;
                 break;
             case 7:
                 currentNote.setText("C");
                 sheetMusic.setImageResource(R.drawable.c2);
-                result = Constants.C_5;
+                result = Constants.MusicNoteFrequencies.C_5;
                 break;
             case 8:
                 currentNote.setText("D");
                 sheetMusic.setImageResource(R.drawable.e2);
-                result = Constants.D_5;
+                result = Constants.MusicNoteFrequencies.D_5;
                 break;
             case 9:
                 currentNote.setText("E");
                 sheetMusic.setImageResource(R.drawable.e2);
-                result = Constants.E_5;
+                result = Constants.MusicNoteFrequencies.E_5;
                 break;
             case 10:
                 currentNote.setText("F");
                 sheetMusic.setImageResource(R.drawable.f2);
-                result = Constants.F_5;
+                result = Constants.MusicNoteFrequencies.F_5;
                 break;
             case 11:
                 currentNote.setText("G");
                 sheetMusic.setImageResource(R.drawable.g2);
-                result = Constants.G_5;
+                result = Constants.MusicNoteFrequencies.G_5;
                 break;
             case 12:
                 currentNote.setText("A");
                 sheetMusic.setImageResource(R.drawable.a2);
-                result = Constants.A_5;
+                result = Constants.MusicNoteFrequencies.A_5;
                 break;
             case 13:
                 currentNote.setText("B");
                 sheetMusic.setImageResource(R.drawable.b2);
-                result = Constants.B_5;
+                result = Constants.MusicNoteFrequencies.B_5;
                 break;
             case 14:
                 currentNote.setText("C");
                 sheetMusic.setImageResource(R.drawable.c3);
-                result = Constants.C_6;
+                result = Constants.MusicNoteFrequencies.C_6;
                 break;
         }
 
@@ -120,7 +120,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            Log.v(Constants.LOG_TAG, "onProgressChanged");
             finalPitch = getFrequency(i);
             currentPitch.setText(String.valueOf(finalPitch) + " " + getString(R.string.hz));
         }

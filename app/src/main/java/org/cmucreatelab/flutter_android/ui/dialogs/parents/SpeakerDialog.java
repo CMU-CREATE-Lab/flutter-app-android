@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,9 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -77,6 +76,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     private Settings volumeSettings;
     private Speaker speaker;
 
+//    private enum CurrentTab {
+//        VOLUME, PITCH
+//    }
+//    private CurrentTab currentTab;
+
 
     private void updateViews(View view) {
         pitchSettings = speaker.getPitch().getSettings();
@@ -118,7 +122,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Speaker.SPEAKER_KEY, speaker);
-        args.putSerializable(RobotActivity.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
         ledDialog.setArguments(args);
 
         return ledDialog;
@@ -135,7 +139,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         isVolume = true;
 
         speaker = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(RobotActivity.SERIALIZABLE_KEY);
+        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_speakers, null);
@@ -154,6 +158,14 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_settings);
+
+        // set attributes so we can manipulate in the click events
+        // TODO @tasota lots of these attributes need to be refactored
+        ViewGroup view2 = (ViewGroup) view.findViewById(R.id.linear_set_linked_sensor);
+        currentImageView = (ImageView) ((ViewGroup) view2).getChildAt(0);
+        View layout = ((ViewGroup) view2).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
 
         return builder.create();
     }
@@ -189,7 +201,6 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     public void onClickRemoveLink() {
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
         ArrayList<String> msgs = new ArrayList<>();
-        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
         msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
         speaker.getPitch().setIsLinked(false, speaker.getPitch());
@@ -213,6 +224,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             buttonPitch.setTextColor(Color.GRAY);
             relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
+            // update the dislpayed sensors
+            Sensor volumeSensor = volumeSettings.getSensor();
+            currentImageView.setImageResource(volumeSensor.getGreenImageId());
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(volumeSensor.getSensorType().toString());
             isVolume = true;
         }
     }
@@ -228,6 +244,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             buttonPitch.setTextColor(Color.WHITE);
             relativePitch.setVisibility(View.VISIBLE);
             relativeVolume.setVisibility(View.GONE);
+            // update the dislpayed sensors
+            Sensor pitchSensor = pitchSettings.getSensor();
+            currentImageView.setImageResource(pitchSensor.getGreenImageId());
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(pitchSensor.getSensorType().toString());
             isVolume = false;
         }
     }
@@ -323,8 +344,19 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorType().toString());
-            volumeSettings.setSensor(sensor);
-            pitchSettings.setSensor(sensor);
+            // set sensor for the proper tab
+            if (isVolume) {
+                volumeSettings.setSensor(sensor);
+            } else {
+                pitchSettings.setSensor(sensor);
+            }
+            // set a sensor by default
+            if (volumeSettings.getSensor().getClass() == NoSensor.class) {
+                volumeSettings.setSensor(sensor);
+            }
+            if (pitchSettings.getSensor().getClass() == NoSensor.class) {
+                pitchSettings.setSensor(sensor);
+            }
             saveButton.setEnabled(true);
         }
     }

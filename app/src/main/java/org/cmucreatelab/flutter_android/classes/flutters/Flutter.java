@@ -13,14 +13,9 @@ import android.bluetooth.BluetoothDevice;
 public abstract class Flutter {
 
     protected BluetoothDevice mDevice;
-    protected String name;
-
 
     public BluetoothDevice getDevice() {
         return mDevice;
-    }
-    public String getName() {
-        return name;
     }
 
 }

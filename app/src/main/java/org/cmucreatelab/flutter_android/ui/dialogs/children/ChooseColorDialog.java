@@ -135,7 +135,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
     protected SeekBar.OnSeekBarChangeListener hueSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean bool) {
-            Log.d(Constants.LOG_TAG, "onHueChanged");
+            Log.v(Constants.LOG_TAG, "onHueChanged");
             h = i;
             updateColor();
 
@@ -166,7 +166,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
     protected SeekBar.OnSeekBarChangeListener saturationSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onSaturationChanged");
+            Log.v(Constants.LOG_TAG, "onSaturationChanged");
             s = 99 - i;
             updateColor();
         }
@@ -186,7 +186,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
     protected SeekBar.OnSeekBarChangeListener valueSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onLightnessChanged");
+            Log.v(Constants.LOG_TAG, "onProgressChanged");
             v = i;
             updateColor();
         }

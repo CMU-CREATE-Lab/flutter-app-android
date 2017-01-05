@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,8 +42,7 @@ public class DataLogsActivity extends BaseNavigationActivity {
         setContentView(R.layout.activity_data_logs);
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
-
-        flutter = globalHandler.sessionHandler.getFlutter();
+        flutter = globalHandler.sessionHandler.getSession().getFlutter();
         dataSetOnFlutter = flutter.getDataSet();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);

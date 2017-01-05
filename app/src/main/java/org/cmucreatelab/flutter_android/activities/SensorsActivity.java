@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
-
-import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,9 +29,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, FlutterMessageListener, Serializable {
-
-    public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener {
 
     // views
     private ImageView selectedView;
@@ -46,16 +43,16 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     private ProgressBar progress2;
     private ProgressBar progress3;
 
-    private Sensor[] sensors;
-    private Sensor currentSensor;
-
-    private boolean isPlayingSensors;
+    private Session session;
+    private boolean isPlayingSensors = true;
 
 
     private void updateDynamicViews() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Sensor[] sensors = session.getFlutter().getSensors();
+
                 textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
                 progress1.setProgress(sensors[0].getSensorReading());
                 textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
@@ -69,6 +66,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     private void updateStaticViews() {
+        Sensor[] sensors = session.getFlutter().getSensors();
+
         if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
             selectedView = (ImageView) findViewById(R.id.image_sensor_1);
             currentHigh = (TextView) findViewById(R.id.text_high_1);
@@ -96,10 +95,27 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     private void updateStaticByIndex(int index) {
+        Sensor[] sensors = session.getFlutter().getSensors();
+
         selectedView.setImageResource(sensors[index].getBlueImageId());
         currentHigh.setText(sensors[index].getHighTextId());
         currentLow.setText(sensors[index].getLowTextId());
         currentSensorType.setText(sensors[index].getSensorTypeId());
+    }
+
+
+    // after pause/resume, determine if we should start sensor readings via 'isPlayingSensors' flag
+    private void handleSensorReadingState() {
+        Button button = (Button) findViewById(R.id.button_play_pause);
+        if (isPlayingSensors) {
+            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
+            button.setText(R.string.pause_sensors);
+            startSensorReading();
+        } else {
+            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
+            button.setText(R.string.play_sensors);
+            stopSensorReading();
+        }
     }
 
 
@@ -111,25 +127,26 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors);
         ButterKnife.bind(this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
+        // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_sensor));
         toolbar.setContentInsetsAbsolute(0,0);
+        setSupportActionBar(toolbar);
 
-        if (!globalHandler.sessionHandler.isBluetoothConnected) {
-            NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_sensor);
-            noFlutterConnectedDialog.setCancelable(false);
-            noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
         } else {
-            String flutterName = globalHandler.sessionHandler.getFlutterName();
+            this.session = globalHandler.sessionHandler.getSession();
+            session.setFlutterMessageListener(this);
+
+            // set title
+            String flutterName = session.getFlutter().getName();
             if (flutterName != null && flutterName.length() > 0)
                 toolbar.setTitle(flutterName);
             else
                 toolbar.setTitle(R.string.unknown_device);
-            isPlayingSensors = true;
-            setSupportActionBar(toolbar);
-
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
 
             // init views
             textSensor1Reading = (TextView) findViewById(R.id.text_sensor_1_reading);
@@ -139,8 +156,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
             progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
-            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
-            startSensorReading();
             updateDynamicViews();
             updateStaticViews();
         }
@@ -150,77 +165,27 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @Override
     protected void onResume() {
         super.onResume();
-        if (globalHandler.sessionHandler.isBluetoothConnected)
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            session.setFlutterMessageListener(this);
+            handleSensorReadingState();
+        }
     }
 
 
     @Override
     public void onBackPressed() {
-        globalHandler.sessionHandler.release();
+        GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.disconnect();
         super.onBackPressed();
         finish();
     }
-
-
-    @Override
-    public void onSensorTypeChosen(Sensor sensor) {
-        Log.d(Constants.LOG_TAG, "onSensorTypeChosen");
-
-        // find the index of the sensor chosen
-        int index = -1;
-        int i = 0;
-        while(index == -1) {
-            if (currentSensor.equals(sensors[i])) {
-                index = i;
-            }
-            i++;
-        }
-
-        // update references
-        sensors[index] = sensor;
-        globalHandler.sessionHandler.getFlutter().setSensors(sensors);
-
-        selectedView.setImageResource(sensor.getBlueImageId());
-        currentSensorType.setText(getString(sensor.getSensorTypeId()));
-
-        if (sensors[index].getSensorType() != Sensor.Type.NO_SENSOR) {
-            currentHigh.setText(getString(sensor.getHighTextId()));
-            currentLow.setText(getString(sensor.getLowTextId()));
-        } else {
-            currentHigh.setText("");
-            currentLow.setText("");
-        }
-        updateDynamicViews();
-    }
-
-
-    @Override
-    public void onMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, output);
-        if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
-            sensors[0].setSensorReading(Integer.valueOf(sensor1));
-            sensors[1].setSensorReading(Integer.valueOf(sensor2));
-            sensors[2].setSensorReading(Integer.valueOf(sensor3));
-            updateDynamicViews();
-        }
-    }
-
-
-    // Button Events
 
 
     @OnClick(R.id.image_sensor_1)
     public void onClickSensor1() {
         Log.d(Constants.LOG_TAG, "onClickSensor1");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
-        currentSensor = sensors[0];
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
@@ -233,7 +198,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
-        currentSensor = sensors[1];
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
@@ -246,7 +210,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     public void onClickSensor3() {
         Log.d(Constants.LOG_TAG, "onClickSensor3");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
-        currentSensor = sensors[2];
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
@@ -258,24 +221,62 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_play_pause)
     public void onClickPlayPause() {
         Log.d(Constants.LOG_TAG, "onClickPlayPause");
-        Button button = (Button) findViewById(R.id.button_play_pause);
-        if (isPlayingSensors) {
-            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
-            button.setText(R.string.play_sensors);
-            isPlayingSensors = false;
-            stopSensorReading();
-        } else {
-            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
-            button.setText(R.string.pause_sensors);
-            isPlayingSensors = true;
-            startSensorReading();
-        }
+        isPlayingSensors = !isPlayingSensors;
+        handleSensorReadingState();
     }
 
 
     @OnClick(R.id.button_record)
     public void onClickRecordData() {
         Log.d(Constants.LOG_TAG, "onClickRecordData");
+    }
+
+
+    // SensorTypeDialog.DialogSensorTypeListener implementation
+
+
+    @Override
+    public void onSensorTypeChosen(Sensor sensor) {
+        int portNumber = sensor.getPortNumber();
+        Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
+        Sensor[] sensors = session.getFlutter().getSensors();
+
+        // update references
+        sensors[portNumber-1] = sensor;
+
+        selectedView.setImageResource(sensor.getBlueImageId());
+        currentSensorType.setText(getString(sensor.getSensorTypeId()));
+
+        if (sensors[portNumber-1].getSensorType() != Sensor.Type.NO_SENSOR) {
+            currentHigh.setText(getString(sensor.getHighTextId()));
+            currentLow.setText(getString(sensor.getLowTextId()));
+        } else {
+            currentHigh.setText("");
+            currentLow.setText("");
+        }
+        updateDynamicViews();
+    }
+
+
+    // FlutterMessageListener implementation
+
+
+    @Override
+    public void onFlutterMessageReceived(String output) {
+        Sensor[] sensors = session.getFlutter().getSensors();
+
+        if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
+            output = output.substring(2, output.length());
+            String sensor1 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor2 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor3 = output;
+            sensors[0].setSensorReading(Integer.valueOf(sensor1));
+            sensors[1].setSensorReading(Integer.valueOf(sensor2));
+            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateDynamicViews();
+        }
     }
 
 }

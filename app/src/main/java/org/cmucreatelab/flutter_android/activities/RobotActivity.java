@@ -15,19 +15,19 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -35,24 +35,16 @@ import butterknife.OnClick;
 
 // TODO - make a message reconstruct class to determine what kind of message it is
 // TODO - then call the appropriate method depending on what kind of message was received
-public class RobotActivity extends BaseSensorReadingActivity implements Serializable, FlutterMessageListener,
-    ServoDialog.DialogServoListener,
-    LedDialog.DialogLedListener,
-    SpeakerDialog.DialogSpeakerListener {
+public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener {
 
-
-    public static final String SERIALIZABLE_KEY = "serializable_key";
-
-    private Servo[] servos;
-    private TriColorLed[] triColorLeds;
-    private Speaker speaker;
-    private Sensor[] sensors;
-
-    private boolean isSensorData;
+    private Session session;
+    private boolean isUsingSensorData = true;
 
 
     private void updateStaticViews() {
+        Sensor[] sensors = session.getFlutter().getSensors();
         TextView sensorText;
+
         sensorText = (TextView) findViewById(R.id.text_sensor_1);
         sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
         sensorText.setText(sensors[0].getTypeTextId());
@@ -69,7 +61,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Sensor[] sensors = session.getFlutter().getSensors();
                 TextView sensorReadingText;
+
                 if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
                     sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                     sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
@@ -89,6 +83,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void updateLinkedViews() {
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
+        Servo[] servos = session.getFlutter().getServos();
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+        Speaker speaker = session.getFlutter().getSpeaker();
+
         // servos link check
         for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
             Output[] outputs = new Output[7];
@@ -162,7 +160,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Sensor[] sensors = session.getFlutter().getSensors();
                     TextView sensorReadingText;
+
                     if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                         sensorReadingText.setText(String.valueOf(i) + "%");
@@ -196,85 +196,64 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
         ButterKnife.bind(this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_robot));
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
-        Log.d(Constants.LOG_TAG, String.valueOf(globalHandler.sessionHandler.isBluetoothConnected));
-        if (!globalHandler.sessionHandler.isBluetoothConnected) {
-            NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_robot);
-            noFlutterConnectedDialog.setCancelable(false);
-            noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
         } else {
-            servos = globalHandler.sessionHandler.getFlutter().getServos();
-            triColorLeds = globalHandler.sessionHandler.getFlutter().getTriColorLeds();
-            speaker = globalHandler.sessionHandler.getFlutter().getSpeaker();
-            sensors = globalHandler.sessionHandler.getFlutter().getSensors();
-            isSensorData = true;
+            this.session = globalHandler.sessionHandler.getSession();
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
-        }
-        startSensorReading();
-        updateStaticViews();
-        updateDynamicViews();
-    }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (globalHandler.sessionHandler.isBluetoothConnected) {
-            globalHandler.sessionHandler.setFlutterMessageListener(this);
-            updateLinkedViews();
-        }
-    }
-
-
-    @Override
-    public void onMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived: " + output);
-
-        // sensor reading
-        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
-            sensors[0].setSensorReading(Integer.valueOf(sensor1));
-            sensors[1].setSensorReading(Integer.valueOf(sensor2));
-            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateStaticViews();
             updateDynamicViews();
         }
     }
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            this.session.setFlutterMessageListener(this);
+            updateLinkedViews();
+            if (isUsingSensorData) startSensorReading();
+        }
+    }
+
+
+    @Override
     public void onServoLinkListener(String message) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
-        globalHandler.sessionHandler.addMessage(message);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessage(message);
         updateLinkedViews();
     }
 
 
     @Override
     public void onLedLinkListener(ArrayList<String> msgs) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        globalHandler.sessionHandler.addMessages(msgs);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
         updateLinkedViews();
     }
 
 
     @Override
     public void onSpeakerLinkListener(ArrayList<String> msgs) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
-        globalHandler.sessionHandler.addMessages(msgs);
-        globalHandler.sessionHandler.sendMessages();
+        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
         updateLinkedViews();
     }
 
@@ -283,6 +262,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickServo1() {
         Log.d(Constants.LOG_TAG, "onClickServo1");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -298,6 +279,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickServo2() {
         Log.d(Constants.LOG_TAG, "onClickServo2");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -313,6 +296,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickServo3() {
         Log.d(Constants.LOG_TAG, "onClickServo3");
+        Servo[] servos = session.getFlutter().getServos();
+
         ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -328,6 +313,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed1() {
         Log.d(Constants.LOG_TAG, "onClickLed1");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[0], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -343,6 +330,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed2() {
         Log.d(Constants.LOG_TAG, "onClickLed2");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -358,6 +347,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickLed3() {
         Log.d(Constants.LOG_TAG, "onClickLed3");
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
         LedDialog dialog = LedDialog.newInstance(triColorLeds[2], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -373,6 +364,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
 
     private void onClickSpeaker() {
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
+        Speaker speaker = session.getFlutter().getSpeaker();
+
         SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
@@ -389,7 +382,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     @OnClick(R.id.button_sensor_data)
     public void onClickSensorData() {
         Log.d(Constants.LOG_TAG, "onClickSensorData");
-        if (!isSensorData) {
+        if (!isUsingSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
             sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
             sensorData.setTextColor(Color.WHITE);
@@ -398,7 +391,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
             simulateData.setTextColor(Color.GRAY);
 
-            isSensorData = true;
+            isUsingSensorData = true;
             startSensorReading();
 
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
@@ -410,7 +403,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
     @OnClick(R.id.button_simulate_data)
     public void onClickSimulateData() {
         Log.d(Constants.LOG_TAG, "onClickSimulateData");
-        if (isSensorData) {
+        if (isUsingSensorData) {
             Button sensorData = (Button) findViewById(R.id.button_sensor_data);
             sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
             sensorData.setTextColor(Color.GRAY);
@@ -419,7 +412,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
             simulateData.setTextColor(Color.WHITE);
 
-            isSensorData = false;
+            isUsingSensorData = false;
             stopSensorReading();
 
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
@@ -427,4 +420,27 @@ public class RobotActivity extends BaseSensorReadingActivity implements Serializ
             simulatedSeekbar.setProgress(0);
         }
     }
+
+
+    // FlutterMessageListener implementation
+
+
+    @Override
+    public void onFlutterMessageReceived(String output) {
+        Sensor[] sensors = session.getFlutter().getSensors();
+
+        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
+            output = output.substring(2, output.length());
+            String sensor1 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor2 = output.substring(0, output.indexOf(','));
+            output = output.substring(output.indexOf(',')+1, output.length());
+            String sensor3 = output;
+            sensors[0].setSensorReading(Integer.valueOf(sensor1));
+            sensors[1].setSensorReading(Integer.valueOf(sensor2));
+            sensors[2].setSensorReading(Integer.valueOf(sensor3));
+            updateDynamicViews();
+        }
+    }
+
 }

@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit;
  * Created by Steve on 12/14/2016.
  */
 // TODO - may make a DataSet class to hold dataset details
-public class DataLoggingHandler implements FlutterMessageListener{
+
+public class DataLoggingHandler implements FlutterMessageListener {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
@@ -171,7 +172,7 @@ public class DataLoggingHandler implements FlutterMessageListener{
     public void populateDataSetDetails() {
         Log.d(Constants.LOG_TAG, "populateDataSetDetails");
         globalHandler = GlobalHandler.getInstance(appContext);
-        globalHandler.sessionHandler.setFlutterMessageListener(this);
+        globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         messageSender = new MessageSender();
         String[] messages = new String[2];
         messages[0] = READ_LOG_NAME;
@@ -181,7 +182,7 @@ public class DataLoggingHandler implements FlutterMessageListener{
 
 
     @Override
-    public void onMessageReceived(String output) {
+    public void onFlutterMessageReceived(String output) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + output);
 
         if (!output.equals("OK") && !output.equals("FAIL")) {
@@ -215,7 +216,7 @@ public class DataLoggingHandler implements FlutterMessageListener{
 
             for (int i = 0; i < strings.length; i++) {
                 Log.d(Constants.LOG_TAG, String.valueOf(i));
-                globalHandler.sessionHandler.sendMessage(strings[i]);
+                globalHandler.melodySmartDeviceHandler.addMessage(strings[i]);
                 while (isSending) {
                     try {
                         Thread.sleep(100);
