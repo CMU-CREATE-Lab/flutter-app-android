@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.bluecreation.melodysmart.DataService;
 
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.DeviceHandler;
+import org.cmucreatelab.flutter_android.helpers.melodysmart.MessageQueue;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -16,8 +18,9 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  */
 public class DataListener implements DataService.Listener {
 
-    private Session mSession;
-    private DeviceHandler parent;
+    final private Session mSession;
+    final private DeviceHandler parent;
+    final private MessageQueue messageQueue;
     private boolean serviceConnected;
 
 
@@ -26,9 +29,10 @@ public class DataListener implements DataService.Listener {
     }
 
 
-    public DataListener(Session session, DeviceHandler parent) {
+    public DataListener(Session session, DeviceHandler parent, MessageQueue messageQueue) {
         this.mSession = session;
         this.parent = parent;
+        this.messageQueue = messageQueue;
         serviceConnected = false;
     }
 
@@ -47,9 +51,14 @@ public class DataListener implements DataService.Listener {
 
     @Override
     public void onReceived(final byte[] bytes) {
-        String response = new String(bytes);
-        Log.v(Constants.LOG_TAG,"DataListener.onReceived="+response);
-        mSession.getFlutterMessageListener().onFlutterMessageReceived(response);
+        FlutterMessage currentMessage = messageQueue.notifyMessageReceived();
+        if (currentMessage == null) {
+            Log.v(Constants.LOG_TAG,"DataListener.onReceived ignoring with null currentMessage");
+        } else {
+            String response = new String(bytes);
+            Log.v(Constants.LOG_TAG,"DataListener.onReceived="+response);
+            mSession.getFlutterMessageListener().onFlutterMessageReceived(response);
+        }
     }
 
 }

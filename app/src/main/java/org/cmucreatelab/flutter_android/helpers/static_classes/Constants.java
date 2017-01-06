@@ -40,6 +40,9 @@ public final class Constants {
         public static final int C_6 = 1047;
     }
 
+    // forces MessageQueue to throw away all "r" requests
+    public static final boolean IGNORE_READ_SENSORS = false;
+
     // for activities
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";

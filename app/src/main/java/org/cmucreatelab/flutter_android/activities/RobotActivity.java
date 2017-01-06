@@ -243,7 +243,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
+        for (String message : msgs) {
+            globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
         updateLinkedViews();
     }
 
@@ -253,7 +255,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
-        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
+        for (String message : msgs) {
+            globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
         updateLinkedViews();
     }
 
