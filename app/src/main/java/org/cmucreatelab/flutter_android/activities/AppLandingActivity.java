@@ -39,7 +39,7 @@ import butterknife.OnClick;
  * An activity that can scan for flutters nearby and connect to them.
  *
  */
-public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener, FlutterOG.PopulatedDataSetListener {
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -229,14 +229,22 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
+    // TODO - this is something we will need to move/change once we have a way to load
+    @Override
+    public void onDataSetPopulated() {
+        Log.d(Constants.LOG_TAG, "AppLandingActivity.onDataSetPopulated");
+        Intent intent = new Intent(this, SensorsActivity.class);
+        startActivity(intent);
+    }
+
+
     // FlutterConnectListener implementation
 
 
     @Override
     public void onFlutterConnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
-        Intent intent = new Intent(this, SensorsActivity.class);
-        startActivity(intent);
+        GlobalHandler.getInstance(this).sessionHandler.getSession().getFlutter().populateDataSet(this, this);
     }
 
 

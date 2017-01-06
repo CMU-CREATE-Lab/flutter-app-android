@@ -13,12 +13,12 @@ import java.util.HashMap;
  */
 public class DataSet {
 
-    private HashMap<String, String[]> data;
+    private HashMap<String, DataPoint> data;
     private ArrayList<String> keys;
     private String dataName;
 
 
-    public DataSet(HashMap<String, String[]> data, ArrayList<String> keys, String dataName) {
+    public DataSet(HashMap<String, DataPoint> data, ArrayList<String> keys, String dataName) {
         this.data = data;
         this.keys = keys;
         this.dataName = dataName;
@@ -26,13 +26,13 @@ public class DataSet {
 
 
     // getters
-    public HashMap<String, String[]> getData() { return data; }
+    public HashMap<String, DataPoint> getData() { return data; }
     public ArrayList<String> getKeys() { return keys; }
     public String getDataName() { return dataName; }
 
 
     // setters
-    public void setData(HashMap<String, String[]> data) { this.data = data; }
+    public void setData(HashMap<String, DataPoint> data) { this.data = data; }
     public void setKeys(ArrayList<String> keys) { this.keys = keys; }
     public void setDataName(String name) { this.dataName = name; }
 

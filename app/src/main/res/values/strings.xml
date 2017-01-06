@@ -158,5 +158,6 @@
     <string name="on">On</string>
     <string name="flutter">Flutter</string>
     <string name="no_relationship">No Relationship</string>
+    <string name="time">Time</string>
 
 </resources>

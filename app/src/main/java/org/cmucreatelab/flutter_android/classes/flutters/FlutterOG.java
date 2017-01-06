@@ -41,7 +41,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
 
     private String name;
     private DataSet mDataSet;
-    private DataSetListener listener;
+    private PopulatedDataSetListener listener;
 
 
     public FlutterOG(BluetoothDevice device, String name) {
@@ -64,7 +64,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     }
 
 
-    public void populateDataSet(Context context, DataSetListener listener) {
+    public void populateDataSet(Context context, PopulatedDataSetListener listener) {
         Log.d(Constants.LOG_TAG, "populateDataSet");
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
         globalHandler.dataLoggingHandler.setDataSetListener(this);
@@ -97,7 +97,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     public void setDatatSet(DataSet datatSet) { mDataSet = datatSet; }
 
 
-    public interface DataSetListener {
+    public interface PopulatedDataSetListener {
         void onDataSetPopulated();
     }
 
