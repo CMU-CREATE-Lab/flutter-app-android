@@ -57,7 +57,7 @@ public class DataListener implements DataService.Listener {
         } else {
             String response = new String(bytes);
             Log.v(Constants.LOG_TAG,"DataListener.onReceived="+response);
-            mSession.getFlutterMessageListener().onFlutterMessageReceived(response);
+            mSession.getFlutterMessageListener().onFlutterMessageReceived(currentMessage.getRequest(), response);
         }
     }
 

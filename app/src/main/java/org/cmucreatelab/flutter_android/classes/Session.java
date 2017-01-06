@@ -17,7 +17,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * Provides access to the current session's flutter and activities/listeners.
  *
  */
-public class Session /*implements FlutterMessageListener*/ {
+public class Session implements FlutterMessageListener {
 
     private Activity currentActivity;
     private FlutterOG flutter;
@@ -42,8 +42,8 @@ public class Session /*implements FlutterMessageListener*/ {
     }
 
 
-    //@Override
-    public void onFlutterMessageReceived(String response) {
+    @Override
+    public void onFlutterMessageReceived(String request, String response) {
         if (response.equals("OK") || response.equals("FAIL")) {
             Log.v(Constants.LOG_TAG,"ignoring onFlutterMessageReceived="+response);
             return;

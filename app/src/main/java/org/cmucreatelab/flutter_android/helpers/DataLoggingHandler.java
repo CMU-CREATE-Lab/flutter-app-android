@@ -181,24 +181,24 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     @Override
-    public void onFlutterMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived - " + output);
+    public void onFlutterMessageReceived(String request, String response) {
+        Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
 
-        if (!output.equals("OK") && !output.equals("FAIL")) {
-            String firstLetter = output.substring(0,1);
+        if (!response.equals("OK") && !response.equals("FAIL")) {
+            String firstLetter = response.substring(0,1);
 
             switch (firstLetter) {
                 case READ_LOG_NAME:
                     Log.d(Constants.LOG_TAG, "Read Log Name");
-                    readLogName(output);
+                    readLogName(response);
                     break;
                 case READ_NUMBER_OF_POINTS:
                     Log.d(Constants.LOG_TAG, "Read Number of Points response");
-                    readNumberOfPoints(output);
+                    readNumberOfPoints(response);
                     break;
                 case READ_POINT:
                     Log.d(Constants.LOG_TAG, "Read Point response");
-                    readPoint(output);
+                    readPoint(response);
                     break;
             }
             isSending = false;

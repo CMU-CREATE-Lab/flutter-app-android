@@ -262,16 +262,16 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     @Override
-    public void onFlutterMessageReceived(String output) {
+    public void onFlutterMessageReceived(String request, String response) {
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        if (output.length() > 0 && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
+        if (response.length() > 0 && !response.equals("OK") && !response.equals("FAIL")) {
+            response = response.substring(2, response.length());
+            String sensor1 = response.substring(0, response.indexOf(','));
+            response = response.substring(response.indexOf(',')+1, response.length());
+            String sensor2 = response.substring(0, response.indexOf(','));
+            response = response.substring(response.indexOf(',')+1, response.length());
+            String sensor3 = response;
             sensors[0].setSensorReading(Integer.valueOf(sensor1));
             sensors[1].setSensorReading(Integer.valueOf(sensor2));
             sensors[2].setSensorReading(Integer.valueOf(sensor3));
