@@ -8,7 +8,7 @@ package org.cmucreatelab.flutter_android.helpers.static_classes;
  * A class that handles global constants that is used throughout the app.
  *
  */
-public class Constants {
+public final class Constants {
 
     public static final String LOG_TAG = "FlutterAndroid";
 
@@ -22,7 +22,7 @@ public class Constants {
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
 
-    public static class MusicNoteFrequencies {
+    public final class MusicNoteFrequencies {
         public static final int C_4 = 262;
         public static final int D_4 = 294;
         public static final int E_4 = 330;
@@ -39,6 +39,9 @@ public class Constants {
         public static final int B_5 = 988;
         public static final int C_6 = 1047;
     }
+
+    // forces MessageQueue to throw away all "r" requests
+    public static final boolean IGNORE_READ_SENSORS = false;
 
     // for activities
 

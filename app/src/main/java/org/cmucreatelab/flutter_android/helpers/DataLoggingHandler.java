@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -77,13 +78,13 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    private void readLogName(String output) {
+    public void readLogName(String output) {
         String temp = output.substring(2, output.length());
         dataName = temp;
     }
 
 
-    private void readNumberOfPoints(String output) {
+    public void readNumberOfPoints(String output) {
         output = "P,0,0,0";
         String temp = output.substring(2, output.length());
 
@@ -117,7 +118,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    private void readPoint(String output) {
+    public void readPoint(String output) {
         String temp = output.substring(2, output.length());
         String[] sensorValues = new String[3];
 
@@ -182,29 +183,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     @Override
-    public void onFlutterMessageReceived(String output) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived - " + output);
-
-        if (!output.equals("OK") && !output.equals("FAIL")) {
-            String firstLetter = output.substring(0,1);
-
-            switch (firstLetter) {
-                case READ_LOG_NAME:
-                    Log.d(Constants.LOG_TAG, "Read Log Name");
-                    readLogName(output);
-                    break;
-                case READ_NUMBER_OF_POINTS:
-                    Log.d(Constants.LOG_TAG, "Read Number of Points response");
-                    readNumberOfPoints(output);
-                    break;
-                case READ_POINT:
-                    Log.d(Constants.LOG_TAG, "Read Point response");
-                    readPoint(output);
-                    break;
-            }
-            isSending = false;
-
-        }
+    public void onFlutterMessageReceived(String request, String response) {
+        Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
+        isSending = false;
     }
 
 
@@ -216,7 +197,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
             for (int i = 0; i < strings.length; i++) {
                 Log.d(Constants.LOG_TAG, String.valueOf(i));
-                globalHandler.melodySmartDeviceHandler.addMessage(strings[i]);
+                // TODO ?
+                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(strings[i]));
                 while (isSending) {
                     try {
                         Thread.sleep(100);

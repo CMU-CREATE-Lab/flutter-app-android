@@ -21,6 +21,8 @@ public interface Output {
         VOLUME
     }
 
+    String getProtocolString();
+
     // getters
     Type getOutputType();
     int getOutputImageId();

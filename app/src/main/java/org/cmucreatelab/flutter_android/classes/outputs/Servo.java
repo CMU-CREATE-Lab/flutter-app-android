@@ -32,6 +32,12 @@ public class Servo extends A_Output implements Serializable, Output {
 
 
     @Override
+    public String getProtocolString() {
+        return TYPE+getPortNumber();
+    }
+
+
+    @Override
     public Type getOutputType() {
         return outputType;
     }
