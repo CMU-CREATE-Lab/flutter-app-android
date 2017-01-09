@@ -1,5 +1,17 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
+import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
+import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
+import org.cmucreatelab.flutter_android.classes.sensors.Distance;
+import org.cmucreatelab.flutter_android.classes.sensors.Humidity;
+import org.cmucreatelab.flutter_android.classes.sensors.Light;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.sensors.SoilMoisture;
+import org.cmucreatelab.flutter_android.classes.sensors.Sound;
+import org.cmucreatelab.flutter_android.classes.sensors.Temperature;
+import org.cmucreatelab.flutter_android.classes.sensors.WindSpeed;
+
 /**
  * Created by mike on 1/4/17.
  *
@@ -17,7 +29,50 @@ public final class FlutterProtocol {
         public static final short SOUND = 2;
         public static final short DISTANCE = 3;
         public static final short TEMPERATURE = 4;
+        public static final short HUMIDITY = 5;
+        public static final short WIND_SPEED = 6;
+        public static final short BAROMETRIC_PRESSURE = 7;
+        public static final short ANALOG_OR_UNKNOWN = 8;
         // **please add more**
+    }
+
+    public static Sensor sensorFromInputType(int portNumber, short inputType) {
+        Sensor result;
+
+        switch(inputType) {
+            case InputTypes.LIGHT:
+                result = new Light(portNumber);
+                break;
+            case InputTypes.SOIL:
+                result = new SoilMoisture(portNumber);
+                break;
+            case InputTypes.SOUND:
+                result = new Sound(portNumber);
+                break;
+            case InputTypes.DISTANCE:
+                result = new Distance(portNumber);
+                break;
+            case InputTypes.TEMPERATURE:
+                result = new Temperature(portNumber);
+                break;
+            case InputTypes.HUMIDITY:
+                result = new Humidity(portNumber);
+                break;
+            case InputTypes.WIND_SPEED:
+                result = new WindSpeed(portNumber);
+                break;
+            case InputTypes.BAROMETRIC_PRESSURE:
+                result = new BarometricPressure(portNumber);
+                break;
+            case InputTypes.ANALOG_OR_UNKNOWN:
+                result = new AnalogOrUnknown(portNumber);
+                break;
+            case InputTypes.NOT_SET:
+            default:
+                result = new NoSensor(portNumber);
+        }
+
+        return result;
     }
 
     public final class Commands {

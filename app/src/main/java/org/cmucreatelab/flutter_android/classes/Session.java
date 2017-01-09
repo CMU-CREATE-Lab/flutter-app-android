@@ -6,7 +6,12 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
+import org.cmucreatelab.flutter_android.classes.outputs.Volume;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -119,6 +124,36 @@ public class Session implements FlutterMessageListener {
                 break;
             case FlutterProtocol.Commands.READ_OUTPUT_STATE:
                 // TODO actions, but more complex (you also need to know the output you were talking about)
+                String protocolString = request.substring(1);
+                Output output = flutter.findOutputWithProtocolString(protocolString);
+                if (args[1].equals("x")) {
+                    output.setIsLinked(false, output);
+                    Log.v(Constants.LOG_TAG,"UNLINK "+protocolString);
+                } else if (args[1].equals("p")) {
+                    // PROPORTIONAL
+                    if (args.length != 7) {
+                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                    } else {
+                        int omin, omax, imin, imax, portNumber;
+                        omin = Integer.valueOf(args[2], 16);
+                        omax = Integer.valueOf(args[3], 16);
+                        portNumber = Integer.valueOf(args[4]);
+                        imin = Integer.valueOf(args[5], 16);
+                        imax = Integer.valueOf(args[6], 16);
+
+                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Settings settings = output.getSettings();
+                        settings.setSensor(sensor);
+                        settings.setOutputMin(omin);
+                        settings.setOutputMax(omax);
+                        settings.getAdvancedSettings().setInputMin(imin);
+                        settings.getAdvancedSettings().setInputMax(imax);
+                        output.setIsLinked(true, output);
+                        Log.v(Constants.LOG_TAG,"LINK "+protocolString);
+                    }
+                } else {
+                    Log.e(Constants.LOG_TAG,"failed to parse output state (not implemented): "+args[1]);
+                }
                 break;
             case FlutterProtocol.Commands.SET_INPUT_TYPE:
                 break;
@@ -126,10 +161,12 @@ public class Session implements FlutterMessageListener {
                 if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_INPUT_TYPE="+response);
                 } else {
-                    // TODO you need to know the input that you were asking about
-                    short inputType = Integer.valueOf(args[1],16).shortValue();
+                    int portNumber = Integer.valueOf(request.split(",")[1]);
+                    short inputType = Integer.valueOf(args[1]).shortValue();
 
-                    // TODO actions
+                    Sensor sensor = FlutterProtocol.sensorFromInputType(portNumber,inputType);
+                    Log.v(Constants.LOG_TAG,"About to set portNumber="+portNumber+" to inputType="+inputType+"="+currentActivity.getString(sensor.getSensorTypeId()));
+                    this.flutter.getSensors()[portNumber-1] = sensor;
                 }
                 break;
             case FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL:

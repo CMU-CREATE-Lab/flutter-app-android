@@ -6,9 +6,15 @@ import com.bluecreation.melodysmart.DataService;
 
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.DeviceHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.MessageQueue;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+
+import java.util.ArrayList;
 
 /**
  * Created by mike on 12/28/16.
@@ -45,6 +51,18 @@ public class DataListener implements DataService.Listener {
         if (isFound) {
             parent.getDataService().enableNotifications(true);
         }
+
+        // read sensor types
+        Sensor[] sensors = mSession.getFlutter().getSensors();
+        for (Sensor sensor : sensors) {
+            parent.addMessage(MessageConstructor.constructReadInputType(sensor));
+        }
+        // read outputs
+        ArrayList<Output> outputs = mSession.getFlutter().getOutputs();
+        for (Output output : outputs) {
+            parent.addMessage(MessageConstructor.constructReadOutputState(output));
+        }
+
         mSession.getFlutterConnectListener().onFlutterConnected();
     }
 

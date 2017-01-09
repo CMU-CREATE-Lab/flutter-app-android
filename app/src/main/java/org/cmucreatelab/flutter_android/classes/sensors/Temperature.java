@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class Temperature extends A_Sensor implements Sensor, Serializable {
 
-    private static final Sensor.Type sensorType = Type.TEMPERATURE;
+    private static final short sensorType = FlutterProtocol.InputTypes.TEMPERATURE;
     private static final int sensorTypeId = R.string.temperature;
     private static final int highTextId = R.string.hot;
     private static final int lowTextId = R.string.cold;
@@ -34,7 +35,7 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public Type getSensorType() {
+    public short getSensorType() {
         return sensorType;
     }
 

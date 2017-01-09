@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class NoSensor extends A_Sensor implements Sensor, Serializable {
 
-    private static final Sensor.Type sensorType = Type.NO_SENSOR;
+    private static final short sensorType = FlutterProtocol.InputTypes.NOT_SET;
     private static final int sensorTypeId = R.string.no_sensor;
     private static final int highTextId = R.string.high;
     private static final int lowTextId = R.string.low;
@@ -34,7 +35,7 @@ public class NoSensor extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public Type getSensorType() {
+    public short getSensorType() {
         return sensorType;
     }
 

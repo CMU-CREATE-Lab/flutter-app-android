@@ -25,6 +25,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
@@ -229,7 +230,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             Sensor volumeSensor = volumeSettings.getSensor();
             currentImageView.setImageResource(volumeSensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(volumeSensor.getSensorType().toString());
+            currentTextViewItem.setText(volumeSensor.getSensorTypeId());
             isVolume = true;
         }
     }
@@ -249,7 +250,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             Sensor pitchSensor = pitchSettings.getSensor();
             currentImageView.setImageResource(pitchSensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(pitchSensor.getSensorType().toString());
+            currentTextViewItem.setText(pitchSensor.getSensorTypeId());
             isVolume = false;
         }
     }
@@ -340,11 +341,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        if (sensor.getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(sensor.getSensorType().toString());
+            currentTextViewItem.setText(sensor.getSensorTypeId());
             // set sensor for the proper tab
             if (isVolume) {
                 volumeSettings.setSensor(sensor);

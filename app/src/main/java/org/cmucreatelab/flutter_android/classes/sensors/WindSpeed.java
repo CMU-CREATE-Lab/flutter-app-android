@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class WindSpeed extends A_Sensor implements Sensor, Serializable {
 
-    private static final Sensor.Type sensorType = Type.WIND_SPEED;
+    private static final short sensorType = FlutterProtocol.InputTypes.WIND_SPEED;
     private static final int sensorTypeId = R.string.wind_speed;
     private static final int highTextId = R.string.fast;
     private static final int lowTextId = R.string.slow;
@@ -34,7 +35,7 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public Type getSensorType() {
+    public short getSensorType() {
         return sensorType;
     }
 
