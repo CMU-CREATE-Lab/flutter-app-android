@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
@@ -13,6 +14,9 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -61,6 +65,66 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
         for (int i = 0; i < mSensors.length; i++) {
             mSensors[i] = new NoSensor(i+1);
         }
+    }
+
+
+    public ArrayList<Output> getOutputs() {
+        ArrayList<Output> result = new ArrayList<>();
+
+        result.addAll(Arrays.asList(mServos));
+        for (TriColorLed led : mTriColorLeds) {
+            result.add(led.getRedLed());
+            result.add(led.getGreenLed());
+            result.add(led.getBlueLed());
+        }
+        result.add(mSpeaker.getPitch());
+        result.add(mSpeaker.getVolume());
+
+        return result;
+    }
+
+
+    public Output findOutputWithProtocolString(String protocolString) {
+        // LEDs
+        switch (protocolString) {
+            case "r1":
+                return getTriColorLeds()[0].getRedLed();
+            case "r2":
+                return getTriColorLeds()[1].getRedLed();
+            case "r3":
+                return getTriColorLeds()[2].getRedLed();
+            case "g1":
+                return getTriColorLeds()[0].getGreenLed();
+            case "g2":
+                return getTriColorLeds()[1].getGreenLed();
+            case "g3":
+                return getTriColorLeds()[2].getGreenLed();
+            case "b1":
+                return getTriColorLeds()[0].getBlueLed();
+            case "b2":
+                return getTriColorLeds()[1].getBlueLed();
+            case "b3":
+                return getTriColorLeds()[2].getBlueLed();
+        }
+        // Servos
+        switch (protocolString) {
+            case "s1":
+                return getServos()[0];
+            case "s2":
+                return getServos()[1];
+            case "s3":
+                return getServos()[2];
+        }
+        // Speaker
+        switch (protocolString) {
+            case "v":
+                return getSpeaker().getVolume();
+            case "f":
+                return getSpeaker().getPitch();
+        }
+        // fail
+        Log.e(Constants.LOG_TAG,"Cannot find Output with protocolString="+protocolString);
+        return null;
     }
 
 
