@@ -14,6 +14,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 /**
  * Created by Steve on 11/4/2016.
@@ -39,7 +40,7 @@ public abstract class BaseResizableDialog extends DialogFragment {
             Settings settings = output.getSettings();
 
             // sensor
-            if (output.getSettings().getSensor().getSensorType() != Sensor.Type.NO_SENSOR) {
+            if (output.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                 ImageView sensorImage = (ImageView) view.findViewById(R.id.image_sensor);
                 sensorImage.setImageResource(settings.getSensor().getGreenImageId());
                 TextView sensorText = (TextView) view.findViewById(R.id.text_sensor_link);

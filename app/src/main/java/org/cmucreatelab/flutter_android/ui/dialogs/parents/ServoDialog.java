@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
@@ -236,12 +237,12 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        if (sensor.getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             saveButton.setEnabled(true);
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(sensor.getSensorType().toString());
+            currentTextViewItem.setText(sensor.getSensorTypeId());
             settings.setSensor(sensor);
         }
     }

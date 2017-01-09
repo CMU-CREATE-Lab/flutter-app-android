@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class Sound extends A_Sensor implements Sensor, Serializable {
 
-    private static final Sensor.Type sensorType = Type.SOUND;
+    private static final short sensorType = FlutterProtocol.InputTypes.SOUND;
     private static final int sensorTypeId = R.string.sound;
     private static final int highTextId = R.string.loud;
     private static final int lowTextId = R.string.quiet;
@@ -34,7 +35,7 @@ public class Sound extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public Type getSensorType() {
+    public short getSensorType() {
         return sensorType;
     }
 

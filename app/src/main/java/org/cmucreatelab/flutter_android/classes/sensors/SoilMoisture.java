@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
 
-    private static final Sensor.Type sensorType = Type.SOIL_MOISTURE;
+    private static final short sensorType = FlutterProtocol.InputTypes.SOIL;
     private static final int sensorTypeId = R.string.soil_moisture;
     private static final int highTextId = R.string.wet;
     private static final int lowTextId = R.string.dry;
@@ -34,7 +35,7 @@ public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
 
 
     @Override
-    public Type getSensorType() {
+    public short getSensorType() {
         return sensorType;
     }
 

@@ -126,10 +126,12 @@ public class Session implements FlutterMessageListener {
                 if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_INPUT_TYPE="+response);
                 } else {
-                    // TODO you need to know the input that you were asking about
-                    short inputType = Integer.valueOf(args[1],16).shortValue();
+                    int portNumber = Integer.valueOf(request.split(",")[1]);
+                    short inputType = Integer.valueOf(args[1]).shortValue();
 
-                    // TODO actions
+                    Sensor sensor = FlutterProtocol.sensorFromInputType(portNumber,inputType);
+                    Log.v(Constants.LOG_TAG,"About to set portNumber="+portNumber+" to inputType="+inputType+"="+currentActivity.getString(sensor.getSensorTypeId()));
+                    this.flutter.getSensors()[portNumber-1] = sensor;
                 }
                 break;
             case FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL:

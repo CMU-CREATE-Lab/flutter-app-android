@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
@@ -65,15 +66,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 Sensor[] sensors = session.getFlutter().getSensors();
                 TextView sensorReadingText;
 
-                if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                     sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
                 }
-                if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
                     sensorReadingText.setText(String.valueOf(sensors[1].getSensorReading()));
                 }
-                if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
                     sensorReadingText.setText(String.valueOf(sensors[2].getSensorReading()));
                 }
@@ -164,15 +165,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     Sensor[] sensors = session.getFlutter().getSensors();
                     TextView sensorReadingText;
 
-                    if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
                         sensorReadingText.setText(String.valueOf(i) + "%");
                     }
-                    if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
                         sensorReadingText.setText(String.valueOf(i) + "%");
                     }
-                    if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+                    if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
                         sensorReadingText.setText(String.valueOf(i) + "%");
                     }
@@ -433,6 +434,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         updateDynamicViews();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateStaticViews();
+            }
+        });
     }
 
 }

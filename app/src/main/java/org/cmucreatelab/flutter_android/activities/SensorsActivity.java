@@ -15,6 +15,8 @@ import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
@@ -68,7 +70,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     private void updateStaticViews() {
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        if (sensors[0].getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             selectedView = (ImageView) findViewById(R.id.image_sensor_1);
             currentHigh = (TextView) findViewById(R.id.text_high_1);
             currentLow = (TextView) findViewById(R.id.text_low_1);
@@ -76,7 +78,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             updateStaticByIndex(0);
         }
 
-        if (sensors[1].getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             selectedView = (ImageView) findViewById(R.id.image_sensor_2);
             currentHigh = (TextView) findViewById(R.id.text_high_2);
             currentLow = (TextView) findViewById(R.id.text_low_2);
@@ -84,7 +86,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             updateStaticByIndex(1);
         }
 
-        if (sensors[2].getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             selectedView = (ImageView) findViewById(R.id.image_sensor_3);
             currentHigh = (TextView) findViewById(R.id.text_high_3);
             currentLow = (TextView) findViewById(R.id.text_low_3);
@@ -247,13 +249,18 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         selectedView.setImageResource(sensor.getBlueImageId());
         currentSensorType.setText(getString(sensor.getSensorTypeId()));
 
-        if (sensors[portNumber-1].getSensorType() != Sensor.Type.NO_SENSOR) {
+        if (sensors[portNumber-1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             currentHigh.setText(getString(sensor.getHighTextId()));
             currentLow.setText(getString(sensor.getLowTextId()));
         } else {
             currentHigh.setText("");
             currentLow.setText("");
         }
+
+        // send message to flutter with sensor type
+        short inputType = sensor.getSensorType();
+        GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
+
         updateDynamicViews();
     }
 
@@ -264,6 +271,12 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         updateDynamicViews();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateStaticViews();
+            }
+        });
     }
 
 }

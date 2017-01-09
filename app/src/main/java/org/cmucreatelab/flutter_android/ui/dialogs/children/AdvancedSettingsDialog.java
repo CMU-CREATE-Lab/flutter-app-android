@@ -153,10 +153,8 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         if (output.getOutputType() == Output.Type.SPEAKER)
             sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();*/
 
-        sensorText = output.getSettings().getSensor().getSensorType().toString();
+        sensorText = getString(output.getSettings().getSensor().getSensorTypeId());
 
-        sensorText = sensorText.toLowerCase();
-        sensorText.replace('_', ' ');
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");
         textZeroPoint.setText(getString(R.string.zero_point) + " " + zeroPoint + "%");
