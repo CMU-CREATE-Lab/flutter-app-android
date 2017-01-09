@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -143,8 +145,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         servo.setSettings(settings);
-        String msg = MessageConstructor.getLinkedMessage(servo);
-//        Log.d(Constants.LOG_TAG, msg);
+        FlutterMessage msg = MessageConstructor.constructRelationshipMessage(servo, settings);
         servo.setIsLinked(true, servo);
         dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
@@ -155,8 +156,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
     public void onClickRemoveLink() {
         if (servo.getSettings() != null) {
             Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            String msg = MessageConstructor.getRemoveLinkMessage(servo);
-//            Log.d(Constants.LOG_TAG, msg);
+            FlutterMessage msg = MessageConstructor.constructRemoveRelation(servo);
             servo.setIsLinked(false, servo);
             settings.setOutputMax(servo.getMax());
             settings.setOutputMin(servo.getMin());
@@ -286,7 +286,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
 
     public interface DialogServoListener {
-        public void onServoLinkListener(String message);
+        public void onServoLinkListener(FlutterMessage message);
     }
 
 }

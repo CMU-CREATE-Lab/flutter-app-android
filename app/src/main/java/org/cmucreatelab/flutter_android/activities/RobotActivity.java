@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -229,7 +230,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onServoLinkListener(String message) {
+    public void onServoLinkListener(FlutterMessage message) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
@@ -239,21 +240,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onLedLinkListener(ArrayList<String> msgs) {
+    public void onLedLinkListener(ArrayList<FlutterMessage> msgs) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
+        for (FlutterMessage message : msgs) {
+            globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
         updateLinkedViews();
     }
 
 
     @Override
-    public void onSpeakerLinkListener(ArrayList<String> msgs) {
+    public void onSpeakerLinkListener(ArrayList<FlutterMessage> msgs) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
-        globalHandler.melodySmartDeviceHandler.addMessages(msgs);
+        for (FlutterMessage message : msgs) {
+            globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
         updateLinkedViews();
     }
 
@@ -426,21 +431,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onFlutterMessageReceived(String output) {
-        Sensor[] sensors = session.getFlutter().getSensors();
-
-        if (output.substring(0,1).equals("r") && !output.equals("OK") && !output.equals("FAIL")) {
-            output = output.substring(2, output.length());
-            String sensor1 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor2 = output.substring(0, output.indexOf(','));
-            output = output.substring(output.indexOf(',')+1, output.length());
-            String sensor3 = output;
-            sensors[0].setSensorReading(Integer.valueOf(sensor1));
-            sensors[1].setSensorReading(Integer.valueOf(sensor2));
-            sensors[2].setSensorReading(Integer.valueOf(sensor3));
-            updateDynamicViews();
-        }
+    public void onFlutterMessageReceived(String request, String response) {
+        updateDynamicViews();
     }
 
 }

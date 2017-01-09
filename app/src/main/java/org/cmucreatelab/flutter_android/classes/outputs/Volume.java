@@ -22,6 +22,12 @@ public class Volume extends A_Output {
 
 
     @Override
+    public String getProtocolString() {
+        return TYPE;
+    }
+
+
+    @Override
     public Type getOutputType() {
         return outputType;
     }

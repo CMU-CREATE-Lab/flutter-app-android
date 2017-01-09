@@ -5,12 +5,11 @@ import android.bluetooth.BluetoothAdapter;
 import com.bluecreation.melodysmart.DataService;
 import com.bluecreation.melodysmart.MelodySmartDevice;
 
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.listeners.DataListener;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.listeners.DeviceListener;
-
-import java.util.ArrayList;
 
 /**
  * Created by mike on 12/27/16.
@@ -55,13 +54,8 @@ public class DeviceHandler {
     }
 
 
-    public void addMessage(String msg) {
-        messageQueue.addMessage(msg);
-    }
-
-
-    public void addMessages(ArrayList<String> msgs) {
-        messageQueue.addMessages(msgs);
+    public void addMessage(FlutterMessage message) {
+        messageQueue.addMessage(message);
     }
 
 
@@ -90,7 +84,7 @@ public class DeviceHandler {
             unregisterListeners();
         }
         deviceListener = new DeviceListener(session);
-        dataListener = new DataListener(session,this);
+        dataListener = new DataListener(session,this,messageQueue);
 
         registerListeners();
         mMelodySmartDevice.connect(session.getFlutter().getDevice().getAddress());

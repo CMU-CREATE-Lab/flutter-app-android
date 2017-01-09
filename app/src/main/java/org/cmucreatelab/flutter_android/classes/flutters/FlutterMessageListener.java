@@ -8,5 +8,5 @@ package org.cmucreatelab.flutter_android.classes.flutters;
  * An interface for an activity that will be sending messages to and from the flutter.
  */
 public interface FlutterMessageListener {
-    public void onFlutterMessageReceived(final String output);
+    public void onFlutterMessageReceived(final String request, final String response);
 }

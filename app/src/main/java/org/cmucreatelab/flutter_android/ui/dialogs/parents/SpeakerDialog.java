@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -185,11 +186,11 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        ArrayList<String> msgs = new ArrayList<>();
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
-        msgs.add(MessageConstructor.getLinkedMessage(speaker.getVolume()));
-        msgs.add(MessageConstructor.getLinkedMessage(speaker.getPitch()));
+        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
+        msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
+        msgs.add(MessageConstructor.constructRelationshipMessage(speaker.getVolume(),speaker.getVolume().getSettings()));
+        msgs.add(MessageConstructor.constructRelationshipMessage(speaker.getPitch(),speaker.getPitch().getSettings()));
         speaker.getVolume().setIsLinked(true, speaker.getVolume());
         speaker.getPitch().setIsLinked(true, speaker.getPitch());
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
@@ -200,9 +201,9 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        ArrayList<String> msgs = new ArrayList<>();
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getPitch()));
-        msgs.add(MessageConstructor.getRemoveLinkMessage(speaker.getVolume()));
+        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
+        msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
         speaker.getPitch().setIsLinked(false, speaker.getPitch());
         speaker.getVolume().setIsLinked(false, speaker.getVolume());
         volumeSettings.setOutputMax(speaker.getVolume().getMax());
@@ -413,7 +414,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
 
     public interface DialogSpeakerListener {
-        public void onSpeakerLinkListener(ArrayList<String> msgs);
+        public void onSpeakerLinkListener(ArrayList<FlutterMessage> msgs);
     }
 
 }
