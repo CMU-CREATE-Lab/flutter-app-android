@@ -54,8 +54,8 @@ public class DeviceHandler {
     }
 
 
-    public void addMessage(String msg) {
-        messageQueue.addMessage(new FlutterMessage(msg));
+    public void addMessage(FlutterMessage message) {
+        messageQueue.addMessage(message);
     }
 
 

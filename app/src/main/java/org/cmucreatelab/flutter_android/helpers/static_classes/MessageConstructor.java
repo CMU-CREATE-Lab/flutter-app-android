@@ -1,7 +1,10 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
+import android.util.Log;
+
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
@@ -116,57 +119,17 @@ public class MessageConstructor {
     }
 
 
-    // TODO @tasota delete and replace with new constructors
-    public static String getRemoveLinkMessage(Output output) {
-        StringBuilder result = new StringBuilder();
-        if (output.getOutputType() != Output.Type.PITCH && output.getOutputType() != Output.Type.VOLUME) {
-            result.append("x" + output.getSettings().getType() + output.getPortNumber());
+    // TODO @tasota this is just a helper for now, but it might be okay to handle all relationships this way
+    public static FlutterMessage constructRelationshipMessage(Output output, Settings settings) {
+        FlutterMessage result = null;
+
+        if (settings.getRelationship().getClass() == Proportional.class) {
+            result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMin(), settings.getOutputMax(), settings.getAdvancedSettings().getInputMin(), settings.getAdvancedSettings().getInputMax());
         } else {
-            result.append("x" + output.getSettings().getType());
-        }
-        return result.toString();
-    }
-
-
-    // TODO @tasota delete and replace with new constructors
-    public static String getLinkedMessage(Output output) {
-        StringBuilder result = new StringBuilder();
-        Settings settings = output.getSettings();
-        String portNumber = String.valueOf(output.getPortNumber());
-
-        if (portNumber.equals("0")) {
-            portNumber = "";
+            Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());
         }
 
-        Relationship.Type relationshipType = settings.getRelationship().getRelationshipType();
-        String inputMax = Integer.toHexString(settings.getAdvancedSettings().getInputMax());
-        String inputMin = Integer.toHexString(settings.getAdvancedSettings().getInputMin());
-        String outputMax = Integer.toHexString(settings.getOutputMax());
-        String outputMin = Integer.toHexString(settings.getOutputMin());
-
-        switch (relationshipType) {
-            case AMPLITUDE:
-                break;
-            case CHANGE:
-                break;
-            case CONSTANT:
-                break;
-            case CUMULATIVE:
-                break;
-            case FREQUENCY:
-                break;
-            case NO_RELATIONSHIP:
-                break;
-            case PROPORTIONAL:
-                result.append("p");
-                break;
-            case SWITCH:
-                break;
-        }
-
-        result.append(settings.getType() + portNumber + "," + outputMin + "," + outputMax + "," + String.valueOf(settings.getSensor().getPortNumber()) + "," + inputMin + "," + inputMax);
-
-        return result.toString();
+        return result;
     }
 
 }

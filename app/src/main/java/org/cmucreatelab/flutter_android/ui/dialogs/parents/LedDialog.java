@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -172,14 +173,14 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        ArrayList<String> msg = new ArrayList<>();
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getRedLed()));
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getGreenLed()));
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getBlueLed()));
+        ArrayList<FlutterMessage> msg = new ArrayList<>();
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
 
-        msg.add(MessageConstructor.getLinkedMessage(triColorLed.getRedLed()));
-        msg.add(MessageConstructor.getLinkedMessage(triColorLed.getGreenLed()));
-        msg.add(MessageConstructor.getLinkedMessage(triColorLed.getBlueLed()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getRedLed(),triColorLed.getRedLed().getSettings()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getGreenLed(),triColorLed.getGreenLed().getSettings()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getBlueLed(),triColorLed.getBlueLed().getSettings()));
 
         triColorLed.getRedLed().setIsLinked(true, triColorLed.getRedLed());
         triColorLed.getGreenLed().setIsLinked(true, triColorLed.getGreenLed());
@@ -192,12 +193,12 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        ArrayList<String> msg = new ArrayList<>();
+        ArrayList<FlutterMessage> msg = new ArrayList<>();
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
 
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getRedLed()));
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getGreenLed()));
-        msg.add(MessageConstructor.getRemoveLinkMessage(triColorLed.getBlueLed()));
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
+        msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
 
         triColorLed.getRedLed().setIsLinked(false, triColorLed.getRedLed());
         redSettings.setOutputMax(triColorLed.getRedLed().getMax());
@@ -208,10 +209,6 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         triColorLed.getBlueLed().setIsLinked(false, triColorLed.getBlueLed());
         blueSettings.setOutputMax(triColorLed.getBlueLed().getMax());
         blueSettings.setOutputMin(triColorLed.getBlueLed().getMin());
-
-        for(int i = 0; i < msg.size(); i++) {
-            Log.d("this tag", msg.get(i));
-        }
 
         dialogLedListener.onLedLinkListener(msg);
 
@@ -356,7 +353,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
 
     public interface DialogLedListener {
-        public void onLedLinkListener(ArrayList<String> msgs);
+        public void onLedLinkListener(ArrayList<FlutterMessage> msgs);
     }
 
 }

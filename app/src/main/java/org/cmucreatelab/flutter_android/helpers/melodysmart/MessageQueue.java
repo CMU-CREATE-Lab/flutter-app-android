@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Timer;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -67,7 +66,7 @@ public class MessageQueue {
      *
      * @return the requested FlutterMessage associated with message response.
      */
-    public FlutterMessage notifyMessageReceived() {
+    public synchronized FlutterMessage notifyMessageReceived() {
         isWaitingForResponse = false;
         messageTimeout.stopTimer();
         FlutterMessage result = this.currentMessage;

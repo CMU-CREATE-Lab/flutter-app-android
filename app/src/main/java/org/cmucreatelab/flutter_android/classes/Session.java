@@ -84,9 +84,7 @@ public class Session implements FlutterMessageListener {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_LOG_NAME="+response);
                 } else {
 //                    String logName = args[1];
-
-                    // TODO actions
-                    //GlobalHandler.getInstance(currentActivity).dataLoggingHandler.toString();
+                    GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readLogName(response);
                 }
                 break;
             case FlutterProtocol.Commands.READ_NUMBER_POINTS_AVAILABLE:
@@ -97,9 +95,7 @@ public class Session implements FlutterMessageListener {
 //                    boolean currentlyLogging = Boolean.valueOf(args[3]);
 //                    numberOfPoints = Integer.valueOf(args[1]).shortValue();
 //                    totalNeeded = Integer.valueOf(args[2]).shortValue();
-
-                    // TODO actions
-                    //GlobalHandler.getInstance(currentActivity).dataLoggingHandler.toString();
+                    GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readNumberOfPoints(response);
                 }
                 break;
             case FlutterProtocol.Commands.READ_POINT:
@@ -115,9 +111,7 @@ public class Session implements FlutterMessageListener {
 //                        sensor1 = Integer.valueOf(args[2], 16).shortValue();
 //                        sensor2 = Integer.valueOf(args[3], 16).shortValue();
 //                        sensor3 = Integer.valueOf(args[4], 16).shortValue();
-
-                        // TODO actions
-                        //GlobalHandler.getInstance(currentActivity).dataLoggingHandler.toString();
+                        GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readPoint(response);
                     }
                 }
                 break;

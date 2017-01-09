@@ -27,7 +27,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
             @Override
             public void run() {
                 GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-                globalHandler.melodySmartDeviceHandler.addMessage(String.valueOf(FlutterProtocol.Commands.READ_SENSOR_VALUES));
+                globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadSensorValues());
             }
         };
         timer = new Timer();
