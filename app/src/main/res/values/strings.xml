@@ -85,6 +85,7 @@
     <string name="choose_flutter">Choose Flutter</string>
     <string name="high">High</string>
     <string name="low">Low</string>
+    <string name="no_flutter_default">To set up, please first connect your Flutter.</string>
     <string name="no_flutter_robot">To set up your robot, please first connect your Flutter.</string>
     <string name="no_flutter_sensor">To set up sensors, please first connect your Flutter.</string>
     <string name="bright">Bright</string>
