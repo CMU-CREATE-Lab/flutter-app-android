@@ -37,7 +37,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private Context appContext;
     private GlobalHandler globalHandler;
-    private SharedPreferences sharedPreferences;
 
     private DataSetListener dataSetListener;
 
@@ -182,7 +181,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.data = new TreeMap<>();
         this.keys = new ArrayList<>();
         this.dataName = "";
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 
@@ -200,12 +198,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
         String intervalString = getIntervalInHex(interval);
         String samplesString = getSamplesInHex(samples);
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
-
-        Sensor[] sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.PreferencesKeys.dataloggingSensor1, appContext.getString(sensors[0].getTypeTextId()));
-        editor.putString(Constants.PreferencesKeys.dataloggingSensor2, appContext.getString(sensors[1].getTypeTextId()));
-        editor.putString(Constants.PreferencesKeys.dataloggingSensor3, appContext.getString(sensors[2].getTypeTextId()));
 
         globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage("n," + logName));
         globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(builder.toString()));
@@ -227,9 +219,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
         if (data.size() == numberOfPoints && data.size() != 0) {
             String[] sensorNames = new String[3];
-            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor1, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor1));
-            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor2, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor2));
-            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor3, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor3));
+            sensorNames[0] = "TODO";
+            sensorNames[1] = "TODO";
+            sensorNames[2] = "TODO";
             DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
             dataSetListener.onDataSetDetailsPopulated(dataSet);
         }
