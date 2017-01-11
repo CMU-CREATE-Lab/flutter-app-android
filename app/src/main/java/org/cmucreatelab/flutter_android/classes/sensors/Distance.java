@@ -28,6 +28,9 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
     private static final int greyImageIdSm = R.drawable.sensor_distance_grey_s_m_20;
     private static final int whiteImageIdSm = R.drawable.sensor_distance_s_m_20;
 
+    public static final int INPUT_MINIMUM = 0;
+    public static final int INPUT_MAXIMUM = 75;
+
 
     public Distance(int portNumber) {
         super(portNumber);
@@ -97,6 +100,21 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
     @Override
     public int getWhiteImageIdSm() {
         return whiteImageIdSm;
+    }
+
+
+    // TODO @tasota hacked for custom distance input value ranges
+    @Override
+    public int getSensorReading() {
+        int value = super.getSensorReading();
+        double temp = (value - INPUT_MINIMUM) / (double)INPUT_MAXIMUM;
+        if (temp > 1.0) {
+            temp = 1.0;
+        } else if (temp < 0) {
+            temp = 0;
+        }
+        temp = 1.0 - temp;
+        return (int)(temp * 100);
     }
 
 }
