@@ -320,15 +320,12 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         maxColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
+        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Green: " + String.valueOf(rgb[1]) + " Blue: " + String.valueOf(rgb[2]));
         int max = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(max));
         redSettings.setOutputMax(max);
         max = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(max));
         greenSettings.setOutputMax(max);
         max = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(max));
         blueSettings.setOutputMax(max);
     }
 
@@ -340,15 +337,12 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         minColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Blue: " + String.valueOf(rgb[1]) + " Green: " + String.valueOf(rgb[2]));
+        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Green: " + String.valueOf(rgb[1]) + " Blue: " + String.valueOf(rgb[2]));
         int min = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(min));
         redSettings.setOutputMin(min);
         min = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(min));
         greenSettings.setOutputMin(min);
         min = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-//        Log.d(Constants.LOG_TAG, String.valueOf(min));
         blueSettings.setOutputMin(min);
     }
 
