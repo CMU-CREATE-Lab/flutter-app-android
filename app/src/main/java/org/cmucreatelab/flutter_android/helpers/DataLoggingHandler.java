@@ -13,9 +13,10 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,7 +48,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private ArrayList<String> keys;
     private String dataName;
-    private HashMap<String, DataPoint> data;
+    private TreeMap<String, DataPoint> data;
 
 
     private String getTimeInHex() {
@@ -129,6 +130,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         StringBuilder date = new StringBuilder();
         StringBuilder time = new StringBuilder();
         calendar.setTimeInMillis(Long.parseLong(dataPointTime, 16)*1000);
+        Date dateTime = calendar.getTime();
 
         String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
         String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -166,7 +168,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
 
         // populate hashmap
-        DataPoint dataPoint = new DataPoint(date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
+        DataPoint dataPoint = new DataPoint(dateTime, date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
         data.put(dataPointTime, dataPoint);
         keys.add(dataPointTime);
     }
@@ -177,7 +179,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.isSending = false;
         this.isLogging = false;
         //this.messageSender = new MessageSender();
-        this.data = new HashMap<>();
+        this.data = new TreeMap<>();
         this.keys = new ArrayList<>();
         this.dataName = "";
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
