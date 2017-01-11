@@ -16,12 +16,14 @@ public class DataSet {
     private HashMap<String, DataPoint> data;
     private ArrayList<String> keys;
     private String dataName;
+    private String[] sensorNames;
 
 
-    public DataSet(HashMap<String, DataPoint> data, ArrayList<String> keys, String dataName) {
+    public DataSet(HashMap<String, DataPoint> data, ArrayList<String> keys, String dataName, String[] sensorNames) {
         this.data = data;
         this.keys = keys;
         this.dataName = dataName;
+        this.sensorNames = sensorNames;
     }
 
 
@@ -29,12 +31,14 @@ public class DataSet {
     public HashMap<String, DataPoint> getData() { return data; }
     public ArrayList<String> getKeys() { return keys; }
     public String getDataName() { return dataName; }
+    public String[] getSensorNames() { return this.sensorNames; }
 
 
     // setters
     public void setData(HashMap<String, DataPoint> data) { this.data = data; }
     public void setKeys(ArrayList<String> keys) { this.keys = keys; }
     public void setDataName(String name) { this.dataName = name; }
+    public void setSensorNames(String[] sensorNames) { this.sensorNames = sensorNames; }
 
 
     // TODO - We may want this somewhere since you can send data logs via email.

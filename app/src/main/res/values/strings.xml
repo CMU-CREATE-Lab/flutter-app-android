@@ -159,5 +159,25 @@
     <string name="flutter">Flutter</string>
     <string name="no_relationship">No Relationship</string>
     <string name="time">Time</string>
+    <string name="record_data_set">Record Data Set</string>
+    <string name="for_how_long">For how long?</string>
+    <string name="times_per">times per</string>
+    <string name="data_set_name">Data Set Name</string>
+    <string name="for_word">for</string>
+    <string name="start_recording">Start Recording</string>
+
+    <string-array name="time_array">
+        <item>minute</item>
+        <item>hour</item>
+        <item>day</item>
+        <item>week</item>
+    </string-array>
+
+    <string-array name="times_array">
+        <item>minutes</item>
+        <item>hours</item>
+        <item>days</item>
+        <item>weeks</item>
+    </string-array>
 
 </resources>

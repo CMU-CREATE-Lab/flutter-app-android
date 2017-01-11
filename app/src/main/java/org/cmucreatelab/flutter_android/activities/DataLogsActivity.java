@@ -19,7 +19,10 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -27,7 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 // TODO - We need to make a database to hold the data logs
-public class DataLogsActivity extends BaseNavigationActivity {
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener {
+
+    public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
     private GlobalHandler globalHandler;
 
@@ -110,6 +115,8 @@ public class DataLogsActivity extends BaseNavigationActivity {
     @OnClick(R.id.text_record_data)
     public void onClickTextRecordData() {
         Log.d(Constants.LOG_TAG, "onClickTextRecordData");
+        RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(this);
+        recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -117,7 +124,6 @@ public class DataLogsActivity extends BaseNavigationActivity {
     public void onClickRelativeFlutterLog() {
         Log.d(Constants.LOG_TAG, "onClickRelativeFlutterLog");
         if (dataSetOnFlutter != null) {
-            // TODO - Load the data log (make visible to user) using an adapter
             progressDataLogSelected.setVisibility(ProgressBar.VISIBLE);
             findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
             workingDataSet = dataSetOnFlutter;
@@ -127,21 +133,27 @@ public class DataLogsActivity extends BaseNavigationActivity {
             TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
             TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
             TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
-            sensor1Type.setText("TODO");
-            sensor2Type.setText("TODO");
-            sensor3Type.setText("TODO");
-            //sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[0].getOrangeImageIdSm()), null, null);
-            //sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[1].getOrangeImageIdSm()), null, null);
-            //sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[2].getOrangeImageIdSm()), null, null);
+            sensor1Type.setText(workingDataSet.getSensorNames()[0]);
+            sensor2Type.setText(workingDataSet.getSensorNames()[1]);
+            sensor3Type.setText(workingDataSet.getSensorNames()[2]);
+            /*sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[0].getOrangeImageIdSm()), null, null);
+            sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[1].getOrangeImageIdSm()), null, null);
+            sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[2].getOrangeImageIdSm()), null, null);*/
 
             Iterator it = workingDataSet.getData().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 System.out.println(pair.getKey() + " = " + pair.getValue());
                 dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
-                it.remove(); // avoids a ConcurrentModificationException
+                it.remove();
             }
         }
     }
 
+
+    @Override
+    public void onDataRecord(String name, int interval, int sample) {
+        Log.d(Constants.LOG_TAG, "onDataRecord");
+        globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
+    }
 }

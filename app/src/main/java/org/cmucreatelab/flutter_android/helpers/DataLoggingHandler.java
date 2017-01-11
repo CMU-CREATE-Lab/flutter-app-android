@@ -1,13 +1,16 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
@@ -18,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Steve on 12/14/2016.
  */
-// TODO - may make a DataSet class to hold dataset details
+
+// TODO - properly name a data log and properly start logging
 
 public class DataLoggingHandler implements FlutterMessageListener {
 
@@ -32,7 +36,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private Context appContext;
     private GlobalHandler globalHandler;
-    private MessageSender messageSender;
+    private SharedPreferences sharedPreferences;
 
     private DataSetListener dataSetListener;
 
@@ -86,7 +90,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    private void readNumberOfPoints(String output) {
+    public void readNumberOfPoints(String output) {
+        Log.d(Constants.LOG_TAG, "readNumberOfPoints");
         String temp = output.substring(2, output.length());
 
         // number of points
@@ -104,15 +109,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
         temp = temp.substring(num.length()+1, temp.length());
         isLogging = Boolean.valueOf(temp);
 
-        // Now populate the actual data set
-        messageSender = new MessageSender();
-        String[] messages = new String[numberOfPoints];
-        for (int i = 0; i < numberOfPoints; i++) {
-            messages[i] = READ_POINT + "," + i;
-        }
-
         if (numberOfPoints > 0) {
-            messageSender.execute(messages);
+            for (int i = 0; i < numberOfPoints; i++) {
+                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + i));
+            }
         } else {
             dataSetListener.onDataSetDetailsPopulated(null);
         }
@@ -141,6 +141,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
         }
         else {
             amOrPm = "PM";
+        }
+
+        if (hour.equals("0")) {
+            hour = "12";
         }
 
         time.append(hour + ":");
@@ -172,10 +176,11 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.appContext = context;
         this.isSending = false;
         this.isLogging = false;
-        this.messageSender = new MessageSender();
+        //this.messageSender = new MessageSender();
         this.data = new HashMap<>();
         this.keys = new ArrayList<>();
         this.dataName = "";
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 
@@ -184,9 +189,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    // TODO - Do we want to delete the data log that is currently on the device before we start to log again?
     public void startLogging(int interval, int samples, String logName) {
         globalHandler = GlobalHandler.getInstance(appContext);
-        String[] messages = new String[2];
 
         StringBuilder builder = new StringBuilder();
         String timestamp = getTimeInHex();
@@ -194,10 +199,14 @@ public class DataLoggingHandler implements FlutterMessageListener {
         String samplesString = getSamplesInHex(samples);
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
 
-        messages[0] = builder.toString();
-        messages[1] = "n," + logName;
-        this.messageSender = new MessageSender();
-        this.messageSender.execute(messages);
+        Sensor[] sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.PreferencesKeys.dataloggingSensor1, appContext.getString(sensors[0].getTypeTextId()));
+        editor.putString(Constants.PreferencesKeys.dataloggingSensor2, appContext.getString(sensors[1].getTypeTextId()));
+        editor.putString(Constants.PreferencesKeys.dataloggingSensor3, appContext.getString(sensors[2].getTypeTextId()));
+
+        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage("n," + logName));
+        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(builder.toString()));
     }
 
 
@@ -205,56 +214,24 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Log.d(Constants.LOG_TAG, "populateDataSetDetails");
         globalHandler = GlobalHandler.getInstance(appContext);
         globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
-        messageSender = new MessageSender();
-        String[] messages = new String[2];
-        messages[0] = READ_LOG_NAME;
-        messages[1] = READ_NUMBER_OF_POINTS;
-        messageSender.execute(messages);
+
+        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_LOG_NAME));
+        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_NUMBER_OF_POINTS));
     }
 
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
+        if (data.size() == numberOfPoints && data.size() != 0) {
+            String[] sensorNames = new String[3];
+            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor1, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor1));
+            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor2, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor2));
+            sensorNames[0] = sharedPreferences.getString(Constants.PreferencesKeys.dataloggingSensor3, (String) Constants.DEFAULT_SETTINGS.get(Constants.PreferencesKeys.dataloggingSensor3));
+            DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
+            dataSetListener.onDataSetDetailsPopulated(dataSet);
+        }
         isSending = false;
-    }
-
-
-    private class MessageSender extends AsyncTask<String, Void, DataSet> {
-
-        @Override
-        protected DataSet doInBackground(String... strings) {
-            isSending = true;
-
-            for (int i = 0; i < strings.length; i++) {
-                Log.d(Constants.LOG_TAG, String.valueOf(i));
-                // TODO ?
-                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(strings[i]));
-                while (isSending) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                isSending = true;
-            }
-            isSending = false;
-
-            if (data.size() != 0) {
-                DataSet dataSet = new DataSet(data, keys, dataName);
-                return dataSet;
-            } else {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(DataSet dataSet) {
-            super.onPostExecute(dataSet);
-            if (dataSet != null)
-                dataSetListener.onDataSetDetailsPopulated(dataSet);
-        }
     }
 
 

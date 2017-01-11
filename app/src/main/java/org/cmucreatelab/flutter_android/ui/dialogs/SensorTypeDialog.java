@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
 import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
 import org.cmucreatelab.flutter_android.classes.sensors.Distance;
@@ -63,7 +64,7 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
 
         Bundle args = new Bundle();
         args.putInt(Sensor.SENSOR_PORT_KEY, portNumber);
-        args.putSerializable(Constants.SENSORS_ACTIVITY_KEY, serializable);
+        args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
         sensorTypeDialog.setArguments(args);
 
         return sensorTypeDialog;
@@ -75,7 +76,7 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         super.onCreateDialog(savedInstanceState);
         portNumber = getArguments().getInt(Sensor.SENSOR_PORT_KEY);
         sensorText = getSensorText(portNumber);
-        sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(Constants.SENSORS_ACTIVITY_KEY);
+        sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensor_types, null);

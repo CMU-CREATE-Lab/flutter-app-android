@@ -44,6 +44,7 @@ public class Session implements FlutterMessageListener {
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
+        Log.d(Constants.LOG_TAG, "onFlutterMessageReceived - " + " " + request + " "  + response);
         if (response.equals("OK") || response.equals("FAIL")) {
             Log.v(Constants.LOG_TAG,"ignoring onFlutterMessageReceived="+response);
             return;
@@ -99,7 +100,7 @@ public class Session implements FlutterMessageListener {
                 }
                 break;
             case FlutterProtocol.Commands.READ_POINT:
-                if (args.length != 5) {
+                if (args.length != 3) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_POINT="+response);
                 } else {
                     // If the time is ffffffff, there is no point available
