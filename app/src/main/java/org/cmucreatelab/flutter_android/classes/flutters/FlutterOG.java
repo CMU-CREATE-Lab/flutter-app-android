@@ -94,7 +94,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     public void setSensors(Sensor[] sensors) {
         mSensors = sensors;
     }
-    public void setDatatSet(DataSet datatSet) { mDataSet = datatSet; }
+    public void setDatatSet(DataSet dataSet) { mDataSet = dataSet; }
 
 
     public interface PopulatedDataSetListener {

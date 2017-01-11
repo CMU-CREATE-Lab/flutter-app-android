@@ -145,7 +145,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 Map.Entry pair = (Map.Entry)it.next();
                 System.out.println(pair.getKey() + " = " + pair.getValue());
                 dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
-                it.remove();
             }
         }
     }
