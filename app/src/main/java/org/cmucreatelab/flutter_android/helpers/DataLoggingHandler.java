@@ -165,18 +165,18 @@ public class DataLoggingHandler implements FlutterMessageListener {
             Integer sensor2 = Integer.parseInt(sensorValues[1], 16);
             Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
 
-            // populate hashmap
+            // populate treemap
             DataPoint dataPoint = new DataPoint(dateTime, date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
             data.put(dataPointTime, dataPoint);
             keys.add(dataPointTime);
         }
+        Log.d(Constants.LOG_TAG, "size - " + data.size());
     }
 
 
     public DataLoggingHandler(Context context) {
         this.appContext = context;
         this.isLogging = false;
-        //this.messageSender = new MessageSender();
         this.data = new TreeMap<>();
         this.keys = new ArrayList<>();
         this.dataName = "";
@@ -211,7 +211,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     public void populatedDataSet(DataSetListener dataSetListener) {
         this.dataSetListener = dataSetListener;
-        globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
+        this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
+        this.data.clear();
         for (int i = 0; i < numberOfPoints; i++) {
             globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
         }
@@ -223,9 +224,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
         if (data.size() == numberOfPoints && data.size() != 0) {
             String[] sensorNames = new String[3];
-            sensorNames[0] = "TODO";
-            sensorNames[1] = "TODO";
-            sensorNames[2] = "TODO";
+            sensorNames[0] = "Sensor 1";
+            sensorNames[1] = "Sensor 2";
+            sensorNames[2] = "Sensor 3";
             DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
             dataSetListener.onDataSetPopulated(dataSet);
         }
