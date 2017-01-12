@@ -41,7 +41,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
     private int numberOfPoints;
     private int remainingPoints;
     private boolean isLogging;
-    private boolean isSending;
 
     private ArrayList<String> keys;
     private String dataName;
@@ -113,62 +112,69 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     public void readPoint(String output) {
         Log.d(Constants.LOG_TAG, "DataLoggingHandler.readPoint");
-        String temp = output.substring(2, output.length());
-        String[] sensorValues = new String[3];
+        // TODO - temporary fix to corrupt data points
+        if (output.contains("ffffffff")) {
+            DataPoint dataPoint = new DataPoint(new Date(), "0/00/0000", "0:00", "0", "0", "0");
+            Calendar calendar = Calendar.getInstance();
+            data.put(String.valueOf(calendar.getTimeInMillis()), dataPoint);
+            keys.add(String.valueOf(calendar.getTimeInMillis()));
+        } else {
+            String temp = output.substring(2, output.length());
+            String[] sensorValues = new String[3];
 
-        int index = temp.indexOf(",");
-        String dataPointTime = temp.substring(0, index);
-        Calendar calendar = Calendar.getInstance();
-        StringBuilder date = new StringBuilder();
-        StringBuilder time = new StringBuilder();
-        calendar.setTimeInMillis(Long.parseLong(dataPointTime, 16)*1000);
-        Date dateTime = calendar.getTime();
+            int index = temp.indexOf(",");
+            String dataPointTime = temp.substring(0, index);
+            Calendar calendar = Calendar.getInstance();
+            StringBuilder date = new StringBuilder();
+            StringBuilder time = new StringBuilder();
+            calendar.setTimeInMillis(Long.parseLong(dataPointTime, 16)*1000);
+            Date dateTime = calendar.getTime();
 
-        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        String year = String.valueOf(calendar.get(Calendar.YEAR));
-        String hour = String.valueOf(calendar.get(Calendar.HOUR));
-        String minute = String.valueOf(calendar.get(Calendar.MINUTE));
-        String amOrPm = "";
-        if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
-            amOrPm = "AM";
+            String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+            String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            String hour = String.valueOf(calendar.get(Calendar.HOUR));
+            String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+            String amOrPm = "";
+            if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
+                amOrPm = "AM";
+            }
+            else {
+                amOrPm = "PM";
+            }
+
+            if (hour.equals("0")) {
+                hour = "12";
+            }
+
+            time.append(hour + ":");
+            if (minute.length() < 2) {
+                time.append("0" + minute + " " + amOrPm);
+            }
+            else {
+                time.append(minute + " " + amOrPm);
+            }
+            date.append(month + "/" + day + "/" + year);
+
+            temp = temp.substring(dataPointTime.length()+1, temp.length());
+            sensorValues[0] = temp.substring(0, 2);
+            temp = temp.substring(sensorValues[0].length(), temp.length());
+            sensorValues[1] = temp.substring(0,2);
+            sensorValues[2] = temp.substring(sensorValues[1].length(), temp.length());
+            Integer sensor1 = Integer.parseInt(sensorValues[0], 16);
+            Integer sensor2 = Integer.parseInt(sensorValues[1], 16);
+            Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
+
+            // populate hashmap
+            DataPoint dataPoint = new DataPoint(dateTime, date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
+            data.put(dataPointTime, dataPoint);
+            keys.add(dataPointTime);
         }
-        else {
-            amOrPm = "PM";
-        }
-
-        if (hour.equals("0")) {
-            hour = "12";
-        }
-
-        time.append(hour + ":");
-        if (minute.length() < 2) {
-            time.append("0" + minute + " " + amOrPm);
-        }
-        else {
-            time.append(minute + " " + amOrPm);
-        }
-        date.append(month + "/" + day + "/" + year);
-
-        temp = temp.substring(dataPointTime.length()+1, temp.length());
-        sensorValues[0] = temp.substring(0, 2);
-        temp = temp.substring(sensorValues[0].length(), temp.length());
-        sensorValues[1] = temp.substring(0,2);
-        sensorValues[2] = temp.substring(sensorValues[1].length(), temp.length());
-        Integer sensor1 = Integer.parseInt(sensorValues[0], 16);
-        Integer sensor2 = Integer.parseInt(sensorValues[1], 16);
-        Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
-
-        // populate hashmap
-        DataPoint dataPoint = new DataPoint(dateTime, date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
-        data.put(dataPointTime, dataPoint);
-        keys.add(dataPointTime);
     }
 
 
     public DataLoggingHandler(Context context) {
         this.appContext = context;
-        this.isSending = false;
         this.isLogging = false;
         //this.messageSender = new MessageSender();
         this.data = new TreeMap<>();
@@ -215,16 +221,13 @@ public class DataLoggingHandler implements FlutterMessageListener {
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
-        if (request.charAt(0) == FlutterProtocol.Commands.READ_POINT) {
-            String substring = request.substring(2,request.length());
-            if (substring.equals(String.valueOf(numberOfPoints-1))) {
-                    String[] sensorNames = new String[3];
-                    sensorNames[0] = "TODO";
-                    sensorNames[1] = "TODO";
-                    sensorNames[2] = "TODO";
-                    DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
-                    dataSetListener.onDataSetPopulated(dataSet);
-            }
+        if (data.size() == numberOfPoints && data.size() != 0) {
+            String[] sensorNames = new String[3];
+            sensorNames[0] = "TODO";
+            sensorNames[1] = "TODO";
+            sensorNames[2] = "TODO";
+            DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
+            dataSetListener.onDataSetPopulated(dataSet);
         }
     }
 

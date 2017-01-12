@@ -104,16 +104,17 @@ public class Session implements FlutterMessageListener {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_POINT="+response);
                 } else {
                     // If the time is ffffffff, there is no point available
-                    if (args[1].equals("ffffffff")) {
+                    // TODO - temporarily commented out until we figure out what exactly to do with corrupted points
+                    /*if (args[1].equals("ffffffff")) {
                         Log.w(Constants.LOG_TAG,"no point available for READ_POINT (first arg is ffffffff)");
-                    } else {
+                    } else {*/
 //                        long unixTime = Long.valueOf(args[1], 16);
 //                        short sensor1, sensor2, sensor3;
 //                        sensor1 = Integer.valueOf(args[2], 16).shortValue();
 //                        sensor2 = Integer.valueOf(args[3], 16).shortValue();
 //                        sensor3 = Integer.valueOf(args[4], 16).shortValue();
                         GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readPoint(response);
-                    }
+                    //}
                 }
                 break;
             case FlutterProtocol.Commands.DELETE_LOG:
