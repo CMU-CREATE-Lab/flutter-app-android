@@ -14,12 +14,13 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="97dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/flutterconnectgraphic"
         android:padding="10dp"/>
 
     <TextView
+        android:text="@string/no_flutter_default"
         android:id="@+id/text_no_flutter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

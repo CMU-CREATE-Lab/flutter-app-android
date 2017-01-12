@@ -36,6 +36,14 @@ public class Settings {
     }
 
 
+    public void invertOutputs() {
+        int temp;
+        temp = getOutputMax();
+        setOutputMax(getOutputMin());
+        setOutputMin(temp);
+    }
+
+
     // getters
 
     public int getOutputMax() {

@@ -73,6 +73,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     private RelativeLayout relativeVolume;
     private RelativeLayout relativePitch;
     private Button saveButton;
+    private View view;
 
     private Settings pitchSettings;
     private Settings volumeSettings;
@@ -144,7 +145,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_speakers, null);
+        this.view = inflater.inflate(R.layout.dialog_speakers, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
@@ -355,6 +356,9 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
             // set a sensor by default
             if (volumeSettings.getSensor().getClass() == NoSensor.class) {
                 volumeSettings.setSensor(sensor);
+                volumeSettings.setOutputMin(100);
+                volumeSettings.setOutputMax(100);
+                updateViews(view);
             }
             if (pitchSettings.getSensor().getClass() == NoSensor.class) {
                 pitchSettings.setSensor(sensor);

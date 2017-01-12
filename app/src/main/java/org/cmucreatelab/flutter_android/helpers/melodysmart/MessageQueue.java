@@ -23,13 +23,7 @@ public class MessageQueue {
     private Timer messageSendingTimer;
     private Timer messageTimeout;
 
-    // (from steve)
-    // So even though there is a callback so I do not send messages on top of each other,
-    // the flutter still seems to need some time in order to send all of the messages successfully.
-    // For example, making an led relationship we need to send three separate messages for each color (rgb)
-    // This is why I put a simple sleep to give the flutter some time.
-    // Without this, only the last color would be set, blue.
-    private static final int MESSAGE_SENDING_TIMER_DELAY_IN_MILLISECONDS = 300;
+    private static final int MESSAGE_SENDING_TIMER_DELAY_IN_MILLISECONDS = 100;
     // if we do not receive a response within this time, recover
     private static final int MESSAGE_TIMEOUT_WAIT_IN_MILLISECONDS = 3000;
 

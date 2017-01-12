@@ -148,6 +148,10 @@ public class Session implements FlutterMessageListener {
                         settings.setOutputMax(omax);
                         settings.getAdvancedSettings().setInputMin(imin);
                         settings.getAdvancedSettings().setInputMax(imax);
+                        // TODO @tasota hacked for inverted distance
+                        if (sensor.getSensorType() == FlutterProtocol.InputTypes.DISTANCE) {
+                            settings.invertOutputs();
+                        }
                         output.setIsLinked(true, output);
                         Log.v(Constants.LOG_TAG,"LINK "+protocolString);
                     }

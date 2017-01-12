@@ -53,7 +53,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
                 break;
             case 3:
                 currentNote.setText("F");
-                sheetMusic.setImageResource(R.drawable.g1);
+                sheetMusic.setImageResource(R.drawable.f1);
                 result = Constants.MusicNoteFrequencies.F_4;
                 break;
             case 4:
@@ -78,7 +78,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
                 break;
             case 8:
                 currentNote.setText("D");
-                sheetMusic.setImageResource(R.drawable.e2);
+                sheetMusic.setImageResource(R.drawable.d2);
                 result = Constants.MusicNoteFrequencies.D_5;
                 break;
             case 9:
