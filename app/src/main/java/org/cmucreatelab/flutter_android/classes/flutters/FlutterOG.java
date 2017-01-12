@@ -67,15 +67,14 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     public void populateDataSet(Context context, PopulatedDataSetListener listener) {
         Log.d(Constants.LOG_TAG, "populateDataSet");
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
-        globalHandler.dataLoggingHandler.setDataSetListener(this);
         this.listener = listener;
-        globalHandler.dataLoggingHandler.populateDataSetDetails();
+        globalHandler.dataLoggingHandler.populatedDataSet(this);
     }
 
 
     @Override
-    public void onDataSetDetailsPopulated(DataSet dataSet) {
-        Log.d(Constants.LOG_TAG, "onDataSetDetailsPopulated");
+    public void onDataSetPopulated(DataSet dataSet) {
+        Log.d(Constants.LOG_TAG, "FlutterOG.onDataSetPopulated");
         this.mDataSet = dataSet;
         listener.onDataSetPopulated();
     }

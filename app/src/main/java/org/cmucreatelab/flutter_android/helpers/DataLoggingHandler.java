@@ -1,17 +1,14 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -38,6 +35,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     private Context appContext;
     private GlobalHandler globalHandler;
 
+    private DataSetPointsListener dataSetPointsListener;
     private DataSetListener dataSetListener;
 
     private int numberOfPoints;
@@ -109,17 +107,12 @@ public class DataLoggingHandler implements FlutterMessageListener {
         temp = temp.substring(num.length()+1, temp.length());
         isLogging = Boolean.valueOf(temp);
 
-        if (numberOfPoints > 0) {
-            for (int i = 0; i < numberOfPoints; i++) {
-                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + i));
-            }
-        } else {
-            dataSetListener.onDataSetDetailsPopulated(null);
-        }
+        dataSetPointsListener.onDataSetPointsPopulated(true);
     }
 
 
     public void readPoint(String output) {
+        Log.d(Constants.LOG_TAG, "DataLoggingHandler.readPoint");
         String temp = output.substring(2, output.length());
         String[] sensorValues = new String[3];
 
@@ -184,11 +177,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    public void setDataSetListener(DataSetListener dataSetListener) {
-        this.dataSetListener = dataSetListener;
-    }
-
-
     // TODO - Do we want to delete the data log that is currently on the device before we start to log again?
     public void startLogging(int interval, int samples, String logName) {
         globalHandler = GlobalHandler.getInstance(appContext);
@@ -204,8 +192,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    public void populateDataSetDetails() {
-        Log.d(Constants.LOG_TAG, "populateDataSetDetails");
+    public void populatePointsAvailable(DataSetPointsListener dataSetPointsListener) {
+        Log.d(Constants.LOG_TAG, "populatePointsAvailable");
+        this.dataSetPointsListener = dataSetPointsListener;
         globalHandler = GlobalHandler.getInstance(appContext);
         globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
 
@@ -214,23 +203,46 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    public void populatedDataSet(DataSetListener dataSetListener) {
+        this.dataSetListener = dataSetListener;
+        globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
+        for (int i = 0; i < numberOfPoints; i++) {
+            globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+        }
+    }
+
+
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
-        if (data.size() == numberOfPoints && data.size() != 0) {
-            String[] sensorNames = new String[3];
-            sensorNames[0] = "TODO";
-            sensorNames[1] = "TODO";
-            sensorNames[2] = "TODO";
-            DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
-            dataSetListener.onDataSetDetailsPopulated(dataSet);
+        if (request.charAt(0) == FlutterProtocol.Commands.READ_POINT) {
+            String substring = request.substring(2,request.length());
+            if (substring.equals(String.valueOf(numberOfPoints-1))) {
+                    String[] sensorNames = new String[3];
+                    sensorNames[0] = "TODO";
+                    sensorNames[1] = "TODO";
+                    sensorNames[2] = "TODO";
+                    DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
+                    dataSetListener.onDataSetPopulated(dataSet);
+            }
         }
-        isSending = false;
+    }
+
+
+    // getters
+
+
+    public String getDataName() { return dataName; }
+    public int getNumberOfPoints() { return numberOfPoints; }
+
+
+    public interface DataSetPointsListener {
+        public void onDataSetPointsPopulated(boolean isSuccess);
     }
 
 
     public interface DataSetListener {
-        public void onDataSetDetailsPopulated(DataSet dataSet);
+        public void onDataSetPopulated(DataSet dataSet);
     }
 
 }

@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavig
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
@@ -39,7 +40,8 @@ import butterknife.OnClick;
  * An activity that can scan for flutters nearby and connect to them.
  *
  */
-public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener, FlutterOG.PopulatedDataSetListener {
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener,
+        DataLoggingHandler.DataSetPointsListener{
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -228,11 +230,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         scanForDevice(true);
     }
 
-
     // TODO - this is something we will need to move/change once we have a way to load
     @Override
-    public void onDataSetPopulated() {
-        Log.d(Constants.LOG_TAG, "AppLandingActivity.onDataSetPopulated");
+    public void onDataSetPointsPopulated(boolean isSuccess) {
+        Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
     }
@@ -244,7 +245,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterConnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
-        GlobalHandler.getInstance(this).sessionHandler.getSession().getFlutter().populateDataSet(this, this);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        globalHandler.dataLoggingHandler.populatePointsAvailable(this);
     }
 
 
