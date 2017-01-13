@@ -45,7 +45,7 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
 
     private String name;
     private DataSet mDataSet;
-    private DataSetListener listener;
+    private PopulatedDataSetListener listener;
 
 
     public FlutterOG(BluetoothDevice device, String name) {
@@ -128,18 +128,17 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     }
 
 
-    public void populateDataSet(Context context, DataSetListener listener) {
+    public void populateDataSet(Context context, PopulatedDataSetListener listener) {
         Log.d(Constants.LOG_TAG, "populateDataSet");
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
-        globalHandler.dataLoggingHandler.setDataSetListener(this);
         this.listener = listener;
-        globalHandler.dataLoggingHandler.populateDataSetDetails();
+        globalHandler.dataLoggingHandler.populatedDataSet(this);
     }
 
 
     @Override
-    public void onDataSetDetailsPopulated(DataSet dataSet) {
-        Log.d(Constants.LOG_TAG, "onDataSetDetailsPopulated");
+    public void onDataSetPopulated(DataSet dataSet) {
+        Log.d(Constants.LOG_TAG, "FlutterOG.onDataSetPopulated");
         this.mDataSet = dataSet;
         listener.onDataSetPopulated();
     }
@@ -158,10 +157,10 @@ public class FlutterOG extends Flutter implements DataLoggingHandler.DataSetList
     public void setSensors(Sensor[] sensors) {
         mSensors = sensors;
     }
-    public void setDatatSet(DataSet datatSet) { mDataSet = datatSet; }
+    public void setDatatSet(DataSet dataSet) { mDataSet = dataSet; }
 
 
-    public interface DataSetListener {
+    public interface PopulatedDataSetListener {
         void onDataSetPopulated();
     }
 

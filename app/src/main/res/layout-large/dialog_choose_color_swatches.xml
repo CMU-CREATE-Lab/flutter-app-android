@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:text="Selected Color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3" />
+
+    <FrameLayout
+        android:id="@+id/frame_final_color"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:padding="2dp"/>
+
+    <TextView
+        android:text="Swatches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_red"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_red"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_orange"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_orange"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_yellow"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_yellow"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_chartreuse_green"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_chartreuse_green"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_green"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_green"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_spring_green"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_spring_green"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_cyan"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_cyan"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_azure"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_azure"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_blue"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_blue"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_violet"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_violet"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_magenta"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_magenta"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_rose"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_rose"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_white"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/swatch_black"
+            android:adjustViewBounds="true"
+            android:id="@+id/imageView_black"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

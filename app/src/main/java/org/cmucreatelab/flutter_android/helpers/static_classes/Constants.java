@@ -1,5 +1,8 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
+import android.graphics.Color;
+import java.util.HashMap;
+
 /**
  * Created by Steve on 5/26/2016.
  *
@@ -40,12 +43,43 @@ public final class Constants {
         public static final int C_6 = 1047;
     }
 
+    public static final class ColorSwatches {
+        public static final int RED = Color.parseColor("#ff0000");
+        public static final int ORANGE = Color.parseColor("#ff7f00");
+        public static final int YELLOW = Color.parseColor("#ffff00");
+        public static final int CHARTREUSE_GREEN = Color.parseColor("#7fff00");
+        public static final int GREEN = Color.parseColor("#00ff00");
+        public static final int SPRING_GREEN = Color.parseColor("#00ff7f");
+        public static final int CYAN = Color.parseColor("#00ffff");
+        public static final int AZURE = Color.parseColor("#007fff");
+        public static final int BLUE = Color.parseColor("#0000ff");
+        public static final int VIOLET = Color.parseColor("#7f00ff");
+        public static final int MAGENTA = Color.parseColor("#ff00ff");
+        public static final int ROSE = Color.parseColor("#ff007f");
+        public static final int WHITE = Color.parseColor("#ffffff");
+        public static final int BLACK = Color.parseColor("#000000");
+    }
+
     // forces MessageQueue to throw away all "r" requests
     public static final boolean IGNORE_READ_SENSORS = false;
 
     // for activities
 
-    public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
+    // TODO - not sure if we will actually use these since messaging has been refactored
+    public static final class PreferencesKeys {
+        public static final String dataloggingSensor1 = "data_logging_sensor_1";
+        public static final String dataloggingSensor2 = "data_logging_sensor_2";
+        public static final String dataloggingSensor3 = "data_logging_sensor_3";
+        public static final String dataloggingName = "date_logging_name";
+    }
+
+    public static final HashMap<String, Object> DEFAULT_SETTINGS = new HashMap(){{
+        put(PreferencesKeys.dataloggingSensor1, "No Sensor");
+        put(PreferencesKeys.dataloggingSensor2, "No Sensor");
+        put(PreferencesKeys.dataloggingSensor3, "No Sensor");
+    }};
+
+    // for activities
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
 

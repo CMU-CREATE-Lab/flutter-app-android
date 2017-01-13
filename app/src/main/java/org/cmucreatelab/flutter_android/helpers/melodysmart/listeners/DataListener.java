@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.DeviceHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.MessageQueue;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -78,7 +77,11 @@ public class DataListener implements DataService.Listener {
             // handle parse
             mSession.onFlutterMessageReceived(currentMessage.getRequest(), response);
             // update views
-            mSession.getFlutterMessageListener().onFlutterMessageReceived(currentMessage.getRequest(), response);
+            if (mSession.getFlutterMessageListener() != null) {
+                mSession.getFlutterMessageListener().onFlutterMessageReceived(currentMessage.getRequest(), response);
+            } else {
+                Log.w(Constants.LOG_TAG,"Tried to call callback onFlutterMessageReceived but session FlutterMessageListener is null.");
+            }
         }
     }
 

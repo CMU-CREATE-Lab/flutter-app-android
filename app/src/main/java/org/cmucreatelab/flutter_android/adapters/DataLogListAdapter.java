@@ -27,6 +27,7 @@ public class DataLogListAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         public TextView dataLogName;
+        public TextView numberOfPoints;
     }
 
 
@@ -37,8 +38,8 @@ public class DataLogListAdapter extends BaseAdapter {
     }
 
 
-    public void addDevice(DataSet dataSet) {
-        Log.d(Constants.LOG_TAG, "Found device " + dataSet.getDataName());
+    public void addDataLog(DataSet dataSet) {
+        Log.d(Constants.LOG_TAG, "Found data set " + dataSet.getDataName());
         dataLogs.add(dataSet);
         notifyDataSetChanged();
     }
@@ -73,10 +74,10 @@ public class DataLogListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.list_item_device, null);
+            view = layoutInflater.inflate(R.layout.list_data_log, null);
             viewHolder = new ViewHolder();
-            viewHolder.dataLogName = (TextView) view.findViewById(R.id.device_name);
-
+            viewHolder.dataLogName = (TextView) view.findViewById(R.id.text_current_log_name);
+            viewHolder.numberOfPoints = (TextView) view.findViewById(R.id.text_num_points);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -85,8 +86,10 @@ public class DataLogListAdapter extends BaseAdapter {
         DataSet dataSet = dataLogs.get(i);
 
         final String dataLogName = dataSet.getDataName();
+        final int numPoints = dataSet.getData().size();
         if (dataLogName != null && dataLogName.length() > 0) {
             viewHolder.dataLogName.setText(dataLogName);
+            viewHolder.numberOfPoints.setText(String.valueOf(numPoints));
         } else {
             //viewHolder.dataLogName.setText(R.string.unknown_log);
         }

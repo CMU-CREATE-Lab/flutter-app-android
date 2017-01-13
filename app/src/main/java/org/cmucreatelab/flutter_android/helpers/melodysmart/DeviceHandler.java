@@ -59,6 +59,11 @@ public class DeviceHandler {
     }
 
 
+    public void clearMessages() {
+        messageQueue.clear();
+    }
+
+
     // connect/disconnect for a session
 
 
@@ -86,6 +91,7 @@ public class DeviceHandler {
         deviceListener = new DeviceListener(session);
         dataListener = new DataListener(session,this,messageQueue);
 
+        globalHandler.sessionHandler.updateProgressDialogMessage("Registering Listeners...");
         registerListeners();
         mMelodySmartDevice.connect(session.getFlutter().getDevice().getAddress());
     }
