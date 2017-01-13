@@ -215,6 +215,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             updateStaticViews();
             updateDynamicViews();
         }
+
+        // TODO hiding for first pilot as per issue #47
+        findViewById(R.id.button_simulate_data).setVisibility(View.INVISIBLE);
     }
 
 

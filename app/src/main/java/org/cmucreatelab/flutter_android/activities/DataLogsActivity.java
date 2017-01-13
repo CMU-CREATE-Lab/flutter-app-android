@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 
@@ -64,35 +65,44 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
         dataLoggingHandler = globalHandler.dataLoggingHandler;
-        flutter = globalHandler.sessionHandler.getSession().getFlutter();
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_default);
+        } else {
+            flutter = globalHandler.sessionHandler.getSession().getFlutter();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
-        toolbar.setContentInsetsAbsolute(0,0);
-        setSupportActionBar(toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
+            toolbar.setContentInsetsAbsolute(0, 0);
+            setSupportActionBar(toolbar);
 
-        TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
-        TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
-        TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
+            TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
+            TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
+            TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
 
-        logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
-        if (!dataLoggingHandler.getDataName().equals(null) && dataLoggingHandler.getNumberOfPoints() != 0) {
-            findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
-            textLogName.setText(dataLoggingHandler.getDataName());
-            textLogPoints.setText(String.valueOf(dataLoggingHandler.getNumberOfPoints()));
+            logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
+            if (!dataLoggingHandler.getDataName().equals(null) && dataLoggingHandler.getNumberOfPoints() != 0) {
+                findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
+                textLogName.setText(dataLoggingHandler.getDataName());
+                textLogPoints.setText(String.valueOf(dataLoggingHandler.getNumberOfPoints()));
+            }
+
+            dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
+            ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
+            listDataLogs.setAdapter(dataLogListAdapter);
+            listDataLogs.setOnItemClickListener(onDataLogClickListener);
+
+            dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
+            ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
+            listDataInstance.setAdapter(dataInstanceListAdapter);
+            listDataInstance.setOnItemClickListener(onDataLogClickListener);
+
+            progressDataLogSelected = (ProgressBar) findViewById(R.id.progress_load_data_log);
         }
 
-        dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
-        ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
-        listDataLogs.setAdapter(dataLogListAdapter);
-        listDataLogs.setOnItemClickListener(onDataLogClickListener);
-
-        dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
-        ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
-        listDataInstance.setAdapter(dataInstanceListAdapter);
-        listDataInstance.setOnItemClickListener(onDataLogClickListener);
-
-        progressDataLogSelected = (ProgressBar) findViewById(R.id.progress_load_data_log);
+        // TODO hiding for first pilot as per issue #47
+        findViewById(R.id.text_open_log).setVisibility(View.INVISIBLE);
+        findViewById(R.id.text_send_log).setVisibility(View.INVISIBLE);
+        findViewById(R.id.text_clean_up).setVisibility(View.INVISIBLE);
     }
 
 

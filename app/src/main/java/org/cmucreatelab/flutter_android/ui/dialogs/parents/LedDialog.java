@@ -164,6 +164,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_settings);
 
+        // TODO hiding for first pilot as per issue #47
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.INVISIBLE);
+
         return builder.create();
     }
 

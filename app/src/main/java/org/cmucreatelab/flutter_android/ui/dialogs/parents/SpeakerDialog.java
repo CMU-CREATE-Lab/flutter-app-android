@@ -170,6 +170,9 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
 
+        // TODO hiding for first pilot as per issue #47
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.INVISIBLE);
+
         return builder.create();
     }
 
