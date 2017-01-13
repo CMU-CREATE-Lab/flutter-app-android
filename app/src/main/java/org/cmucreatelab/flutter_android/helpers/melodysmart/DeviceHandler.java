@@ -59,6 +59,11 @@ public class DeviceHandler {
     }
 
 
+    public void clearMessages() {
+        messageQueue.clear();
+    }
+
+
     // connect/disconnect for a session
 
 

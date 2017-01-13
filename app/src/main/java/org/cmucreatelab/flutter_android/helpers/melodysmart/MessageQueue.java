@@ -34,10 +34,17 @@ public class MessageQueue {
             @Override
             public void timerExpires() {
                 if (currentMessage != null) {
-                    Log.e(Constants.LOG_TAG,"messageTimeout timerExpires; will not process request="+currentMessage.getRequest());
-                    // TODO @tasota this should likely trigger disconnecting from the Flutter
+                    if (currentMessage.numberOfAttemptedSends <= 1) {
+                        Log.e(Constants.LOG_TAG, "messageTimeout timerExpires; attempting to resend request=" + currentMessage.getRequest());
+                        messageTimeout.startTimer();
+                        dataService.send(currentMessage.getRequest().getBytes());
+                        currentMessage.numberOfAttemptedSends++;
+                    } else {
+                        Log.e(Constants.LOG_TAG,"messageTimeout timerExpires after multiple send attempts; will not process request="+currentMessage.getRequest());
+                        // TODO @tasota this should likely trigger disconnecting from the Flutter
+                        notifyMessageReceived();
+                    }
                 }
-                notifyMessageReceived();
             }
         };
         messageSendingTimer = new Timer(MESSAGE_SENDING_TIMER_DELAY_IN_MILLISECONDS) {
@@ -49,6 +56,7 @@ public class MessageQueue {
                     currentMessage = messages.poll();
                     Log.v(Constants.LOG_TAG,"messageSendingTimer timerExpires: SEND: '"+currentMessage.getRequest()+"'");
                     dataService.send(currentMessage.getRequest().getBytes());
+                    currentMessage.numberOfAttemptedSends++;
                 }
             }
         };
@@ -79,6 +87,17 @@ public class MessageQueue {
         }
         messages.add(message);
         sendNextMessage();
+    }
+
+
+    /**
+     * Clears the MessageQueue of all outstanding jobs.
+     */
+    void clear() {
+        Log.v(Constants.LOG_TAG,"Clearing "+messages.size()+" messages in MessageQueue...");
+        messageSendingTimer.stopTimer();
+        messages.clear();
+        notifyMessageReceived();
     }
 
 

@@ -11,6 +11,7 @@ import com.bluecreation.melodysmart.MelodySmartListener;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -47,6 +48,7 @@ public class DeviceListener implements MelodySmartListener {
     public void onDeviceDisconnected(final BLEError bleError) {
         Log.v(Constants.LOG_TAG, "DeviceListener.onDeviceDisconnected");
         deviceConnected = false;
+        GlobalHandler.getInstance(session.getCurrentActivity()).melodySmartDeviceHandler.clearMessages();
 
         // Check for errors
         if (bleError.getType() != BLEError.Type.NO_ERROR) {
