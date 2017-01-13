@@ -15,7 +15,7 @@ public final class Constants {
 
     public static final String LOG_TAG = "FlutterAndroid";
 
-    public static final String APP_VERSION = "1.0";
+    public static final String APP_VERSION = "1.0.0";
 
     public static final String FLUTTER_MAC_ADDRESS = "20:FA:BB";
 
