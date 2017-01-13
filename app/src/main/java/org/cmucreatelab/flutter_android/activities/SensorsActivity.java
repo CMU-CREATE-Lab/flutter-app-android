@@ -18,6 +18,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import butterknife.ButterKnife;
@@ -31,7 +32,11 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, RecordDataSensorDialog.DialogRecordDataSensorListener {
+
+    public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
+
+    private GlobalHandler globalHandler;
 
     // views
     private ImageView selectedView;
@@ -129,7 +134,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors);
         ButterKnife.bind(this);
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -167,7 +172,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @Override
     protected void onResume() {
         super.onResume();
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             session.setFlutterMessageListener(this);
@@ -178,7 +183,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
     @Override
     public void onBackPressed() {
-        GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.disconnect();
+        globalHandler.melodySmartDeviceHandler.disconnect();
         super.onBackPressed();
         finish();
     }
@@ -231,6 +236,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_record)
     public void onClickRecordData() {
         Log.d(Constants.LOG_TAG, "onClickRecordData");
+        RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(this);
+        recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -262,6 +269,16 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
 
         updateDynamicViews();
+    }
+
+
+    // RecordDataSensorDialog.DialogRecordDataSensorListener implementation
+
+
+    @Override
+    public void onDataRecord(String name, int interval, int sample) {
+        Log.d(Constants.LOG_TAG, "SensorsActivity.onDataRecord");
+        globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
     }
 
 

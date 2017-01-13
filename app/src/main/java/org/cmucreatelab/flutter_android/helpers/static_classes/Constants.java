@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.graphics.Color;
+import java.util.HashMap;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -64,7 +65,21 @@ public final class Constants {
 
     // for activities
 
-    public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
+    // TODO - not sure if we will actually use these since messaging has been refactored
+    public static final class PreferencesKeys {
+        public static final String dataloggingSensor1 = "data_logging_sensor_1";
+        public static final String dataloggingSensor2 = "data_logging_sensor_2";
+        public static final String dataloggingSensor3 = "data_logging_sensor_3";
+        public static final String dataloggingName = "date_logging_name";
+    }
+
+    public static final HashMap<String, Object> DEFAULT_SETTINGS = new HashMap(){{
+        put(PreferencesKeys.dataloggingSensor1, "No Sensor");
+        put(PreferencesKeys.dataloggingSensor2, "No Sensor");
+        put(PreferencesKeys.dataloggingSensor3, "No Sensor");
+    }};
+
+    // for activities
 
     public static final String SERIALIZABLE_KEY = "serializable_key";
 
