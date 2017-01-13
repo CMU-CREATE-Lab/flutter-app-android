@@ -1,6 +1,6 @@
 package org.cmucreatelab.flutter_android.helpers;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
@@ -30,6 +30,7 @@ public class SessionHandler {
 
     private GlobalHandler globalHandler;
     private Session session;
+    private ProgressDialog progressDialog;
 
 
     public SessionHandler(GlobalHandler globalHandler) {
@@ -37,9 +38,41 @@ public class SessionHandler {
     }
 
 
+    public void createProgressDialog(BaseNavigationActivity activity) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+        this.progressDialog = new ProgressDialog(activity);
+        progressDialog.setTitle("Loading");
+        updateProgressDialogMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+
+    public void updateProgressDialogMessage(String message) {
+        if (progressDialog == null) {
+            Log.e(Constants.LOG_TAG,"called updateProgressDialogMessage but progressDialog is null.");
+            return;
+        }
+        progressDialog.setMessage(message);
+    }
+
+
+    public void dismissProgressDialog() {
+        if (progressDialog == null) {
+            Log.e(Constants.LOG_TAG,"called dismissProgressDialog but progressDialog is null.");
+            return;
+        }
+        progressDialog.dismiss();
+        progressDialog = null;
+    }
+
+
     public void startSession(AppLandingActivity activity, FlutterOG flutterOG) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
         this.session = new Session(activity,flutterOG,activity,null);
+        createProgressDialog(activity);
         globalHandler.melodySmartDeviceHandler.connect(this.getSession());
     }
 
