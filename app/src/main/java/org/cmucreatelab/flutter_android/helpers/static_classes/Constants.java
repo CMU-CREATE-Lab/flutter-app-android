@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
+import android.graphics.Color;
+
 /**
  * Created by Steve on 5/26/2016.
  *
@@ -38,6 +40,23 @@ public final class Constants {
         public static final int A_5 = 880;
         public static final int B_5 = 988;
         public static final int C_6 = 1047;
+    }
+
+    public static final class ColorSwatches {
+        public static final int RED = Color.parseColor("#ff0000");
+        public static final int ORANGE = Color.parseColor("#ff7f00");
+        public static final int YELLOW = Color.parseColor("#ffff00");
+        public static final int CHARTREUSE_GREEN = Color.parseColor("#7fff00");
+        public static final int GREEN = Color.parseColor("#00ff00");
+        public static final int SPRING_GREEN = Color.parseColor("#00ff7f");
+        public static final int CYAN = Color.parseColor("#00ffff");
+        public static final int AZURE = Color.parseColor("#007fff");
+        public static final int BLUE = Color.parseColor("#0000ff");
+        public static final int VIOLET = Color.parseColor("#7f00ff");
+        public static final int MAGENTA = Color.parseColor("#ff00ff");
+        public static final int ROSE = Color.parseColor("#ff007f");
+        public static final int WHITE = Color.parseColor("#ffffff");
+        public static final int BLACK = Color.parseColor("#000000");
     }
 
     // forces MessageQueue to throw away all "r" requests
