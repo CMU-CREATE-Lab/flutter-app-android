@@ -30,7 +30,7 @@ import butterknife.OnClick;
  * Created by Steve on 1/9/2017.
  */
 
-public class RecordDataLoggingDialog extends BaseResizableDialog {
+public class RecordDataLoggingDialog extends BaseDataLoggingDialog {
 
     private DialogRecordDataLoggingListener dialogRecordDataLoggingListener;
 
@@ -39,23 +39,6 @@ public class RecordDataLoggingDialog extends BaseResizableDialog {
     private Spinner intervalSpinner;
     private EditText timePeriodText;
     private Spinner timePeriodSpinner;
-
-
-    private int timeToSeconds(String time) {
-        int result = 0;
-
-        if (time.equals("minute") || time.equals("minutes")) {
-            result = 60;
-        } else if(time.equals("hour") || time.equals("hours")) {
-            result = 3600;
-        } else if (time.equals("day") || time.equals("days")) {
-            result = 86400;
-        } else if(time.equals("week") || time.equals("weeks")) {
-            result = 604800;
-        }
-
-        return result;
-    }
 
 
     public static RecordDataLoggingDialog newInstance(Serializable serializable) {
@@ -108,28 +91,42 @@ public class RecordDataLoggingDialog extends BaseResizableDialog {
     public void onClickButtonStartRecording() {
         Log.d(Constants.LOG_TAG, "onClickButtonStartRecording");
         String name = dataSetNameText.getText().toString();
-        int intervalsT = Integer.valueOf(intervalsText.getText().toString());
-        // in seconds
-        int interval = 0;
+        if (!name.matches("")) {
+            String intervalString = intervalsText.getText().toString();
+            if (!intervalString.matches("")) {
+                String timerPeriodString = timePeriodText.getText().toString();
+                if (!timerPeriodString.matches("")) {
+                    int intervalsT = Integer.valueOf(intervalString);
+                    // in seconds
+                    int interval = 0;
 
-        String temp = intervalSpinner.getSelectedItem().toString();
-        interval = timeToSeconds(temp);
-        interval = interval / intervalsT;
+                    String temp = intervalSpinner.getSelectedItem().toString();
+                    interval = timeToSeconds(temp);
+                    interval = interval / intervalsT;
 
-        int timePeriodT = Integer.valueOf(timePeriodText.getText().toString());
-        // in seconds
-        int timePeriod = 0;
-        temp = timePeriodSpinner.getSelectedItem().toString();
-        timePeriod = timeToSeconds(temp);
-        timePeriod = timePeriodT * timePeriod;
-        int sample = timePeriod / interval;
+                    int timePeriodT = Integer.valueOf(timerPeriodString);
+                    // in seconds
+                    int timePeriod = 0;
+                    temp = timePeriodSpinner.getSelectedItem().toString();
+                    timePeriod = timeToSeconds(temp);
+                    timePeriod = timePeriodT * timePeriod;
+                    int sample = timePeriod / interval;
 
-        Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + name);
-        Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
-        Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
+                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + name);
+                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
+                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
 
-        dialogRecordDataLoggingListener.onDataRecord(name, interval, sample);
-        this.dismiss();
+                    dialogRecordDataLoggingListener.onDataRecord(name, interval, sample);
+                    this.dismiss();
+                } else {
+                    timePeriodText.setError(getString(R.string.this_field_cannot_be_blank));
+                }
+            } else {
+                intervalsText.setError(getString(R.string.this_field_cannot_be_blank));
+            }
+        } else {
+            dataSetNameText.setError(getString(R.string.this_field_cannot_be_blank));
+        }
     }
 
 

@@ -166,6 +166,8 @@
     <string name="data_set_name">Data Set Name</string>
     <string name="for_word">for</string>
     <string name="start_recording">Start Recording</string>
+    <string name="empty_data_name">Data Set Name is required!</string>
+    <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
 
     <string-array name="time_array">
         <item>minute</item>

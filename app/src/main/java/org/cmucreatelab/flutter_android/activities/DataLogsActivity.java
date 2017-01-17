@@ -96,12 +96,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
-    @OnClick(R.id.text_open_log)
-    public void onClickTextOpenLog() {
-        Log.d(Constants.LOG_TAG, "onClickTextOpenLog");
-    }
-
-
     @OnClick(R.id.text_send_log)
     public void onClickTextSendLog() {
         Log.d(Constants.LOG_TAG, "onClickTextSendLog");
@@ -122,12 +116,20 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
-    @OnClick(R.id.relative_flutter_log)
-    public void onClickRelativeFlutterLog() {
-        Log.d(Constants.LOG_TAG, "onClickRelativeFlutterLog");
+    private void loadFlutterDataLog() {
         globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
         progressDataLogSelected.setVisibility(ProgressBar.VISIBLE);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
+    }
+    @OnClick(R.id.text_open_log)
+    public void onClickTextOpenLog() {
+        Log.d(Constants.LOG_TAG, "onClickTextOpenLog");
+        loadFlutterDataLog();
+    }
+    @OnClick(R.id.relative_flutter_log)
+    public void onClickRelativeFlutterLog() {
+        Log.d(Constants.LOG_TAG, "onClickRelativeFlutterLog");
+        loadFlutterDataLog();
     }
 
 
