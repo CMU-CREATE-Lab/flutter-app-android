@@ -32,7 +32,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 // TODO - We need to make a database to hold the data logs
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, FlutterOG.PopulatedDataSetListener {
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, FlutterOG.PopulatedDataSetListener,
+    DataLoggingHandler.DataSetPointsListener{
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -46,6 +47,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private FlutterOG flutter;
 
     private DataSet workingDataSet;
+    private boolean isDataLogSelected;
 
 
     private AdapterView.OnItemClickListener onDataLogClickListener = new AdapterView.OnItemClickListener() {
@@ -74,26 +76,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             toolbar.setContentInsetsAbsolute(0,0);
             setSupportActionBar(toolbar);
 
-            TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
-            TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
-            TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
-
-            logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
-            if (!dataLoggingHandler.getDataName().equals(null) && dataLoggingHandler.getNumberOfPoints() != 0) {
-                findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
-                textLogName.setText(dataLoggingHandler.getDataName());
-                textLogPoints.setText(String.valueOf(dataLoggingHandler.getNumberOfPoints()));
-            }
-
-            dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
-            ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
-            listDataLogs.setAdapter(dataLogListAdapter);
-            listDataLogs.setOnItemClickListener(onDataLogClickListener);
-
-            dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
-            ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
-            listDataInstance.setAdapter(dataInstanceListAdapter);
-            listDataInstance.setOnItemClickListener(onDataLogClickListener);
+            globalHandler.sessionHandler.createProgressDialog(this);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
+            dataLoggingHandler.populatePointsAvailable(this);
+            isDataLogSelected = false;
         }
     }
 
@@ -123,11 +109,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
         globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
+        isDataLogSelected = true;
     }
     @OnClick(R.id.text_open_log)
     public void onClickTextOpenLog() {
-        Log.d(Constants.LOG_TAG, "onClickTextOpenLog");
-        loadFlutterDataLog();
+        if (!isDataLogSelected) {
+            Log.d(Constants.LOG_TAG, "onClickTextOpenLog");
+            loadFlutterDataLog();
+        }
     }
     @OnClick(R.id.relative_flutter_log)
     public void onClickRelativeFlutterLog() {
@@ -169,6 +158,38 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
             });
         }
+    }
+
+
+    @Override
+    public void onDataSetPointsPopulated(boolean isSuccess) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
+                TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
+                TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
+
+                logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
+                if (!dataLoggingHandler.getDataName().equals(null) && dataLoggingHandler.getNumberOfPoints() != 0) {
+                    findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
+                    textLogName.setText(dataLoggingHandler.getDataName());
+                    textLogPoints.setText(String.valueOf(dataLoggingHandler.getNumberOfPoints()));
+                }
+
+                dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
+                ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
+                listDataLogs.setAdapter(dataLogListAdapter);
+                listDataLogs.setOnItemClickListener(onDataLogClickListener);
+
+                dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
+                ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
+                listDataInstance.setAdapter(dataInstanceListAdapter);
+                listDataInstance.setOnItemClickListener(onDataLogClickListener);
+            }
+        });
+
+        globalHandler.sessionHandler.dismissProgressDialog();
     }
 
 
