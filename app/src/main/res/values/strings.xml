@@ -169,6 +169,7 @@
     <string name="empty_data_name">Data Set Name is required!</string>
     <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
     <string name="no_flutter_data_logs">To view data log information, please first connect your Flutter.</string>
+    <string name="loading_data">Loading Data Log...</string>
 
     <string-array name="time_array">
         <item>minute</item>

@@ -42,8 +42,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataLogListAdapter dataLogListAdapter;
     private DataInstanceListAdapter dataInstanceListAdapter;
 
-    private ProgressBar progressDataLogSelected;
-
     private DataSet dataSetOnFlutter;
     private FlutterOG flutter;
 
@@ -96,8 +94,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
             listDataInstance.setAdapter(dataInstanceListAdapter);
             listDataInstance.setOnItemClickListener(onDataLogClickListener);
-
-            progressDataLogSelected = (ProgressBar) findViewById(R.id.progress_load_data_log);
         }
     }
 
@@ -123,8 +119,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     private void loadFlutterDataLog() {
+        globalHandler.sessionHandler.createProgressDialog(this);
+        globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
         globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
-        progressDataLogSelected.setVisibility(ProgressBar.VISIBLE);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
     }
     @OnClick(R.id.text_open_log)
@@ -148,7 +145,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 @Override
                 public void run() {
                     workingDataSet = dataSetOnFlutter;
-                    progressDataLogSelected.setVisibility(ProgressBar.INVISIBLE);
                     findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
 
                     TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
@@ -168,6 +164,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         System.out.println(pair.getKey() + " = " + pair.getValue());
                         dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
                     }
+
+                    globalHandler.sessionHandler.dismissProgressDialog();
                 }
             });
         }

@@ -230,7 +230,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         scanForDevice(true);
     }
 
-    // TODO - this is something we will need to move/change once we have a way to load
+
     @Override
     public void onDataSetPointsPopulated(boolean isSuccess) {
         Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);

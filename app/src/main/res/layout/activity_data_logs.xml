@@ -78,11 +78,4 @@
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_load_data_log"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"/>
-
 </RelativeLayout>
