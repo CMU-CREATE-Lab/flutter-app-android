@@ -46,16 +46,6 @@ public class EmailHandler {
 
                 activity.startActivity(intent);
             }
-            /*Uri uri = Uri.fromFile(currentDataLog);
-            Log.d(Constants.LOG_TAG, uri.getPath());
-            Intent i = new Intent(Intent.ACTION_SENDTO);
-            i.setData(Uri.parse("mailto: " + email));
-            i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + currentDataLog));
-            i.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
-            i.putExtra(Intent.EXTRA_TEXT, message);
-            if (i.resolveActivity(activity.getPackageManager()) != null) {
-                activity.startActivity(Intent.createChooser(i, "Send Email"));
-            }*/
         } else {
             // TODO - alert user to select a data log
         }
