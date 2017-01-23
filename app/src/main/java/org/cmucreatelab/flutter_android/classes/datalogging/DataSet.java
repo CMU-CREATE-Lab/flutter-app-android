@@ -1,7 +1,20 @@
 package org.cmucreatelab.flutter_android.classes.datalogging;
 
+import android.os.Environment;
+import android.util.Log;
+
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -18,6 +31,32 @@ public class DataSet {
     private ArrayList<String> keys;
     private String dataName;
     private String[] sensorNames;
+    private File csv;
+
+
+    private void populateFile() {
+        try {
+            FileOutputStream fos = new FileOutputStream(csv);
+            StringBuilder sb = new StringBuilder();
+            Iterator it = data.entrySet().iterator();
+            sb.append("Time,Sensor 1,Sensor2,Sensor3\n");
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                DataPoint temp = (DataPoint) pair.getValue();
+                sb.append(temp.getDate() + " " + temp.getTime());
+                sb.append(',');
+                sb.append(temp.getSensor1Value() + ',');
+                sb.append(temp.getSensor2Value() + ',');
+                sb.append(temp.getSensor3Value() + '\n');
+            }
+            fos.write(sb.toString().getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public DataSet(TreeMap<String, DataPoint> data, ArrayList<String> keys, String dataName, String[] sensorNames) {
@@ -25,6 +64,8 @@ public class DataSet {
         this.keys = keys;
         this.dataName = dataName;
         this.sensorNames = sensorNames;
+        this.csv = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath(), "/" + dataName + ".csv");
+        populateFile();
     }
 
 
@@ -36,7 +77,10 @@ public class DataSet {
 
 
     // setters
-    public void setData(TreeMap<String, DataPoint> data) { this.data = data; }
+    public void setData(TreeMap<String, DataPoint> data) {
+        this.data = data;
+        populateFile();
+    }
     public void setKeys(ArrayList<String> keys) { this.keys = keys; }
     public void setDataName(String name) { this.dataName = name; }
     public void setSensorNames(String[] sensorNames) { this.sensorNames = sensorNames; }
@@ -61,5 +105,10 @@ public class DataSet {
         }
         table.put(previousArray[0], dataPoints);
     }*/
+
+
+    public File getFile() {
+        return csv;
+    }
 
 }

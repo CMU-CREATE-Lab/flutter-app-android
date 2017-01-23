@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
@@ -86,7 +87,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     @OnClick(R.id.text_send_log)
     public void onClickTextSendLog() {
-        Log.d(Constants.LOG_TAG, "onClickTextSendLog");
+        if (isDataLogSelected) {
+            Log.d(Constants.LOG_TAG, "onClickTextSendLog");
+            EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet.getFile());
+            emailDialog.show(getSupportFragmentManager(), "tag");
+        }
     }
 
 
@@ -150,7 +155,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     Iterator it = workingDataSet.getData().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry)it.next();
-                        System.out.println(pair.getKey() + " = " + pair.getValue());
                         dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
                     }
 

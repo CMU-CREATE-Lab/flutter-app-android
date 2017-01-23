@@ -16,6 +16,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 
+import java.io.File;
+import java.io.Serializable;
+
 /**
  * Created by Steve on 9/7/2016.
  *
@@ -25,9 +28,23 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
  */
 public class EmailDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
+    private static final String FILE_KEY = "file_key";
+
     private GlobalHandler globalHandler;
     private EditText email;
     private EditText message;
+    private File currentDataLog;
+
+
+    public static EmailDialog newInstance(Serializable file) {
+        EmailDialog emailDialog = new EmailDialog();
+
+        Bundle args = new Bundle();
+        args.putSerializable(FILE_KEY, file);
+        emailDialog.setArguments(args);
+
+        return emailDialog;
+    }
 
 
     @Override
@@ -40,6 +57,7 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
         builder.setPositiveButton(R.string.send, this);
         email = (EditText) view.findViewById(R.id.edit_text_email);
         message = (EditText) view.findViewById(R.id.edit_text_message);
+        currentDataLog = (File) getArguments().getSerializable(FILE_KEY);
         return builder.create();
     }
 
@@ -48,7 +66,7 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSend");
         // TODO @tasota include File currentDataLog in args
-        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), null);
+        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), currentDataLog);
     }
 
 }
