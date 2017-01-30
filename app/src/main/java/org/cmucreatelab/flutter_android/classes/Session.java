@@ -3,18 +3,18 @@ package org.cmucreatelab.flutter_android.classes;
 import android.app.Activity;
 import android.util.Log;
 
+import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
-import org.cmucreatelab.flutter_android.classes.outputs.Volume;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+
+import java.util.ArrayList;
 
 /**
  * Created by mike on 12/28/16.
@@ -26,15 +26,18 @@ public class Session implements FlutterMessageListener {
 
     private Activity currentActivity;
     private FlutterOG flutter;
+    private ArrayList<DataSet> dataSets;
     private FlutterConnectListener flutterConnectListener;
     private FlutterMessageListener flutterMessageListener;
     // getters/setters
     public Activity getCurrentActivity() { return currentActivity; }
     public FlutterOG getFlutter() { return flutter; }
+    public ArrayList<DataSet> getDataSets() { return this.dataSets; }
     public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
     public FlutterMessageListener getFlutterMessageListener() { return flutterMessageListener; }
     public void setCurrentActivity(Activity currentActivity) { this.currentActivity = currentActivity; }
     public void setFlutter(FlutterOG flutter) { this.flutter = flutter; }
+    public void setDataSets(ArrayList<DataSet> dataSets) { this.dataSets = dataSets; }
     public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
 

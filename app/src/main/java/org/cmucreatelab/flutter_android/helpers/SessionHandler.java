@@ -8,6 +8,7 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavig
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 /**
  * Created by Steve on 5/31/2016.
@@ -73,6 +74,7 @@ public class SessionHandler {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
         this.session = new Session(activity,flutterOG,activity,null);
         createProgressDialog(activity);
+        session.setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
         globalHandler.melodySmartDeviceHandler.connect(this.getSession());
     }
 

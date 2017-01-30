@@ -7,8 +7,6 @@ import java.util.Date;
  */
 public class DataPoint implements Comparable<DataPoint> {
 
-    // used for ordering the data points
-    private Date dateTime;
     private String date;
     private String time;
     private String sensor1Value;
@@ -16,8 +14,16 @@ public class DataPoint implements Comparable<DataPoint> {
     private String sensor3Value;
 
 
-    public DataPoint(Date dateTime, String date, String time, String sensor1Value, String sensor2Value, String sensor3Value) {
-        this.dateTime = dateTime;
+    public DataPoint() {
+        date = "0/00/0000";
+        time = "0:00:00";
+        sensor1Value = "0";
+        sensor2Value = "0";
+        sensor3Value = "0";
+    }
+
+
+    public DataPoint(String date, String time, String sensor1Value, String sensor2Value, String sensor3Value) {
         this.date = date;
         this.time = time;
         this.sensor1Value = sensor1Value;
@@ -28,7 +34,6 @@ public class DataPoint implements Comparable<DataPoint> {
 
     // getters
 
-    public Date getDateTime() { return this.dateTime; }
     public String getDate() { return this.date; }
     public String getTime() { return this.time; }
     public String getSensor1Value() { return this.sensor1Value; }
@@ -48,7 +53,7 @@ public class DataPoint implements Comparable<DataPoint> {
 
     @Override
     public int compareTo(DataPoint dataPoint) {
-        return dateTime.compareTo(dataPoint.getDateTime());
+        return time.compareTo(dataPoint.getTime());
     }
 
 }

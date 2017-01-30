@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -20,12 +21,14 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -38,6 +41,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
+    private DataLogsActivity instance;
     private GlobalHandler globalHandler;
     private DataLoggingHandler dataLoggingHandler;
 
@@ -46,15 +50,45 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     private DataSet dataSetOnFlutter;
     private FlutterOG flutter;
+    private ArrayList<DataSet> dataSetsOnDevice;
 
-    private DataSet workingDataSet;
     private boolean isDataLogSelected;
 
 
+    private void loadDataSet(DataSet dataSet) {
+        Log.d(Constants.LOG_TAG, "onDataLogSelected");
+        isDataLogSelected = true;
+        findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
+        findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
+
+        TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
+        TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
+        TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
+        sensor1Type.setText(dataSet.getSensorNames()[0]);
+        sensor2Type.setText(dataSet.getSensorNames()[1]);
+        sensor3Type.setText(dataSet.getSensorNames()[2]);
+        // TODO - show the image of what type of sensor is chosen
+        /*sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[0].getOrangeImageIdSm()), null, null);
+        sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[1].getOrangeImageIdSm()), null, null);
+        sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[2].getOrangeImageIdSm()), null, null);*/
+
+        Iterator it = dataSet.getData().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
+        }
+
+        globalHandler.sessionHandler.dismissProgressDialog();
+    }
+
+
     private AdapterView.OnItemClickListener onDataLogClickListener = new AdapterView.OnItemClickListener() {
+
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Log.d(Constants.LOG_TAG, "onDataLogSelected");
+            globalHandler.sessionHandler.createProgressDialog(instance);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+            loadDataSet(dataSetsOnDevice.get(i));
         }
     };
 
@@ -65,6 +99,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         setContentView(R.layout.activity_data_logs);
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
+        instance = this;
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
@@ -81,6 +116,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
             dataLoggingHandler.populatePointsAvailable(this);
             isDataLogSelected = false;
+
+            dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();
         }
     }
 
@@ -89,8 +126,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onClickTextSendLog() {
         if (isDataLogSelected) {
             Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-            EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet.getFile());
-            emailDialog.show(getSupportFragmentManager(), "tag");
+            // TODO - just pass in the dataset
+            /*EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet.getFile());
+            emailDialog.show(getSupportFragmentManager(), "tag");*/
         }
     }
 
@@ -134,31 +172,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onDataSetPopulated() {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
+        dataLoggingHandler.deleteLog();
+        FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
         if (dataSetOnFlutter != null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    workingDataSet = dataSetOnFlutter;
-                    findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
-
-                    TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
-                    TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
-                    TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
-                    sensor1Type.setText(workingDataSet.getSensorNames()[0]);
-                    sensor2Type.setText(workingDataSet.getSensorNames()[1]);
-                    sensor3Type.setText(workingDataSet.getSensorNames()[2]);
-                    // TODO - show the image of what type of sensor is chosen
-                    /*sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[0].getOrangeImageIdSm()), null, null);
-                    sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[1].getOrangeImageIdSm()), null, null);
-                    sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[2].getOrangeImageIdSm()), null, null);*/
-
-                    Iterator it = workingDataSet.getData().entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
-                        dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
-                    }
-
-                    globalHandler.sessionHandler.dismissProgressDialog();
+                    loadDataSet(dataSetOnFlutter);
                 }
             });
         }
@@ -186,10 +206,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 listDataLogs.setAdapter(dataLogListAdapter);
                 listDataLogs.setOnItemClickListener(onDataLogClickListener);
 
+                for (DataSet dataSet : dataSetsOnDevice) {
+                    dataLogListAdapter.addDataLog(dataSet);
+                }
+
                 dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
                 ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
                 listDataInstance.setAdapter(dataInstanceListAdapter);
-                listDataInstance.setOnItemClickListener(onDataLogClickListener);
             }
         });
 
