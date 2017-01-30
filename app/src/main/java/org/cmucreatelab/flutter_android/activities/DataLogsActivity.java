@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 
@@ -47,12 +48,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private FlutterOG flutter;
     private ArrayList<DataSet> dataSetsOnDevice;
 
+    private DataSet workingDataSet;
     private boolean isDataLogSelected;
 
 
     private void loadDataSet(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "onDataLogSelected");
+
         isDataLogSelected = true;
+        workingDataSet = dataSet;
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
         findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
 
@@ -122,9 +126,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onClickTextSendLog() {
         if (isDataLogSelected) {
             Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-            // TODO - just pass in the dataset
-            /*EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet.getFile());
-            emailDialog.show(getSupportFragmentManager(), "tag");*/
+            EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
+            emailDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 

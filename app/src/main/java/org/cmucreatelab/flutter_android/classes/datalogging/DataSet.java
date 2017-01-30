@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.classes.datalogging;
 
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -13,7 +14,7 @@ import java.util.TreeMap;
  * A class representing the data as a whole.
  *
  */
-public class DataSet {
+public class DataSet implements Serializable {
 
     private TreeMap<String, DataPoint> data;
     private ArrayList<String> keys;

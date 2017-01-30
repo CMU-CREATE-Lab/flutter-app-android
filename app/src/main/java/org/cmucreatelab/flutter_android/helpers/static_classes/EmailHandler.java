@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -26,10 +27,16 @@ public class EmailHandler {
 
     public static void sendEmail(Activity activity, String email, String message, File currentDataLog) {
         if (currentDataLog != null) {
-            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null));
+            Uri uri = FileProvider.getUriForFile(activity, "org.cmucreatelab.flutter_android.fileprovider", currentDataLog);
+            Intent intent = new Intent();
+
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("message/rfc822");
+            intent.putExtra(Intent.EXTRA_EMAIL, email);
             intent.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
             intent.putExtra(Intent.EXTRA_TEXT, message);
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(currentDataLog));
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
             List<ResolveInfo> resolveInfos = activity.getPackageManager().queryIntentActivities(intent, 0);
             if (resolveInfos.size() == 0) {
@@ -40,10 +47,8 @@ public class EmailHandler {
             } else {
                 String packageName = resolveInfos.get(0).activityInfo.packageName;
                 String name = resolveInfos.get(0).activityInfo.name;
-
-                intent.setAction(Intent.ACTION_SEND);
                 intent.setComponent(new ComponentName(packageName, name));
-
+                activity.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 activity.startActivity(intent);
             }
         } else {

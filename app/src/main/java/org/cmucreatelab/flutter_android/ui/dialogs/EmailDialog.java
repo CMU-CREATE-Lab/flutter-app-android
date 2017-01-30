@@ -12,9 +12,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 import java.io.File;
 import java.io.Serializable;
@@ -28,19 +30,19 @@ import java.io.Serializable;
  */
 public class EmailDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
-    private static final String FILE_KEY = "file_key";
+    private static final String DATA_SET_KEY = "data_set_key";
 
     private GlobalHandler globalHandler;
     private EditText email;
     private EditText message;
-    private File currentDataLog;
+    private DataSet currentDataLog;
 
 
-    public static EmailDialog newInstance(Serializable file) {
+    public static EmailDialog newInstance(Serializable dataSet) {
         EmailDialog emailDialog = new EmailDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(FILE_KEY, file);
+        args.putSerializable(DATA_SET_KEY, dataSet);
         emailDialog.setArguments(args);
 
         return emailDialog;
@@ -57,7 +59,7 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
         builder.setPositiveButton(R.string.send, this);
         email = (EditText) view.findViewById(R.id.edit_text_email);
         message = (EditText) view.findViewById(R.id.edit_text_message);
-        currentDataLog = (File) getArguments().getSerializable(FILE_KEY);
+        currentDataLog = (DataSet) getArguments().getSerializable(DATA_SET_KEY);
         return builder.create();
     }
 
@@ -66,7 +68,7 @@ public class EmailDialog extends DialogFragment implements DialogInterface.OnCli
     public void onClick(DialogInterface dialogInterface, int i) {
         Log.d(Constants.LOG_TAG, "onClickSend");
         // TODO @tasota include File currentDataLog in args
-        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), currentDataLog);
+        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
     }
 
 }

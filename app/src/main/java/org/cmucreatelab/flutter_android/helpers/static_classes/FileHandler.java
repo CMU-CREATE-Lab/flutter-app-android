@@ -10,10 +10,11 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,11 +29,15 @@ public class FileHandler {
     private static final String DATA_SETS_PATH = "DATA_SETS";
 
 
+    // TODO - handle case when you try to save a file that is already there
+    // TODO - maybe append an integer to the end of the name
+    // TODO - maybe prompt the user when about to record the data log
     public static void saveDataSetToFile(GlobalHandler globalHandler, DataSet dataSet) {
         try {
-            File directory = globalHandler.appContext.getDir(DATA_SETS_PATH, Context.MODE_PRIVATE);
-            File csv = new File(directory, dataSet.getDataName() + ".csv");
-            FileOutputStream fos = new FileOutputStream(csv);
+            File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
+            root.mkdirs();
+            File csv = new File(root, dataSet.getDataName() + ".csv");
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(csv));
             StringBuilder sb = new StringBuilder();
             Iterator it = dataSet.getData().entrySet().iterator();
             Context context = globalHandler.appContext;
@@ -47,8 +52,8 @@ public class FileHandler {
                 sb.append(temp.getSensor2Value() + ',');
                 sb.append(temp.getSensor3Value() + '\n');
             }
-            fos.write(sb.toString().getBytes());
-            fos.close();
+            bufferedWriter.write(sb.toString());
+            bufferedWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -60,7 +65,7 @@ public class FileHandler {
     public static ArrayList<DataSet> loadDataSetsFromFile(GlobalHandler globalHandler) {
         ArrayList<DataSet> dataSets = new ArrayList<>();
 
-        File root = globalHandler.appContext.getDir(DATA_SETS_PATH, Context.MODE_PRIVATE);
+        File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
         File[] files = root.listFiles();
 
         if (files != null && files.length > 0) {
@@ -119,6 +124,24 @@ public class FileHandler {
         }
 
         return dataSets;
+    }
+
+
+    public static File getFileFromDataSet(GlobalHandler globalHandler, DataSet dataSet) {
+        File result = new File("");
+
+        File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
+        File[] files = root.listFiles();
+
+        for(File file : files) {
+            String name = file.getName();
+            name = name.substring(0, name.indexOf("."));
+            if (name.equals(dataSet.getDataName())) {
+                result = file;
+            }
+        }
+
+        return result;
     }
 
 

@@ -13,6 +13,8 @@ import java.util.HashMap;
  */
 public final class Constants {
 
+    public static final String PACKAGE_NAME = "org.cmucreatelab.flutter_android";
+
     public static final String LOG_TAG = "FlutterAndroid";
 
     public static final String APP_VERSION = "1.0.0";
