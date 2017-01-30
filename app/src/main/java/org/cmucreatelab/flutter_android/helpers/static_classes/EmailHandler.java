@@ -32,7 +32,7 @@ public class EmailHandler {
 
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL, email);
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{ email });
             intent.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
             intent.putExtra(Intent.EXTRA_TEXT, message);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
