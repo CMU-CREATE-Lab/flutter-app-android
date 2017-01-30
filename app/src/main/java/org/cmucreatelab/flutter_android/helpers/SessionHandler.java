@@ -74,7 +74,6 @@ public class SessionHandler {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
         this.session = new Session(activity,flutterOG,activity,null);
         createProgressDialog(activity);
-        session.setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
         globalHandler.melodySmartDeviceHandler.connect(this.getSession());
     }
 

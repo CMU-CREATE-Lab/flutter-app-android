@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -22,10 +20,8 @@ import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
-import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +31,6 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// TODO - We need to make a database to hold the data logs
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, FlutterOG.PopulatedDataSetListener,
     DataLoggingHandler.DataSetPointsListener{
 
@@ -64,13 +59,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
         TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
         TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
-        sensor1Type.setText(dataSet.getSensorNames()[0]);
-        sensor2Type.setText(dataSet.getSensorNames()[1]);
-        sensor3Type.setText(dataSet.getSensorNames()[2]);
-        // TODO - show the image of what type of sensor is chosen
-        /*sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[0].getOrangeImageIdSm()), null, null);
-        sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[1].getOrangeImageIdSm()), null, null);
-        sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, flutter.getSensors()[2].getOrangeImageIdSm()), null, null);*/
+        sensor1Type.setText(getString(dataSet.getSensors()[0].getTypeTextId()));
+        sensor2Type.setText(getString(dataSet.getSensors()[1].getTypeTextId()));
+        sensor3Type.setText(getString(dataSet.getSensors()[2].getTypeTextId()));
+        // TODO - figure out why these images are not populating
+        sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, dataSet.getSensors()[0].getOrangeImageIdSm()), null, null);
+        sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, dataSet.getSensors()[1].getOrangeImageIdSm()), null, null);
+        sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(this, dataSet.getSensors()[2].getOrangeImageIdSm()), null, null);
 
         Iterator it = dataSet.getData().entrySet().iterator();
         while (it.hasNext()) {
@@ -117,6 +112,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             dataLoggingHandler.populatePointsAvailable(this);
             isDataLogSelected = false;
 
+            globalHandler.sessionHandler.getSession().setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
             dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();
         }
     }

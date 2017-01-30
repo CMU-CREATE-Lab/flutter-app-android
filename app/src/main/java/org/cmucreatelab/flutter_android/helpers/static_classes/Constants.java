@@ -65,19 +65,18 @@ public final class Constants {
 
     // for activities
 
-    // TODO - not sure if we will actually use these since messaging has been refactored
-    public static final class PreferencesKeys {
-        public static final String dataloggingSensor1 = "data_logging_sensor_1";
-        public static final String dataloggingSensor2 = "data_logging_sensor_2";
-        public static final String dataloggingSensor3 = "data_logging_sensor_3";
-        public static final String dataloggingName = "date_logging_name";
+    public static final class SensorTypeWords {
+        public static final String ANALOG_OR_UNKNOWN = "Analog / Unknown";
+        public static final String BAROMETRIC_PRESSURE = "Barometric Pressure";
+        public static final String DISTANCE = "Distance";
+        public static final String HUMIDITY = "Humidity";
+        public static final String LIGHT = "Light";
+        public static final String NO_SENSOR = "No Sensor";
+        public static final String SOIL_MOISTURE = "Soil Moisture";
+        public static final String SOUND = "Sound";
+        public static final String TEMPERATURE = "Temperature";
+        public static final String WIND_SPEED = "Wind Speed";
     }
-
-    public static final HashMap<String, Object> DEFAULT_SETTINGS = new HashMap(){{
-        put(PreferencesKeys.dataloggingSensor1, "No Sensor");
-        put(PreferencesKeys.dataloggingSensor2, "No Sensor");
-        put(PreferencesKeys.dataloggingSensor3, "No Sensor");
-    }};
 
     // for activities
 

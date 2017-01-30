@@ -7,6 +7,7 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
@@ -233,11 +234,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
         if (data.size() == numberOfPoints && data.size() != 0 && request.substring(0,1).equals(READ_POINT)) {
-            String[] sensorNames = new String[3];
-            sensorNames[0] = "Sensor 1";
-            sensorNames[1] = "Sensor 2";
-            sensorNames[2] = "Sensor 3";
-            DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
+            Sensor[] sensors;
+            sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
+            DataSet dataSet = new DataSet(data, keys, dataName, sensors);
             dataSetListener.onDataSetPopulated(dataSet);
         }
     }

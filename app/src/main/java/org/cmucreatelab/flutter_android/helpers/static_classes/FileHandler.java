@@ -1,13 +1,13 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import com.opencsv.CSVReader;
 
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
 import java.io.File;
@@ -35,7 +35,9 @@ public class FileHandler {
             FileOutputStream fos = new FileOutputStream(csv);
             StringBuilder sb = new StringBuilder();
             Iterator it = dataSet.getData().entrySet().iterator();
-            sb.append("Date,Time,Sensor 1,Sensor2,Sensor3\n");
+            Context context = globalHandler.appContext;
+            sb.append("Date,Time," + context.getString(dataSet.getSensors()[0].getTypeTextId()) + "," +
+                    context.getString(dataSet.getSensors()[1].getTypeTextId()) + "," + context.getString(dataSet.getSensors()[2].getTypeTextId()) + "\n");
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 DataPoint temp = (DataPoint) pair.getValue();
@@ -97,11 +99,16 @@ public class FileHandler {
                     }
                     String name = file.getName();
                     name = name.substring(0, name.indexOf("."));
+                    Sensor[] sensors = new Sensor[3];
+                    sensors[0] = SensorFactory.getSensorFromName(1, sensorNames[0]);
+                    sensors[1] = SensorFactory.getSensorFromName(2, sensorNames[1]);
+                    sensors[2] = SensorFactory.getSensorFromName(3, sensorNames[2]);
+
 
                     dataSet.setData(map);
                     dataSet.setKeys(keys);
                     dataSet.setDataName(name);
-                    dataSet.setSensorNames(sensorNames);
+                    dataSet.setSensors(sensors);
                     dataSets.add(dataSet);
                 }
             } catch (FileNotFoundException e) {

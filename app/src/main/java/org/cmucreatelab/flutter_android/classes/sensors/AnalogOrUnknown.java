@@ -15,11 +15,11 @@ import java.io.Serializable;
  */
 public class AnalogOrUnknown extends A_Sensor implements Sensor, Serializable {
 
+    public static final int typeTextId = R.string.analog_or_unknown;
     private static final short sensorType = FlutterProtocol.InputTypes.ANALOG_OR_UNKNOWN;
     private static final int sensorTypeId = R.string.analog_or_unknown;
     private static final int highTextId = R.string.high;
     private static final int lowTextId = R.string.low;
-    private static final int typeTextId = R.string.analog_or_unknown;
 
     private static final int blueImageId = R.drawable.sensor_blue_analog_l_g_68;
     private static final int greenImageId = R.drawable.sensor_green_analog_l_g_68;
