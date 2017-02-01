@@ -35,7 +35,7 @@
             android:drawableTop="@drawable/data_menu_email"
             android:layout_below="@id/text_open_log"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp" />
 
         <TextView
             android:id="@+id/text_clean_up"
@@ -71,7 +71,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="220dp">
+        android:layout_marginStart="275dp">
 
         <include android:id="@+id/include_data_log_selected"
             layout="@layout/data_log_selected"/>

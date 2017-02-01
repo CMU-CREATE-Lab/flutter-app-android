@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -51,11 +52,17 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataSet workingDataSet;
     private boolean isDataLogSelected;
 
+    private DataPoint workingDataPoint;
+    private ImageView workingDataPointImage;
+
+    private TextView sendLogTextView;
+
 
     private void loadDataSet(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "onDataLogSelected");
 
         isDataLogSelected = true;
+        sendLogTextView.setEnabled(true);
         workingDataSet = dataSet;
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
         findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
@@ -82,12 +89,37 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     private AdapterView.OnItemClickListener onDataLogClickListener = new AdapterView.OnItemClickListener() {
-
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
             loadDataSet(dataSetsOnDevice.get(i));
+        }
+    };
+
+
+    private AdapterView.OnItemClickListener onDataInstanceClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            ArrayList<String> keys = workingDataSet.getKeys();
+            if (workingDataPoint == null) {
+                workingDataPointImage = (ImageView) view.findViewById(R.id.image_selector);
+                workingDataPointImage.setImageResource(R.drawable.circle_selected);
+                workingDataPoint = workingDataSet.getData().get(keys.get(i));
+            } else {
+                DataPoint temp = workingDataSet.getData().get(keys.get(i));
+                if (temp.equals(workingDataPoint)) {
+                    workingDataPointImage = (ImageView) view.findViewById(R.id.image_selector);
+                    workingDataPointImage.setImageResource(R.drawable.circle_not_selected);
+                    workingDataPointImage = null;
+                    workingDataPoint = null;
+                } else {
+                    workingDataPointImage.setImageResource(R.drawable.circle_not_selected);
+                    workingDataPointImage = (ImageView) view.findViewById(R.id.image_selector);
+                    workingDataPointImage.setImageResource(R.drawable.circle_selected);
+                    workingDataPoint = workingDataSet.getData().get(keys.get(i));
+                }
+            }
         }
     };
 
@@ -115,6 +147,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
             dataLoggingHandler.populatePointsAvailable(this);
             isDataLogSelected = false;
+            sendLogTextView = (TextView) findViewById(R.id.text_send_log);
+            sendLogTextView.setEnabled(false);
 
             globalHandler.sessionHandler.getSession().setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
             dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();
@@ -152,6 +186,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
         isDataLogSelected = true;
+        sendLogTextView.setEnabled(true);
     }
     @OnClick(R.id.text_open_log)
     public void onClickTextOpenLog() {
@@ -212,6 +247,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
                 ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
                 listDataInstance.setAdapter(dataInstanceListAdapter);
+                listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
             }
         });
 
