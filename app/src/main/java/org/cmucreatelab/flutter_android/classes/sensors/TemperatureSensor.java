@@ -3,17 +3,15 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * Temperature
+ * TemperatureSensor
  *
  * A class representing a temperature sensor.
  *
  */
-public class Temperature extends A_Sensor implements Sensor, Serializable {
+public class TemperatureSensor extends Sensor {
 
     private static final short sensorType = FlutterProtocol.InputTypes.TEMPERATURE;
     private static final int sensorTypeId = R.string.temperature;
@@ -29,7 +27,7 @@ public class Temperature extends A_Sensor implements Sensor, Serializable {
     private static final int whiteImageIdSm = R.drawable.sensor_temperature_s_m_20;
 
 
-    public Temperature(int portNumber) {
+    public TemperatureSensor(int portNumber) {
         super(portNumber);
     }
 

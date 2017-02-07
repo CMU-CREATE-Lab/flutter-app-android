@@ -1,16 +1,16 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
-import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
-import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
-import org.cmucreatelab.flutter_android.classes.sensors.Distance;
-import org.cmucreatelab.flutter_android.classes.sensors.Humidity;
-import org.cmucreatelab.flutter_android.classes.sensors.Light;
+import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknownSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.HumiditySensor;
+import org.cmucreatelab.flutter_android.classes.sensors.LightSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.classes.sensors.SoilMoisture;
-import org.cmucreatelab.flutter_android.classes.sensors.Sound;
-import org.cmucreatelab.flutter_android.classes.sensors.Temperature;
-import org.cmucreatelab.flutter_android.classes.sensors.WindSpeed;
+import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.WindSpeedSensor;
 
 /**
  * Created by mike on 1/4/17.
@@ -41,31 +41,31 @@ public final class FlutterProtocol {
 
         switch(inputType) {
             case InputTypes.LIGHT:
-                result = new Light(portNumber);
+                result = new LightSensor(portNumber);
                 break;
             case InputTypes.SOIL:
-                result = new SoilMoisture(portNumber);
+                result = new SoilMoistureSensor(portNumber);
                 break;
             case InputTypes.SOUND:
-                result = new Sound(portNumber);
+                result = new SoundSensor(portNumber);
                 break;
             case InputTypes.DISTANCE:
-                result = new Distance(portNumber);
+                result = new DistanceSensor(portNumber);
                 break;
             case InputTypes.TEMPERATURE:
-                result = new Temperature(portNumber);
+                result = new TemperatureSensor(portNumber);
                 break;
             case InputTypes.HUMIDITY:
-                result = new Humidity(portNumber);
+                result = new HumiditySensor(portNumber);
                 break;
             case InputTypes.WIND_SPEED:
-                result = new WindSpeed(portNumber);
+                result = new WindSpeedSensor(portNumber);
                 break;
             case InputTypes.BAROMETRIC_PRESSURE:
-                result = new BarometricPressure(portNumber);
+                result = new BarometricPressureSensor(portNumber);
                 break;
             case InputTypes.ANALOG_OR_UNKNOWN:
-                result = new AnalogOrUnknown(portNumber);
+                result = new AnalogOrUnknownSensor(portNumber);
                 break;
             case InputTypes.NOT_SET:
             default:

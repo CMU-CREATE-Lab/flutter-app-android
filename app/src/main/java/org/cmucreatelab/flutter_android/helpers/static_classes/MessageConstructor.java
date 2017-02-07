@@ -5,7 +5,7 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.sensors.Distance;
+import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
@@ -126,7 +126,7 @@ public class MessageConstructor {
         if (settings.getRelationship().getClass() == Proportional.class) {
             // TODO @tasota hacked for inverted distance
             if (settings.getSensor().getSensorType() == FlutterProtocol.InputTypes.DISTANCE) {
-                result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMax(), settings.getOutputMin(), Distance.INPUT_MINIMUM, Distance.INPUT_MAXIMUM);
+                result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMax(), settings.getOutputMin(), DistanceSensor.INPUT_MINIMUM, DistanceSensor.INPUT_MAXIMUM);
             } else {
                 result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMin(), settings.getOutputMax(), settings.getAdvancedSettings().getInputMin(), settings.getAdvancedSettings().getInputMax());
             }

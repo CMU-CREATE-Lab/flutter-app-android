@@ -3,33 +3,31 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * BarometricPressure
+ * HumiditySensor
  *
- * A class representing a barometric pressure sensor.
+ * A class representing a humidity sensor.
  *
  */
-public class BarometricPressure extends A_Sensor implements Sensor, Serializable {
+public class HumiditySensor extends Sensor {
 
-    private static final short sensorType = FlutterProtocol.InputTypes.BAROMETRIC_PRESSURE;
-    private static final int sensorTypeId = R.string.barometric_pressure;
-    private static final int highTextId = R.string.high;
-    private static final int lowTextId = R.string.low;
-    private static final int typeTextId = R.string.barometric_pressure;
+    private static final short sensorType = FlutterProtocol.InputTypes.HUMIDITY;
+    private static final int sensorTypeId = R.string.humidity;
+    private static final int highTextId = R.string.humid;
+    private static final int lowTextId = R.string.dry;
+    private static final int typeTextId = R.string.humidity;
 
-    private static final int blueImageId = R.drawable.sensor_blue_barometric_l_g_68;
-    private static final int greenImageId = R.drawable.sensor_green_barometric_l_g_68;
-    private static final int orangeImageIdMd = R.drawable.sensor_orange_barometric_m_d_40;
-    private static final int orangeImageIdSm = R.drawable.sensor_orange_barometric_s_m_22;
-    private static final int greyImageIdSm = R.drawable.sensor_barometric_grey_s_m_20;
-    private static final int whiteImageIdSm = R.drawable.sensor_barometric_s_m_20;
+    private static final int blueImageId = R.drawable.sensor_blue_humidity_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_humidity_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_humidity_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_humidity_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_humidity_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_humidity_s_m_20;
 
 
-    public BarometricPressure(int portNumber) {
+    public HumiditySensor(int portNumber) {
         super(portNumber);
     }
 
@@ -81,6 +79,7 @@ public class BarometricPressure extends A_Sensor implements Sensor, Serializable
         return orangeImageIdMd;
     }
 
+
     @Override
     public int getOrangeImageIdSm() {
         return orangeImageIdSm;
@@ -91,7 +90,6 @@ public class BarometricPressure extends A_Sensor implements Sensor, Serializable
     public int getGreyImageIdSm() {
         return greyImageIdSm;
     }
-
 
     @Override
     public int getWhiteImageIdSm() {

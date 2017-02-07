@@ -3,17 +3,15 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * Distance
+ * DistanceSensor
  *
  * A class representing a distance sensor.
  *
  */
-public class Distance extends A_Sensor implements Sensor, Serializable {
+public class DistanceSensor extends Sensor {
 
     private static final short sensorType = FlutterProtocol.InputTypes.DISTANCE;
     private static final int sensorTypeId = R.string.distance;
@@ -32,7 +30,7 @@ public class Distance extends A_Sensor implements Sensor, Serializable {
     public static final int INPUT_MAXIMUM = 75;
 
 
-    public Distance(int portNumber) {
+    public DistanceSensor(int portNumber) {
         super(portNumber);
     }
 

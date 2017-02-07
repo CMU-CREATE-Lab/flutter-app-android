@@ -1,8 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.settings;
 
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-
 /**
  * Created by Steve on 10/25/2016.
  *

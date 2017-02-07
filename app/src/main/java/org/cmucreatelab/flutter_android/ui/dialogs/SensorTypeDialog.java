@@ -11,17 +11,17 @@ import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
-import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknown;
-import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressure;
-import org.cmucreatelab.flutter_android.classes.sensors.Distance;
-import org.cmucreatelab.flutter_android.classes.sensors.Humidity;
-import org.cmucreatelab.flutter_android.classes.sensors.Light;
+import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknownSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.HumiditySensor;
+import org.cmucreatelab.flutter_android.classes.sensors.LightSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.classes.sensors.SoilMoisture;
-import org.cmucreatelab.flutter_android.classes.sensors.Sound;
-import org.cmucreatelab.flutter_android.classes.sensors.Temperature;
-import org.cmucreatelab.flutter_android.classes.sensors.WindSpeed;
+import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.WindSpeedSensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -104,39 +104,39 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.image_light:
                 Log.d(Constants.LOG_TAG, "onClickLightSensor");
-                sensor = new Light(portNumber);
+                sensor = new LightSensor(portNumber);
                 break;
             case R.id.image_soil_moisture:
                 Log.d(Constants.LOG_TAG, "onClickSoilMoistureSensor");
-                sensor = new SoilMoisture(portNumber);
+                sensor = new SoilMoistureSensor(portNumber);
                 break;
             case R.id.image_distance:
                 Log.d(Constants.LOG_TAG, "onClickDistanceSensor");
-                sensor = new Distance(portNumber);
+                sensor = new DistanceSensor(portNumber);
                 break;
             case R.id.image_sound:
                 Log.d(Constants.LOG_TAG, "onClickSoundSensor");
-                sensor = new Sound(portNumber);
+                sensor = new SoundSensor(portNumber);
                 break;
             case R.id.image_wind_speed:
                 Log.d(Constants.LOG_TAG, "onClickWindSpeedSensor");
-                sensor = new WindSpeed(portNumber);
+                sensor = new WindSpeedSensor(portNumber);
                 break;
             case R.id.image_humidity:
                 Log.d(Constants.LOG_TAG, "onClickHumiditySensor");
-                sensor = new Humidity(portNumber);
+                sensor = new HumiditySensor(portNumber);
                 break;
             case R.id.image_temperature:
                 Log.d(Constants.LOG_TAG, "onClickTemperatureSensor");
-                sensor = new Temperature(portNumber);
+                sensor = new TemperatureSensor(portNumber);
                 break;
             case R.id.image_barometric_pressure:
                 Log.d(Constants.LOG_TAG, "onClickBarometricPressureSensor");
-                sensor = new BarometricPressure(portNumber);
+                sensor = new BarometricPressureSensor(portNumber);
                 break;
             case R.id.image_analog_unknown:
                 Log.d(Constants.LOG_TAG, "onClickAnalogUnknownSensor");
-                sensor = new AnalogOrUnknown(portNumber);
+                sensor = new AnalogOrUnknownSensor(portNumber);
                 break;
             case R.id.image_no_sensor:
                 Log.d(Constants.LOG_TAG, "onClickNoSensor");
