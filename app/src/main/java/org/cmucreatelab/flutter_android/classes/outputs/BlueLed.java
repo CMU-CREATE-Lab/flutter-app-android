@@ -5,17 +5,16 @@ import org.cmucreatelab.flutter_android.R;
 /**
  * Created by Steve on 12/13/2016.
  */
-public class BlueLed extends A_Output{
+public class BlueLed extends Output {
 
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 100;
     private static final String TYPE = "b";
     private static final Output.Type outputType = Type.BLUE_LED;
+    private static final int imageId = R.mipmap.ic_launcher;
 
-    public static final String LED_KEY = "blue_led_key";
-    public static final int imageId = R.mipmap.ic_launcher;
 
-    public BlueLed(int portNumber) {
+    BlueLed(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
     }
 

@@ -18,20 +18,16 @@ public class Speaker implements Serializable {
     private Pitch pitch;
     private Volume volume;
 
+    // getters
+    public int getPortNumber() { return this.portNumber; }
+    public Pitch getPitch() { return this.pitch; }
+    public Volume getVolume() { return this.volume; }
+
 
     public Speaker(int portNumber) {
         this.portNumber = portNumber;
         pitch = new Pitch(portNumber);
         volume = new Volume(portNumber);
     }
-
-
-    public int getPortNumber() { return this.portNumber; }
-    public Pitch getPitch() { return this.pitch; }
-    public Volume getVolume() { return this.volume; }
-
-
-    public void setPitch(Pitch pitch) { this.pitch = pitch; }
-    public void setVolume(Volume volume) { this.volume = volume; }
 
 }

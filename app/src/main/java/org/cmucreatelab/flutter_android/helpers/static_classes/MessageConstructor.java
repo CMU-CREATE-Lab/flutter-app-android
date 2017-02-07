@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.Distance;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 
 /**
  * Created by Steve on 8/23/2016.

@@ -7,10 +7,10 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  *
  * Output
  *
- * An interface defining the various types of outputs.
+ * An abstract class that holds a Settings object to represent the link between input and output
  *
  */
-public interface Output {
+public abstract class Output {
 
     enum Type {
         RED_LED,
@@ -21,19 +21,48 @@ public interface Output {
         VOLUME
     }
 
-    String getProtocolString();
+    private boolean isLinked;
+    private Settings settings;
+    private int portNumber;
 
     // getters
-    Type getOutputType();
-    int getOutputImageId();
-    Settings getSettings();
-    int getPortNumber();
-    int getMax();
-    int getMin();
-    boolean isLinked();
+    public Settings getSettings() { return settings; }
+    public int getPortNumber() { return portNumber; }
+    public boolean isLinked() { return isLinked; }
 
     // setters
-    void setSettings(Settings settings);
-    void setIsLinked(boolean bool, Output output);
+    public void setSettings(Settings settings) { this.settings = settings; }
+
+
+    public Output(String type, int max, int min, int portNumber) {
+        this.portNumber = portNumber;
+        isLinked = false;
+        settings = new Settings(type, max, min);
+    }
+
+
+    public void setIsLinked(boolean bool, Output output) {
+        isLinked = bool;
+        if (!isLinked) {
+            String type = settings.getType();
+            int max = output.getMax();
+            int min = output.getMin();
+            settings = new Settings(type, max, min);
+        }
+    }
+
+
+    // abstract methods
+
+
+    public abstract int getMax();
+
+    public abstract int getMin();
+
+    public abstract int getOutputImageId();
+
+    public abstract Type getOutputType();
+
+    public abstract String getProtocolString();
 
 }

@@ -5,18 +5,16 @@ import org.cmucreatelab.flutter_android.R;
 /**
  * Created by Steve on 12/13/2016.
  */
-public class Volume extends A_Output {
+public class Volume extends Output {
 
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 100;
     private static final String TYPE = "v";
     private static final Output.Type outputType = Type.VOLUME;
-
-    public static final String LED_KEY = "volume_speaker_key";
-    public static final int imageId = R.mipmap.ic_launcher;
+    private static final int imageId = R.mipmap.ic_launcher;
 
 
-    public Volume(int portNumber) {
+    Volume(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
     }
 

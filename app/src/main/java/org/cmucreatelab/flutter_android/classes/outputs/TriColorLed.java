@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Steve on 12/13/2016.
  */
-public class TriColorLed implements Serializable{
+public class TriColorLed implements Serializable {
 
     public static final String LED_KEY = "led_key";
 
@@ -14,6 +14,12 @@ public class TriColorLed implements Serializable{
     private BlueLed blueLed;
     private int portNumber;
 
+    // getters
+    public RedLed getRedLed() { return this.redLed; }
+    public GreenLed getGreenLed() { return  this.greenLed; }
+    public BlueLed getBlueLed() { return this.blueLed; }
+    public int getPortNumber() { return this.portNumber; }
+
 
     public TriColorLed(int portNumber) {
         this.portNumber = portNumber;
@@ -21,16 +27,5 @@ public class TriColorLed implements Serializable{
         greenLed = new GreenLed(this.portNumber);
         blueLed = new BlueLed(this.portNumber);
     }
-
-
-    public RedLed getRedLed() { return this.redLed; }
-    public GreenLed getGreenLed() { return  this.greenLed; }
-    public BlueLed getBlueLed() { return this.blueLed; }
-    public int getPortNumber() { return this.portNumber; }
-
-
-    public void setRedLed(RedLed redLed) { this.redLed = redLed; }
-    public void setGreenLed(GreenLed greenLed) { this.greenLed = greenLed; }
-    public void setBlueLed(BlueLed blueLed) { this.blueLed = blueLed; }
 
 }

@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 import java.io.Serializable;
 
@@ -13,8 +12,7 @@ import java.io.Serializable;
  * A class that represents a servo on the flutter.
  *
  */
-public class Servo extends A_Output implements Serializable, Output {
-
+public class Servo extends Output implements Serializable {
 
     public static final String SERVO_KEY = "servo_key";
 
@@ -22,8 +20,7 @@ public class Servo extends A_Output implements Serializable, Output {
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 180;
     private static final String TYPE = "s";
-
-    public static final int imageId = R.mipmap.ic_launcher;
+    private static final int imageId = R.mipmap.ic_launcher;
 
 
     public Servo(int portNumber) {
