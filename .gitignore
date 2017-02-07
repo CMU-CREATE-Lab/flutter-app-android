@@ -1,8 +1,10 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+# /.idea/workspace.xml
+# /.idea/libraries
+# just ignore entire dir
+/.idea
 .DS_Store
 /build
 /captures
