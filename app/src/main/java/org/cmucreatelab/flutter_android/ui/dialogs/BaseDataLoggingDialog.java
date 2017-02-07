@@ -3,7 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 /**
  * Created by Steve on 1/17/2017.
  */
-public class BaseDataLoggingDialog extends BaseResizableDialog {
+public abstract class BaseDataLoggingDialog extends BaseResizableDialog {
 
 
     protected int timeToSeconds(String time) {

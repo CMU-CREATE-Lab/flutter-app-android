@@ -219,8 +219,13 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.dataSetListener = dataSetListener;
         this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         this.data.clear();
-        for (int i = 0; i < numberOfPoints; i++) {
-            globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+        if (numberOfPoints > 0) {
+            for (int i = 0; i < numberOfPoints; i++) {
+                Log.d(Constants.LOG_TAG, "in here");
+                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+            }
+        } else {
+            dataSetListener.onDataSetPopulated(null);
         }
     }
 

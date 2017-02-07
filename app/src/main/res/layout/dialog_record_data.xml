@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:text="@string/record_data_set"/>
 
     <EditText

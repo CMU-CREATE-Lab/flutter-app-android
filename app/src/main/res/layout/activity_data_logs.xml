@@ -71,7 +71,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="275dp">
+        android:layout_marginStart="220dp">
 
         <include android:id="@+id/include_data_log_selected"
             layout="@layout/data_log_selected"/>

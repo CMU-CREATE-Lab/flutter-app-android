@@ -62,7 +62,7 @@ public class FileHandler {
     }
 
 
-    public static ArrayList<DataSet> loadDataSetsFromFile(GlobalHandler globalHandler) {
+    public static DataSet[] loadDataSetsFromFile(GlobalHandler globalHandler) {
         ArrayList<DataSet> dataSets = new ArrayList<>();
 
         File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
@@ -71,7 +71,6 @@ public class FileHandler {
         if (files != null && files.length > 0) {
             try {
                 for (File file : files) {
-                    Log.d(Constants.LOG_TAG, "there is a file");
                     CSVReader csvReader = null;
                     csvReader = new CSVReader(new FileReader(file.getPath()));
                     ArrayList<String[]> list = (ArrayList<String[]>) csvReader.readAll();
@@ -123,7 +122,7 @@ public class FileHandler {
             }
         }
 
-        return dataSets;
+        return dataSets.toArray(new DataSet[dataSets.size()]);
     }
 
 
@@ -142,6 +141,12 @@ public class FileHandler {
         }
 
         return result;
+    }
+
+
+    public static void deleteFile(GlobalHandler globalHandler, DataSet dataSet) {
+        File fileToDelete = getFileFromDataSet(globalHandler, dataSet);
+        fileToDelete.delete();
     }
 
 

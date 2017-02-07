@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -15,22 +16,22 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import java.util.ArrayList;
 
 /**
- * Created by Steve on 1/3/2017.
+ * Created by Steve on 2/1/2017.
  */
-public class DataLogListAdapter extends BaseAdapter {
-
+public class DataLogListAdapterCleanUp extends BaseAdapter {
 
     private ArrayList<DataSet> dataLogs;
     private LayoutInflater layoutInflater;
 
 
     private static class ViewHolder {
+        public ImageView selector;
         public TextView dataLogName;
         public TextView numberOfPoints;
     }
 
 
-    public DataLogListAdapter(LayoutInflater inflater) {
+    public DataLogListAdapterCleanUp(LayoutInflater inflater) {
         super();
         dataLogs = new ArrayList<>();
         layoutInflater = inflater;
@@ -73,8 +74,9 @@ public class DataLogListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.list_data_log, null);
+            view = layoutInflater.inflate(R.layout.list_data_log_clean_up, null);
             viewHolder = new ViewHolder();
+            viewHolder.selector = (ImageView) view.findViewById(R.id.image_selector);
             viewHolder.dataLogName = (TextView) view.findViewById(R.id.text_current_log_name);
             viewHolder.numberOfPoints = (TextView) view.findViewById(R.id.text_num_points);
             view.setTag(viewHolder);
@@ -84,6 +86,7 @@ public class DataLogListAdapter extends BaseAdapter {
 
         DataSet dataSet = dataLogs.get(i);
 
+        viewHolder.selector.setImageResource(R.drawable.circle_not_selected);
         final String dataLogName = dataSet.getDataName();
         final int numPoints = dataSet.getData().size();
         if (dataLogName != null && dataLogName.length() > 0) {

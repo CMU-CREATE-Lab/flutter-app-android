@@ -28,7 +28,7 @@ import java.io.Serializable;
  *
  * A dialog that prompts the user to send an email of a data log.
  */
-public class EmailDialog extends DialogFragment implements DialogInterface.OnClickListener {
+public class EmailDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
 
     private static final String DATA_SET_KEY = "data_set_key";
 

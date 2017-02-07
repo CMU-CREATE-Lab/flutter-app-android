@@ -1,7 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.datalogging;
 
-import java.util.Date;
-
 /**
  * Created by Steve on 1/4/2017.
  */

@@ -21,8 +21,10 @@ import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 
 import java.io.Serializable;
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, FlutterOG.PopulatedDataSetListener,
-    DataLoggingHandler.DataSetPointsListener{
+    DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener{
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -45,9 +47,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataLogListAdapter dataLogListAdapter;
     private DataInstanceListAdapter dataInstanceListAdapter;
 
-    private DataSet dataSetOnFlutter;
     private FlutterOG flutter;
-    private ArrayList<DataSet> dataSetsOnDevice;
+    private DataSet dataSetOnFlutter;
+    private DataSet[] dataSetsOnDevice;
 
     private DataSet workingDataSet;
     private boolean isDataLogSelected;
@@ -93,7 +95,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            loadDataSet(dataSetsOnDevice.get(i));
+            loadDataSet(dataSetsOnDevice[i]);
         }
     };
 
@@ -131,7 +133,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
         instance = this;
+    }
 
+
+    @Override
+    public void onResume() {
+        Log.d(Constants.LOG_TAG, "onResume");
+        super.onResume();
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
         } else {
@@ -156,6 +164,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
+    @OnClick(R.id.text_open_log)
+    public void onClickTextOpenLog() {
+        OpenLogDialog openLogDialog = OpenLogDialog.newInstance(this, dataSetOnFlutter, dataSetsOnDevice);
+        openLogDialog.show(getSupportFragmentManager(), "tag");
+    }
+
     @OnClick(R.id.text_send_log)
     public void onClickTextSendLog() {
         if (isDataLogSelected) {
@@ -169,6 +183,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @OnClick(R.id.text_clean_up)
     public void onClickTextCleanUp() {
         Log.d(Constants.LOG_TAG, "onClickTextCleanUp");
+        CleanUpLogsDialog cleanUpLogsDialog = CleanUpLogsDialog.newInstance(this, dataSetOnFlutter, dataSetsOnDevice);
+        cleanUpLogsDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -182,18 +198,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     private void loadFlutterDataLog() {
         globalHandler.sessionHandler.createProgressDialog(this);
-        globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-        globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
         isDataLogSelected = true;
         sendLogTextView.setEnabled(true);
-    }
-    @OnClick(R.id.text_open_log)
-    public void onClickTextOpenLog() {
-        if (!isDataLogSelected) {
-            Log.d(Constants.LOG_TAG, "onClickTextOpenLog");
-            loadFlutterDataLog();
-        }
+        loadDataSet(dataSetOnFlutter);
+        FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
+        dataLoggingHandler.deleteLog();
     }
     @OnClick(R.id.relative_flutter_log)
     public void onClickRelativeFlutterLog() {
@@ -206,16 +216,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onDataSetPopulated() {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
-        dataLoggingHandler.deleteLog();
-        FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
-        if (dataSetOnFlutter != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loadDataSet(dataSetOnFlutter);
-                }
-            });
-        }
+        globalHandler.sessionHandler.dismissProgressDialog();
     }
 
 
@@ -250,8 +251,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
             }
         });
-
-        globalHandler.sessionHandler.dismissProgressDialog();
+        globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
     }
 
 
@@ -261,4 +261,21 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
     }
 
+    @Override
+    public void onOpenedLog(DataSet dataSet) {
+        if (dataSet.equals(dataSetOnFlutter)) {
+            globalHandler.sessionHandler.createProgressDialog(this);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+            findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
+            isDataLogSelected = true;
+            sendLogTextView.setEnabled(true);
+            loadDataSet(dataSet);
+            FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
+            dataLoggingHandler.deleteLog();
+        } else {
+            globalHandler.sessionHandler.createProgressDialog(instance);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+            loadDataSet(dataSet);
+        }
+    }
 }
