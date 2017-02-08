@@ -21,6 +21,9 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import java.io.File;
 import java.io.Serializable;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 9/7/2016.
  *
@@ -28,7 +31,7 @@ import java.io.Serializable;
  *
  * A dialog that prompts the user to send an email of a data log.
  */
-public class EmailDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
+public class EmailDialog extends BaseResizableDialog {
 
     private static final String DATA_SET_KEY = "data_set_key";
 
@@ -55,8 +58,8 @@ public class EmailDialog extends BaseResizableDialog implements DialogInterface.
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_email, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(getString(R.string.send_data_log)).setView(view);
-        builder.setPositiveButton(R.string.send, this);
+        builder.setView(view);
+        ButterKnife.bind(this, view);
         email = (EditText) view.findViewById(R.id.edit_text_email);
         message = (EditText) view.findViewById(R.id.edit_text_message);
         currentDataLog = (DataSet) getArguments().getSerializable(DATA_SET_KEY);
@@ -64,8 +67,8 @@ public class EmailDialog extends BaseResizableDialog implements DialogInterface.
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
+    @OnClick(R.id.button_send_email)
+    public void onClickSendEmail() {
         Log.d(Constants.LOG_TAG, "onClickSend");
         // TODO @tasota include File currentDataLog in args
         EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
