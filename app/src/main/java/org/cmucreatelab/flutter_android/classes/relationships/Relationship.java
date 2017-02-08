@@ -10,7 +10,7 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  */
 public interface Relationship {
 
-    public static final String RELATIONSHIP_KEY = "relationship_key";
+    String RELATIONSHIP_KEY = "relationship_key";
 
     enum Type {
         NO_RELATIONSHIP,
@@ -24,9 +24,13 @@ public interface Relationship {
     }
 
     Type getRelationshipType();
+
     int getRelationshipTypeId();
+
     int getGreenImageIdLg();
+
     int getGreenImageIdMd();
+
     int getGreyImageIdSm();
 
 }

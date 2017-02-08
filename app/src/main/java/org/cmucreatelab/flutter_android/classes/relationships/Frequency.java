@@ -19,7 +19,6 @@ public class Frequency implements Relationship {
     private static final int greyImageIdSm = R.drawable.relationship_grey_frequency_s_m_20;
 
 
-
     @Override
     public Type getRelationshipType() {
         return relationshipType;

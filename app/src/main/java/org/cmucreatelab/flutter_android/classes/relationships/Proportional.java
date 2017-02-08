@@ -19,7 +19,6 @@ public class Proportional implements Relationship {
     private static final int greyImageIdSm = R.drawable.relationship_grey_proportional_s_m_20;
 
 
-
     @Override
     public Type getRelationshipType() {
         return relationshipType;

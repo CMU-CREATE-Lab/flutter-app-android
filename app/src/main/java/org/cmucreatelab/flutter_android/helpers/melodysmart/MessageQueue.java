@@ -34,11 +34,11 @@ public class MessageQueue {
             @Override
             public void timerExpires() {
                 if (currentMessage != null) {
-                    if (currentMessage.numberOfAttemptedSends <= 1) {
+                    if (currentMessage.getNumberOfAttemptedSends() <= 1) {
                         Log.e(Constants.LOG_TAG, "messageTimeout timerExpires; attempting to resend request=" + currentMessage.getRequest());
                         messageTimeout.startTimer();
                         dataService.send(currentMessage.getRequest().getBytes());
-                        currentMessage.numberOfAttemptedSends++;
+                        currentMessage.setNumberOfAttemptedSends(currentMessage.getNumberOfAttemptedSends() + 1);
                     } else {
                         Log.e(Constants.LOG_TAG,"messageTimeout timerExpires after multiple send attempts; will not process request="+currentMessage.getRequest());
                         // TODO @tasota this should likely trigger disconnecting from the Flutter
@@ -56,7 +56,7 @@ public class MessageQueue {
                     currentMessage = messages.poll();
                     Log.v(Constants.LOG_TAG,"messageSendingTimer timerExpires: SEND: '"+currentMessage.getRequest()+"'");
                     dataService.send(currentMessage.getRequest().getBytes());
-                    currentMessage.numberOfAttemptedSends++;
+                    currentMessage.setNumberOfAttemptedSends(currentMessage.getNumberOfAttemptedSends() + 1);
                 }
             }
         };

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class LeDeviceListAdapter extends BaseAdapter {
 
-    private ArrayList<FlutterOG> mFlutterOGs;
+    private ArrayList<Flutter> mFlutters;
     private LayoutInflater mInflater;
 
     private static class ViewHolder {
@@ -34,32 +34,32 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
     public LeDeviceListAdapter(LayoutInflater inflater) {
         super();
-        mFlutterOGs = new ArrayList<>();
+        mFlutters = new ArrayList<>();
         mInflater = inflater;
     }
 
 
-    public void addDevice(FlutterOG flutterOG) {
-        Log.d(Constants.LOG_TAG, "Found device " + flutterOG.getName());
-        mFlutterOGs.add(flutterOG);
+    public void addDevice(Flutter flutter) {
+        Log.d(Constants.LOG_TAG, "Found device " + flutter.getName());
+        mFlutters.add(flutter);
         notifyDataSetChanged();
     }
 
 
     public void clearDevices() {
-        mFlutterOGs.clear();
+        mFlutters.clear();
         notifyDataSetChanged();
     }
 
 
     @Override
     public int getCount() {
-        return mFlutterOGs.size();
+        return mFlutters.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mFlutterOGs.get(position);
+        return mFlutters.get(position);
     }
 
     @Override
@@ -81,9 +81,9 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        FlutterOG flutterOG = mFlutterOGs.get(position);
+        Flutter flutter = mFlutters.get(position);
 
-        final String deviceName = flutterOG.getName();
+        final String deviceName = flutter.getName();
         if (deviceName != null && deviceName.length() > 0) {
             viewHolder.deviceName.setText(deviceName);
         } else {

@@ -3,9 +3,9 @@ package org.cmucreatelab.flutter_android.classes;
 import android.app.Activity;
 import android.util.Log;
 
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -22,21 +22,21 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 public class Session implements FlutterMessageListener {
 
     private Activity currentActivity;
-    private FlutterOG flutter;
+    private Flutter flutter;
     private FlutterConnectListener flutterConnectListener;
     private FlutterMessageListener flutterMessageListener;
     // getters/setters
     public Activity getCurrentActivity() { return currentActivity; }
-    public FlutterOG getFlutter() { return flutter; }
+    public Flutter getFlutter() { return flutter; }
     public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
     public FlutterMessageListener getFlutterMessageListener() { return flutterMessageListener; }
     public void setCurrentActivity(Activity currentActivity) { this.currentActivity = currentActivity; }
-    public void setFlutter(FlutterOG flutter) { this.flutter = flutter; }
+    public void setFlutter(Flutter flutter) { this.flutter = flutter; }
     public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
 
 
-    public Session(Activity currentActivity, FlutterOG flutter, FlutterConnectListener flutterConnectListener, FlutterMessageListener flutterMessageListener) {
+    public Session(Activity currentActivity, Flutter flutter, FlutterConnectListener flutterConnectListener, FlutterMessageListener flutterMessageListener) {
         this.currentActivity = currentActivity;
         this.flutter = flutter;
         this.flutterConnectListener = flutterConnectListener;

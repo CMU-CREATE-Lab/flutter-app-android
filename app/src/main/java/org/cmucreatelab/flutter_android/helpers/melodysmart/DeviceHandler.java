@@ -82,7 +82,7 @@ public class DeviceHandler {
     /**
      * Request to connect a MelodySmart device.
      *
-     * @param session: used for listeners and to grab the Flutter's address.
+     * @param session: used for listeners and to grab the FlutterBoard's address.
      */
     public void connect(Session session) {
         if (deviceListener != null || dataListener != null) {
@@ -93,7 +93,7 @@ public class DeviceHandler {
 
         globalHandler.sessionHandler.updateProgressDialogMessage("Registering Listeners...");
         registerListeners();
-        mMelodySmartDevice.connect(session.getFlutter().getDevice().getAddress());
+        mMelodySmartDevice.connect(session.getFlutter().getBluetoothDevice().getAddress());
     }
 
 

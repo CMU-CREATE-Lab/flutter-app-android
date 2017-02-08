@@ -16,12 +16,11 @@ import org.cmucreatelab.flutter_android.adapters.DataInstanceListAdapter;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapter;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 // TODO - We need to make a database to hold the data logs
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, FlutterOG.PopulatedDataSetListener {
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -44,7 +43,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private ProgressBar progressDataLogSelected;
 
     private DataSet dataSetOnFlutter;
-    private FlutterOG flutter;
+    private Flutter flutter;
 
     private DataSet workingDataSet;
 

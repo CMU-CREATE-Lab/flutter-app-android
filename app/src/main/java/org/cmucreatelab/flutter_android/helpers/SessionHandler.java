@@ -6,7 +6,7 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -69,9 +69,9 @@ public class SessionHandler {
     }
 
 
-    public void startSession(AppLandingActivity activity, FlutterOG flutterOG) {
-        Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
-        this.session = new Session(activity,flutterOG,activity,null);
+    public void startSession(AppLandingActivity activity, Flutter flutter) {
+        Log.d(Constants.LOG_TAG, "Starting session with " + flutter.getBluetoothDevice().getName());
+        this.session = new Session(activity, flutter,activity,null);
         createProgressDialog(activity);
         globalHandler.melodySmartDeviceHandler.connect(this.getSession());
     }
