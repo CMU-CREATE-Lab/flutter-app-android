@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -181,7 +182,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker);
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -336,6 +337,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
+        // TODO - do we want to set it for both outputs?
         volumeSettings.setAdvancedSettings(advancedSettings);
         pitchSettings.setAdvancedSettings(advancedSettings);
     }

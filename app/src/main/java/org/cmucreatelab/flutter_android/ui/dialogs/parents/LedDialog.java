@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -231,7 +232,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, triColorLed);
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, triColorLed.getRedLed());
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 

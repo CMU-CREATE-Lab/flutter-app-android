@@ -2,10 +2,12 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 12/13/2016.
  */
-public class Pitch extends A_Output {
+public class Pitch extends A_Output implements Serializable {
 
     public static final int MINIMUM = 262;
     public static final int MAXIMUM = 1047;

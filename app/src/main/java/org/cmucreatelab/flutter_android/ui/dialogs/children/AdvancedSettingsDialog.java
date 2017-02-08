@@ -13,17 +13,22 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 import java.io.Serializable;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 11/17/2016.
  */
 // TODO - fix the sensor type text, just hacked it in for now
-public class AdvancedSettingsDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
+public class AdvancedSettingsDialog extends BaseResizableDialog {
 
 
     private static final String ADVANCED_KEY = "advanced_key";
@@ -121,12 +126,11 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         dialogAdvancedSettingsListener = (DialogAdvancedSettingsListener) getArguments().getSerializable(ADVANCED_KEY);
         output = (Output) getArguments().getSerializable(OUTPUT_KEY);
 
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_advanced_settings, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setPositiveButton(R.string.save, this);
         builder.setTitle(getString(R.string.advanced_settings)).setView(view);
+        ButterKnife.bind(this, view);
 
         seekBarMaxInput = (SeekBar) view.findViewById(R.id.seekbar_max_input);
         seekBarMinInput = (SeekBar) view.findViewById(R.id.seekbar_min_input);
@@ -146,13 +150,6 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         seekBarMinInput.setProgress(minInput);
         seekBarZeroPoint.setProgress(zeroPoint);
 
-        /*if (output.getOutputType() == Output.Type.SERVO)
-            sensorText = ((Servo) output).getServoSettings().getSensor().getSensorType().toString();
-        if (output.getOutputType() == Output.Type.LED)
-            sensorText = ((Led) output).getRedSettings().getSensor().getSensorType().toString();
-        if (output.getOutputType() == Output.Type.SPEAKER)
-            sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();*/
-
         sensorText = getString(output.getSettings().getSensor().getSensorTypeId());
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
@@ -163,14 +160,15 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClick");
+    @OnClick(R.id.button_save_settings)
+    public void onClickSaveSettings() {
+        Log.d(Constants.LOG_TAG, "AdvancedSettingsDialog.onClickSaveSettings");
         AdvancedSettings result = new AdvancedSettings();
         result.setInputMax(maxInput);
         result.setInputMin(minInput);
         result.setZeroValue(zeroPoint);
         dialogAdvancedSettingsListener.onAdvancedSettingsSet(result);
+        dismiss();
     }
 
 
