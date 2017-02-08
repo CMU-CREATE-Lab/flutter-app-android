@@ -12,7 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -31,7 +31,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
 
 
     private DialogAdvancedSettingsListener dialogAdvancedSettingsListener;
-    private Output output;
+    private FlutterOutput flutterOutput;
     private SeekBar seekBarMaxInput;
     private SeekBar seekBarMinInput;
     private SeekBar seekBarZeroPoint;
@@ -119,8 +119,10 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
         dialogAdvancedSettingsListener = (DialogAdvancedSettingsListener) getArguments().getSerializable(ADVANCED_KEY);
-        output = (Output) getArguments().getSerializable(OUTPUT_KEY);
-
+        flutterOutput = (FlutterOutput) getArguments().getSerializable(OUTPUT_KEY);
+        // ASSERT: settings are the same across all outputs, and there is always at least 1 output
+        sensorText = getString(flutterOutput.getOutputs()[0].getSettings().getSensor().getSensorTypeId());
+        Log.i(Constants.LOG_TAG,"created AdvancedSettingsDialog for FlutterOutput=" + flutterOutput.getClass().getName());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_advanced_settings, null);
@@ -145,15 +147,6 @@ public class AdvancedSettingsDialog extends BaseResizableDialog implements Dialo
         seekBarMaxInput.setProgress(maxInput);
         seekBarMinInput.setProgress(minInput);
         seekBarZeroPoint.setProgress(zeroPoint);
-
-        /*if (output.getOutputType() == Output.Type.SERVO)
-            sensorText = ((Servo) output).getServoSettings().getSensor().getSensorType().toString();
-        if (output.getOutputType() == Output.Type.LED)
-            sensorText = ((Led) output).getRedSettings().getSensor().getSensorType().toString();
-        if (output.getOutputType() == Output.Type.SPEAKER)
-            sensorText = ((Speaker) output).getVolumeSettings().getSensor().getSensorType().toString();*/
-
-        sensorText = getString(output.getSettings().getSensor().getSensorTypeId());
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");

@@ -1,11 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 12/13/2016.
  */
-public class TriColorLed implements FlutterOutput, Serializable {
+public class TriColorLed implements FlutterOutput {
 
     public static final String LED_KEY = "led_key";
     private static final int NUMBER_OF_OUTPUTS = 3;

@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
-import java.io.Serializable;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * A class that represents a servo on the flutter.
  *
  */
-public class Servo extends Output implements FlutterOutput, Serializable {
+public class Servo extends Output implements FlutterOutput {
 
     public static final String SERVO_KEY = "servo_key";
 

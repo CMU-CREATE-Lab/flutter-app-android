@@ -1,7 +1,5 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -10,7 +8,7 @@ import java.io.Serializable;
  * A class that represents the speaker on a flutter.
  *
  */
-public class Speaker implements FlutterOutput, Serializable {
+public class Speaker implements FlutterOutput {
 
     public static final String SPEAKER_KEY = "speaker_key";
     private static final int NUMBER_OF_OUTPUTS = 2;
