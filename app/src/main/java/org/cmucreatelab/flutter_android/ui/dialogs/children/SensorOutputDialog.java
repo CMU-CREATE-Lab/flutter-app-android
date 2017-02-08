@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import java.io.Serializable;
 
@@ -33,7 +34,7 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         SensorOutputDialog sensorDialog = new SensorOutputDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(Sensor.SENSOR_KEY, serializable);
+        args.putSerializable(Constants.SerializableKeys.SENSOR_KEY, serializable);
         sensorDialog.setArguments(args);
 
         return sensorDialog;
@@ -43,7 +44,7 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
-        dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Sensor.SENSOR_KEY);
+        dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Constants.SerializableKeys.SENSOR_KEY);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));

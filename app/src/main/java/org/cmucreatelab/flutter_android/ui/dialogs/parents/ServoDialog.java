@@ -104,7 +104,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Servo.SERVO_KEY, servo);
-        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SerializableKeys.DIALOG_SERVO, activity);
         servoDialog.setArguments(args);
 
         return servoDialog;
@@ -120,7 +120,7 @@ public class ServoDialog extends BaseResizableDialog implements Serializable,
         dialogFragment = this;
 
         servo = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-        dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
+        dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_servos, null);

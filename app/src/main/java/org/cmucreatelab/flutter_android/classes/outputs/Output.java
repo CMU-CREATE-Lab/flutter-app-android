@@ -29,7 +29,6 @@ public abstract class Output {
     public Settings getSettings() { return settings; }
     public int getPortNumber() { return portNumber; }
     public boolean isLinked() { return isLinked; }
-
     // setters
     public void setSettings(Settings settings) { this.settings = settings; }
 

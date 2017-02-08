@@ -12,16 +12,12 @@ import java.io.Serializable;
  */
 public abstract class Sensor implements Serializable {
 
-    public static String SENSOR_KEY = "sensor_key";
-    public static String SENSOR_PORT_KEY = "sensor_text_key";
-
     private int reading;
     private int portNumber;
 
     // getters
     public int getSensorReading() { return reading; }
     public int getPortNumber() { return portNumber; }
-
     // setters
     public void setSensorReading(int value) { reading = value; }
 

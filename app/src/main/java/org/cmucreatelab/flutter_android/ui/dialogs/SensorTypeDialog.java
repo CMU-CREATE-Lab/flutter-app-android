@@ -63,7 +63,7 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         SensorTypeDialog sensorTypeDialog = new SensorTypeDialog();
 
         Bundle args = new Bundle();
-        args.putInt(Sensor.SENSOR_PORT_KEY, portNumber);
+        args.putInt(Constants.SerializableKeys.SENSOR_PORT_KEY, portNumber);
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
         sensorTypeDialog.setArguments(args);
 
@@ -74,7 +74,7 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        portNumber = getArguments().getInt(Sensor.SENSOR_PORT_KEY);
+        portNumber = getArguments().getInt(Constants.SerializableKeys.SENSOR_PORT_KEY);
         sensorText = getSensorText(portNumber);
         sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
 

@@ -125,7 +125,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Speaker.SPEAKER_KEY, speaker);
-        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SerializableKeys.DIALOG_SPEAKER, activity);
         ledDialog.setArguments(args);
 
         return ledDialog;
@@ -142,7 +142,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
         isVolume = true;
 
         speaker = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
+        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SPEAKER);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         this.view = inflater.inflate(R.layout.dialog_speakers, null);

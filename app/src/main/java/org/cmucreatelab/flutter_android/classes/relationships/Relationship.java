@@ -10,8 +10,6 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  */
 public interface Relationship {
 
-    String RELATIONSHIP_KEY = "relationship_key";
-
     enum Type {
         NO_RELATIONSHIP,
         PROPORTIONAL,
