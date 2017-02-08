@@ -67,4 +67,13 @@
         android:layout_gravity="center"
         android:padding="2dp"/>
 
+    <Button
+        android:id="@+id/button_delete_logs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_selected_logs"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_orange_button_bottom"/>
+
 </LinearLayout>

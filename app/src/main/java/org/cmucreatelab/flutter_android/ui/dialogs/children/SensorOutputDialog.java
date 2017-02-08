@@ -47,7 +47,7 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setTitle(getString(R.string.choose_sensor)).setView(view);
+        builder.setView(view);
 
         Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
 

@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:background="@drawable/dialog_bg">
 
     <TextView
         android:text="Selected Color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:id="@+id/textView3" />
 
     <FrameLayout
@@ -21,7 +22,8 @@
         android:text="Swatches"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4" />
+        android:id="@+id/textView4"
+        android:padding="5dp"/>
 
 
     <LinearLayout
@@ -174,6 +176,14 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_set_color"
+        android:text="@string/set_color"
+        android:textColor="@color/white"
+        android:background="@drawable/round_green_button_bottom"/>
 
 
 </LinearLayout>

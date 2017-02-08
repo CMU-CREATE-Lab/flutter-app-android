@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +10,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
@@ -35,7 +38,6 @@ import java.io.Serializable;
  */
 public class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
 
-    private String sensorText;
     private int portNumber;
     DialogSensorTypeListener sensorListener;
 
@@ -75,13 +77,13 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         portNumber = getArguments().getInt(Sensor.SENSOR_PORT_KEY);
-        sensorText = getSensorText(portNumber);
         sensorListener = (DialogSensorTypeListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensor_types, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setMessage(sensorText).setView(view);
+        builder.setView(view);
+        ((TextView) view.findViewById(R.id.text_sensor_type_dialog_title)).setText(getSensorText(portNumber));
 
         // bind click listeners
         view.findViewById(R.id.image_light).setOnClickListener(this);
@@ -95,7 +97,9 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         view.findViewById(R.id.image_analog_unknown).setOnClickListener(this);
         view.findViewById(R.id.image_no_sensor).setOnClickListener(this);
 
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        return dialog;
     }
 
     @Override

@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -26,10 +28,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 2/1/2017.
  */
-public class CleanUpLogsDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
+public class CleanUpLogsDialog extends BaseResizableDialog {
 
     private static final String ACTIVITY_KEY = "activity_key";
     private static final String DATA_SET_FLUTTER_KEY = "data_set_flutter_key";
@@ -168,7 +173,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog implements DialogInte
         final View view = inflater.inflate(R.layout.dialog_clean_up_logs, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        builder.setPositiveButton(R.string.delete_selected_logs, this);
+        ButterKnife.bind(this, view);
 
         baseNavigationActivity = (DataLogsActivity) getArguments().getSerializable(ACTIVITY_KEY);
         dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_FLUTTER_KEY);
@@ -230,11 +235,12 @@ public class CleanUpLogsDialog extends BaseResizableDialog implements DialogInte
     }
 
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "CleanUpLogsDialog.onClick");
+    @OnClick(R.id.button_delete_logs)
+    public void onClickDeleteLogs() {
+        Log.d(Constants.LOG_TAG, "CleanUpLogsDialog.onClickDeleteLogs");
         CleanUpConfirmationDialog cleanUpConfirmationDialog = CleanUpConfirmationDialog.newInstance(baseNavigationActivity, logsToDelete.toArray(new DataSet[logsToDelete.size()]));
         cleanUpConfirmationDialog.show(getFragmentManager(), "tag");
+        this.dismiss();
     }
 
 }

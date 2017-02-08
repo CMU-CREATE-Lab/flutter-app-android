@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Created by Steve on 11/14/2016.
  */
-public class MaxPitchDialog extends ChoosePitchDialog {
+public class MaxPitchDialog extends ChoosePitchDialog implements ChoosePitchDialog.SetPitchListener {
 
 
     private static String PITCH_KEY = "pitch_key";
@@ -34,13 +34,16 @@ public class MaxPitchDialog extends ChoosePitchDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         maxPitchListener = (DialogMaxPitchListener) getArguments().getSerializable(PITCH_KEY);
+        setPitchListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
+
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSetMaxPitch");
+    public void onSetPitch() {
+        Log.d(Constants.LOG_TAG, "MaxPitchDialog.onSetPitch");
         maxPitchListener.onMaxPitchChosen(finalPitch);
+        dismiss();
     }
 
 

@@ -19,6 +19,9 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 10/21/2016.
  *
@@ -26,13 +29,13 @@ import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
  *
  * An abstract dialog that Max and Min Position Dialog extends off of since they are similar.
  */
-public abstract class ChoosePositionDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
-
+public abstract class ChoosePositionDialog extends BaseResizableDialog {
 
     private ImageView pointer;
     private TextView curentPosition;
     private SeekBar seekBarMaxMin;
 
+    protected SetPositionListener setPositionListener;
     protected int finalPosition;
 
     private void updatePointer() {
@@ -70,8 +73,8 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog implement
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_position, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setPositiveButton(R.string.save, this);
         builder.setView(view);
+        ButterKnife.bind(this, view);
 
         pointer = (ImageView) view.findViewById(R.id.image_servo_pointer);
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
@@ -80,6 +83,17 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog implement
         curentPosition.setText("0" + (char) 0x00B0);
 
         return builder.create();
+    }
+
+
+    @OnClick(R.id.button_set_position)
+    public void onClickSetPosition() {
+        setPositionListener.onSetPosition();
+    }
+
+
+    public interface SetPositionListener {
+        public void onSetPosition();
     }
 
 }

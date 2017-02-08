@@ -180,6 +180,9 @@
     <string name="loading_data">Loading data...</string>
     <string name="confirm_logs_to_delete">Confirm Logs To Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="set_position">Set Position</string>
+    <string name="set_volume">Set Volume</string>
+    <string name="set_pitch">Set Pitch</string>
 
     <string-array name="time_array">
         <item>minute</item>

@@ -29,4 +29,12 @@
         android:layout_gravity="center"
         android:padding="10dp"/>
 
+    <Button
+        android:id="@+id/button_connect_flutter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/connect_flutter"
+        android:textColor="@color/white"
+        android:background="@drawable/round_green_button_bottom"/>
+
 </LinearLayout>

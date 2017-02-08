@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to choose a low color.
  */
-public class MinColorDialog extends ChooseColorDialog {
+public class MinColorDialog extends ChooseColorDialog implements ChooseColorDialog.SetColorListener {
 
 
     private DialogLowColorListener lowColorListener;
@@ -37,19 +37,21 @@ public class MinColorDialog extends ChooseColorDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         lowColorListener = (DialogLowColorListener) getArguments().getSerializable(COLOR_KEY);
+        setColorListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSetColor");
-        lowColorListener.onLowColorChosen(finalRGB);
+    public void onSetColor(int swatch) {
+        Log.d(Constants.LOG_TAG, "MinColorDialog.onSetColor");
+        lowColorListener.onLowColorChosen(finalRGB, swatch);
+        dismiss();
     }
 
 
     public interface DialogLowColorListener {
-        public void onLowColorChosen(int[] rgb);
+        public void onLowColorChosen(int[] rgb, int swatch);
     }
 
 }

@@ -67,7 +67,7 @@ public class OpenLogDialog extends BaseResizableDialog {
         globalHandler = GlobalHandler.getInstance(this.getActivity());
         instance = this;
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.open_dialog, null);
+        final View view = inflater.inflate(R.layout.dialog_open_log, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);

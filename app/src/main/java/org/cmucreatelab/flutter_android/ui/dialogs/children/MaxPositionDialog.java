@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to choose a max position for a servo.
  */
-public class MaxPositionDialog extends ChoosePositionDialog {
+public class MaxPositionDialog extends ChoosePositionDialog implements ChoosePositionDialog.SetPositionListener {
 
 
     private static String POSITION_KEY = "position_key";
@@ -38,13 +38,15 @@ public class MaxPositionDialog extends ChoosePositionDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         maxPositionListener = (DialogMaxPositionListener) getArguments().getSerializable(POSITION_KEY);
+        setPositionListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSetMinPosition");
+    public void onSetPosition() {
+        Log.d(Constants.LOG_TAG, "MaxPositionDialog.onSetPosition");
         maxPositionListener.onMaxPosChosen(finalPosition);
+        this.dismiss();
     }
 
 
