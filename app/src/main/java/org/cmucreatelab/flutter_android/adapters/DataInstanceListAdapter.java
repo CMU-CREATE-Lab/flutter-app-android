@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -24,6 +25,7 @@ public class DataInstanceListAdapter extends BaseAdapter {
 
 
     private static class ViewHolder {
+        public ImageView selector;
         public TextView date;
         public TextView time;
         public TextView sensor1Value;
@@ -77,6 +79,7 @@ public class DataInstanceListAdapter extends BaseAdapter {
         if (view == null) {
             view = layoutInflater.inflate(R.layout.list_data_log_instance, null);
             viewHolder = new ViewHolder();
+            viewHolder.selector = (ImageView) view.findViewById(R.id.image_selector);
             viewHolder.date = (TextView) view.findViewById(R.id.text_date);
             viewHolder.time = (TextView) view.findViewById(R.id.text_time);
             viewHolder.sensor1Value = (TextView) view.findViewById(R.id.text_sensor_1_value);
@@ -89,6 +92,7 @@ public class DataInstanceListAdapter extends BaseAdapter {
 
         DataPoint dataPoint = dataPoints.get(i);
 
+        viewHolder.selector.setImageResource(R.drawable.circle_not_selected);
         final String date = dataPoint.getDate();
         final String time = dataPoint.getTime();
         final String sensor1Value = dataPoint.getSensor1Value();

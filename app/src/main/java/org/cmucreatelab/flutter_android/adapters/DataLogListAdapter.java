@@ -17,7 +17,6 @@ import java.util.ArrayList;
 /**
  * Created by Steve on 1/3/2017.
  */
-// TODO - Use this once we have a database to populate the data logs saved on a device
 public class DataLogListAdapter extends BaseAdapter {
 
 
@@ -45,7 +44,7 @@ public class DataLogListAdapter extends BaseAdapter {
     }
 
 
-    public void clearDevices() {
+    public void clearDataLogs() {
         dataLogs.clear();
         notifyDataSetChanged();
     }

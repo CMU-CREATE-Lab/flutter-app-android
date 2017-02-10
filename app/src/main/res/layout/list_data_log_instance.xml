@@ -3,6 +3,11 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/image_selector"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"/>
 
     <RelativeLayout
         android:layout_width="100dp"
@@ -26,20 +31,26 @@
 
     <TextView
         android:id="@+id/text_sensor_1_value"
-        android:layout_width="100dp"
+        android:layout_width="75dp"
         android:layout_height="50dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"/>
 
     <TextView
         android:id="@+id/text_sensor_2_value"
-        android:layout_width="100dp"
+        android:layout_width="75dp"
         android:layout_height="50dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"/>
 
     <TextView
         android:id="@+id/text_sensor_3_value"
-        android:layout_width="100dp"
+        android:layout_width="75dp"
         android:layout_height="50dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"/>
 
 </LinearLayout>

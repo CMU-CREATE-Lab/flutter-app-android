@@ -2,56 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:background="@drawable/dialog_bg">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/sensor_settings"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
 
-    <TextView
-        android:id="@+id/text_max_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
-    <SeekBar
-        android:id="@+id/seekbar_max_input"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/sensor_settings"/>
+
+        <TextView
+            android:id="@+id/text_max_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/seekbar_max_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"/>
+
+        <TextView
+            android:id="@+id/text_min_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/seekbar_min_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"/>
+
+        <TextView
+            android:id="@+id/text_zero_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/seekbar_zero_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/link_settings"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_constant"/>
+
+    </LinearLayout>
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"/>
-
-    <TextView
-        android:id="@+id/text_min_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <SeekBar
-        android:id="@+id/seekbar_min_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"/>
-
-    <TextView
-        android:id="@+id/text_zero_point"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <SeekBar
-        android:id="@+id/seekbar_zero_point"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/link_settings"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_constant"/>
+        android:id="@+id/button_save_settings"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:background="@drawable/round_green_button_bottom"/>
 
 </LinearLayout>

@@ -55,7 +55,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_relationships, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setTitle(getString(R.string.choose_relationship)).setView(view);
+        builder.setView(view);
 
         // bind click listeners
         view.findViewById(R.id.linear_proportional).setOnClickListener(this);

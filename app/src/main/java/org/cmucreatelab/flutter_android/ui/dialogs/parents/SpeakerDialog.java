@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -27,6 +28,7 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
@@ -49,7 +51,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Speaker and a Sensor
  */
-public class SpeakerDialog extends BaseResizableDialog implements Serializable,
+public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
@@ -180,7 +182,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker);
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -335,6 +337,7 @@ public class SpeakerDialog extends BaseResizableDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
+        // TODO - do we want to set it for both outputs?
         volumeSettings.setAdvancedSettings(advancedSettings);
         pitchSettings.setAdvancedSettings(advancedSettings);
     }

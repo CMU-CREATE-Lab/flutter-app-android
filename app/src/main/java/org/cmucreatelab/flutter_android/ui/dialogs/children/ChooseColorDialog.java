@@ -26,13 +26,14 @@ import butterknife.OnClick;
  *
  * An abstract Dialog that handles the color picking.
  */
-public abstract class ChooseColorDialog extends BaseResizableDialog implements DialogInterface.OnClickListener {
+public abstract class ChooseColorDialog extends BaseResizableDialog {
 
     protected static final String COLOR_KEY = "color_key";
     private FrameLayout frameFinalColor;
     protected int[] finalRGB;
+    protected SetColorListener setColorListener;
 
-    private static class DrawableColor {
+    public static class DrawableColor {
         final int color, imageView, swatch,swatchSelected;
         DrawableColor(int color, int imageView, int swatch, int swatchSelected) {
             this.color = color;
@@ -95,7 +96,6 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        builder.setPositiveButton(R.string.set_color, this);
         ButterKnife.bind(this, view);
 
         return builder.create();
@@ -103,6 +103,12 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
 
 
     // OnClickListener implementation (ButterKnife)
+
+
+    @OnClick(R.id.button_set_color)
+    public void onClickSetColor() {
+        setColorListener.onSetColor(currentlySelected.swatch);
+    }
 
 
     @OnClick(R.id.imageView_red)
@@ -187,6 +193,13 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements D
     public void onClickBlack(View view) {
         Log.d(Constants.LOG_TAG, "onClickBlack");
         selectColor(colorSwatches.get(Constants.ColorSwatches.BLACK));
+    }
+
+
+    // interface for children
+
+    public interface SetColorListener {
+        public void onSetColor(int selectedSwatch);
     }
 
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
@@ -25,6 +26,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxColorDialog;
@@ -45,7 +47,7 @@ import butterknife.OnClick;
  *
  * A Dialog that shows the options for creating a link between Led and a Sensor
  */
-public class LedDialog extends BaseResizableDialog implements Serializable,
+public class LedDialog extends BaseOutputDialog implements Serializable,
         AdvancedSettingsDialog.DialogAdvancedSettingsListener,
         SensorOutputDialog.DialogSensorListener,
         RelationshipOutputDialog.DialogRelationshipListener,
@@ -63,8 +65,10 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
     private TextView currentTextViewItem;
     private Button saveButton;
 
-    private View maxColor;
-    private View minColor;
+    private ImageView maxColor;
+    private ImageView minColor;
+    private int maxSwatch;
+    private int minSwatch;
 
     private Settings redSettings;
     private Settings greenSettings;
@@ -85,7 +89,8 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         // max
         ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
-        ((GradientDrawable) maxColor.getBackground()).setColor(Color.rgb(redMax, greenMax, blueMax));
+        //((GradientDrawable) maxColor.getBackground()).setColor(Color.rgb(redMax, greenMax, blueMax));
+        maxColor.setImageResource(triColorLed.getMaxSwatch());
         maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
@@ -95,7 +100,8 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         // min
         ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
         minColorImg.setVisibility(View.GONE);
-        ((GradientDrawable) minColor.getBackground()).setColor(Color.rgb(redMin, greenMin, blueMin));
+        //((GradientDrawable) minColor.getBackground()).setColor(Color.rgb(redMin, greenMin, blueMin));
+        minColor.setImageResource(triColorLed.getMinSwatch());
         minColor.setVisibility(View.VISIBLE);
         TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
         TextView minColorValue = (TextView) view.findViewById(R.id.text_min_color_value);
@@ -158,8 +164,8 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         greenSettings = triColorLed.getGreenLed().getSettings();
         blueSettings = triColorLed.getBlueLed().getSettings();
 
-        maxColor = view.findViewById(R.id.view_max_color);
-        minColor = view.findViewById(R.id.view_min_color);
+        maxColor = (ImageView) view.findViewById(R.id.view_max_color);
+        minColor = (ImageView) view.findViewById(R.id.view_min_color);
 
         updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_settings);
@@ -187,6 +193,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         triColorLed.getGreenLed().setIsLinked(true, triColorLed.getGreenLed());
         triColorLed.getBlueLed().setIsLinked(true, triColorLed.getBlueLed());
 
+        triColorLed.setMinSwatch(minSwatch);
+        triColorLed.setMaxSwatch(maxSwatch);
+
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
     }
@@ -211,6 +220,9 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
         blueSettings.setOutputMax(triColorLed.getBlueLed().getMax());
         blueSettings.setOutputMin(triColorLed.getBlueLed().getMin());
 
+        triColorLed.setMaxSwatch(R.drawable.swatch_black);
+        triColorLed.setMinSwatch(R.drawable.swatch_white);
+
         dialogLedListener.onLedLinkListener(msg);
 
         this.dismiss();
@@ -220,7 +232,7 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, triColorLed);
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, triColorLed.getRedLed());
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -314,9 +326,10 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
 
     @Override
-    public void onHighColorChosen(int[] rgb) {
+    public void onHighColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
-        ((GradientDrawable) maxColor.getBackground()).setColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
+        maxSwatch = swatch;
+        maxColor.setImageResource(swatch);
         maxColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
@@ -331,9 +344,10 @@ public class LedDialog extends BaseResizableDialog implements Serializable,
 
 
     @Override
-    public void onLowColorChosen(int[] rgb) {
+    public void onLowColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
-        ((GradientDrawable) minColor.getBackground()).setColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
+        minSwatch = swatch;
+        minColor.setImageResource(swatch);
         minColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);

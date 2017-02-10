@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -40,8 +41,7 @@ import butterknife.OnClick;
  * An activity that can scan for flutters nearby and connect to them.
  *
  */
-public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener,
-        DataLoggingHandler.DataSetPointsListener{
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -230,19 +230,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         scanForDevice(true);
     }
 
-    // TODO - this is something we will need to move/change once we have a way to load
-    @Override
-    public void onDataSetPointsPopulated(boolean isSuccess) {
-        Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
-
-        // dismiss spinner
-        GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
-
-        // start new activity
-        Intent intent = new Intent(this, SensorsActivity.class);
-        startActivity(intent);
-    }
-
 
     // FlutterConnectListener implementation
 
@@ -250,14 +237,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterConnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
-        final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                globalHandler.sessionHandler.updateProgressDialogMessage("Reading Flutter Data...");
-            }
-        });
-        globalHandler.dataLoggingHandler.populatePointsAvailable(this);
+
+        // dismiss spinner
+        GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
+
+        // start new activity
+        Intent intent = new Intent(this, SensorsActivity.class);
+        startActivity(intent);
     }
 
 

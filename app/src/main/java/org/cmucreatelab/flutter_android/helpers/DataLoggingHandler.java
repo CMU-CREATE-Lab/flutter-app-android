@@ -7,6 +7,7 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
@@ -114,7 +115,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Log.d(Constants.LOG_TAG, "DataLoggingHandler.readPoint");
         // TODO - temporary fix to corrupt data points
         if (output.contains("ffffffff")) {
-            DataPoint dataPoint = new DataPoint(new Date(), "0/00/0000", "0:00", "0", "0", "0");
+            DataPoint dataPoint = new DataPoint();
             Calendar calendar = Calendar.getInstance();
             data.put(String.valueOf(calendar.getTimeInMillis()), dataPoint);
             keys.add(String.valueOf(calendar.getTimeInMillis()));
@@ -128,13 +129,13 @@ public class DataLoggingHandler implements FlutterMessageListener {
             StringBuilder date = new StringBuilder();
             StringBuilder time = new StringBuilder();
             calendar.setTimeInMillis(Long.parseLong(dataPointTime, 16)*1000);
-            Date dateTime = calendar.getTime();
 
             String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
             String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
             String year = String.valueOf(calendar.get(Calendar.YEAR));
             String hour = String.valueOf(calendar.get(Calendar.HOUR));
             String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+            String second = String.valueOf(calendar.get(Calendar.SECOND));
             String amOrPm = "";
             if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
                 amOrPm = "AM";
@@ -149,11 +150,17 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
             time.append(hour + ":");
             if (minute.length() < 2) {
-                time.append("0" + minute + " " + amOrPm);
+                time.append("0" + minute);
+            } else {
+                time.append(minute);
             }
-            else {
-                time.append(minute + " " + amOrPm);
+            if( second.length() < 2) {
+                time.append(":0" + second + " ");
+            } else {
+                time.append(":" + second + " ");
             }
+
+            time.append(amOrPm);
             date.append(month + "/" + day + "/" + year);
 
             temp = temp.substring(dataPointTime.length()+1, temp.length());
@@ -166,9 +173,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
             Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
 
             // populate treemap
-            DataPoint dataPoint = new DataPoint(dateTime, date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
-            data.put(dataPointTime, dataPoint);
-            keys.add(dataPointTime);
+            DataPoint dataPoint = new DataPoint(date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
+            data.put(date.toString() + time.toString(), dataPoint);
+            keys.add(date.toString() + time.toString());
         }
         Log.d(Constants.LOG_TAG, "size - " + data.size());
     }
@@ -183,7 +190,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    // TODO - Do we want to delete the data log that is currently on the device before we start to log again?
     public void startLogging(int interval, int samples, String logName) {
         globalHandler = GlobalHandler.getInstance(appContext);
 
@@ -213,21 +219,29 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.dataSetListener = dataSetListener;
         this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         this.data.clear();
-        for (int i = 0; i < numberOfPoints; i++) {
-            globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+        if (numberOfPoints > 0) {
+            for (int i = 0; i < numberOfPoints; i++) {
+                Log.d(Constants.LOG_TAG, "in here");
+                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+            }
+        } else {
+            dataSetListener.onDataSetPopulated(null);
         }
+    }
+
+
+    public void deleteLog() {
+        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(DELETE_LOG));
     }
 
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived - " + response);
-        if (data.size() == numberOfPoints && data.size() != 0) {
-            String[] sensorNames = new String[3];
-            sensorNames[0] = "Sensor 1";
-            sensorNames[1] = "Sensor 2";
-            sensorNames[2] = "Sensor 3";
-            DataSet dataSet = new DataSet(data, keys, dataName, sensorNames);
+        Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
+        if (data.size() == numberOfPoints && data.size() != 0 && request.substring(0,1).equals(READ_POINT)) {
+            Sensor[] sensors;
+            sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
+            DataSet dataSet = new DataSet(data, keys, dataName, sensors);
             dataSetListener.onDataSetPopulated(dataSet);
         }
     }

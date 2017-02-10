@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to choose a high color.
  */
-public class MaxColorDialog extends ChooseColorDialog {
+public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDialog.SetColorListener {
 
 
     private DialogHighColorListener highColorListener;
@@ -37,19 +37,21 @@ public class MaxColorDialog extends ChooseColorDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         highColorListener = (DialogHighColorListener) getArguments().getSerializable(COLOR_KEY);
+        setColorListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSetColor");
-        highColorListener.onHighColorChosen(finalRGB);
+    public void onSetColor(int swatch) {
+        Log.d(Constants.LOG_TAG, "MaxColorDialog.onSetColor");
+        highColorListener.onHighColorChosen(finalRGB, swatch);
+        dismiss();
     }
 
 
     public interface DialogHighColorListener {
-        public void onHighColorChosen(int[] rgb);
+        public void onHighColorChosen(int[] rgb, int swatch);
     }
 
 }

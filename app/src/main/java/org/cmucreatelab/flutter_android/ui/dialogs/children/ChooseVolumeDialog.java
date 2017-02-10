@@ -16,16 +16,20 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 11/14/2016.
  */
-public abstract class ChooseVolumeDialog extends BaseResizableDialog implements DialogInterface.OnClickListener  {
+public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
 
 
     private TextView currentVolume;
     private SeekBar seekBarVolume;
 
     protected int finalVolume;
+    protected SetVolumeListener setVolumeListener;
 
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -54,8 +58,8 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog implements 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_volume, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setPositiveButton(R.string.save, this);
         builder.setView(view);
+        ButterKnife.bind(this, view);
 
         currentVolume = (TextView) view.findViewById(R.id.text_current_volume);
         seekBarVolume = (SeekBar) view.findViewById(R.id.seek_volume);
@@ -63,6 +67,17 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog implements 
         currentVolume.setText("0");
 
         return builder.create();
+    }
+
+
+    @OnClick(R.id.button_set_volume)
+    public void onClickSetVolume() {
+        setVolumeListener.onSetVolume();
+    }
+
+
+    public interface SetVolumeListener {
+        public void onSetVolume();
     }
 
 }

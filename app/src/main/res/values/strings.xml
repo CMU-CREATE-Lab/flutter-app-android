@@ -166,6 +166,23 @@
     <string name="data_set_name">Data Set Name</string>
     <string name="for_word">for</string>
     <string name="start_recording">Start Recording</string>
+    <string name="empty_data_name">Data Set Name is required!</string>
+    <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
+    <string name="no_flutter_data_logs">To view data log information, please first connect your Flutter.</string>
+    <string name="loading_data_log_on_flutter">Loading Data...</string>
+    <string name="no_mail_app">No Email App To Resolve Intent</string>
+    <string name="ok">Ok</string>
+    <string name="loading_database">Loading Database...</string>
+    <string name="this_week">This Week</string>
+    <string name="this_month">This Month</string>
+    <string name="this_year">This Year</string>
+    <string name="delete_selected_logs">Delete Selected Logs</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="confirm_logs_to_delete">Confirm Logs To Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="set_position">Set Position</string>
+    <string name="set_volume">Set Volume</string>
+    <string name="set_pitch">Set Pitch</string>
 
     <string-array name="time_array">
         <item>minute</item>

@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to select a minimum Position of a servo.
  */
-public class MinPositionDialog extends ChoosePositionDialog {
+public class MinPositionDialog extends ChoosePositionDialog implements ChoosePositionDialog.SetPositionListener {
 
 
     private static String POSITION_KEY = "position_key";
@@ -38,13 +38,16 @@ public class MinPositionDialog extends ChoosePositionDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         minPositionListener = (DialogMinPositionListener) getArguments().getSerializable(POSITION_KEY);
+        setPositionListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
+
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        Log.d(Constants.LOG_TAG, "onClickSetMinPosition");
+    public void onSetPosition() {
+        Log.d(Constants.LOG_TAG, "MinPositionDialog.onSetPosition");
         minPositionListener.onMinPosChosen(finalPosition);
+        this.dismiss();
     }
 
 

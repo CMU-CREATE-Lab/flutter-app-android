@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg">
 
     <TextView
         android:id="@+id/text_current_volume"
@@ -57,5 +58,13 @@
         android:paddingLeft="2dp"
         android:thumbOffset="1dp"
         android:padding="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_set_volume"
+        android:text="@string/set_volume"
+        android:textColor="@color/white"
+        android:background="@drawable/round_green_button_bottom"/>
 
 </LinearLayout>

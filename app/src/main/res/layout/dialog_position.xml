@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="150dp"
     android:layout_height="match_parent"
-    android:weightSum="4">
+    android:weightSum="4"
+    android:background="@drawable/dialog_bg">
 
     <TextView
         android:id="@+id/text_current_angle"
@@ -49,5 +50,13 @@
         android:paddingLeft="2dp"
         android:thumbOffset="1dp"
         android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/button_set_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_position"
+        android:textColor="@color/white"
+        android:background="@drawable/round_green_button_bottom"/>
 
 </LinearLayout>

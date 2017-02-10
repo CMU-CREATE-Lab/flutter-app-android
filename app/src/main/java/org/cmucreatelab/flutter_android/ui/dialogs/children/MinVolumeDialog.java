@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * Created by Steve on 11/14/2016.
  */
-public class MinVolumeDialog extends ChooseVolumeDialog {
+public class MinVolumeDialog extends ChooseVolumeDialog implements ChooseVolumeDialog.SetVolumeListener {
 
 
     private static String VOLUME_KEY = "volume_key";
@@ -34,13 +34,16 @@ public class MinVolumeDialog extends ChooseVolumeDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         minVolumeListener = (DialogMinVolumeListener) getArguments().getSerializable(VOLUME_KEY);
+        setVolumeListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
 
+
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
+    public void onSetVolume() {
         Log.d(Constants.LOG_TAG, "onClickSetMinVolume");
         minVolumeListener.onMinVolumeChosen(finalVolume);
+        dismiss();
     }
 
 

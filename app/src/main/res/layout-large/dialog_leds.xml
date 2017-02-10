@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:background="@drawable/dialog_bg">
 
     <include android:id="@+id/include_toolbar_dialog"
         layout="@layout/toolbar_outputs"/>
@@ -39,12 +39,13 @@
                     android:src="@drawable/question_icon"
                     android:visibility="visible"/>
 
-                <View
+                <ImageView
                     android:id="@+id/view_max_color"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:visibility="invisible"
-                    android:background="@drawable/circle_dynamic"/>
+                    android:adjustViewBounds="true"
+                    android:visibility="invisible"/>
+
 
             </RelativeLayout>
 
@@ -94,12 +95,12 @@
                     android:src="@drawable/question_icon"
                     android:visibility="visible"/>
 
-                <View
+                <ImageView
                     android:id="@+id/view_min_color"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:visibility="invisible"
-                    android:background="@drawable/circle_dynamic"/>
+                    android:adjustViewBounds="true"
+                    android:visibility="invisible"/>
 
             </RelativeLayout>
 

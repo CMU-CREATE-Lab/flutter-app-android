@@ -1,5 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.R;
+
+import java.io.Serializable;
+
 /**
  * Created by Steve on 12/13/2016.
  */
@@ -10,12 +14,18 @@ public class TriColorLed implements FlutterOutput {
 
     private int portNumber;
     private Output[] outputs;
+    private int maxSwatch;
+    private int minSwatch;
 
     // getters
     public RedLed getRedLed() { return (RedLed)outputs[0]; }
     public GreenLed getGreenLed() { return  (GreenLed)outputs[1]; }
     public BlueLed getBlueLed() { return (BlueLed)outputs[2]; }
     public int getPortNumber() { return this.portNumber; }
+    public int getMaxSwatch() { return this.maxSwatch; }
+    public int getMinSwatch() { return this.minSwatch; }
+    public void setMaxSwatch(int maxSwatch) { this.maxSwatch = maxSwatch; }
+    public void setMinSwatch(int minSwatch) { this.minSwatch = minSwatch; }
 
 
     public TriColorLed(int portNumber) {

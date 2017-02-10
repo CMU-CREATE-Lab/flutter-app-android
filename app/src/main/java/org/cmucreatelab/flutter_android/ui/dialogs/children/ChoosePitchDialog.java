@@ -16,10 +16,13 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Steve on 11/14/2016.
  */
-public abstract class ChoosePitchDialog extends BaseResizableDialog implements DialogInterface.OnClickListener{
+public abstract class ChoosePitchDialog extends BaseResizableDialog {
 
 
     private static int MINIMUM_PITCH = 260;
@@ -30,6 +33,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
     private SeekBar seekBarPitch;
 
     protected int finalPitch;
+    protected SetPitchListener setPitchListener;
 
 
     private int getFrequency(int progress) {
@@ -143,8 +147,8 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_pitch, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setPositiveButton(R.string.save, this);
         builder.setView(view);
+        ButterKnife.bind(this, view);
 
         finalPitch = MINIMUM_PITCH;
         currentNote = (TextView) view.findViewById(R.id.text_current_note);
@@ -157,6 +161,17 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog implements D
         sheetMusic.setImageResource(R.drawable.c1);
 
         return builder.create();
+    }
+
+
+    @OnClick(R.id.button_set_pitch)
+    public void onClickSetPitch() {
+        setPitchListener.onSetPitch();
+    }
+
+
+    public interface SetPitchListener {
+        public void onSetPitch();
     }
 
 }

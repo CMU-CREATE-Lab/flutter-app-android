@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
@@ -23,15 +24,18 @@ public class Session implements FlutterMessageListener {
 
     private Activity currentActivity;
     private Flutter flutter;
+    private DataSet[] dataSets;
     private FlutterConnectListener flutterConnectListener;
     private FlutterMessageListener flutterMessageListener;
     // getters/setters
     public Activity getCurrentActivity() { return currentActivity; }
     public Flutter getFlutter() { return flutter; }
+    public DataSet[] getDataSets() { return this.dataSets; }
     public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
     public FlutterMessageListener getFlutterMessageListener() { return flutterMessageListener; }
     public void setCurrentActivity(Activity currentActivity) { this.currentActivity = currentActivity; }
     public void setFlutter(Flutter flutter) { this.flutter = flutter; }
+    public void setDataSets(DataSet[] dataSets) { this.dataSets = dataSets; }
     public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
 
