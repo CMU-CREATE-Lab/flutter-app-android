@@ -182,7 +182,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
