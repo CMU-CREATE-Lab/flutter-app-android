@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * An activity that can scan for flutters nearby and connect to them.
  *
  */
-public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener, DataLoggingHandler.DataSetPointsListener {
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -231,12 +231,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
-    // FlutterConnectListener implementation
-
-
     @Override
-    public void onFlutterConnected() {
-        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
+    public void onDataSetPointsPopulated(boolean isSuccess) {
+        Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
 
         // dismiss spinner
         GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
@@ -244,6 +241,23 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         // start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
+    }
+
+
+    // FlutterConnectListener implementation
+
+
+    @Override
+    public void onFlutterConnected() {
+        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                globalHandler.sessionHandler.updateProgressDialogMessage("Reading Flutter Data...");
+            }
+        });
+        globalHandler.dataLoggingHandler.populatePointsAvailable(this);
     }
 
 
