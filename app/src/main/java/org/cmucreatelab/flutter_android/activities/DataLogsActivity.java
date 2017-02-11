@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -23,7 +22,6 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
@@ -41,23 +39,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
     private DataLogsActivity instance;
-    private GlobalHandler globalHandler;
     private DataLoggingHandler dataLoggingHandler;
-
     private DataLogListAdapter dataLogListAdapter;
     private DataInstanceListAdapter dataInstanceListAdapter;
-
-    private ProgressBar progressDataLogSelected;
     private DataSet dataSetOnFlutter;
-    private Flutter flutter;
     private DataSet[] dataSetsOnDevice;
-
     private DataSet workingDataSet;
     private boolean isDataLogSelected;
-
     private DataPoint workingDataPoint;
     private ImageView workingDataPointImage;
-
     private TextView sendLogTextView;
 
 
@@ -87,13 +77,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             dataInstanceListAdapter.addDataPoint((DataPoint) pair.getValue());
         }
 
-        globalHandler.sessionHandler.dismissProgressDialog();
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.dismissProgressDialog();
     }
 
 
     private AdapterView.OnItemClickListener onDataLogClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
             loadDataSet(dataSetsOnDevice[i]);
@@ -132,7 +123,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_logs);
         ButterKnife.bind(this);
-        globalHandler = GlobalHandler.getInstance(this);
         instance = this;
     }
 
@@ -141,11 +131,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onResume() {
         Log.d(Constants.LOG_TAG, "onResume");
         super.onResume();
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
         } else {
             dataLoggingHandler = globalHandler.dataLoggingHandler;
-            flutter = globalHandler.sessionHandler.getSession().getFlutter();
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
@@ -198,6 +189,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     private void loadFlutterDataLog() {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         globalHandler.sessionHandler.createProgressDialog(this);
         findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
         isDataLogSelected = true;
@@ -216,6 +209,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @Override
     public void onDataSetPopulated() {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onDataSetPopulated");
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
         globalHandler.sessionHandler.dismissProgressDialog();
     }
@@ -229,6 +224,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
                 TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
                 TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
+                Flutter flutter = GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().getFlutter();
 
                 logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
                 if (!dataLoggingHandler.getDataName().equals(null) && dataLoggingHandler.getNumberOfPoints() != 0) {
@@ -252,18 +248,20 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
             }
         });
-        globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().getFlutter().populateDataSet(this, this);
     }
 
 
     @Override
     public void onDataRecord(String name, int interval, int sample) {
         Log.d(Constants.LOG_TAG, "onDataRecord");
-        globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
+        GlobalHandler.getInstance(getApplicationContext()).dataLoggingHandler.startLogging(interval, sample, name);
     }
 
     @Override
     public void onOpenedLog(DataSet dataSet) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+
         if (dataSet.equals(dataSetOnFlutter)) {
             globalHandler.sessionHandler.createProgressDialog(this);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));

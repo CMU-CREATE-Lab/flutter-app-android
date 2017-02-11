@@ -10,8 +10,8 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeMap;
@@ -27,25 +27,19 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
-    private static final String STOP_LOGGING = "L";
-    private static final String READ_NUMBER_OF_POINTS = "P";
-    private static final String READ_LOG_NAME = "N";
-    private static final String READ_POINT = "R";
-    private static final String DELETE_LOG = "D";
 
     private Context appContext;
     private GlobalHandler globalHandler;
-
     private DataSetPointsListener dataSetPointsListener;
     private DataSetListener dataSetListener;
-
     private int numberOfPoints;
-    private int remainingPoints;
-    private boolean isLogging;
-
     private ArrayList<String> keys;
     private String dataName;
     private TreeMap<String, DataPoint> data;
+
+    // TODO @tasota did we still need these to be tracking something?
+    private int remainingPoints;
+    private boolean isLogging;
 
 
     private String getTimeInHex() {
@@ -210,8 +204,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
         globalHandler = GlobalHandler.getInstance(appContext);
         globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
 
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_LOG_NAME));
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_NUMBER_OF_POINTS));
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadLogName());
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadNumberPointsAvailable());
     }
 
 
@@ -222,7 +216,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         if (numberOfPoints > 0) {
             for (int i = 0; i < numberOfPoints; i++) {
                 Log.d(Constants.LOG_TAG, "in here");
-                globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_POINT + "," + Integer.toHexString(i)));
+                globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadPoint((short)i));
             }
         } else {
             dataSetListener.onDataSetPopulated(null);
@@ -231,14 +225,14 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     public void deleteLog() {
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(DELETE_LOG));
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructDeleteLog());
     }
 
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
-        if (data.size() == numberOfPoints && data.size() != 0 && request.substring(0,1).equals(READ_POINT)) {
+        if (data.size() == numberOfPoints && data.size() != 0 && request.substring(0,1).equals(FlutterProtocol.Commands.READ_POINT)) {
             Sensor[] sensors;
             sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
             DataSet dataSet = new DataSet(data, keys, dataName, sensors);
