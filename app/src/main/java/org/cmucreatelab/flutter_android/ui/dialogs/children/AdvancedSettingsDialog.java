@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -13,9 +12,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -28,13 +24,10 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 11/17/2016.
  */
-// TODO - fix the sensor type text, just hacked it in for now
 public class AdvancedSettingsDialog extends BaseResizableDialog {
-
 
     private static final String ADVANCED_KEY = "advanced_key";
     private static final String OUTPUT_KEY = "output_key";
-
 
     private DialogAdvancedSettingsListener dialogAdvancedSettingsListener;
     private FlutterOutput flutterOutput;
@@ -44,7 +37,6 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     private TextView textMaxInput;
     private TextView textMinInput;
     private TextView textZeroPoint;
-
     private int maxInput;
     private int minInput;
     private int zeroPoint;

@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.adapters;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,10 +103,7 @@ public class DataInstanceListAdapter extends BaseAdapter {
             viewHolder.sensor1Value.setText(sensor1Value);
             viewHolder.sensor2Value.setText(sensor2Value);
             viewHolder.sensor3Value.setText(sensor3Value);
-        } else {
-            //viewHolder.dataLogName.setText(R.string.unknown_log);
         }
-        //viewHolder.dataLogName.setGravity(Gravity.CENTER);
 
         return view;
     }

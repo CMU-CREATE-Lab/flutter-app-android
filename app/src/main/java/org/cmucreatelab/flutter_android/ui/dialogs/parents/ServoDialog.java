@@ -26,7 +26,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog.DialogMaxPositionListener;
@@ -53,17 +52,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         DialogMaxPositionListener,
         MinPositionDialog.DialogMinPositionListener {
 
-
     private DialogServoListener dialogServoListener;
-
     private Serializable serializable;
     private DialogFragment dialogFragment;
-
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
-
     private Settings settings;
     private Servo servo;
 

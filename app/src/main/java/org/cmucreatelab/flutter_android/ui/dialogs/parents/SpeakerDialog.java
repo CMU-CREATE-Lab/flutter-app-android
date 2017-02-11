@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -29,7 +28,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
@@ -60,13 +58,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         MaxPitchDialog.DialogMaxPitchListener,
         MinPitchDialog.DialogMinPitchListener {
 
-
     private DialogSpeakerListener dialogSpeakerListener;
-
     private Serializable serializable;
     private DialogFragment dialogFragment;
     private boolean isVolume;
-
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
@@ -76,15 +71,9 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private RelativeLayout relativePitch;
     private Button saveButton;
     private View view;
-
     private Settings pitchSettings;
     private Settings volumeSettings;
     private Speaker speaker;
-
-//    private enum CurrentTab {
-//        VOLUME, PITCH
-//    }
-//    private CurrentTab currentTab;
 
 
     private void updateViews(View view) {

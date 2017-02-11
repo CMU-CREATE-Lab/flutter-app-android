@@ -35,12 +35,47 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-// TODO - make a message reconstruct class to determine what kind of message it is
-// TODO - then call the appropriate method depending on what kind of message was received
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener {
 
     private Session session;
     private boolean isUsingSensorData = true;
+
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
+            Log.d(Constants.LOG_TAG, "onProgressChanged");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Sensor[] sensors = session.getFlutter().getSensors();
+                    TextView sensorReadingText;
+
+                    if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                    if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                        sensorReadingText.setText(String.valueOf(i) + "%");
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
 
     private void updateStaticViews() {
@@ -155,42 +190,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onProgressChanged");
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Sensor[] sensors = session.getFlutter().getSensors();
-                    TextView sensorReadingText;
-
-                    if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
-                    }
-                    if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
-                    }
-                    if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                        sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
+    // Class methods
 
 
     @Override
@@ -230,6 +230,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
+    // Dialog Listeners
+
+
     @Override
     public void onServoLinkListener(FlutterMessage message) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
@@ -262,6 +265,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
         updateLinkedViews();
     }
+
 
     // onClick listeners
 

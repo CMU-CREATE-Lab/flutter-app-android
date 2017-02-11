@@ -89,8 +89,6 @@ public class DataLogListAdapter extends BaseAdapter {
         if (dataLogName != null && dataLogName.length() > 0) {
             viewHolder.dataLogName.setText(dataLogName);
             viewHolder.numberOfPoints.setText(String.valueOf(numPoints));
-        } else {
-            //viewHolder.dataLogName.setText(R.string.unknown_log);
         }
         viewHolder.dataLogName.setGravity(Gravity.CENTER);
 

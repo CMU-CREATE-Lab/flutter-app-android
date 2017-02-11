@@ -1,8 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.parents;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.FlutterMessage;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
@@ -27,7 +24,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinColorDialog;
@@ -54,22 +50,17 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         MaxColorDialog.DialogHighColorListener,
         MinColorDialog.DialogLowColorListener {
 
-
     private DialogLedListener dialogLedListener;
-
     private Serializable serializable;
     private DialogFragment dialogFragment;
-
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
-
     private ImageView maxColor;
     private ImageView minColor;
     private int maxSwatch;
     private int minSwatch;
-
     private Settings redSettings;
     private Settings greenSettings;
     private Settings blueSettings;
@@ -89,7 +80,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         // max
         ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
-        //((GradientDrawable) maxColor.getBackground()).setColor(Color.rgb(redMax, greenMax, blueMax));
         maxColor.setImageResource(triColorLed.getMaxSwatch());
         maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
@@ -100,7 +90,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         // min
         ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
         minColorImg.setVisibility(View.GONE);
-        //((GradientDrawable) minColor.getBackground()).setColor(Color.rgb(redMin, greenMin, blueMin));
         minColor.setImageResource(triColorLed.getMinSwatch());
         minColor.setVisibility(View.VISIBLE);
         TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
