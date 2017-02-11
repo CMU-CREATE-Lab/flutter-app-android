@@ -9,7 +9,6 @@ import java.io.Serializable;
  *
  * An interface for any physical output that appears on a FlutterDevice, which may consist of multiple hardware outputs
  */
-
 public interface FlutterOutput extends Serializable {
 
     Output[] getOutputs();

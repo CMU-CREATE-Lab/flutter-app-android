@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -10,7 +12,7 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  * An abstract class that holds a Settings object to represent the link between input and output
  *
  */
-public abstract class Output {
+public abstract class Output implements Serializable {
 
     enum Type {
         RED_LED,
