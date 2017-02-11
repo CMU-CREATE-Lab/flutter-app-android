@@ -3,8 +3,8 @@ package org.cmucreatelab.flutter_android.helpers;
 import android.content.Context;
 import android.util.Log;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -193,8 +193,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
         String samplesString = getSamplesInHex(samples);
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
 
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage("n," + logName));
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(builder.toString()));
+        globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage("n," + logName));
+        globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage(builder.toString()));
     }
 
 

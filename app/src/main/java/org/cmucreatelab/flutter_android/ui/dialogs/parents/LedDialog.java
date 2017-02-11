@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
@@ -169,7 +169,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        ArrayList<FlutterMessage> msg = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msg = new ArrayList<>();
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
@@ -192,7 +192,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        ArrayList<FlutterMessage> msg = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msg = new ArrayList<>();
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
 
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
@@ -351,7 +351,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
 
     public interface DialogLedListener {
-        public void onLedLinkListener(ArrayList<FlutterMessage> msgs);
+        public void onLedLinkListener(ArrayList<MelodySmartMessage> msgs);
     }
 
 }

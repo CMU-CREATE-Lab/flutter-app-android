@@ -64,7 +64,7 @@ public class SessionHandler {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutter.getBluetoothDevice().getName());
         this.session = new Session(activity, flutter,activity,null);
         createProgressDialog(activity);
-        globalHandler.melodySmartDeviceHandler.connect(this.getSession());
+        globalHandler.melodySmartDeviceHandler.connect(this.getSession().getFlutter().getBluetoothDevice());
     }
 
 

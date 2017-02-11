@@ -22,11 +22,13 @@ android {
 repositories {
     flatDir {
         dirs 'libs'
+        dirs project(':melodysmart-module-android').file('libs')
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':melodysmart-module-android')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile(name:'MelodySmart', ext:'aar')

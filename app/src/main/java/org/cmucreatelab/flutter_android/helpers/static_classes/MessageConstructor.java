@@ -2,7 +2,7 @@ package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.util.Log;
 
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
@@ -28,100 +28,100 @@ public class MessageConstructor {
     }
 
 
-    public static FlutterMessage constructReadSensorValues() {
+    public static MelodySmartMessage constructReadSensorValues() {
         // Request: 'r'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_SENSOR_VALUES));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_SENSOR_VALUES));
     }
 
 
-    public static FlutterMessage constructSetOutput(Output output, int value) {
+    public static MelodySmartMessage constructSetOutput(Output output, int value) {
         // Request: 'soutput,value'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.SET_OUTPUT)+output.getProtocolString()+","+Integer.toHexString(value));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SET_OUTPUT)+output.getProtocolString()+","+Integer.toHexString(value));
     }
 
 
-    public static FlutterMessage constructRemoveRelation(Output output) {
+    public static MelodySmartMessage constructRemoveRelation(Output output) {
         // Request: 'xoutput'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.REMOVE_RELATION)+output.getProtocolString());
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.REMOVE_RELATION)+output.getProtocolString());
     }
 
 
-    public static FlutterMessage constructRemoveAllRelations() {
+    public static MelodySmartMessage constructRemoveAllRelations() {
         // Request: 'X'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.REMOVE_ALL_RELATIONS));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.REMOVE_ALL_RELATIONS));
     }
 
 
     // ASSERT: unixTime is 8 bytes, loggingInterval is 4 bytes, samples is 2 bytes (all are treated as unsigned)
-    public static FlutterMessage constructStartLogging(long unixTime, int loggingInterval, short samples) {
+    public static MelodySmartMessage constructStartLogging(long unixTime, int loggingInterval, short samples) {
         // Request: 'l,unix_time,logging_interval,samples'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.START_LOGGING)+","+Long.toHexString(unixTime)+","+Integer.toHexString(loggingInterval)+","+shortToHexString(samples));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.START_LOGGING)+","+Long.toHexString(unixTime)+","+Integer.toHexString(loggingInterval)+","+shortToHexString(samples));
     }
 
 
-    public static FlutterMessage constructStopLogging() {
+    public static MelodySmartMessage constructStopLogging() {
         // Request: 'L'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.STOP_LOGGING));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.STOP_LOGGING));
     }
 
 
-    public static FlutterMessage constructSetLogName(String logName) {
+    public static MelodySmartMessage constructSetLogName(String logName) {
         // Request: 'n,log_name'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.SET_LOG_NAME)+","+logName);
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SET_LOG_NAME)+","+logName);
     }
 
 
-    public static FlutterMessage constructReadLogName() {
+    public static MelodySmartMessage constructReadLogName() {
         // Request: 'N'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_LOG_NAME));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_LOG_NAME));
     }
 
 
-    public static FlutterMessage constructReadNumberPointsAvailable() {
+    public static MelodySmartMessage constructReadNumberPointsAvailable() {
         // Request: 'P'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_NUMBER_POINTS_AVAILABLE));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_NUMBER_POINTS_AVAILABLE));
     }
 
 
-    public static FlutterMessage constructReadPoint(short pointNumber) {
+    public static MelodySmartMessage constructReadPoint(short pointNumber) {
         // Request: 'R,pointNumber'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_POINT)+","+shortToHexString(pointNumber));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_POINT)+","+shortToHexString(pointNumber));
     }
 
 
-    public static FlutterMessage constructDeleteLog() {
+    public static MelodySmartMessage constructDeleteLog() {
         // Request: 'D'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.DELETE_LOG));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.DELETE_LOG));
     }
 
 
-    public static FlutterMessage constructReadOutputState(Output output) {
+    public static MelodySmartMessage constructReadOutputState(Output output) {
         // Request: 'Ooutput'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_OUTPUT_STATE)+output.getProtocolString());
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_OUTPUT_STATE)+output.getProtocolString());
     }
 
 
-    public static FlutterMessage constructSetInputType(Sensor sensor, short inputType) {
+    public static MelodySmartMessage constructSetInputType(Sensor sensor, short inputType) {
         // Request: 'y,input,type'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.SET_INPUT_TYPE)+","+sensor.getPortNumber()+","+inputType);
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SET_INPUT_TYPE)+","+sensor.getPortNumber()+","+inputType);
     }
 
 
-    public static FlutterMessage constructReadInputType(Sensor input) {
+    public static MelodySmartMessage constructReadInputType(Sensor input) {
         // Request: 'Y,input'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.READ_INPUT_TYPE)+","+input.getPortNumber());
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_INPUT_TYPE)+","+input.getPortNumber());
     }
 
 
-    public static FlutterMessage constructEnableProportionalControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue) {
+    public static MelodySmartMessage constructEnableProportionalControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue) {
         // Request: 'poutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue'
-        return new FlutterMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue));
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue));
     }
 
 
     // TODO @tasota this is just a helper for now, but it might be okay to handle all relationships this way
-    public static FlutterMessage constructRelationshipMessage(Output output, Settings settings) {
-        FlutterMessage result = null;
+    public static MelodySmartMessage constructRelationshipMessage(Output output, Settings settings) {
+        MelodySmartMessage result = null;
 
         if (settings.getRelationship().getClass() == Proportional.class) {
             // TODO @tasota hacked for inverted distance

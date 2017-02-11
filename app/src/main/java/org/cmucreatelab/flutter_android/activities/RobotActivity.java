@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -234,7 +234,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onServoLinkListener(FlutterMessage message) {
+    public void onServoLinkListener(MelodySmartMessage message) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
@@ -244,11 +244,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onLedLinkListener(ArrayList<FlutterMessage> msgs) {
+    public void onLedLinkListener(ArrayList<MelodySmartMessage> msgs) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onLedLinkCreated");
-        for (FlutterMessage message : msgs) {
+        for (MelodySmartMessage message : msgs) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
         updateLinkedViews();
@@ -256,11 +256,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onSpeakerLinkListener(ArrayList<FlutterMessage> msgs) {
+    public void onSpeakerLinkListener(ArrayList<MelodySmartMessage> msgs) {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         Log.d(Constants.LOG_TAG, "onSpeakerLinkCreated");
-        for (FlutterMessage message : msgs) {
+        for (MelodySmartMessage message : msgs) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
         updateLinkedViews();
@@ -432,7 +432,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    // FlutterMessageListener implementation
+    // MelodySmartMessageListener implementation
 
 
     @Override

@@ -15,8 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -141,7 +141,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         servo.setSettings(settings);
-        FlutterMessage msg = MessageConstructor.constructRelationshipMessage(servo, settings);
+        MelodySmartMessage msg = MessageConstructor.constructRelationshipMessage(servo, settings);
         servo.setIsLinked(true, servo);
         dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
@@ -152,7 +152,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onClickRemoveLink() {
         if (servo.getSettings() != null) {
             Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            FlutterMessage msg = MessageConstructor.constructRemoveRelation(servo);
+            MelodySmartMessage msg = MessageConstructor.constructRemoveRelation(servo);
             servo.setIsLinked(false, servo);
             settings.setOutputMax(servo.getMax());
             settings.setOutputMin(servo.getMin());
@@ -282,7 +282,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
 
     public interface DialogServoListener {
-        public void onServoLinkListener(FlutterMessage message);
+        public void onServoLinkListener(MelodySmartMessage message);
     }
 
 }

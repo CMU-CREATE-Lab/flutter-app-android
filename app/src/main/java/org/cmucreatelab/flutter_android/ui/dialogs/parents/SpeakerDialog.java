@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -179,7 +179,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msgs = new ArrayList<>();
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
         msgs.add(MessageConstructor.constructRelationshipMessage(speaker.getVolume(),speaker.getVolume().getSettings()));
@@ -194,7 +194,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msgs = new ArrayList<>();
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
         speaker.getPitch().setIsLinked(false, speaker.getPitch());
@@ -411,7 +411,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
 
     public interface DialogSpeakerListener {
-        public void onSpeakerLinkListener(ArrayList<FlutterMessage> msgs);
+        public void onSpeakerLinkListener(ArrayList<MelodySmartMessage> msgs);
     }
 
 }

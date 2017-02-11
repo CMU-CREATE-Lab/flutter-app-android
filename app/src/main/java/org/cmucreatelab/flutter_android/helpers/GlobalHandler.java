@@ -2,7 +2,7 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
 
-import org.cmucreatelab.flutter_android.helpers.melodysmart.DeviceHandler;
+import org.cmucreatelab.flutter_android.helpers.melodysmart.FlutterDeviceHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 
 /**
@@ -17,7 +17,7 @@ public class GlobalHandler {
 
     public Context appContext;
     public SessionHandler sessionHandler;
-    public DeviceHandler melodySmartDeviceHandler;
+    public FlutterDeviceHandler melodySmartDeviceHandler;
     public EmailHandler emailHandler;
     public DataLoggingHandler dataLoggingHandler;
 
@@ -39,7 +39,7 @@ public class GlobalHandler {
     private GlobalHandler(Context context) {
         this.appContext = context;
         this.sessionHandler = new SessionHandler(this);
-        this.melodySmartDeviceHandler = new DeviceHandler(this);
+        this.melodySmartDeviceHandler = new FlutterDeviceHandler(this);
         this.emailHandler = new EmailHandler();
         this.dataLoggingHandler = new DataLoggingHandler(appContext);
     }
