@@ -31,6 +31,8 @@ public class TriColorLed implements FlutterOutput {
     public TriColorLed(int portNumber) {
         this.portNumber = portNumber;
         this.outputs = new Output[NUMBER_OF_OUTPUTS];
+        maxSwatch = R.drawable.swatch_black;
+        minSwatch = R.drawable.swatch_white;
         outputs[0] = new RedLed(this.portNumber);
         outputs[1] = new GreenLed(this.portNumber);
         outputs[2] = new BlueLed(this.portNumber);
