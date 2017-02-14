@@ -10,6 +10,7 @@ import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
 import java.util.ArrayList;
@@ -52,6 +53,9 @@ public class FlutterDataListener extends DataListener<MessageQueue> {
 
     @Override
     public void onMessageReceived(MelodySmartMessage request, String response) {
+        if (Constants.IGNORE_READ_SENSORS && request.getRequest().charAt(0) == FlutterProtocol.Commands.READ_SENSOR_VALUES) {
+            return;
+        }
         Log.v(Constants.LOG_TAG, "FlutterDataListener.onMessageReceived");
         // handle parse
         session.onFlutterMessageReceived(request.getRequest(), response);

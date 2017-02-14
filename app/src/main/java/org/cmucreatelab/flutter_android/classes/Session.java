@@ -50,7 +50,7 @@ public class Session implements FlutterMessageListener {
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
-        Log.d(Constants.LOG_TAG, "onFlutterMessageReceived - " + " " + request + " "  + response);
+        Log.v(Constants.LOG_TAG, "onFlutterMessageReceived - " + " " + request + " "  + response);
         if (response.equals("OK") || response.equals("FAIL")) {
             Log.v(Constants.LOG_TAG,"ignoring onFlutterMessageReceived="+response);
             return;
