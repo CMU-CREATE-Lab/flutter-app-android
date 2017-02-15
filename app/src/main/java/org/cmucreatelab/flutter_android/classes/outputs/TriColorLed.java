@@ -65,7 +65,7 @@ public class TriColorLed implements FlutterOutput {
             return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
-        return R.drawable.swatch_black;
+        return R.drawable.swatch_black_selected;
     }
 
 
@@ -89,7 +89,7 @@ public class TriColorLed implements FlutterOutput {
             return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
-        return R.drawable.swatch_black;
+        return R.drawable.swatch_black_selected;
     }
 
 

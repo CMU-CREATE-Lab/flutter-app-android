@@ -99,22 +99,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    private int getOutputToRgb(int value) {
-        float result = 0;
-
-        float ratio = 255.0f / 100.0f;
-        result = (ratio*value);
-
-        return (int) result;
-    }
-
-
     private int getProportionalValue(float value, float maxValue, float newMaxValue) {
-        int result = 0;
-
         float ratio = value / maxValue;
-        result = (int) Math.ceil(ratio*newMaxValue);
-
+        int result = (int) Math.ceil(ratio*newMaxValue);
         return result;
     }
 
@@ -296,6 +283,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         updateViews(dialogView);
     }
 
+
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
@@ -311,8 +299,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onHighColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
-        maxColor.setImageResource(swatch);
-        maxColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
         int max = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
@@ -321,6 +307,8 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getGreenLed().getSettings().setOutputMax(max);
         max = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
         triColorLed.getBlueLed().getSettings().setOutputMax(max);
+        maxColor.setImageResource(triColorLed.getMaxSwatch());
+        maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMaxColorText());
     }
 
@@ -328,8 +316,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onLowColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
-        minColor.setImageResource(swatch);
-        minColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
         int min = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
@@ -338,6 +324,8 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getGreenLed().getSettings().setOutputMin(min);
         min = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
         triColorLed.getBlueLed().getSettings().setOutputMin(min);
+        minColor.setImageResource(triColorLed.getMinSwatch());
+        minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMinColorText());
     }
 
