@@ -27,8 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 1/9/2017.
  */
-// TODO - use an abstract class to simplify this class
-public class RecordDataSensorDialog extends BaseDataLoggingDialog {
+public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Serializable {
 
     private DialogRecordDataSensorListener dialogRecordDataSensorListener;
 
@@ -94,28 +93,36 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog {
             if (!intervalString.matches("")) {
                 String timerPeriodString = timePeriodText.getText().toString();
                 if (!timerPeriodString.matches("")) {
-                    int intervalsT = Integer.valueOf(intervalString);
-                    // in seconds
-                    int interval = 0;
+                    if (!getIsWaitingForResponse()) {
+                        if (!getIsLogging()) {
+                            int intervalsT = Integer.valueOf(intervalString);
+                            // in seconds
+                            int interval = 0;
 
-                    String temp = intervalSpinner.getSelectedItem().toString();
-                    interval = timeToSeconds(temp);
-                    interval = interval / intervalsT;
+                            String temp = intervalSpinner.getSelectedItem().toString();
+                            interval = timeToSeconds(temp);
+                            interval = interval / intervalsT;
 
-                    int timePeriodT = Integer.valueOf(timerPeriodString);
-                    // in seconds
-                    int timePeriod = 0;
-                    temp = timePeriodSpinner.getSelectedItem().toString();
-                    timePeriod = timeToSeconds(temp);
-                    timePeriod = timePeriodT * timePeriod;
-                    int sample = timePeriod / interval;
+                            int timePeriodT = Integer.valueOf(timerPeriodString);
+                            // in seconds
+                            int timePeriod = 0;
+                            temp = timePeriodSpinner.getSelectedItem().toString();
+                            timePeriod = timeToSeconds(temp);
+                            timePeriod = timePeriodT * timePeriod;
+                            int sample = timePeriod / interval;
 
-                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + name);
-                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
-                    Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
+                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + name);
+                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
+                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
 
-                    dialogRecordDataSensorListener.onDataRecord(name, interval, sample);
-                    this.dismiss();
+                            dialogRecordDataSensorListener.onDataRecord(name, interval, sample);
+                            this.dismiss();
+                        } else {
+                            IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
+                            isRecordingDialog.show(getFragmentManager(), "tag");
+                            this.dismiss();
+                        }
+                    }
                 } else {
                     timePeriodText.setError(getString(R.string.this_field_cannot_be_blank));
                 }

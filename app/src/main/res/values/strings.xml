@@ -183,6 +183,10 @@
     <string name="set_position">Set Position</string>
     <string name="set_volume">Set Volume</string>
     <string name="set_pitch">Set Pitch</string>
+    <string name="warning">Warning</string>
+    <string name="overwrite_message">The Flutter is currently recording data. Do you want it to stop?</string>
+    <string name="stop_the_current_recoring">Stop the current recording</string>
+    <string name="keep_the_current_recording">Keep the current recording</string>
 
     <string-array name="time_array">
         <item>minute</item>
