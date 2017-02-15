@@ -202,8 +202,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         isDataLogSelected = true;
         sendLogTextView.setEnabled(true);
         loadDataSet(dataSetOnFlutter);
-        FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
-        dataLoggingHandler.deleteLog();
+        if (!dataLoggingHandler.getIsLogging()) {
+            FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
+            dataLoggingHandler.deleteLog();
+        }
     }
     @OnClick(R.id.relative_flutter_log)
     public void onClickRelativeFlutterLog() {
@@ -234,6 +236,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
                     textLogName.setText(dataLoggingHandler.getDataName());
                     textLogPoints.setText(String.valueOf(dataLoggingHandler.getNumberOfPoints()));
+                } else {
+                    findViewById(R.id.relative_flutter_log).setVisibility(View.GONE);
                 }
 
                 dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
@@ -277,5 +281,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
             loadDataSet(dataSet);
         }
+    }
+
+    @Override
+    public void onDismissed() {
+        onResume();
     }
 }
