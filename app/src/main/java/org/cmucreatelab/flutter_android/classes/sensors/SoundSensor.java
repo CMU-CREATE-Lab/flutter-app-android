@@ -3,17 +3,15 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * Sound
+ * SoundSensor
  *
  * A class representing a sound sensor.
  *
  */
-public class Sound extends A_Sensor implements Sensor, Serializable {
+public class SoundSensor extends Sensor {
 
     private static final short sensorType = FlutterProtocol.InputTypes.SOUND;
     private static final int sensorTypeId = R.string.sound;
@@ -29,7 +27,7 @@ public class Sound extends A_Sensor implements Sensor, Serializable {
     private static final int whiteImageIdSm = R.drawable.sensor_sound_s_m_20;
 
 
-    public Sound(int portNumber) {
+    public SoundSensor(int portNumber) {
         super(portNumber);
     }
 

@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;

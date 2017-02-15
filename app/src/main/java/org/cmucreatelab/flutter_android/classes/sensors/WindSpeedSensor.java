@@ -3,33 +3,31 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * SoilMoisture
+ * WindSpeedSensor
  *
- * A class representing a soil moisture sensor.
+ * A class representing a wind speed sensor.
  *
  */
-public class SoilMoisture extends A_Sensor implements Sensor, Serializable {
+public class WindSpeedSensor extends Sensor {
 
-    private static final short sensorType = FlutterProtocol.InputTypes.SOIL;
-    private static final int sensorTypeId = R.string.soil_moisture;
-    private static final int highTextId = R.string.wet;
-    private static final int lowTextId = R.string.dry;
-    private static final int typeTextId = R.string.soil_moisture;
+    private static final short sensorType = FlutterProtocol.InputTypes.WIND_SPEED;
+    private static final int sensorTypeId = R.string.wind_speed;
+    private static final int highTextId = R.string.fast;
+    private static final int lowTextId = R.string.slow;
+    private static final int typeTextId = R.string.wind_speed;
 
-    private static final int blueImageId = R.drawable.sensor_blue_soil_moisture_l_g_68;
-    private static final int greenImageId = R.drawable.sensor_green_soil_moisture_l_g_68;
-    private static final int orangeImageIdMd = R.drawable.sensor_orange_soil_moisture_m_d_40;
-    private static final int orangeImageIdSm = R.drawable.sensor_orange_soil_moisture_s_m_22;
-    private static final int greyImageIdSm = R.drawable.sensor_soil_moisture_grey_s_m_20;
-    private static final int whiteImageIdSm = R.drawable.sensor_soil_moisture_s_m_20;
+    private static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_wind_speed_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_wind_speed_s_m_20;
 
 
-    public SoilMoisture(int portNumber) {
+    public WindSpeedSensor(int portNumber) {
         super(portNumber);
     }
 

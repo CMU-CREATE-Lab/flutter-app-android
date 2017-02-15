@@ -2,22 +2,19 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 12/13/2016.
  */
-public class GreenLed extends A_Output implements Serializable {
+public class GreenLed extends Output {
 
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 100;
     private static final String TYPE = "g";
     private static final Output.Type outputType = Type.GREEN_LED;
+    private static final int imageId = R.mipmap.ic_launcher;
 
-    public static final String LED_KEY = "green_led_key";
-    public static final int imageId = R.mipmap.ic_launcher;
 
-    public GreenLed(int portNumber) {
+    GreenLed(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
     }
 

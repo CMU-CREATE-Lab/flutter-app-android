@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -12,9 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -27,23 +24,19 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 11/17/2016.
  */
-// TODO - fix the sensor type text, just hacked it in for now
 public class AdvancedSettingsDialog extends BaseResizableDialog {
-
 
     private static final String ADVANCED_KEY = "advanced_key";
     private static final String OUTPUT_KEY = "output_key";
 
-
     private DialogAdvancedSettingsListener dialogAdvancedSettingsListener;
-    private Output output;
+    private FlutterOutput flutterOutput;
     private SeekBar seekBarMaxInput;
     private SeekBar seekBarMinInput;
     private SeekBar seekBarZeroPoint;
     private TextView textMaxInput;
     private TextView textMinInput;
     private TextView textZeroPoint;
-
     private int maxInput;
     private int minInput;
     private int zeroPoint;
@@ -124,7 +117,10 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
         dialogAdvancedSettingsListener = (DialogAdvancedSettingsListener) getArguments().getSerializable(ADVANCED_KEY);
-        output = (Output) getArguments().getSerializable(OUTPUT_KEY);
+        flutterOutput = (FlutterOutput) getArguments().getSerializable(OUTPUT_KEY);
+        // ASSERT: settings are the same across all outputs, and there is always at least 1 output
+        sensorText = getString(flutterOutput.getOutputs()[0].getSettings().getSensor().getSensorTypeId());
+        Log.i(Constants.LOG_TAG,"created AdvancedSettingsDialog for FlutterOutput=" + flutterOutput.getClass().getName());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_advanced_settings, null);
@@ -149,8 +145,6 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         seekBarMaxInput.setProgress(maxInput);
         seekBarMinInput.setProgress(minInput);
         seekBarZeroPoint.setProgress(zeroPoint);
-
-        sensorText = getString(output.getSettings().getSensor().getSensorTypeId());
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");

@@ -6,9 +6,8 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 /**
  * Created by Steve on 5/31/2016.
@@ -18,15 +17,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
  * A class that handles your session after selecting a device on AppLandingActivity
  *
  */
-// TODO - Too much is happening in here I think, I'd like to refactor it eventually -  split some things up
-// TODO - I would like this class to eventually be a container that holds the flutter instance, data logs, and any other object instances we need throughout the session of the app.
-// TODO - Refactor message sending and actually make use of the Message class
-// TODO - Separate class for handling connecting and disconnecting (the more we split this up the better)
-// I would like to have a message handler class that handles all of the messages
-// Maybe a MessageSender class that does the actual sending of messages and the Message Handler
-// will just handle which messages are being sent to the sender.
-// This would clean up the DataLoggingHandler and anywhere else we send messages.
-// Wish I thought of that before I wrote all of this.. :/
 public class SessionHandler {
 
     private GlobalHandler globalHandler;
@@ -70,11 +60,11 @@ public class SessionHandler {
     }
 
 
-    public void startSession(AppLandingActivity activity, FlutterOG flutterOG) {
-        Log.d(Constants.LOG_TAG, "Starting session with " + flutterOG.getDevice().getName());
-        this.session = new Session(activity,flutterOG,activity,null);
+    public void startSession(AppLandingActivity activity, Flutter flutter) {
+        Log.d(Constants.LOG_TAG, "Starting session with " + flutter.getBluetoothDevice().getName());
+        this.session = new Session(activity, flutter,activity,null);
         createProgressDialog(activity);
-        globalHandler.melodySmartDeviceHandler.connect(this.getSession());
+        globalHandler.melodySmartDeviceHandler.connect(this.getSession().getFlutter().getBluetoothDevice());
     }
 
 

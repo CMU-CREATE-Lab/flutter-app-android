@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.helpers.melodysmart.listeners;
+package org.cmucreatelab.flutter_android.helpers.melodysmart;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -6,48 +6,35 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 
 import com.bluecreation.melodysmart.BLEError;
-import com.bluecreation.melodysmart.DeviceDatabase;
-import com.bluecreation.melodysmart.MelodySmartListener;
 
+import org.cmucreatelab.android.melodysmart.listeners.DeviceListener;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
- * Created by mike on 12/28/16.
- *
- * Creates a MelodySmartListener instance using information from a Session.
- *
+ * Created by mike on 2/9/17.
  */
-public class DeviceListener implements MelodySmartListener {
+public class FlutterDeviceListener extends DeviceListener {
 
-    private Session session;
-    private boolean deviceConnected;
-
-
-    public boolean isDeviceConnected() {
-        return deviceConnected;
-    }
+    final private Session session;
 
 
-    public DeviceListener(Session session) {
+    public FlutterDeviceListener(Session session) {
         this.session = session;
-        deviceConnected = false;
     }
 
 
     @Override
-    public void onDeviceConnected() {
-        Log.v(Constants.LOG_TAG, "DeviceListener.onDeviceConnected");
-        deviceConnected = true;
+    public void onConnected() {
+        Log.v(Constants.LOG_TAG, "FlutterDeviceListener.onConnected");
     }
 
 
     @Override
-    public void onDeviceDisconnected(final BLEError bleError) {
-        Log.v(Constants.LOG_TAG, "DeviceListener.onDeviceDisconnected");
-        deviceConnected = false;
+    public void onDisconnected(final BLEError bleError) {
+        Log.v(Constants.LOG_TAG, "FlutterDeviceListener.onDisconnected");
         GlobalHandler.getInstance(session.getCurrentActivity()).melodySmartDeviceHandler.clearMessages();
 
         // Check for errors
@@ -72,10 +59,5 @@ public class DeviceListener implements MelodySmartListener {
             session.getFlutterConnectListener().onFlutterDisconnected();
         }
     }
-
-
-    // unused implementations
-    public void onOtauAvailable() {}
-    public void onOtauRecovery(DeviceDatabase.DeviceData deviceData) {}
 
 }

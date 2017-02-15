@@ -42,7 +42,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         RelationshipOutputDialog relationshipDialog = new RelationshipOutputDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(Relationship.RELATIONSHIP_KEY, serializable);
+        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
         relationshipDialog.setArguments(args);
 
         return relationshipDialog;
@@ -50,7 +50,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
-        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Relationship.RELATIONSHIP_KEY);
+        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_relationships, null);

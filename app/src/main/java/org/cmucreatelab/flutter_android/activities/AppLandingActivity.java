@@ -23,8 +23,8 @@ import android.widget.ListView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterOG;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * An activity that can scan for flutters nearby and connect to them.
  *
  */
-public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
+public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener, DataLoggingHandler.DataSetPointsListener {
 
     private LeDeviceListAdapter mLeDeviceAdapter;
 
@@ -53,8 +53,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 @Override
                 public void run() {
                     for (int i=0; i<mLeDeviceAdapter.getCount(); i++) {
-                        FlutterOG result = (FlutterOG)mLeDeviceAdapter.getItem(i);
-                        if (result.getDevice().equals(device)) {
+                        Flutter result = (Flutter)mLeDeviceAdapter.getItem(i);
+                        if (result.getBluetoothDevice().equals(device)) {
                             return;
                         }
                     }
@@ -64,7 +64,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
                         findViewById(R.id.image_flutter).setVisibility(View.GONE);
                         String name = NamingHandler.generateName(getApplicationContext(),device.getAddress());
-                        FlutterOG endResult = new FlutterOG(device, name);
+                        Flutter endResult = new Flutter(device, name);
                         mLeDeviceAdapter.addDevice(endResult);
 
                         runOnUiThread(new Runnable() {
@@ -178,7 +178,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    FlutterOG flutter = (FlutterOG)mLeDeviceAdapter.getItem(i);
+                    Flutter flutter = (Flutter)mLeDeviceAdapter.getItem(i);
                     scanForDevice(false);
                     globalHandler.sessionHandler.startSession(AppLandingActivity.this, flutter);
                 }
@@ -231,12 +231,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
-    // FlutterConnectListener implementation
-
-
     @Override
-    public void onFlutterConnected() {
-        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
+    public void onDataSetPointsPopulated(boolean isSuccess) {
+        Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
 
         // dismiss spinner
         GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
@@ -244,6 +241,23 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         // start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
+    }
+
+
+    // FlutterConnectListener implementation
+
+
+    @Override
+    public void onFlutterConnected() {
+        Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                globalHandler.sessionHandler.updateProgressDialogMessage("Reading Flutter Data...");
+            }
+        });
+        globalHandler.dataLoggingHandler.populatePointsAvailable(this);
     }
 
 

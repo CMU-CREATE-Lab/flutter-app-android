@@ -3,33 +3,31 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * Humidity
+ * SoilMoistureSensor
  *
- * A class representing a humidity sensor.
+ * A class representing a soil moisture sensor.
  *
  */
-public class Humidity extends A_Sensor implements Sensor, Serializable {
+public class SoilMoistureSensor extends Sensor {
 
-    private static final short sensorType = FlutterProtocol.InputTypes.HUMIDITY;
-    private static final int sensorTypeId = R.string.humidity;
-    private static final int highTextId = R.string.humid;
+    private static final short sensorType = FlutterProtocol.InputTypes.SOIL;
+    private static final int sensorTypeId = R.string.soil_moisture;
+    private static final int highTextId = R.string.wet;
     private static final int lowTextId = R.string.dry;
-    private static final int typeTextId = R.string.humidity;
+    private static final int typeTextId = R.string.soil_moisture;
 
-    private static final int blueImageId = R.drawable.sensor_blue_humidity_l_g_68;
-    private static final int greenImageId = R.drawable.sensor_green_humidity_l_g_68;
-    private static final int orangeImageIdMd = R.drawable.sensor_orange_humidity_m_d_40;
-    private static final int orangeImageIdSm = R.drawable.sensor_orange_humidity_s_m_22;
-    private static final int greyImageIdSm = R.drawable.sensor_humidity_grey_s_m_20;
-    private static final int whiteImageIdSm = R.drawable.sensor_humidity_s_m_20;
+    private static final int blueImageId = R.drawable.sensor_blue_soil_moisture_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_soil_moisture_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_soil_moisture_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_soil_moisture_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_soil_moisture_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_soil_moisture_s_m_20;
 
 
-    public Humidity(int portNumber) {
+    public SoilMoistureSensor(int portNumber) {
         super(portNumber);
     }
 
@@ -92,6 +90,7 @@ public class Humidity extends A_Sensor implements Sensor, Serializable {
     public int getGreyImageIdSm() {
         return greyImageIdSm;
     }
+
 
     @Override
     public int getWhiteImageIdSm() {

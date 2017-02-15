@@ -3,33 +3,31 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
- * WindSpeed
+ * BarometricPressureSensor
  *
- * A class representing a wind speed sensor.
+ * A class representing a barometric pressure sensor.
  *
  */
-public class WindSpeed extends A_Sensor implements Sensor, Serializable {
+public class BarometricPressureSensor extends Sensor {
 
-    private static final short sensorType = FlutterProtocol.InputTypes.WIND_SPEED;
-    private static final int sensorTypeId = R.string.wind_speed;
-    private static final int highTextId = R.string.fast;
-    private static final int lowTextId = R.string.slow;
-    private static final int typeTextId = R.string.wind_speed;
+    private static final short sensorType = FlutterProtocol.InputTypes.BAROMETRIC_PRESSURE;
+    private static final int sensorTypeId = R.string.barometric_pressure;
+    private static final int highTextId = R.string.high;
+    private static final int lowTextId = R.string.low;
+    private static final int typeTextId = R.string.barometric_pressure;
 
-    private static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
-    private static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
-    private static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
-    private static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
-    private static final int greyImageIdSm = R.drawable.sensor_wind_speed_grey_s_m_20;
-    private static final int whiteImageIdSm = R.drawable.sensor_wind_speed_s_m_20;
+    private static final int blueImageId = R.drawable.sensor_blue_barometric_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_barometric_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_barometric_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_barometric_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_barometric_grey_s_m_20;
+    private static final int whiteImageIdSm = R.drawable.sensor_barometric_s_m_20;
 
 
-    public WindSpeed(int portNumber) {
+    public BarometricPressureSensor(int portNumber) {
         super(portNumber);
     }
 
@@ -80,7 +78,6 @@ public class WindSpeed extends A_Sensor implements Sensor, Serializable {
     public int getOrangeImageIdMd() {
         return orangeImageIdMd;
     }
-
 
     @Override
     public int getOrangeImageIdSm() {

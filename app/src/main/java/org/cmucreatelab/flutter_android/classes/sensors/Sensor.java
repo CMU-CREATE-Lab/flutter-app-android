@@ -1,31 +1,56 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import java.io.Serializable;
+
 /**
- * Created by Steve on 6/20/2016.
+ * Created by Steve on 8/11/2016.
  *
  * Sensor
  *
- * Interface for the anything is a sensor. There are various types of sensors defined in the enum 'Type'
+ * An abstract class that implements the sensor readings values and the port number.
  *
  */
-public interface Sensor {
+public abstract class Sensor implements Serializable {
 
-    String SENSOR_KEY = "sensor_key";
-    String SENSOR_PORT_KEY = "sensor_text_key";
+    private int reading;
+    private int portNumber;
 
-    short getSensorType();
-    int getSensorTypeId();
-    int getHighTextId();
-    int getLowTextId();
-    int getTypeTextId();
-    int getBlueImageId();
-    int getGreenImageId();
-    int getOrangeImageIdMd();
-    int getOrangeImageIdSm();
-    int getGreyImageIdSm();
-    int getWhiteImageIdSm();
-    int getSensorReading();
-    int getPortNumber();
-    void setSensorReading(int value);
+    // getters
+    public int getSensorReading() { return reading; }
+    public int getPortNumber() { return portNumber; }
+    // setters
+    public void setSensorReading(int value) { reading = value; }
+
+
+    public Sensor(int portNumber) {
+        reading = 0;
+        this.portNumber = portNumber;
+    }
+
+
+    // abstract methods
+
+
+    public abstract short getSensorType();
+
+    public abstract int getSensorTypeId();
+
+    public abstract int getHighTextId();
+
+    public abstract int getLowTextId();
+
+    public abstract int getTypeTextId();
+
+    public abstract int getBlueImageId();
+
+    public abstract int getGreenImageId();
+
+    public abstract int getOrangeImageIdMd();
+
+    public abstract int getOrangeImageIdSm();
+
+    public abstract int getGreyImageIdSm();
+
+    public abstract int getWhiteImageIdSm();
 
 }

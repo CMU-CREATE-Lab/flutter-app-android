@@ -1,0 +1,4 @@
+[submodule "melodysmart-module-android"]
+	path = melodysmart-module-android
+	url = https://github.com/CMU-CREATE-Lab/melodysmart-module-android.git
+	ignore = dirty

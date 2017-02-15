@@ -2,23 +2,19 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 12/13/2016.
  */
-public class Pitch extends A_Output implements Serializable {
+public class Pitch extends Output {
 
-    public static final int MINIMUM = 262;
-    public static final int MAXIMUM = 1047;
+    private static final int MINIMUM = 262;
+    private static final int MAXIMUM = 1047;
     private static final String TYPE = "f";
     private static final Output.Type outputType = Type.PITCH;
-
-    public static final String LED_KEY = "pitch_speaker_key";
-    public static final int imageId = R.mipmap.ic_launcher;
+    private static final int imageId = R.mipmap.ic_launcher;
 
 
-    public Pitch(int portNumber) {
+    Pitch(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
     }
 

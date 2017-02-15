@@ -16,9 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
-import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
@@ -29,7 +28,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
@@ -60,13 +58,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         MaxPitchDialog.DialogMaxPitchListener,
         MinPitchDialog.DialogMinPitchListener {
 
-
     private DialogSpeakerListener dialogSpeakerListener;
-
     private Serializable serializable;
     private DialogFragment dialogFragment;
     private boolean isVolume;
-
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
@@ -76,15 +71,9 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private RelativeLayout relativePitch;
     private Button saveButton;
     private View view;
-
     private Settings pitchSettings;
     private Settings volumeSettings;
     private Speaker speaker;
-
-//    private enum CurrentTab {
-//        VOLUME, PITCH
-//    }
-//    private CurrentTab currentTab;
 
 
     private void updateViews(View view) {
@@ -127,7 +116,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Speaker.SPEAKER_KEY, speaker);
-        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SerializableKeys.DIALOG_SPEAKER, activity);
         ledDialog.setArguments(args);
 
         return ledDialog;
@@ -144,7 +133,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         isVolume = true;
 
         speaker = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
+        dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SPEAKER);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         this.view = inflater.inflate(R.layout.dialog_speakers, null);
@@ -182,7 +171,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -190,7 +179,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.button_save_settings)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
-        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msgs = new ArrayList<>();
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
         msgs.add(MessageConstructor.constructRelationshipMessage(speaker.getVolume(),speaker.getVolume().getSettings()));
@@ -205,7 +194,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        ArrayList<FlutterMessage> msgs = new ArrayList<>();
+        ArrayList<MelodySmartMessage> msgs = new ArrayList<>();
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
         msgs.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
         speaker.getPitch().setIsLinked(false, speaker.getPitch());
@@ -422,7 +411,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
 
     public interface DialogSpeakerListener {
-        public void onSpeakerLinkListener(ArrayList<FlutterMessage> msgs);
+        public void onSpeakerLinkListener(ArrayList<MelodySmartMessage> msgs);
     }
 
 }

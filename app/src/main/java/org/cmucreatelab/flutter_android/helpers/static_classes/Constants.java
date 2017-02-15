@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.graphics.Color;
-import java.util.HashMap;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -20,10 +19,6 @@ public final class Constants {
     public static final String APP_VERSION = "1.0.0";
 
     public static final String FLUTTER_MAC_ADDRESS = "20:FA:BB";
-
-    public static final String NAMES_TABLE_FILE = "names_table.txt";
-
-    public static final String DATA_SET_PREFIX = "DATA_SET_";
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
 
@@ -67,6 +62,15 @@ public final class Constants {
 
     // for activities
 
+    public static final class SerializableKeys {
+        public static final String DIALOG_LED = "dialog_led";
+        public static final String DIALOG_SERVO = "dialog_servo";
+        public static final String DIALOG_SPEAKER = "dialog_speaker";
+        public static String SENSOR_KEY = "sensor_key";
+        public static String SENSOR_PORT_KEY = "sensor_text_key";
+        public static String RELATIONSHIP_KEY = "relationship_key";
+    }
+
     public static final class SensorTypeWords {
         public static final String ANALOG_OR_UNKNOWN = "Analog / Unknown";
         public static final String BAROMETRIC_PRESSURE = "Barometric Pressure";
@@ -79,19 +83,5 @@ public final class Constants {
         public static final String TEMPERATURE = "Temperature";
         public static final String WIND_SPEED = "Wind Speed";
     }
-
-    // for activities
-
-    public static final String SERIALIZABLE_KEY = "serializable_key";
-
-    public static final int NUMBER_OF_SENSORS = 3;
-
-    public static final int NUMBER_OF_SERVOS = 3;
-
-    public static final int NUMBER_OF_TRI_COLOR_LEDS = 3;
-
-    public static final int NUMBER_OF_SPEAKERS = 1;
-
-    public static final char[] HEX_ALPHABET = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
 }

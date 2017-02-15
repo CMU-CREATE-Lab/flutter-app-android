@@ -15,19 +15,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog.DialogMaxPositionListener;
@@ -54,17 +52,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         DialogMaxPositionListener,
         MinPositionDialog.DialogMinPositionListener {
 
-
     private DialogServoListener dialogServoListener;
-
     private Serializable serializable;
     private DialogFragment dialogFragment;
-
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
-
     private Settings settings;
     private Servo servo;
 
@@ -106,7 +100,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         Bundle args = new Bundle();
         args.putSerializable(Servo.SERVO_KEY, servo);
-        args.putSerializable(Constants.SERIALIZABLE_KEY, activity);
+        args.putSerializable(Constants.SerializableKeys.DIALOG_SERVO, activity);
         servoDialog.setArguments(args);
 
         return servoDialog;
@@ -122,7 +116,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         dialogFragment = this;
 
         servo = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-        dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SERIALIZABLE_KEY);
+        dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_servos, null);
@@ -147,7 +141,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         servo.setSettings(settings);
-        FlutterMessage msg = MessageConstructor.constructRelationshipMessage(servo, settings);
+        MelodySmartMessage msg = MessageConstructor.constructRelationshipMessage(servo, settings);
         servo.setIsLinked(true, servo);
         dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
@@ -158,7 +152,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onClickRemoveLink() {
         if (servo.getSettings() != null) {
             Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            FlutterMessage msg = MessageConstructor.constructRemoveRelation(servo);
+            MelodySmartMessage msg = MessageConstructor.constructRemoveRelation(servo);
             servo.setIsLinked(false, servo);
             settings.setOutputMax(servo.getMax());
             settings.setOutputMin(servo.getMin());
@@ -288,7 +282,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
 
     public interface DialogServoListener {
-        public void onServoLinkListener(FlutterMessage message);
+        public void onServoLinkListener(MelodySmartMessage message);
     }
 
 }

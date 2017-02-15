@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.R;
  */
 public class Switch implements Relationship {
 
-
     private static final Relationship.Type relationshipType = Type.SWITCH;
     private static final int relationshipTypeId = R.string.switch_relationship;
     private static final int greenImageIdLg = R.drawable.relationship_green_switch_l_g_68;

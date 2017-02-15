@@ -72,42 +72,48 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    private void updateStaticViews() {
-        Sensor[] sensors = session.getFlutter().getSensors();
-
-        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            selectedView = (ImageView) findViewById(R.id.image_sensor_1);
-            currentHigh = (TextView) findViewById(R.id.text_high_1);
-            currentLow = (TextView) findViewById(R.id.text_low_1);
-            currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-            updateStaticByIndex(0);
-        }
-
-        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            selectedView = (ImageView) findViewById(R.id.image_sensor_2);
-            currentHigh = (TextView) findViewById(R.id.text_high_2);
-            currentLow = (TextView) findViewById(R.id.text_low_2);
-            currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-            updateStaticByIndex(1);
-        }
-
-        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            selectedView = (ImageView) findViewById(R.id.image_sensor_3);
-            currentHigh = (TextView) findViewById(R.id.text_high_3);
-            currentLow = (TextView) findViewById(R.id.text_low_3);
-            currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-            updateStaticByIndex(2);
-        }
+    private void updateStaticViewsForSensor(Sensor sensor, ImageView selectedImage, TextView highText, TextView lowText, TextView typeText) {
+        selectedImage.setImageResource(sensor.getBlueImageId());
+        highText.setText(sensor.getHighTextId());
+        lowText.setText(sensor.getLowTextId());
+        typeText.setText(sensor.getSensorTypeId());
     }
 
 
-    private void updateStaticByIndex(int index) {
+    private void updateStaticViews() {
+        ImageView selectedImage;
+        TextView highText;
+        TextView lowText;
+        TextView typeText;
+        Sensor sensor;
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        selectedView.setImageResource(sensors[index].getBlueImageId());
-        currentHigh.setText(sensors[index].getHighTextId());
-        currentLow.setText(sensors[index].getLowTextId());
-        currentSensorType.setText(sensors[index].getSensorTypeId());
+        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            selectedImage = (ImageView) findViewById(R.id.image_sensor_1);
+            highText = (TextView) findViewById(R.id.text_high_1);
+            lowText = (TextView) findViewById(R.id.text_low_1);
+            typeText = (TextView) findViewById(R.id.text_sensor_1);
+            sensor = sensors[0];
+            updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+        }
+
+        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            selectedImage = (ImageView) findViewById(R.id.image_sensor_2);
+            highText = (TextView) findViewById(R.id.text_high_2);
+            lowText = (TextView) findViewById(R.id.text_low_2);
+            typeText = (TextView) findViewById(R.id.text_sensor_2);
+            sensor = sensors[1];
+            updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+        }
+
+        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            selectedImage = (ImageView) findViewById(R.id.image_sensor_3);
+            highText = (TextView) findViewById(R.id.text_high_3);
+            lowText = (TextView) findViewById(R.id.text_low_3);
+            typeText = (TextView) findViewById(R.id.text_sensor_3);
+            sensor = sensors[2];
+            updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+        }
     }
 
 

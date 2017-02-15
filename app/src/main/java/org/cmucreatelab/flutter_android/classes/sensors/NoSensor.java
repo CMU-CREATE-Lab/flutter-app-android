@@ -3,8 +3,6 @@ package org.cmucreatelab.flutter_android.classes.sensors;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -13,7 +11,7 @@ import java.io.Serializable;
  * A class that represents no sensor.
  *
  */
-public class NoSensor extends A_Sensor implements Sensor, Serializable {
+public class NoSensor extends Sensor {
 
     private static final short sensorType = FlutterProtocol.InputTypes.NOT_SET;
     private static final int sensorTypeId = R.string.no_sensor;

@@ -3,8 +3,8 @@ package org.cmucreatelab.flutter_android.helpers;
 import android.content.Context;
 import android.util.Log;
 
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
-import org.cmucreatelab.flutter_android.classes.FlutterMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeMap;
@@ -28,25 +27,19 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
-    private static final String STOP_LOGGING = "L";
-    private static final String READ_NUMBER_OF_POINTS = "P";
-    private static final String READ_LOG_NAME = "N";
-    private static final String READ_POINT = "R";
-    private static final String DELETE_LOG = "D";
 
     private Context appContext;
     private GlobalHandler globalHandler;
-
     private DataSetPointsListener dataSetPointsListener;
     private DataSetListener dataSetListener;
-
     private int numberOfPoints;
-    private int remainingPoints;
-    private boolean isLogging;
-
     private ArrayList<String> keys;
     private String dataName;
     private TreeMap<String, DataPoint> data;
+
+    // TODO @tasota did we still need these to be tracking something?
+    private int remainingPoints;
+    private boolean isLogging;
 
 
     private String getTimeInHex() {
@@ -203,8 +196,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
         String samplesString = getSamplesInHex(samples);
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
 
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage("n," + logName));
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(builder.toString()));
+        globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage("n," + logName));
+        globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage(builder.toString()));
     }
 
 
@@ -214,8 +207,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
         globalHandler = GlobalHandler.getInstance(appContext);
         globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
 
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_LOG_NAME));
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(READ_NUMBER_OF_POINTS));
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadLogName());
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadNumberPointsAvailable());
     }
 
 
@@ -234,7 +227,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     public void deleteLog() {
-        globalHandler.melodySmartDeviceHandler.addMessage(new FlutterMessage(DELETE_LOG));
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructDeleteLog());
     }
 
 
