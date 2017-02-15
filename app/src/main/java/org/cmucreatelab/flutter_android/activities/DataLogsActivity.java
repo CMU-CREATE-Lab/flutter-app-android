@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private ImageView workingDataPointImage;
 
     private TextView sendLogTextView;
+    private LinearLayout dataOnFlutterContainer;
+    private LinearLayout dataOnDeviceContainer;
 
 
     private void loadDataSet(DataSet dataSet) {
@@ -133,6 +136,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
         instance = this;
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
+        toolbar.setContentInsetsAbsolute(0,0);
+        setSupportActionBar(toolbar);
+
+        sendLogTextView = (TextView) findViewById(R.id.text_send_log);
+        dataOnFlutterContainer = (LinearLayout) findViewById(R.id.linear_flutter_data_container);
+        dataOnDeviceContainer = (LinearLayout) findViewById(R.id.linear_device_data_container);
     }
 
 
@@ -146,20 +158,33 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             dataLoggingHandler = globalHandler.dataLoggingHandler;
             flutter = globalHandler.sessionHandler.getSession().getFlutter();
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-            toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
-            toolbar.setContentInsetsAbsolute(0,0);
-            setSupportActionBar(toolbar);
-
             globalHandler.sessionHandler.createProgressDialog(this);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
             dataLoggingHandler.populatePointsAvailable(this);
             isDataLogSelected = false;
-            sendLogTextView = (TextView) findViewById(R.id.text_send_log);
             sendLogTextView.setEnabled(false);
 
             globalHandler.sessionHandler.getSession().setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
             dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();
+
+            if (dataSetsOnDevice.length > 0)
+                dataOnDeviceContainer.setVisibility(View.VISIBLE);
+            else
+                dataOnDeviceContainer.setVisibility(View.GONE);
+
+            dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
+            ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
+            listDataLogs.setAdapter(dataLogListAdapter);
+            listDataLogs.setOnItemClickListener(onDataLogClickListener);
+
+            for (DataSet dataSet : dataSetsOnDevice) {
+                dataLogListAdapter.addDataLog(dataSet);
+            }
+
+            dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
+            ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
+            listDataInstance.setAdapter(dataInstanceListAdapter);
+            listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
         }
     }
 
@@ -220,6 +245,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
         globalHandler.sessionHandler.dismissProgressDialog();
+        if (dataSetOnFlutter != null && dataSetOnFlutter.getData().size() > 0)
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dataOnFlutterContainer.setVisibility(View.VISIBLE);
+                }
+            });
     }
 
 
@@ -240,20 +272,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 } else {
                     findViewById(R.id.relative_flutter_log).setVisibility(View.GONE);
                 }
-
-                dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
-                ListView listDataLogs = (ListView) findViewById(R.id.list_data_logs);
-                listDataLogs.setAdapter(dataLogListAdapter);
-                listDataLogs.setOnItemClickListener(onDataLogClickListener);
-
-                for (DataSet dataSet : dataSetsOnDevice) {
-                    dataLogListAdapter.addDataLog(dataSet);
-                }
-
-                dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
-                ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
-                listDataInstance.setAdapter(dataInstanceListAdapter);
-                listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
             }
         });
         globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(this, this);
