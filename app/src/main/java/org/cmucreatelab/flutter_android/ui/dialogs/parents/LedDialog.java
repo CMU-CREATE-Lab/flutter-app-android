@@ -59,8 +59,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     private Button saveButton;
     private ImageView maxColor;
     private ImageView minColor;
-    private int maxSwatch;
-    private int minSwatch;
     private Settings redSettings;
     private Settings greenSettings;
     private Settings blueSettings;
@@ -113,7 +111,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         int result = 0;
 
         float ratio = value / maxValue;
-        result = (int) (ratio*newMaxValue);
+        result = (int) Math.ceil(ratio*newMaxValue);
 
         return result;
     }
@@ -182,9 +180,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getGreenLed().setIsLinked(true, triColorLed.getGreenLed());
         triColorLed.getBlueLed().setIsLinked(true, triColorLed.getBlueLed());
 
-        triColorLed.setMinSwatch(minSwatch);
-        triColorLed.setMaxSwatch(maxSwatch);
-
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
     }
@@ -208,9 +203,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getBlueLed().setIsLinked(false, triColorLed.getBlueLed());
         blueSettings.setOutputMax(triColorLed.getBlueLed().getMax());
         blueSettings.setOutputMin(triColorLed.getBlueLed().getMin());
-
-        triColorLed.setMaxSwatch(R.drawable.swatch_black);
-        triColorLed.setMinSwatch(R.drawable.swatch_white);
 
         dialogLedListener.onLedLinkListener(msg);
 
@@ -317,7 +309,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onHighColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
-        maxSwatch = swatch;
         maxColor.setImageResource(swatch);
         maxColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
@@ -335,7 +326,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onLowColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
-        minSwatch = swatch;
         minColor.setImageResource(swatch);
         minColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);

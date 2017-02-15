@@ -2,6 +2,10 @@ package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.graphics.Color;
 
+import org.cmucreatelab.flutter_android.R;
+
+import java.util.HashMap;
+
 /**
  * Created by Steve on 5/26/2016.
  *
@@ -56,6 +60,23 @@ public final class Constants {
         public static final int WHITE = Color.parseColor("#ffffff");
         public static final int BLACK = Color.parseColor("#000000");
     }
+
+    public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
+        put(ColorSwatches.RED, R.drawable.swatch_red);
+        put(ColorSwatches.ORANGE, R.drawable.swatch_orange);
+        put(ColorSwatches.YELLOW, R.drawable.swatch_yellow);
+        put(ColorSwatches.CHARTREUSE_GREEN, R.drawable.swatch_chartreuse_green);
+        put(ColorSwatches.GREEN, R.drawable.swatch_green);
+        put(ColorSwatches.SPRING_GREEN, R.drawable.swatch_spring_green);
+        put(ColorSwatches.CYAN, R.drawable.swatch_cyan);
+        put(ColorSwatches.AZURE, R.drawable.swatch_azure);
+        put(ColorSwatches.BLUE, R.drawable.swatch_blue);
+        put(ColorSwatches.VIOLET, R.drawable.swatch_violet);
+        put(ColorSwatches.MAGENTA, R.drawable.swatch_magenta);
+        put(ColorSwatches.ROSE, R.drawable.swatch_rose);
+        put(ColorSwatches.WHITE, R.drawable.swatch_white);
+        put(ColorSwatches.BLACK, R.drawable.swatch_black);
+    }};
 
     // forces MessageQueue to throw away all "r" requests
     public static final boolean IGNORE_READ_SENSORS = false;
