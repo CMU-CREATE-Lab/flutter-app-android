@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -8,7 +10,7 @@ package org.cmucreatelab.flutter_android.classes.sensors;
  * An abstract class that implements the sensor readings values and the port number.
  *
  */
-public abstract class A_Sensor implements Sensor {
+public abstract class A_Sensor implements Sensor, Serializable {
 
     private int reading;
     private int portNumber;

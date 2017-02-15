@@ -170,12 +170,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         openLogDialog.show(getSupportFragmentManager(), "tag");
     }
 
+
     @OnClick(R.id.text_send_log)
     public void onClickTextSendLog() {
         if (isDataLogSelected) {
             Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-            //EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
-            //emailDialog.show(getSupportFragmentManager(), "tag");
+            EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
+            emailDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 

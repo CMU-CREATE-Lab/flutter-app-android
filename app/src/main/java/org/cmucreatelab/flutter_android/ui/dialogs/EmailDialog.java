@@ -72,6 +72,7 @@ public class EmailDialog extends BaseResizableDialog {
         Log.d(Constants.LOG_TAG, "onClickSend");
         // TODO @tasota include File currentDataLog in args
         EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
+        this.dismiss();
     }
 
 }
