@@ -148,7 +148,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
-        } else {
+        } else if (!isDataLogSelected) {
             dataLoggingHandler = globalHandler.dataLoggingHandler;
 
             globalHandler.sessionHandler.createProgressDialog(this);
@@ -219,9 +219,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         globalHandler.sessionHandler.createProgressDialog(this);
-        findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
-        isDataLogSelected = true;
-        sendLogTextView.setEnabled(true);
         loadDataSet(dataSetOnFlutter);
         if (!dataLoggingHandler.getIsLogging()) {
             FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
@@ -289,12 +286,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         if (dataSet.equals(dataSetOnFlutter)) {
             globalHandler.sessionHandler.createProgressDialog(this);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
-            isDataLogSelected = true;
-            sendLogTextView.setEnabled(true);
             loadDataSet(dataSet);
-            FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
-            dataLoggingHandler.deleteLog();
+            if (!dataLoggingHandler.getIsLogging()) {
+                FileHandler.saveDataSetToFile(globalHandler, dataSetOnFlutter);
+                dataLoggingHandler.deleteLog();
+            }
         } else {
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));

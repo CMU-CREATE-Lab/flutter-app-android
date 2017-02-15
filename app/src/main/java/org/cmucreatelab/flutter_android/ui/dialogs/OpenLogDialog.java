@@ -44,8 +44,8 @@ public class OpenLogDialog extends BaseResizableDialog {
     private AdapterView.OnItemClickListener dataLogListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            instance.dismiss();
             openLogListener.onOpenedLog(dataSetsOnDevice[i]);
+            instance.dismiss();
         }
     };
 
