@@ -68,13 +68,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     private void updateViews(View view) {
         updateViews(view, triColorLed.getRedLed());
 
-        int redMax = getOutputToRgb(redSettings.getOutputMax());
-        int redMin = getOutputToRgb(redSettings.getOutputMin());
-        int greenMax = getOutputToRgb(greenSettings.getOutputMax());
-        int greenMin = getOutputToRgb(greenSettings.getOutputMin());
-        int blueMax = getOutputToRgb(blueSettings.getOutputMax());
-        int blueMin = getOutputToRgb(blueSettings.getOutputMin());
-
         // max
         ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
@@ -83,7 +76,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
         maxColorTxt.setText(R.string.maximum_color);
-        maxColorValue.setText("Red: " + String.valueOf(redMax) + " Green: " + String.valueOf(greenMax) + " Blue: " + String.valueOf(blueMax));
+        maxColorValue.setText(triColorLed.getMaxColorText());
 
         // min
         ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
@@ -93,7 +86,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
         TextView minColorValue = (TextView) view.findViewById(R.id.text_min_color_value);
         minColorTxt.setText(R.string.minimum_color);
-        minColorValue.setText("Red: " + String.valueOf(redMin) + " Green: " + String.valueOf(greenMin) + " Blue: " + String.valueOf(blueMin));
+        minColorValue.setText(triColorLed.getMinColorText());
     }
 
 
@@ -313,13 +306,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         maxColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Green: " + String.valueOf(rgb[1]) + " Blue: " + String.valueOf(rgb[2]));
         int max = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
         redSettings.setOutputMax(max);
         max = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
         greenSettings.setOutputMax(max);
         max = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
         blueSettings.setOutputMax(max);
+        currentTextViewItem.setText(triColorLed.getMaxColorText());
     }
 
 
@@ -330,13 +323,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         minColor.setVisibility(View.VISIBLE);
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        currentTextViewItem.setText("Red: " + String.valueOf(rgb[0]) + " Green: " + String.valueOf(rgb[1]) + " Blue: " + String.valueOf(rgb[2]));
         int min = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
         redSettings.setOutputMin(min);
         min = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
         greenSettings.setOutputMin(min);
         min = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
         blueSettings.setOutputMin(min);
+        currentTextViewItem.setText(triColorLed.getMinColorText());
     }
 
 

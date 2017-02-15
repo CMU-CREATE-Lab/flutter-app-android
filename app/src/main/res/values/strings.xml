@@ -184,6 +184,22 @@
     <string name="set_volume">Set Volume</string>
     <string name="set_pitch">Set Pitch</string>
 
+    <!-- Colors -->
+    <string name="color_red">Red</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_chartreuse_green">Chartreuse Green</string>
+    <string name="color_green">Green</string>
+    <string name="color_spring_green">Spring Green</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_azure">Azure</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_violet">Violet</string>
+    <string name="color_magenta">Magenta</string>
+    <string name="color_rose">Rose</string>
+    <string name="color_white">White</string>
+    <string name="color_black">Black</string>
+
     <string-array name="time_array">
         <item>minute</item>
         <item>hour</item>

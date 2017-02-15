@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 
 import org.cmucreatelab.flutter_android.R;
@@ -40,33 +41,69 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
-    public int getMaxSwatch() {
-        String r,g,b,color;
+    private String getMaxColorHex() {
+        String r,g,b;
         r = getHexValue(getRedLed().getSettings().getOutputMax());
         g = getHexValue(getGreenLed().getSettings().getOutputMax());
         b = getHexValue(getBlueLed().getSettings().getOutputMax());
-        color = "#".concat(r.concat(g).concat(b));
-        int c = Color.parseColor(color);
-        if (Constants.COLOR_RES.containsKey(c)) {
-            return Constants.COLOR_RES.get(c);
+        return "#".concat(r.concat(g).concat(b));
+    }
+
+
+    private String getMinColorHex() {
+        String r,g,b;
+        r = getHexValue(getRedLed().getSettings().getOutputMin());
+        g = getHexValue(getGreenLed().getSettings().getOutputMin());
+        b = getHexValue(getBlueLed().getSettings().getOutputMin());
+        return "#".concat(r.concat(g).concat(b));
+    }
+
+
+    public int getMaxSwatch() {
+        int color = Color.parseColor(getMaxColorHex());
+        if (Constants.COLOR_RES.containsKey(color)) {
+            return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
         return R.drawable.swatch_black;
     }
 
 
+    public String getMaxColorText() {
+        String result;
+        int color = Color.parseColor(getMaxColorHex());
+
+        if (Constants.COLOR_NAMES.containsKey(color)) {
+            result = Constants.COLOR_NAMES.get(color);
+        } else {
+            result = "Red: " + String.valueOf(Color.red(color)) + " Green: " + String.valueOf(Color.green(color)) + " Blue: " + String.valueOf(Color.blue(color));
+        }
+
+        return result;
+    }
+
+
     public int getMinSwatch() {
-        String r,g,b,color;
-        r = getHexValue(getRedLed().getSettings().getOutputMin());
-        g = getHexValue(getGreenLed().getSettings().getOutputMin());
-        b = getHexValue(getBlueLed().getSettings().getOutputMin());
-        color = "#".concat(r.concat(g).concat(b));
-        int c = Color.parseColor(color);
-        if (Constants.COLOR_RES.containsKey(c)) {
-            return Constants.COLOR_RES.get(c);
+        int color = Color.parseColor(getMinColorHex());
+        if (Constants.COLOR_RES.containsKey(color)) {
+            return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
         return R.drawable.swatch_black;
+    }
+
+
+    public String getMinColorText() {
+        String result;
+        int color = Color.parseColor(getMinColorHex());
+
+        if (Constants.COLOR_NAMES.containsKey(color)) {
+            result = Constants.COLOR_NAMES.get(color);
+        } else {
+            result = "Red: " + String.valueOf(Color.red(color)) + " Green: " + String.valueOf(Color.green(color)) + " Blue: " + String.valueOf(Color.blue(color));
+        }
+
+        return result;
     }
 
 

@@ -78,6 +78,23 @@ public final class Constants {
         put(ColorSwatches.BLACK, R.drawable.swatch_black);
     }};
 
+    public static final HashMap<Integer,String> COLOR_NAMES = new HashMap(){{
+        put(ColorSwatches.RED, "Red");
+        put(ColorSwatches.ORANGE, "Orange");
+        put(ColorSwatches.YELLOW, "Yellow");
+        put(ColorSwatches.CHARTREUSE_GREEN, "Chartreuse Green");
+        put(ColorSwatches.GREEN, "Green");
+        put(ColorSwatches.SPRING_GREEN, "Spring Green");
+        put(ColorSwatches.CYAN, "Cyan");
+        put(ColorSwatches.AZURE, "Azure");
+        put(ColorSwatches.BLUE, "Blue");
+        put(ColorSwatches.VIOLET, "Violet");
+        put(ColorSwatches.MAGENTA, "Magenta");
+        put(ColorSwatches.ROSE, "Rose");
+        put(ColorSwatches.WHITE, "White");
+        put(ColorSwatches.BLACK, "Black");
+    }};
+
     // forces MessageQueue to throw away all "r" requests
     public static final boolean IGNORE_READ_SENSORS = false;
 
