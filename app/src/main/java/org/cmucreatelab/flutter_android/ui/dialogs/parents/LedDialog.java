@@ -23,6 +23,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
@@ -123,7 +124,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
 
-        triColorLed = (TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY);
+        // clone old object
+        triColorLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
+
         dialogLedListener = (DialogLedListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_LED);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -155,13 +158,16 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
 
-        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getRedLed(),triColorLed.getRedLed().getSettings()));
-        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getGreenLed(),triColorLed.getGreenLed().getSettings()));
-        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getBlueLed(),triColorLed.getBlueLed().getSettings()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getRedLed(), triColorLed.getRedLed().getSettings()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getGreenLed(), triColorLed.getGreenLed().getSettings()));
+        msg.add(MessageConstructor.constructRelationshipMessage(triColorLed.getBlueLed(), triColorLed.getBlueLed().getSettings()));
 
         triColorLed.getRedLed().setIsLinked(true, triColorLed.getRedLed());
         triColorLed.getGreenLed().setIsLinked(true, triColorLed.getGreenLed());
         triColorLed.getBlueLed().setIsLinked(true, triColorLed.getBlueLed());
+
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
 
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
@@ -190,8 +196,10 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         blueLed.getSettings().setOutputMax(triColorLed.getBlueLed().getMax());
         blueLed.getSettings().setOutputMin(triColorLed.getBlueLed().getMin());
 
-        dialogLedListener.onLedLinkListener(msg);
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
 
+        dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
     }
 

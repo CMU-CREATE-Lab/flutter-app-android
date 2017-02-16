@@ -29,4 +29,13 @@ public class AdvancedSettings {
         zeroValue = 0;
     }
 
+
+    public static AdvancedSettings newInstance(AdvancedSettings oldInstance) {
+        AdvancedSettings newInstance = new AdvancedSettings();
+        newInstance.inputMax = oldInstance.inputMax;
+        newInstance.inputMin = oldInstance.inputMin;
+        newInstance.zeroValue = oldInstance.zeroValue;
+        return newInstance;
+    }
+
 }

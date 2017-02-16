@@ -48,6 +48,23 @@ public class Settings {
     }
 
 
+    /**
+     * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
+     * Settings. That way we can display changes the user makes and, if the settings are not saved,
+     * then the real Settings will not be overwritten.
+     *
+     * @param oldInstance The object that is to be copied.
+     * @return A new instance of Settings.
+     */
+    public static Settings newInstance(Settings oldInstance) {
+        Settings newInstance = new Settings(oldInstance.type, oldInstance.outputMax, oldInstance.outputMin);
+        newInstance.sensor = oldInstance.sensor;
+        newInstance.relationship = oldInstance.relationship;
+        newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings);
+        return newInstance;
+    }
+
+
     public void invertOutputs() {
         int temp;
         temp = getOutputMax();
