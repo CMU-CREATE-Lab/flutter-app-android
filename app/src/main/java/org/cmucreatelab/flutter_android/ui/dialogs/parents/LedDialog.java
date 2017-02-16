@@ -244,7 +244,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxColorDialog.newInstance(this);
+        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorText(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
@@ -257,7 +257,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinColorDialog.newInstance(this);
+        DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorText(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
