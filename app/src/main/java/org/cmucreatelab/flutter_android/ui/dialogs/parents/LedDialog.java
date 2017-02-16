@@ -148,7 +148,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
 
         updateViews(view);
-        saveButton = (Button) view.findViewById(R.id.button_save_settings);
+        saveButton = (Button) view.findViewById(R.id.button_save_link);
 
         return builder.create();
     }
@@ -157,7 +157,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     // onClick listeners
 
 
-    @OnClick(R.id.button_save_settings)
+    @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         ArrayList<MelodySmartMessage> msg = new ArrayList<>();

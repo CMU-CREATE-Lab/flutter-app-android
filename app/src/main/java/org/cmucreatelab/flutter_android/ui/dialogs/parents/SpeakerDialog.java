@@ -151,7 +151,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         volumeSettings = speaker.getVolume().getSettings();
 
         updateViews(view);
-        saveButton = (Button) view.findViewById(R.id.button_save_settings);
+        saveButton = (Button) view.findViewById(R.id.button_save_link);
 
         // set attributes so we can manipulate in the click events
         // TODO @tasota lots of these attributes need to be refactored
@@ -176,7 +176,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    @OnClick(R.id.button_save_settings)
+    @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         ArrayList<MelodySmartMessage> msgs = new ArrayList<>();

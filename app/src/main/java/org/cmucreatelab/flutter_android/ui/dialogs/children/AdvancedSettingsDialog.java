@@ -154,7 +154,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     }
 
 
-    @OnClick(R.id.button_save_settings)
+    @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "AdvancedSettingsDialog.onClickSaveSettings");
         AdvancedSettings result = new AdvancedSettings();

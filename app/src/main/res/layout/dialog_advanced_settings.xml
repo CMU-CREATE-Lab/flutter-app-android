@@ -65,7 +65,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_save_settings"
+        android:id="@+id/button_save_link"
         android:text="@string/save"
         android:textColor="@color/white"
         android:background="@drawable/round_green_button_bottom"/>

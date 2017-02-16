@@ -30,7 +30,7 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
                 sensorText.setText(R.string.linked_sensor);
                 TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
                 sensorType.setText(getString(settings.getSensor().getSensorTypeId()));
-                Button saveButton = (Button) view.findViewById(R.id.button_save_settings);
+                Button saveButton = (Button) view.findViewById(R.id.button_save_link);
                 saveButton.setEnabled(true);
             }
 

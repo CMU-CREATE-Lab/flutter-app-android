@@ -128,7 +128,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         settings = servo.getSettings();
 
         updateViews(view);
-        saveButton = (Button) view.findViewById(R.id.button_save_settings);
+        saveButton = (Button) view.findViewById(R.id.button_save_link);
 
         return builder.create();
     }
@@ -137,7 +137,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     // OnClickListeners
 
 
-    @OnClick(R.id.button_save_settings)
+    @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "onClickSaveSettings");
         servo.setSettings(settings);
