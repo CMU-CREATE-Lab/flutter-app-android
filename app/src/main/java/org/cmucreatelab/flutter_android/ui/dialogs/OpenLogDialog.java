@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -43,8 +44,8 @@ public class OpenLogDialog extends BaseResizableDialog {
     private AdapterView.OnItemClickListener dataLogListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            instance.dismiss();
             openLogListener.onOpenedLog(dataSetsOnDevice[i]);
+            instance.dismiss();
         }
     };
 
@@ -101,6 +102,12 @@ public class OpenLogDialog extends BaseResizableDialog {
     }
 
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        openLogListener.onDismissed();
+    }
+
     @OnClick(R.id.relative_flutter_log)
     public void onClickDataLogOnFlutter() {
         openLogListener.onOpenedLog(dataSetOnFlutter);
@@ -110,6 +117,7 @@ public class OpenLogDialog extends BaseResizableDialog {
 
     public interface OpenLogListener {
         public void onOpenedLog(DataSet dataSet);
+        public void onDismissed();
     }
 
 }

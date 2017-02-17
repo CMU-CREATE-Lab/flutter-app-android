@@ -1,9 +1,11 @@
 package org.cmucreatelab.flutter_android.classes.datalogging;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 1/4/2017.
  */
-public class DataPoint implements Comparable<DataPoint> {
+public class DataPoint implements Comparable<DataPoint>, Serializable {
 
     private String date;
     private String time;

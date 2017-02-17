@@ -99,7 +99,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
         // is logging
         temp = temp.substring(num.length()+1, temp.length());
-        isLogging = Boolean.valueOf(temp);
+        if (temp.equals("1"))
+            isLogging = true;
+        else
+            isLogging = false;
 
         dataSetPointsListener.onDataSetPointsPopulated(true);
     }
@@ -215,7 +218,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.data.clear();
         if (numberOfPoints > 0) {
             for (int i = 0; i < numberOfPoints; i++) {
-                Log.d(Constants.LOG_TAG, "in here");
                 globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadPoint((short)i));
             }
         } else {
@@ -229,10 +231,17 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    public void stopRecording() {
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructStopLogging());
+    }
+
+
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
-        if (data.size() == numberOfPoints && data.size() != 0 && request.substring(0,1).equals(FlutterProtocol.Commands.READ_POINT)) {
+        if (data.size() == numberOfPoints && data.size() != 0
+                && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
+                && dataSetListener != null) {
             Sensor[] sensors;
             sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
             DataSet dataSet = new DataSet(data, keys, dataName, sensors);
@@ -244,6 +253,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     // getters
 
 
+    public boolean getIsLogging() { return isLogging; }
     public String getDataName() { return dataName; }
     public int getNumberOfPoints() { return numberOfPoints; }
 
