@@ -81,9 +81,7 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timePeriodSpinner.setAdapter(adapter);
 
-        Dialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        return dialog;
+        return builder.create();
     }
 
 

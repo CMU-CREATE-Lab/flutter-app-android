@@ -11,6 +11,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -78,9 +79,7 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timePeriodSpinner.setAdapter(adapter);
 
-        Dialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        return dialog;
+        return builder.create();
     }
 
 
