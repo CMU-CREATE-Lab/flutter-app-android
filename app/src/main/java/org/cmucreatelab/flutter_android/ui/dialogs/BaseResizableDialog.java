@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 public abstract class BaseResizableDialog extends DialogFragment {
 
 
-    private int convertDpToPx(int dp){
+    protected int convertDpToPx(int dp){
         return Math.round(dp*(getResources().getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
 

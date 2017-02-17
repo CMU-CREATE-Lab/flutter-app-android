@@ -21,10 +21,11 @@ public class MinColorDialog extends ChooseColorDialog implements ChooseColorDial
     private DialogLowColorListener lowColorListener;
 
 
-    public static MinColorDialog newInstance(Serializable serializable) {
+    public static MinColorDialog newInstance(String color, Serializable serializable) {
         MinColorDialog minColorDialog = new MinColorDialog();
 
         Bundle args = new Bundle();
+        args.putSerializable(SELECTED_COLOR_KEY, color);
         args.putSerializable(COLOR_KEY, serializable);
         minColorDialog.setArguments(args);
 

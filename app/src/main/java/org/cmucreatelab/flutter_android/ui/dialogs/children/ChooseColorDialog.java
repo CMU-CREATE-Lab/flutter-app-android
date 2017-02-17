@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.children;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -27,7 +28,8 @@ import butterknife.OnClick;
  */
 public abstract class ChooseColorDialog extends BaseResizableDialog {
 
-    protected static final String COLOR_KEY = "color_key";
+    protected static final String COLOR_KEY = "color_listener";
+    protected static final String SELECTED_COLOR_KEY = "selected_color";
     private FrameLayout frameFinalColor;
     protected int[] finalRGB;
     protected SetColorListener setColorListener;
@@ -91,7 +93,14 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         final View view = inflater.inflate(R.layout.dialog_choose_color_swatches, null);
         this.dialogView = view;
         this.frameFinalColor = (FrameLayout) view.findViewById(R.id.frame_final_color);
-        selectColor(colorSwatches.get(Constants.ColorSwatches.WHITE));
+        String selectedColor = (String) getArguments().getSerializable(SELECTED_COLOR_KEY);
+        int color = Color.parseColor(selectedColor);
+        if (colorSwatches.indexOfKey(color) >= 0) {
+            selectColor(colorSwatches.get(color));
+        } else {
+            Log.w(Constants.LOG_TAG,"could not find color swatch for color="+color);
+            selectColor(colorSwatches.get(Constants.ColorSwatches.WHITE));
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);

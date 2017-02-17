@@ -41,6 +41,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     private int minInput;
     private int zeroPoint;
     private String sensorText;
+    private AdvancedSettings advancedSettings;
 
 
     private SeekBar.OnSeekBarChangeListener seekBarMaxInputListener = new SeekBar.OnSeekBarChangeListener() {
@@ -118,8 +119,11 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         super.onCreateDialog(savedInstances);
         dialogAdvancedSettingsListener = (DialogAdvancedSettingsListener) getArguments().getSerializable(ADVANCED_KEY);
         flutterOutput = (FlutterOutput) getArguments().getSerializable(OUTPUT_KEY);
+
         // ASSERT: settings are the same across all outputs, and there is always at least 1 output
         sensorText = getString(flutterOutput.getOutputs()[0].getSettings().getSensor().getSensorTypeId());
+        this.advancedSettings = AdvancedSettings.newInstance(flutterOutput.getOutputs()[0].getSettings().getAdvancedSettings());
+
         Log.i(Constants.LOG_TAG,"created AdvancedSettingsDialog for FlutterOutput=" + flutterOutput.getClass().getName());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -135,9 +139,10 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         textMinInput = (TextView) view.findViewById(R.id.text_min_input);
         textZeroPoint = (TextView) view.findViewById(R.id.text_zero_point);
 
-        maxInput = 100;
-        minInput = 0;
-        zeroPoint = 0;
+        // populate defaults
+        maxInput = advancedSettings.getInputMax();
+        minInput = advancedSettings.getInputMin();
+        zeroPoint = advancedSettings.getZeroValue();
 
         seekBarMaxInput.setOnSeekBarChangeListener(seekBarMaxInputListener);
         seekBarMinInput.setOnSeekBarChangeListener(seekBarMinInputListener);
@@ -157,11 +162,10 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "AdvancedSettingsDialog.onClickSaveSettings");
-        AdvancedSettings result = new AdvancedSettings();
-        result.setInputMax(maxInput);
-        result.setInputMin(minInput);
-        result.setZeroValue(zeroPoint);
-        dialogAdvancedSettingsListener.onAdvancedSettingsSet(result);
+        advancedSettings.setInputMax(maxInput);
+        advancedSettings.setInputMin(minInput);
+        advancedSettings.setZeroValue(zeroPoint);
+        dialogAdvancedSettingsListener.onAdvancedSettingsSet(advancedSettings);
         dismiss();
     }
 

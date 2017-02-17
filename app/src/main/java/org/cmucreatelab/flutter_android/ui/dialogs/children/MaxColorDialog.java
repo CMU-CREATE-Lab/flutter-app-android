@@ -21,10 +21,11 @@ public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDial
     private DialogHighColorListener highColorListener;
 
 
-    public static MaxColorDialog newInstance(Serializable serializable) {
+    public static MaxColorDialog newInstance(String color, Serializable serializable) {
         MaxColorDialog maxColorDialog = new MaxColorDialog();
 
         Bundle args = new Bundle();
+        args.putSerializable(SELECTED_COLOR_KEY, color);
         args.putSerializable(COLOR_KEY, serializable);
         maxColorDialog.setArguments(args);
 

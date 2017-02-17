@@ -58,6 +58,7 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
     // setters
     public void setSensors(Sensor[] sensors) { this.sensors = sensors; }
     public void setDatatSet(DataSet dataSet) { this.dataSet = dataSet; }
+    public void setSpeaker(Speaker speaker) { this.speaker = speaker; }
 
 
     public Flutter(BluetoothDevice device, String name) {

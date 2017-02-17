@@ -17,16 +17,15 @@ import java.io.Serializable;
  */
 public class MaxPositionDialog extends ChoosePositionDialog implements ChoosePositionDialog.SetPositionListener {
 
-
-    private static String POSITION_KEY = "position_key";
     private DialogMaxPositionListener maxPositionListener;
 
 
-    public static MaxPositionDialog newInstance(Serializable serializable) {
+    public static MaxPositionDialog newInstance(Integer position, Serializable serializable) {
         MaxPositionDialog maxPositionDialog = new MaxPositionDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(POSITION_KEY, serializable);
+        args.putSerializable(POSITION_KEY, position);
+        args.putSerializable(POSITION_LISTENER_KEY, serializable);
         maxPositionDialog.setArguments(args);
 
         return maxPositionDialog;
@@ -36,7 +35,7 @@ public class MaxPositionDialog extends ChoosePositionDialog implements ChoosePos
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        maxPositionListener = (DialogMaxPositionListener) getArguments().getSerializable(POSITION_KEY);
+        maxPositionListener = (DialogMaxPositionListener) getArguments().getSerializable(POSITION_LISTENER_KEY);
         setPositionListener = this;
         return super.onCreateDialog(savedInstanceState);
     }

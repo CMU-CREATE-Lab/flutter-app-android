@@ -1,9 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -30,6 +30,15 @@ public class TriColorLed implements FlutterOutput {
         outputs[0] = new RedLed(this.portNumber);
         outputs[1] = new GreenLed(this.portNumber);
         outputs[2] = new BlueLed(this.portNumber);
+    }
+
+
+    public static TriColorLed newInstance(TriColorLed oldInstance) {
+        TriColorLed newInstance = new TriColorLed(oldInstance.portNumber);
+        newInstance.getRedLed().setSettings(Settings.newInstance(oldInstance.getRedLed().getSettings()));
+        newInstance.getGreenLed().setSettings(Settings.newInstance(oldInstance.getGreenLed().getSettings()));
+        newInstance.getBlueLed().setSettings(Settings.newInstance(oldInstance.getBlueLed().getSettings()));
+        return newInstance;
     }
 
 
@@ -65,7 +74,7 @@ public class TriColorLed implements FlutterOutput {
             return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
-        return R.drawable.swatch_black;
+        return R.drawable.swatch_black_selected;
     }
 
 
@@ -89,7 +98,7 @@ public class TriColorLed implements FlutterOutput {
             return Constants.COLOR_RES.get(color);
         }
         // default to black if color isn't in COLOR_RES
-        return R.drawable.swatch_black;
+        return R.drawable.swatch_black_selected;
     }
 
 

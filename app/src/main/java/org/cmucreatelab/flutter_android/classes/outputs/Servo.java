@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -23,6 +24,13 @@ public class Servo extends Output implements FlutterOutput {
 
     public Servo(int portNumber) {
         super(TYPE, MAXIMUM, MINIMUM, portNumber);
+    }
+
+
+    public static Servo newInstance(Servo oldInstance) {
+        Servo newInstance = new Servo(oldInstance.getPortNumber());
+        newInstance.setSettings(Settings.newInstance(oldInstance.getSettings()));
+        return newInstance;
     }
 
 

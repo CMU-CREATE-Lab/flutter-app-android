@@ -24,7 +24,8 @@ import butterknife.OnClick;
 public abstract class ChoosePitchDialog extends BaseResizableDialog {
 
 
-    private static int MINIMUM_PITCH = 260;
+    public static String PITCH_LISTENER_KEY = "pitch_listener";
+    public static String PITCH_KEY = "pitch";
 
     private TextView currentNote;
     private TextView currentPitch;
@@ -120,6 +121,50 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     }
 
 
+    private void populateViewWithPitch(int pitch) {
+        int progress=0;
+
+        if (pitch <= Constants.MusicNoteFrequencies.C_4) {
+            progress = 0;
+        } else if (pitch <= Constants.MusicNoteFrequencies.D_4) {
+            progress = 1;
+        } else if (pitch <= Constants.MusicNoteFrequencies.E_4) {
+            progress = 2;
+        } else if (pitch <= Constants.MusicNoteFrequencies.F_4) {
+            progress = 3;
+        } else if (pitch <= Constants.MusicNoteFrequencies.G_4) {
+            progress = 4;
+        } else if (pitch <= Constants.MusicNoteFrequencies.A_4) {
+            progress = 5;
+        } else if (pitch <= Constants.MusicNoteFrequencies.B_4) {
+            progress = 6;
+        } else if (pitch <= Constants.MusicNoteFrequencies.C_5) {
+            progress = 7;
+        } else if (pitch <= Constants.MusicNoteFrequencies.D_5) {
+            progress = 8;
+        } else if (pitch <= Constants.MusicNoteFrequencies.E_5) {
+            progress = 9;
+        } else if (pitch <= Constants.MusicNoteFrequencies.F_5) {
+            progress = 10;
+        } else if (pitch <= Constants.MusicNoteFrequencies.G_5) {
+            progress = 11;
+        } else if (pitch <= Constants.MusicNoteFrequencies.A_5) {
+            progress = 12;
+        } else if (pitch <= Constants.MusicNoteFrequencies.B_5) {
+            progress = 13;
+        } else if (pitch <= Constants.MusicNoteFrequencies.C_6) {
+            progress = 14;
+        } else {
+            Log.w(Constants.LOG_TAG,"Found pitch above " + Constants.MusicNoteFrequencies.C_6 + " Hz; using this value instead.");
+            progress = 14;
+        }
+
+        seekBarPitch.setProgress(progress);
+        finalPitch = getFrequency(progress);
+        currentPitch.setText(String.valueOf(finalPitch) + " " + getString(R.string.hz));
+    }
+
+
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -149,15 +194,13 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         builder.setView(view);
         ButterKnife.bind(this, view);
 
-        finalPitch = MINIMUM_PITCH;
         currentNote = (TextView) view.findViewById(R.id.text_current_note);
         currentPitch = (TextView) view.findViewById(R.id.text_current_pitch);
         sheetMusic = (ImageView) view.findViewById(R.id.image_sheet_music);
         seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
         seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
-        currentNote.setText("C");
-        currentPitch.setText(String.valueOf(MINIMUM_PITCH) + " " + getString(R.string.hz));
-        sheetMusic.setImageResource(R.drawable.c1);
+
+        populateViewWithPitch((Integer) getArguments().getSerializable(PITCH_KEY));
 
         return builder.create();
     }

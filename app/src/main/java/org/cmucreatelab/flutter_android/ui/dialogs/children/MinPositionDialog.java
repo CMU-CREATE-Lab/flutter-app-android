@@ -17,16 +17,15 @@ import java.io.Serializable;
  */
 public class MinPositionDialog extends ChoosePositionDialog implements ChoosePositionDialog.SetPositionListener {
 
-
-    private static String POSITION_KEY = "position_key";
     private DialogMinPositionListener minPositionListener;
 
 
-    public static MinPositionDialog newInstance(Serializable serializable) {
+    public static MinPositionDialog newInstance(Integer position, Serializable serializable) {
         MinPositionDialog minPositionDialog = new MinPositionDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(POSITION_KEY, serializable);
+        args.putSerializable(POSITION_KEY, position);
+        args.putSerializable(POSITION_LISTENER_KEY, serializable);
         minPositionDialog.setArguments(args);
 
         return minPositionDialog;
@@ -36,7 +35,7 @@ public class MinPositionDialog extends ChoosePositionDialog implements ChoosePos
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        minPositionListener = (DialogMinPositionListener) getArguments().getSerializable(POSITION_KEY);
+        minPositionListener = (DialogMinPositionListener) getArguments().getSerializable(POSITION_LISTENER_KEY);
         setPositionListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
