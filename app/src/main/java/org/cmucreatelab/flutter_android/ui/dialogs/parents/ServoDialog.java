@@ -202,7 +202,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxPositionDialog.newInstance(serializable);
+        DialogFragment dialog = MaxPositionDialog.newInstance(Integer.valueOf(servo.getSettings().getOutputMax()), serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -215,7 +215,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinPositionDialog.newInstance(serializable);
+        DialogFragment dialog = MinPositionDialog.newInstance(Integer.valueOf(servo.getSettings().getOutputMin()), serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 

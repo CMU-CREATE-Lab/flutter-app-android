@@ -279,7 +279,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxVolumeDialog.newInstance(serializable);
+        DialogFragment dialog = MaxVolumeDialog.newInstance(speaker.getVolume().getSettings().getOutputMax(),serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -291,7 +291,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinVolumeDialog.newInstance(serializable);
+        DialogFragment dialog = MinVolumeDialog.newInstance(speaker.getVolume().getSettings().getOutputMin(),serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -303,7 +303,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxPitchDialog.newInstance(serializable);
+        DialogFragment dialog = MaxPitchDialog.newInstance(speaker.getPitch().getSettings().getOutputMax(),serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 
@@ -315,7 +315,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinPitchDialog.newInstance(serializable);
+        DialogFragment dialog = MinPitchDialog.newInstance(speaker.getPitch().getSettings().getOutputMin(),serializable);
         dialog.show(dialogFragment.getFragmentManager(), "tag");
     }
 

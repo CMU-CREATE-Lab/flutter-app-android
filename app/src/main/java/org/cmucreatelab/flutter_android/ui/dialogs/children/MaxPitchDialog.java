@@ -13,16 +13,15 @@ import java.io.Serializable;
  */
 public class MaxPitchDialog extends ChoosePitchDialog implements ChoosePitchDialog.SetPitchListener {
 
-
-    private static String PITCH_KEY = "pitch_key";
     private DialogMaxPitchListener maxPitchListener;
 
 
-    public static MaxPitchDialog newInstance(Serializable serializable) {
+    public static MaxPitchDialog newInstance(Integer pitch, Serializable serializable) {
         MaxPitchDialog maxPitchDialog = new MaxPitchDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(PITCH_KEY, serializable);
+        args.putSerializable(PITCH_KEY, pitch);
+        args.putSerializable(PITCH_LISTENER_KEY, serializable);
         maxPitchDialog.setArguments(args);
 
         return maxPitchDialog;
@@ -32,7 +31,7 @@ public class MaxPitchDialog extends ChoosePitchDialog implements ChoosePitchDial
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        maxPitchListener = (DialogMaxPitchListener) getArguments().getSerializable(PITCH_KEY);
+        maxPitchListener = (DialogMaxPitchListener) getArguments().getSerializable(PITCH_LISTENER_KEY);
         setPitchListener = this;
         return super.onCreateDialog(savedInstanceState);
     }

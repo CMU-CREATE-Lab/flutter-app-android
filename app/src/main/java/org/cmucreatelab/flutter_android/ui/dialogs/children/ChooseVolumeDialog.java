@@ -23,7 +23,8 @@ import butterknife.OnClick;
  */
 public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
 
-
+    public static String VOLUME_LISTENER_KEY = "volume_listener";
+    public static String VOLUME_KEY = "volume";
     private TextView currentVolume;
     private SeekBar seekBarVolume;
 
@@ -63,7 +64,9 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
         currentVolume = (TextView) view.findViewById(R.id.text_current_volume);
         seekBarVolume = (SeekBar) view.findViewById(R.id.seek_volume);
         seekBarVolume.setOnSeekBarChangeListener(seekBarChangeListener);
-        currentVolume.setText("0");
+        finalVolume = (Integer) getArguments().getSerializable(VOLUME_KEY);;
+        seekBarVolume.setProgress(finalVolume);
+        currentVolume.setText(String.valueOf(finalVolume));
 
         return builder.create();
     }

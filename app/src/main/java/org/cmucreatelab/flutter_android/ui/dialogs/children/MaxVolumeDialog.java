@@ -13,16 +13,15 @@ import java.io.Serializable;
  */
 public class MaxVolumeDialog extends ChooseVolumeDialog implements ChooseVolumeDialog.SetVolumeListener {
 
-
-    private static String VOLUME_KEY = "volume_key";
     private DialogMaxVolumeListener maxVolumeListener;
 
 
-    public static MaxVolumeDialog newInstance(Serializable serializable) {
+    public static MaxVolumeDialog newInstance(Integer volume, Serializable serializable) {
         MaxVolumeDialog maxVolumeDialog = new MaxVolumeDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(VOLUME_KEY, serializable);
+        args.putSerializable(VOLUME_KEY, volume);
+        args.putSerializable(VOLUME_LISTENER_KEY, serializable);
         maxVolumeDialog.setArguments(args);
 
         return maxVolumeDialog;
@@ -32,7 +31,7 @@ public class MaxVolumeDialog extends ChooseVolumeDialog implements ChooseVolumeD
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        maxVolumeListener = (DialogMaxVolumeListener) getArguments().getSerializable(VOLUME_KEY);
+        maxVolumeListener = (DialogMaxVolumeListener) getArguments().getSerializable(VOLUME_LISTENER_KEY);
         setVolumeListener = this;
         return super.onCreateDialog(savedInstanceState);
     }
