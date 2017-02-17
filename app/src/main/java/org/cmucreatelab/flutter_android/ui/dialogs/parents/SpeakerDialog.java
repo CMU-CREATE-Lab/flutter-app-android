@@ -23,6 +23,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
@@ -120,10 +121,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
-
         isVolume = true;
 
-        speaker = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
+        // clone old object
+        speaker = Speaker.newInstance((Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY));
+
         dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SPEAKER);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -175,6 +177,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         msgs.add(MessageConstructor.constructRelationshipMessage(speaker.getPitch(),speaker.getPitch().getSettings()));
         speaker.getVolume().setIsLinked(true, speaker.getVolume());
         speaker.getPitch().setIsLinked(true, speaker.getPitch());
+
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().setSpeaker(speaker);
+
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }
@@ -192,6 +198,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         speaker.getVolume().getSettings().setOutputMin(speaker.getVolume().getMin());
         speaker.getPitch().getSettings().setOutputMax(speaker.getPitch().getMax());
         speaker.getPitch().getSettings().setOutputMin(speaker.getPitch().getMin());
+
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().setSpeaker(speaker);
+
         dialogSpeakerListener.onSpeakerLinkListener(msgs);
         this.dismiss();
     }

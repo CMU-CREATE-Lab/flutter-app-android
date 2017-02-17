@@ -21,6 +21,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
@@ -108,7 +109,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
 
-        servo = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
+        // clone old object
+        servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
+
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -135,6 +138,10 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         servo.setSettings(servo.getSettings());
         MelodySmartMessage msg = MessageConstructor.constructRelationshipMessage(servo, servo.getSettings());
         servo.setIsLinked(true, servo);
+
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getServos()[servo.getPortNumber()-1] = servo;
+
         dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
     }
@@ -142,14 +149,16 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
     @OnClick(R.id.button_remove_link)
     public void onClickRemoveLink() {
-        if (servo.getSettings() != null) {
-            Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-            MelodySmartMessage msg = MessageConstructor.constructRemoveRelation(servo);
-            servo.setIsLinked(false, servo);
-            servo.getSettings().setOutputMax(servo.getMax());
-            servo.getSettings().setOutputMin(servo.getMin());
-            dialogServoListener.onServoLinkListener(msg);
-        }
+        Log.d(Constants.LOG_TAG, "onClickRemoveLink");
+        MelodySmartMessage msg = MessageConstructor.constructRemoveRelation(servo);
+        servo.setIsLinked(false, servo);
+        servo.getSettings().setOutputMax(servo.getMax());
+        servo.getSettings().setOutputMin(servo.getMin());
+
+        // overwrite old object
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getServos()[servo.getPortNumber()-1] = servo;
+
+        dialogServoListener.onServoLinkListener(msg);
         this.dismiss();
     }
 
