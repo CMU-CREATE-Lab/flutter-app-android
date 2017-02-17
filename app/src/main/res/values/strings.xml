@@ -100,7 +100,7 @@
     <string name="robot">Robot</string>
     <string name="data_log">Data Log</string>
     <string name="enable_bluetooth">Enable Bluetooth</string>
-    <string name="enable_bluetooth_msg">Bluetooth is currently off, please turn it on to continue.</string>
+    <string name="enable_bluetooth_msg">Bluetooth is currently disabled. Press OK to enable it. \nNote that you cannot use Flutter without Bluetooth enabled.</string>
     <string name="save_link">Save Link</string>
     <string name="set_linked_sensor">Set Linked Sensor</string>
     <string name="set_relationship">Set Relationship</string>

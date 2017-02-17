@@ -159,9 +159,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         if (!isSupported) {
             showAlertBleUnsupported();
         } else {
-            // TODO @tasota do we want this to keep popping up in this fashion?
             final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (!bluetoothAdapter.isEnabled()) {
+                // Automatically enable bluetooth for the user, but prompt that we are doing this.
+                bluetoothAdapter.enable();
                 showAlertBluetoothDisabled(bluetoothAdapter);
             }
 
