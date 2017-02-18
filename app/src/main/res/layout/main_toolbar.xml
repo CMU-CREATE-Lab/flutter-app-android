@@ -86,6 +86,16 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
+            <TextView
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/versionName"
+                android:textSize="11dp"
+                android:paddingLeft="6dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/white"/>
+
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
