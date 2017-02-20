@@ -20,8 +20,6 @@ public final class Constants {
 
     public static final String LOG_TAG = "FlutterAndroid";
 
-    public static final String APP_VERSION = "1.0.0";
-
     public static final String FLUTTER_MAC_ADDRESS = "20:FA:BB";
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
@@ -99,6 +97,8 @@ public final class Constants {
     public static final boolean IGNORE_READ_SENSORS = false;
 
     // for activities
+
+    public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 20000;
 
     public static final class SerializableKeys {
         public static final String DIALOG_LED = "dialog_led";

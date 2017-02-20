@@ -11,9 +11,9 @@
             android:id="@+id/device_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textSize="24sp" />
-
+            android:textColor="@color/fluttergreen"
+            android:gravity="center_horizontal|center_vertical"
+            android:textSize="26sp" />
     </RelativeLayout>
 
     <RelativeLayout

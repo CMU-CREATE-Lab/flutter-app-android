@@ -18,6 +18,8 @@
     <item name="gray" type="color">#ADADAD</item>
     <item name="darkgray" type="color">#4A4A4A</item>
 
+    <item name="fluttergreen" type="color">#63bd6b</item>
+
     <integer-array name="androidcolors">
         <item>@color/blue</item>
         <item>@color/purple</item>

@@ -25,7 +25,8 @@
     <string name="blue_led">\'b\': blue LED</string>
     <string name="volume_buzzer">\'v\': volume of the buzzer</string>
     <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
-    <string name="scanning">Scanning...</string>
+    <string name="scanning">Scanning for Flutters...</string>
+    <string name="scan_timeout_prompt">Don\'t see your Flutter?</string>
     <string name="rescan">Rescan</string>
     <string name="connect_flutter">CONNECT FLUTTER</string>
     <string name="data_los">DATA LOGS</string>
@@ -82,7 +83,7 @@
     <string name="barometric_pressure">Barometric Pressure</string>
     <string name="temperature">Temperature</string>
     <string name="set_sensor">Set Sensor</string>
-    <string name="choose_flutter">Choose Flutter</string>
+    <string name="choose_flutter">CHOOSE YOUR FLUTTER</string>
     <string name="high">High</string>
     <string name="low">Low</string>
     <string name="no_flutter_default">To set up, please first connect your Flutter.</string>
@@ -168,7 +169,7 @@
     <string name="start_recording">Start Recording</string>
     <string name="empty_data_name">Data Set Name is required!</string>
     <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
-    <string name="no_flutter_data_logs">To view data log information, please first connect your Flutter.</string>
+    <string name="no_flutter_data_logs">To view the data log, please first connect your Flutter.</string>
     <string name="loading_data_log_on_flutter">Loading Data...</string>
     <string name="no_mail_app">No Email App To Resolve Intent</string>
     <string name="ok">Ok</string>
@@ -187,6 +188,8 @@
     <string name="overwrite_message">The Flutter is currently recording data. Do you want it to stop?</string>
     <string name="stop_the_current_recoring">Stop the current recording</string>
     <string name="keep_the_current_recording">Keep the current recording</string>
+    <string name="connect_step_one">STEP 1:</string>
+    <string name="connect_step_two">STEP 2:</string>
 
     <!-- Colors -->
     <string name="color_red">Red</string>
