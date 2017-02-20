@@ -277,35 +277,38 @@
             android:id="@+id/linear_play_record"
             android:layout_width="386dp"
             android:layout_height="55dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/button_play_pause"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/button_icon_pause"
                 android:layout_margin="5dp"
-                android:padding="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:drawablePadding="-15dp"
+                android:drawableStart="@drawable/button_icon_pause"
+                android:paddingLeft="15dp"
                 android:text="@string/pause_sensors"
-                android:textColor="@color/white"
-                android:background="@drawable/round_button"/>
+                android:textColor="@color/white" />
 
 
             <Button
                 android:id="@+id/button_record"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/button_icon_record"
                 android:layout_margin="5dp"
-                android:padding="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button"
+                android:drawablePadding="-20dp"
+                android:drawableStart="@drawable/button_icon_record"
+                android:paddingLeft="15dp"
                 android:text="@string/record_data"
-                android:textColor="@color/white"
-                android:background="@drawable/round_button" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
