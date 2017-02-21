@@ -52,6 +52,10 @@
             android:name=".activities.RobotActivity"
             android:screenOrientation="landscape"/>
 
+        <activity
+            android:name=".activities.FlutterStatusActivity"
+            android:screenOrientation="landscape"/>
+
     </application>
 
 </manifest>

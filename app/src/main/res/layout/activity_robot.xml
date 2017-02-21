@@ -131,6 +131,10 @@
             
         </LinearLayout>
 
+        <include
+            android:id="@+id/include_flutter_status_button"
+            layout="@layout/flutter_status_button" />
+
     </RelativeLayout>
 
 </RelativeLayout>

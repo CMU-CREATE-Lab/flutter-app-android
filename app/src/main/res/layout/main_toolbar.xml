@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="120dp"
-    android:layout_height="match_parent">
+    android:layout_width="120dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
@@ -17,47 +17,84 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/text_menu_robot"
+            <LinearLayout
+                android:id="@+id/text_menu_robot_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/robot"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:drawableStart="@drawable/menu_icon_robot"
-                android:drawablePadding="10dp"
-                android:layout_centerVertical="true"
-                android:paddingTop="23dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"/>
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/text_menu_robot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="28dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/menu_icon_robot"
+                    android:gravity="center"
+                    android:text="@string/robot"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/text_menu_sensor_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/text_menu_robot_container"
+                android:layout_marginBottom="-33dp">
+
+                <TextView
+                    android:id="@+id/text_menu_sensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="28dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/menu_icon_sensor"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="30dp"
+                    android:text="@string/sensors"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/text_menu_datalog_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_menu_robot_container"
+                android:layout_marginTop="-8dp">
+
+                <TextView
+                    android:id="@+id/text_menu_datalog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginStart="6dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/menu_icon_datalog"
+                    android:gravity="center"
+                    android:paddingBottom="30dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/data_log"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/text_menu_sensor"
+                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sensors"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:drawableStart="@drawable/menu_icon_sensor"
-                android:drawablePadding="10dp"
-                android:layout_above="@id/text_menu_robot"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"/>
-
-            <TextView
-                android:id="@+id/text_menu_datalog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/data_log"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:drawableStart="@drawable/menu_icon_datalog"
-                android:drawablePadding="10dp"
-                android:layout_below="@id/text_menu_robot"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"/>
+                android:text="@string/versionName"
+                android:textSize="11dp"
+                android:paddingLeft="6dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
 

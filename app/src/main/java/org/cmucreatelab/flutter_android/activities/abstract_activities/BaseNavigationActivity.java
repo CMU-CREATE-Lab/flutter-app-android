@@ -8,6 +8,7 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
+import org.cmucreatelab.flutter_android.activities.FlutterStatusActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -76,6 +77,14 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     public void onClickDataLogMenu() {
         Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);
+        startActivity(intent);
+    }
+
+    @Nullable
+    @OnClick(R.id.image_flutter_status_button)
+    public void onClickFlutterStatus() {
+        Log.d(Constants.LOG_TAG, "onClickFlutterStatus");
+        Intent intent = new Intent(this, FlutterStatusActivity.class);
         startActivity(intent);
     }
 

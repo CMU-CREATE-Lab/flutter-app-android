@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
@@ -29,6 +29,9 @@ import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,6 +47,7 @@ import butterknife.OnClick;
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener, DataLoggingHandler.DataSetPointsListener {
 
     private LeDeviceListAdapter mLeDeviceAdapter;
+    private Timer mLeDeviceAdapterTimer;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
     private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
@@ -61,18 +65,16 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     // Check if the device is a flutter or not
                     String address = device.getAddress();
                     address = address.substring(0,8);
+                    findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
+                        TextView landingPage = (TextView)findViewById(R.id.text_app_landing_title);
+                        landingPage.setText(R.string.choose_flutter);
                         findViewById(R.id.image_flutter).setVisibility(View.GONE);
+                        findViewById(R.id.text_connect_s1).setVisibility(View.GONE);
+                        findViewById(R.id.text_connect_s2).setVisibility(View.GONE);
                         String name = NamingHandler.generateName(getApplicationContext(),device.getAddress());
                         Flutter endResult = new Flutter(device, name);
                         mLeDeviceAdapter.addDevice(endResult);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
-                            }
-                        });
                     }
                 }
             });
@@ -95,7 +97,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             scan.setTextColor(Color.BLACK);
             list.setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.image_timed_prompt).setVisibility(View.INVISIBLE);
+            TextView landingPage = (TextView)findViewById(R.id.text_app_landing_title);
+            landingPage.setText(R.string.connect_flutter);
+            findViewById(R.id.layout_timed_prompt).setVisibility(View.INVISIBLE);
             findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
             findViewById(R.id.image_flutter).setVisibility(View.VISIBLE);
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
@@ -181,6 +185,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Flutter flutter = (Flutter)mLeDeviceAdapter.getItem(i);
                     scanForDevice(false);
+                    findViewById(R.id.image_flutter).setVisibility(View.GONE);
+                    findViewById(R.id.text_connect_s1).setVisibility(View.GONE);
+                    findViewById(R.id.text_connect_s2).setVisibility(View.GONE);
+                    findViewById(R.id.button_scan).setVisibility(View.GONE);
                     globalHandler.sessionHandler.startSession(AppLandingActivity.this, flutter);
                 }
             });
@@ -229,6 +237,26 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
+        if (mLeDeviceAdapterTimer != null) {
+            mLeDeviceAdapterTimer.cancel();
+        }
+        mLeDeviceAdapterTimer = new Timer();
+        mLeDeviceAdapterTimer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i=0; i<mLeDeviceAdapter.getCount(); i++) {
+                            if (mLeDeviceAdapter.getDeviceAddedTime(i) < System.currentTimeMillis() - Constants.FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS) {
+                                mLeDeviceAdapter.removeDevice(i);
+                                findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                });
+            }
+        },0,1000);
     }
 
 
@@ -252,6 +280,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     public void onFlutterConnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
         final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
+        mLeDeviceAdapterTimer.cancel();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

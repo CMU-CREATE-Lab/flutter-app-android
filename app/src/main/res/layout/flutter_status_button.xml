@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/image_flutter_status_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/partial_circle_white"
+            android:translationX="30dp"
+            android:translationY="-40dp" />
+
+        <TextView
+            android:id="@+id/text_connected_flutter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/flutter_name_default" />
+
+        <ImageView
+            android:id="@+id/image_flutter_status_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/flutterdisconnectgraphic" />
+
+        <TextView
+            android:id="@+id/text_flutter_connection_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="65dp"
+            android:text="@string/connection_disconnected"
+            android:textColor="@color/gray" />
+    </FrameLayout>
+</RelativeLayout>
