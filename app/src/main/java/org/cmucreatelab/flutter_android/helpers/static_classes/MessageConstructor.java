@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -31,12 +32,6 @@ public class MessageConstructor {
     public static MelodySmartMessage constructReadSensorValues() {
         // Request: 'r'
         return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.READ_SENSOR_VALUES));
-    }
-
-
-    public static MelodySmartMessage constructSetOutput(Output output, int value) {
-        // Request: 'soutput,value'
-        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SET_OUTPUT)+output.getProtocolString()+","+Integer.toHexString(value));
     }
 
 
@@ -113,6 +108,15 @@ public class MessageConstructor {
     }
 
 
+    // Links
+
+
+    public static MelodySmartMessage constructSetOutput(Output output, int value) {
+        // Request: 'soutput,value'
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SET_OUTPUT)+output.getProtocolString()+","+Integer.toHexString(value));
+    }
+
+
     public static MelodySmartMessage constructEnableProportionalControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue) {
         // Request: 'poutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue'
         return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue));
@@ -130,6 +134,9 @@ public class MessageConstructor {
             } else {
                 result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMin(), settings.getOutputMax(), settings.getAdvancedSettings().getInputMin(), settings.getAdvancedSettings().getInputMax());
             }
+        } else if (settings.getRelationship().getClass() == Constant.class) {
+            // TODO @tasota use a real structure for (constant) Settings
+            result = constructSetOutput(output, settings.getOutputMax());
         } else {
             Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());
         }
