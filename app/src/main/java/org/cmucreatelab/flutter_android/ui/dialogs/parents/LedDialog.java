@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
@@ -20,6 +21,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.GreenLed;
 import org.cmucreatelab.flutter_android.classes.outputs.RedLed;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
@@ -68,36 +70,73 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
     private void updateViews(View view) {
         updateViews(view, triColorLed.getRedLed());
+        Relationship relationship = triColorLed.getRedLed().getSettings().getRelationship();
 
-        // max
-        ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
-        maxColorImg.setVisibility(View.GONE);
-        maxColor.setImageResource(triColorLed.getMaxSwatch());
-        maxColor.setVisibility(View.VISIBLE);
-        TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
-        TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
-        // TODO @tasota this should check for all (RGB) settings
-        if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
-            maxColorTxt.setText(R.string.maximum_color);
-        } else {
-            maxColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId())+" Color");
-        }
-        maxColorValue.setText(triColorLed.getMaxColorText());
+        LinearLayout linkedSensor,minColorLayout;
+        ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
+        linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
+        minColorLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_color);
 
-        // min
-        ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
-        minColorImg.setVisibility(View.GONE);
-        minColor.setImageResource(triColorLed.getMinSwatch());
-        minColor.setVisibility(View.VISIBLE);
-        TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
-        TextView minColorValue = (TextView) view.findViewById(R.id.text_min_color_value);
-        // TODO @tasota this should check for all (RGB) settings
-        if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
-            minColorTxt.setText(R.string.minimum_color);
+        if (relationship.getClass() == Constant.class) {
+            // advanced settings
+            advancedSettingsView.setVisibility(View.GONE);
+
+            // sensor
+            linkedSensor.setVisibility(View.GONE);
+
+            // max
+            ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
+            maxColorImg.setVisibility(View.GONE);
+            maxColor.setImageResource(triColorLed.getMaxSwatch());
+            maxColor.setVisibility(View.VISIBLE);
+            TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
+            TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
+            maxColorTxt.setText("Color");
+            maxColorValue.setText(triColorLed.getMaxColorText());
+
+            // min
+            minColorLayout.setVisibility(View.GONE);
         } else {
-            minColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getLowTextId())+" Color");
+            if (relationship.getClass() != Proportional.class) {
+                Log.e(Constants.LOG_TAG,"tried to run updateViews on unimplemented relationship.");
+            }
+            // advanced settings
+            advancedSettingsView.setVisibility(View.VISIBLE);
+
+            // sensor
+            linkedSensor.setVisibility(View.VISIBLE);
+
+            // max
+            ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
+            maxColorImg.setVisibility(View.GONE);
+            maxColor.setImageResource(triColorLed.getMaxSwatch());
+            maxColor.setVisibility(View.VISIBLE);
+            TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
+            TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
+            // TODO @tasota this should check for all (RGB) settings
+            if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
+                maxColorTxt.setText(R.string.maximum_color);
+            } else {
+                maxColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId())+" Color");
+            }
+            maxColorValue.setText(triColorLed.getMaxColorText());
+
+            // min
+            minColorLayout.setVisibility(View.VISIBLE);
+            ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
+            minColorImg.setVisibility(View.GONE);
+            minColor.setImageResource(triColorLed.getMinSwatch());
+            minColor.setVisibility(View.VISIBLE);
+            TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
+            TextView minColorValue = (TextView) view.findViewById(R.id.text_min_color_value);
+            // TODO @tasota this should check for all (RGB) settings
+            if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
+                minColorTxt.setText(R.string.minimum_color);
+            } else {
+                minColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getLowTextId())+" Color");
+            }
+            minColorValue.setText(triColorLed.getMinColorText());
         }
-        minColorValue.setText(triColorLed.getMinColorText());
     }
 
 
@@ -307,6 +346,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         } else if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
         }
+        updateViews(dialogView);
     }
 
 
