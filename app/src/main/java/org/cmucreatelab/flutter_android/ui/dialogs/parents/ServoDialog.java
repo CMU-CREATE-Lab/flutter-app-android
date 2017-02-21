@@ -13,10 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -62,8 +65,53 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
 
     private void updateViews(View view) {
-        if (servo.getSettings() != null) {
-            super.updateViews(view, servo);
+        super.updateViews(view, servo);
+
+        LinearLayout linkedSensor,minPosLayout;
+        ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
+        linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
+        minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
+
+        if (servo.getSettings().getRelationship().getClass() == Constant.class) {
+            // save
+            saveButton.setEnabled(true);
+
+            // advanced settings
+            advancedSettingsView.setVisibility(View.GONE);
+
+            // sensor
+            linkedSensor.setVisibility(View.GONE);
+
+            // max
+            ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, servo.getSettings().getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setFillEnabled(true);
+            rotateAnimation.setFillAfter(true);
+            rotateAnimation.setDuration(0);
+            maxPosImg.startAnimation(rotateAnimation);
+            TextView maxPosTxt = (TextView) view.findViewById(R.id.text_max_pos);
+            TextView maxPosValue = (TextView) view.findViewById(R.id.text_max_pos_value);
+            maxPosTxt.setText("Value");
+            maxPosValue.setText(String.valueOf(servo.getSettings().getOutputMax()));
+
+            // min
+            minPosLayout.setVisibility(View.GONE);
+        } else {
+            if (servo.getSettings().getRelationship().getClass() != Proportional.class) {
+                Log.e(Constants.LOG_TAG,"tried to run ServoDialog.updateViews on unimplemented relationship.");
+            }
+            // save
+            if (servo.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+                saveButton.setEnabled(true);
+            } else {
+                saveButton.setEnabled(false);
+            }
+
+            // advanced settings
+            advancedSettingsView.setVisibility(View.VISIBLE);
+
+            // sensor
+            linkedSensor.setVisibility(View.VISIBLE);
 
             // max
             ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
@@ -78,6 +126,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             maxPosValue.setText(String.valueOf(servo.getSettings().getOutputMax()));
 
             // min
+            minPosLayout.setVisibility(View.VISIBLE);
             ImageView minPosImg = (ImageView) view.findViewById(R.id.image_min_pos);
             rotateAnimation = new RotateAnimation(0, servo.getSettings().getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
@@ -121,10 +170,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ButterKnife.bind(this, view);
-
-        updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
 
+        updateViews(view);
         return builder.create();
     }
 
@@ -251,6 +299,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
         servo.getSettings().setRelationship(relationship);
+        updateViews(dialogView);
     }
 
 
