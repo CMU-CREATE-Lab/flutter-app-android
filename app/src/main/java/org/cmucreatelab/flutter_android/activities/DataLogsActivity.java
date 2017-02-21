@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -145,11 +147,23 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         Log.d(Constants.LOG_TAG, "onResume");
         super.onResume();
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
+        ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
+            flutterStatusText.setText(R.string.connection_disconnected);
+            flutterStatusText.setTextColor(Color.GRAY);
+            flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
         } else if (!isDataLogSelected) {
             dataLoggingHandler = globalHandler.dataLoggingHandler;
+
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
+            TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
+            flutterStatusButtonName.setText(flutterName);
+            flutterStatusText.setText(R.string.connection_connected);
+            flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
+            flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
             globalHandler.sessionHandler.createProgressDialog(this);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
@@ -213,7 +227,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(this);
         recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
     }
-
 
     private void loadFlutterDataLog() {
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());

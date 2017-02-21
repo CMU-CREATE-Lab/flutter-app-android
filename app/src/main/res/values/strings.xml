@@ -2,8 +2,11 @@
 
     <string name="app_name">Flutter Links</string>
     <string name="connection_status">Status:</string>
-    <string name="scan">Scan</string>
+    <string name="scan">Run Scan</string>
     <string name="stop">Stop</string>
+    <string name="connection_connected">Connected</string>
+    <string name="connection_disconnected">Disconnected</string>
+    <string name="disconnect">Disconnect</string>
     <string name="positive_response">OK</string>
 
     <!-- Errors -->
@@ -25,7 +28,7 @@
     <string name="blue_led">\'b\': blue LED</string>
     <string name="volume_buzzer">\'v\': volume of the buzzer</string>
     <string name="frequency_buzzer">\'f\': frequency of the buzzer</string>
-    <string name="scanning">Scanning for Flutters...</string>
+    <string name="scanning">Scanning for Flutters&#8230;</string>
     <string name="scan_timeout_prompt">Don\'t see your Flutter?</string>
     <string name="rescan">Rescan</string>
     <string name="connect_flutter">CONNECT FLUTTER</string>
@@ -190,6 +193,7 @@
     <string name="keep_the_current_recording">Keep the current recording</string>
     <string name="connect_step_one">STEP 1:</string>
     <string name="connect_step_two">STEP 2:</string>
+    <string name="flutter_name_default">Your Flutter</string>
 
     <!-- Colors -->
     <string name="color_red">Red</string>
