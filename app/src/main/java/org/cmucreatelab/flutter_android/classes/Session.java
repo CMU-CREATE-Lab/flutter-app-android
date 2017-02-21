@@ -8,6 +8,7 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -156,8 +157,18 @@ public class Session implements FlutterMessageListener {
                             settings.invertOutputs();
                         }
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK "+protocolString);
+                        Log.v(Constants.LOG_TAG,"LINK (proportional) "+protocolString);
                     }
+                } else if (args.length == 2) {
+                    // TODO @tasota use a real structure for (constant) Settings
+                    int position;
+                    position = Integer.valueOf(args[1], 16);
+
+                    Settings settings = output.getSettings();
+                    settings.setOutputMax(position);
+                    settings.setRelationship(new Constant());
+                    output.setIsLinked(true, output);
+                    Log.v(Constants.LOG_TAG,"LINK (constant) "+protocolString);
                 } else {
                     Log.e(Constants.LOG_TAG,"failed to parse output state (not implemented): "+args[1]);
                 }

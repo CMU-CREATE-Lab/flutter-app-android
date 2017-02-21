@@ -50,7 +50,7 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
-    private String getMaxColorHex() {
+    public String getMaxColorHex() {
         String r,g,b;
         r = getHexValue(getRedLed().getSettings().getOutputMax());
         g = getHexValue(getGreenLed().getSettings().getOutputMax());
@@ -59,7 +59,7 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
-    private String getMinColorHex() {
+    public String getMinColorHex() {
         String r,g,b;
         r = getHexValue(getRedLed().getSettings().getOutputMin());
         g = getHexValue(getGreenLed().getSettings().getOutputMin());

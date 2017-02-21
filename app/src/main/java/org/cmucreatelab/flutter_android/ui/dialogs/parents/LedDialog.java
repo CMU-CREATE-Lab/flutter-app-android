@@ -19,6 +19,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.BlueLed;
 import org.cmucreatelab.flutter_android.classes.outputs.GreenLed;
 import org.cmucreatelab.flutter_android.classes.outputs.RedLed;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
@@ -244,7 +245,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorText(),this);
+        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
@@ -257,7 +258,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         View layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorText(),this);
+        DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorHex(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
@@ -301,6 +302,11 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getRedLed().getSettings().setRelationship(relationship);
         triColorLed.getGreenLed().getSettings().setRelationship(relationship);
         triColorLed.getBlueLed().getSettings().setRelationship(relationship);
+        if (relationship.getClass() == Constant.class) {
+            saveButton.setEnabled(true);
+        } else if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(false);
+        }
     }
 
 
