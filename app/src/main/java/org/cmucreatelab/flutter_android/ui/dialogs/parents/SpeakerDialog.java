@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -61,6 +64,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private View dialogView;
     private DialogSpeakerListener dialogSpeakerListener;
     private boolean isVolume;
+
     private ImageView currentImageView;
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
@@ -68,40 +72,145 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private Button buttonPitch;
     private RelativeLayout relativeVolume;
     private RelativeLayout relativePitch;
+
     private Button saveButton;
     private Speaker speaker;
 
 
-    private void updateViews(View view) {
+    private void updatePitchViews(View view) {
         updateViews(view, speaker.getPitch());
 
-        // max Volume and max Pitch
-        ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
-        ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
-        maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
-        maxPitch.setImageResource(R.drawable.link_icon_pitch);
-        TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
-        TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
-        maxVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.volume));
-        maxPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.pitch));
-        TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
-        TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
-        maxVolumeValue.setText(String.valueOf(speaker.getVolume().getSettings().getOutputMax()));
-        maxPitchValue.setText(String.valueOf(speaker.getPitch().getSettings().getOutputMax()) + " " + getString(R.string.hz));
+        LinearLayout linkedSensor,minPitchLayout;
+        ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
+        linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
+        minPitchLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pitch);
 
-        //min Volume and min Pitch
-        ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
-        ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
-        minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
-        minPitch.setImageResource(R.drawable.link_icon_pitch);
-        TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
-        TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
-        minVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.volume));
-        minPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.pitch));
-        TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
-        TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
-        minVolumeValue.setText(String.valueOf(speaker.getVolume().getSettings().getOutputMin()));
-        minPitchValue.setText(String.valueOf(speaker.getPitch().getSettings().getOutputMin()) + " " + getString(R.string.hz));
+        // Pitch
+        if (speaker.getPitch().getSettings().getRelationship().getClass() == Constant.class) {
+            // advanced settings
+            advancedSettingsView.setVisibility(View.GONE);
+
+            // sensor
+            linkedSensor.setVisibility(View.GONE);
+
+            // max Pitch
+            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+            maxPitch.setImageResource(R.drawable.link_icon_pitch);
+            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+            maxPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.pitch));
+            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+            maxPitchValue.setText(String.valueOf(speaker.getPitch().getSettings().getOutputMax()) + " " + getString(R.string.hz));
+
+            // min Pitch
+            minPitchLayout.setVisibility(View.GONE);
+        } else {
+            if (speaker.getPitch().getSettings().getRelationship().getClass() != Proportional.class) {
+                Log.e(Constants.LOG_TAG,"tried to run SpeakerDialog.updateViews on unimplemented relationship (pitch).");
+            }
+            // advanced settings
+            advancedSettingsView.setVisibility(View.VISIBLE);
+
+            // sensor
+            linkedSensor.setVisibility(View.VISIBLE);
+            ((ImageView)linkedSensor.getChildAt(0)).setImageResource(speaker.getPitch().getSettings().getSensor().getGreenImageId());
+            ViewGroup sensorViewGroup = ((ViewGroup)linkedSensor.getChildAt(1));
+            ((TextView)sensorViewGroup.getChildAt(0)).setText(R.string.linked_sensor);
+            ((TextView)sensorViewGroup.getChildAt(1)).setText(speaker.getPitch().getSettings().getSensor().getSensorTypeId());
+
+            // max Pitch
+            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+            maxPitch.setImageResource(R.drawable.link_icon_pitch);
+            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+            maxPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.pitch));
+            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+            maxPitchValue.setText(String.valueOf(speaker.getPitch().getSettings().getOutputMax()) + " " + getString(R.string.hz));
+
+            // min Pitch
+            minPitchLayout.setVisibility(View.VISIBLE);
+            ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
+            minPitch.setImageResource(R.drawable.link_icon_pitch);
+            TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
+            minPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.pitch));
+            TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
+            minPitchValue.setText(String.valueOf(speaker.getPitch().getSettings().getOutputMin()) + " " + getString(R.string.hz));
+        }
+    }
+
+
+    private void updateVolumeViews(View view) {
+        updateViews(view, speaker.getVolume());
+
+        LinearLayout linkedSensor,minVolumeLayout;
+        ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
+        linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
+        minVolumeLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_volume);
+
+        // Volume
+        if (speaker.getVolume().getSettings().getRelationship().getClass() == Constant.class) {
+            // advanced settings
+            advancedSettingsView.setVisibility(View.GONE);
+
+            // sensor
+            linkedSensor.setVisibility(View.GONE);
+
+            // max Volume
+            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+            maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
+            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+            maxVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.volume));
+            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+            maxVolumeValue.setText(String.valueOf(speaker.getVolume().getSettings().getOutputMax()));
+
+            // min Volume
+            minVolumeLayout.setVisibility(View.GONE);
+        } else {
+            if (speaker.getVolume().getSettings().getRelationship().getClass() != Proportional.class) {
+                Log.e(Constants.LOG_TAG,"tried to run SpeakerDialog.updateViews on unimplemented relationship (volume).");
+            }
+            // advanced settings
+            advancedSettingsView.setVisibility(View.VISIBLE);
+
+            // sensor
+            linkedSensor.setVisibility(View.VISIBLE);
+            ((ImageView)linkedSensor.getChildAt(0)).setImageResource(speaker.getVolume().getSettings().getSensor().getGreenImageId());
+            ViewGroup sensorViewGroup = ((ViewGroup)linkedSensor.getChildAt(1));
+            ((TextView)sensorViewGroup.getChildAt(0)).setText(R.string.linked_sensor);
+            ((TextView)sensorViewGroup.getChildAt(1)).setText(speaker.getVolume().getSettings().getSensor().getSensorTypeId());
+
+            // max Volume
+            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+            maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
+            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+            maxVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.volume));
+            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+            maxVolumeValue.setText(String.valueOf(speaker.getVolume().getSettings().getOutputMax()));
+
+            // min Volume
+            minVolumeLayout.setVisibility(View.VISIBLE);
+            ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
+            minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
+            TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
+            minVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.volume));
+            TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
+            minVolumeValue.setText(String.valueOf(speaker.getVolume().getSettings().getOutputMin()));
+        }
+    }
+
+
+    private void updateViews(View view) {
+        if (isVolume) {
+            updateVolumeViews(view);
+        } else {
+            updatePitchViews(view);
+        }
+
+        saveButton.setEnabled(true);
+        if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(false);
+        }
+        if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(false);
+        }
     }
 
 
@@ -140,9 +249,9 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         buttonPitch = (Button) view.findViewById(R.id.button_pitch);
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
+        saveButton = (Button) view.findViewById(R.id.button_save_link);
 
         updateViews(view);
-        saveButton = (Button) view.findViewById(R.id.button_save_link);
 
         // set attributes so we can manipulate in the click events
         // TODO @tasota lots of these attributes need to be refactored
@@ -217,12 +326,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             buttonPitch.setTextColor(Color.GRAY);
             relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
-            // update the dislpayed sensors
-            Sensor volumeSensor = speaker.getVolume().getSettings().getSensor();
-            currentImageView.setImageResource(volumeSensor.getGreenImageId());
-            currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(volumeSensor.getSensorTypeId());
             isVolume = true;
+            updateViews(dialogView);
         }
     }
 
@@ -237,12 +342,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             buttonPitch.setTextColor(Color.WHITE);
             relativePitch.setVisibility(View.VISIBLE);
             relativeVolume.setVisibility(View.GONE);
-            // update the dislpayed sensors
-            Sensor pitchSensor = speaker.getPitch().getSettings().getSensor();
-            currentImageView.setImageResource(pitchSensor.getGreenImageId());
-            currentTextViewDescrp.setText(R.string.linked_sensor);
-            currentTextViewItem.setText(pitchSensor.getSensorTypeId());
             isVolume = false;
+            updateViews(dialogView);
         }
     }
 
@@ -325,9 +426,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        // TODO - do we want to set it for both outputs?
-        speaker.getVolume().getSettings().setAdvancedSettings(advancedSettings);
-        speaker.getPitch().getSettings().setAdvancedSettings(advancedSettings);
+        if (isVolume) {
+            speaker.getVolume().getSettings().setAdvancedSettings(advancedSettings);
+        } else {
+            speaker.getPitch().getSettings().setAdvancedSettings(advancedSettings);
+        }
     }
 
 
@@ -345,19 +448,20 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
                 speaker.getPitch().getSettings().setSensor(sensor);
             }
             // set a sensor by default
-            if (speaker.getVolume().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getVolume().getSettings().setSensor(sensor);
+            if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getClass() == NoSensor.class) {
+                speaker.getVolume().getSettings().setRelationship(new Constant());
                 speaker.getVolume().getSettings().setOutputMin(100);
                 speaker.getVolume().getSettings().setOutputMax(100);
-                updateViews(dialogView);
             }
-            if (speaker.getPitch().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getPitch().getSettings().setSensor(sensor);
+            if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getClass() == NoSensor.class) {
+                speaker.getPitch().getSettings().setRelationship(new Constant());
+                speaker.getPitch().getSettings().setOutputMax(440);
+                speaker.getPitch().getSettings().setOutputMin(440);
             }
-            saveButton.setEnabled(true);
         }
         updateViews(dialogView);
     }
+
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
@@ -365,8 +469,24 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        speaker.getVolume().getSettings().setRelationship(relationship);
-        speaker.getPitch().getSettings().setRelationship(relationship);
+        if (isVolume) {
+            speaker.getVolume().getSettings().setRelationship(relationship);
+            // set a sensor by default
+            if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getClass() == NoSensor.class) {
+                speaker.getPitch().getSettings().setRelationship(new Constant());
+                speaker.getPitch().getSettings().setOutputMax(440);
+                speaker.getPitch().getSettings().setOutputMin(440);
+            }
+        } else {
+            speaker.getPitch().getSettings().setRelationship(relationship);
+            // set a sensor by default
+            if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getClass() == NoSensor.class) {
+                speaker.getVolume().getSettings().setRelationship(new Constant());
+                speaker.getVolume().getSettings().setOutputMin(100);
+                speaker.getVolume().getSettings().setOutputMax(100);
+            }
+        }
+        updateViews(dialogView);
     }
 
 
