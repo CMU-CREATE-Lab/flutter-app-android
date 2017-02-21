@@ -25,13 +25,13 @@
 
                 <TextView
                     android:id="@+id/text_menu_robot"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="52dp"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="28dp"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="-9dp"
                     android:drawableStart="@drawable/menu_icon_robot"
                     android:gravity="center"
                     android:text="@string/robot"
@@ -48,12 +48,12 @@
 
                 <TextView
                     android:id="@+id/text_menu_sensor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="28dp"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="4dp"
                     android:drawableStart="@drawable/menu_icon_sensor"
                     android:gravity="center"
                     android:paddingBottom="20dp"
@@ -72,11 +72,11 @@
 
                 <TextView
                     android:id="@+id/text_menu_datalog"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="6dp"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="-20dp"
                     android:drawableStart="@drawable/menu_icon_datalog"
                     android:gravity="center"
                     android:paddingBottom="30dp"
