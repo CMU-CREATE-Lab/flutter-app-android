@@ -78,6 +78,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         minColorLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_color);
 
         if (relationship.getClass() == Constant.class) {
+            // save
+            saveButton.setEnabled(true);
+
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -98,8 +101,15 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             minColorLayout.setVisibility(View.GONE);
         } else {
             if (relationship.getClass() != Proportional.class) {
-                Log.e(Constants.LOG_TAG,"tried to run updateViews on unimplemented relationship.");
+                Log.e(Constants.LOG_TAG,"tried to run LedDialog.updateViews on unimplemented relationship.");
             }
+            // save
+            if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+                saveButton.setEnabled(true);
+            } else {
+                saveButton.setEnabled(false);
+            }
+
             // advanced settings
             advancedSettingsView.setVisibility(View.VISIBLE);
 
@@ -179,10 +189,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         maxColor = (ImageView) view.findViewById(R.id.view_max_color);
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
-
-        updateViews(view);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
 
+        updateViews(view);
         return builder.create();
     }
 
@@ -326,7 +335,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             triColorLed.getRedLed().getSettings().setSensor(sensor);
             triColorLed.getGreenLed().getSettings().setSensor(sensor);
             triColorLed.getBlueLed().getSettings().setSensor(sensor);
-            saveButton.setEnabled(true);
         }
         updateViews(dialogView);
     }
@@ -341,11 +349,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getRedLed().getSettings().setRelationship(relationship);
         triColorLed.getGreenLed().getSettings().setRelationship(relationship);
         triColorLed.getBlueLed().getSettings().setRelationship(relationship);
-        if (relationship.getClass() == Constant.class) {
-            saveButton.setEnabled(true);
-        } else if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
-            saveButton.setEnabled(false);
-        }
         updateViews(dialogView);
     }
 
