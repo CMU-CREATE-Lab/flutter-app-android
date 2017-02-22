@@ -121,7 +121,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
 
     private void selectionHelper(ListView list, ArrayList<DataSet> dataSets, View view, int index) {
         if (list.isItemChecked(index)) {
-            ((ImageView) view.findViewById(R.id.image_selector)).setImageResource(R.drawable.circle_selected);
+            ((ImageView) view.findViewById(R.id.image_selector)).setImageResource(R.drawable.check_mark);
             logsToDelete.add(dataSets.get(index));
         } else {
             ((ImageView) view.findViewById(R.id.image_selector)).setImageResource(R.drawable.circle_not_selected);
