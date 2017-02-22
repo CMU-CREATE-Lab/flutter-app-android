@@ -1,15 +1,14 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -63,6 +62,17 @@ public class NoFlutterConnectedDialog extends BaseResizableDialog {
 
         TextView text = (TextView) view.findViewById(R.id.text_no_flutter);
         text.setText(resourceId);
+
+        Button connectFlutterButton = (Button) view.findViewById(R.id.button_connect_flutter);
+        String activityName = getActivity().getLocalClassName();
+
+        if (activityName.equals("activities.SensorsActivity")) {
+            connectFlutterButton.setBackgroundResource(R.drawable.round_blue_button_bottom);
+        } else if (activityName.equals("activities.RobotActivity")) {
+            connectFlutterButton.setBackgroundResource(R.drawable.round_green_button_bottom);
+        } else if (activityName.equals("activities.DataLogsActivity")) {
+            connectFlutterButton.setBackgroundResource(R.drawable.round_orange_button_bottom);
+        }
 
         return builder.create();
     }
