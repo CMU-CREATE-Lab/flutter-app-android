@@ -33,14 +33,14 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
                 sensorText.setText(R.string.linked_sensor);
                 TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
                 sensorType.setText(getString(settings.getSensor().getSensorTypeId()));
-                saveButton.setVisibility(View.VISIBLE);
-                removeButton.setVisibility(View.VISIBLE);
+                saveButton.setEnabled(true);
+                removeButton.setEnabled(true);
             }
 
             // relationship
             if (settings.getRelationship().getClass() == Constant.class) {
-                saveButton.setVisibility(View.VISIBLE);
-                removeButton.setVisibility(View.VISIBLE);
+                saveButton.setEnabled(true);
+                removeButton.setEnabled(true);
             }
             ImageView relationshipImage = (ImageView) view.findViewById(R.id.image_relationship);
             relationshipImage.setImageResource(settings.getRelationship().getGreenImageIdMd());

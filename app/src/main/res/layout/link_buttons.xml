@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:weightSum="2">
 
     <Button
         android:id="@+id/button_remove_link"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_weight="1"
-        android:background="@drawable/round_reddish_button_bottom"
+        android:background="@drawable/round_reddish_button_bottom_left"
+        android:enabled="false"
         android:text="@string/remove_link"
-        android:textColor="@color/white"
-        android:visibility="invisible"/>
+        android:textColor="@drawable/white_text_enable_disable" />
+
+    <ImageView
+        android:id="@+id/image_vertical_border"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#999" />
 
     <Button
         android:id="@+id/button_save_link"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_weight="1"
         android:background="@drawable/round_green_button_bottom_right"
+        android:enabled="false"
         android:text="@string/save_link"
-        android:textColor="@color/white"
-        android:visibility="invisible"/>
+        android:textColor="@drawable/white_text_enable_disable" />
 
 </LinearLayout>
