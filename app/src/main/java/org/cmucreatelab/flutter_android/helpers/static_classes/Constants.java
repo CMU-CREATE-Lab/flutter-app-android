@@ -20,8 +20,6 @@ public final class Constants {
 
     public static final String LOG_TAG = "FlutterAndroid";
 
-    public static final String APP_VERSION = "1.0.0";
-
     public static final String FLUTTER_MAC_ADDRESS = "20:FA:BB";
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
@@ -62,20 +60,20 @@ public final class Constants {
     }
 
     public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
-        put(ColorSwatches.RED, R.drawable.swatch_red);
-        put(ColorSwatches.ORANGE, R.drawable.swatch_orange);
-        put(ColorSwatches.YELLOW, R.drawable.swatch_yellow);
-        put(ColorSwatches.CHARTREUSE_GREEN, R.drawable.swatch_chartreuse_green);
-        put(ColorSwatches.GREEN, R.drawable.swatch_green);
-        put(ColorSwatches.SPRING_GREEN, R.drawable.swatch_spring_green);
-        put(ColorSwatches.CYAN, R.drawable.swatch_cyan);
-        put(ColorSwatches.AZURE, R.drawable.swatch_azure);
-        put(ColorSwatches.BLUE, R.drawable.swatch_blue);
-        put(ColorSwatches.VIOLET, R.drawable.swatch_violet);
-        put(ColorSwatches.MAGENTA, R.drawable.swatch_magenta);
-        put(ColorSwatches.ROSE, R.drawable.swatch_rose);
-        put(ColorSwatches.WHITE, R.drawable.swatch_white);
-        put(ColorSwatches.BLACK, R.drawable.swatch_black);
+        put(ColorSwatches.RED, R.drawable.swatch_red_selected);
+        put(ColorSwatches.ORANGE, R.drawable.swatch_orange_selected);
+        put(ColorSwatches.YELLOW, R.drawable.swatch_yellow_selected);
+        put(ColorSwatches.CHARTREUSE_GREEN, R.drawable.swatch_chartreuse_green_selected);
+        put(ColorSwatches.GREEN, R.drawable.swatch_green_selected);
+        put(ColorSwatches.SPRING_GREEN, R.drawable.swatch_spring_green_selected);
+        put(ColorSwatches.CYAN, R.drawable.swatch_cyan_selected);
+        put(ColorSwatches.AZURE, R.drawable.swatch_azure_selected);
+        put(ColorSwatches.BLUE, R.drawable.swatch_blue_selected);
+        put(ColorSwatches.VIOLET, R.drawable.swatch_violet_selected);
+        put(ColorSwatches.MAGENTA, R.drawable.swatch_magenta_selected);
+        put(ColorSwatches.ROSE, R.drawable.swatch_rose_selected);
+        put(ColorSwatches.WHITE, R.drawable.swatch_white_selected);
+        put(ColorSwatches.BLACK, R.drawable.swatch_black_selected);
     }};
 
     public static final HashMap<Integer,String> COLOR_NAMES = new HashMap(){{
@@ -99,6 +97,8 @@ public final class Constants {
     public static final boolean IGNORE_READ_SENSORS = false;
 
     // for activities
+
+    public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 20000;
 
     public static final class SerializableKeys {
         public static final String DIALOG_LED = "dialog_led";

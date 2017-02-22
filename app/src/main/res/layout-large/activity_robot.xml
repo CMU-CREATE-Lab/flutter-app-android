@@ -176,14 +176,14 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/image_servo_3"/>
 
-           <RelativeLayout
-               android:id="@+id/relative_servo_2"
-               android:layout_width="155dp"
-               android:layout_height="60dp"
-               android:layout_alignParentEnd="true"
-               android:layout_below="@id/relative_servo_3"
-               android:background="@drawable/link_active_servo_b_g"
-               android:visibility="invisible">
+            <RelativeLayout
+                android:id="@+id/relative_servo_2"
+                android:layout_width="155dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/relative_servo_3"
+                android:background="@drawable/link_active_servo_b_g"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -474,7 +474,8 @@
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:padding="5dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp">
 
             <LinearLayout
                 android:id="@+id/linear_data_buttons"
@@ -517,5 +518,9 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
+    <include
+        android:id="@+id/include_flutter_status_button"
+        layout="@layout/flutter_status_button" />
 
 </RelativeLayout>

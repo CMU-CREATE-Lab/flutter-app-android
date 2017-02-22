@@ -13,16 +13,15 @@ import java.io.Serializable;
  */
 public class MinPitchDialog extends ChoosePitchDialog implements ChoosePitchDialog.SetPitchListener {
 
-
-    private static String PITCH_KEY = "pitch_key";
     private DialogMinPitchListener minPitchListener;
 
 
-    public static MinPitchDialog newInstance(Serializable serializable) {
+    public static MinPitchDialog newInstance(Integer pitch, Serializable serializable) {
         MinPitchDialog minPitchDialog = new MinPitchDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(PITCH_KEY, serializable);
+        args.putSerializable(PITCH_KEY, pitch);
+        args.putSerializable(PITCH_LISTENER_KEY, serializable);
         minPitchDialog.setArguments(args);
 
         return minPitchDialog;
@@ -32,7 +31,7 @@ public class MinPitchDialog extends ChoosePitchDialog implements ChoosePitchDial
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
-        minPitchListener = (DialogMinPitchListener) getArguments().getSerializable(PITCH_KEY);
+        minPitchListener = (DialogMinPitchListener) getArguments().getSerializable(PITCH_LISTENER_KEY);
         setPitchListener = this;
         return super.onCreateDialog(savedInstanceState);
     }

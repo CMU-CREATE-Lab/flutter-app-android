@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.adapters;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class LeDeviceListAdapter extends BaseAdapter {
 
-    private ArrayList<Flutter> mFlutters;
+    private ArrayList<HashMap<Flutter, Long>> mFlutters;
     private LayoutInflater mInflater;
 
     private static class ViewHolder {
@@ -41,10 +41,21 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
     public void addDevice(Flutter flutter) {
         Log.d(Constants.LOG_TAG, "Found device " + flutter.getName());
-        mFlutters.add(flutter);
+        HashMap hm = new HashMap<>();
+        hm.put(flutter, System.currentTimeMillis());
+        mFlutters.add(hm);
         notifyDataSetChanged();
     }
 
+    public void removeDevice(int position) {
+        mFlutters.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public long getDeviceAddedTime(int position) {
+        HashMap hm = mFlutters.get(position);
+        return (Long)hm.values().iterator().next();
+    }
 
     public void clearDevices() {
         mFlutters.clear();
@@ -59,7 +70,8 @@ public class LeDeviceListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mFlutters.get(position);
+        HashMap hm = mFlutters.get(position);
+        return hm.keySet().iterator().next();
     }
 
     @Override
@@ -81,7 +93,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Flutter flutter = mFlutters.get(position);
+        Flutter flutter = (Flutter)getItem(position);
 
         final String deviceName = flutter.getName();
         if (deviceName != null && deviceName.length() > 0) {
@@ -89,7 +101,6 @@ public class LeDeviceListAdapter extends BaseAdapter {
         } else {
             viewHolder.deviceName.setText(R.string.unknown_device);
         }
-        viewHolder.deviceName.setGravity(Gravity.CENTER);
 
         return convertView;
     }

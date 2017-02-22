@@ -29,6 +29,8 @@ import butterknife.OnClick;
  */
 public abstract class ChoosePositionDialog extends BaseResizableDialog {
 
+    public static String POSITION_LISTENER_KEY = "position_listener";
+    public static String POSITION_KEY = "position";
     private ImageView pointer;
     private TextView curentPosition;
     private SeekBar seekBarMaxMin;
@@ -78,7 +80,11 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
-        curentPosition.setText("0" + (char) 0x00B0);
+
+        finalPosition = (Integer) getArguments().getSerializable(POSITION_KEY);
+        seekBarMaxMin.setProgress(finalPosition);
+        curentPosition.setText(String.valueOf(finalPosition) + (char) 0x00B0);
+        updatePointer();
 
         return builder.create();
     }

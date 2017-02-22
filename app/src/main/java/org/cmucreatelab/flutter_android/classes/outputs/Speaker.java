@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+
 /**
  * Created by Steve on 6/20/2016.
  *
@@ -27,6 +29,14 @@ public class Speaker implements FlutterOutput {
         this.outputs = new Output[NUMBER_OF_OUTPUTS];
         outputs[0] = new Pitch(portNumber);
         outputs[1] = new Volume(portNumber);
+    }
+
+
+    public static Speaker newInstance(Speaker oldInstance) {
+        Speaker newInstance = new Speaker(oldInstance.portNumber);
+        newInstance.getPitch().setSettings(Settings.newInstance(oldInstance.getPitch().getSettings()));
+        newInstance.getVolume().setSettings(Settings.newInstance(oldInstance.getVolume().getSettings()));
+        return newInstance;
     }
 
 
