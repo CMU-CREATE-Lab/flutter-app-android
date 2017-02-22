@@ -43,7 +43,8 @@ import butterknife.OnClick;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener, DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener {
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener,
+        DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -624,6 +625,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
             loadDataSet(dataSet);
         }
+        workingDataPoint = null;
+        updateViews();
     }
 
 }
