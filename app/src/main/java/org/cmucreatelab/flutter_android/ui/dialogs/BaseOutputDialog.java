@@ -23,6 +23,7 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
             Log.v(Constants.LOG_TAG, "BaseResizableDialog.updateViews");
             Settings settings = output.getSettings();
             Button saveButton = (Button) view.findViewById(R.id.button_save_link);
+            Button removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
             // sensor
             if (output.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
@@ -32,12 +33,14 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
                 sensorText.setText(R.string.linked_sensor);
                 TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
                 sensorType.setText(getString(settings.getSensor().getSensorTypeId()));
-                saveButton.setEnabled(true);
+                saveButton.setVisibility(View.VISIBLE);
+                removeButton.setVisibility(View.VISIBLE);
             }
 
             // relationship
             if (settings.getRelationship().getClass() == Constant.class) {
-                saveButton.setEnabled(true);
+                saveButton.setVisibility(View.VISIBLE);
+                removeButton.setVisibility(View.VISIBLE);
             }
             ImageView relationshipImage = (ImageView) view.findViewById(R.id.image_relationship);
             relationshipImage.setImageResource(settings.getRelationship().getGreenImageIdMd());
