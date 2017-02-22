@@ -150,10 +150,10 @@ public class Session implements FlutterMessageListener {
                         settings.setSensor(sensor);
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(imin);
-                        settings.getAdvancedSettings().setInputMax(imax);
-                        // TODO @tasota hacked for inverted distance
-                        if (sensor.getSensorType() == FlutterProtocol.InputTypes.DISTANCE) {
+                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
+                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        // check for inverted sensor
+                        if (sensor.isInverted()) {
                             settings.invertOutputs();
                         }
                         output.setIsLinked(true, output);

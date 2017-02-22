@@ -128,11 +128,12 @@ public class MessageConstructor {
         MelodySmartMessage result = null;
 
         if (settings.getRelationship().getClass() == Proportional.class) {
-            // TODO @tasota hacked for inverted distance
-            if (settings.getSensor().getSensorType() == FlutterProtocol.InputTypes.DISTANCE) {
-                result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMax(), settings.getOutputMin(), DistanceSensor.INPUT_MINIMUM, DistanceSensor.INPUT_MAXIMUM);
+            Sensor sensor = settings.getSensor();
+            // check for inverted sensor
+            if (sensor.isInverted()) {
+                result = constructEnableProportionalControl(output, sensor, settings.getOutputMax(), settings.getOutputMin(), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMax()));
             } else {
-                result = constructEnableProportionalControl(output, settings.getSensor(), settings.getOutputMin(), settings.getOutputMax(), settings.getAdvancedSettings().getInputMin(), settings.getAdvancedSettings().getInputMax());
+                result = constructEnableProportionalControl(output, sensor, settings.getOutputMin(), settings.getOutputMax(), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMax()));
             }
         } else if (settings.getRelationship().getClass() == Constant.class) {
             // TODO @tasota use a real structure for (constant) Settings
