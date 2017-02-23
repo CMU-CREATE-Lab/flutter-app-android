@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -175,6 +176,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             toolbar.setContentInsetsAbsolute(0,0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
+
+            TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
+            ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
+            flutterStatusText.setText(R.string.connection_disconnected);
+            flutterStatusText.setTextColor(Color.GRAY);
+            flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
 
             // setup adapter for LeScan
             mLeDeviceAdapter = new LeDeviceListAdapter(getLayoutInflater());

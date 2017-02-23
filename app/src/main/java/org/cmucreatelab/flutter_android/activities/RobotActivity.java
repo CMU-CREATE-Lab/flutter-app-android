@@ -221,7 +221,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             String flutterName = session.getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
             flutterStatusButtonName.setText(flutterName);
-            flutterStatusText.setText(R.string.connection_disconnected);
+            flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
