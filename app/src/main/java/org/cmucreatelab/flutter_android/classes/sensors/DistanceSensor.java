@@ -1,6 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
+import android.util.Log;
+
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 /**
@@ -25,9 +28,6 @@ public class DistanceSensor extends Sensor {
     private static final int orangeImageIdSm = R.drawable.sensor_orange_distance_s_m_22;
     private static final int greyImageIdSm = R.drawable.sensor_distance_grey_s_m_20;
     private static final int whiteImageIdSm = R.drawable.sensor_distance_s_m_20;
-
-    public static final int INPUT_MINIMUM = 0;
-    public static final int INPUT_MAXIMUM = 75;
 
 
     public DistanceSensor(int portNumber) {
@@ -101,18 +101,45 @@ public class DistanceSensor extends Sensor {
     }
 
 
-    // TODO @tasota hacked for custom distance input value ranges
+    // custom Sensor ranges
+
+
+    public static final int INPUT_MINIMUM = 0;
+    public static final int INPUT_MAXIMUM = 75;
+    public static final boolean INVERT_SENSOR = true;
+
+
     @Override
-    public int getSensorReading() {
-        int value = super.getSensorReading();
-        double temp = (value - INPUT_MINIMUM) / (double)INPUT_MAXIMUM;
+    public boolean isInverted() {
+        return INVERT_SENSOR;
+    }
+
+
+    @Override
+    public int voltageToPercent(int voltage) {
+        double temp = (voltage - INPUT_MINIMUM) / (double)(INPUT_MAXIMUM-INPUT_MINIMUM);
+
         if (temp > 1.0) {
             temp = 1.0;
         } else if (temp < 0) {
             temp = 0;
         }
-        temp = 1.0 - temp;
+
         return (int)(temp * 100);
+    }
+
+
+    @Override
+    public int percentToVoltage(int percent) {
+        double temp = ((double)percent / 100.0);
+
+        if (temp > 1.0) {
+            temp = 1.0;
+        } else if (temp < 0) {
+            temp = 0;
+        }
+
+        return (int)Math.round(temp*(INPUT_MAXIMUM-INPUT_MINIMUM))+INPUT_MINIMUM;
     }
 
 }

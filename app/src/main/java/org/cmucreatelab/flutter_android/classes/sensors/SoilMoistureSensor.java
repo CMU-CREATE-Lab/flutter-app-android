@@ -97,4 +97,46 @@ public class SoilMoistureSensor extends Sensor {
         return whiteImageIdSm;
     }
 
+
+    // custom Sensor ranges
+
+
+    public static final int INPUT_MINIMUM = 0;
+    public static final int INPUT_MAXIMUM = 90;
+    public static final boolean INVERT_SENSOR = false;
+
+
+    @Override
+    public boolean isInverted() {
+        return INVERT_SENSOR;
+    }
+
+
+    @Override
+    public int voltageToPercent(int voltage) {
+        double temp = (voltage - INPUT_MINIMUM) / (double)(INPUT_MAXIMUM-INPUT_MINIMUM);
+
+        if (temp > 1.0) {
+            temp = 1.0;
+        } else if (temp < 0) {
+            temp = 0;
+        }
+
+        return (int)(temp * 100);
+    }
+
+
+    @Override
+    public int percentToVoltage(int percent) {
+        double temp = ((double)percent / 100.0);
+
+        if (temp > 1.0) {
+            temp = 1.0;
+        } else if (temp < 0) {
+            temp = 0;
+        }
+
+        return (int)Math.round(temp*(INPUT_MAXIMUM-INPUT_MINIMUM))+INPUT_MINIMUM;
+    }
+
 }
