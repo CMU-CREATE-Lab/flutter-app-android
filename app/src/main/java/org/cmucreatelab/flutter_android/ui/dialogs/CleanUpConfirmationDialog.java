@@ -79,7 +79,7 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
             public void onGlobalLayout() {
                 for (int i = 0; i < logsToDelete.getChildCount(); i++) {
                     View temp = logsToDelete.getChildAt(i);
-                    ((ImageView) temp.findViewById(R.id.image_selector)).setImageResource(R.drawable.circle_selected);
+                    ((ImageView) temp.findViewById(R.id.image_selector)).setImageResource(R.drawable.check_mark);
                 }
             }
         });

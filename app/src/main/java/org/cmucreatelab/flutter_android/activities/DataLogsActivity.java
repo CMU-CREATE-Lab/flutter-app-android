@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import org.cmucreatelab.flutter_android.adapters.DataLogListAdapter;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -29,6 +31,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +41,10 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener, DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener {
+import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
+
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener,
+        DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -46,15 +52,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataLoggingHandler dataLoggingHandler;
     private DataLogListAdapter dataLogListAdapter;
     private DataInstanceListAdapter dataInstanceListAdapter;
-    private DataSet dataSetOnFlutter;
+    private DataSet dataSetOnFlutter, workingDataSet;
     private DataSet[] dataSetsOnDevice;
-    private DataSet workingDataSet;
-    private boolean isDataLogSelected;
+
+    private Constants.MATH_STATES mathState;
+    private boolean isDataLogSelected, isMax, isMin;
+
     private DataPoint workingDataPoint;
-    private ImageView workingDataPointImage;
+    private ImageView workingDataPointImage, imageSensor1, imageSensor2, imageSensor3;
     private TextView sendLogTextView;
-    private LinearLayout dataOnFlutterContainer;
-    private LinearLayout dataOnDeviceContainer;
+    private LinearLayout dataOnFlutterContainer, dataOnDeviceContainer;
+    private MeanMedianModeProgressBar progressSensor1, progressSensor2, progressSensor3;
+    private Button buttonMean, buttonMedian, buttonMode, buttonMax, buttonMin;
 
 
     private void loadDataSet(DataSet dataSet) {
@@ -84,6 +93,21 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         }
 
         GlobalHandler.getInstance(getApplicationContext()).sessionHandler.dismissProgressDialog();
+
+        if (workingDataSet.getSensors()[0].getSensorType() != NOT_SET)
+            imageSensor1.setImageDrawable(ContextCompat.getDrawable(this, workingDataSet.getSensors()[0].getOrangeImageIdMd()));
+        else
+            imageSensor1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.grey_question_mark));
+
+        if (workingDataSet.getSensors()[1].getSensorType() != NOT_SET)
+            imageSensor2.setImageDrawable(ContextCompat.getDrawable(this, workingDataSet.getSensors()[1].getOrangeImageIdMd()));
+        else
+            imageSensor2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.grey_question_mark));
+
+        if (workingDataSet.getSensors()[2].getSensorType() != NOT_SET)
+            imageSensor3.setImageDrawable(ContextCompat.getDrawable(this, workingDataSet.getSensors()[2].getOrangeImageIdMd()));
+        else
+            imageSensor3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.grey_question_mark));
     }
 
 
@@ -104,7 +128,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ArrayList<String> keys = workingDataSet.getKeys();
             if (workingDataPoint == null) {
                 workingDataPointImage = (ImageView) view.findViewById(R.id.image_selector);
-                workingDataPointImage.setImageResource(R.drawable.circle_selected);
+                workingDataPointImage.setImageResource(R.drawable.check_mark);
                 workingDataPoint = workingDataSet.getData().get(keys.get(i));
             } else {
                 DataPoint temp = workingDataSet.getData().get(keys.get(i));
@@ -116,8 +140,272 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 } else {
                     workingDataPointImage.setImageResource(R.drawable.circle_not_selected);
                     workingDataPointImage = (ImageView) view.findViewById(R.id.image_selector);
-                    workingDataPointImage.setImageResource(R.drawable.circle_selected);
+                    workingDataPointImage.setImageResource(R.drawable.check_mark);
                     workingDataPoint = workingDataSet.getData().get(keys.get(i));
+                }
+            }
+
+            updateViews();
+        }
+    };
+
+
+    private void updateViews() {
+        TextView sensorHigh;
+        TextView sensorLow;
+
+        if (workingDataSet != null && workingDataPoint != null) {
+            Sensor sensor1 = workingDataSet.getSensors()[0];
+            Sensor sensor2 = workingDataSet.getSensors()[1];
+            Sensor sensor3 = workingDataSet.getSensors()[2];
+
+            if (sensor1.getSensorType() != NOT_SET) {
+                sensorHigh = (TextView) findViewById(R.id.text_high_1);
+                sensorLow = (TextView) findViewById(R.id.text_low_1);
+                sensorHigh.setText(sensor1.getHighTextId());
+                sensorLow.setText(sensor1.getLowTextId());
+                progressSensor1.setProgress(Integer.parseInt(workingDataPoint.getSensor1Value()));
+            }
+            if (sensor2.getSensorType() != NOT_SET) {
+                sensorHigh = (TextView) findViewById(R.id.text_high_2);
+                sensorLow = (TextView) findViewById(R.id.text_low_2);
+                sensorHigh.setText(sensor2.getHighTextId());
+                sensorLow.setText(sensor2.getLowTextId());
+                progressSensor2.setProgress(Integer.parseInt(workingDataPoint.getSensor2Value()));
+            }
+            if (sensor3.getSensorType() != NOT_SET) {
+                sensorHigh = (TextView) findViewById(R.id.text_high_3);
+                sensorLow = (TextView) findViewById(R.id.text_low_3);
+                sensorHigh.setText(sensor3.getHighTextId());
+                sensorLow.setText(sensor3.getLowTextId());
+                progressSensor3.setProgress(Integer.parseInt(workingDataPoint.getSensor3Value()));
+            }
+        } else {
+            sensorHigh = (TextView) findViewById(R.id.text_high_1);
+            sensorLow = (TextView) findViewById(R.id.text_low_1);
+            sensorHigh.setText("");
+            sensorLow.setText("");
+            progressSensor1.setProgress(0);
+            sensorHigh = (TextView) findViewById(R.id.text_high_2);
+            sensorLow = (TextView) findViewById(R.id.text_low_2);
+            sensorHigh.setText("");
+            sensorLow.setText("");
+            progressSensor2.setProgress(0);
+            sensorHigh = (TextView) findViewById(R.id.text_high_3);
+            sensorLow = (TextView) findViewById(R.id.text_low_3);
+            sensorHigh.setText("");
+            sensorLow.setText("");
+            progressSensor3.setProgress(0);
+        }
+    }
+
+
+    private void mathStateHelper() {
+        switch (mathState) {
+            case NONE:
+                break;
+            case MEAN:
+                buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
+                buttonMean.setTextColor(getResources().getColor(R.color.orange));
+                break;
+            case MEDIAN:
+                buttonMedian.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_middle));
+                buttonMedian.setTextColor(getResources().getColor(R.color.orange));
+                break;
+            case MODE:
+                buttonMode.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_right));
+                buttonMode.setTextColor(getResources().getColor(R.color.orange));
+                break;
+        }
+    }
+
+
+    // OnClick Listeners
+
+
+    private Button.OnClickListener meanClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(Constants.LOG_TAG, "DataLogsActivity.meanClickListener");
+            mathStateHelper();
+            int[] means = workingDataSet.getMeans();
+            Sensor[] sensors = workingDataSet.getSensors();
+
+            if (mathState == Constants.MATH_STATES.MEAN) {
+                mathState = Constants.MATH_STATES.NONE;
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.removeString(Constants.MATH_STATES.MEAN, means[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.removeString(Constants.MATH_STATES.MEAN, means[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.removeString(Constants.MATH_STATES.MEAN, means[2]);
+                }
+            } else {
+                mathState = Constants.MATH_STATES.MEAN;
+                buttonMean.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_left));
+                buttonMean.setTextColor(getResources().getColor(R.color.white));
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.placeStringAtPosition(Constants.MATH_STATES.MEAN, means[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.placeStringAtPosition(Constants.MATH_STATES.MEAN, means[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.placeStringAtPosition(Constants.MATH_STATES.MEAN, means[2]);
+                }
+            }
+        }
+    };
+
+
+    private Button.OnClickListener medianClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(Constants.LOG_TAG, "DataLogsActivity.medianClickListener");
+            mathStateHelper();
+            int[] medians = workingDataSet.getMedians();
+            Sensor[] sensors = workingDataSet.getSensors();
+
+            if (mathState == Constants.MATH_STATES.MEDIAN) {
+                mathState = Constants.MATH_STATES.NONE;
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.removeString(Constants.MATH_STATES.MEDIAN, medians[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.removeString(Constants.MATH_STATES.MEDIAN, medians[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.removeString(Constants.MATH_STATES.MEDIAN, medians[2]);
+                }
+            } else {
+                mathState = Constants.MATH_STATES.MEDIAN;
+                buttonMedian.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_middle));
+                buttonMedian.setTextColor(getResources().getColor(R.color.white));
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.placeStringAtPosition(mathState, medians[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.placeStringAtPosition(mathState, medians[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.placeStringAtPosition(mathState, medians[2]);
+                }
+            }
+        }
+    };
+
+
+    private Button.OnClickListener modeClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(Constants.LOG_TAG, "DataLogsActivity.modeClickListener");
+            mathStateHelper();
+            int[] modes = workingDataSet.getModes();
+            Sensor[] sensors = workingDataSet.getSensors();
+
+            if (mathState == Constants.MATH_STATES.MODE) {
+                mathState = Constants.MATH_STATES.NONE;
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.removeString(Constants.MATH_STATES.MODE, modes[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.removeString(Constants.MATH_STATES.MODE, modes[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.removeString(Constants.MATH_STATES.MODE, modes[2]);
+                }
+            } else {
+                mathState = Constants.MATH_STATES.MODE;
+                buttonMode.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_right));
+                buttonMode.setTextColor(getResources().getColor(R.color.white));
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.placeStringAtPosition(mathState, modes[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.placeStringAtPosition(mathState, modes[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.placeStringAtPosition(mathState, modes[2]);
+                }
+            }
+        }
+    };
+
+
+    private Button.OnClickListener maxClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(Constants.LOG_TAG, "DataLogsActivity.maxClickListener");
+            int[] maxs = workingDataSet.getMaximums();
+            Sensor[] sensors = workingDataSet.getSensors();
+
+            isMax = !isMax;
+            if (isMax) {
+                buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
+                buttonMax.setTextColor(getResources().getColor(R.color.white));
+
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.placeStringAtPosition(Constants.MATH_STATES.MAX, maxs[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.placeStringAtPosition(Constants.MATH_STATES.MAX, maxs[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.placeStringAtPosition(Constants.MATH_STATES.MAX, maxs[2]);
+                }
+            } else {
+                buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
+                buttonMax.setTextColor(getResources().getColor(R.color.orange));
+
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.removeString(Constants.MATH_STATES.MAX, maxs[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.removeString(Constants.MATH_STATES.MAX, maxs[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.removeString(Constants.MATH_STATES.MAX, maxs[2]);
+                }
+            }
+        }
+    };
+
+
+    private Button.OnClickListener minClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(Constants.LOG_TAG, "DataLogsActivity.minClickListener");
+            int[] mins = workingDataSet.getMinimums();
+            Sensor[] sensors = workingDataSet.getSensors();
+
+            isMin = !isMin;
+            if (isMin) {
+                buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
+                buttonMin.setTextColor(getResources().getColor(R.color.white));
+
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.placeStringAtPosition(Constants.MATH_STATES.MIN, mins[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.placeStringAtPosition(Constants.MATH_STATES.MIN, mins[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.placeStringAtPosition(Constants.MATH_STATES.MIN, mins[2]);
+                }
+            } else {
+                buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
+                buttonMin.setTextColor(getResources().getColor(R.color.orange));
+
+                if (sensors[0].getSensorType() != NOT_SET) {
+                    progressSensor1.removeString(Constants.MATH_STATES.MIN, mins[0]);
+                }
+                if (sensors[1].getSensorType() != NOT_SET) {
+                    progressSensor2.removeString(Constants.MATH_STATES.MIN, mins[1]);
+                }
+                if (sensors[2].getSensorType() != NOT_SET) {
+                    progressSensor3.removeString(Constants.MATH_STATES.MIN, mins[2]);
                 }
             }
         }
@@ -139,6 +427,27 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         sendLogTextView = (TextView) findViewById(R.id.text_send_log);
         dataOnFlutterContainer = (LinearLayout) findViewById(R.id.linear_flutter_data_container);
         dataOnDeviceContainer = (LinearLayout) findViewById(R.id.linear_device_data_container);
+
+        progressSensor1 = (MeanMedianModeProgressBar) findViewById(R.id.progress_sensor_1);
+        progressSensor2 = (MeanMedianModeProgressBar) findViewById(R.id.progress_sensor_2);
+        progressSensor3 = (MeanMedianModeProgressBar) findViewById(R.id.progress_sensor_3);
+        buttonMean = (Button) findViewById(R.id.button_mean);
+        buttonMedian = (Button) findViewById(R.id.button_median);
+        buttonMode = (Button) findViewById(R.id.button_mode);
+        buttonMax = (Button) findViewById(R.id.button_max);
+        buttonMin = (Button) findViewById(R.id.button_min);
+
+        imageSensor1 = (ImageView) findViewById(R.id.image_sensor_1);
+        imageSensor2 = (ImageView) findViewById(R.id.image_sensor_2);
+        imageSensor3 = (ImageView) findViewById(R.id.image_sensor_3);
+
+        buttonMean.setOnClickListener(meanClickListener);
+        buttonMedian.setOnClickListener(medianClickListener);
+        buttonMode.setOnClickListener(modeClickListener);
+        buttonMax.setOnClickListener(maxClickListener);
+        buttonMin.setOnClickListener(minClickListener);
+
+        mathState = Constants.MATH_STATES.NONE;
     }
 
 
@@ -192,7 +501,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ListView listDataInstance = (ListView) findViewById(R.id.list_data_instance);
             listDataInstance.setAdapter(dataInstanceListAdapter);
             listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
+
+            updateViews();
         }
+    }
+
+    @Override
+    public void onDismissed() {
+        onResume();
     }
 
 
@@ -309,10 +625,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
             loadDataSet(dataSet);
         }
+        workingDataPoint = null;
+        updateViews();
     }
 
-    @Override
-    public void onDismissed() {
-        onResume();
-    }
 }

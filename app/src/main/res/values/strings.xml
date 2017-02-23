@@ -210,6 +210,11 @@
     <string name="color_rose">Rose</string>
     <string name="color_white">White</string>
     <string name="color_black">Black</string>
+    <string name="mean">Mean</string>
+    <string name="median">Median</string>
+    <string name="mode">Mode</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
 
     <string-array name="time_array">
         <item>minute</item>

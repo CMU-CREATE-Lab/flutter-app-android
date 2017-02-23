@@ -1,63 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     android:visibility="gone">
 
     <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp">
+        android:orientation="vertical"
+        android:layout_width="325dp"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="@string/time"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="30dp">
 
-        <TextView
-            android:id="@+id/text_sensor_1_type"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:singleLine="false"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"/>
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/text_sensor_2_type"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:singleLine="false"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"/>
+            <TextView
+                android:id="@+id/text_sensor_1_type"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:ellipsize="end"
+                android:minLines="1"
+                android:maxLines="2"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
 
-        <TextView
-            android:id="@+id/text_sensor_3_type"
-            android:layout_width="75dp"
-            android:layout_height="50dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:singleLine="false"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"/>
+            <TextView
+                android:id="@+id/text_sensor_2_type"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:minLines="1"
+                android:maxLines="2"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/text_sensor_3_type"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:minLines="1"
+                android:maxLines="2"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_data_instance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"/>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_data_instance"
-        android:layout_width="400dp"
-        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_sensor_1"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/image_sensor_1"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_low_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                    android:id="@+id/progress_sensor_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="99"
+                    android:paddingBottom="20dp"
+                    android:layout_below="@id/text_low_1"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_sensor_2"
+            android:orientation="horizontal"
+            android:layout_below="@id/linear_sensor_1"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/image_sensor_2"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_low_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                    android:id="@+id/progress_sensor_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="99"
+                    android:paddingBottom="20dp"
+                    android:layout_below="@id/text_low_2"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_sensor_3"
+            android:orientation="horizontal"
+            android:layout_below="@id/linear_sensor_2"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/image_sensor_3"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_low_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="10dp"/>
+
+                <TextView
+                    android:id="@+id/text_high_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="10dp"/>
+
+                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                    android:id="@+id/progress_sensor_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="99"
+                    android:paddingBottom="20dp"
+                    android:layout_below="@id/text_low_3"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_button_container"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_mean"
+                android:text="@string/mean"
+                android:textColor="@color/orange"
+                android:background="@drawable/orange_button_border_left"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_median"
+                android:text="@string/median"
+                android:textColor="@color/orange"
+                android:background="@drawable/orange_button_border_middle"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_mode"
+                android:text="@string/mode"
+                android:textColor="@color/orange"
+                android:background="@drawable/orange_button_border_right"
+                android:layout_marginEnd="2dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_max"
+                android:text="@string/maximum"
+                android:textColor="@color/orange"
+                android:background="@drawable/orange_button_border"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_min"
+                android:text="@string/minimum"
+                android:textColor="@color/orange"
+                android:background="@drawable/orange_button_border"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

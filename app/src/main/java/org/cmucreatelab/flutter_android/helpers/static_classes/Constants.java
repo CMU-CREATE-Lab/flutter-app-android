@@ -122,4 +122,13 @@ public final class Constants {
         public static final String WIND_SPEED = "Wind Speed";
     }
 
+    public static enum MATH_STATES {
+        NONE,
+        MEAN,
+        MEDIAN,
+        MODE,
+        MAX,
+        MIN
+    }
+
 }
