@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,13 +13,16 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import butterknife.ButterKnife;
@@ -255,8 +257,28 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_record)
     public void onClickRecordData() {
         Log.d(Constants.LOG_TAG, "onClickRecordData");
-        RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(this);
-        recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
+        final SensorsActivity instance = this;
+        globalHandler.sessionHandler.createProgressDialog(this);
+        globalHandler.sessionHandler.updateProgressDialogMessage("Loading data log information...");
+
+        globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+            @Override
+            public void onDataSetPointsPopulated(boolean isSuccess) {
+                globalHandler.sessionHandler.dismissProgressDialog();
+                if (globalHandler.dataLoggingHandler.getIsLogging()) {
+                    String dataLogName = globalHandler.dataLoggingHandler.getDataName();
+                    DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogdeatils(instance);
+                    RecordingWarningSensorDialog recordingWarningSensorDialog = RecordingWarningSensorDialog.newInstance(
+                            dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
+                    );
+                    recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
+                }
+                else {
+                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance);
+                    recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
+                }
+            }
+        });
     }
 
 

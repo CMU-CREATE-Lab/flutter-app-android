@@ -17,6 +17,7 @@
     <item name="white" type="color">#FFFFFFFF</item>
     <item name="gray" type="color">#ADADAD</item>
     <item name="darkgray" type="color">#4A4A4A</item>
+    <item name="black" type="color">#000000 </item>
 
     <item name="fluttergreen" type="color">#63bd6b</item>
 
@@ -34,6 +35,7 @@
         <item>@color/white</item>
         <item>@color/gray</item>
         <item>@color/darkgray</item>
+        <item>@color/black</item>
     </integer-array>
 
 </resources>

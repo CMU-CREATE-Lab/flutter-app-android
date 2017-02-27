@@ -18,6 +18,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.DataInstanceListAdapter;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapter;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
@@ -31,6 +32,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar;
 
 import java.io.Serializable;
@@ -48,6 +50,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
+    private GlobalHandler globalHandler;
     private DataLogsActivity instance;
     private DataLoggingHandler dataLoggingHandler;
     private DataLogListAdapter dataLogListAdapter;
@@ -455,7 +458,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onResume() {
         Log.d(Constants.LOG_TAG, "onResume");
         super.onResume();
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler = GlobalHandler.getInstance(getApplicationContext());
         TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
@@ -540,8 +543,27 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @OnClick(R.id.text_record_data)
     public void onClickTextRecordData() {
         Log.d(Constants.LOG_TAG, "onClickTextRecordData");
-        RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(this);
-        recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
+        globalHandler.sessionHandler.createProgressDialog(this);
+        globalHandler.sessionHandler.updateProgressDialogMessage("Loading data log information...");
+
+        globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+            @Override
+            public void onDataSetPointsPopulated(boolean isSuccess) {
+                globalHandler.sessionHandler.dismissProgressDialog();
+                if (globalHandler.dataLoggingHandler.getIsLogging()) {
+                    String dataLogName = globalHandler.dataLoggingHandler.getDataName();
+                    DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogdeatils(instance);
+                    RecordingWarningDataDialog recordingWarningDataDialog = RecordingWarningDataDialog.newInstance(
+                            dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
+                    );
+                    recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
+                }
+                else {
+                    RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance);
+                    recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
+                }
+            }
+        });
     }
 
     private void loadFlutterDataLog() {

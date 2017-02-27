@@ -215,6 +215,10 @@
     <string name="mode">Mode</string>
     <string name="minimum">Minimum</string>
     <string name="maximum">Maximum</string>
+    <string name="cancel_recording">Cancel Recording</string>
+    <string name="is_currently_recording">is currently recording</string>
+    <string name="data_set">data set.</string>
+    <string name="data_log_details">Data Log Details:</string>
 
     <string-array name="time_array">
         <item>minute</item>

@@ -24,6 +24,8 @@ public final class Constants {
 
     public static final String EMAIL_SUBJECT = "Flutter Data Log";
 
+    public static final String PREFERENCES = "preferences";
+
     public final class MusicNoteFrequencies {
         public static final int C_4 = 262;
         public static final int D_4 = 294;

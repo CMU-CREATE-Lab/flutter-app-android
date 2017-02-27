@@ -1,9 +1,12 @@
 package org.cmucreatelab.flutter_android.helpers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
@@ -27,6 +30,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
+    private static final String INTERVAL_INT_KEY = "interval_int_key";
+    private static final String INTERVAL_STRING_KEY = "interval_string_key";
+    private static final String TIME_PERIOD_INT_KEY = "time_period_int_key";
+    private static final String TIME_PERIOD_STRING_KEY = "time_period_string_key";
 
     private Context appContext;
     private GlobalHandler globalHandler;
@@ -198,6 +205,27 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage("n," + logName));
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage(builder.toString()));
+    }
+
+
+    public void saveDataLogDetails(Activity activity, int intervalInt, String intervalString, int timePeriodInt, String timePeriodString) {
+        SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(INTERVAL_INT_KEY, intervalInt);
+        editor.putString(INTERVAL_STRING_KEY, intervalString);
+        editor.putInt(TIME_PERIOD_INT_KEY, timePeriodInt);
+        editor.putString(TIME_PERIOD_STRING_KEY, timePeriodString);
+        editor.apply();
+    }
+
+
+    public DataLogDetails loadDataLogdeatils(Activity activity) {
+        SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        int intervalInt = sharedPref.getInt(INTERVAL_INT_KEY, 0);
+        String intervalString = sharedPref.getString(INTERVAL_STRING_KEY, "minute");
+        int timePeriodInt = sharedPref.getInt(TIME_PERIOD_INT_KEY, 0);
+        String timePeriodString = sharedPref.getString(TIME_PERIOD_STRING_KEY, "minutes");
+        return new DataLogDetails(intervalInt, intervalString, timePeriodInt, timePeriodString);
     }
 
 

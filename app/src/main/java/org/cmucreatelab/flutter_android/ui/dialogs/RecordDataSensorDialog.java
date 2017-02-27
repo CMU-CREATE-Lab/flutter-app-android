@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -94,6 +95,13 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
                 if (!timerPeriodString.matches("")) {
                     if (!getIsWaitingForResponse()) {
                         if (!getIsLogging()) {
+                            GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity());
+                            int iInt = Integer.parseInt(intervalsText.getText().toString());
+                            String iString = intervalSpinner.getSelectedItem().toString();
+                            int tInt = Integer.parseInt(timePeriodText.getText().toString());
+                            String tString = timePeriodSpinner.getSelectedItem().toString();
+                            globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
+
                             int intervalsT = Integer.valueOf(intervalString);
                             // in seconds
                             int interval = 0;

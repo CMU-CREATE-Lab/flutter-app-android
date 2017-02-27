@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,19 +13,24 @@
         android:textSize="24sp"
         android:text="@string/record_data_set"/>
 
-    <EditText
-        android:id="@+id/edit_data_set_name"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/data_set_name"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:id="@+id/text_warning_flutter"
+        android:textSize="18sp"
+        android:layout_gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/for_how_long"
+        android:id="@+id/text_warning_data_log"
+        android:textSize="18sp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/data_log_details"
         android:textStyle="bold"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
@@ -45,12 +50,10 @@
             android:layout_height="50dp"
             android:background="@drawable/spinner_dropdown_bg">
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_number_of_intervals"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number"
-                android:hint="@string/zero"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="2dp"/>
@@ -73,11 +76,10 @@
             android:layout_height="50dp"
             android:background="@drawable/spinner_dropdown_bg">
 
-            <Spinner
+            <TextView
                 android:id="@+id/spinner_dropdown_interval"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:spinnerMode="dropdown"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="2dp"/>
@@ -111,12 +113,10 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_time_period"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number"
-                android:hint="@string/zero"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="2dp"/>
@@ -130,16 +130,41 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp">
 
-            <Spinner
+            <TextView
                 android:id="@+id/spinner_dropdown_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:spinnerMode="dropdown"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="2dp" />
 
         </FrameLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_cancel_recording"
+            android:layout_weight="1"
+            android:text="@string/cancel_recording"
+            android:textColor="@color/black"
+            android:background="@drawable/button_gray_left_bottom"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_ok"
+            android:layout_weight="1"
+            android:text="@string/ok"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
