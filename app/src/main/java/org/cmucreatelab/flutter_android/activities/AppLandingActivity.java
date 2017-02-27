@@ -36,6 +36,7 @@ import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by Steve on 5/26/2016.
@@ -49,6 +50,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     private LeDeviceListAdapter mLeDeviceAdapter;
     private Timer mLeDeviceAdapterTimer;
+    private boolean layoutLarge=true;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
     private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
@@ -173,6 +175,11 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
             // construct toolbar
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+            // this is checking for if the layout being used is layout-large. if the view is null, we must be using non-large layout
+            if (toolbar == null) {
+                layoutLarge = false;
+                return;
+            }
             toolbar.setContentInsetsAbsolute(0,0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
@@ -229,18 +236,20 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     protected void onResume() {
         super.onResume();
-        scanForDevice(false);
+        if (layoutLarge)
+            scanForDevice(false);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        scanForDevice(false);
+        if (layoutLarge)
+            scanForDevice(false);
     }
 
 
-    @OnClick(R.id.button_scan)
+    @Optional @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
