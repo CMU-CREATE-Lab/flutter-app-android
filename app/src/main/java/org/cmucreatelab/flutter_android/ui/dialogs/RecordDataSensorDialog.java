@@ -123,6 +123,10 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
                             Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
 
                             dialogRecordDataSensorListener.onDataRecord(name, interval, sample);
+
+                            DataLoggingConfirmationSensor dataLoggingConfirmationSensor = new DataLoggingConfirmationSensor();
+                            dataLoggingConfirmationSensor.show(getFragmentManager(), "tag");
+
                             this.dismiss();
                         } else {
                             IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);

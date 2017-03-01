@@ -125,6 +125,10 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
                             Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
 
                             dialogRecordDataLoggingListener.onDataRecord(name, interval, sample);
+
+                            DataLoggingConfirmationDataLog dataLoggingConfirmationDataLog = new DataLoggingConfirmationDataLog();
+                            dataLoggingConfirmationDataLog.show(getFragmentManager(), "tag");
+
                             this.dismiss();
                         } else {
                             IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
