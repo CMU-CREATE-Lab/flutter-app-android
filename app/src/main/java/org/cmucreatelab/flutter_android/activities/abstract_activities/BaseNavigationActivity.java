@@ -15,6 +15,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by Steve on 8/22/2016.
@@ -57,7 +58,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_menu_sensor)
+    @Optional @OnClick(R.id.text_menu_sensor)
     public void onClickSensorsMenu() {
         Log.d(Constants.LOG_TAG, "onClickSensors");
         Intent intent = new Intent(this, SensorsActivity.class);
@@ -65,7 +66,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_menu_robot)
+    @Optional @OnClick(R.id.text_menu_robot)
     public void onClickRobotMenu() {
         Log.d(Constants.LOG_TAG, "onClickRobotMenu");
         Intent intent = new Intent(this, RobotActivity.class);
@@ -73,15 +74,14 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.text_menu_datalog)
+    @Optional @OnClick(R.id.text_menu_datalog)
     public void onClickDataLogMenu() {
         Log.d(Constants.LOG_TAG, "onClickDataLogMenu");
         Intent intent = new Intent(this, DataLogsActivity.class);
         startActivity(intent);
     }
 
-    @Nullable
-    @OnClick(R.id.image_flutter_status_button)
+    @Optional @OnClick(R.id.image_flutter_status_button)
     public void onClickFlutterStatus() {
         Log.d(Constants.LOG_TAG, "onClickFlutterStatus");
         Intent intent = new Intent(this, FlutterStatusActivity.class);
