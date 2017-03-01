@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -33,6 +32,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SaveToKindleDialog;
 import org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar;
 
 import java.io.Serializable;
@@ -46,7 +46,7 @@ import butterknife.OnClick;
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener, Flutter.PopulatedDataSetListener,
-        DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener {
+        DataLoggingHandler.DataSetPointsListener, OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -579,7 +579,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @OnClick(R.id.relative_flutter_log)
     public void onClickRelativeFlutterLog() {
         Log.d(Constants.LOG_TAG, "onClickRelativeFlutterLog");
-        loadFlutterDataLog();
+        SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(this, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -649,6 +650,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         }
         workingDataPoint = null;
         updateViews();
+    }
+
+
+    @Override
+    public void onSaveToKindle() {
+        Log.d(Constants.LOG_TAG, "DataLogsActivity.onSaveToKindle");
+        loadFlutterDataLog();
     }
 
 }

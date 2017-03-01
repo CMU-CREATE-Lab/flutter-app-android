@@ -221,6 +221,8 @@
     <string name="data_set">data set.</string>
     <string name="data_log_details">Data Log Details:</string>
     <string name="collecting_data">Your flutter is now collecting data!</string>
+    <string name="get_data_log">Get Data Log</string>
+    <string name="save_data_log_to_kindle">Save Data Log to Kindle</string>
 
     <string-array name="time_array">
         <item>minute</item>
