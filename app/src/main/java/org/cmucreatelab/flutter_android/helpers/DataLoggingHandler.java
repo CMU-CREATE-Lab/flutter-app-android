@@ -182,7 +182,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
             data.put(date.toString() + time.toString(), dataPoint);
             keys.add(date.toString() + time.toString());
         }
-        Log.d(Constants.LOG_TAG, "size - " + data.size());
     }
 
 
@@ -245,6 +244,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.dataSetListener = dataSetListener;
         this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         this.data.clear();
+        this.keys.clear();
         if (numberOfPoints > 0) {
             for (int i = 0; i < numberOfPoints; i++) {
                 globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadPoint((short)i));

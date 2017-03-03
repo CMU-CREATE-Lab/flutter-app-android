@@ -145,6 +145,7 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         Log.d(Constants.LOG_TAG, "populateDataSet");
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
         this.listener = listener;
+        this.dataSet = new DataSet();
         globalHandler.dataLoggingHandler.populatedDataSet(this);
     }
 

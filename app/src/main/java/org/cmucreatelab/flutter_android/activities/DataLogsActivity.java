@@ -28,7 +28,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
@@ -502,7 +501,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             dataLoggingHandler = globalHandler.dataLoggingHandler;
 
             initializeDataLogs();
-            isDataLogSelected = false;
             sendLogTextView.setEnabled(false);
 
             if (dataSetsOnDevice.length > 0)
@@ -611,13 +609,21 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
         globalHandler.sessionHandler.dismissProgressDialog();
-        if (dataSetOnFlutter != null && dataSetOnFlutter.getData().size() > 0)
+        if (dataSetOnFlutter != null && dataSetOnFlutter.getData().size() > 0) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     dataOnFlutterContainer.setVisibility(View.VISIBLE);
                 }
             });
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    dataOnFlutterContainer.setVisibility(View.GONE);
+                }
+            });
+        }
 
         if (initializeState == INITIALIZE_DATA_STATE.OPEN_DATA_LOG) {
             OpenLogDialog openLogDialog = OpenLogDialog.newInstance(this, dataSetOnFlutter, dataSetsOnDevice);
