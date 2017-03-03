@@ -229,11 +229,17 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     private void initializeDataLogs() {
-        globalHandler.sessionHandler.createProgressDialog(this);
-        globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
-        dataLoggingHandler.populatePointsAvailable(this);
-        globalHandler.sessionHandler.getSession().setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
-        dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            globalHandler.sessionHandler.createProgressDialog(this);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
+            dataLoggingHandler.populatePointsAvailable(this);
+        }
+        globalHandler.dataLoggingHandler.setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
+        dataSetsOnDevice = globalHandler.dataLoggingHandler.getDataSets();
+        if (!globalHandler.melodySmartDeviceHandler.isConnected() && initializeState == INITIALIZE_DATA_STATE.OPEN_DATA_LOG) {
+            OpenLogDialog openLogDialog = OpenLogDialog.newInstance(this, dataSetOnFlutter, dataSetsOnDevice);
+            openLogDialog.show(getSupportFragmentManager(), "tag");
+        }
     }
 
 
@@ -478,29 +484,26 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         initializeState = INITIALIZE_DATA_STATE.ON_RESUME;
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_data_logs);
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
-        } else if (!isDataLogSelected) {
-            dataLoggingHandler = globalHandler.dataLoggingHandler;
-
+            findViewById(R.id.linear_flutter_data_container).setVisibility(View.GONE);
+            findViewById(R.id.text_record_data).setEnabled(false);
+        } else {
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
             flutterStatusButtonName.setText(flutterName);
             flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
+        }
 
-            /*globalHandler.sessionHandler.createProgressDialog(this);
-            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
-            dataLoggingHandler.populatePointsAvailable(this);*/
+        if (!isDataLogSelected) {
+            dataLoggingHandler = globalHandler.dataLoggingHandler;
+
             initializeDataLogs();
             isDataLogSelected = false;
             sendLogTextView.setEnabled(false);
-
-            /*globalHandler.sessionHandler.getSession().setDataSets(FileHandler.loadDataSetsFromFile(globalHandler));
-            dataSetsOnDevice = globalHandler.sessionHandler.getSession().getDataSets();*/
 
             if (dataSetsOnDevice.length > 0)
                 dataOnDeviceContainer.setVisibility(View.VISIBLE);
@@ -533,8 +536,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     @OnClick(R.id.text_open_log)
     public void onClickTextOpenLog() {
-        initializeDataLogs();
+        Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickTextOpenLog");
         initializeState = INITIALIZE_DATA_STATE.OPEN_DATA_LOG;
+        initializeDataLogs();
     }
 
 

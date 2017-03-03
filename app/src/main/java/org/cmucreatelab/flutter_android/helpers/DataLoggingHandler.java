@@ -43,6 +43,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     private ArrayList<String> keys;
     private String dataName;
     private TreeMap<String, DataPoint> data;
+    private DataSet[] dataSets;
 
     // TODO @tasota did we still need these to be tracking something?
     private int remainingPoints;
@@ -284,6 +285,13 @@ public class DataLoggingHandler implements FlutterMessageListener {
     public boolean getIsLogging() { return isLogging; }
     public String getDataName() { return dataName; }
     public int getNumberOfPoints() { return numberOfPoints; }
+    public DataSet[] getDataSets() { return this.dataSets; }
+
+
+    // setters
+
+
+    public void setDataSets(DataSet[] dataSets) { this.dataSets = dataSets; }
 
 
     public interface DataSetPointsListener {
