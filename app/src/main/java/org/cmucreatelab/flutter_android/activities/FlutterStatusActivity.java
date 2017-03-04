@@ -57,6 +57,7 @@ public class FlutterStatusActivity extends BaseNavigationActivity {
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
+            flutterConnectDisconnect.setBackgroundResource(R.drawable.round_green_button);
             flutterConnectDisconnect.setText(R.string.connect_flutter);
         } else {
             flutterStatusText.setText(R.string.connection_connected);
@@ -64,6 +65,7 @@ public class FlutterStatusActivity extends BaseNavigationActivity {
             String flutterName = session.getFlutter().getName();
             flutterStatusName.setText(flutterName);
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
+            flutterConnectDisconnect.setBackgroundResource(R.drawable.round_reddish_button);
             flutterConnectDisconnect.setText(R.string.disconnect);
         }
     }

@@ -43,7 +43,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/round_green_button"
+        android:background="@drawable/round_reddish_button"
         android:textColor="@color/white" />
 
     <Button

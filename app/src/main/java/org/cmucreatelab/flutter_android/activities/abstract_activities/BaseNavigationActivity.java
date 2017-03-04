@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.FlutterStatusDialog;
 
 import butterknife.OnClick;
 import butterknife.Optional;
@@ -84,8 +85,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Optional @OnClick(R.id.image_flutter_status_button)
     public void onClickFlutterStatus() {
         Log.d(Constants.LOG_TAG, "onClickFlutterStatus");
-        Intent intent = new Intent(this, FlutterStatusActivity.class);
-        startActivity(intent);
+        FlutterStatusDialog.displayDialog(this, 0);
     }
 
 }
