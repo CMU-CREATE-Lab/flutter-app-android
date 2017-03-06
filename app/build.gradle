@@ -35,6 +35,15 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile(name:'MelodySmart', ext:'aar')
-    compile 'com.jakewharton:butterknife:8.5.1'
+    compile ('com.jakewharton:butterknife:8.5.1') {
+        /* Multiple dex file define error (DexException) is thrown, since duplicates of the
+           following libraries are being included with Butterknife starting in 8.5.x. We must
+           therefore exclude them.
+
+           Running 'gradle -q app:dependencies' is a great way to see the dependency tree of an app.
+         */
+        exclude module: 'support-annotations'
+        exclude module: 'support-compat'
+    }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
