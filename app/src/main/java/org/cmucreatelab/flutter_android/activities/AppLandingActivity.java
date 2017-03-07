@@ -66,10 +66,11 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         }
                     }
                     // Check if the device is a flutter or not
-                    String address = device.getAddress();
-                    address = address.substring(0,8);
+                    String macAddress = device.getAddress();
+                    // All Flutters have the same first 8 characters
+                    String address = macAddress.substring(0,8);
                     findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
-                    if (address.equals(Constants.FLUTTER_MAC_ADDRESS)) {
+                    if (address.equals(Constants.FLUTTER_MAC_ADDRESS) && !Constants.addressBlackList.contains(macAddress)) {
                         TextView landingPage = (TextView)findViewById(R.id.text_app_landing_title);
                         landingPage.setText(R.string.choose_flutter);
                         findViewById(R.id.image_flutter).setVisibility(View.GONE);

@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import org.cmucreatelab.flutter_android.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -132,5 +133,13 @@ public final class Constants {
         MAX,
         MIN
     }
+
+    // Put any Melody Smart MAC addresses that you don't want to show up in the scan list here.
+    public static final ArrayList<String> addressBlackList = new ArrayList<String>() {
+        {
+            /* Groovy Indigo Grasshopper: Josh's non-Flutter device */
+            add("20:FA:BB:04:96:62");
+        }
+    };
 
 }
