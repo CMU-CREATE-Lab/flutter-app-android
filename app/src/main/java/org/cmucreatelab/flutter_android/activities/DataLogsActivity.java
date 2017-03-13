@@ -40,6 +40,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SaveToKindleDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SendDataLogFailedDialog;
 import org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar;
 
 import java.io.Serializable;
@@ -264,6 +265,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
                 emailDialog.show(getSupportFragmentManager(), "tag");
+            } else {
+                SendDataLogFailedDialog sendDataLogFailedDialog = new SendDataLogFailedDialog();
+                sendDataLogFailedDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
