@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
 
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.FlutterDeviceHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 

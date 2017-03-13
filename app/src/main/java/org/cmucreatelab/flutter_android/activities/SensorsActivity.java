@@ -15,7 +15,7 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSenso
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -318,7 +318,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
     @Override
     public void onDataRecord(String name, int interval, int sample) {
-        Log.d(Constants.LOG_TAG, "SensorsActivity.onDataRecord");
+        Log.d(Constants.LOG_TAG, "SensorsActivity.onRecordData");
         globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
     }
 

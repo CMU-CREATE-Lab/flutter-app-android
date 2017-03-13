@@ -14,10 +14,10 @@ import android.widget.ListView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapterCleanUp;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpAfterState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
@@ -40,6 +40,8 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
 
     private DataLogsActivity dataLogsActivity;
     private DataSet[] dataSets;
+
+    private DataSet deletedDataSet;
 
 
     public static CleanUpConfirmationDialog newInstance(Serializable activity, Serializable[] dataSets) {
@@ -91,7 +93,9 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        dataLogsActivity.onResume();
+        globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
+        globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+        dataLogsActivity.getDataLogsHelper().registerStateAndUpdate(new CleanUpAfterState(dataLogsActivity, deletedDataSet));
     }
 
     @OnClick(R.id.button_cancel)
@@ -106,10 +110,12 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
         Log.d(Constants.LOG_TAG, "CleanUpConfirmationDialog.onClickDeleteLogs");
         for (DataSet dataSet : dataSets) {
             // if the dataSet is equal to the one on the flutter, then use DataLoggingHandler to communicate with the flutter.
-            if (dataSet.equals(globalHandler.sessionHandler.getSession().getFlutter().getDataSet())) {
+            if (dataSet.equals(dataLogsActivity.getDataLogsHelper().getDataSetOnFlutter())) {
                 globalHandler.dataLoggingHandler.deleteLog();
+                deletedDataSet = dataLogsActivity.getDataLogsHelper().getDataSetOnFlutter();
             } else {
                 FileHandler.deleteFile(globalHandler, dataSet);
+                deletedDataSet = dataSet;
             }
         }
         this.dismiss();

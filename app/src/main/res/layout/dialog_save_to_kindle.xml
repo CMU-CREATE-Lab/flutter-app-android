@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/button_save"
         android:text="@string/save_data_log_to_kindle"
+        android:textColor="@color/white"
         android:background="@drawable/round_orange_button_bottom"/>
 
 </LinearLayout>
