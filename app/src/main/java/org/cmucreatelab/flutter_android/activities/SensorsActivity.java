@@ -63,7 +63,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             @Override
             public void run() {
                 Sensor[] sensors = session.getFlutter().getSensors();
-
                 textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
                 progress1.setProgress(sensors[0].getSensorReading());
                 textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
@@ -128,6 +127,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
             button.setText(R.string.pause_sensors);
             startSensorReading();
+            session.setFlutterMessageListener(this);
         } else {
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
             button.setText(R.string.play_sensors);
