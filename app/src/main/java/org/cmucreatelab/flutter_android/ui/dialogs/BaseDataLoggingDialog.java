@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
 /**

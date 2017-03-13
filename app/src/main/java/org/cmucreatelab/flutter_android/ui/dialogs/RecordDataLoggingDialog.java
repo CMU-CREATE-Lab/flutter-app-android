@@ -2,23 +2,18 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -34,6 +29,7 @@ import butterknife.OnClick;
 public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Serializable {
 
     private DialogRecordDataLoggingListener dialogRecordDataLoggingListener;
+    private DataLogsActivity dataLogsActivity;
 
     private EditText dataSetNameText;
     private EditText intervalsText;
@@ -57,6 +53,7 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         dialogRecordDataLoggingListener = (DialogRecordDataLoggingListener) getArguments().getSerializable(DataLogsActivity.DATA_LOGS_ACTIVITY_KEY);
+        dataLogsActivity = (DataLogsActivity) getArguments().getSerializable(DataLogsActivity.DATA_LOGS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_datalogging_record_data, null);
@@ -124,9 +121,9 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
                             Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
                             Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
 
-                            dialogRecordDataLoggingListener.onDataRecord(name, interval, sample);
+                            dialogRecordDataLoggingListener.onRecordData(name, interval, sample);
 
-                            DataLoggingConfirmationDataLog dataLoggingConfirmationDataLog = new DataLoggingConfirmationDataLog();
+                            DataLoggingConfirmationDataLog dataLoggingConfirmationDataLog = DataLoggingConfirmationDataLog.newInstance(dataLogsActivity);
                             dataLoggingConfirmationDataLog.show(getFragmentManager(), "tag");
 
                             this.dismiss();
@@ -149,7 +146,7 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
 
 
     public interface DialogRecordDataLoggingListener {
-        public void onDataRecord(String name, int interval, int sample);
+        public void onRecordData(String name, int interval, int sample);
     }
 
 }

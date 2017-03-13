@@ -34,6 +34,7 @@ public class OpenLogDialog extends BaseResizableDialog {
     private OpenLogDialog instance;
 
     private OpenLogListener openLogListener;
+    private DismissDialogListener dismissDialogListener;
     private DataSet dataSetOnFlutter;
     private DataSet[] dataSetsOnDevice;
 
@@ -74,6 +75,7 @@ public class OpenLogDialog extends BaseResizableDialog {
         ButterKnife.bind(this, view);
 
         openLogListener = (OpenLogListener) getArguments().getSerializable(OPEN_LOG_LISTENER_KEY);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(OPEN_LOG_LISTENER_KEY);
         dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_ON_FLUTTER_KEY);
         dataSetsOnDevice = (DataSet[]) getArguments().getSerializable(DATA_SETS_ON_DEVICE_KEY);
         listDeviceDataSets = (ListView) view.findViewById(R.id.list_data_logs);
@@ -105,7 +107,7 @@ public class OpenLogDialog extends BaseResizableDialog {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        openLogListener.onDismissed();
+        dismissDialogListener.onDialogDismissed();
     }
 
     @OnClick(R.id.relative_flutter_log)
@@ -117,7 +119,6 @@ public class OpenLogDialog extends BaseResizableDialog {
 
     public interface OpenLogListener {
         public void onOpenedLog(DataSet dataSet);
-        public void onDismissed();
     }
 
 }

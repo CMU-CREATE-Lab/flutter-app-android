@@ -47,7 +47,7 @@ public class DataInstanceListAdapter extends BaseAdapter {
     }
 
 
-    public void clearDevices() {
+    public void clearDataPoints() {
         dataPoints.clear();
         notifyDataSetChanged();
     }

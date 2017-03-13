@@ -26,7 +26,7 @@ import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavig
 import org.cmucreatelab.flutter_android.adapters.LeDeviceListAdapter;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
-import org.cmucreatelab.flutter_android.helpers.DataLoggingHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
