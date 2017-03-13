@@ -227,7 +227,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
-    private void initializeDataLogs() {
+    private void updateDataLogs() {
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.sessionHandler.createProgressDialog(this);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data_log_on_flutter));
@@ -497,10 +497,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
         }
 
+        dataLoggingHandler = globalHandler.dataLoggingHandler;
+        updateDataLogs();
         if (!isDataLogSelected) {
-            dataLoggingHandler = globalHandler.dataLoggingHandler;
-
-            initializeDataLogs();
             sendLogTextView.setEnabled(false);
 
             if (dataSetsOnDevice.length > 0)
@@ -536,7 +535,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onClickTextOpenLog() {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickTextOpenLog");
         initializeState = INITIALIZE_DATA_STATE.OPEN_DATA_LOG;
-        initializeDataLogs();
+        updateDataLogs();
     }
 
 
