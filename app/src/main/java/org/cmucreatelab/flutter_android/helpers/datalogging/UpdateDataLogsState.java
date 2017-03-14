@@ -5,5 +5,5 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
  */
 
 public interface UpdateDataLogsState {
-    public abstract void update();
+    void update();
 }

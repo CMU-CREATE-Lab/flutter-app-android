@@ -52,7 +52,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     public void onDataSetPointsPopulated(boolean isSuccess) {
         isWaitingForResponse = false;
         if (isSuccess) {
-            isLogging = globalHandler.dataLoggingHandler.getIsLogging();
+            isLogging = globalHandler.dataLoggingHandler.isLogging();
         }
     }
 

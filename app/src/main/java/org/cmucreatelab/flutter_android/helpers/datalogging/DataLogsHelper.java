@@ -2,6 +2,9 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
+import org.cmucreatelab.android.melodysmart.models.Timer;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -26,7 +29,7 @@ public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener,
     }
 
 
-    public void registerStateAndUpdate(UpdateDataLogsState updateDataLogsState) {
+    public void registerStateAndUpdateLogs(UpdateDataLogsState updateDataLogsState) {
         this.updateDataLogsState = updateDataLogsState;
         if (globalHandler.melodySmartDeviceHandler.isConnected())
             this.globalHandler.dataLoggingHandler.populatePointsAvailable(this);
@@ -55,4 +58,5 @@ public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener,
     public UpdateDataLogsState getUpdateDataLogsState() { return this.updateDataLogsState; }
     public DataSet getDataSetOnFlutter() { return this.dataSetOnFlutter; }
     public DataSet[] getDataSetsOnDevice() { return this.dataSetsOnDevice; }
+
 }

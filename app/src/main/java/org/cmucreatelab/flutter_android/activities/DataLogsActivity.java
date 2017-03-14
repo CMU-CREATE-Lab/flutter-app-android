@@ -28,6 +28,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpBeforeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsHelper;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataRecordingTimer;
 import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
@@ -53,7 +54,7 @@ import butterknife.ButterKnife;
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener,
-        OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener,
+        OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener, DataRecordingTimer.TimeExpireListener,
         OpenLogState.OpenLogStateListener, ResumeState.ResumeStateListener, CleanUpBeforeState.CleanUpBeforeStateListener, CleanUpAfterState.CleanUpStateAfterListener, SaveToKindleState.SaveToKindleStateListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
@@ -63,6 +64,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataLogsHelper dataLogsHelper;
     private DataSet workingDataSet;
     private DataPoint workingDataPoint;
+    private DataRecordingTimer dataRecordingTimer;
 
     private Constants.MATH_STATES mathState;
     private boolean isMax, isMin;
@@ -252,7 +254,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickOpenLog");
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            dataLogsHelper.registerStateAndUpdate(new OpenLogState(instance));
+            dataLogsHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
         }
     };
 
@@ -279,7 +281,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickCleanUp");
             globalHandler.sessionHandler.createProgressDialog(instance);
             globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            dataLogsHelper.registerStateAndUpdate(new CleanUpBeforeState(instance));
+            dataLogsHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
         }
     };
 
@@ -295,9 +297,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 @Override
                 public void onDataSetPointsPopulated(boolean isSuccess) {
                     globalHandler.sessionHandler.dismissProgressDialog();
-                    if (globalHandler.dataLoggingHandler.getIsLogging()) {
+                    if (globalHandler.dataLoggingHandler.isLogging()) {
                         String dataLogName = globalHandler.dataLoggingHandler.getDataName();
-                        DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogdeatils(instance);
+                        DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
                         RecordingWarningDataDialog recordingWarningDataDialog = RecordingWarningDataDialog.newInstance(
                                 instance, dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
                         );
@@ -354,7 +356,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickDataSetOnFlutter");
-            if (!globalHandler.dataLoggingHandler.getIsLogging()) {
+            if (!globalHandler.dataLoggingHandler.isLogging()) {
                 SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
                 dialog.show(getSupportFragmentManager(), "tag");
             } else {
@@ -619,6 +621,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
 
         mathState = Constants.MATH_STATES.NONE;
+
+        dataRecordingTimer = new DataRecordingTimer(5000, this);
     }
 
 
@@ -645,7 +649,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
         globalHandler.sessionHandler.createProgressDialog(instance);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-        dataLogsHelper.registerStateAndUpdate(new ResumeState(this));
+        dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));
     }
 
 
@@ -658,6 +662,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.sessionHandler.dismissProgressDialog();
         OpenLogDialog openLogDialog = OpenLogDialog.newInstance(this, dataLogsHelper.getDataSetOnFlutter(), dataLogsHelper.getDataSetsOnDevice());
         openLogDialog.show(getSupportFragmentManager(), "tag");
+        checkIfLogging();
     }
 
 
@@ -666,6 +671,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         Log.d(Constants.LOG_TAG, "DataLogsActivity.updateFromResume");
         globalHandler.sessionHandler.dismissProgressDialog();
         updateDynamicViews();
+        checkIfLogging();
     }
 
 
@@ -696,7 +702,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 workingDataPoint = null;
             }
         }
-        dataLogsHelper.registerStateAndUpdate(new ResumeState(this));
+        dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));
     }
 
 
@@ -706,14 +712,17 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.sessionHandler.dismissProgressDialog();
         if (dataLogsHelper.getDataSetOnFlutter() != null) {
             loadDataSet(dataLogsHelper.getDataSetOnFlutter());
+            checkIfLogging();
             return;
         }
         for (DataSet dataSet : dataLogsHelper.getDataSetsOnDevice()) {
             if (dataSet.getDataName().equals(((SaveToKindleState)dataLogsHelper.getUpdateDataLogsState()).getDataSetName())) {
                 loadDataSet(dataSet);
+                checkIfLogging();
                 return;
             }
         }
+        checkIfLogging();
     }
 
 
@@ -739,11 +748,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onSaveToKindle");
         globalHandler.sessionHandler.createProgressDialog(this);
         String dataSetName = dataLogsHelper.getDataSetOnFlutter().getDataName();
-        if (!globalHandler.dataLoggingHandler.getIsLogging()) {
+        if (!globalHandler.dataLoggingHandler.isLogging()) {
             FileHandler.saveDataSetToFile(globalHandler, dataLogsHelper.getDataSetOnFlutter());
             globalHandler.dataLoggingHandler.deleteLog();
         }
-        dataLogsHelper.registerStateAndUpdate(new SaveToKindleState(this, dataSetName));
+        dataLogsHelper.registerStateAndUpdateLogs(new SaveToKindleState(this, dataSetName));
     }
 
 
@@ -751,7 +760,39 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onDialogDismissed() {
         globalHandler.sessionHandler.createProgressDialog(this);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-        dataLogsHelper.registerStateAndUpdate(new ResumeState(this));
+        dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));
+    }
+
+
+    private void checkIfLogging() {
+        if (globalHandler.dataLoggingHandler.isLogging()) {
+            dataRecordingTimer.stopTimer();
+            timerExpired();
+        }
+    }
+    @Override
+    public void timerExpired() {
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+                @Override
+                public void onDataSetPointsPopulated(boolean isSuccess) {
+                    if (isSuccess) {
+                        if (globalHandler.dataLoggingHandler.isLogging()) {
+                            dataRecordingTimer.startTimer();
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    globalHandler.sessionHandler.createProgressDialog(instance);
+                                    globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.done_recording));
+                                    dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(instance));
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
     }
 
 
@@ -759,4 +800,5 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     public DataLogsHelper getDataLogsHelper() { return this.dataLogsHelper; }
+
 }

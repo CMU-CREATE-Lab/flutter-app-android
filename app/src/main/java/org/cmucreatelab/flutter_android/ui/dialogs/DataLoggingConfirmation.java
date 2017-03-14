@@ -204,7 +204,7 @@ public abstract class DataLoggingConfirmation extends BaseResizableDialog {
         Button buttonCancel = (Button) view.findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(buttonCancelListener);
 
-        String message = populateMessage(globalHandler.dataLoggingHandler.loadDataLogdeatils(getActivity()));
+        String message = populateMessage(globalHandler.dataLoggingHandler.loadDataLogDetails(getActivity()));
         ((TextView) view.findViewById(R.id.text_time_details)).setText(message);
 
         return builder.create();

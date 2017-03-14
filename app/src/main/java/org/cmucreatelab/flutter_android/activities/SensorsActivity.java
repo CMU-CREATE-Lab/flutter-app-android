@@ -265,9 +265,9 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             @Override
             public void onDataSetPointsPopulated(boolean isSuccess) {
                 globalHandler.sessionHandler.dismissProgressDialog();
-                if (globalHandler.dataLoggingHandler.getIsLogging()) {
+                if (globalHandler.dataLoggingHandler.isLogging()) {
                     String dataLogName = globalHandler.dataLoggingHandler.getDataName();
-                    DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogdeatils(instance);
+                    DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
                     RecordingWarningSensorDialog recordingWarningSensorDialog = RecordingWarningSensorDialog.newInstance(
                             dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
                     );

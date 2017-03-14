@@ -219,7 +219,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    public DataLogDetails loadDataLogdeatils(Activity activity) {
+    public DataLogDetails loadDataLogDetails(Activity activity) {
         SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
         int intervalInt = sharedPref.getInt(INTERVAL_INT_KEY, 0);
         String intervalString = sharedPref.getString(INTERVAL_STRING_KEY, "minute");
@@ -282,7 +282,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     // getters
 
 
-    public boolean getIsLogging() { return isLogging; }
+    public boolean isLogging() { return isLogging; }
     public String getDataName() { return dataName; }
     public int getNumberOfPoints() { return numberOfPoints; }
 
