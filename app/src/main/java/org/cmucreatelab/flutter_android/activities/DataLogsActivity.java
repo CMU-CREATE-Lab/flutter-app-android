@@ -86,6 +86,28 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private void mathStateHelper() {
         switch (mathState) {
             case NONE:
+                buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
+                buttonMean.setTextColor(getResources().getColor(R.color.orange));
+                buttonMedian.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_middle));
+                buttonMedian.setTextColor(getResources().getColor(R.color.orange));
+                buttonMode.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_right));
+                buttonMode.setTextColor(getResources().getColor(R.color.orange));
+
+                progressSensor1.removeString(Constants.MATH_STATES.MEAN, 0);
+                progressSensor1.removeString(Constants.MATH_STATES.MEDIAN, 0);
+                progressSensor1.removeString(Constants.MATH_STATES.MODE, 0);
+
+                progressSensor2.removeString(Constants.MATH_STATES.MEAN, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MEDIAN, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MODE, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MAX, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MIN, 0);
+
+                progressSensor3.removeString(Constants.MATH_STATES.MEAN, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MEDIAN, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MODE, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MAX, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MIN, 0);
                 break;
             case MEAN:
                 buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
@@ -144,23 +166,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         dataLogListAdapter.addDataLog(dataSet);
                     }
 
-                    sensorHigh = (TextView) findViewById(R.id.text_high_1);
-                    sensorLow = (TextView) findViewById(R.id.text_low_1);
-                    sensorHigh.setText("");
-                    sensorLow.setText("");
-                    progressSensor1.setProgress(0);
-                    sensorHigh = (TextView) findViewById(R.id.text_high_2);
-                    sensorLow = (TextView) findViewById(R.id.text_low_2);
-                    sensorHigh.setText("");
-                    sensorLow.setText("");
-                    progressSensor2.setProgress(0);
-                    sensorHigh = (TextView) findViewById(R.id.text_high_3);
-                    sensorLow = (TextView) findViewById(R.id.text_low_3);
-                    sensorHigh.setText("");
-                    sensorLow.setText("");
-                    progressSensor3.setProgress(0);
-
-                } else if (workingDataPoint != null){
+                } else if (workingDataPoint != null && workingDataSet != null){
                     Sensor sensor1 = workingDataSet.getSensors()[0];
                     Sensor sensor2 = workingDataSet.getSensors()[1];
                     Sensor sensor3 = workingDataSet.getSensors()[2];
@@ -186,9 +192,26 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         sensorLow.setText(sensor3.getLowTextId());
                         progressSensor3.setProgress(Integer.parseInt(workingDataPoint.getSensor3Value()));
                     }
+                } else {
+                    sensorHigh = (TextView) findViewById(R.id.text_high_1);
+                    sensorLow = (TextView) findViewById(R.id.text_low_1);
+                    sensorHigh.setText("");
+                    sensorLow.setText("");
+                    progressSensor1.setProgress(0);
+                    sensorHigh = (TextView) findViewById(R.id.text_high_2);
+                    sensorLow = (TextView) findViewById(R.id.text_low_2);
+                    sensorHigh.setText("");
+                    sensorLow.setText("");
+                    progressSensor2.setProgress(0);
+                    sensorHigh = (TextView) findViewById(R.id.text_high_3);
+                    sensorLow = (TextView) findViewById(R.id.text_low_3);
+                    sensorHigh.setText("");
+                    sensorLow.setText("");
+                    progressSensor3.setProgress(0);
+
+                    mathState = Constants.MATH_STATES.NONE;
+                    mathStateHelper();
                 }
-
-
             }
         });
     }
@@ -238,6 +261,22 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     imageSensor3.setImageDrawable(ContextCompat.getDrawable(instance, workingDataSet.getSensors()[2].getOrangeImageIdMd()));
                 else
                     imageSensor3.setImageDrawable(ContextCompat.getDrawable(instance, R.drawable.grey_question_mark));
+
+                workingDataPoint = null;
+                mathState = Constants.MATH_STATES.NONE;
+                mathStateHelper();
+                isMin = false;
+                isMax = false;
+                progressSensor1.removeString(Constants.MATH_STATES.MAX, 0);
+                progressSensor1.removeString(Constants.MATH_STATES.MIN, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MAX, 0);
+                progressSensor2.removeString(Constants.MATH_STATES.MIN, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MAX, 0);
+                progressSensor3.removeString(Constants.MATH_STATES.MIN, 0);
+                buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
+                buttonMax.setTextColor(getResources().getColor(R.color.orange));
+                buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
+                buttonMin.setTextColor(getResources().getColor(R.color.orange));
 
                 updateDynamicViews();
             }
