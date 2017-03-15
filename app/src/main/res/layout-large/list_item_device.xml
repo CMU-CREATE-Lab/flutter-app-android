@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,18 +12,19 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/circle_hollow_filled_green"/>
+            android:background="@drawable/circle_hollow_filled_green" />
 
         <TextView
             android:id="@+id/device_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/fluttergreen"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:ellipsize="end"
             android:gravity="center_horizontal|center_vertical"
+            android:maxLines="3"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/fluttergreen"
             android:textSize="26sp" />
     </RelativeLayout>
-
 
 </LinearLayout>
