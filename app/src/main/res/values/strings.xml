@@ -78,6 +78,7 @@
     <string name="pre_mixed">Pre-Mixed:</string>
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind Speed</string>
+    <string name="air_quality">Air Quality</string>
     <string name="sound">Sound</string>
     <string name="distance">Distance</string>
     <string name="soil_moisture">Soil Moisture</string>

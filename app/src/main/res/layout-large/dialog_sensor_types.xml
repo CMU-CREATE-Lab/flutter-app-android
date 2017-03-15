@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:src="@drawable/sensor_blue_wind_speed_l_g_68"/>
+                android:src="@drawable/sensor_blue_air_quality_l_g_68"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="@string/wind_speed"/>
+                android:text="@string/air_quality"/>
 
         </LinearLayout>
 
