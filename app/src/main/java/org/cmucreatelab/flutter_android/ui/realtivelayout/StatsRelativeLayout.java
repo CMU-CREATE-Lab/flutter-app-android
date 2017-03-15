@@ -96,7 +96,6 @@ public class StatsRelativeLayout extends RelativeLayout {
 
             view.setLayoutParams(params);
             view.setPadding(2,2,2,2);
-            view.setBackground(ContextCompat.getDrawable(context, R.drawable.debug_border));
             this.addView(positionTextViews.get(i));
         }
 
