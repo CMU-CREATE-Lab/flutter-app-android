@@ -98,9 +98,9 @@
     <string name="dry">Dry</string>
     <string name="wet">Wet</string>
     <string name="analog_or_unknown">Analog / Unknown</string>
-    <string name="sensor_port_1">Sensor Port 1</string>
-    <string name="sensor_port_2">Sensor Port 2</string>
-    <string name="sensor_port_3">Sensor Port 3</string>
+    <string name="sensor_port_1">What type of sensor is connected to Port 1?</string>
+    <string name="sensor_port_2">What type of sensor is connected to Port 2?</string>
+    <string name="sensor_port_3">What type of sensor is connected to Port 3?</string>
     <string name="no_flutter">No Flutters Found</string>
     <string name="robot">Robot</string>
     <string name="data_log">Data Log</string>
