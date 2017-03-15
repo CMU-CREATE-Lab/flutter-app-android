@@ -20,7 +20,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
     private static final int END_MAX = 90;
 
     private int currentPosition;
-    private Constants.MATH_STATES currentType;
+    private Constants.STATS currentType;
     private Paint textPaint;
     private String currentText;
 
@@ -85,7 +85,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
         super(context);
         textPaint = new Paint();
         textPaint.setColor(context.getResources().getColor(R.color.orange));
-        currentType = Constants.MATH_STATES.NONE;
+        currentType = Constants.STATS.NONE;
         currentText = "";
     }
 
@@ -94,7 +94,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
         super(context, attrs);
         textPaint = new Paint();
         textPaint.setColor(context.getResources().getColor(R.color.orange));
-        currentType = Constants.MATH_STATES.NONE;
+        currentType = Constants.STATS.NONE;
         currentText = "";
     }
 
@@ -103,7 +103,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
         super(context, attrs, defStyleAttr);
         textPaint = new Paint();
         textPaint.setColor(context.getResources().getColor(R.color.orange));
-        currentType = Constants.MATH_STATES.NONE;
+        currentType = Constants.STATS.NONE;
         currentText = "";
     }
 
@@ -113,7 +113,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
         drawIt(canvas, currentText);
     }
 
-    public void placeStringAtPosition(Constants.MATH_STATES type, int position) {
+    public void placeStringAtPosition(Constants.STATS type, int position) {
         currentType = type;
         switch (currentType) {
             case MEAN:
@@ -145,7 +145,7 @@ public class MeanMedianModeProgressBar extends ProgressBar {
         invalidate();
     }
 
-    public void removeString(Constants.MATH_STATES type, int position) {
+    public void removeString(Constants.STATS type, int position) {
         currentType = type;
         switch (type){
             case MEAN:
