@@ -31,7 +31,7 @@
                 android:id="@+id/text_sensor_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:text="@string/set_linked_sensor"/>
 
             <TextView
@@ -73,7 +73,7 @@
                 android:id="@+id/text_relationship"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_marginRight="1dp"
                 android:text="@string/set_relationship"/>
 
