@@ -185,6 +185,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(triColorLed.getPortNumber()));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
         ButterKnife.bind(this, view);
 
         maxColor = (ImageView) view.findViewById(R.id.view_max_color);

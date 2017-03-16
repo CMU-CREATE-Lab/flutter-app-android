@@ -243,6 +243,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
         ButterKnife.bind(this, view);
 
         buttonVolume = (Button) view.findViewById(R.id.button_volume);
