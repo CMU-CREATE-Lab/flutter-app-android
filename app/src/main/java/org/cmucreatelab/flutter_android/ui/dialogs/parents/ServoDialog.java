@@ -61,6 +61,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
+    private Button removeButton;
     private Servo servo;
 
 
@@ -73,9 +74,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
 
         if (servo.getSettings().getRelationship().getClass() == Constant.class) {
-            // save
-            saveButton.setEnabled(true);
-
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -99,12 +97,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         } else {
             if (servo.getSettings().getRelationship().getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run ServoDialog.updateViews on unimplemented relationship.");
-            }
-            // save
-            if (servo.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                saveButton.setEnabled(true);
-            } else {
-                saveButton.setEnabled(false);
             }
 
             // advanced settings
@@ -137,6 +129,15 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             TextView minPosValue = (TextView) view.findViewById(R.id.text_min_pos_value);
             minPosTxt.setText(servo.getSettings().getSensor().getLowTextId());
             minPosValue.setText(String.valueOf(servo.getSettings().getOutputMin()));
+        }
+
+        // save / remove
+        if (servo.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(true);
+            removeButton.setEnabled(true);
+        } else {
+            saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
         }
     }
 
@@ -173,6 +174,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         ButterKnife.bind(this, view);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
+        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
         updateViews(view);
         return builder.create();
@@ -286,6 +288,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             saveButton.setEnabled(true);
+            removeButton.setEnabled(true);
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());

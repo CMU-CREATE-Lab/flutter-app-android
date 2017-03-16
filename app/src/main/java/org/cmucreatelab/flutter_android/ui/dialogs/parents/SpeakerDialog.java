@@ -74,6 +74,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private RelativeLayout relativePitch;
 
     private Button saveButton;
+    private Button removeButton;
     private Speaker speaker;
 
 
@@ -205,11 +206,14 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         }
 
         saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
         if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
         }
         if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
         }
     }
 
@@ -251,6 +255,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
+        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
         updateViews(view);
 
