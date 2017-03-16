@@ -205,8 +205,11 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if (this.isTaskRoot()) {
+            return;
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

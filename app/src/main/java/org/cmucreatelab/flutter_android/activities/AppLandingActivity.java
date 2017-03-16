@@ -104,8 +104,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             TextView landingPage = (TextView)findViewById(R.id.text_app_landing_title);
             landingPage.setText(R.string.connect_flutter);
             findViewById(R.id.layout_timed_prompt).setVisibility(View.INVISIBLE);
-            findViewById(R.id.frame_second_scan).setVisibility(View.GONE);
-            findViewById(R.id.image_flutter).setVisibility(View.VISIBLE);
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button));
             scan.setText(R.string.scan);
             scan.setTextColor(Color.WHITE);
@@ -241,7 +239,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             scanForDevice(false);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -287,6 +284,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         // start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        // Disable back button for this Activity.
     }
 
 
