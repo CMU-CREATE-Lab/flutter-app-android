@@ -48,4 +48,22 @@ public class Cumulative implements Relationship {
         return greyImageIdSm;
     }
 
+
+    // Singleton Implementation
+
+
+    private static Cumulative classInstance;
+
+
+    private Cumulative() {
+        super();
+    }
+
+
+    public static synchronized Cumulative getInstance() {
+        if (classInstance == null)
+            classInstance = new Cumulative();
+        return classInstance;
+    }
+
 }

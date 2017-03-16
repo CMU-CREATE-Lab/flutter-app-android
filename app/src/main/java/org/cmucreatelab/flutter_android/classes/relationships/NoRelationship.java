@@ -15,9 +15,6 @@ public class NoRelationship implements Relationship {
     private static final int relationshipTypeId = R.string.no_relationship;
 
 
-    public NoRelationship() {}
-
-
     @Override
     public Type getRelationshipType() {
         return relationshipType;
@@ -29,10 +26,12 @@ public class NoRelationship implements Relationship {
         return relationshipTypeId;
     }
 
+
     @Override
     public int getGreenImageIdLg() {
         return 0;
     }
+
 
     @Override
     public int getGreenImageIdMd() {
@@ -43,6 +42,24 @@ public class NoRelationship implements Relationship {
     @Override
     public int getGreyImageIdSm() {
         return 0;
+    }
+
+
+    // Singleton Implementation
+
+
+    private static NoRelationship classInstance;
+
+
+    private NoRelationship() {
+        super();
+    }
+
+
+    public static synchronized NoRelationship getInstance() {
+        if (classInstance == null)
+            classInstance = new NoRelationship();
+        return classInstance;
     }
 
 }

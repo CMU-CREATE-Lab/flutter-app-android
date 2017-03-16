@@ -450,12 +450,12 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             }
             // set a sensor by default
             if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getVolume().getSettings().setRelationship(new Constant());
+                speaker.getVolume().getSettings().setRelationship(Constant.getInstance());
                 speaker.getVolume().getSettings().setOutputMin(100);
                 speaker.getVolume().getSettings().setOutputMax(100);
             }
             if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getPitch().getSettings().setRelationship(new Constant());
+                speaker.getPitch().getSettings().setRelationship(Constant.getInstance());
                 speaker.getPitch().getSettings().setOutputMax(440);
                 speaker.getPitch().getSettings().setOutputMin(440);
             }
@@ -474,7 +474,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             speaker.getVolume().getSettings().setRelationship(relationship);
             // set a sensor by default
             if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getPitch().getSettings().setRelationship(new Constant());
+                speaker.getPitch().getSettings().setRelationship(Constant.getInstance());
                 speaker.getPitch().getSettings().setOutputMax(440);
                 speaker.getPitch().getSettings().setOutputMin(440);
             }
@@ -482,7 +482,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             speaker.getPitch().getSettings().setRelationship(relationship);
             // set a sensor by default
             if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getClass() == NoSensor.class) {
-                speaker.getVolume().getSettings().setRelationship(new Constant());
+                speaker.getVolume().getSettings().setRelationship(Constant.getInstance());
                 speaker.getVolume().getSettings().setOutputMin(100);
                 speaker.getVolume().getSettings().setOutputMax(100);
             }

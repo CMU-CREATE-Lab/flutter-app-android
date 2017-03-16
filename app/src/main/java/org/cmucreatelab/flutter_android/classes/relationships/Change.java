@@ -48,4 +48,22 @@ public class Change implements Relationship {
         return greyImageIdSm;
     }
 
+
+    // Singleton Implementation
+
+
+    private static Change classInstance;
+
+
+    private Change() {
+        super();
+    }
+
+
+    public static synchronized Change getInstance() {
+        if (classInstance == null)
+            classInstance = new Change();
+        return classInstance;
+    }
+
 }

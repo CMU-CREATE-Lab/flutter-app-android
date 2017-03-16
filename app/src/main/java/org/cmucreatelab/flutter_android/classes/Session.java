@@ -163,7 +163,7 @@ public class Session implements FlutterMessageListener {
 
                     Settings settings = output.getSettings();
                     settings.setOutputMax(position);
-                    settings.setRelationship(new Constant());
+                    settings.setRelationship(Constant.getInstance());
                     output.setIsLinked(true, output);
                     Log.v(Constants.LOG_TAG,"LINK (constant) "+protocolString);
                 } else {

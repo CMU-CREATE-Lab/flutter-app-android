@@ -10,7 +10,7 @@ import org.cmucreatelab.flutter_android.R;
  * A class that represents an amplitude relationship.
  *
  */
-public class Amplitutude implements Relationship {
+public class Amplitude implements Relationship {
 
     private static final Relationship.Type relationshipType = Type.AMPLITUDE;
     private static final int relationshipTypeId = R.string.amplitude;
@@ -46,6 +46,24 @@ public class Amplitutude implements Relationship {
     @Override
     public int getGreyImageIdSm() {
         return greyImageIdSm;
+    }
+
+
+    // Singleton Implementation
+
+
+    private static Amplitude classInstance;
+
+
+    private Amplitude() {
+        super();
+    }
+
+
+    public static synchronized Amplitude getInstance() {
+        if (classInstance == null)
+            classInstance = new Amplitude();
+        return classInstance;
     }
 
 }

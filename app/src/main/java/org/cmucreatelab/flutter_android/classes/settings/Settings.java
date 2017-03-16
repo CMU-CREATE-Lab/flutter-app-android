@@ -41,7 +41,7 @@ public class Settings {
     public Settings(String type, int max, int min) {
         advancedSettings = new AdvancedSettings();
         sensor = new NoSensor(0);
-        relationship = new Proportional();
+        relationship = Proportional.getInstance();
         outputMax = max;
         outputMin = min;
         this.type = type;

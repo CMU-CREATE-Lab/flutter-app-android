@@ -7,7 +7,6 @@ import org.cmucreatelab.flutter_android.R;
  */
 public class Constant implements Relationship {
 
-
     private static final Relationship.Type relationshipType = Type.CONSTANT;
     private static final int relationshipTypeId = R.string.constant;
     private static final int greenImageIdLg = R.drawable.relationship_green_constant_l_g_68;
@@ -42,6 +41,24 @@ public class Constant implements Relationship {
     @Override
     public int getGreyImageIdSm() {
         return greyImageIdSm;
+    }
+
+
+    // Singleton Implementation
+
+
+    private static Constant classInstance;
+
+
+    private Constant() {
+        super();
+    }
+
+
+    public static synchronized Constant getInstance() {
+        if (classInstance == null)
+            classInstance = new Constant();
+        return classInstance;
     }
 
 }

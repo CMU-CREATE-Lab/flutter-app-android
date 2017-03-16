@@ -48,4 +48,22 @@ public class Frequency implements Relationship {
         return greyImageIdSm;
     }
 
+
+    // Singleton Implementation
+
+
+    private static Frequency classInstance;
+
+
+    private Frequency() {
+        super();
+    }
+
+
+    public static synchronized Frequency getInstance() {
+        if (classInstance == null)
+            classInstance = new Frequency();
+        return classInstance;
+    }
+
 }

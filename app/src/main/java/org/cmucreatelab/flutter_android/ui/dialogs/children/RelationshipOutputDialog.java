@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.relationships.Amplitutude;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
@@ -82,35 +82,35 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
 
     @Override
     public void onClick(View view) {
-        Relationship relationship = new NoRelationship();
+        Relationship relationship = NoRelationship.getInstance();
         switch (view.getId()) {
             case R.id.linear_proportional:
                 Log.d(Constants.LOG_TAG, "onClickProportional");
-                relationship = new Proportional();
+                relationship = Proportional.getInstance();
                 break;
             case R.id.linear_frequency:
                 Log.d(Constants.LOG_TAG, "onClickFrequency");
-                relationship = new Frequency();
+                relationship = Frequency.getInstance();
                 break;
             case R.id.linear_amplitude:
                 Log.d(Constants.LOG_TAG, "onClickAmplitude");
-                relationship = new Amplitutude();
+                relationship = Amplitude.getInstance();
                 break;
             case R.id.linear_cumulative:
                 Log.d(Constants.LOG_TAG, "onClickImageCumulative");
-                relationship = new Cumulative();
+                relationship = Cumulative.getInstance();
                 break;
             case R.id.linear_change:
                 Log.d(Constants.LOG_TAG, "onClickChange");
-                relationship = new Change();
+                relationship = Change.getInstance();
                 break;
             case R.id.linear_switch:
                 Log.d(Constants.LOG_TAG, "onClickSwitch");
-                relationship = new Switch();
+                relationship = Switch.getInstance();
                 break;
             case R.id.linear_constant:
                 Log.d(Constants.LOG_TAG, "onClickConstant");
-                relationship = new Constant();
+                relationship = Constant.getInstance();
                 break;
         }
         relationshipListener.onRelationshipChosen(relationship);
