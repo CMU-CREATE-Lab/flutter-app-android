@@ -37,6 +37,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
@@ -150,9 +151,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
                     TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
                     TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
-                    Flutter flutter = GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().getFlutter();
 
-                    logTitle.setText(getString(R.string.on) + " " + flutter.getName() + " " + getString(R.string.flutter));
+                    String name = "";
+                    if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+                        name = globalHandler.sessionHandler.getSession().getFlutter().getName();
+                    }
+                    logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
                     if (!globalHandler.dataLoggingHandler.getDataName().equals(null) && globalHandler.dataLoggingHandler.getNumberOfPoints() != 0) {
                         findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
                         textLogName.setText(globalHandler.dataLoggingHandler.getDataName());
@@ -329,27 +333,36 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickRecordData");
-            globalHandler.sessionHandler.createProgressDialog(instance);
-            globalHandler.sessionHandler.updateProgressDialogMessage("Loading data log information...");
 
-            globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
-                @Override
-                public void onDataSetPointsPopulated(boolean isSuccess) {
-                    globalHandler.sessionHandler.dismissProgressDialog();
-                    if (globalHandler.dataLoggingHandler.isLogging()) {
-                        String dataLogName = globalHandler.dataLoggingHandler.getDataName();
-                        DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
-                        RecordingWarningDataDialog recordingWarningDataDialog = RecordingWarningDataDialog.newInstance(
-                                instance, dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
-                        );
-                        recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
+            if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+                TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
+                ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
+                NoFlutterConnectedDialog.displayDialog(DataLogsActivity.this, R.string.no_flutter_data_logs);
+                flutterStatusText.setText(R.string.connection_disconnected);
+                flutterStatusText.setTextColor(Color.GRAY);
+                flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
+            } else {
+                globalHandler.sessionHandler.createProgressDialog(instance);
+                globalHandler.sessionHandler.updateProgressDialogMessage("Loading data log information...");
+
+                globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+                    @Override
+                    public void onDataSetPointsPopulated(boolean isSuccess) {
+                        globalHandler.sessionHandler.dismissProgressDialog();
+                        if (globalHandler.dataLoggingHandler.isLogging()) {
+                            String dataLogName = globalHandler.dataLoggingHandler.getDataName();
+                            DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
+                            RecordingWarningDataDialog recordingWarningDataDialog = RecordingWarningDataDialog.newInstance(
+                                    instance, dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
+                            );
+                            recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
+                        } else {
+                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance);
+                            recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
+                        }
                     }
-                    else {
-                        RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance);
-                        recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
-                    }
-                }
-            });
+                });
+            }
         }
     };
 
@@ -668,24 +681,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @Override
     protected void onResume() {
         super.onResume();
-
-        TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
-        ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
-        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            flutterStatusText.setText(R.string.connection_disconnected);
-            flutterStatusText.setTextColor(Color.GRAY);
-            flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
-            findViewById(R.id.linear_flutter_data_container).setVisibility(View.GONE);
-            findViewById(R.id.text_record_data).setEnabled(false);
-        } else {
-            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
-            TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
-            flutterStatusButtonName.setText(flutterName);
-            flutterStatusText.setText(R.string.connection_connected);
-            flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
-            flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
-        }
-
         globalHandler.sessionHandler.createProgressDialog(instance);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
         dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));

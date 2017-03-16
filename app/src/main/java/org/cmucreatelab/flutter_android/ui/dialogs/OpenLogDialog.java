@@ -88,7 +88,11 @@ public class OpenLogDialog extends BaseResizableDialog {
         }
 
         TextView logTitle = (TextView) view.findViewById(R.id.text_current_device_title);
-        logTitle.setText(getString(R.string.on) + " " + globalHandler.sessionHandler.getSession().getFlutter().getName() + " " + getString(R.string.flutter));
+        String name = "";
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            name = globalHandler.sessionHandler.getSession().getFlutter().getName();
+        }
+        logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
 
         // populate the data log on the flutter
         if (dataSetOnFlutter != null) {
