@@ -210,7 +210,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick(R.id.image_sensor_1)
+    @OnClick({R.id.image_sensor_1, R.id.image_sensor_1_2})
     public void onClickSensor1() {
         Log.d(Constants.LOG_TAG, "onClickSensor1");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
@@ -222,7 +222,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick(R.id.image_sensor_2)
+    @OnClick({R.id.image_sensor_2, R.id.image_sensor_2_2})
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
@@ -234,7 +234,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick(R.id.image_sensor_3)
+    @OnClick({R.id.image_sensor_3, R.id.image_sensor_3_2})
     public void onClickSensor3() {
         Log.d(Constants.LOG_TAG, "onClickSensor3");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
