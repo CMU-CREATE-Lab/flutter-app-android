@@ -122,7 +122,7 @@ public final class Constants {
         public static final String SOIL_MOISTURE = "Soil Moisture";
         public static final String SOUND = "Sound";
         public static final String TEMPERATURE = "Temperature";
-        public static final String WIND_SPEED = "Wind Speed";
+        public static final String AIR_QUALITY = "Air Particles";
     }
 
     public static enum MATH_STATES {

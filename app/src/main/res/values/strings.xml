@@ -78,7 +78,7 @@
     <string name="pre_mixed">Pre-Mixed:</string>
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind Speed</string>
-    <string name="air_quality">Air Quality</string>
+    <string name="air_quality">Air Particles</string>
     <string name="sound">Sound</string>
     <string name="distance">Distance</string>
     <string name="soil_moisture">Soil Moisture</string>
@@ -173,7 +173,7 @@
     <string name="start_recording">Start Recording</string>
     <string name="empty_data_name">Data Set Name is required!</string>
     <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
-    <string name="no_flutter_data_logs">To view the data log, please first connect your Flutter.</string>
+    <string name="no_flutter_data_logs">To record data, please first connect your Flutter.</string>
     <string name="loading_data_log_on_flutter">Loading Data...</string>
     <string name="no_mail_app">No Email App To Resolve Intent</string>
     <string name="ok">Ok</string>

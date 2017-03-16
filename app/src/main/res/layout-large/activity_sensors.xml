@@ -38,7 +38,7 @@
 
             <LinearLayout
                 android:id="@+id/image_sensor_2_2"
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="15"
@@ -49,14 +49,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sensor_2"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/text_sensor_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/set_sensor"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -73,7 +73,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingStart="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_high_2"
@@ -82,7 +82,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:paddingEnd="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ProgressBar
                     android:id="@+id/progress_sensor_2"
@@ -129,7 +129,7 @@
 
             <LinearLayout
                 android:id="@+id/image_sensor_1_2"
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="15"
@@ -140,14 +140,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sensor_1"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/text_sensor_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/set_sensor"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -164,7 +164,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingStart="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_high_1"
@@ -173,7 +173,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:paddingEnd="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ProgressBar
                     android:id="@+id/progress_sensor_1"
@@ -220,7 +220,7 @@
 
             <LinearLayout
                 android:id="@+id/image_sensor_3_2"
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="15"
@@ -231,14 +231,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sensor_3"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/text_sensor_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/set_sensor"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -255,7 +255,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:paddingStart="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_high_3"
@@ -264,7 +264,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:paddingEnd="10dp"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ProgressBar
                     android:id="@+id/progress_sensor_3"
