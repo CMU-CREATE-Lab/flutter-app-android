@@ -72,8 +72,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
+        Relationship relationship = servo.getSettings().getRelationship();
 
-        if (servo.getSettings().getRelationship().getClass() == Constant.class) {
+        if (relationship.getClass() == Constant.class) {
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -95,7 +96,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             // min
             minPosLayout.setVisibility(View.GONE);
         } else {
-            if (servo.getSettings().getRelationship().getClass() != Proportional.class) {
+            if (relationship.getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run ServoDialog.updateViews on unimplemented relationship.");
             }
 
@@ -131,11 +132,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             minPosValue.setText(String.valueOf(servo.getSettings().getOutputMin()));
         }
 
-        // save / remove
-        if (servo.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            saveButton.setEnabled(true);
-            removeButton.setEnabled(true);
-        } else {
+        saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
+        if (relationship.getClass() != Constant.class && servo.getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
             removeButton.setEnabled(false);
         }
@@ -287,8 +286,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onSensorChosen(Sensor sensor) {
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
-            saveButton.setEnabled(true);
-            removeButton.setEnabled(true);
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());

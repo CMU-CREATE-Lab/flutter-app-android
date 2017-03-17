@@ -140,14 +140,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             minColorValue.setText(triColorLed.getMinColorText());
         }
 
-        // save / remove
-        if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            saveButton.setEnabled(true);
-            removeButton.setEnabled(true);
-        } else {
+        saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
+        if (relationship.getClass() != Constant.class && triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
             removeButton.setEnabled(false);
         }
+
     }
 
 

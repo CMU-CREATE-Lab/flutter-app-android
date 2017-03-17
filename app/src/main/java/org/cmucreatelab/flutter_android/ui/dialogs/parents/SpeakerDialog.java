@@ -85,9 +85,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPitchLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pitch);
+        Relationship relationship = speaker.getPitch().getSettings().getRelationship();
 
         // Pitch
-        if (speaker.getPitch().getSettings().getRelationship().getClass() == Constant.class) {
+        if (relationship.getClass() == Constant.class) {
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -105,7 +106,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             // min Pitch
             minPitchLayout.setVisibility(View.GONE);
         } else {
-            if (speaker.getPitch().getSettings().getRelationship().getClass() != Proportional.class) {
+            if (relationship.getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run SpeakerDialog.updateViews on unimplemented relationship (pitch).");
             }
             // advanced settings
@@ -145,9 +146,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minVolumeLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_volume);
+        Relationship relationship = speaker.getVolume().getSettings().getRelationship();
 
         // Volume
-        if (speaker.getVolume().getSettings().getRelationship().getClass() == Constant.class) {
+        if (relationship.getClass() == Constant.class) {
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -165,7 +167,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             // min Volume
             minVolumeLayout.setVisibility(View.GONE);
         } else {
-            if (speaker.getVolume().getSettings().getRelationship().getClass() != Proportional.class) {
+            if (relationship.getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run SpeakerDialog.updateViews on unimplemented relationship (volume).");
             }
             // advanced settings
