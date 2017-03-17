@@ -227,6 +227,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
             updateStaticViews();
             updateDynamicViews();
+
+            // TODO hidden only for release (functionality not yet implemented)
+            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
+            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
+            sensorData.setVisibility(View.INVISIBLE);
+            simulateData.setVisibility(View.INVISIBLE);
         }
     }
 
