@@ -625,6 +625,23 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);
 
+        TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
+        ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+            flutterStatusText.setText(R.string.connection_disconnected);
+            flutterStatusText.setTextColor(Color.GRAY);
+            flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
+            findViewById(R.id.linear_flutter_data_container).setVisibility(View.GONE);
+            findViewById(R.id.text_record_data).setEnabled(false);
+        } else {
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
+            TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
+            flutterStatusButtonName.setText(flutterName);
+            flutterStatusText.setText(R.string.connection_connected);
+            flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
+            flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
+        }
+
         dataOnFlutterContainer = (LinearLayout) findViewById(R.id.linear_flutter_data_container);
         dataOnDeviceContainer = (LinearLayout) findViewById(R.id.linear_device_data_container);
         dataOnFlutterRealtiveContainer = (RelativeLayout) findViewById(R.id.relative_flutter_log);
