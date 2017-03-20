@@ -1,9 +1,17 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -16,6 +24,7 @@ public class TriColorLed implements FlutterOutput {
 
     private int portNumber;
     private Output[] outputs;
+    private Flutter flutter;
 
     // getters
     public RedLed getRedLed() { return (RedLed)outputs[0]; }
@@ -24,20 +33,34 @@ public class TriColorLed implements FlutterOutput {
     public int getPortNumber() { return this.portNumber; }
 
 
-    public TriColorLed(int portNumber) {
+    public TriColorLed(int portNumber, Flutter flutter) {
         this.portNumber = portNumber;
         this.outputs = new Output[NUMBER_OF_OUTPUTS];
-        outputs[0] = new RedLed(this.portNumber);
-        outputs[1] = new GreenLed(this.portNumber);
-        outputs[2] = new BlueLed(this.portNumber);
+        outputs[0] = new RedLed(this.portNumber, flutter);
+        outputs[1] = new GreenLed(this.portNumber, flutter);
+        outputs[2] = new BlueLed(this.portNumber, flutter);
+        this.flutter = flutter;
     }
 
 
     public static TriColorLed newInstance(TriColorLed oldInstance) {
-        TriColorLed newInstance = new TriColorLed(oldInstance.portNumber);
-        newInstance.getRedLed().setSettings(Settings.newInstance(oldInstance.getRedLed().getSettings()));
-        newInstance.getGreenLed().setSettings(Settings.newInstance(oldInstance.getGreenLed().getSettings()));
-        newInstance.getBlueLed().setSettings(Settings.newInstance(oldInstance.getBlueLed().getSettings()));
+        TriColorLed newInstance = new TriColorLed(oldInstance.portNumber,oldInstance.flutter);
+
+        // settings
+        if (oldInstance.getRedLed().getSettings().getClass() == oldInstance.getGreenLed().getSettings().getClass() && oldInstance.getGreenLed().getSettings().getClass() == oldInstance.getBlueLed().getSettings().getClass()) {
+            if (oldInstance.getRedLed().getSettings().getClass() == SettingsConstant.class) {
+                newInstance.getRedLed().setSettings(SettingsConstant.newInstance(oldInstance.getRedLed().getSettings()));
+                newInstance.getGreenLed().setSettings(SettingsConstant.newInstance(oldInstance.getGreenLed().getSettings()));
+                newInstance.getBlueLed().setSettings(SettingsConstant.newInstance(oldInstance.getBlueLed().getSettings()));
+            } else {
+                newInstance.getRedLed().setSettings(SettingsProportional.newInstance(oldInstance.getRedLed().getSettings()));
+                newInstance.getGreenLed().setSettings(SettingsProportional.newInstance(oldInstance.getGreenLed().getSettings()));
+                newInstance.getBlueLed().setSettings(SettingsProportional.newInstance(oldInstance.getBlueLed().getSettings()));
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.newInstance: RGB setting types do not match; returning new instance as is.");
+        }
+
         return newInstance;
     }
 
@@ -51,20 +74,47 @@ public class TriColorLed implements FlutterOutput {
 
 
     public String getMaxColorHex() {
-        String r,g,b;
-        r = getHexValue(getRedLed().getSettings().getOutputMax());
-        g = getHexValue(getGreenLed().getSettings().getOutputMax());
-        b = getHexValue(getBlueLed().getSettings().getOutputMax());
-        return "#".concat(r.concat(g).concat(b));
+        if (getRedLed().getSettings().getClass() == getGreenLed().getSettings().getClass() && getGreenLed().getSettings().getClass() == getBlueLed().getSettings().getClass()) {
+            String r,g,b;
+            Class mClass = getRedLed().getSettings().getClass();
+
+            if (mClass == SettingsProportional.class) {
+                r = getHexValue(((SettingsProportional)getRedLed().getSettings()).getOutputMax());
+                g = getHexValue(((SettingsProportional)getGreenLed().getSettings()).getOutputMax());
+                b = getHexValue(((SettingsProportional)getBlueLed().getSettings()).getOutputMax());
+                return "#".concat(r.concat(g).concat(b));
+            } else if (mClass == SettingsConstant.class) {
+                r = getHexValue(((SettingsConstant)getRedLed().getSettings()).getValue());
+                g = getHexValue(((SettingsConstant)getGreenLed().getSettings()).getValue());
+                b = getHexValue(((SettingsConstant)getBlueLed().getSettings()).getValue());
+                return "#".concat(r.concat(g).concat(b));
+            } else {
+                Log.e(Constants.LOG_TAG,"Tried to make max hex color but relationship not implemented.");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG,"Tried to make max hex color but RGB LEDs are not the same relationship.");
+        }
+        return "#000000";
     }
 
 
     public String getMinColorHex() {
-        String r,g,b;
-        r = getHexValue(getRedLed().getSettings().getOutputMin());
-        g = getHexValue(getGreenLed().getSettings().getOutputMin());
-        b = getHexValue(getBlueLed().getSettings().getOutputMin());
-        return "#".concat(r.concat(g).concat(b));
+        if (getRedLed().getSettings().getClass() == getGreenLed().getSettings().getClass() && getGreenLed().getSettings().getClass() == getBlueLed().getSettings().getClass()) {
+            String r,g,b;
+            Class mClass = getRedLed().getSettings().getClass();
+
+            if (mClass == SettingsProportional.class) {
+                r = getHexValue(((SettingsProportional)getRedLed().getSettings()).getOutputMin());
+                g = getHexValue(((SettingsProportional)getGreenLed().getSettings()).getOutputMin());
+                b = getHexValue(((SettingsProportional)getBlueLed().getSettings()).getOutputMin());
+                return "#".concat(r.concat(g).concat(b));
+            } else {
+                Log.e(Constants.LOG_TAG,"Tried to make min hex color but relationship not implemented.");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG,"Tried to make min hex color but RGB LEDs are not the same relationship.");
+        }
+        return "#000000";
     }
 
 
@@ -119,6 +169,119 @@ public class TriColorLed implements FlutterOutput {
     @Override
     public Output[] getOutputs() {
         return this.outputs;
+    }
+
+
+    // helpers for TriColorLed settings; we assume all LEDs share the same settings
+
+
+    private int getProportionalValue(float value, float maxValue, float newMaxValue) {
+        float ratio = value / maxValue;
+        int result = (int) Math.ceil(ratio*newMaxValue);
+        return result;
+    }
+
+
+    public void setAdvancedSettings (AdvancedSettings advancedSettings) {
+        Settings r,g,b;
+        r = getRedLed().getSettings();
+        g = getGreenLed().getSettings();
+        b = getBlueLed().getSettings();
+        if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
+            if (r.hasAdvancedSettings()) {
+                if (r.getClass() == SettingsProportional.class) {
+                    ((SettingsProportional)r).setAdvancedSettings(advancedSettings);
+                    ((SettingsProportional)g).setAdvancedSettings(advancedSettings);
+                    ((SettingsProportional)b).setAdvancedSettings(advancedSettings);
+                } else {
+                    Log.e(Constants.LOG_TAG, "TriColorLed.setAdvancedSettings: relationship not implemented");
+                }
+            } else {
+                Log.w(Constants.LOG_TAG, "called setAdvancedSettings in TriColorLed but current setting does not use advanced settings; ignoring.");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.setAdvancedSettings: RGB setting types do not match and not sure how to proceed.");
+        }
+    }
+
+
+    public void setSensorPortNumber(int sensorPortNumber) {
+        Settings r,g,b;
+        r = getRedLed().getSettings();
+        g = getGreenLed().getSettings();
+        b = getBlueLed().getSettings();
+        if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
+            if (r.getClass() == SettingsProportional.class) {
+                ((SettingsProportional)r).setSensorPortNumber(sensorPortNumber);
+                ((SettingsProportional)g).setSensorPortNumber(sensorPortNumber);
+                ((SettingsProportional)b).setSensorPortNumber(sensorPortNumber);
+            } else {
+                Log.e(Constants.LOG_TAG, "TriColorLed.setSensorPortNumber: relationship not implemented");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.setSensorPortNumber: RGB setting types do not match and not sure how to proceed.");
+        }
+    }
+
+
+    public void setRelationship(Relationship relationship) {
+        if (relationship.getClass() == Proportional.class) {
+            getRedLed().setSettings(SettingsProportional.newInstance(getRedLed().getSettings()));
+            getGreenLed().setSettings(SettingsProportional.newInstance(getGreenLed().getSettings()));
+            getBlueLed().setSettings(SettingsProportional.newInstance(getBlueLed().getSettings()));
+        } else if (relationship.getClass() == Constant.class) {
+            getRedLed().setSettings(SettingsConstant.newInstance(getRedLed().getSettings()));
+            getGreenLed().setSettings(SettingsConstant.newInstance(getGreenLed().getSettings()));
+            getBlueLed().setSettings(SettingsConstant.newInstance(getBlueLed().getSettings()));
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.setRelationship: relationship not implemented");
+        }
+    }
+
+
+    public void setOutputMax(int red, int green, int blue) {
+        Settings r,g,b;
+        r = getRedLed().getSettings();
+        g = getGreenLed().getSettings();
+        b = getBlueLed().getSettings();
+        if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
+            if (r.getClass() == SettingsProportional.class) {
+                ((SettingsProportional) r).setOutputMax(getProportionalValue(red, 255, getRedLed().getMax()));
+                ((SettingsProportional) g).setOutputMax(getProportionalValue(green, 255, getGreenLed().getMax()));
+                ((SettingsProportional) b).setOutputMax(getProportionalValue(blue, 255, getBlueLed().getMax()));
+            } else if (r.getClass() == SettingsConstant.class) {
+                ((SettingsConstant) r).setValue(getProportionalValue(red, 255, getRedLed().getMax()));
+                ((SettingsConstant) g).setValue(getProportionalValue(green, 255, getGreenLed().getMax()));
+                ((SettingsConstant) b).setValue(getProportionalValue(blue, 255, getBlueLed().getMax()));
+            } else {
+                Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMax: relationship not implemented");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMax: RGB setting types do not match and not sure how to proceed.");
+        }
+    }
+
+
+    public void setOutputMin(int red, int green, int blue) {
+        Settings r,g,b;
+        r = getRedLed().getSettings();
+        g = getGreenLed().getSettings();
+        b = getBlueLed().getSettings();
+        if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
+            if (r.getClass() == SettingsProportional.class) {
+                ((SettingsProportional)r).setOutputMin( getProportionalValue(red, 255, getRedLed().getMin()) );
+                ((SettingsProportional)g).setOutputMin( getProportionalValue(green, 255, getGreenLed().getMin()) );
+                ((SettingsProportional)b).setOutputMin( getProportionalValue(blue, 255, getBlueLed().getMin()) );
+            } else if (r.getClass() == SettingsConstant.class) {
+                ((SettingsConstant) r).setValue(getProportionalValue(red, 255, getRedLed().getMax()));
+                ((SettingsConstant) g).setValue(getProportionalValue(green, 255, getGreenLed().getMax()));
+                ((SettingsConstant) b).setValue(getProportionalValue(blue, 255, getBlueLed().getMax()));
+            } else {
+                Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMin: relationship not implemented");
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMin: RGB setting types do not match and not sure how to proceed.");
+        }
     }
 
 }

@@ -1,11 +1,12 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 
 /**
  * Created by Steve on 12/13/2016.
  */
-public class Volume extends Output {
+public class Volume extends Output implements FlutterOutput {
 
     private static final int MINIMUM = 0;
     private static final int MAXIMUM = 100;
@@ -14,8 +15,8 @@ public class Volume extends Output {
     private static final int imageId = R.mipmap.ic_launcher;
 
 
-    Volume(int portNumber) {
-        super(TYPE, MAXIMUM, MINIMUM, portNumber);
+    Volume(int portNumber, Flutter flutter) {
+        super(MAXIMUM, MINIMUM, portNumber, flutter);
     }
 
 
@@ -46,6 +47,13 @@ public class Volume extends Output {
     @Override
     public int getMin() {
         return MINIMUM;
+    }
+
+
+    @Override
+    public Output[] getOutputs() {
+        Output[] outputs = {this};
+        return outputs;
     }
 
 }

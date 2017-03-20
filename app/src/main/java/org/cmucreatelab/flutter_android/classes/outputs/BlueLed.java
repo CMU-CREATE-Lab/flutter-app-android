@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 
 /**
  * Created by Steve on 12/13/2016.
@@ -14,8 +15,8 @@ public class BlueLed extends Output {
     private static final int imageId = R.mipmap.ic_launcher;
 
 
-    BlueLed(int portNumber) {
-        super(TYPE, MAXIMUM, MINIMUM, portNumber);
+    BlueLed(int portNumber, Flutter flutter) {
+        super(MAXIMUM, MINIMUM, portNumber, flutter);
     }
 
 

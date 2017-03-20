@@ -150,13 +150,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    private int getProportionalValue(float value, float maxValue, float newMaxValue) {
-        float ratio = value / maxValue;
-        int result = (int) Math.ceil(ratio*newMaxValue);
-        return result;
-    }
-
-
     public static LedDialog newInstance(TriColorLed led, Serializable activity) {
         LedDialog ledDialog = new LedDialog();
 
@@ -237,14 +230,8 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
 
         redLed.setIsLinked(false, triColorLed.getRedLed());
-        redLed.getSettings().setOutputMax(triColorLed.getRedLed().getMax());
-        redLed.getSettings().setOutputMin(triColorLed.getRedLed().getMin());
         greenLed.setIsLinked(false, triColorLed.getGreenLed());
-        greenLed.getSettings().setOutputMax(triColorLed.getGreenLed().getMax());
-        greenLed.getSettings().setOutputMin(triColorLed.getGreenLed().getMin());
         blueLed.setIsLinked(false, triColorLed.getBlueLed());
-        blueLed.getSettings().setOutputMax(triColorLed.getBlueLed().getMax());
-        blueLed.getSettings().setOutputMin(triColorLed.getBlueLed().getMin());
 
         // overwrite old object
         GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
@@ -318,10 +305,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-
-        triColorLed.getRedLed().getSettings().setAdvancedSettings(advancedSettings);
-        triColorLed.getGreenLed().getSettings().setAdvancedSettings(advancedSettings);
-        triColorLed.getBlueLed().getSettings().setAdvancedSettings(advancedSettings);
+        triColorLed.setAdvancedSettings(advancedSettings);
     }
 
 
@@ -333,9 +317,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
 
-            triColorLed.getRedLed().getSettings().setSensor(sensor);
-            triColorLed.getGreenLed().getSettings().setSensor(sensor);
-            triColorLed.getBlueLed().getSettings().setSensor(sensor);
+            triColorLed.setSensorPortNumber(sensor.getPortNumber());
         }
         updateViews(dialogView);
     }
@@ -347,9 +329,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipTypeId());
-        triColorLed.getRedLed().getSettings().setRelationship(relationship);
-        triColorLed.getGreenLed().getSettings().setRelationship(relationship);
-        triColorLed.getBlueLed().getSettings().setRelationship(relationship);
+        triColorLed.setRelationship(relationship);
         updateViews(dialogView);
     }
 
@@ -359,12 +339,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        int max = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-        triColorLed.getRedLed().getSettings().setOutputMax(max);
-        max = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-        triColorLed.getGreenLed().getSettings().setOutputMax(max);
-        max = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-        triColorLed.getBlueLed().getSettings().setOutputMax(max);
+        triColorLed.setOutputMax(rgb[0], rgb[1], rgb[2]);
         maxColor.setImageResource(triColorLed.getMaxSwatch());
         maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMaxColorText());
@@ -376,12 +351,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        int min = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-        triColorLed.getRedLed().getSettings().setOutputMin(min);
-        min = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-        triColorLed.getGreenLed().getSettings().setOutputMin(min);
-        min = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-        triColorLed.getBlueLed().getSettings().setOutputMin(min);
+        triColorLed.setOutputMin(rgb[0], rgb[1], rgb[2]);
         minColor.setImageResource(triColorLed.getMinSwatch());
         minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMinColorText());

@@ -22,7 +22,10 @@ import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -179,7 +182,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     link = (ImageView) linkAndSensor.getChildAt(0);
                     sensor = (ImageView) linkAndSensor.getChildAt(1);
                     link.setImageResource(outputs[i].getSettings().getRelationship().getGreyImageIdSm());
-                    sensor.setImageResource(outputs[i].getSettings().getSensor().getGreyImageIdSm());
+
+                    Settings settings = outputs[i].getSettings();
+                    int imageRes;
+                    if (settings.getClass() == SettingsProportional.class && ((SettingsProportional)settings).getSensorPortNumber() != 0) {
+                        imageRes = session.getFlutter().getSensors()[((SettingsProportional)settings).getSensorPortNumber()-1].getGreyImageIdSm();
+                    } else {
+                        imageRes = new NoSensor(0).getGreyImageIdSm();
+                    }
+                    sensor.setImageResource(imageRes);
                 }
             } else {
                 if (currentLayout != null && questionMark != null) {

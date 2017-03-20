@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
-import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -143,8 +143,8 @@ public class Session implements FlutterMessageListener {
                         imax = Integer.valueOf(args[6], 16);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
-                        Settings settings = output.getSettings();
-                        settings.setSensor(sensor);
+                        SettingsProportional settings = SettingsProportional.newInstance(output.getSettings());
+                        settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
                         settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
@@ -153,17 +153,18 @@ public class Session implements FlutterMessageListener {
                         if (sensor.isInverted()) {
                             settings.invertOutputs();
                         }
+                        output.setSettings(settings);
                         output.setIsLinked(true, output);
                         Log.v(Constants.LOG_TAG,"LINK (proportional) "+protocolString);
                     }
                 } else if (args.length == 2) {
-                    // TODO @tasota use a real structure for (constant) Settings
+                    // TODO @tasota use a real structure for (constant) SettingsProportional
                     int position;
                     position = Integer.valueOf(args[1], 16);
 
-                    Settings settings = output.getSettings();
-                    settings.setOutputMax(position);
-                    settings.setRelationship(Constant.getInstance());
+                    SettingsConstant settingsConstant = SettingsConstant.newInstance(output.getSettings());
+                    settingsConstant.setValue(position);
+                    output.setSettings(settingsConstant);
                     output.setIsLinked(true, output);
                     Log.v(Constants.LOG_TAG,"LINK (constant) "+protocolString);
                 } else {

@@ -1,7 +1,9 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -21,15 +23,25 @@ public class Servo extends Output implements FlutterOutput {
     private static final String TYPE = "s";
     private static final int imageId = R.mipmap.ic_launcher;
 
+    private Flutter flutter;
 
-    public Servo(int portNumber) {
-        super(TYPE, MAXIMUM, MINIMUM, portNumber);
+
+    public Servo(int portNumber, Flutter flutter) {
+        super(MAXIMUM, MINIMUM, portNumber, flutter);
+        this.flutter = flutter;
     }
 
 
     public static Servo newInstance(Servo oldInstance) {
-        Servo newInstance = new Servo(oldInstance.getPortNumber());
-        newInstance.setSettings(Settings.newInstance(oldInstance.getSettings()));
+        Servo newInstance = new Servo(oldInstance.getPortNumber(),oldInstance.flutter);
+
+        // settings
+        if (oldInstance.getSettings().getClass() == SettingsConstant.class) {
+            newInstance.setSettings(SettingsConstant.newInstance(oldInstance.getSettings()));
+        } else {
+            newInstance.setSettings(SettingsProportional.newInstance(oldInstance.getSettings()));
+        }
+
         return newInstance;
     }
 

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
@@ -122,7 +124,14 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
 
         // ASSERT: settings are the same across all outputs, and there is always at least 1 output
         sensorText = getString(flutterOutput.getOutputs()[0].getSettings().getSensor().getSensorTypeId());
-        this.advancedSettings = AdvancedSettings.newInstance(flutterOutput.getOutputs()[0].getSettings().getAdvancedSettings());
+        Settings settings = flutterOutput.getOutputs()[0].getSettings();
+        if (settings.hasAdvancedSettings()) {
+            if (settings.getClass() == SettingsProportional.class) {
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional)settings).getAdvancedSettings());
+            } else {
+                Log.e(Constants.LOG_TAG,"AdvancedSettingsDialog.onCreateDialog: unimplemented relationship/settings");
+            }
+        }
 
         Log.i(Constants.LOG_TAG,"created AdvancedSettingsDialog for FlutterOutput=" + flutterOutput.getClass().getName());
 

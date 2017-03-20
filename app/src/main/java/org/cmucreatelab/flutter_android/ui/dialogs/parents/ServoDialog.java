@@ -18,12 +18,16 @@ import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -65,6 +69,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
 
     private void updateViews(View view) {
+        Flutter flutter = GlobalHandler.getInstance(view.getContext().getApplicationContext()).sessionHandler.getSession().getFlutter();
         super.updateViews(view, servo);
 
         LinearLayout linkedSensor,minPosLayout;
@@ -72,7 +77,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
 
-        if (servo.getSettings().getRelationship().getClass() == Constant.class) {
+        if (servo.getSettings().getClass() == SettingsConstant.class) {
+            SettingsConstant settings = (SettingsConstant) servo.getSettings();
+
             // save
             saveButton.setEnabled(true);
 
@@ -84,7 +91,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
             // max
             ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, servo.getSettings().getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, settings.getValue(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setDuration(0);
@@ -92,16 +99,24 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             TextView maxPosTxt = (TextView) view.findViewById(R.id.text_max_pos);
             TextView maxPosValue = (TextView) view.findViewById(R.id.text_max_pos_value);
             maxPosTxt.setText("Value");
-            maxPosValue.setText(String.valueOf(servo.getSettings().getOutputMax()));
+            maxPosValue.setText(String.valueOf(settings.getValue()));
 
             // min
             minPosLayout.setVisibility(View.GONE);
-        } else {
+        } else if (servo.getSettings().getClass() == SettingsProportional.class) {
+            SettingsProportional settings = (SettingsProportional) servo.getSettings();
+            Sensor sensor;
+            if (settings.getSensorPortNumber() != 0) {
+                sensor = flutter.getSensors()[settings.getSensorPortNumber()-1];
+            }  else {
+                sensor = new NoSensor(0);
+            }
+
             if (servo.getSettings().getRelationship().getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run ServoDialog.updateViews on unimplemented relationship.");
             }
             // save
-            if (servo.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                 saveButton.setEnabled(true);
             } else {
                 saveButton.setEnabled(false);
@@ -115,28 +130,30 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
             // max
             ImageView maxPosImg = (ImageView) view.findViewById(R.id.image_max_pos);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, servo.getSettings().getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            RotateAnimation rotateAnimation = new RotateAnimation(0, settings.getOutputMax(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setDuration(0);
             maxPosImg.startAnimation(rotateAnimation);
             TextView maxPosTxt = (TextView) view.findViewById(R.id.text_max_pos);
             TextView maxPosValue = (TextView) view.findViewById(R.id.text_max_pos_value);
-            maxPosTxt.setText(servo.getSettings().getSensor().getHighTextId());
-            maxPosValue.setText(String.valueOf(servo.getSettings().getOutputMax()));
+            maxPosTxt.setText(sensor.getHighTextId());
+            maxPosValue.setText(String.valueOf(settings.getOutputMax()));
 
             // min
             minPosLayout.setVisibility(View.VISIBLE);
             ImageView minPosImg = (ImageView) view.findViewById(R.id.image_min_pos);
-            rotateAnimation = new RotateAnimation(0, servo.getSettings().getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation = new RotateAnimation(0, settings.getOutputMin(), Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setFillEnabled(true);
             rotateAnimation.setFillAfter(true);
             rotateAnimation.setDuration(0);
             minPosImg.startAnimation(rotateAnimation);
             TextView minPosTxt = (TextView) view.findViewById(R.id.text_min_pos);
             TextView minPosValue = (TextView) view.findViewById(R.id.text_min_pos_value);
-            minPosTxt.setText(servo.getSettings().getSensor().getLowTextId());
-            minPosValue.setText(String.valueOf(servo.getSettings().getOutputMin()));
+            minPosTxt.setText(sensor.getLowTextId());
+            minPosValue.setText(String.valueOf(settings.getOutputMin()));
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.updateViews: unimplemented Relationship/Settings.");
         }
     }
 
@@ -159,6 +176,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         super.onCreateDialog(savedInstanceState);
 
         // clone old object
+        // NO!
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
 
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
@@ -202,8 +220,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
         MelodySmartMessage msg = MessageConstructor.constructRemoveRelation(servo);
         servo.setIsLinked(false, servo);
-        servo.getSettings().setOutputMax(servo.getMax());
-        servo.getSettings().setOutputMin(servo.getMin());
 
         // overwrite old object
         GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getServos()[servo.getPortNumber()-1] = servo;
@@ -253,8 +269,15 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MaxPositionDialog.newInstance(Integer.valueOf(servo.getSettings().getOutputMax()), this);
-        dialog.show(this.getFragmentManager(), "tag");
+        if (servo.getSettings().getClass() == SettingsProportional.class) {
+            DialogFragment dialog = MaxPositionDialog.newInstance(Integer.valueOf(((SettingsProportional)servo.getSettings()).getOutputMax()), this);
+            dialog.show(this.getFragmentManager(), "tag");
+        } else if (servo.getSettings().getClass() == SettingsConstant.class) {
+            DialogFragment dialog = MaxPositionDialog.newInstance(Integer.valueOf(((SettingsConstant)servo.getSettings()).getValue()), this);
+            dialog.show(this.getFragmentManager(), "tag");
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.onClickSetMaximumPosition: unimplemented Relationship/Settings.");
+        }
     }
 
 
@@ -266,8 +289,15 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-        DialogFragment dialog = MinPositionDialog.newInstance(Integer.valueOf(servo.getSettings().getOutputMin()), this);
-        dialog.show(this.getFragmentManager(), "tag");
+        if (servo.getSettings().getClass() == SettingsProportional.class) {
+            DialogFragment dialog = MinPositionDialog.newInstance(Integer.valueOf(((SettingsProportional)servo.getSettings()).getOutputMin()), this);
+            dialog.show(this.getFragmentManager(), "tag");
+        } else if (servo.getSettings().getClass() == SettingsConstant.class) {
+            DialogFragment dialog = MinPositionDialog.newInstance(Integer.valueOf(((SettingsConstant)servo.getSettings()).getValue()), this);
+            dialog.show(this.getFragmentManager(), "tag");
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.onclickSetMinimumPosition: unimplemented Relationship/Settings.");
+        }
     }
 
 
@@ -277,7 +307,11 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        servo.getSettings().setAdvancedSettings(advancedSettings);
+        if (servo.getSettings().hasAdvancedSettings()) {
+            if (servo.getSettings().getClass() == SettingsProportional.class) {
+                ((SettingsProportional)servo.getSettings()).setAdvancedSettings(advancedSettings);
+            }
+        }
     }
 
 
@@ -289,7 +323,11 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
-            servo.getSettings().setSensor(sensor);
+            if (servo.getSettings().getClass() == SettingsProportional.class) {
+                ((SettingsProportional)servo.getSettings()).setSensorPortNumber(sensor.getPortNumber());
+            } else {
+                Log.e(Constants.LOG_TAG,"ServoDialog.onSensorChosen: unimplemented Relationship/Settings.");
+            }
         }
         updateViews(dialogView);
     }
@@ -300,7 +338,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        servo.getSettings().setRelationship(relationship);
+        if (relationship.getClass() == Proportional.class) {
+            servo.setSettings(SettingsProportional.newInstance(servo.getSettings()));
+        } else if (relationship.getClass() == Constant.class) {
+            servo.setSettings(SettingsConstant.newInstance(servo.getSettings()));
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.onRelationshipChosen: unimplemented Relationship/Settings.");
+        }
         updateViews(dialogView);
     }
 
@@ -313,9 +357,19 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         rotateAnimation.setFillAfter(true);
         rotateAnimation.setDuration(0);
         currentImageView.startAnimation(rotateAnimation);
-        currentTextViewDescrp.setText(servo.getSettings().getSensor().getHighTextId());
-        currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
-        servo.getSettings().setOutputMax(max);
+        if (servo.getSettings().getClass() == SettingsProportional.class) {
+            SettingsProportional settings = (SettingsProportional) servo.getSettings();
+            currentTextViewDescrp.setText(settings.getSensor().getHighTextId());
+            currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
+            settings.setOutputMax(max);
+        } else if (servo.getSettings().getClass() == SettingsConstant.class) {
+            SettingsConstant settings = (SettingsConstant) servo.getSettings();
+            currentTextViewDescrp.setText(settings.getSensor().getHighTextId());
+            currentTextViewItem.setText(String.valueOf(max) + (char) 0x00B0);
+            settings.setValue(max);
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.onMaxPosChosen: unimplemented Relationship/Settings.");
+        }
     }
 
 
@@ -327,10 +381,19 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         rotateAnimation.setFillAfter(true);
         rotateAnimation.setDuration(0);
         currentImageView.startAnimation(rotateAnimation);
-        currentTextViewDescrp.setText(servo.getSettings().getSensor().getLowTextId());
-        currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
-        servo.getSettings().setOutputMin(min);
-
+        if (servo.getSettings().getClass() == SettingsProportional.class) {
+            SettingsProportional settings = (SettingsProportional) servo.getSettings();
+            currentTextViewDescrp.setText(settings.getSensor().getLowTextId());
+            currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
+            settings.setOutputMin(min);
+        } else if (servo.getSettings().getClass() == SettingsConstant.class) {
+            SettingsConstant settings = (SettingsConstant) servo.getSettings();
+            currentTextViewDescrp.setText(settings.getSensor().getLowTextId());
+            currentTextViewItem.setText(String.valueOf(min) + (char) 0x00B0);
+            settings.setValue(min);
+        } else {
+            Log.e(Constants.LOG_TAG,"ServoDialog.onMinPosChosen: unimplemented Relationship/Settings.");
+        }
     }
 
 
