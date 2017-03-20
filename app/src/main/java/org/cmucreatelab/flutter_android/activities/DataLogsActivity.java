@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -690,6 +691,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         globalHandler.sessionHandler.createProgressDialog(instance);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
         dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (workingDataSet == null)
+            super.onBackPressed();
+        else {
+            workingDataSet = null;
+            globalHandler.sessionHandler.createProgressDialog(instance);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+            dataLogsHelper.registerStateAndUpdateLogs(new ResumeState(this));
+        }
     }
 
 
