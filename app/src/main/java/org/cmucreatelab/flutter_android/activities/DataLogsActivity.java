@@ -431,10 +431,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     statsRelativeLayout1.add(statState, means[0]);
                 }
                 if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(statState, means[0]);
+                    statsRelativeLayout2.add(statState, means[1]);
                 }
                 if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(statState, means[0]);
+                    statsRelativeLayout3.add(statState, means[2]);
                 }
             }
         }

@@ -51,7 +51,6 @@ public class StatsRelativeLayout extends RelativeLayout {
 
 
     private void update() {
-        // TODO - the hard part
         ArrayList<PositionTextView> positionTextViews = new ArrayList<>();
         this.removeAllViews();
 
@@ -77,7 +76,7 @@ public class StatsRelativeLayout extends RelativeLayout {
                 params.addRule(RelativeLayout.ALIGN_PARENT_START);
                 params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
             } else {
-                if (view.getPosition() -  positionTextViews.get(i-1).getPosition() < 30) {
+                if (view.getPosition() -  positionTextViews.get(i-1).getPosition() < 25) {
                     params.addRule(RelativeLayout.BELOW, positionTextViews.get(i-1).getId());
                     params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
                 } else {
