@@ -125,7 +125,7 @@ public final class Constants {
         public static final String AIR_QUALITY = "Air Particles";
     }
 
-    public static enum MATH_STATES {
+    public static enum STATS {
         NONE,
         MEAN,
         MEDIAN,

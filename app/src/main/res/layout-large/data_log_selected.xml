@@ -84,23 +84,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="115dp"
             android:id="@+id/linear_sensor_1"
             android:orientation="horizontal"
             android:layout_marginTop="100dp"
-            android:padding="20dp">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/image_sensor_1"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:padding="5dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:gravity="center">
 
                 <TextView
@@ -119,15 +119,20 @@
                     android:layout_alignParentEnd="true"
                     android:paddingEnd="10dp"/>
 
-                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                <ProgressBar
                     android:id="@+id/progress_sensor_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="99"
-                    android:paddingBottom="20dp"
                     android:layout_below="@id/text_low_1"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relative_stats_1"
+                    android:layout_below="@id/progress_sensor_1"/>
 
             </RelativeLayout>
 
@@ -135,23 +140,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="115dp"
             android:id="@+id/linear_sensor_2"
             android:orientation="horizontal"
             android:layout_below="@id/linear_sensor_1"
-            android:padding="20dp">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/image_sensor_2"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:padding="5dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:gravity="center">
 
                 <TextView
@@ -170,15 +175,20 @@
                     android:layout_alignParentEnd="true"
                     android:paddingEnd="10dp"/>
 
-                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                <ProgressBar
                     android:id="@+id/progress_sensor_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="99"
-                    android:paddingBottom="20dp"
                     android:layout_below="@id/text_low_2"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relative_stats_2"
+                    android:layout_below="@id/progress_sensor_2"/>
 
             </RelativeLayout>
 
@@ -186,23 +196,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="115dp"
             android:id="@+id/linear_sensor_3"
             android:orientation="horizontal"
-            android:layout_below="@id/linear_sensor_2"
-            android:padding="20dp">
+            android:padding="5dp"
+            android:layout_below="@id/linear_sensor_2">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/image_sensor_3"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:padding="5dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:gravity="center">
 
                 <TextView
@@ -221,15 +231,20 @@
                     android:layout_alignParentEnd="true"
                     android:paddingEnd="10dp"/>
 
-                <org.cmucreatelab.flutter_android.ui.progressbar.MeanMedianModeProgressBar
+                <ProgressBar
                     android:id="@+id/progress_sensor_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="99"
-                    android:paddingBottom="20dp"
                     android:layout_below="@id/text_low_3"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
+
+                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relative_stats_3"
+                    android:layout_below="@id/progress_sensor_3"/>
 
             </RelativeLayout>
 
