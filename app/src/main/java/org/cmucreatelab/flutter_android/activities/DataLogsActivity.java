@@ -772,12 +772,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     @Override
     public void onOpenedLog(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onOpenedLog");
-        if (!globalHandler.dataLoggingHandler.isLogging()) {
-            SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
-            dialog.show(getSupportFragmentManager(), "tag");
-        } else {
-            if (dataLogsHelper.getDataSetOnFlutter() != null)
+        if (dataLogsHelper.getDataSetOnFlutter() == dataSet) {
+            if (!globalHandler.dataLoggingHandler.isLogging()) {
+                SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
+                dialog.show(getSupportFragmentManager(), "tag");
+            } else {
                 loadDataSet(dataLogsHelper.getDataSetOnFlutter());
+            }
+        } else {
+            loadDataSet(dataSet);
         }
     }
 
