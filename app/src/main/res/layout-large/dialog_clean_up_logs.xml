@@ -1,79 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:text="@string/clean_up_logs"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
+        android:background="@drawable/dialog_bg">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="@string/this_week"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/orange"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/clean_up_logs"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"/>
 
-    <ListView
-        android:id="@+id/list_this_week"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="2dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/this_week"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/orange"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="@string/this_month"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/orange"/>
+        <org.cmucreatelab.flutter_android.ui.ExtendedHeightListView
+            android:id="@+id/list_this_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="2dp"/>
 
-    <ListView
-        android:id="@+id/list_this_month"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="2dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/this_month"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/orange"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="@string/this_year"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/orange"/>
 
-    <ListView
-        android:id="@+id/list_this_year"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="2dp"/>
+        <org.cmucreatelab.flutter_android.ui.ExtendedHeightListView
+            android:id="@+id/list_this_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="2dp"/>
 
-    <Button
-        android:id="@+id/button_delete_logs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete_selected_logs"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/round_orange_button_bottom"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/this_year"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/orange"/>
 
-</LinearLayout>
+
+        <org.cmucreatelab.flutter_android.ui.ExtendedHeightListView
+            android:id="@+id/list_this_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="2dp"/>
+
+        <Button
+            android:id="@+id/button_delete_logs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_selected_logs"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_orange_button_bottom"/>
+
+    </LinearLayout>
+
+</ScrollView>

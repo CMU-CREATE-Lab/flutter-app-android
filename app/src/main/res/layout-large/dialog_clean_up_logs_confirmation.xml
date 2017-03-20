@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:text="@string/confirm_logs_to_delete"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
-
-    <ListView
-        android:id="@+id/list_logs_to_delete"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="2dp"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="bottom">
+        android:background="@drawable/dialog_bg">
 
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/round_gray_button_bottom"
-            android:text="@string/cancel"
-            android:textColor="@color/darkgray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:text="@string/confirm_logs_to_delete"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"/>
 
-        <Button
-            android:id="@+id/button_delete_logs"
-            android:layout_width="0dp"
+        <org.cmucreatelab.flutter_android.ui.ExtendedHeightListView
+            android:id="@+id/list_logs_to_delete"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/round_orange_button_bottom_right"
-            android:text="@string/delete_selected_logs"
-            android:textColor="@color/white"/>
+            android:layout_gravity="center"
+            android:padding="2dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_gray_button_bottom"
+                android:text="@string/cancel"
+                android:textColor="@color/darkgray"/>
+
+            <Button
+                android:id="@+id/button_delete_logs"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_orange_button_bottom_right"
+                android:text="@string/delete_selected_logs"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
