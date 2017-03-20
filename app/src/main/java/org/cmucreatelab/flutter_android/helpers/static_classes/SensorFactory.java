@@ -12,7 +12,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
-import org.cmucreatelab.flutter_android.classes.sensors.WindSpeedSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
 
 /**
  * Created by Steve on 1/30/2017.
@@ -49,8 +49,8 @@ public class SensorFactory {
             case Constants.SensorTypeWords.TEMPERATURE:
                 result = new TemperatureSensor(port);
                 break;
-            case Constants.SensorTypeWords.WIND_SPEED:
-                result = new WindSpeedSensor(port);
+            case Constants.SensorTypeWords.AIR_QUALITY:
+                result = new AirQualitySensor(port);
                 break;
             default:
                 break;

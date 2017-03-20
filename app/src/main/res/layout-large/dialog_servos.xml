@@ -62,7 +62,7 @@
                     android:id="@+id/text_max_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:text="@string/set_maximum_position"/>
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="start" />
 
             </LinearLayout>
 
@@ -120,7 +120,7 @@
                     android:id="@+id/text_min_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:text="@string/set_minimum_position"/>
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="start" />
 
             </LinearLayout>
 

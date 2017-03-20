@@ -24,7 +24,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
-import org.cmucreatelab.flutter_android.classes.sensors.WindSpeedSensor;
+import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -92,7 +92,7 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         view.findViewById(R.id.image_soil_moisture).setOnClickListener(this);
         view.findViewById(R.id.image_distance).setOnClickListener(this);
         view.findViewById(R.id.image_sound).setOnClickListener(this);
-        view.findViewById(R.id.image_wind_speed).setOnClickListener(this);
+        view.findViewById(R.id.image_air_quality).setOnClickListener(this);
         view.findViewById(R.id.image_humidity).setOnClickListener(this);
         view.findViewById(R.id.image_temperature).setOnClickListener(this);
         view.findViewById(R.id.image_barometric_pressure).setOnClickListener(this);
@@ -124,9 +124,9 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
                 Log.d(Constants.LOG_TAG, "onClickSoundSensor");
                 sensor = new SoundSensor(portNumber);
                 break;
-            case R.id.image_wind_speed:
+            case R.id.image_air_quality:
                 Log.d(Constants.LOG_TAG, "onClickWindSpeedSensor");
-                sensor = new WindSpeedSensor(portNumber);
+                sensor = new AirQualitySensor(portNumber);
                 break;
             case R.id.image_humidity:
                 Log.d(Constants.LOG_TAG, "onClickHumiditySensor");

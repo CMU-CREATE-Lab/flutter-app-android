@@ -11,23 +11,23 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * A class representing a wind speed sensor.
  *
  */
-public class WindSpeedSensor extends Sensor {
+public class AirQualitySensor extends Sensor {
 
-    private static final short sensorType = FlutterProtocol.InputTypes.WIND_SPEED;
-    private static final int sensorTypeId = R.string.wind_speed;
-    private static final int highTextId = R.string.fast;
-    private static final int lowTextId = R.string.slow;
-    private static final int typeTextId = R.string.wind_speed;
+    private static final short sensorType = FlutterProtocol.InputTypes.AIR_QUALITY;
+    private static final int sensorTypeId = R.string.air_quality;
+    private static final int highTextId = R.string.high;
+    private static final int lowTextId = R.string.low;
+    private static final int typeTextId = R.string.air_quality;
 
-    private static final int blueImageId = R.drawable.sensor_blue_wind_speed_l_g_68;
-    private static final int greenImageId = R.drawable.sensor_green_wind_speed_l_g_68;
-    private static final int orangeImageIdMd = R.drawable.sensor_orange_wind_speed_m_d_40;
-    private static final int orangeImageIdSm = R.drawable.sensor_orange_wind_speed_s_m_22;
-    private static final int greyImageIdSm = R.drawable.sensor_wind_speed_grey_s_m_20;
-    private static final int whiteImageIdSm = R.drawable.sensor_wind_speed_s_m_20;
+    private static final int blueImageId = R.drawable.sensor_blue_air_quality_l_g_68;
+    private static final int greenImageId = R.drawable.sensor_green_air_quality_l_g_68;
+    private static final int orangeImageIdMd = R.drawable.sensor_orange_air_quality_m_d_40;
+    private static final int orangeImageIdSm = R.drawable.sensor_orange_air_quality_s_m_22;
+    private static final int greyImageIdSm = R.drawable.sensor_grey_air_quality_s_m_22;
+    private static final int whiteImageIdSm = R.drawable.sensor_air_quality_s_m_20;
 
 
-    public WindSpeedSensor(int portNumber) {
+    public AirQualitySensor(int portNumber) {
         super(portNumber);
     }
 

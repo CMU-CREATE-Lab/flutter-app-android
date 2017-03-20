@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
+import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
 import org.cmucreatelab.flutter_android.classes.sensors.AnalogOrUnknownSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.BarometricPressureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
@@ -10,7 +11,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
-import org.cmucreatelab.flutter_android.classes.sensors.WindSpeedSensor;
 
 /**
  * Created by mike on 1/4/17.
@@ -30,7 +30,7 @@ public final class FlutterProtocol {
         public static final short DISTANCE = 3;
         public static final short TEMPERATURE = 4;
         public static final short HUMIDITY = 5;
-        public static final short WIND_SPEED = 6;
+        public static final short AIR_QUALITY = 6;
         public static final short BAROMETRIC_PRESSURE = 7;
         public static final short ANALOG_OR_UNKNOWN = 8;
         // **please add more**
@@ -58,8 +58,8 @@ public final class FlutterProtocol {
             case InputTypes.HUMIDITY:
                 result = new HumiditySensor(portNumber);
                 break;
-            case InputTypes.WIND_SPEED:
-                result = new WindSpeedSensor(portNumber);
+            case InputTypes.AIR_QUALITY:
+                result = new AirQualitySensor(portNumber);
                 break;
             case InputTypes.BAROMETRIC_PRESSURE:
                 result = new BarometricPressureSensor(portNumber);

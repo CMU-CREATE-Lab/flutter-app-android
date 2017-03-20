@@ -41,8 +41,8 @@
 
                 <ImageView
                     android:id="@+id/view_max_color"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:adjustViewBounds="true"
                     android:visibility="invisible"/>
 
@@ -61,7 +61,7 @@
                     android:id="@+id/text_max_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:text="@string/set_maximum_color"/>
 
                 <TextView
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="start" />
 
             </LinearLayout>
 
@@ -97,8 +97,8 @@
 
                 <ImageView
                     android:id="@+id/view_min_color"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:adjustViewBounds="true"
                     android:visibility="invisible"/>
 
@@ -116,7 +116,7 @@
                     android:id="@+id/text_min_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="start"
                     android:text="@string/set_minimum_color"/>
 
                 <TextView
@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="start" />
 
             </LinearLayout>
 

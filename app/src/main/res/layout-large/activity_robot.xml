@@ -12,9 +12,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/include_toolbar_robot"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_toEndOf="@id/include_toolbar_robot">
 
         <ImageView
             android:id="@+id/image_flutter_illustration"
@@ -22,17 +22,17 @@
             android:layout_height="235dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/flutter_illustration_robot_page"/>
+            android:src="@drawable/flutter_illustration_robot_page" />
 
         <LinearLayout
             android:id="@+id/linear_sensors"
             android:layout_width="315dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignBottom="@id/image_flutter_illustration"
             android:layout_alignStart="@id/image_flutter_illustration"
-            android:layout_marginStart="15dp"
             android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <TextView
@@ -41,9 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:lines="1"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:lines="1"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/text_sensor_2"
@@ -51,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:lines="1"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:lines="1"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/text_sensor_3"
@@ -61,18 +61,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:lines="1"
                 android:gravity="center"
-                android:textColor="@color/white"/>
+                android:lines="1"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="315dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/linear_sensors"
             android:layout_alignStart="@id/linear_sensors"
+            android:layout_below="@+id/linear_sensors"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <TextView
@@ -81,10 +81,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
-                android:textStyle="bold"
                 android:textSize="36sp"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_sensor_2_reading"
@@ -92,10 +92,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
-                android:textStyle="bold"
                 android:textSize="36sp"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_sensor_3_reading"
@@ -103,10 +103,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:lines="1"
-                android:textStyle="bold"
                 android:textSize="36sp"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -114,18 +114,19 @@
             android:id="@+id/linear_servos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/image_flutter_illustration"
             android:layout_alignTop="@+id/image_flutter_illustration"
+            android:layout_toStartOf="@id/image_flutter_illustration"
             android:padding="5dp">
 
             <ImageView
                 android:id="@+id/image_servo_3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="2dp"
-                android:src="@drawable/question_icon"
+                android:layout_alignBottom="@+id/relative_servo_3"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:padding="2dp"
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_servo_3"
@@ -139,31 +140,31 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_alignParentStart="true"
                     android:layout_margin="12dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="top"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="bottom"
-                        android:src="@drawable/sensor_light_grey_s_m_20"/>
+                        android:src="@drawable/sensor_light_grey_s_m_20" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="101dp"
                     android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"/>
+                    android:src="@drawable/link_servo_b_g_sm" />
 
             </RelativeLayout>
 
@@ -171,10 +172,11 @@
                 android:id="@+id/image_servo_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="2dp"
-                android:src="@drawable/question_icon"
+                android:layout_alignBottom="@+id/relative_servo_2"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/image_servo_3"/>
+                android:layout_below="@+id/image_servo_3"
+                android:padding="2dp"
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_servo_2"
@@ -188,31 +190,31 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_alignParentStart="true"
                     android:layout_margin="12dp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="top"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="bottom"
-                        android:src="@drawable/sensor_light_grey_s_m_20"/>
+                        android:src="@drawable/sensor_light_grey_s_m_20" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="101dp"
                     android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"/>
+                    android:src="@drawable/link_servo_b_g_sm" />
 
             </RelativeLayout>
 
@@ -220,10 +222,11 @@
                 android:id="@+id/image_servo_1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="2dp"
-                android:src="@drawable/question_icon"
+                android:layout_alignBottom="@+id/relative_servo_1"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/image_servo_2"/>
+                android:layout_below="@+id/image_servo_2"
+                android:padding="2dp"
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_servo_1"
@@ -238,29 +241,29 @@
                     android:id="@+id/linear_sensor_link_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_alignParentStart="true"
+                    android:layout_margin="12dp"
                     android:gravity="center"
-                    android:layout_margin="12dp">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/sensor_light_grey_s_m_20"/>
+                        android:src="@drawable/sensor_light_grey_s_m_20" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="101dp"
                     android:layout_height="51dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm"
-                    android:layout_alignParentEnd="true"/>
+                    android:src="@drawable/link_servo_b_g_sm" />
 
             </RelativeLayout>
 
@@ -271,19 +274,19 @@
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/image_flutter_illustration"
-            android:layout_toEndOf="@id/linear_servos"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="45dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@id/linear_servos"
             android:padding="5dp">
 
             <ImageView
                 android:id="@+id/image_led_1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
                 android:padding="2dp"
-                android:src="@drawable/question_icon"/>
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_led_1"
@@ -297,19 +300,19 @@
                     android:id="@+id/linear_led_link_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                 </LinearLayout>
 
@@ -317,9 +320,9 @@
                     android:id="@+id/view_color_1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/circle_green"
+                    android:layout_below="@id/linear_led_link_1"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/linear_led_link_1"/>
+                    android:background="@drawable/circle_green" />
 
             </RelativeLayout>
 
@@ -327,10 +330,10 @@
                 android:id="@+id/image_led_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:padding="2dp"
-                android:src="@drawable/question_icon"/>
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_led_2"
@@ -344,19 +347,19 @@
                     android:id="@+id/linear_led_link_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                 </LinearLayout>
 
@@ -364,9 +367,9 @@
                     android:id="@+id/view_color_2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_below="@id/linear_led_link_2"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/circle_green"
-                    android:layout_below="@id/linear_led_link_2"/>
+                    android:background="@drawable/circle_green" />
 
             </RelativeLayout>
 
@@ -374,10 +377,10 @@
                 android:id="@+id/image_led_3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
                 android:padding="2dp"
-                android:src="@drawable/question_icon"/>
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_led_3"
@@ -391,19 +394,19 @@
                     android:id="@+id/linear_led_link_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher"/>
+                        android:src="@drawable/ic_launcher" />
 
                 </LinearLayout>
 
@@ -411,9 +414,9 @@
                     android:id="@+id/view_color_3"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_below="@id/linear_led_link_3"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/circle_green"
-                    android:layout_below="@id/linear_led_link_3"/>
+                    android:background="@drawable/circle_green" />
 
             </RelativeLayout>
 
@@ -423,19 +426,19 @@
             android:id="@+id/image_speaker"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toEndOf="@id/relative_leds"
             android:layout_alignBottom="@+id/relative_leds"
-            android:padding="2dp"
             android:layout_marginStart="70dp"
+            android:layout_toEndOf="@id/relative_leds"
+            android:padding="2dp"
             android:src="@drawable/question_icon" />
 
         <RelativeLayout
             android:id="@+id/relative_speaker"
             android:layout_width="64dp"
             android:layout_height="103dp"
-            android:layout_toEndOf="@id/relative_leds"
             android:layout_alignBottom="@+id/relative_leds"
             android:layout_marginStart="70dp"
+            android:layout_toEndOf="@id/relative_leds"
             android:background="@drawable/link_active_l_e_d_speaker_b_g"
             android:visibility="invisible">
 
@@ -443,29 +446,29 @@
                 android:id="@+id/linear_speaker_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_alignParentTop="true"
-                android:layout_margin="12dp">
+                android:layout_margin="12dp"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/ic_launcher" />
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_below="@id/linear_speaker_link"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/circle_green"
-                android:layout_below="@id/linear_speaker_link"
-                android:src="@drawable/speaker_icon"/>
+                android:src="@drawable/speaker_icon" />
 
         </RelativeLayout>
 
@@ -481,9 +484,9 @@
                 android:id="@+id/linear_data_buttons"
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
-                android:weightSum="2"
+                android:layout_centerVertical="true"
                 android:orientation="horizontal"
-                android:layout_centerVertical="true">
+                android:weightSum="2">
 
 
                 <Button
@@ -493,7 +496,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/round_green_button_left"
                     android:text="@string/sensor_data"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/button_simulate_data"
@@ -502,7 +505,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/round_gray_white_right"
                     android:text="@string/simulate_data"
-                    android:textColor="@color/gray"/>
+                    android:textColor="@color/gray" />
 
             </LinearLayout>
 
@@ -510,10 +513,10 @@
                 android:id="@+id/seekbar_simulated_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="100"
-                android:layout_toEndOf="@id/linear_data_buttons"
                 android:layout_centerVertical="true"
-                android:visibility="invisible"/>
+                android:layout_toEndOf="@id/linear_data_buttons"
+                android:max="100"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 

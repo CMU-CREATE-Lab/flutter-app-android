@@ -63,6 +63,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
+    private Button removeButton;
     private ImageView maxColor;
     private ImageView minColor;
     private TriColorLed triColorLed;
@@ -78,9 +79,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         minColorLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_color);
 
         if (relationship.getClass() == Constant.class) {
-            // save
-            saveButton.setEnabled(true);
-
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -102,12 +100,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         } else {
             if (relationship.getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run LedDialog.updateViews on unimplemented relationship.");
-            }
-            // save
-            if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                saveButton.setEnabled(true);
-            } else {
-                saveButton.setEnabled(false);
             }
 
             // advanced settings
@@ -147,6 +139,14 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             }
             minColorValue.setText(triColorLed.getMinColorText());
         }
+
+        saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
+        if (relationship.getClass() != Constant.class && triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
+        }
+
     }
 
 
@@ -185,11 +185,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(triColorLed.getPortNumber()));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
         ButterKnife.bind(this, view);
 
         maxColor = (ImageView) view.findViewById(R.id.view_max_color);
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
+        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
         updateViews(view);
         return builder.create();
