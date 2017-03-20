@@ -33,13 +33,6 @@ public class StatsRelativeLayout extends RelativeLayout {
     private Context context;
 
 
-    private boolean checkCollision(View v1,View v2) {
-        Rect R1=new Rect(v1.getLeft(), v1.getTop(), v1.getRight(), v1.getBottom());
-        Rect R2=new Rect(v2.getLeft(), v2.getTop(), v2.getRight(), v2.getBottom());
-        return R1.intersect(R2);
-    }
-
-
     private int positionToPixels(int width, int position) {
         int result = 0;
 
@@ -47,13 +40,12 @@ public class StatsRelativeLayout extends RelativeLayout {
         float temp = (float) position / 100;
         Log.d(Constants.LOG_TAG, String.valueOf(temp));
         result = (int) (temp * width);
-        //Log.d(Constants.LOG_TAG, String.valueOf(temp));
-        //result = (int) (width - temp);
         Log.d(Constants.LOG_TAG, String.valueOf(result));
 
         // A dumb hack to keep it in bounds
         if ((width - result) < 80) result = width - 80;
-
+        if (result < 0) result = 0;
+        Log.d(Constants.LOG_TAG, String.valueOf(result));
         return result;
     }
 
@@ -83,14 +75,14 @@ public class StatsRelativeLayout extends RelativeLayout {
 
             if (i == 0) {
                 params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                params.setMargins(positionToPixels(this.getWidth(), view.getPosition()), 0, 0, 0);
+                params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
             } else {
                 if (view.getPosition() -  positionTextViews.get(i-1).getPosition() < 30) {
                     params.addRule(RelativeLayout.BELOW, positionTextViews.get(i-1).getId());
-                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()), 0, 0, 0);
+                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
                 } else {
                     params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()), 0, 0, 0);
+                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
                 }
             }
 
