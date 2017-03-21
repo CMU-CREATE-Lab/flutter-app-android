@@ -76,6 +76,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private RelativeLayout relativePitch;
 
     private Button saveButton;
+    private Button removeButton;
     private Speaker speaker;
 
 
@@ -86,11 +87,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPitchLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pitch);
+        Relationship relationship = speaker.getPitch().getSettings().getRelationship();
 
         // Pitch
         if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional pitchSettings = (SettingsProportional) speaker.getPitch().getSettings();
-
             // advanced settings
             advancedSettingsView.setVisibility(View.VISIBLE);
 
@@ -149,6 +150,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minVolumeLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_volume);
+        Relationship relationship = speaker.getVolume().getSettings().getRelationship();
 
         // Volume
         if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
@@ -213,11 +215,14 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         }
 
         saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
         if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
         }
         if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
             saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
         }
     }
 
@@ -259,6 +264,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
+        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
         updateViews(view);
 

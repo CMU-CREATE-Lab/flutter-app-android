@@ -65,6 +65,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     private TextView currentTextViewDescrp;
     private TextView currentTextViewItem;
     private Button saveButton;
+    private Button removeButton;
     private Servo servo;
 
 
@@ -76,6 +77,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
+        Relationship relationship = servo.getSettings().getRelationship();
 
         if (servo.getSettings().getClass() == SettingsConstant.class) {
             SettingsConstant settings = (SettingsConstant) servo.getSettings();
@@ -155,6 +157,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         } else {
             Log.e(Constants.LOG_TAG,"ServoDialog.updateViews: unimplemented Relationship/Settings.");
         }
+
+        saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
+        if (relationship.getClass() != Constant.class && servo.getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            saveButton.setEnabled(false);
+            removeButton.setEnabled(false);
+        }
     }
 
 
@@ -191,6 +200,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         ButterKnife.bind(this, view);
         saveButton = (Button) view.findViewById(R.id.button_save_link);
+        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
         updateViews(view);
         return builder.create();
@@ -319,7 +329,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public void onSensorChosen(Sensor sensor) {
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
-            saveButton.setEnabled(true);
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());

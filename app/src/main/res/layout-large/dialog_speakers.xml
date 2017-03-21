@@ -79,7 +79,7 @@
                         android:id="@+id/text_max_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="start"
                         android:text="@string/set_maximum_volume"/>
 
                     <TextView
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="start" />
 
                 </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:id="@+id/text_min_volume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="start"
                         android:text="@string/set_minimum_volume"/>
 
                     <TextView
@@ -129,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="start" />
 
                 </LinearLayout>
 
@@ -171,7 +171,7 @@
                         android:id="@+id/text_max_pitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="start"
                         android:text="@string/set_maximum_pitch"/>
 
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="start" />
 
                 </LinearLayout>
 
@@ -213,7 +213,7 @@
                         android:id="@+id/text_min_pitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="start"
                         android:text="@string/set_minimum_pitch"/>
 
                     <TextView
@@ -221,7 +221,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="start" />
 
                 </LinearLayout>
 
