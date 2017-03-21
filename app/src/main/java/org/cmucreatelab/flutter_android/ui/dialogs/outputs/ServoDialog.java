@@ -18,10 +18,8 @@ import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
@@ -69,20 +67,18 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
 
     private void updateViews(View view) {
-        Flutter flutter = GlobalHandler.getInstance(view.getContext().getApplicationContext()).sessionHandler.getSession().getFlutter();
         super.updateViews(view, servo);
 
         LinearLayout linkedSensor,minPosLayout;
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minPosLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_pos);
-        Relationship relationship = servo.getSettings().getRelationship();
+
+        saveButton.setEnabled(true);
+        removeButton.setEnabled(true);
 
         if (servo.getSettings().getClass() == SettingsConstant.class) {
             SettingsConstant settings = (SettingsConstant) servo.getSettings();
-
-            // save
-            saveButton.setEnabled(true);
 
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
@@ -106,21 +102,10 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             minPosLayout.setVisibility(View.GONE);
         } else if (servo.getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional settings = (SettingsProportional) servo.getSettings();
-            Sensor sensor;
-            if (settings.getSensorPortNumber() != 0) {
-                sensor = flutter.getSensors()[settings.getSensorPortNumber()-1];
-            }  else {
-                sensor = new NoSensor(0);
-            }
+            Sensor sensor = settings.getSensor();
 
             if (servo.getSettings().getRelationship().getClass() != Proportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run ServoDialog.updateViews on unimplemented relationship.");
-            }
-            // save
-            if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                saveButton.setEnabled(true);
-            } else {
-                saveButton.setEnabled(false);
             }
 
             // advanced settings
@@ -153,15 +138,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             TextView minPosValue = (TextView) view.findViewById(R.id.text_min_pos_value);
             minPosTxt.setText(sensor.getLowTextId());
             minPosValue.setText(String.valueOf(settings.getOutputMin()));
+
+            if (!settings.isSettable()) {
+                saveButton.setEnabled(false);
+                removeButton.setEnabled(false);
+            }
         } else {
             Log.e(Constants.LOG_TAG,"ServoDialog.updateViews: unimplemented Relationship/Settings.");
-        }
-
-        saveButton.setEnabled(true);
-        removeButton.setEnabled(true);
-        if (relationship.getClass() != Constant.class && servo.getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
-            saveButton.setEnabled(false);
-            removeButton.setEnabled(false);
         }
     }
 
@@ -184,7 +167,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         super.onCreateDialog(savedInstanceState);
 
         // clone old object
-        // NO!
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
 
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);

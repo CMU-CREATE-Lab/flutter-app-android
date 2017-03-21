@@ -20,12 +20,12 @@ import org.cmucreatelab.flutter_android.classes.outputs.BlueLed;
 import org.cmucreatelab.flutter_android.classes.outputs.GreenLed;
 import org.cmucreatelab.flutter_android.classes.outputs.RedLed;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -70,14 +70,17 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
     private void updateViews(View view) {
         updateViews(view, triColorLed.getRedLed());
-        Relationship relationship = triColorLed.getRedLed().getSettings().getRelationship();
+
+        if (triColorLed.getRedLed().getSettings().getClass() != triColorLed.getGreenLed().getSettings().getClass() || triColorLed.getGreenLed().getSettings().getClass() != triColorLed.getBlueLed().getSettings().getClass()) {
+            Log.w(Constants.LOG_TAG,"LedDialog.updateViews assumes same relationship for all Leds but they are not the same.");
+        }
 
         LinearLayout linkedSensor,minColorLayout;
         ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
         minColorLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_color);
 
-        if (relationship.getClass() == Constant.class) {
+        if (triColorLed.getRedLed().getSettings().getClass() == SettingsConstant.class) {
             // advanced settings
             advancedSettingsView.setVisibility(View.GONE);
 
@@ -97,7 +100,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             // min
             minColorLayout.setVisibility(View.GONE);
         } else {
-            if (relationship.getClass() != Proportional.class) {
+            if (triColorLed.getRedLed().getSettings().getClass() != SettingsProportional.class) {
                 Log.e(Constants.LOG_TAG,"tried to run LedDialog.updateViews on unimplemented relationship.");
             }
 
@@ -141,7 +144,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         saveButton.setEnabled(true);
         removeButton.setEnabled(true);
-        if (relationship.getClass() != Constant.class && triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+        if (!triColorLed.getRedLed().getSettings().isSettable()) {
             saveButton.setEnabled(false);
             removeButton.setEnabled(false);
         }

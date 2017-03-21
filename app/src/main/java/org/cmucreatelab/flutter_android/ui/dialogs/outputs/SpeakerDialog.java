@@ -214,11 +214,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
         saveButton.setEnabled(true);
         removeButton.setEnabled(true);
-        if (speaker.getVolume().getSettings().getRelationship().getClass() != Constant.class && speaker.getVolume().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+        if (!speaker.getVolume().getSettings().isSettable()) {
             saveButton.setEnabled(false);
             removeButton.setEnabled(false);
         }
-        if (speaker.getPitch().getSettings().getRelationship().getClass() != Constant.class && speaker.getPitch().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+        if (!speaker.getPitch().getSettings().isSettable()) {
             saveButton.setEnabled(false);
             removeButton.setEnabled(false);
         }
