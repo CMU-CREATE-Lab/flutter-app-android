@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.outputs;
 
 import android.util.Log;
 import android.view.View;
@@ -17,6 +17,7 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 /**
  * Created by Steve on 2/1/2017.
@@ -53,6 +54,7 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
                 saveButton.setEnabled(true);
                 removeButton.setEnabled(true);
             }
+
             ImageView relationshipImage = (ImageView) view.findViewById(R.id.image_relationship);
             relationshipImage.setImageResource(settings.getRelationship().getGreenImageIdMd());
             TextView relationshipText = (TextView) view.findViewById(R.id.text_relationship);

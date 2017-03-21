@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -30,9 +29,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.LedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.ServoDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.parents.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.LedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.ServoDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.SpeakerDialog;
 
 import java.util.ArrayList;
 
