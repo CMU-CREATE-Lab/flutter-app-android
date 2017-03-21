@@ -196,6 +196,7 @@
     <string name="connect_step_two">STEP 2:</string>
     <string name="flutter_name_default">Your Flutter</string>
     <string name="non_large_layout_description">Flutter Links is currently optimized for a large screen experience. Please use Flutter Links with a device that has at least a 640dp x 480dp screen.</string>
+    <string name="reading_data">Reading Flutter Data...</string>
 
     <!-- Colors -->
     <string name="color_red">Red</string>
