@@ -292,7 +292,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
         dataPopulated = true;
 
-        // start new activity
+        // Dismiss spinner
+        GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
+
+        // Start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
     }
