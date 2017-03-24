@@ -29,9 +29,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.LedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 
 import java.util.ArrayList;
 
