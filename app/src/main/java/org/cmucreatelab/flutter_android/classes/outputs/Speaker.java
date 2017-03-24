@@ -45,6 +45,7 @@ public class Speaker implements FlutterOutput {
         } else {
             newInstance.getPitch().setSettings(SettingsProportional.newInstance(oldInstance.getPitch().getSettings()));
         }
+        newInstance.getPitch().setIsLinked(oldInstance.getPitch().isLinked(),oldInstance.getPitch());
 
         // settings (volume)
         if (oldInstance.getVolume().getSettings().getClass() == SettingsConstant.class) {
@@ -52,6 +53,7 @@ public class Speaker implements FlutterOutput {
         } else {
             newInstance.getVolume().setSettings(SettingsProportional.newInstance(oldInstance.getVolume().getSettings()));
         }
+        newInstance.getVolume().setIsLinked(oldInstance.getVolume().isLinked(),oldInstance.getVolume());
 
         return newInstance;
     }

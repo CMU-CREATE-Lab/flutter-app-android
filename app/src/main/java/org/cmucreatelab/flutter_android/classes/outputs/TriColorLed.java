@@ -57,9 +57,13 @@ public class TriColorLed implements FlutterOutput {
                 newInstance.getGreenLed().setSettings(SettingsProportional.newInstance(oldInstance.getGreenLed().getSettings()));
                 newInstance.getBlueLed().setSettings(SettingsProportional.newInstance(oldInstance.getBlueLed().getSettings()));
             }
+            newInstance.getRedLed().setIsLinked(oldInstance.getRedLed().isLinked(), oldInstance.getRedLed());
+            newInstance.getGreenLed().setIsLinked(oldInstance.getGreenLed().isLinked(), oldInstance.getGreenLed());
+            newInstance.getBlueLed().setIsLinked(oldInstance.getBlueLed().isLinked(), oldInstance.getBlueLed());
         } else {
             Log.e(Constants.LOG_TAG, "TriColorLed.newInstance: RGB setting types do not match; returning new instance as is.");
         }
+
 
         return newInstance;
     }

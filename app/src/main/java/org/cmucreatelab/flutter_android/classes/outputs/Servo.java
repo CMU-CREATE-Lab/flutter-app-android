@@ -41,6 +41,7 @@ public class Servo extends Output implements FlutterOutput {
         } else {
             newInstance.setSettings(SettingsProportional.newInstance(oldInstance.getSettings()));
         }
+        newInstance.setIsLinked(oldInstance.isLinked(), oldInstance);
 
         return newInstance;
     }

@@ -7,7 +7,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
