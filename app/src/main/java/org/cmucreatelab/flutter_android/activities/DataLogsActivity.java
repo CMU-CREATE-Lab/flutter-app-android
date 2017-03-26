@@ -236,10 +236,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 sensor1Type.setText(getString(dataSet.getSensors()[0].getTypeTextId()));
                 sensor2Type.setText(getString(dataSet.getSensors()[1].getTypeTextId()));
                 sensor3Type.setText(getString(dataSet.getSensors()[2].getTypeTextId()));
-                // TODO - figure out why these images are not populating
-                sensor1Type.setCompoundDrawables(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[0].getOrangeImageIdSm()), null, null);
-                sensor2Type.setCompoundDrawables(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[1].getOrangeImageIdSm()), null, null);
-                sensor3Type.setCompoundDrawables(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[2].getOrangeImageIdSm()), null, null);
+                sensor1Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[0].getOrangeImageIdSm()), null, null);
+                sensor2Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[1].getOrangeImageIdSm()), null, null);
+                sensor3Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[2].getOrangeImageIdSm()), null, null);
 
                 dataInstanceListAdapter.clearDataPoints();
                 Iterator it = dataSet.getData().entrySet().iterator();
