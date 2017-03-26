@@ -418,6 +418,36 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     };
 
 
+    // I am not including MAX and MIN because they behave differently since they can be on at the same time
+    private void updateStats(Sensor[] sensors, int[] array, Constants.STATS type, Button button, int drawableId) {
+        if (statState == type) {
+            if (sensors[0].getSensorType() != NOT_SET) {
+                statsRelativeLayout1.remove(type);
+            }
+            if (sensors[1].getSensorType() != NOT_SET) {
+                statsRelativeLayout2.remove(type);
+            }
+            if (sensors[2].getSensorType() != NOT_SET) {
+                statsRelativeLayout3.remove(type);
+            }
+            statState = Constants.STATS.NONE;
+        } else {
+            statState = type;
+            button.setBackground(ContextCompat.getDrawable(instance, drawableId));
+            button.setTextColor(getResources().getColor(R.color.white));
+            if (sensors[0].getSensorType() != NOT_SET) {
+                statsRelativeLayout1.add(statState, array[0]);
+            }
+            if (sensors[1].getSensorType() != NOT_SET) {
+                statsRelativeLayout2.add(statState, array[1]);
+            }
+            if (sensors[2].getSensorType() != NOT_SET) {
+                statsRelativeLayout3.add(statState, array[2]);
+            }
+        }
+    }
+
+
     private Button.OnClickListener meanClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -425,32 +455,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             statsHelper();
             int[] means = workingDataSet.getMeans();
             Sensor[] sensors = workingDataSet.getSensors();
-
-            if (statState == Constants.STATS.MEAN) {
-                statState = Constants.STATS.NONE;
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.remove(Constants.STATS.MEAN);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.remove(Constants.STATS.MEAN);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.remove(Constants.STATS.MEAN);
-                }
-            } else {
-                statState = Constants.STATS.MEAN;
-                buttonMean.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_left));
-                buttonMean.setTextColor(getResources().getColor(R.color.white));
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.add(statState, means[0]);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(statState, means[1]);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(statState, means[2]);
-                }
-            }
+            updateStats(sensors, means, Constants.STATS.MEAN, buttonMean, R.drawable.orange_button_left);
         }
     };
 
@@ -462,32 +467,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             statsHelper();
             int[] medians = workingDataSet.getMedians();
             Sensor[] sensors = workingDataSet.getSensors();
-
-            if (statState == Constants.STATS.MEDIAN) {
-                statState = Constants.STATS.NONE;
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.remove(Constants.STATS.MEDIAN);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.remove(Constants.STATS.MEDIAN);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.remove(Constants.STATS.MEDIAN);
-                }
-            } else {
-                statState = Constants.STATS.MEDIAN;
-                buttonMedian.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_middle));
-                buttonMedian.setTextColor(getResources().getColor(R.color.white));
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.add(statState, medians[0]);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(statState, medians[1]);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(statState, medians[2]);
-                }
-            }
+            updateStats(sensors, medians, Constants.STATS.MEDIAN, buttonMedian, R.drawable.orange_button_middle);
         }
     };
 
@@ -499,32 +479,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             statsHelper();
             int[] modes = workingDataSet.getModes();
             Sensor[] sensors = workingDataSet.getSensors();
-
-            if (statState == Constants.STATS.MODE) {
-                statState = Constants.STATS.NONE;
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.remove(Constants.STATS.MODE);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.remove(Constants.STATS.MODE);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.remove(Constants.STATS.MODE);
-                }
-            } else {
-                statState = Constants.STATS.MODE;
-                buttonMode.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_right));
-                buttonMode.setTextColor(getResources().getColor(R.color.white));
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.add(statState, modes[0]);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(statState, modes[1]);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(statState, modes[2]);
-                }
-            }
+            updateStats(sensors, modes, Constants.STATS.MODE, buttonMode, R.drawable.orange_button_right);
         }
     };
 

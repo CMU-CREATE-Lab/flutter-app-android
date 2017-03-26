@@ -13,6 +13,8 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * This class helps DataLogsActivity to update the list of data logs and then react appropriately to whoever did the updating
  */
 
 public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
