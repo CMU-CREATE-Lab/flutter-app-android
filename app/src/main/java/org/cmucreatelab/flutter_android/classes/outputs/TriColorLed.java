@@ -273,9 +273,9 @@ public class TriColorLed implements FlutterOutput {
         b = getBlueLed().getSettings();
         if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
             if (r.getClass() == SettingsProportional.class) {
-                ((SettingsProportional)r).setOutputMin( getProportionalValue(red, 255, getRedLed().getMin()) );
-                ((SettingsProportional)g).setOutputMin( getProportionalValue(green, 255, getGreenLed().getMin()) );
-                ((SettingsProportional)b).setOutputMin( getProportionalValue(blue, 255, getBlueLed().getMin()) );
+                ((SettingsProportional)r).setOutputMin( getProportionalValue(red, 255, getRedLed().getMax()) );
+                ((SettingsProportional)g).setOutputMin( getProportionalValue(green, 255, getGreenLed().getMax()) );
+                ((SettingsProportional)b).setOutputMin( getProportionalValue(blue, 255, getBlueLed().getMax()) );
             } else if (r.getClass() == SettingsConstant.class) {
                 ((SettingsConstant) r).setValue(getProportionalValue(red, 255, getRedLed().getMax()));
                 ((SettingsConstant) g).setValue(getProportionalValue(green, 255, getGreenLed().getMax()));

@@ -53,6 +53,7 @@ public abstract class Output implements Serializable {
             int min = output.getMin();
             int max = output.getMax();
             SettingsProportional settings = SettingsProportional.newInstance(this.settings);
+            settings.setSensorPortNumber(0);
             settings.setOutputMin(min);
             settings.setOutputMax(max);
             this.settings = settings;

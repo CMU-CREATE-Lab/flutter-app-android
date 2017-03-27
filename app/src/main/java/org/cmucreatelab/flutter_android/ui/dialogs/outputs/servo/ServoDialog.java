@@ -68,14 +68,15 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
     private void updateViews() {
         super.updateViews(dialogView, servo);
-        Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
-        Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
 
         this.advancedSettingsView = (ImageView) dialogView.findViewById(R.id.image_advanced_settings);
         this.linkedSensor = (LinearLayout) dialogView.findViewById(R.id.linear_set_linked_sensor);
         this.minPosLayout = (LinearLayout) dialogView.findViewById(R.id.linear_set_min_pos);
 
         stateHelper.updateView(this);
+
+        Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
+        Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
         saveButton.setEnabled(stateHelper.canSaveLink());
         removeButton.setEnabled(stateHelper.canRemoveLink());
     }

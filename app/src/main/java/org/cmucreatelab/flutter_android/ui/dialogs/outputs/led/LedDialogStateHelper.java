@@ -1,21 +1,15 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.led;
 
 import android.util.Log;
-import android.widget.TextView;
 
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
-import org.cmucreatelab.flutter_android.classes.settings.Settings;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.DialogStateHelper;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialogConstant;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialogNoRelationship;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialogProportional;
 
 /**
  * Created by mike on 3/24/17.
@@ -41,15 +35,20 @@ public abstract class LedDialogStateHelper implements DialogStateHelper<LedDialo
     public static LedDialogStateHelper newInstance(TriColorLed triColorLed) {
         LedDialogStateHelper result;
 
-        result = null;
-//        if (settings.getClass() == SettingsProportional.class) {
-//            result = ServoDialogProportional.newInstance(servo);
-//        } else if (settings.getClass() == SettingsConstant.class) {
-//            result = ServoDialogConstant.newInstance(servo);
-//        } else {
-//            Log.w(Constants.LOG_TAG,"ServoDialogStateHelper.newInstance: unimplmeneted relationship, returning ServoDialogNoRelationship.");
-//            result = ServoDialogNoRelationship.newInstance(servo);
-//        }
+        if (triColorLed.getRedLed().getSettings().getClass() == triColorLed.getGreenLed().getSettings().getClass() && triColorLed.getGreenLed().getSettings().getClass() == triColorLed.getBlueLed().getSettings().getClass()) {
+            Relationship relationship = triColorLed.getRedLed().getSettings().getRelationship();
+            if (relationship.getClass() == Proportional.class) {
+                result = LedDialogProportional.newInstance(triColorLed);
+            } else if (relationship.getClass() == Constant.class) {
+                result = LedDialogConstant.newInstance(triColorLed);
+            } else {
+                Log.w(Constants.LOG_TAG,"LedDialogStateHelper.newInstance: relationship not implemented");
+                result = LedDialogNoRelationship.newInstance(triColorLed);
+            }
+        } else {
+            Log.e(Constants.LOG_TAG,"LedDialogStateHelper.newInstance: RGB Led Relationships do not match.");
+            result = LedDialogNoRelationship.newInstance(triColorLed);
+        }
 
         return result;
     }
@@ -62,9 +61,9 @@ public abstract class LedDialogStateHelper implements DialogStateHelper<LedDialo
 
     public abstract void setLinkedSensor(Sensor sensor);
 
-    public abstract void setMinimumColor();
+    public abstract void setMinimumColor(int red, int green, int blue);
 
-    public abstract void setMaximumColor();
+    public abstract void setMaximumColor(int red, int green, int blue);
 
 
     // DialogStateHelper implementation
