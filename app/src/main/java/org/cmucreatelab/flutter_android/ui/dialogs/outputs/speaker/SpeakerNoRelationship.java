@@ -9,8 +9,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * SpeakerStateHelper implementation with No relationship assigned
+ *
  */
-
 public class SpeakerNoRelationship extends SpeakerStateHelper {
 
 

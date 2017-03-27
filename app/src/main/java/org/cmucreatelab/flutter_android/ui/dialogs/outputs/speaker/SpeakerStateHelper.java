@@ -13,7 +13,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume.Sp
 /**
  * Created by mike on 3/24/17.
  *
- * DialogStateHelper for the Speaker dialog
+ * DialogStateHelper for the Speaker dialog; tracks the Tab state as well as Relationship type for selected tab
  *
  */
 public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDialog> {

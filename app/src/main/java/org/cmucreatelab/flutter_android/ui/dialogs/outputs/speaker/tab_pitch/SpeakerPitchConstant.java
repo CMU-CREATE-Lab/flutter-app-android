@@ -18,8 +18,10 @@ import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * SpeakerPitchStateHelper implementation with Constant relationship
+ *
  */
-
 public class SpeakerPitchConstant extends SpeakerPitchStateHelper {
 
 

@@ -3,20 +3,17 @@ package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerStateHelper;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * SpeakerStateHelper when the Pitch tab is selected
+ *
  */
-
 public abstract class SpeakerPitchStateHelper extends SpeakerStateHelper {
 
 

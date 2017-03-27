@@ -6,12 +6,11 @@ import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.DialogStateHelper;
 
 /**
  * Created by mike on 3/24/17.
  *
- * DialogStateHelper for the Led dialog
+ * LedDialogStateHelper implementation with No relationship assigned
  *
  */
 public class LedDialogNoRelationship extends LedDialogStateHelper {

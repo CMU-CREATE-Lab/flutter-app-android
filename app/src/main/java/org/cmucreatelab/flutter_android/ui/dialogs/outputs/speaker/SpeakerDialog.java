@@ -62,12 +62,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         MinPitchDialog.DialogMinPitchListener {
 
     public View dialogView;
-    private DialogSpeakerListener dialogSpeakerListener;
-    private SpeakerStateHelper stateHelper;
-    private Speaker speaker;
 
-    private RelativeLayout relativeVolume;
-    private RelativeLayout relativePitch;
+    private SpeakerStateHelper stateHelper;
+    private DialogSpeakerListener dialogSpeakerListener;
+    private Speaker speaker;
 
 
     private void updateViews() {
@@ -122,9 +120,6 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
         ButterKnife.bind(this, view);
-
-        relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
-        relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
 
         updateViews();
 
@@ -183,6 +178,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onClickVolume");
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
+        RelativeLayout relativeVolume = (RelativeLayout) dialogView.findViewById(R.id.relative_volume);
+        RelativeLayout relativePitch = (RelativeLayout) dialogView.findViewById(R.id.relative_pitch);
 
         if (stateHelper.getCurrentTab() != SpeakerStateHelper.TabType.VOLUME) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_left));
@@ -202,6 +199,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onClickPitch");
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
+        RelativeLayout relativeVolume = (RelativeLayout) dialogView.findViewById(R.id.relative_volume);
+        RelativeLayout relativePitch = (RelativeLayout) dialogView.findViewById(R.id.relative_pitch);
 
         if (stateHelper.getCurrentTab() != SpeakerStateHelper.TabType.PITCH) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_left));

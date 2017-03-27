@@ -14,8 +14,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * LedDialogStateHelper implementation with Constant relationship
+ *
  */
-
 public class LedDialogConstant extends LedDialogStateHelper {
 
 

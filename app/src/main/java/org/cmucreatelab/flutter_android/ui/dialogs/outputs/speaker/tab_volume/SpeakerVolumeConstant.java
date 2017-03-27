@@ -3,7 +3,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,15 +12,16 @@ import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * SpeakerVolumeStateHelper implementation with Constant relationship
+ *
  */
-
 public class SpeakerVolumeConstant extends SpeakerVolumeStateHelper {
 
 
@@ -39,7 +39,6 @@ public class SpeakerVolumeConstant extends SpeakerVolumeStateHelper {
     public void updateView(SpeakerDialog dialog) {
         ImageView advancedSettingsView = (ImageView) dialog.dialogView.findViewById(R.id.image_advanced_settings);
         LinearLayout linkedSensor = (LinearLayout) dialog.dialogView.findViewById(R.id.linear_set_linked_sensor);
-        LinearLayout minPitchLayout = (LinearLayout) dialog.dialogView.findViewById(R.id.linear_set_min_pitch);
         LinearLayout minVolumeLayout = (LinearLayout) dialog.dialogView.findViewById(R.id.linear_set_min_volume);
 
         SettingsConstant volumeSettings = (SettingsConstant) getSpeaker().getVolume().getSettings();

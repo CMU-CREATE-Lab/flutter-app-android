@@ -12,8 +12,10 @@ import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * LedDialogStateHelper implementation with Proportional relationship
+ *
  */
-
 public class LedDialogProportional extends LedDialogStateHelper {
 
 
@@ -33,10 +35,6 @@ public class LedDialogProportional extends LedDialogStateHelper {
         ImageView advancedSettingsView = (ImageView) dialog.dialogView.findViewById(R.id.image_advanced_settings);
         linkedSensor = (LinearLayout) dialog.dialogView.findViewById(R.id.linear_set_linked_sensor);
         minColorLayout = (LinearLayout) dialog.dialogView.findViewById(R.id.linear_set_min_color);
-
-//        if (getTriColorLed().getRedLed().getSettings().getClass() != SettingsProportional.class) {
-//            Log.e(Constants.LOG_TAG,"tried to run LedDialog.updateViews on unimplemented relationship.");
-//        }
 
         // advanced settings
         advancedSettingsView.setVisibility(View.VISIBLE);

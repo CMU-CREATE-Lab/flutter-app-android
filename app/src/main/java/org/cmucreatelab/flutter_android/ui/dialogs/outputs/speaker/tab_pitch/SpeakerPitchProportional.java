@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,20 +11,18 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerStateHelper;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume.SpeakerVolumeConstant;
 
 /**
  * Created by mike on 3/27/17.
+ *
+ * SpeakerPitchStateHelper implementation with Proportional relationship
+ *
  */
-
 public class SpeakerPitchProportional extends SpeakerPitchStateHelper {
 
 
