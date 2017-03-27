@@ -55,13 +55,13 @@ public class SpeakerNoRelationship extends SpeakerStateHelper {
 
 
     @Override
-    public void setMinimum() {
+    public void setMinimum(int minimum) {
         Log.w(Constants.LOG_TAG, "SpeakerNoRelationship.setMinimum: attribute not implemented");
     }
 
 
     @Override
-    public void setMaximum() {
+    public void setMaximum(int maximum) {
         Log.w(Constants.LOG_TAG, "SpeakerNoRelationship.setMaximum: attribute not implemented");
     }
 
