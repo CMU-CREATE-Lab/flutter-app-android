@@ -91,19 +91,22 @@ public class SpeakerVolumeProportional extends SpeakerVolumeStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getVolume().getSettings();
+        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
     }
 
 
     @Override
     public void setMinimum(int minimum) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getVolume().getSettings();
+        settingsProportional.setOutputMin(minimum);
     }
 
 
     @Override
     public void setMaximum(int maximum) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getVolume().getSettings();
+        settingsProportional.setOutputMax(maximum);
     }
 
 }

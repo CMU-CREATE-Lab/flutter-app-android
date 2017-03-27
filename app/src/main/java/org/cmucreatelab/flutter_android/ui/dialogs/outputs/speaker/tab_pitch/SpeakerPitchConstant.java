@@ -61,7 +61,7 @@ public class SpeakerPitchConstant extends SpeakerPitchStateHelper {
 
     @Override
     public void clickMin() {
-
+        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.clickMin: no relationship; default to resource.");
     }
 
 
@@ -79,19 +79,20 @@ public class SpeakerPitchConstant extends SpeakerPitchStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-
+        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.setLinkedSensor: attribute not implemented");
     }
 
 
     @Override
     public void setMinimum(int minimum) {
-
+        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.setMinimum: attribute not implemented");
     }
 
 
     @Override
     public void setMaximum(int maximum) {
-
+        SettingsConstant settingsConstant = (SettingsConstant) getSpeaker().getPitch().getSettings();
+        settingsConstant.setValue(maximum);
     }
 
 }

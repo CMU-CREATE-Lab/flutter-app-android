@@ -140,6 +140,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
         DialogFragment dialog;
 
+        // TODO state helper
         switch (stateHelper.getCurrentTab()) {
             case VOLUME:
                 dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
@@ -249,6 +250,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMaxVolume(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaxVolume");
 
+        // TODO state helper
         if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional volumeSettings = (SettingsProportional) speaker.getVolume().getSettings();
             DialogFragment dialog = MaxVolumeDialog.newInstance(volumeSettings.getOutputMax(),this);
@@ -267,6 +269,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMinVolume(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinVolume");
 
+        // TODO state helper
         if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional volumeSettings = (SettingsProportional) speaker.getVolume().getSettings();
             DialogFragment dialog = MinVolumeDialog.newInstance(volumeSettings.getOutputMin(),this);
@@ -281,6 +284,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMaxPitch(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaxPitch");
 
+        // TODO state helper
         if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional pitchSettings = (SettingsProportional) speaker.getPitch().getSettings();
             DialogFragment dialog = MaxPitchDialog.newInstance(pitchSettings.getOutputMax(),this);
@@ -299,6 +303,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMinPitch(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinPitch");
 
+        // TODO state helper
         if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
             SettingsProportional pitchSettings = (SettingsProportional) speaker.getPitch().getSettings();
             DialogFragment dialog = MinPitchDialog.newInstance(pitchSettings.getOutputMin(),this);
@@ -333,27 +338,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
+
             // set sensor for the proper tab
-            switch (stateHelper.getCurrentTab()) {
-                case VOLUME:
-                    if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-                        SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
-                        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
-                    } else {
-                        Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Volume");
-                    }
-                    break;
-                case PITCH:
-                    if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-                        SettingsProportional settingsProportional = (SettingsProportional) speaker.getPitch().getSettings();
-                        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
-                    } else {
-                        Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Pitch");
-                    }
-                    break;
-                default:
-                    Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
-            }
+            stateHelper.setLinkedSensor(sensor);
+
             // set a sensor by default
             if (!speaker.getVolume().getSettings().isSettable()) {
                 SettingsConstant settingsConstant = SettingsConstant.newInstance(speaker.getVolume().getSettings());
@@ -423,6 +411,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
                 Log.e(Constants.LOG_TAG,"Failed to parse TabType");
                 stateHelper = SpeakerStateHelper.newInstance(null, speaker);
         }
+
         updateViews();
     }
 
@@ -441,14 +430,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentTextViewItem.setText(String.valueOf(max));
         currentImageView.setImageResource(R.drawable.link_icon_volume_high);
 
-        if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
-            settingsProportional.setOutputMax(max);
-        } else if (speaker.getVolume().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant settingsConstant = (SettingsConstant) speaker.getVolume().getSettings();
-            settingsConstant.setValue(max);
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.VOLUME) {
+            stateHelper.setMaximum(max);
         } else {
-            Log.e(Constants.LOG_TAG,"SpeakerDialog.onMaxVolumeChosen: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onMaxVolumeChosen but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 
@@ -467,14 +452,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentTextViewItem.setText(String.valueOf(min));
         currentImageView.setImageResource(R.drawable.link_icon_volume_low);
 
-        if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
-            settingsProportional.setOutputMin(min);
-        } else if (speaker.getVolume().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant settingsConstant = (SettingsConstant) speaker.getVolume().getSettings();
-            settingsConstant.setValue(min);
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.VOLUME) {
+            stateHelper.setMinimum(min);
         } else {
-            Log.e(Constants.LOG_TAG,"SpeakerDialog.onMinVolumeChosen: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onMinVolumeChosen but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 
@@ -493,14 +474,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentTextViewItem.setText(String.valueOf(max) + " " + getString(R.string.hz));
         currentImageView.setImageResource(R.drawable.link_icon_pitch);
 
-        if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional settingsProportional = (SettingsProportional) speaker.getPitch().getSettings();
-            settingsProportional.setOutputMax(max);
-        } else if (speaker.getPitch().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant settingsConstant = (SettingsConstant) speaker.getPitch().getSettings();
-            settingsConstant.setValue(max);
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.PITCH) {
+            stateHelper.setMaximum(max);
         } else {
-            Log.e(Constants.LOG_TAG,"SpeakerDialog.onMaxPitchChosen: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onMaxPitchChosen but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 
@@ -519,14 +496,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentTextViewItem.setText(String.valueOf(min) + " " + getString(R.string.hz));
         currentImageView.setImageResource(R.drawable.link_icon_pitch);
 
-        if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional settingsProportional = (SettingsProportional) speaker.getPitch().getSettings();
-            settingsProportional.setOutputMax(min);
-        } else if (speaker.getPitch().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant settingsConstant = (SettingsConstant) speaker.getPitch().getSettings();
-            settingsConstant.setValue(min);
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.PITCH) {
+            stateHelper.setMinimum(min);
         } else {
-            Log.e(Constants.LOG_TAG,"SpeakerDialog.onMinPitchChosen: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onMaxPitchChosen but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 

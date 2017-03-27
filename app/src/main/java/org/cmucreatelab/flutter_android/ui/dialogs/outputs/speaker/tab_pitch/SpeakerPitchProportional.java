@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,8 +11,11 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerStateHelper;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume.SpeakerVolumeConstant;
 
 /**
@@ -89,19 +93,22 @@ public class SpeakerPitchProportional extends SpeakerPitchStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getPitch().getSettings();
+        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
     }
 
 
     @Override
     public void setMinimum(int minimum) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getPitch().getSettings();
+        settingsProportional.setOutputMax(minimum);
     }
 
 
     @Override
     public void setMaximum(int maximum) {
-
+        SettingsProportional settingsProportional = (SettingsProportional) getSpeaker().getPitch().getSettings();
+        settingsProportional.setOutputMax(maximum);
     }
 
 }

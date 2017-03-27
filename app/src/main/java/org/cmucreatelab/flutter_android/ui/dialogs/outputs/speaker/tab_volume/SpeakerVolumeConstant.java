@@ -63,7 +63,7 @@ public class SpeakerVolumeConstant extends SpeakerVolumeStateHelper {
 
     @Override
     public void clickMin() {
-
+        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.clickMin: no relationship; default to resource.");
     }
 
 
@@ -81,19 +81,20 @@ public class SpeakerVolumeConstant extends SpeakerVolumeStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-
+        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.setLinkedSensor: attribute not implemented");
     }
 
 
     @Override
     public void setMinimum(int minimum) {
-
+        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.setMinimum: attribute not implemented");
     }
 
 
     @Override
     public void setMaximum(int maximum) {
-
+        SettingsConstant settingsConstant = (SettingsConstant) getSpeaker().getVolume().getSettings();
+        settingsConstant.setValue(maximum);
     }
 
 }
