@@ -138,21 +138,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        DialogFragment dialog;
-
-        // TODO state helper
-        switch (stateHelper.getCurrentTab()) {
-            case VOLUME:
-                dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
-                dialog.show(this.getFragmentManager(), "tag");
-                break;
-            case PITCH:
-                dialog = AdvancedSettingsDialog.newInstance(this, speaker.getPitch());
-                dialog.show(this.getFragmentManager(), "tag");
-                break;
-            default:
-                Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
-        }
+        stateHelper.clickAdvancedSettings(this);
     }
 
 
@@ -250,17 +236,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMaxVolume(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaxVolume");
 
-        // TODO state helper
-        if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional volumeSettings = (SettingsProportional) speaker.getVolume().getSettings();
-            DialogFragment dialog = MaxVolumeDialog.newInstance(volumeSettings.getOutputMax(),this);
-            dialog.show(this.getFragmentManager(), "tag");
-        } else if (speaker.getVolume().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant volumeSettings = (SettingsConstant) speaker.getVolume().getSettings();
-            DialogFragment dialog = MaxVolumeDialog.newInstance(volumeSettings.getValue(),this);
-            dialog.show(this.getFragmentManager(), "tag");
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.VOLUME) {
+            stateHelper.clickMax(this);
         } else {
-            Log.e(Constants.LOG_TAG, "SpeakerDialog.onClickSetMaxVolume: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onClickSetMaxVolume but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 
@@ -269,13 +248,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMinVolume(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinVolume");
 
-        // TODO state helper
-        if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional volumeSettings = (SettingsProportional) speaker.getVolume().getSettings();
-            DialogFragment dialog = MinVolumeDialog.newInstance(volumeSettings.getOutputMin(),this);
-            dialog.show(this.getFragmentManager(), "tag");
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.VOLUME) {
+            stateHelper.clickMin(this);
         } else {
-            Log.e(Constants.LOG_TAG, "SpeakerDialog.onClickSetMaxVolume: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onClickSetMinVolume but DialogStateHelper.currentTab is not on VOLUME");
         }
     }
 
@@ -284,17 +260,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMaxPitch(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaxPitch");
 
-        // TODO state helper
-        if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional pitchSettings = (SettingsProportional) speaker.getPitch().getSettings();
-            DialogFragment dialog = MaxPitchDialog.newInstance(pitchSettings.getOutputMax(),this);
-            dialog.show(this.getFragmentManager(), "tag");
-        } else if (speaker.getPitch().getSettings().getClass() == SettingsConstant.class) {
-            SettingsConstant pitchSettings = (SettingsConstant) speaker.getPitch().getSettings();
-            DialogFragment dialog = MaxPitchDialog.newInstance(pitchSettings.getValue(),this);
-            dialog.show(this.getFragmentManager(), "tag");
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.PITCH) {
+            stateHelper.clickMax(this);
         } else {
-            Log.e(Constants.LOG_TAG, "SpeakerDialog.onClickSetMaxPitch: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onClickSetMaxPitch but DialogStateHelper.currentTab is not on PITCH");
         }
     }
 
@@ -303,13 +272,10 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     public void onClickSetMinPitch(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinPitch");
 
-        // TODO state helper
-        if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            SettingsProportional pitchSettings = (SettingsProportional) speaker.getPitch().getSettings();
-            DialogFragment dialog = MinPitchDialog.newInstance(pitchSettings.getOutputMin(),this);
-            dialog.show(this.getFragmentManager(), "tag");
+        if (stateHelper.getCurrentTab() == SpeakerStateHelper.TabType.PITCH) {
+            stateHelper.clickMin(this);
         } else {
-            Log.e(Constants.LOG_TAG, "SpeakerDialog.onClickSetMinPitch: unimplemented relationship");
+            Log.e(Constants.LOG_TAG,"onClickSetMinPitch but DialogStateHelper.currentTab is not on PITCH");
         }
     }
 

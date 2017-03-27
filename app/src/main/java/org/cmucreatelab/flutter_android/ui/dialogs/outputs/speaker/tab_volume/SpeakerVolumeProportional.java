@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume;
 
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MinVolumeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 
 /**
@@ -71,14 +75,25 @@ public class SpeakerVolumeProportional extends SpeakerVolumeStateHelper {
 
 
     @Override
-    public void clickMin() {
-
+    public void clickAdvancedSettings(SpeakerDialog dialog) {
+        DialogFragment fragment = AdvancedSettingsDialog.newInstance(dialog, getSpeaker().getVolume());
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 
     @Override
-    public void clickMax() {
+    public void clickMin(SpeakerDialog dialog) {
+        SettingsProportional volumeSettings = (SettingsProportional) getSpeaker().getVolume().getSettings();
+        DialogFragment fragment = MinVolumeDialog.newInstance(volumeSettings.getOutputMin(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
+    }
 
+
+    @Override
+    public void clickMax(SpeakerDialog dialog) {
+        SettingsProportional volumeSettings = (SettingsProportional) getSpeaker().getVolume().getSettings();
+        DialogFragment fragment = MaxVolumeDialog.newInstance(volumeSettings.getOutputMax(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 

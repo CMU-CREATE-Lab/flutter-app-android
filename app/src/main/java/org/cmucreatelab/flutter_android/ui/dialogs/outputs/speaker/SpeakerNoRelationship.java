@@ -31,13 +31,18 @@ public class SpeakerNoRelationship extends SpeakerStateHelper {
 
 
     @Override
-    public void clickMin() {
+    public void clickAdvancedSettings(SpeakerDialog dialog) {
+        Log.w(Constants.LOG_TAG, "SpeakerNoRelationship.clickAdvancedSettings: no relationship; default to resource.");
+    }
+
+    @Override
+    public void clickMin(SpeakerDialog dialog) {
         Log.w(Constants.LOG_TAG, "SpeakerNoRelationship.clickMin: no relationship; default to resource.");
     }
 
 
     @Override
-    public void clickMax() {
+    public void clickMax(SpeakerDialog dialog) {
         Log.w(Constants.LOG_TAG, "SpeakerNoRelationship.clickMax: no relationship; default to resource.");
     }
 

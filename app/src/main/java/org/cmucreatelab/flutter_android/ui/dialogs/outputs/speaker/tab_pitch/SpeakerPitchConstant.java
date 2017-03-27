@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 
 /**
@@ -60,14 +62,22 @@ public class SpeakerPitchConstant extends SpeakerPitchStateHelper {
 
 
     @Override
-    public void clickMin() {
-        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.clickMin: no relationship; default to resource.");
+    public void clickAdvancedSettings(SpeakerDialog dialog) {
+        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.clickAdvancedSettings: not implemented; default to resource.");
     }
 
 
     @Override
-    public void clickMax() {
+    public void clickMin(SpeakerDialog dialog) {
+        Log.w(Constants.LOG_TAG, "SpeakerPitchConstant.clickMin: not implemented; default to resource.");
+    }
 
+
+    @Override
+    public void clickMax(SpeakerDialog dialog) {
+        SettingsConstant pitchSettings = (SettingsConstant) getSpeaker().getPitch().getSettings();
+        DialogFragment fragment = MaxPitchDialog.newInstance(pitchSettings.getValue(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 

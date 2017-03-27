@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPitchDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MinPitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerStateHelper;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume.SpeakerVolumeConstant;
@@ -73,14 +77,25 @@ public class SpeakerPitchProportional extends SpeakerPitchStateHelper {
 
 
     @Override
-    public void clickMin() {
-
+    public void clickAdvancedSettings(SpeakerDialog dialog) {
+        DialogFragment fragment = AdvancedSettingsDialog.newInstance(dialog, getSpeaker().getPitch());
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 
     @Override
-    public void clickMax() {
+    public void clickMin(SpeakerDialog dialog) {
+        SettingsProportional pitchSettings = (SettingsProportional) getSpeaker().getPitch().getSettings();
+        DialogFragment fragment = MinPitchDialog.newInstance(pitchSettings.getOutputMin(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
+    }
 
+
+    @Override
+    public void clickMax(SpeakerDialog dialog) {
+        SettingsProportional pitchSettings = (SettingsProportional) getSpeaker().getPitch().getSettings();
+        DialogFragment fragment = MaxPitchDialog.newInstance(pitchSettings.getOutputMax(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 

@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume;
 
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxVolumeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
 
 /**
@@ -62,14 +64,22 @@ public class SpeakerVolumeConstant extends SpeakerVolumeStateHelper {
 
 
     @Override
-    public void clickMin() {
-        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.clickMin: no relationship; default to resource.");
+    public void clickAdvancedSettings(SpeakerDialog dialog) {
+        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.clickAdvancedSettings: not implemented; default to resource.");
     }
 
 
     @Override
-    public void clickMax() {
+    public void clickMin(SpeakerDialog dialog) {
+        Log.w(Constants.LOG_TAG, "SpeakerVolumeConstant.clickMin: not implemented; default to resource.");
+    }
 
+
+    @Override
+    public void clickMax(SpeakerDialog dialog) {
+        SettingsConstant volumeSettings = (SettingsConstant) getSpeaker().getVolume().getSettings();
+        DialogFragment fragment = MaxVolumeDialog.newInstance(volumeSettings.getValue(),dialog);
+        fragment.show(dialog.getFragmentManager(), "tag");
     }
 
 

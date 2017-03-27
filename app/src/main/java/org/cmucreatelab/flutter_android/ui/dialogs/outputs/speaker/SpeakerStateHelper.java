@@ -64,9 +64,11 @@ public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDia
     // click actions
 
 
-    public abstract void clickMin();
+    public abstract void clickAdvancedSettings(SpeakerDialog dialog);
 
-    public abstract void clickMax();
+    public abstract void clickMin(SpeakerDialog dialog);
+
+    public abstract void clickMax(SpeakerDialog dialog);
 
 
     // set actions
