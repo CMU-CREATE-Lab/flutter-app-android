@@ -64,7 +64,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
     private View dialogView;
     private DialogSpeakerListener dialogSpeakerListener;
-    private TabType currentTab;
+    private SpeakerStateHelper stateHelper;
     private Speaker speaker;
 
     private LinearLayout linkedSensor,minVolumeLayout,minPitchLayout;
@@ -73,13 +73,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private RelativeLayout relativePitch;
 
 
-    public enum TabType {
-        VOLUME, PITCH
-    }
-
-
-    private void updatePitchViews(View view) {
-        updateViews(view, speaker.getPitch());
+    private void updatePitchViews() {
+        super.updateViews(dialogView, speaker.getPitch());
         Relationship relationship = speaker.getPitch().getSettings().getRelationship();
 
         // Pitch
@@ -96,20 +91,20 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             ((TextView)sensorViewGroup.getChildAt(1)).setText(speaker.getPitch().getSettings().getSensor().getSensorTypeId());
 
             // max Pitch
-            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+            ImageView maxPitch = (ImageView) dialogView.findViewById(R.id.image_max_pitch);
             maxPitch.setImageResource(R.drawable.link_icon_pitch);
-            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+            TextView maxPitchTxt = (TextView) dialogView.findViewById(R.id.text_max_pitch);
             maxPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.pitch));
-            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+            TextView maxPitchValue = (TextView) dialogView.findViewById(R.id.text_max_pitch_value);
             maxPitchValue.setText(String.valueOf(pitchSettings.getOutputMax()) + " " + getString(R.string.hz));
 
             // min Pitch
             minPitchLayout.setVisibility(View.VISIBLE);
-            ImageView minPitch = (ImageView) view.findViewById(R.id.image_min_pitch);
+            ImageView minPitch = (ImageView) dialogView.findViewById(R.id.image_min_pitch);
             minPitch.setImageResource(R.drawable.link_icon_pitch);
-            TextView minPitchTxt = (TextView) view.findViewById(R.id.text_min_pitch);
+            TextView minPitchTxt = (TextView) dialogView.findViewById(R.id.text_min_pitch);
             minPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.pitch));
-            TextView minPitchValue = (TextView) view.findViewById(R.id.text_min_pitch_value);
+            TextView minPitchValue = (TextView) dialogView.findViewById(R.id.text_min_pitch_value);
             minPitchValue.setText(String.valueOf(pitchSettings.getOutputMin()) + " " + getString(R.string.hz));
         } else if (speaker.getPitch().getSettings().getClass() == SettingsConstant.class) {
             SettingsConstant pitchSettings = (SettingsConstant) speaker.getPitch().getSettings();
@@ -121,11 +116,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             linkedSensor.setVisibility(View.GONE);
 
             // max Pitch
-            ImageView maxPitch = (ImageView) view.findViewById(R.id.image_max_pitch);
+            ImageView maxPitch = (ImageView) dialogView.findViewById(R.id.image_max_pitch);
             maxPitch.setImageResource(R.drawable.link_icon_pitch);
-            TextView maxPitchTxt = (TextView) view.findViewById(R.id.text_max_pitch);
+            TextView maxPitchTxt = (TextView) dialogView.findViewById(R.id.text_max_pitch);
             maxPitchTxt.setText(getString(speaker.getPitch().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.pitch));
-            TextView maxPitchValue = (TextView) view.findViewById(R.id.text_max_pitch_value);
+            TextView maxPitchValue = (TextView) dialogView.findViewById(R.id.text_max_pitch_value);
             maxPitchValue.setText(String.valueOf(pitchSettings.getValue()) + " " + getString(R.string.hz));
 
             // min Pitch
@@ -136,8 +131,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    private void updateVolumeViews(View view) {
-        updateViews(view, speaker.getVolume());
+    private void updateVolumeViews() {
+        super.updateViews(dialogView, speaker.getVolume());
         Relationship relationship = speaker.getVolume().getSettings().getRelationship();
 
         // Volume
@@ -155,20 +150,20 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             ((TextView)sensorViewGroup.getChildAt(1)).setText(speaker.getVolume().getSettings().getSensor().getSensorTypeId());
 
             // max Volume
-            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+            ImageView maxVolumeImg = (ImageView) dialogView.findViewById(R.id.image_max_volume);
             maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
-            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+            TextView maxVolumeTxt = (TextView) dialogView.findViewById(R.id.text_max_volume);
             maxVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.volume));
-            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+            TextView maxVolumeValue = (TextView) dialogView.findViewById(R.id.text_max_volume_value);
             maxVolumeValue.setText(String.valueOf(volumeSettings.getOutputMax()));
 
             // min Volume
             minVolumeLayout.setVisibility(View.VISIBLE);
-            ImageView minVolumeImg = (ImageView) view.findViewById(R.id.image_min_volume);
+            ImageView minVolumeImg = (ImageView) dialogView.findViewById(R.id.image_min_volume);
             minVolumeImg.setImageResource(R.drawable.link_icon_volume_low);
-            TextView minVolumeTxt = (TextView) view.findViewById(R.id.text_min_volume);
+            TextView minVolumeTxt = (TextView) dialogView.findViewById(R.id.text_min_volume);
             minVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getLowTextId()) + " " + getString(R.string.volume));
-            TextView minVolumeValue = (TextView) view.findViewById(R.id.text_min_volume_value);
+            TextView minVolumeValue = (TextView) dialogView.findViewById(R.id.text_min_volume_value);
             minVolumeValue.setText(String.valueOf(volumeSettings.getOutputMin()));
         } else if (speaker.getVolume().getSettings().getClass() == SettingsConstant.class) {
             SettingsConstant volumeSettings = (SettingsConstant) speaker.getVolume().getSettings();
@@ -180,11 +175,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             linkedSensor.setVisibility(View.GONE);
 
             // max Volume
-            ImageView maxVolumeImg = (ImageView) view.findViewById(R.id.image_max_volume);
+            ImageView maxVolumeImg = (ImageView) dialogView.findViewById(R.id.image_max_volume);
             maxVolumeImg.setImageResource(R.drawable.link_icon_volume_high);
-            TextView maxVolumeTxt = (TextView) view.findViewById(R.id.text_max_volume);
+            TextView maxVolumeTxt = (TextView) dialogView.findViewById(R.id.text_max_volume);
             maxVolumeTxt.setText(getString(speaker.getVolume().getSettings().getSensor().getHighTextId()) + " " + getString(R.string.volume));
-            TextView maxVolumeValue = (TextView) view.findViewById(R.id.text_max_volume_value);
+            TextView maxVolumeValue = (TextView) dialogView.findViewById(R.id.text_max_volume_value);
             maxVolumeValue.setText(String.valueOf(volumeSettings.getValue()));
 
             // min Volume
@@ -195,20 +190,20 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    private void updateViews(View view) {
-        switch (currentTab) {
+    private void updateViews() {
+        switch (stateHelper.getCurrentTab()) {
             case VOLUME:
-                updateVolumeViews(view);
+                updateVolumeViews();
                 break;
             case PITCH:
-                updatePitchViews(view);
+                updatePitchViews();
                 break;
             default:
                 Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
         }
 
-        Button saveButton = (Button) view.findViewById(R.id.button_save_link);
-        Button removeButton = (Button) view.findViewById(R.id.button_remove_link);
+        Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
+        Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
 
         saveButton.setEnabled(true);
         removeButton.setEnabled(true);
@@ -235,20 +230,14 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     }
 
 
-    public TabType getCurrentTab() {
-        return currentTab;
-    }
-
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
-        currentTab = TabType.VOLUME;
 
         // clone old object
         speaker = Speaker.newInstance((Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY));
-
+        stateHelper = SpeakerStateHelper.newInstance(SpeakerStateHelper.TabType.VOLUME, speaker);
         dialogSpeakerListener = (DialogSpeakerListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SPEAKER);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -268,7 +257,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         relativeVolume = (RelativeLayout) view.findViewById(R.id.relative_volume);
         relativePitch = (RelativeLayout) view.findViewById(R.id.relative_pitch);
 
-        updateViews(view);
+        updateViews();
 
         return builder.create();
     }
@@ -282,7 +271,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
         DialogFragment dialog;
 
-        switch (currentTab) {
+        switch (stateHelper.getCurrentTab()) {
             case VOLUME:
                 dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
                 dialog.show(this.getFragmentManager(), "tag");
@@ -339,15 +328,15 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
 
-        if (currentTab != TabType.VOLUME) {
+        if (stateHelper.getCurrentTab() != SpeakerStateHelper.TabType.VOLUME) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_left));
             buttonVolume.setTextColor(Color.WHITE);
             buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_right));
             buttonPitch.setTextColor(Color.GRAY);
             relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
-            currentTab = TabType.VOLUME;
-            updateViews(dialogView);
+            stateHelper = SpeakerStateHelper.newInstance(SpeakerStateHelper.TabType.VOLUME, speaker);
+            updateViews();
         }
     }
 
@@ -358,15 +347,15 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
 
-        if (currentTab != TabType.PITCH) {
+        if (stateHelper.getCurrentTab() != SpeakerStateHelper.TabType.PITCH) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_left));
             buttonVolume.setTextColor(Color.GRAY);
             buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_right));
             buttonPitch.setTextColor(Color.WHITE);
             relativePitch.setVisibility(View.VISIBLE);
             relativeVolume.setVisibility(View.GONE);
-            currentTab = TabType.PITCH;
-            updateViews(dialogView);
+            stateHelper = SpeakerStateHelper.newInstance(SpeakerStateHelper.TabType.PITCH, speaker);
+            updateViews();
         }
     }
 
@@ -457,7 +446,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        switch (currentTab) {
+        switch (stateHelper.getCurrentTab()) {
             case VOLUME:
                 //speaker.getVolume().getSettings().setAdvancedSettings(advancedSettings);
                 if (speaker.getVolume().getSettings().hasAdvancedSettings()) {
@@ -505,7 +494,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
             // set sensor for the proper tab
-            switch (currentTab) {
+            switch (stateHelper.getCurrentTab()) {
                 case VOLUME:
                     if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
                         SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
@@ -537,7 +526,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
                 speaker.getPitch().setSettings(settingsConstant);
             }
         }
-        updateViews(dialogView);
+        updateViews();
     }
 
 
@@ -555,7 +544,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
 
-        switch (currentTab) {
+        switch (stateHelper.getCurrentTab()) {
             case VOLUME:
                 if (relationship.getClass() == Proportional.class) {
                     speaker.getVolume().setSettings(SettingsProportional.newInstance(speaker.getVolume().getSettings()));
@@ -589,8 +578,7 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             default:
                 Log.e(Constants.LOG_TAG,"Failed to parse TabType");
         }
-
-        updateViews(dialogView);
+        updateViews();
     }
 
 

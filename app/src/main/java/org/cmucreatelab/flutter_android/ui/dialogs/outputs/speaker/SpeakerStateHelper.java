@@ -1,11 +1,14 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker;
 
+import android.util.Log;
+
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.DialogStateHelper;
 
 /**
@@ -17,6 +20,17 @@ import org.cmucreatelab.flutter_android.ui.dialogs.outputs.DialogStateHelper;
 public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDialog> {
 
     private Speaker speaker;
+    private TabType currentTab;
+
+
+    public enum TabType {
+        VOLUME, PITCH
+    }
+
+
+    public TabType getCurrentTab() {
+        return currentTab;
+    }
 
 
     public Speaker getSpeaker() {
@@ -24,23 +38,23 @@ public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDia
     }
 
 
-    SpeakerStateHelper(Speaker speaker) {
+    SpeakerStateHelper(TabType currentTab, Speaker speaker) {
         this.speaker = speaker;
+        this.currentTab = currentTab;
     }
 
 
-    public static SpeakerStateHelper newInstance(Speaker speaker) {
+    public static SpeakerStateHelper newInstance(TabType tabType, Speaker speaker) {
         SpeakerStateHelper result;
 
-        result = null;
-//        if (settings.getClass() == SettingsProportional.class) {
-//            result = ServoDialogProportional.newInstance(servo);
-//        } else if (settings.getClass() == SettingsConstant.class) {
-//            result = ServoDialogConstant.newInstance(servo);
-//        } else {
-//            Log.w(Constants.LOG_TAG,"ServoDialogStateHelper.newInstance: unimplmeneted relationship, returning ServoDialogNoRelationship.");
-//            result = ServoDialogNoRelationship.newInstance(servo);
-//        }
+        if (tabType == TabType.VOLUME) {
+            result = SpeakerVolumeStateHelper.newInstance(speaker);
+        } else if (tabType == TabType.PITCH) {
+            result = SpeakerPitchStateHelper.newInstance(speaker);
+        } else {
+            Log.w(Constants.LOG_TAG, "SpeakerStateHelper.newInstance: Could not determine TabType, returning ");
+            result = SpeakerNoRelationship.newInstance(speaker);
+        }
 
         return result;
     }
@@ -49,13 +63,9 @@ public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDia
     // click actions
 
 
-    public abstract void clickMinPitch();
+    public abstract void clickMin();
 
-    public abstract void clickMaxPitch();
-
-    public abstract void clickMinVolume();
-
-    public abstract void clickMaxVolume();
+    public abstract void clickMax();
 
 
     // set actions
@@ -65,13 +75,9 @@ public abstract class SpeakerStateHelper implements DialogStateHelper<SpeakerDia
 
     public abstract void setLinkedSensor(Sensor sensor);
 
-    public abstract void setMinimumPitch();
+    public abstract void setMinimum();
 
-    public abstract void setMaximumPitch();
-
-    public abstract void setMinimumVolume();
-
-    public abstract void setMaximumVolume();
+    public abstract void setMaximum();
 
 
     // DialogStateHelper implementation

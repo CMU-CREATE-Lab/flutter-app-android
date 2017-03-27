@@ -102,7 +102,6 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         // clone old object
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
         stateHelper = ServoDialogStateHelper.newInstance(servo);
-
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
