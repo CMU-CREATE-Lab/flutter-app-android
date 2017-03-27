@@ -64,13 +64,18 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
     private View dialogView;
     private DialogSpeakerListener dialogSpeakerListener;
-    private boolean isVolume;
+    private TabType currentTab;
     private Speaker speaker;
 
     private LinearLayout linkedSensor,minVolumeLayout,minPitchLayout;
     private ImageView advancedSettingsView;
     private RelativeLayout relativeVolume;
     private RelativeLayout relativePitch;
+
+
+    public enum TabType {
+        VOLUME, PITCH
+    }
 
 
     private void updatePitchViews(View view) {
@@ -191,10 +196,15 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
 
 
     private void updateViews(View view) {
-        if (isVolume) {
-            updateVolumeViews(view);
-        } else {
-            updatePitchViews(view);
+        switch (currentTab) {
+            case VOLUME:
+                updateVolumeViews(view);
+                break;
+            case PITCH:
+                updatePitchViews(view);
+                break;
+            default:
+                Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
         }
 
         Button saveButton = (Button) view.findViewById(R.id.button_save_link);
@@ -225,11 +235,16 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     }
 
 
+    public TabType getCurrentTab() {
+        return currentTab;
+    }
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
-        isVolume = true;
+        currentTab = TabType.VOLUME;
 
         // clone old object
         speaker = Speaker.newInstance((Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY));
@@ -265,12 +280,19 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        if (isVolume) {
-            DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
-            dialog.show(this.getFragmentManager(), "tag");
-        } else {
-            DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, speaker.getPitch());
-            dialog.show(this.getFragmentManager(), "tag");
+        DialogFragment dialog;
+
+        switch (currentTab) {
+            case VOLUME:
+                dialog = AdvancedSettingsDialog.newInstance(this, speaker.getVolume());
+                dialog.show(this.getFragmentManager(), "tag");
+                break;
+            case PITCH:
+                dialog = AdvancedSettingsDialog.newInstance(this, speaker.getPitch());
+                dialog.show(this.getFragmentManager(), "tag");
+                break;
+            default:
+                Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
         }
     }
 
@@ -317,14 +339,14 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
 
-        if (!isVolume) {
+        if (currentTab != TabType.VOLUME) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_left));
             buttonVolume.setTextColor(Color.WHITE);
             buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_right));
             buttonPitch.setTextColor(Color.GRAY);
             relativePitch.setVisibility(View.GONE);
             relativeVolume.setVisibility(View.VISIBLE);
-            isVolume = true;
+            currentTab = TabType.VOLUME;
             updateViews(dialogView);
         }
     }
@@ -336,14 +358,14 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Button buttonVolume = (Button) dialogView.findViewById(R.id.button_volume);
         Button buttonPitch = (Button) dialogView.findViewById(R.id.button_pitch);
 
-        if (isVolume) {
+        if (currentTab != TabType.PITCH) {
             buttonVolume.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_gray_white_left));
             buttonVolume.setTextColor(Color.GRAY);
             buttonPitch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_green_button_right));
             buttonPitch.setTextColor(Color.WHITE);
             relativePitch.setVisibility(View.VISIBLE);
             relativeVolume.setVisibility(View.GONE);
-            isVolume = false;
+            currentTab = TabType.PITCH;
             updateViews(dialogView);
         }
     }
@@ -435,30 +457,35 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-        if (isVolume) {
-            //speaker.getVolume().getSettings().setAdvancedSettings(advancedSettings);
-            if (speaker.getVolume().getSettings().hasAdvancedSettings()) {
-                if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-                    SettingsProportional settingsVolume = (SettingsProportional) speaker.getVolume().getSettings();
-                    settingsVolume.setAdvancedSettings(advancedSettings);
+        switch (currentTab) {
+            case VOLUME:
+                //speaker.getVolume().getSettings().setAdvancedSettings(advancedSettings);
+                if (speaker.getVolume().getSettings().hasAdvancedSettings()) {
+                    if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
+                        SettingsProportional settingsVolume = (SettingsProportional) speaker.getVolume().getSettings();
+                        settingsVolume.setAdvancedSettings(advancedSettings);
+                    } else {
+                        Log.e(Constants.LOG_TAG,"onAdvancedSettingsSet: unimplemented relationship for volume");
+                    }
                 } else {
-                    Log.e(Constants.LOG_TAG,"onAdvancedSettingsSet: unimplemented relationship for volume");
+                    Log.w(Constants.LOG_TAG,"Ignoring set advanced settings for Volume relationship.");
                 }
-            } else {
-                Log.w(Constants.LOG_TAG,"Ignoring set advanced settings for Volume relationship.");
-            }
-        } else {
-            //speaker.getPitch().getSettings().setAdvancedSettings(advancedSettings);
-            if (speaker.getPitch().getSettings().hasAdvancedSettings()) {
-                if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-                    SettingsProportional settingsPitch = (SettingsProportional) speaker.getPitch().getSettings();
-                    settingsPitch.setAdvancedSettings(advancedSettings);
+                break;
+            case PITCH:
+                //speaker.getPitch().getSettings().setAdvancedSettings(advancedSettings);
+                if (speaker.getPitch().getSettings().hasAdvancedSettings()) {
+                    if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
+                        SettingsProportional settingsPitch = (SettingsProportional) speaker.getPitch().getSettings();
+                        settingsPitch.setAdvancedSettings(advancedSettings);
+                    } else {
+                        Log.e(Constants.LOG_TAG,"onAdvancedSettingsSet: unimplemented relationship for pitch");
+                    }
                 } else {
-                    Log.e(Constants.LOG_TAG,"onAdvancedSettingsSet: unimplemented relationship for pitch");
+                    Log.w(Constants.LOG_TAG,"Ignoring set advanced settings for Pitch relationship.");
                 }
-            } else {
-                Log.w(Constants.LOG_TAG,"Ignoring set advanced settings for Pitch relationship.");
-            }
+                break;
+            default:
+                Log.e(Constants.LOG_TAG,"Failed to parse TabType");
         }
     }
 
@@ -478,20 +505,25 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
             // set sensor for the proper tab
-            if (isVolume) {
-                if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
-                    SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
-                    settingsProportional.setSensorPortNumber(sensor.getPortNumber());
-                } else {
-                    Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Volume");
-                }
-            } else {
-                if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
-                    SettingsProportional settingsProportional = (SettingsProportional) speaker.getPitch().getSettings();
-                    settingsProportional.setSensorPortNumber(sensor.getPortNumber());
-                } else {
-                    Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Pitch");
-                }
+            switch (currentTab) {
+                case VOLUME:
+                    if (speaker.getVolume().getSettings().getClass() == SettingsProportional.class) {
+                        SettingsProportional settingsProportional = (SettingsProportional) speaker.getVolume().getSettings();
+                        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
+                    } else {
+                        Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Volume");
+                    }
+                    break;
+                case PITCH:
+                    if (speaker.getPitch().getSettings().getClass() == SettingsProportional.class) {
+                        SettingsProportional settingsProportional = (SettingsProportional) speaker.getPitch().getSettings();
+                        settingsProportional.setSensorPortNumber(sensor.getPortNumber());
+                    } else {
+                        Log.e(Constants.LOG_TAG,"SpeakerDialog.onSensorChosen: unimplemented relationship for Pitch");
+                    }
+                    break;
+                default:
+                    Log.e(Constants.LOG_TAG,"Failed to parse TabType.");
             }
             // set a sensor by default
             if (!speaker.getVolume().getSettings().isSettable()) {
@@ -522,35 +554,42 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
-        if (isVolume) {
-            if (relationship.getClass() == Proportional.class) {
-                speaker.getVolume().setSettings(SettingsProportional.newInstance(speaker.getVolume().getSettings()));
-            } else if (relationship.getClass() == Constant.class) {
-                speaker.getVolume().setSettings(SettingsConstant.newInstance(speaker.getVolume().getSettings()));
-            } else {
-                Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Volume");
-            }
-            // set a sensor by default
-            if (!speaker.getPitch().getSettings().isSettable()) {
-                SettingsConstant settingsConstant = SettingsConstant.newInstance(speaker.getPitch().getSettings());
-                settingsConstant.setValue(440);
-                speaker.getPitch().setSettings(settingsConstant);
-            }
-        } else {
-            if (relationship.getClass() == Proportional.class) {
-                speaker.getPitch().setSettings(SettingsProportional.newInstance(speaker.getPitch().getSettings()));
-            } else if (relationship.getClass() == Constant.class) {
-                speaker.getPitch().setSettings(SettingsConstant.newInstance(speaker.getPitch().getSettings()));
-            } else {
-                Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Pitch");
-            }
-            // set a sensor by default
-            if (!speaker.getVolume().getSettings().isSettable()) {
-                SettingsConstant settingsConstant = SettingsConstant.newInstance(speaker.getVolume().getSettings());
-                settingsConstant.setValue(100);
-                speaker.getVolume().setSettings(settingsConstant);
-            }
+
+        switch (currentTab) {
+            case VOLUME:
+                if (relationship.getClass() == Proportional.class) {
+                    speaker.getVolume().setSettings(SettingsProportional.newInstance(speaker.getVolume().getSettings()));
+                } else if (relationship.getClass() == Constant.class) {
+                    speaker.getVolume().setSettings(SettingsConstant.newInstance(speaker.getVolume().getSettings()));
+                } else {
+                    Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Volume");
+                }
+                // set a sensor by default
+                if (!speaker.getPitch().getSettings().isSettable()) {
+                    SettingsConstant settingsConstant = SettingsConstant.newInstance(speaker.getPitch().getSettings());
+                    settingsConstant.setValue(440);
+                    speaker.getPitch().setSettings(settingsConstant);
+                }
+                break;
+            case PITCH:
+                if (relationship.getClass() == Proportional.class) {
+                    speaker.getPitch().setSettings(SettingsProportional.newInstance(speaker.getPitch().getSettings()));
+                } else if (relationship.getClass() == Constant.class) {
+                    speaker.getPitch().setSettings(SettingsConstant.newInstance(speaker.getPitch().getSettings()));
+                } else {
+                    Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Pitch");
+                }
+                // set a sensor by default
+                if (!speaker.getVolume().getSettings().isSettable()) {
+                    SettingsConstant settingsConstant = SettingsConstant.newInstance(speaker.getVolume().getSettings());
+                    settingsConstant.setValue(100);
+                    speaker.getVolume().setSettings(settingsConstant);
+                }
+                break;
+            default:
+                Log.e(Constants.LOG_TAG,"Failed to parse TabType");
         }
+
         updateViews(dialogView);
     }
 
