@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingEnd="20dp">
 
         <ImageView
+            android:id="@+id/device_list_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_centerVertical="true"
             android:background="@drawable/circle_hollow_filled_green" />
-
-        <TextView
-            android:id="@+id/device_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center_horizontal|center_vertical"
-            android:maxLines="3"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:textColor="@color/fluttergreen"
-            android:textSize="26sp" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="3"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:textColor="@color/fluttergreen"
+        android:textSize="26sp" />
 </LinearLayout>

@@ -50,7 +50,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     private LeDeviceListAdapter mLeDeviceAdapter;
     private Timer mLeDeviceAdapterTimer;
-    private boolean layoutLarge=true;
+    private boolean layoutLarge = true;
+    private boolean dataPopulated = false;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
     private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
@@ -235,15 +236,27 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     protected void onResume() {
         super.onResume();
-        if (layoutLarge)
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        if (layoutLarge) {
             scanForDevice(false);
+        }
+        if (globalHandler.melodySmartDeviceHandler.isConnected() && !dataPopulated) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
+                    globalHandler.sessionHandler.updateProgressDialogMessage(getResources().getString(R.string.reading_data));
+                }
+            });
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (layoutLarge)
+        if (layoutLarge) {
             scanForDevice(false);
+        }
     }
 
 
@@ -277,11 +290,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onDataSetPointsPopulated(boolean isSuccess) {
         Log.d(Constants.LOG_TAG, "AppLanding.onDataSetPointsPopulated - Success: " + isSuccess);
+        dataPopulated = true;
 
-        // dismiss spinner
+        // Dismiss spinner
         GlobalHandler.getInstance(this).sessionHandler.dismissProgressDialog();
 
-        // start new activity
+        // Start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
     }
@@ -301,10 +315,11 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
         final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
         mLeDeviceAdapterTimer.cancel();
+        dataPopulated = false;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                globalHandler.sessionHandler.updateProgressDialogMessage("Reading Flutter Data...");
+                globalHandler.sessionHandler.updateProgressDialogMessage(getResources().getString(R.string.reading_data));
             }
         });
         globalHandler.dataLoggingHandler.populatePointsAvailable(this);
