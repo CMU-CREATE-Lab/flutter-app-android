@@ -48,4 +48,22 @@ public class Proportional implements Relationship {
         return greyImageIdSm;
     }
 
+
+    // Singleton Implementation
+
+
+    private static Proportional classInstance;
+
+
+    private Proportional() {
+        super();
+    }
+
+
+    public static synchronized Proportional getInstance() {
+        if (classInstance == null)
+            classInstance = new Proportional();
+        return classInstance;
+    }
+
 }

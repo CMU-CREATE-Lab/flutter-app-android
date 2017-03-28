@@ -6,9 +6,10 @@ import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.sensors.DistanceSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
 /**
  * Created by Steve on 8/23/2016.
@@ -127,17 +128,18 @@ public class MessageConstructor {
     public static MelodySmartMessage constructRelationshipMessage(Output output, Settings settings) {
         MelodySmartMessage result = null;
 
-        if (settings.getRelationship().getClass() == Proportional.class) {
+        if (settings.getClass() == SettingsProportional.class) {
+            SettingsProportional settingsProportional = (SettingsProportional) settings;
             Sensor sensor = settings.getSensor();
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableProportionalControl(output, sensor, settings.getOutputMax(), settings.getOutputMin(), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMax()));
+                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMax(), settingsProportional.getOutputMin(), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMax()));
             } else {
-                result = constructEnableProportionalControl(output, sensor, settings.getOutputMin(), settings.getOutputMax(), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settings.getAdvancedSettings().getInputMax()));
+                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMin(), settingsProportional.getOutputMax(), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMax()));
             }
-        } else if (settings.getRelationship().getClass() == Constant.class) {
-            // TODO @tasota use a real structure for (constant) Settings
-            result = constructSetOutput(output, settings.getOutputMax());
+        } else if (settings.getClass() == SettingsConstant.class) {
+            SettingsConstant settingsConstant = (SettingsConstant) settings;
+            result = constructSetOutput(output, settingsConstant.getValue());
         } else {
             Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());
         }

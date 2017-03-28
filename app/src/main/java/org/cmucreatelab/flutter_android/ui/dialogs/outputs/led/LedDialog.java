@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.parents;
+package org.cmucreatelab.flutter_android.ui.dialogs.outputs.led;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -11,18 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.BlueLed;
-import org.cmucreatelab.flutter_android.classes.outputs.GreenLed;
-import org.cmucreatelab.flutter_android.classes.outputs.RedLed;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
@@ -30,12 +23,12 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MinColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.RelationshipOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.SensorOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.outputs.BaseOutputDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,103 +50,27 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         MaxColorDialog.DialogHighColorListener,
         MinColorDialog.DialogLowColorListener {
 
-    private View dialogView;
+    public View dialogView;
+    public ImageView maxColor;
+    public ImageView minColor;
+
+    private LedDialogStateHelper stateHelper;
     private DialogLedListener dialogLedListener;
-    private ImageView currentImageView;
-    private TextView currentTextViewDescrp;
-    private TextView currentTextViewItem;
-    private Button saveButton;
-    private Button removeButton;
-    private ImageView maxColor;
-    private ImageView minColor;
     private TriColorLed triColorLed;
 
 
-    private void updateViews(View view) {
-        updateViews(view, triColorLed.getRedLed());
-        Relationship relationship = triColorLed.getRedLed().getSettings().getRelationship();
+    private void updateViews() {
+        super.updateViews(dialogView, triColorLed.getRedLed());
 
-        LinearLayout linkedSensor,minColorLayout;
-        ImageView advancedSettingsView = (ImageView) view.findViewById(R.id.image_advanced_settings);
-        linkedSensor = (LinearLayout) view.findViewById(R.id.linear_set_linked_sensor);
-        minColorLayout = (LinearLayout) view.findViewById(R.id.linear_set_min_color);
-
-        if (relationship.getClass() == Constant.class) {
-            // advanced settings
-            advancedSettingsView.setVisibility(View.GONE);
-
-            // sensor
-            linkedSensor.setVisibility(View.GONE);
-
-            // max
-            ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
-            maxColorImg.setVisibility(View.GONE);
-            maxColor.setImageResource(triColorLed.getMaxSwatch());
-            maxColor.setVisibility(View.VISIBLE);
-            TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
-            TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
-            maxColorTxt.setText("Color");
-            maxColorValue.setText(triColorLed.getMaxColorText());
-
-            // min
-            minColorLayout.setVisibility(View.GONE);
-        } else {
-            if (relationship.getClass() != Proportional.class) {
-                Log.e(Constants.LOG_TAG,"tried to run LedDialog.updateViews on unimplemented relationship.");
-            }
-
-            // advanced settings
-            advancedSettingsView.setVisibility(View.VISIBLE);
-
-            // sensor
-            linkedSensor.setVisibility(View.VISIBLE);
-
-            // max
-            ImageView maxColorImg = (ImageView) view.findViewById(R.id.image_max_color);
-            maxColorImg.setVisibility(View.GONE);
-            maxColor.setImageResource(triColorLed.getMaxSwatch());
-            maxColor.setVisibility(View.VISIBLE);
-            TextView maxColorTxt = (TextView) view.findViewById(R.id.text_max_color);
-            TextView maxColorValue = (TextView) view.findViewById(R.id.text_max_color_value);
-            // TODO @tasota this should check for all (RGB) settings
-            if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
-                maxColorTxt.setText(R.string.maximum_color);
-            } else {
-                maxColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId())+" Color");
-            }
-            maxColorValue.setText(triColorLed.getMaxColorText());
-
-            // min
-            minColorLayout.setVisibility(View.VISIBLE);
-            ImageView minColorImg = (ImageView) view.findViewById(R.id.image_min_color);
-            minColorImg.setVisibility(View.GONE);
-            minColor.setImageResource(triColorLed.getMinSwatch());
-            minColor.setVisibility(View.VISIBLE);
-            TextView minColorTxt = (TextView) view.findViewById(R.id.text_min_color);
-            TextView minColorValue = (TextView) view.findViewById(R.id.text_min_color_value);
-            // TODO @tasota this should check for all (RGB) settings
-            if (triColorLed.getRedLed().getSettings().getSensor().getClass() == NoSensor.class) {
-                minColorTxt.setText(R.string.minimum_color);
-            } else {
-                minColorTxt.setText(getString(triColorLed.getRedLed().getSettings().getSensor().getLowTextId())+" Color");
-            }
-            minColorValue.setText(triColorLed.getMinColorText());
+        if (triColorLed.getRedLed().getSettings().getClass() != triColorLed.getGreenLed().getSettings().getClass() || triColorLed.getGreenLed().getSettings().getClass() != triColorLed.getBlueLed().getSettings().getClass()) {
+            Log.w(Constants.LOG_TAG,"LedDialog.updateViews assumes same relationship for all Leds but they are not the same.");
         }
+        stateHelper.updateView(this);
 
-        saveButton.setEnabled(true);
-        removeButton.setEnabled(true);
-        if (relationship.getClass() != Constant.class && triColorLed.getRedLed().getSettings().getSensor().getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
-            saveButton.setEnabled(false);
-            removeButton.setEnabled(false);
-        }
-
-    }
-
-
-    private int getProportionalValue(float value, float maxValue, float newMaxValue) {
-        float ratio = value / maxValue;
-        int result = (int) Math.ceil(ratio*newMaxValue);
-        return result;
+        Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
+        Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
+        saveButton.setEnabled(stateHelper.canSaveLink());
+        removeButton.setEnabled(stateHelper.canRemoveLink());
     }
 
 
@@ -176,7 +93,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         // clone old object
         triColorLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
-
+        stateHelper = LedDialogStateHelper.newInstance(triColorLed);
         dialogLedListener = (DialogLedListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_LED);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -190,10 +107,8 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         maxColor = (ImageView) view.findViewById(R.id.view_max_color);
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
-        saveButton = (Button) view.findViewById(R.id.button_save_link);
-        removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
-        updateViews(view);
+        updateViews();
         return builder.create();
     }
 
@@ -229,23 +144,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     public void onClickRemoveLink() {
         ArrayList<MelodySmartMessage> msg = new ArrayList<>();
         Log.d(Constants.LOG_TAG, "onClickRemoveLink");
-        RedLed redLed = triColorLed.getRedLed();
-        GreenLed greenLed = triColorLed.getGreenLed();
-        BlueLed blueLed = triColorLed.getBlueLed();
 
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
-
-        redLed.setIsLinked(false, triColorLed.getRedLed());
-        redLed.getSettings().setOutputMax(triColorLed.getRedLed().getMax());
-        redLed.getSettings().setOutputMin(triColorLed.getRedLed().getMin());
-        greenLed.setIsLinked(false, triColorLed.getGreenLed());
-        greenLed.getSettings().setOutputMax(triColorLed.getGreenLed().getMax());
-        greenLed.getSettings().setOutputMin(triColorLed.getGreenLed().getMin());
-        blueLed.setIsLinked(false, triColorLed.getBlueLed());
-        blueLed.getSettings().setOutputMax(triColorLed.getBlueLed().getMax());
-        blueLed.getSettings().setOutputMin(triColorLed.getBlueLed().getMin());
+        triColorLed.getRedLed().setIsLinked(false, triColorLed.getRedLed());
+        triColorLed.getGreenLed().setIsLinked(false, triColorLed.getGreenLed());
+        triColorLed.getBlueLed().setIsLinked(false, triColorLed.getBlueLed());
 
         // overwrite old object
         GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
@@ -266,10 +171,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_linked_sensor)
     public void onClickSetLinkedSensor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetLinkedSensor");
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = SensorOutputDialog.newInstance(this);
         dialog.show(this.getFragmentManager(), "tag");
     }
@@ -278,10 +179,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_relationship)
     public void onClickSetRelationship(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetRelationship");
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = RelationshipOutputDialog.newInstance(this);
         dialog.show(this.getFragmentManager(), "tag");
     }
@@ -290,11 +187,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_max_color)
     public void onClickSetMaximumColor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaximumColor");
-        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
-        currentImageView = (ImageView) viewGroup.getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
@@ -303,11 +195,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_min_color)
     public void onclickSetMinimumColor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinimumColor");
-        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
-        currentImageView = (ImageView) viewGroup.getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
         DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorHex(),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
@@ -319,53 +206,62 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onAdvancedSettingsSet(AdvancedSettings advancedSettings) {
         Log.d(Constants.LOG_TAG, "onAdvancedSettingsSet");
-
-        triColorLed.getRedLed().getSettings().setAdvancedSettings(advancedSettings);
-        triColorLed.getGreenLed().getSettings().setAdvancedSettings(advancedSettings);
-        triColorLed.getBlueLed().getSettings().setAdvancedSettings(advancedSettings);
+        stateHelper.setAdvancedSettings(advancedSettings);
     }
 
 
     @Override
     public void onSensorChosen(Sensor sensor) {
+        View view = dialogView.findViewById(R.id.linear_set_linked_sensor);
+        ImageView currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             currentImageView.setImageResource(sensor.getGreenImageId());
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
 
-            triColorLed.getRedLed().getSettings().setSensor(sensor);
-            triColorLed.getGreenLed().getSettings().setSensor(sensor);
-            triColorLed.getBlueLed().getSettings().setSensor(sensor);
+            stateHelper.setLinkedSensor(sensor);
         }
-        updateViews(dialogView);
+        updateViews();
     }
 
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
+        View view = dialogView.findViewById(R.id.linear_set_relationship);
+        ImageView currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipTypeId());
-        triColorLed.getRedLed().getSettings().setRelationship(relationship);
-        triColorLed.getGreenLed().getSettings().setRelationship(relationship);
-        triColorLed.getBlueLed().getSettings().setRelationship(relationship);
-        updateViews(dialogView);
+        triColorLed.setRelationship(relationship);
+        stateHelper = LedDialogStateHelper.newInstance(triColorLed);
+        updateViews();
     }
 
 
     @Override
     public void onHighColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
+        View view = dialogView.findViewById(R.id.linear_set_max_color);
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
+        ImageView currentImageView = (ImageView) viewGroup.getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
+        stateHelper.setMaximumColor(rgb[0], rgb[1], rgb[2]);
+
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        int max = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-        triColorLed.getRedLed().getSettings().setOutputMax(max);
-        max = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-        triColorLed.getGreenLed().getSettings().setOutputMax(max);
-        max = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-        triColorLed.getBlueLed().getSettings().setOutputMax(max);
         maxColor.setImageResource(triColorLed.getMaxSwatch());
         maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMaxColorText());
@@ -375,14 +271,17 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @Override
     public void onLowColorChosen(int[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
+        View view = dialogView.findViewById(R.id.linear_set_min_color);
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
+        ImageView currentImageView = (ImageView) viewGroup.getChildAt(0);
+        View layout = ((ViewGroup) view).getChildAt(1);
+        TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
+        stateHelper.setMinimumColor(rgb[0], rgb[1], rgb[2]);
+
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        int min = getProportionalValue(rgb[0], 255, triColorLed.getRedLed().getMax());
-        triColorLed.getRedLed().getSettings().setOutputMin(min);
-        min = getProportionalValue(rgb[1], 255, triColorLed.getGreenLed().getMax());
-        triColorLed.getGreenLed().getSettings().setOutputMin(min);
-        min = getProportionalValue(rgb[2], 255, triColorLed.getBlueLed().getMax());
-        triColorLed.getBlueLed().getSettings().setOutputMin(min);
         minColor.setImageResource(triColorLed.getMinSwatch());
         minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(triColorLed.getMinColorText());

@@ -48,4 +48,22 @@ public class Switch implements Relationship {
         return greyImageIdSm;
     }
 
+
+    // Singleton Implementation
+
+
+    private static Switch classInstance;
+
+
+    private Switch() {
+        super();
+    }
+
+
+    public static synchronized Switch getInstance() {
+        if (classInstance == null)
+            classInstance = new Switch();
+        return classInstance;
+    }
+
 }

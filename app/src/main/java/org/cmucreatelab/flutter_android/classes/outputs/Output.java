@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
 import java.io.Serializable;
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
  *
  * Output
  *
- * An abstract class that holds a Settings object to represent the link between input and output
+ * An abstract class that holds a SettingsProportional object to represent the link between input and output
  *
  */
 public abstract class Output implements Serializable {
@@ -35,20 +37,26 @@ public abstract class Output implements Serializable {
     public void setSettings(Settings settings) { this.settings = settings; }
 
 
-    public Output(String type, int max, int min, int portNumber) {
+    public Output(int min, int max, int portNumber, Flutter flutter) {
         this.portNumber = portNumber;
         isLinked = false;
-        settings = new Settings(type, max, min);
+        SettingsProportional settings = SettingsProportional.newInstance(flutter);
+        settings.setOutputMin(min);
+        settings.setOutputMax(max);
+        this.settings = settings;
     }
 
 
     public void setIsLinked(boolean bool, Output output) {
         isLinked = bool;
         if (!isLinked) {
-            String type = settings.getType();
-            int max = output.getMax();
             int min = output.getMin();
-            settings = new Settings(type, max, min);
+            int max = output.getMax();
+            SettingsProportional settings = SettingsProportional.newInstance(this.settings);
+            settings.setSensorPortNumber(0);
+            settings.setOutputMin(min);
+            settings.setOutputMax(max);
+            this.settings = settings;
         }
     }
 

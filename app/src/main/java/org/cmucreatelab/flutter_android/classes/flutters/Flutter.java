@@ -66,14 +66,14 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         this.name = name;
         this.servos = new Servo[NUMBER_OF_SERVOS];
         this.triColorLeds = new TriColorLed[NUMBER_OF_LEDS];
-        this.speaker = new Speaker(0);
+        this.speaker = new Speaker(0, this);
         this.sensors = new Sensor[NUMBER_OF_SENSORS];
 
         for (int i = 0; i < servos.length; i++) {
-            servos[i] = new Servo(i+1);
+            servos[i] = new Servo(i+1, this);
         }
         for (int i = 0; i < triColorLeds.length; i++) {
-            triColorLeds[i] = new TriColorLed(i+1);
+            triColorLeds[i] = new TriColorLed(i+1, this);
         }
         for (int i = 0; i < sensors.length; i++) {
             sensors[i] = new NoSensor(i+1);

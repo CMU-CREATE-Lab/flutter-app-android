@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.outputs;
 
 import android.util.Log;
 import android.view.View;
@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 /**
  * Created by Steve on 2/1/2017.
@@ -26,22 +27,24 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
             Button removeButton = (Button) view.findViewById(R.id.button_remove_link);
 
             // sensor
-            if (output.getSettings().getSensor().getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                ImageView sensorImage = (ImageView) view.findViewById(R.id.image_sensor);
-                sensorImage.setImageResource(settings.getSensor().getGreenImageId());
-                TextView sensorText = (TextView) view.findViewById(R.id.text_sensor_link);
-                sensorText.setText(R.string.linked_sensor);
-                TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
-                sensorType.setText(getString(settings.getSensor().getSensorTypeId()));
+            if (settings.getClass() == SettingsProportional.class) {
+                SettingsProportional settingsProportional = (SettingsProportional)settings;
+                if (settingsProportional.getSensor().getClass() != NoSensor.class) {
+                    ImageView sensorImage = (ImageView) view.findViewById(R.id.image_sensor);
+                    sensorImage.setImageResource(settingsProportional.getSensor().getGreenImageId());
+                    TextView sensorText = (TextView) view.findViewById(R.id.text_sensor_link);
+                    sensorText.setText(R.string.linked_sensor);
+                    TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
+                    sensorType.setText(getString(settingsProportional.getSensor().getSensorTypeId()));
+                }
+            }
+
+            // buttons (save, remove)
+            if (settings.isSettable()) {
                 saveButton.setEnabled(true);
                 removeButton.setEnabled(true);
             }
 
-            // relationship
-            if (settings.getRelationship().getClass() == Constant.class) {
-                saveButton.setEnabled(true);
-                removeButton.setEnabled(true);
-            }
             ImageView relationshipImage = (ImageView) view.findViewById(R.id.image_relationship);
             relationshipImage.setImageResource(settings.getRelationship().getGreenImageIdMd());
             TextView relationshipText = (TextView) view.findViewById(R.id.text_relationship);
