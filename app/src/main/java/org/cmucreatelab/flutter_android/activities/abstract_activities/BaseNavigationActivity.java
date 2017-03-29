@@ -26,7 +26,6 @@ import butterknife.Optional;
  * An abstract activity used for the basic navigation bar on the bottom of most activities.
  *
  */
-// TODO - add a field to keep track of which activity you are currently on, this way if you click your current tab nothing will happen.
 public abstract class BaseNavigationActivity extends AppCompatActivity {
 
 

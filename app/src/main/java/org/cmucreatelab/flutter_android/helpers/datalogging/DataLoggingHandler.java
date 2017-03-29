@@ -25,8 +25,6 @@ import java.util.concurrent.TimeUnit;
  * Created by Steve on 12/14/2016.
  */
 
-// TODO - properly name a data log and properly start logging
-
 public class DataLoggingHandler implements FlutterMessageListener {
 
     private static final int MAX_INTERVAL = 65535;

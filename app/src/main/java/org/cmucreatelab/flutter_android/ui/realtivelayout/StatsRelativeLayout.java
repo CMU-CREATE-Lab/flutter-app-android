@@ -1,13 +1,10 @@
 package org.cmucreatelab.flutter_android.ui.realtivelayout;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import org.cmucreatelab.flutter_android.R;
@@ -30,67 +27,81 @@ public class StatsRelativeLayout extends RelativeLayout {
     private PositionTextView textMax;
     private PositionTextView textMin;
 
+    private ArrayList<PositionTextView> views;
+
     private Context context;
+    private StatsRelativeLayout instance;
 
 
     private int positionToPixels(int width, int position) {
         int result = 0;
-
-        Log.d(Constants.LOG_TAG, String.valueOf(width));
         float temp = (float) position / 100;
-        Log.d(Constants.LOG_TAG, String.valueOf(temp));
         result = (int) (temp * width);
-        Log.d(Constants.LOG_TAG, String.valueOf(result));
-
-        // A dumb hack to keep it in bounds
-        if ((width - result) < 80) result = width - 80;
-        if (result < 0) result = 0;
-        Log.d(Constants.LOG_TAG, String.valueOf(result));
         return result;
     }
 
 
+    private boolean isViewOverlapping(View v1, View v2) {
+        return (v1.getTop() >= v2.getTop() &&
+                v1.getLeft() >= v2.getLeft() &&
+                v1.getRight() <= v2.getRight() &&
+                v1.getBottom() <= v2.getBottom());
+    }
+
+
     private void update() {
-        ArrayList<PositionTextView> positionTextViews = new ArrayList<>();
         this.removeAllViews();
+        views = new ArrayList<>();
 
-        if (textMean.isVisible()) positionTextViews.add(textMean);
-        if (textMedian.isVisible()) positionTextViews.add(textMedian);
-        if (textMode.isVisible()) positionTextViews.add(textMode);
-        if (textMax.isVisible()) positionTextViews.add(textMax);
-        if (textMin.isVisible()) positionTextViews.add(textMin);
+        if (textMean.isVisible()) views.add(textMean);
+        if (textMedian.isVisible()) views.add(textMedian);
+        if (textMode.isVisible()) views.add(textMode);
+        if (textMax.isVisible()) views.add(textMax);
+        if (textMin.isVisible()) views.add(textMin);
 
-        Collections.sort(positionTextViews, new Comparator<PositionTextView>() {
+        Collections.sort(views, new Comparator<PositionTextView>() {
             @Override
             public int compare(PositionTextView positionTextView, PositionTextView t1) {
                 return ((Integer)positionTextView.getPosition()).compareTo(t1.getPosition());
             }
         });
 
-        for (int i = 0; i < positionTextViews.size(); i++) {
-            PositionTextView view = positionTextViews.get(i);
+        for (int i = 0; i < views.size(); i++) {
+            PositionTextView view = views.get(i);
             view.setId(i+100);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            view.setPadding(2,2,2,2);
 
-            if (i == 0) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (100 - view.getPosition() >= 90)
                 params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
-            } else {
-                if (view.getPosition() -  positionTextViews.get(i-1).getPosition() < 25) {
-                    params.addRule(RelativeLayout.BELOW, positionTextViews.get(i-1).getId());
-                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
-                } else {
-                    params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                    params.setMargins(positionToPixels(this.getWidth(), view.getPosition()-5), 0, 0, 0);
-                }
-            }
+            else if (100 - view.getPosition() <= 10)
+                params.addRule(RelativeLayout.ALIGN_PARENT_END);
+            else
+                params.setMargins(positionToPixels(instance.getWidth(), view.getPosition()) - view.getWidth() / 2, 0, 0, 0);
 
             view.setLayoutParams(params);
-            view.setPadding(2,2,2,2);
-            this.addView(positionTextViews.get(i));
+
+            this.addView(view);
         }
 
-        invalidate();
+        this.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                for (int i = 0; i < views.size(); i++) {
+                    PositionTextView view = views.get(i);
+                    RelativeLayout.LayoutParams params = (LayoutParams) view.getLayoutParams();
+
+                    if (i > 0) {
+                        if (isViewOverlapping(view, views.get(i-1))) {
+                            params.addRule(RelativeLayout.BELOW, views.get(i - 1).getId());
+                        }
+                    }
+
+                    view.setLayoutParams(params);
+                }
+                instance.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
 
@@ -100,7 +111,9 @@ public class StatsRelativeLayout extends RelativeLayout {
         textMode = new PositionTextView(context);
         textMax = new PositionTextView(context);
         textMin = new PositionTextView(context);
+        views = new ArrayList<>();
         this.context = context;
+        this.instance = this;
 
         textMean.setTextColor(context.getResources().getColor(R.color.orange));
         textMedian.setTextColor(context.getResources().getColor(R.color.orange));
@@ -194,6 +207,7 @@ public class StatsRelativeLayout extends RelativeLayout {
                 textMin.setVisible(false);
                 break;
         }
+
         update();
     }
 }

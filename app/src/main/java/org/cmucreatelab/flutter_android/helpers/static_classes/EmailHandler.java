@@ -51,8 +51,6 @@ public class EmailHandler {
                 activity.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 activity.startActivity(intent);
             }
-        } else {
-            // TODO - alert user to select a data log
         }
     }
 

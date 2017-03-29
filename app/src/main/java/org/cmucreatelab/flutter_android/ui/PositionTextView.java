@@ -1,8 +1,11 @@
 package org.cmucreatelab.flutter_android.ui;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import org.cmucreatelab.flutter_android.R;
 
 /**
  * Created by Steve on 3/14/2017.
@@ -14,7 +17,7 @@ public class PositionTextView extends TextView {
     private boolean isVisible;
 
 
-    private void init() {
+    private void init(Context context) {
         this.position = 0;
         this.isVisible = false;
     }
@@ -22,19 +25,19 @@ public class PositionTextView extends TextView {
 
     public PositionTextView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
 
     public PositionTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
 
     public PositionTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
 
