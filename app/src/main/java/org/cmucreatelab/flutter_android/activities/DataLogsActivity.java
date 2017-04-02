@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -20,10 +19,10 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.DataInstanceListAdapter;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapter;
+import org.cmucreatelab.flutter_android.classes.Stat;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
-import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpAfterState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpBeforeState;
@@ -70,6 +69,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataRecordingTimer dataRecordingTimer;
 
     private Constants.STATS statState;
+    private Stat[] means, medians, modes, maxs, mins;
     private boolean isMax, isMin;
 
     private DataLogListAdapter dataLogListAdapter;
@@ -78,7 +78,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private RelativeLayout dataOnFlutterRealtiveContainer;
     private ListView listDataLogsOnDevice, listDataInstance;
     private ProgressBar progressSensor1, progressSensor2, progressSensor3;
-    private StatsRelativeLayout statsRelativeLayout1, statsRelativeLayout2, statsRelativeLayout3;
+    private StatsRelativeLayout[] statsRelativeLayouts;
     private ImageView workingDataPointImage, imageSensor1, imageSensor2, imageSensor3;
     private Button buttonMean, buttonMedian, buttonMode, buttonMax, buttonMin;
     private TextView openLogTextView, sendLogTextView, cleanUpTextView, recordDataTextView;
@@ -97,17 +97,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 buttonMode.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_right));
                 buttonMode.setTextColor(getResources().getColor(R.color.orange));
 
-                statsRelativeLayout1.remove(Constants.STATS.MEAN);
-                statsRelativeLayout1.remove(Constants.STATS.MEDIAN);
-                statsRelativeLayout1.remove(Constants.STATS.MODE);
+                removeStats(means);
+                removeStats(medians);
+                removeStats(modes);
 
-                statsRelativeLayout2.remove(Constants.STATS.MEAN);
-                statsRelativeLayout2.remove(Constants.STATS.MEDIAN);
-                statsRelativeLayout2.remove(Constants.STATS.MODE);
-
-                statsRelativeLayout3.remove(Constants.STATS.MEAN);
-                statsRelativeLayout3.remove(Constants.STATS.MEDIAN);
-                statsRelativeLayout3.remove(Constants.STATS.MODE);
                 break;
             case MEAN:
                 buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
@@ -269,12 +262,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 statsHelper();
                 isMin = false;
                 isMax = false;
-                statsRelativeLayout1.remove(Constants.STATS.MAX);
-                statsRelativeLayout1.remove(Constants.STATS.MIN);
-                statsRelativeLayout2.remove(Constants.STATS.MAX);
-                statsRelativeLayout2.remove(Constants.STATS.MIN);
-                statsRelativeLayout3.remove(Constants.STATS.MAX);
-                statsRelativeLayout3.remove(Constants.STATS.MIN);
+                removeStats(maxs);
+                removeStats(mins);
                 buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
                 buttonMax.setTextColor(getResources().getColor(R.color.orange));
                 buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
@@ -418,31 +407,29 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     // I am not including MAX and MIN because they behave differently since they can be on at the same time
-    private void updateStats(Sensor[] sensors, int[] array, Constants.STATS type, Button button, int drawableId) {
+    private void updateStats(Sensor[] sensors, int[] positions, Stat[] stats, Constants.STATS type, Button button, int drawableId) {
         if (statState == type) {
-            if (sensors[0].getSensorType() != NOT_SET) {
-                statsRelativeLayout1.remove(type);
-            }
-            if (sensors[1].getSensorType() != NOT_SET) {
-                statsRelativeLayout2.remove(type);
-            }
-            if (sensors[2].getSensorType() != NOT_SET) {
-                statsRelativeLayout3.remove(type);
-            }
+            removeStats(stats);
             statState = Constants.STATS.NONE;
         } else {
             statState = type;
             button.setBackground(ContextCompat.getDrawable(instance, drawableId));
             button.setTextColor(getResources().getColor(R.color.white));
-            if (sensors[0].getSensorType() != NOT_SET) {
-                statsRelativeLayout1.add(statState, array[0]);
-            }
-            if (sensors[1].getSensorType() != NOT_SET) {
-                statsRelativeLayout2.add(statState, array[1]);
-            }
-            if (sensors[2].getSensorType() != NOT_SET) {
-                statsRelativeLayout3.add(statState, array[2]);
-            }
+            addStats(sensors, stats, positions);
+        }
+    }
+
+
+    private void addStats(Sensor[] sensors, Stat[] stats, int[] positions) {
+        for (int i = 0; i < sensors.length; i++)
+            if (sensors[i].getSensorType() != NOT_SET)
+                statsRelativeLayouts[i].add(stats[i], positions[i]);
+    }
+
+
+    private void removeStats(Stat[] stats) {
+        for (int i = 0; i < stats.length; i++) {
+            statsRelativeLayouts[i].remove(stats[i]);
         }
     }
 
@@ -452,9 +439,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.meanClickListener");
             statsHelper();
-            int[] means = workingDataSet.getMeans();
+            int[] positions = workingDataSet.getMeans();
             Sensor[] sensors = workingDataSet.getSensors();
-            updateStats(sensors, means, Constants.STATS.MEAN, buttonMean, R.drawable.orange_button_left);
+            removeStats(medians);
+            removeStats(modes);
+            updateStats(sensors, positions, means, Constants.STATS.MEAN, buttonMean, R.drawable.orange_button_left);
         }
     };
 
@@ -464,9 +453,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.medianClickListener");
             statsHelper();
-            int[] medians = workingDataSet.getMedians();
+            int[] positions = workingDataSet.getMedians();
             Sensor[] sensors = workingDataSet.getSensors();
-            updateStats(sensors, medians, Constants.STATS.MEDIAN, buttonMedian, R.drawable.orange_button_middle);
+            removeStats(means);
+            removeStats(modes);
+            updateStats(sensors, positions, medians, Constants.STATS.MEDIAN, buttonMedian, R.drawable.orange_button_middle);
         }
     };
 
@@ -476,9 +467,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.modeClickListener");
             statsHelper();
-            int[] modes = workingDataSet.getModes();
+            int[] positions = workingDataSet.getModes();
             Sensor[] sensors = workingDataSet.getSensors();
-            updateStats(sensors, modes, Constants.STATS.MODE, buttonMode, R.drawable.orange_button_right);
+            removeStats(means);
+            removeStats(medians);
+            updateStats(sensors, positions, modes, Constants.STATS.MODE, buttonMode, R.drawable.orange_button_right);
         }
     };
 
@@ -487,36 +480,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.maxClickListener");
-            int[] maxs = workingDataSet.getMaximums();
+            int[] positions = workingDataSet.getMaximums();
             Sensor[] sensors = workingDataSet.getSensors();
 
             isMax = !isMax;
             if (isMax) {
                 buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
                 buttonMax.setTextColor(getResources().getColor(R.color.white));
-
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.add(Constants.STATS.MAX, maxs[0]);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(Constants.STATS.MAX, maxs[1]);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(Constants.STATS.MAX, maxs[2]);
-                }
+                addStats(sensors, maxs, positions);
             } else {
                 buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
                 buttonMax.setTextColor(getResources().getColor(R.color.orange));
-
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.remove(Constants.STATS.MAX);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.remove(Constants.STATS.MAX);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.remove(Constants.STATS.MAX);
-                }
+                removeStats(maxs);
             }
         }
     };
@@ -526,36 +501,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.minClickListener");
-            int[] mins = workingDataSet.getMinimums();
+            int[] positions = workingDataSet.getMinimums();
             Sensor[] sensors = workingDataSet.getSensors();
 
             isMin = !isMin;
             if (isMin) {
                 buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
                 buttonMin.setTextColor(getResources().getColor(R.color.white));
-
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.add(Constants.STATS.MIN, mins[0]);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.add(Constants.STATS.MIN, mins[1]);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.add(Constants.STATS.MIN, mins[2]);
-                }
+                addStats(sensors, mins, positions);
             } else {
                 buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
                 buttonMin.setTextColor(getResources().getColor(R.color.orange));
-
-                if (sensors[0].getSensorType() != NOT_SET) {
-                    statsRelativeLayout1.remove(Constants.STATS.MIN);
-                }
-                if (sensors[1].getSensorType() != NOT_SET) {
-                    statsRelativeLayout2.remove(Constants.STATS.MIN);
-                }
-                if (sensors[2].getSensorType() != NOT_SET) {
-                    statsRelativeLayout3.remove(Constants.STATS.MIN);
-                }
+                removeStats(mins);
             }
         }
     };
@@ -602,9 +559,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         progressSensor1 = (ProgressBar) findViewById(R.id.progress_sensor_1);
         progressSensor2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
         progressSensor3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
-        statsRelativeLayout1 = (StatsRelativeLayout) findViewById(R.id.relative_stats_1);
-        statsRelativeLayout2 = (StatsRelativeLayout) findViewById(R.id.relative_stats_2);
-        statsRelativeLayout3 = (StatsRelativeLayout) findViewById(R.id.relative_stats_3);
+        statsRelativeLayouts = new StatsRelativeLayout[3];
+        statsRelativeLayouts[0] = (StatsRelativeLayout) findViewById(R.id.relative_stats_1);
+        statsRelativeLayouts[1] = (StatsRelativeLayout) findViewById(R.id.relative_stats_2);
+        statsRelativeLayouts[2] = (StatsRelativeLayout) findViewById(R.id.relative_stats_3);
 
         buttonMean = (Button) findViewById(R.id.button_mean);
         buttonMedian = (Button) findViewById(R.id.button_median);
@@ -646,6 +604,22 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         listDataInstance.setOnItemClickListener(onDataInstanceClickListener);
 
         statState = Constants.STATS.NONE;
+
+        means = new Stat[3];
+        for (int i = 0; i < means.length; i++)
+            means[i] = new Stat("Mean", this);
+        medians = new Stat[3];
+        for (int i = 0; i < medians.length; i++)
+            medians[i] = new Stat("Median", this);
+        modes = new Stat[3];
+        for (int i = 0; i < modes.length; i++)
+            modes[i] = new Stat("Mode", this);
+        maxs = new Stat[3];
+        for (int i = 0; i < maxs.length; i++)
+            maxs[i] = new Stat("Max", this);
+        mins = new Stat[3];
+        for (int i = 0; i < mins.length; i++)
+            mins[i] = new Stat("Min", this);
 
         dataRecordingTimer = new DataRecordingTimer(5000, this);
     }

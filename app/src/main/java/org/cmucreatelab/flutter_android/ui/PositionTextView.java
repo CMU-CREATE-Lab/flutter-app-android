@@ -3,9 +3,14 @@ package org.cmucreatelab.flutter_android.ui;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Steve on 3/14/2017.
