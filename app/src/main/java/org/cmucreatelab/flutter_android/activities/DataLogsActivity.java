@@ -87,37 +87,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     // utility methods used by the class
 
 
-    private void statsHelper() {
-        switch (statState) {
-            case NONE:
-                buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
-                buttonMean.setTextColor(getResources().getColor(R.color.orange));
-                buttonMedian.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_middle));
-                buttonMedian.setTextColor(getResources().getColor(R.color.orange));
-                buttonMode.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_right));
-                buttonMode.setTextColor(getResources().getColor(R.color.orange));
-
-                removeStats(means);
-                removeStats(medians);
-                removeStats(modes);
-
-                break;
-            case MEAN:
-                buttonMean.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_left));
-                buttonMean.setTextColor(getResources().getColor(R.color.orange));
-                break;
-            case MEDIAN:
-                buttonMedian.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_middle));
-                buttonMedian.setTextColor(getResources().getColor(R.color.orange));
-                break;
-            case MODE:
-                buttonMode.setBackground(ContextCompat.getDrawable(this, R.drawable.orange_button_border_right));
-                buttonMode.setTextColor(getResources().getColor(R.color.orange));
-                break;
-        }
-    }
-
-
     private void updateDynamicViews() {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.updateDynamicViews");
         runOnUiThread(new Runnable() {
@@ -204,9 +173,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     sensorHigh.setText("");
                     sensorLow.setText("");
                     progressSensor3.setProgress(0);
-
-                    statState = Constants.STATS.NONE;
-                    statsHelper();
+                    removeAllStats();
                 }
             }
         });
@@ -257,13 +224,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 else
                     imageSensor3.setImageDrawable(ContextCompat.getDrawable(instance, R.drawable.grey_question_mark));
 
-                workingDataPoint = null;
-                statState = Constants.STATS.NONE;
-                statsHelper();
+                removeAllStats();
                 isMin = false;
                 isMax = false;
-                removeStats(maxs);
-                removeStats(mins);
+                workingDataPoint = null;
                 buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
                 buttonMax.setTextColor(getResources().getColor(R.color.orange));
                 buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
@@ -407,30 +371,43 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
 
     // I am not including MAX and MIN because they behave differently since they can be on at the same time
-    private void updateStats(Sensor[] sensors, int[] positions, Stat[] stats, Constants.STATS type, Button button, int drawableId) {
+    private void updateStats(Sensor[] sensors, int[] positions, Stat[] stats, Constants.STATS type, Button button, int drawableBorderId, int drawableId) {
         if (statState == type) {
-            removeStats(stats);
+            removeStats(stats, button, drawableBorderId);
             statState = Constants.STATS.NONE;
         } else {
             statState = type;
-            button.setBackground(ContextCompat.getDrawable(instance, drawableId));
-            button.setTextColor(getResources().getColor(R.color.white));
-            addStats(sensors, stats, positions);
+            addStats(sensors, stats, positions, button, drawableId);
         }
     }
 
 
-    private void addStats(Sensor[] sensors, Stat[] stats, int[] positions) {
-        for (int i = 0; i < sensors.length; i++)
+    private void addStats(Sensor[] sensors, Stat[] stats, int[] positions, Button button, int drawableId) {
+        for (int i = 0; i < sensors.length; i++) {
             if (sensors[i].getSensorType() != NOT_SET)
                 statsRelativeLayouts[i].add(stats[i], positions[i]);
+        }
+
+        button.setBackground(ContextCompat.getDrawable(instance, drawableId));
+        button.setTextColor(getResources().getColor(R.color.white));
     }
 
 
-    private void removeStats(Stat[] stats) {
+    private void removeStats(Stat[] stats, Button button, int drawableId) {
         for (int i = 0; i < stats.length; i++) {
             statsRelativeLayouts[i].remove(stats[i]);
         }
+        button.setBackground(ContextCompat.getDrawable(this, drawableId));
+        button.setTextColor(getResources().getColor(R.color.orange));
+    }
+
+
+    private void removeAllStats() {
+        removeStats(means, buttonMean, R.drawable.orange_button_border_left);
+        removeStats(medians, buttonMedian, R.drawable.orange_button_border_middle);
+        removeStats(modes, buttonMode, R.drawable.orange_button_border_right);
+        removeStats(maxs, buttonMax, R.drawable.orange_button_border);
+        removeStats(mins, buttonMin, R.drawable.orange_button_border);
     }
 
 
@@ -438,12 +415,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.meanClickListener");
-            statsHelper();
             int[] positions = workingDataSet.getMeans();
             Sensor[] sensors = workingDataSet.getSensors();
-            removeStats(medians);
-            removeStats(modes);
-            updateStats(sensors, positions, means, Constants.STATS.MEAN, buttonMean, R.drawable.orange_button_left);
+            removeStats(medians, buttonMedian, R.drawable.orange_button_border_middle);
+            removeStats(modes, buttonMode, R.drawable.orange_button_border_right);
+            updateStats(sensors, positions, means, Constants.STATS.MEAN, buttonMean, R.drawable.orange_button_border_left, R.drawable.orange_button_left);
         }
     };
 
@@ -452,12 +428,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.medianClickListener");
-            statsHelper();
             int[] positions = workingDataSet.getMedians();
             Sensor[] sensors = workingDataSet.getSensors();
-            removeStats(means);
-            removeStats(modes);
-            updateStats(sensors, positions, medians, Constants.STATS.MEDIAN, buttonMedian, R.drawable.orange_button_middle);
+            removeStats(means, buttonMean, R.drawable.orange_button_border_left);
+            removeStats(modes, buttonMode, R.drawable.orange_button_border_right);
+            updateStats(sensors, positions, medians, Constants.STATS.MEDIAN, buttonMedian, R.drawable.orange_button_border_middle, R.drawable.orange_button_middle);
         }
     };
 
@@ -466,12 +441,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.modeClickListener");
-            statsHelper();
             int[] positions = workingDataSet.getModes();
             Sensor[] sensors = workingDataSet.getSensors();
-            removeStats(means);
-            removeStats(medians);
-            updateStats(sensors, positions, modes, Constants.STATS.MODE, buttonMode, R.drawable.orange_button_right);
+            removeStats(means, buttonMean, R.drawable.orange_button_border_left);
+            removeStats(medians, buttonMedian, R.drawable.orange_button_border_middle);
+            updateStats(sensors, positions, modes, Constants.STATS.MODE, buttonMode, R.drawable.orange_button_border_right, R.drawable.orange_button_right);
         }
     };
 
@@ -485,13 +459,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
             isMax = !isMax;
             if (isMax) {
-                buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
-                buttonMax.setTextColor(getResources().getColor(R.color.white));
-                addStats(sensors, maxs, positions);
+                addStats(sensors, maxs, positions, buttonMax, R.drawable.orange_button);
             } else {
-                buttonMax.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
-                buttonMax.setTextColor(getResources().getColor(R.color.orange));
-                removeStats(maxs);
+                removeStats(maxs, buttonMax, R.drawable.orange_button_border);
             }
         }
     };
@@ -506,13 +476,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
             isMin = !isMin;
             if (isMin) {
-                buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button));
-                buttonMin.setTextColor(getResources().getColor(R.color.white));
-                addStats(sensors, mins, positions);
+                addStats(sensors, mins, positions, buttonMin, R.drawable.orange_button);
             } else {
-                buttonMin.setBackground(ContextCompat.getDrawable(instance, R.drawable.orange_button_border));
-                buttonMin.setTextColor(getResources().getColor(R.color.orange));
-                removeStats(mins);
+                removeStats(mins, buttonMin, R.drawable.orange_button_border);
             }
         }
     };
@@ -542,7 +508,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
             findViewById(R.id.linear_flutter_data_container).setVisibility(View.GONE);
-            findViewById(R.id.text_record_data).setEnabled(false);
         } else {
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
@@ -635,8 +600,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     @Override
     public void onBackPressed() {
-        if (workingDataSet == null)
-            super.onBackPressed();
+        if (workingDataSet == null) {
+            if (this.isTaskRoot())
+                return;
+            else
+                super.onBackPressed();
+        }
         else {
             workingDataSet = null;
             globalHandler.sessionHandler.createProgressDialog(instance);
@@ -772,6 +741,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             timerExpired();
         }
     }
+
+
     @Override
     public void timerExpired() {
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {

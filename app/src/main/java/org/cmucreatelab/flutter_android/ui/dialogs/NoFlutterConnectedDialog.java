@@ -44,7 +44,6 @@ public class NoFlutterConnectedDialog extends BaseResizableDialog {
 
     public static void displayDialog(BaseNavigationActivity activity, int description) {
         NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(description);
-        noFlutterConnectedDialog.setCancelable(false);
         noFlutterConnectedDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
