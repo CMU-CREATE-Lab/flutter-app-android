@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningSensorDialog;
@@ -220,7 +221,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(1, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(1, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -232,7 +233,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(2, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(2, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -244,7 +245,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(3, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(3, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
