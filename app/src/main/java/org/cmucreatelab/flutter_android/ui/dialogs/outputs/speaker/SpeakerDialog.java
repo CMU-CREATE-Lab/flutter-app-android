@@ -19,11 +19,13 @@ import android.widget.TextView;
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -345,6 +347,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
                     speaker.getVolume().setSettings(SettingsProportional.newInstance(speaker.getVolume().getSettings()));
                 } else if (relationship.getClass() == Constant.class) {
                     speaker.getVolume().setSettings(SettingsConstant.newInstance(speaker.getVolume().getSettings()));
+                } else if (relationship.getClass() == Amplitude.class) {
+                    speaker.getVolume().setSettings(SettingsAmplitude.newInstance(speaker.getVolume().getSettings()));
                 } else {
                     Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Volume");
                 }
@@ -361,6 +365,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
                     speaker.getPitch().setSettings(SettingsProportional.newInstance(speaker.getPitch().getSettings()));
                 } else if (relationship.getClass() == Constant.class) {
                     speaker.getPitch().setSettings(SettingsConstant.newInstance(speaker.getPitch().getSettings()));
+                } else if (relationship.getClass() == Amplitude.class) {
+                    speaker.getPitch().setSettings(SettingsAmplitude.newInstance(speaker.getPitch().getSettings()));
                 } else {
                     Log.e(Constants.LOG_TAG,"SpeakerDialog.onRelationshipChosen: unimplemented relationship for Pitch");
                 }

@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.outputs.led;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
@@ -41,6 +42,8 @@ public abstract class LedDialogStateHelper implements DialogStateHelper<LedDialo
                 result = LedDialogProportional.newInstance(triColorLed);
             } else if (relationship.getClass() == Constant.class) {
                 result = LedDialogConstant.newInstance(triColorLed);
+            } else if (relationship.getClass() == Amplitude.class) {
+                result = LedDialogAmplitude.newInstance(triColorLed);
             } else {
                 Log.w(Constants.LOG_TAG,"LedDialogStateHelper.newInstance: relationship not implemented");
                 result = LedDialogNoRelationship.newInstance(triColorLed);

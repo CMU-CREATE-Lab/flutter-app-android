@@ -5,11 +5,13 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -52,10 +54,16 @@ public class TriColorLed implements FlutterOutput {
                 newInstance.getRedLed().setSettings(SettingsConstant.newInstance(oldInstance.getRedLed().getSettings()));
                 newInstance.getGreenLed().setSettings(SettingsConstant.newInstance(oldInstance.getGreenLed().getSettings()));
                 newInstance.getBlueLed().setSettings(SettingsConstant.newInstance(oldInstance.getBlueLed().getSettings()));
-            } else {
+            } else if (oldInstance.getRedLed().getSettings().getClass() == SettingsProportional.class) {
                 newInstance.getRedLed().setSettings(SettingsProportional.newInstance(oldInstance.getRedLed().getSettings()));
                 newInstance.getGreenLed().setSettings(SettingsProportional.newInstance(oldInstance.getGreenLed().getSettings()));
                 newInstance.getBlueLed().setSettings(SettingsProportional.newInstance(oldInstance.getBlueLed().getSettings()));
+            } else if (oldInstance.getRedLed().getSettings().getClass() == SettingsAmplitude.class) {
+                newInstance.getRedLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getRedLed().getSettings()));
+                newInstance.getGreenLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getGreenLed().getSettings()));
+                newInstance.getBlueLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getBlueLed().getSettings()));
+            } else {
+                Log.e(Constants.LOG_TAG, "TriColorLed.newInstance: Relationship not implemented");
             }
             newInstance.getRedLed().setIsLinked(oldInstance.getRedLed().isLinked(), oldInstance.getRedLed());
             newInstance.getGreenLed().setIsLinked(oldInstance.getGreenLed().isLinked(), oldInstance.getGreenLed());
@@ -88,9 +96,14 @@ public class TriColorLed implements FlutterOutput {
                 b = getHexValue(((SettingsProportional)getBlueLed().getSettings()).getOutputMax());
                 return "#".concat(r.concat(g).concat(b));
             } else if (mClass == SettingsConstant.class) {
-                r = getHexValue(((SettingsConstant)getRedLed().getSettings()).getValue());
-                g = getHexValue(((SettingsConstant)getGreenLed().getSettings()).getValue());
-                b = getHexValue(((SettingsConstant)getBlueLed().getSettings()).getValue());
+                r = getHexValue(((SettingsConstant) getRedLed().getSettings()).getValue());
+                g = getHexValue(((SettingsConstant) getGreenLed().getSettings()).getValue());
+                b = getHexValue(((SettingsConstant) getBlueLed().getSettings()).getValue());
+                return "#".concat(r.concat(g).concat(b));
+            } else if (mClass == SettingsAmplitude.class) {
+                r = getHexValue(((SettingsAmplitude)getRedLed().getSettings()).getOutputMax());
+                g = getHexValue(((SettingsAmplitude)getGreenLed().getSettings()).getOutputMax());
+                b = getHexValue(((SettingsAmplitude)getBlueLed().getSettings()).getOutputMax());
                 return "#".concat(r.concat(g).concat(b));
             } else {
                 Log.e(Constants.LOG_TAG,"Tried to make max hex color but relationship not implemented.");
@@ -108,9 +121,14 @@ public class TriColorLed implements FlutterOutput {
             Class mClass = getRedLed().getSettings().getClass();
 
             if (mClass == SettingsProportional.class) {
-                r = getHexValue(((SettingsProportional)getRedLed().getSettings()).getOutputMin());
-                g = getHexValue(((SettingsProportional)getGreenLed().getSettings()).getOutputMin());
-                b = getHexValue(((SettingsProportional)getBlueLed().getSettings()).getOutputMin());
+                r = getHexValue(((SettingsProportional) getRedLed().getSettings()).getOutputMin());
+                g = getHexValue(((SettingsProportional) getGreenLed().getSettings()).getOutputMin());
+                b = getHexValue(((SettingsProportional) getBlueLed().getSettings()).getOutputMin());
+                return "#".concat(r.concat(g).concat(b));
+            } else if (mClass == SettingsAmplitude.class) {
+                r = getHexValue(((SettingsAmplitude) getRedLed().getSettings()).getOutputMin());
+                g = getHexValue(((SettingsAmplitude) getGreenLed().getSettings()).getOutputMin());
+                b = getHexValue(((SettingsAmplitude) getBlueLed().getSettings()).getOutputMin());
                 return "#".concat(r.concat(g).concat(b));
             } else {
                 Log.e(Constants.LOG_TAG,"Tried to make min hex color but relationship not implemented.");
@@ -194,9 +212,13 @@ public class TriColorLed implements FlutterOutput {
         if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
             if (r.hasAdvancedSettings()) {
                 if (r.getClass() == SettingsProportional.class) {
-                    ((SettingsProportional)r).setAdvancedSettings(advancedSettings);
-                    ((SettingsProportional)g).setAdvancedSettings(advancedSettings);
-                    ((SettingsProportional)b).setAdvancedSettings(advancedSettings);
+                    ((SettingsProportional) r).setAdvancedSettings(advancedSettings);
+                    ((SettingsProportional) g).setAdvancedSettings(advancedSettings);
+                    ((SettingsProportional) b).setAdvancedSettings(advancedSettings);
+                } else if (r.getClass() == SettingsAmplitude.class) {
+                    ((SettingsAmplitude) r).setAdvancedSettings(advancedSettings);
+                    ((SettingsAmplitude) g).setAdvancedSettings(advancedSettings);
+                    ((SettingsAmplitude) b).setAdvancedSettings(advancedSettings);
                 } else {
                     Log.e(Constants.LOG_TAG, "TriColorLed.setAdvancedSettings: relationship not implemented");
                 }
@@ -216,9 +238,13 @@ public class TriColorLed implements FlutterOutput {
         b = getBlueLed().getSettings();
         if (r.getClass() == g.getClass() && g.getClass() == b.getClass()) {
             if (r.getClass() == SettingsProportional.class) {
-                ((SettingsProportional)r).setSensorPortNumber(sensorPortNumber);
-                ((SettingsProportional)g).setSensorPortNumber(sensorPortNumber);
-                ((SettingsProportional)b).setSensorPortNumber(sensorPortNumber);
+                ((SettingsProportional) r).setSensorPortNumber(sensorPortNumber);
+                ((SettingsProportional) g).setSensorPortNumber(sensorPortNumber);
+                ((SettingsProportional) b).setSensorPortNumber(sensorPortNumber);
+            } else if (r.getClass() == SettingsAmplitude.class) {
+                ((SettingsAmplitude) r).setSensorPortNumber(sensorPortNumber);
+                ((SettingsAmplitude) g).setSensorPortNumber(sensorPortNumber);
+                ((SettingsAmplitude) b).setSensorPortNumber(sensorPortNumber);
             } else {
                 Log.e(Constants.LOG_TAG, "TriColorLed.setSensorPortNumber: relationship not implemented");
             }
@@ -237,6 +263,10 @@ public class TriColorLed implements FlutterOutput {
             getRedLed().setSettings(SettingsConstant.newInstance(getRedLed().getSettings()));
             getGreenLed().setSettings(SettingsConstant.newInstance(getGreenLed().getSettings()));
             getBlueLed().setSettings(SettingsConstant.newInstance(getBlueLed().getSettings()));
+        } else if (relationship.getClass() == Amplitude.class) {
+            getRedLed().setSettings(SettingsAmplitude.newInstance(getRedLed().getSettings()));
+            getGreenLed().setSettings(SettingsAmplitude.newInstance(getGreenLed().getSettings()));
+            getBlueLed().setSettings(SettingsAmplitude.newInstance(getBlueLed().getSettings()));
         } else {
             Log.e(Constants.LOG_TAG, "TriColorLed.setRelationship: relationship not implemented");
         }
@@ -257,6 +287,10 @@ public class TriColorLed implements FlutterOutput {
                 ((SettingsConstant) r).setValue(getProportionalValue(red, 255, getRedLed().getMax()));
                 ((SettingsConstant) g).setValue(getProportionalValue(green, 255, getGreenLed().getMax()));
                 ((SettingsConstant) b).setValue(getProportionalValue(blue, 255, getBlueLed().getMax()));
+            } else if (r.getClass() == SettingsAmplitude.class) {
+                ((SettingsAmplitude) r).setOutputMax(getProportionalValue(red, 255, getRedLed().getMax()));
+                ((SettingsAmplitude) g).setOutputMax(getProportionalValue(green, 255, getGreenLed().getMax()));
+                ((SettingsAmplitude) b).setOutputMax(getProportionalValue(blue, 255, getBlueLed().getMax()));
             } else {
                 Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMax: relationship not implemented");
             }
@@ -280,6 +314,10 @@ public class TriColorLed implements FlutterOutput {
                 ((SettingsConstant) r).setValue(getProportionalValue(red, 255, getRedLed().getMax()));
                 ((SettingsConstant) g).setValue(getProportionalValue(green, 255, getGreenLed().getMax()));
                 ((SettingsConstant) b).setValue(getProportionalValue(blue, 255, getBlueLed().getMax()));
+            } else if (r.getClass() == SettingsAmplitude.class) {
+                ((SettingsAmplitude)r).setOutputMin( getProportionalValue(red, 255, getRedLed().getMax()) );
+                ((SettingsAmplitude)g).setOutputMin( getProportionalValue(green, 255, getGreenLed().getMax()) );
+                ((SettingsAmplitude)b).setOutputMin( getProportionalValue(blue, 255, getBlueLed().getMax()) );
             } else {
                 Log.e(Constants.LOG_TAG, "TriColorLed.setOutputMin: relationship not implemented");
             }

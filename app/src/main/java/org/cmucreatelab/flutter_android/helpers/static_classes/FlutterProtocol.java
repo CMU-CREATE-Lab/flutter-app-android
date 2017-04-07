@@ -91,6 +91,7 @@ public final class FlutterProtocol {
         public static final char SET_INPUT_TYPE = 'y';
         public static final char READ_INPUT_TYPE = 'Y';
         public static final char ENABLE_PROPORTIONAL_CONTROL = 'p';
+        public static final char ENABLE_AMPLITUDE_CONTROL = 'a';
     }
 
 //    Output correlations

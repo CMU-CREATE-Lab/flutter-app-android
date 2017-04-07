@@ -16,6 +16,7 @@ public class AdvancedSettings {
     // getters
     public int getInputMax() { return inputMax; }
     public int getInputMin() { return inputMin; }
+    // TODO @tasota this should be speed; zero value is not used anywhere else right now
     public int getZeroValue() { return zeroValue; }
     // setters
     public void setInputMax(int max) { inputMax = max; }

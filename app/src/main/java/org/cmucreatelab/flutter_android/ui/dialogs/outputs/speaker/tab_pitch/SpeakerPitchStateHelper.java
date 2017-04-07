@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_pitch;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -29,6 +30,8 @@ public abstract class SpeakerPitchStateHelper extends SpeakerStateHelper {
             result = SpeakerPitchProportional.newInstance(speaker);
         } else if (speaker.getPitch().getSettings().getClass() == SettingsConstant.class) {
             result = SpeakerPitchConstant.newInstance(speaker);
+        } else if (speaker.getPitch().getSettings().getClass() == SettingsAmplitude.class) {
+            result = SpeakerPitchAmplitude.newInstance(speaker);
         } else {
             Log.w(Constants.LOG_TAG, "SpeakerPitchStateHelper.newInstance: settings/relationship not implemented, returning null.");
             result = null;

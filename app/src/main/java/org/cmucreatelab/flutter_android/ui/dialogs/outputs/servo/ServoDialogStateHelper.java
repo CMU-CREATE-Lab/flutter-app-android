@@ -7,6 +7,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -41,6 +42,8 @@ public abstract class ServoDialogStateHelper implements DialogStateHelper<ServoD
             result = ServoDialogProportional.newInstance(servo);
         } else if (settings.getClass() == SettingsConstant.class) {
             result = ServoDialogConstant.newInstance(servo);
+        } else if (settings.getClass() == SettingsAmplitude.class) {
+            result = ServoDialogAmplitude.newInstance(servo);
         } else {
             Log.w(Constants.LOG_TAG,"ServoDialogStateHelper.newInstance: unimplmeneted relationship, returning ServoDialogNoRelationship.");
             result = ServoDialogNoRelationship.newInstance(servo);

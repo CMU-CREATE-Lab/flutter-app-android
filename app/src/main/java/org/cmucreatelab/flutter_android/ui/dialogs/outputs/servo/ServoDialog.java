@@ -18,12 +18,14 @@ import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -249,6 +251,8 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
             servo.setSettings(SettingsProportional.newInstance(servo.getSettings()));
         } else if (relationship.getClass() == Constant.class) {
             servo.setSettings(SettingsConstant.newInstance(servo.getSettings()));
+        } else if (relationship.getClass() == Amplitude.class) {
+            servo.setSettings(SettingsAmplitude.newInstance(servo.getSettings()));
         } else {
             Log.e(Constants.LOG_TAG,"ServoDialog.onRelationshipChosen: unimplemented Relationship/Settings.");
         }

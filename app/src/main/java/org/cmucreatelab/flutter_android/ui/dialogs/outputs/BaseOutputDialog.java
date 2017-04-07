@@ -10,6 +10,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -36,6 +37,16 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
                     sensorText.setText(R.string.linked_sensor);
                     TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
                     sensorType.setText(getString(settingsProportional.getSensor().getSensorTypeId()));
+                }
+            } else if (settings.getClass() == SettingsAmplitude.class) {
+                SettingsAmplitude settingsAmplitude = (SettingsAmplitude)settings;
+                if (settingsAmplitude.getSensor().getClass() != NoSensor.class) {
+                    ImageView sensorImage = (ImageView) view.findViewById(R.id.image_sensor);
+                    sensorImage.setImageResource(settingsAmplitude.getSensor().getGreenImageId());
+                    TextView sensorText = (TextView) view.findViewById(R.id.text_sensor_link);
+                    sensorText.setText(R.string.linked_sensor);
+                    TextView sensorType = (TextView) view.findViewById(R.id.text_sensor_type);
+                    sensorType.setText(getString(settingsAmplitude.getSensor().getSensorTypeId()));
                 }
             }
 

@@ -4,10 +4,10 @@ import android.util.Log;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
@@ -124,7 +124,12 @@ public class MessageConstructor {
     }
 
 
-    // TODO @tasota this is just a helper for now, but it might be okay to handle all relationships this way
+    public static MelodySmartMessage constructEnableAmplitudeControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue, int speed) {
+        // Request: ‘aoutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue,speed’
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_AMPLITUDE_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue)+","+Integer.toHexString(speed));
+    }
+
+
     public static MelodySmartMessage constructRelationshipMessage(Output output, Settings settings) {
         MelodySmartMessage result = null;
 
@@ -140,6 +145,37 @@ public class MessageConstructor {
         } else if (settings.getClass() == SettingsConstant.class) {
             SettingsConstant settingsConstant = (SettingsConstant) settings;
             result = constructSetOutput(output, settingsConstant.getValue());
+        } else if (settings.getClass() == SettingsAmplitude.class) {
+            SettingsAmplitude settingsAmplitude = (SettingsAmplitude) settings;
+            Sensor sensor = settings.getSensor();
+
+            // For buzzer pitch, output values are scaled by 10 (to reduce packet size)
+            int omin,omax;
+            if (output.getClass() == Pitch.class) {
+                omin = settingsAmplitude.getOutputMin() / 10;
+                omax = settingsAmplitude.getOutputMax() / 10;
+            } else {
+                omin = settingsAmplitude.getOutputMin();
+                omax = settingsAmplitude.getOutputMax();
+            }
+
+            // speed values range from 0-15
+            int speed = settingsAmplitude.getAdvancedSettings().getZeroValue();
+            if (speed < 0) {
+                Log.w(Constants.LOG_TAG, "tried settings Amplitude speed below 0; reset to 0.");
+                speed = 0;
+            }
+            if (speed > 15) {
+                Log.w(Constants.LOG_TAG, "tried settings Amplitude speed above 15; reset to 15.");
+                speed = 15;
+            }
+
+            // check for inverted sensor
+            if (sensor.isInverted()) {
+                result = constructEnableAmplitudeControl(output, sensor, omax, omin, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
+            } else {
+                result = constructEnableAmplitudeControl(output, sensor, omin, omax, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
+            }
         } else {
             Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());
         }

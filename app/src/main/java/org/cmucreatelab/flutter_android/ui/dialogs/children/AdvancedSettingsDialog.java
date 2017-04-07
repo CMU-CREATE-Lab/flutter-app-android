@@ -14,6 +14,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -88,7 +89,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.d(Constants.LOG_TAG, "onZeroPointChanged");
-            textZeroPoint.setText(getString(R.string.zero_point) + " " + i + "%");
+            textZeroPoint.setText(getString(R.string.zero_point) + " " + i + " / 15");
             zeroPoint = i;
         }
 
@@ -127,7 +128,9 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         Settings settings = flutterOutput.getOutputs()[0].getSettings();
         if (settings.hasAdvancedSettings()) {
             if (settings.getClass() == SettingsProportional.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional)settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional) settings).getAdvancedSettings());
+            } else if (settings.getClass() == SettingsAmplitude.class) {
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsAmplitude) settings).getAdvancedSettings());
             } else {
                 Log.e(Constants.LOG_TAG,"AdvancedSettingsDialog.onCreateDialog: unimplemented relationship/settings");
             }
@@ -162,7 +165,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");
-        textZeroPoint.setText(getString(R.string.zero_point) + " " + zeroPoint + "%");
+        textZeroPoint.setText(getString(R.string.zero_point) + " " + zeroPoint + " / 15");
 
         return builder.create();
     }

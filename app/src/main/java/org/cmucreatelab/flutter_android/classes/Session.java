@@ -8,6 +8,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -155,6 +156,35 @@ public class Session implements FlutterMessageListener {
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
                         Log.v(Constants.LOG_TAG,"LINK (proportional) "+protocolString);
+                    }
+                } else if (args[1].equals("a")) {
+                    // AMPLITUDE
+                    if (args.length != 8) {
+                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                    } else {
+                        int omin, omax, imin, imax, portNumber, speed;
+                        omin = Integer.valueOf(args[2], 16);
+                        omax = Integer.valueOf(args[3], 16);
+                        portNumber = Integer.valueOf(args[4]);
+                        imin = Integer.valueOf(args[5], 16);
+                        imax = Integer.valueOf(args[6], 16);
+                        speed = Integer.valueOf(args[7], 16);
+
+                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        SettingsAmplitude settings = SettingsAmplitude.newInstance(output.getSettings());
+                        settings.setSensorPortNumber(sensor.getPortNumber());
+                        settings.setOutputMin(omin);
+                        settings.setOutputMax(omax);
+                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
+                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setZeroValue(speed);
+                        // check for inverted sensor
+                        if (sensor.isInverted()) {
+                            settings.invertOutputs();
+                        }
+                        output.setSettings(settings);
+                        output.setIsLinked(true, output);
+                        Log.v(Constants.LOG_TAG,"LINK (amplitude) "+protocolString);
                     }
                 } else if (args.length == 2) {
                     // TODO @tasota use a real structure for (constant) SettingsProportional
