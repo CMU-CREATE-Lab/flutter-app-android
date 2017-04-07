@@ -2,16 +2,12 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,6 +28,7 @@ import butterknife.OnClick;
 public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Serializable {
 
     private DialogRecordDataSensorListener dialogRecordDataSensorListener;
+    private DismissDialogListener dismissDialogListener;
 
     private EditText dataSetNameText;
     private EditText intervalsText;
@@ -45,6 +42,7 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
 
         Bundle args = new Bundle();
         args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
+        args.putSerializable(DismissDialogListener.DISMISS_KEY, serializable);
         recordDataSensorDialog.setArguments(args);
 
         return recordDataSensorDialog;
@@ -55,6 +53,7 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         dialogRecordDataSensorListener = (DialogRecordDataSensorListener) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DismissDialogListener.DISMISS_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors_record_data, null);
@@ -83,6 +82,12 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         return builder.create();
     }
 
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogListener.onDialogDismissed();
+    }
 
     @OnClick(R.id.button_start_recording)
     public void onClickButtonStartRecording() {

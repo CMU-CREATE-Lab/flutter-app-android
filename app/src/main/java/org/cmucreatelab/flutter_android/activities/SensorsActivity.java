@@ -21,6 +21,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningSensorDialog;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, RecordDataSensorDialog.DialogRecordDataSensorListener {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, RecordDataSensorDialog.DialogRecordDataSensorListener, DismissDialogListener {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -273,7 +274,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                     String dataLogName = globalHandler.dataLoggingHandler.getDataName();
                     DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
                     RecordingWarningSensorDialog recordingWarningSensorDialog = RecordingWarningSensorDialog.newInstance(
-                            dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
+                            instance, dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
                     );
                     recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
@@ -339,6 +340,13 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                 updateStaticViews();
             }
         });
+    }
+
+
+    @Override
+    public void onDialogDismissed() {
+        Log.d(Constants.LOG_TAG, "SensorsActivity.onDialogDismissed");
+        onResume();
     }
 
 }

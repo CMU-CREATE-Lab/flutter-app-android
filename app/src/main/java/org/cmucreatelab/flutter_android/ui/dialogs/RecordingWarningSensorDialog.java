@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -9,17 +10,22 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 2/27/2017.
  */
 
 public class RecordingWarningSensorDialog extends RecordingWarningDialog implements RecordingWarningDialog.WarningButtonListener {
 
+    private DismissDialogListener dismissDialogListener;
 
-    public static RecordingWarningSensorDialog newInstance(String name, int times, String time, int forTimes, String forTime) {
+
+    public static RecordingWarningSensorDialog newInstance(Serializable serializable, String name, int times, String time, int forTimes, String forTime) {
         RecordingWarningSensorDialog recordingWarningSensorDialog = new RecordingWarningSensorDialog();
 
         Bundle args = new Bundle();
+        args.putSerializable(DismissDialogListener.DISMISS_KEY, serializable);
         args.putString(NAME_KEY, name);
         args.putInt(TIMES_KEY, times);
         args.putString(TIME_KEY, time);
@@ -36,10 +42,17 @@ public class RecordingWarningSensorDialog extends RecordingWarningDialog impleme
         Log.d(Constants.LOG_TAG, "RecordingWarningSensorDialog.onCreateDialog");
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         super.registerWarningListener(this);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DismissDialogListener.DISMISS_KEY);
         buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
         return dialog;
     }
 
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogListener.onDialogDismissed();
+    }
 
     @Override
     public void onCancelRecording() {
