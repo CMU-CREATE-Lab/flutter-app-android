@@ -20,7 +20,9 @@
         android:hint="@string/data_set_name"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        android:inputType="text"
+        android:imeOptions="actionNext"/>
 
     <TextView
         android:layout_width="wrap_content"
