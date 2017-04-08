@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -19,7 +20,7 @@ import butterknife.OnClick;
  * Created by Steve on 2/24/2017.
  */
 
-public abstract class RecordingWarningDialog extends BaseDataLoggingDialog {
+public abstract class RecordingWarningDialog extends BaseResizableDialog {
 
     protected static final String NAME_KEY = "name_key";
     protected static final String TIMES_KEY = "times_key";
@@ -27,7 +28,7 @@ public abstract class RecordingWarningDialog extends BaseDataLoggingDialog {
     protected static final String FOR_TIMES_KEY = "for_times_key";
     protected static final String FOR_TIME_KEY = "for_time_key";
 
-    private WarningButtonListener warningButtonListener;
+    private DismissDialogListener dismissDialogListener;
     protected Button buttonOk;
 
 
@@ -40,6 +41,7 @@ public abstract class RecordingWarningDialog extends BaseDataLoggingDialog {
         String timePeriodString = getArguments().getString(FOR_TIME_KEY);
         int intervals = getArguments().getInt(TIMES_KEY);
         int timePeriod = getArguments().getInt(FOR_TIMES_KEY);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DismissDialogListener.DISMISS_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_recording_warning, null);
@@ -69,25 +71,23 @@ public abstract class RecordingWarningDialog extends BaseDataLoggingDialog {
     }
 
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogListener.onDialogDismissed();
+    }
+
+
     @OnClick(R.id.button_ok)
     public void onClickOk() {
-        warningButtonListener.onButtonOk();
+        dismiss();
     }
+
 
     @OnClick(R.id.button_cancel_recording)
     public void onClickCancel() {
-        warningButtonListener.onCancelRecording();
-    }
-
-
-    public void registerWarningListener(WarningButtonListener warningButtonListener) {
-        this.warningButtonListener = warningButtonListener;
-    }
-
-
-    public interface WarningButtonListener {
-        public void onCancelRecording();
-        public void onButtonOk();
+        GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
+        dismiss();
     }
 
 }

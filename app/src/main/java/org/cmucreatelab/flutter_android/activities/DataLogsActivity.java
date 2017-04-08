@@ -35,6 +35,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
@@ -55,7 +56,7 @@ import butterknife.ButterKnife;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener,
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, BaseDataLoggingDialog.DialogRecordListener,
         OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener, DataRecordingTimer.TimeExpireListener,
         OpenLogState.OpenLogStateListener, ResumeState.ResumeStateListener, CleanUpBeforeState.CleanUpBeforeStateListener, CleanUpAfterState.CleanUpStateAfterListener, SaveToKindleState.SaveToKindleStateListener {
 

@@ -16,9 +16,7 @@ import java.io.Serializable;
  * Created by Steve on 2/27/2017.
  */
 
-public class RecordingWarningSensorDialog extends RecordingWarningDialog implements RecordingWarningDialog.WarningButtonListener {
-
-    private DismissDialogListener dismissDialogListener;
+public class RecordingWarningSensorDialog extends RecordingWarningDialog {
 
 
     public static RecordingWarningSensorDialog newInstance(Serializable serializable, String name, int times, String time, int forTimes, String forTime) {
@@ -41,30 +39,8 @@ public class RecordingWarningSensorDialog extends RecordingWarningDialog impleme
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "RecordingWarningSensorDialog.onCreateDialog");
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        super.registerWarningListener(this);
-        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DismissDialogListener.DISMISS_KEY);
         buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
         return dialog;
     }
 
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        dismissDialogListener.onDialogDismissed();
-    }
-
-    @Override
-    public void onCancelRecording() {
-        Log.d(Constants.LOG_TAG, "RecordingWarningDataDialog.onCancelRecording");
-        GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
-        dismiss();
-    }
-
-
-    @Override
-    public void onButtonOk() {
-        Log.d(Constants.LOG_TAG, "RecordingWarningDataDialog.onButtonOk");
-        dismiss();
-    }
 }

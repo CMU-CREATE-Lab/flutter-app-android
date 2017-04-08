@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -38,7 +39,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, RecordDataSensorDialog.DialogRecordDataSensorListener, DismissDialogListener {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, BaseDataLoggingDialog.DialogRecordListener, DismissDialogListener {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -322,7 +323,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     @Override
-    public void onDataRecord(String name, int interval, int sample) {
+    public void onRecordData(String name, int interval, int sample) {
         Log.d(Constants.LOG_TAG, "SensorsActivity.onRecordData");
         globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
     }
