@@ -107,20 +107,25 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
                             interval = timeToSeconds(temp);
                             interval = interval / intervalsT;
 
-                            int timePeriodT = Integer.valueOf(timerPeriodString);
-                            // in seconds
-                            int timePeriod = 0;
-                            temp = timePeriodSpinner.getSelectedItem().toString();
-                            timePeriod = timeToSeconds(temp);
-                            timePeriod = timePeriodT * timePeriod;
-                            int sample = timePeriod / interval;
+                            if (interval != 0) {
+                                int timePeriodT = Integer.valueOf(timerPeriodString);
+                                // in seconds
+                                int timePeriod = 0;
+                                temp = timePeriodSpinner.getSelectedItem().toString();
+                                timePeriod = timeToSeconds(temp);
+                                timePeriod = timePeriodT * timePeriod;
+                                int sample = timePeriod / interval;
 
-                            dialogRecordListener.onRecordData(name, interval, sample);
+                                dialogRecordListener.onRecordData(name, interval, sample);
 
-                            DataLoggingConfirmationSensor dataLoggingConfirmationSensor = new DataLoggingConfirmationSensor();
-                            dataLoggingConfirmationSensor.show(getFragmentManager(), "tag");
+                                DataLoggingConfirmationSensor dataLoggingConfirmationSensor = new DataLoggingConfirmationSensor();
+                                dataLoggingConfirmationSensor.show(getFragmentManager(), "tag");
 
-                            this.dismiss();
+                                this.dismiss();
+                            } else {
+                                // TODO - warn the user that he or she cannot record data points more than once per second
+                                this.dismiss();
+                            }
                         } else {
                             IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
                             isRecordingDialog.show(getFragmentManager(), "tag");
