@@ -7,9 +7,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/text_title"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:text="@string/select_a_data_log"
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="5dp"/>
@@ -17,8 +17,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/text_details"
         android:textSize="20sp"
-        android:text="@string/send_failed"
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingTop="20dp"
