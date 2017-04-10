@@ -280,7 +280,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                     recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
                 else {
-                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance);
+                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance, R.drawable.round_blue_button_bottom_right);
                     recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
             }

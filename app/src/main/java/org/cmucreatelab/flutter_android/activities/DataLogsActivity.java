@@ -319,7 +319,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             );
                             recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
                         } else {
-                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance);
+                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance, R.drawable.round_orange_button_bottom_right);
                             recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
                         }
                     }

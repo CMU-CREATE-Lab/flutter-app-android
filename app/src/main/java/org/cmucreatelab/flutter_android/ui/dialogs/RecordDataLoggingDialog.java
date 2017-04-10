@@ -29,12 +29,13 @@ import butterknife.OnClick;
 public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Serializable {
 
 
-    public static RecordDataLoggingDialog newInstance(Serializable serializable) {
+    public static RecordDataLoggingDialog newInstance(Serializable serializable, int buttonDrawableId) {
         RecordDataLoggingDialog recordDataLoggingDialog = new RecordDataLoggingDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(RECORD_KEY, serializable);
         args.putSerializable(DISMISS_KEY, serializable);
+        args.putInt(BUTTON_KEY, buttonDrawableId);
         recordDataLoggingDialog.setArguments(args);
 
         return recordDataLoggingDialog;

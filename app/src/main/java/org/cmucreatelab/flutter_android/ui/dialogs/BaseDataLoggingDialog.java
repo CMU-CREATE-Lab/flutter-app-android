@@ -25,6 +25,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
     protected static final String RECORD_KEY = "record_key";
     protected static final String DISMISS_KEY = "dismiss_key";
+    protected static final String BUTTON_KEY = "button_key";
 
     private GlobalHandler globalHandler;
     private boolean isLogging;
@@ -32,6 +33,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
     private DialogRecordListener dialogRecordListener;
     private DismissDialogListener dismissDialogListener;
+    private int buttonDrawableId;
 
     protected EditText dataSetNameText;
     protected EditText intervalsText;
@@ -63,6 +65,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialogRecordListener = (DialogRecordListener) getArguments().getSerializable(RECORD_KEY);
         dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DismissDialogListener.DISMISS_KEY);
+        buttonDrawableId = getArguments().getInt(BUTTON_KEY);
 
         globalHandler = GlobalHandler.getInstance(getActivity());
         globalHandler.dataLoggingHandler.populatePointsAvailable(this);
@@ -118,8 +121,8 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
                                 dialogRecordListener.onRecordData(name, interval, sample);
 
-                                DataLoggingConfirmationSensor dataLoggingConfirmationSensor = new DataLoggingConfirmationSensor();
-                                dataLoggingConfirmationSensor.show(getFragmentManager(), "tag");
+                                DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
+                                dataLoggingConfirmation.show(getFragmentManager(), "tag");
 
                                 this.dismiss();
                             } else {

@@ -22,12 +22,13 @@ import butterknife.ButterKnife;
 public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Serializable {
 
 
-    public static RecordDataSensorDialog newInstance(Serializable serializable) {
+    public static RecordDataSensorDialog newInstance(Serializable serializable, int buttonDrawableId) {
         RecordDataSensorDialog recordDataSensorDialog = new RecordDataSensorDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(RECORD_KEY, serializable);
         args.putSerializable(DISMISS_KEY, serializable);
+        args.putInt(BUTTON_KEY, buttonDrawableId);
         recordDataSensorDialog.setArguments(args);
 
         return recordDataSensorDialog;
