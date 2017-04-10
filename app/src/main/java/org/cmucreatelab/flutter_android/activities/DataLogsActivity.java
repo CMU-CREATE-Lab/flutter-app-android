@@ -246,10 +246,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private TextView.OnClickListener openLogClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickOpenLog");
-            globalHandler.sessionHandler.createProgressDialog(instance);
-            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            dataLogsHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
+            if (dataLogsHelper.getDataSetOnFlutter() != null || dataLogsHelper.getDataSetsOnDevice().length > 0) {
+                Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickOpenLog");
+                globalHandler.sessionHandler.createProgressDialog(instance);
+                globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+                dataLogsHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
+            }
         }
     };
 

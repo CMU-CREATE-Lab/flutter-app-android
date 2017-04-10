@@ -8,6 +8,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.View.GONE;
 
 /**
  * Created by Steve on 2/6/2017.
@@ -39,6 +42,7 @@ public class OpenLogDialog extends BaseResizableDialog {
     private DataSet[] dataSetsOnDevice;
 
     private ListView listDeviceDataSets;
+    private LinearLayout dataOnFlutterContainer, dataOnDeviceContainer;
     private DataLogListAdapter dataLogListAdapter;
 
 
@@ -79,12 +83,17 @@ public class OpenLogDialog extends BaseResizableDialog {
         dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_ON_FLUTTER_KEY);
         dataSetsOnDevice = (DataSet[]) getArguments().getSerializable(DATA_SETS_ON_DEVICE_KEY);
         listDeviceDataSets = (ListView) view.findViewById(R.id.list_data_logs);
+        dataOnFlutterContainer = (LinearLayout) view.findViewById(R.id.linear_flutter_data_container);
+        dataOnDeviceContainer = (LinearLayout) view.findViewById(R.id.linear_device_data_container);
         dataLogListAdapter = new DataLogListAdapter(inflater);
 
         listDeviceDataSets.setOnItemClickListener(dataLogListener);
         listDeviceDataSets.setAdapter(dataLogListAdapter);
-        for (DataSet dataSet : dataSetsOnDevice) {
-            dataLogListAdapter.addDataLog(dataSet);
+        if (dataSetsOnDevice.length > 0) {
+            dataOnDeviceContainer.setVisibility(View.VISIBLE);
+            for (DataSet dataSet : dataSetsOnDevice) {
+                dataLogListAdapter.addDataLog(dataSet);
+            }
         }
 
         TextView logTitle = (TextView) view.findViewById(R.id.text_current_device_title);
@@ -98,6 +107,7 @@ public class OpenLogDialog extends BaseResizableDialog {
         if (dataSetOnFlutter != null) {
             TextView textLogName = (TextView) view.findViewById(R.id.text_current_log_name);
             TextView textLogPoints = (TextView) view.findViewById(R.id.text_num_points);
+            dataOnFlutterContainer.setVisibility(View.VISIBLE);
 
             view.findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
             textLogName.setText(dataSetOnFlutter.getDataName());
