@@ -50,28 +50,16 @@ public class TriColorLed implements FlutterOutput {
 
         // settings
         if (oldInstance.getRedLed().getSettings().getClass() == oldInstance.getGreenLed().getSettings().getClass() && oldInstance.getGreenLed().getSettings().getClass() == oldInstance.getBlueLed().getSettings().getClass()) {
-            if (oldInstance.getRedLed().getSettings().getClass() == SettingsConstant.class) {
-                newInstance.getRedLed().setSettings(SettingsConstant.newInstance(oldInstance.getRedLed().getSettings()));
-                newInstance.getGreenLed().setSettings(SettingsConstant.newInstance(oldInstance.getGreenLed().getSettings()));
-                newInstance.getBlueLed().setSettings(SettingsConstant.newInstance(oldInstance.getBlueLed().getSettings()));
-            } else if (oldInstance.getRedLed().getSettings().getClass() == SettingsProportional.class) {
-                newInstance.getRedLed().setSettings(SettingsProportional.newInstance(oldInstance.getRedLed().getSettings()));
-                newInstance.getGreenLed().setSettings(SettingsProportional.newInstance(oldInstance.getGreenLed().getSettings()));
-                newInstance.getBlueLed().setSettings(SettingsProportional.newInstance(oldInstance.getBlueLed().getSettings()));
-            } else if (oldInstance.getRedLed().getSettings().getClass() == SettingsAmplitude.class) {
-                newInstance.getRedLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getRedLed().getSettings()));
-                newInstance.getGreenLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getGreenLed().getSettings()));
-                newInstance.getBlueLed().setSettings(SettingsAmplitude.newInstance(oldInstance.getBlueLed().getSettings()));
-            } else {
-                Log.e(Constants.LOG_TAG, "TriColorLed.newInstance: Relationship not implemented");
-            }
+            newInstance.getRedLed().setSettings(Settings.newInstance(oldInstance.getRedLed().getSettings()));
+            newInstance.getGreenLed().setSettings(Settings.newInstance(oldInstance.getGreenLed().getSettings()));
+            newInstance.getBlueLed().setSettings(Settings.newInstance(oldInstance.getBlueLed().getSettings()));
+
             newInstance.getRedLed().setIsLinked(oldInstance.getRedLed().isLinked(), oldInstance.getRedLed());
             newInstance.getGreenLed().setIsLinked(oldInstance.getGreenLed().isLinked(), oldInstance.getGreenLed());
             newInstance.getBlueLed().setIsLinked(oldInstance.getBlueLed().isLinked(), oldInstance.getBlueLed());
         } else {
             Log.e(Constants.LOG_TAG, "TriColorLed.newInstance: RGB setting types do not match; returning new instance as is.");
         }
-
 
         return newInstance;
     }

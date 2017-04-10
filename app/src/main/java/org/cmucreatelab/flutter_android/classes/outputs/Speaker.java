@@ -1,12 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.outputs;
 
-import android.util.Log;
-
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 
 /**
  * Created by Steve on 6/20/2016.
@@ -44,29 +39,10 @@ public class Speaker implements FlutterOutput {
         Speaker newInstance = new Speaker(oldInstance.portNumber,oldInstance.flutter);
 
         // settings (pitch)
-        if (oldInstance.getPitch().getSettings().getClass() == SettingsConstant.class) {
-            newInstance.getPitch().setSettings(SettingsConstant.newInstance(oldInstance.getPitch().getSettings()));
-        } else if (oldInstance.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            newInstance.getPitch().setSettings(SettingsProportional.newInstance(oldInstance.getPitch().getSettings()));
-        } else if (oldInstance.getPitch().getSettings().getClass() == SettingsProportional.class) {
-            newInstance.getPitch().setSettings(SettingsAmplitude.newInstance(oldInstance.getPitch().getSettings()));
-        } else {
-            Log.e(Constants.LOG_TAG, "Speaker.newInstance: Cannot find Settings type for pitch; defaulting to Proportional.");
-            newInstance.getPitch().setSettings(SettingsProportional.newInstance(oldInstance.getPitch().getSettings()));
-        }
+        newInstance.getPitch().setSettings(Settings.newInstance(oldInstance.getPitch().getSettings()));
         newInstance.getPitch().setIsLinked(oldInstance.getPitch().isLinked(),oldInstance.getPitch());
-
         // settings (volume)
-        if (oldInstance.getVolume().getSettings().getClass() == SettingsConstant.class) {
-            newInstance.getVolume().setSettings(SettingsConstant.newInstance(oldInstance.getVolume().getSettings()));
-        } else if (oldInstance.getVolume().getSettings().getClass() == SettingsProportional.class) {
-            newInstance.getVolume().setSettings(SettingsProportional.newInstance(oldInstance.getVolume().getSettings()));
-        } else if (oldInstance.getVolume().getSettings().getClass() == SettingsAmplitude.class) {
-            newInstance.getVolume().setSettings(SettingsAmplitude.newInstance(oldInstance.getVolume().getSettings()));
-        } else {
-            Log.e(Constants.LOG_TAG, "Speaker.newInstance: Cannot find Settings type for volume; defaulting to Proportional.");
-            newInstance.getVolume().setSettings(SettingsProportional.newInstance(oldInstance.getVolume().getSettings()));
-        }
+        newInstance.getVolume().setSettings(Settings.newInstance(oldInstance.getVolume().getSettings()));
         newInstance.getVolume().setIsLinked(oldInstance.getVolume().isLinked(),oldInstance.getVolume());
 
         return newInstance;

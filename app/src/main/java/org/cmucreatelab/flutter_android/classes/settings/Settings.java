@@ -1,8 +1,11 @@
 package org.cmucreatelab.flutter_android.classes.settings;
 
+import android.util.Log;
+
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by mike on 3/16/17.
@@ -33,6 +36,29 @@ public abstract class Settings {
         sensorPortNumber = 0;
         advancedSettings = new AdvancedSettings();
         this.flutter = flutter;
+    }
+
+
+    /**
+     * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
+     * SettingsAmplitude. That way we can display changes the user makes and, if the settings are not saved,
+     * then the real Settings will not be overwritten.
+     *
+     * @param oldInstance The object that is to be copied.
+     * @return A new instance of Settings.
+     */
+    public static Settings newInstance(Settings oldInstance) {
+        Settings result = null;
+        if (oldInstance.getClass() == SettingsProportional.class) {
+            result = SettingsProportional.newInstance(oldInstance);
+        } else if (oldInstance.getClass() == SettingsConstant.class) {
+            result = SettingsConstant.newInstance(oldInstance);
+        } else if (oldInstance.getClass() == SettingsAmplitude.class) {
+            result = SettingsAmplitude.newInstance(oldInstance);
+        } else {
+            Log.e(Constants.LOG_TAG, "Settings.newInstance: Cannot determine Settings subclass");
+        }
+        return result;
     }
 
 

@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
@@ -36,11 +37,7 @@ public class Servo extends Output implements FlutterOutput {
         Servo newInstance = new Servo(oldInstance.getPortNumber(),oldInstance.flutter);
 
         // settings
-        if (oldInstance.getSettings().getClass() == SettingsConstant.class) {
-            newInstance.setSettings(SettingsConstant.newInstance(oldInstance.getSettings()));
-        } else {
-            newInstance.setSettings(SettingsProportional.newInstance(oldInstance.getSettings()));
-        }
+        newInstance.setSettings(Settings.newInstance(oldInstance.getSettings()));
         newInstance.setIsLinked(oldInstance.isLinked(), oldInstance);
 
         return newInstance;
