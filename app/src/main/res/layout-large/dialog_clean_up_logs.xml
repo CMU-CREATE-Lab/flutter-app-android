@@ -100,6 +100,34 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_year_plus_container"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/over_a_year"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/orange"/>
+
+
+            <org.cmucreatelab.flutter_android.ui.ExtendedHeightListView
+                android:id="@+id/list_over_a_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="2dp"/>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/button_delete_logs"
             android:layout_width="match_parent"

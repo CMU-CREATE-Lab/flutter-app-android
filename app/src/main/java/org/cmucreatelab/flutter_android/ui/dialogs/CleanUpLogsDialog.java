@@ -48,20 +48,14 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
     private DataSet dataSetOnFlutter;
     private DataSet[] dataSetsOnDevice;
 
-    private ArrayList<DataSet> thisWeeksDataSets;
-    private ArrayList<DataSet> thisMonthsDataSets;
-    private ArrayList<DataSet> thisYearsDataSets;
+    private ArrayList<DataSet> thisWeeksDataSets, thisMonthsDataSets, thisYearsDataSets, yearPlusDataSets;
 
     private ArrayList<DataSet> logsToDelete;
 
-    private ListView thisWeek;
-    private ListView thisMonth;
-    private ListView thisYear;
-    private LinearLayout weekContainer, monthContainer, yearContainer;
+    private ListView thisWeek, thisMonth, thisYear, yearPlus;
+    private LinearLayout weekContainer, monthContainer, yearContainer, yearPlusContainer;
 
-    private DataLogListAdapterCleanUp thisWeekAdapter;
-    private DataLogListAdapterCleanUp thisMonthAdapter;
-    private DataLogListAdapterCleanUp thisYearAdapter;
+    private DataLogListAdapterCleanUp thisWeekAdapter, thisMonthAdapter, thisYearAdapter, yearPlusAdapter;
 
 
     private boolean isWithinThisWeek(DataSet dataSet) {
@@ -156,6 +150,14 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
     };
 
 
+    private AdapterView.OnItemClickListener yearPlusClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            selectionHelper(yearPlus, thisYearsDataSets, view, i);
+        }
+    };
+
+
     public static CleanUpLogsDialog newInstance(Serializable activity, Serializable dataSetOnFlutter, Serializable[] dataSetsOnDevice) {
         CleanUpLogsDialog result = new CleanUpLogsDialog();
 
@@ -184,32 +186,39 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         thisWeek = (ListView) view.findViewById(R.id.list_this_week);
         thisMonth = (ListView) view.findViewById(R.id.list_this_month);
         thisYear = (ListView) view.findViewById(R.id.list_this_year);
+        yearPlus = (ListView) view.findViewById(R.id.list_over_a_year);
         thisWeek.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         thisMonth.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         thisYear.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        yearPlus.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
         weekContainer = (LinearLayout) view.findViewById(R.id.linear_week_container);
         monthContainer = (LinearLayout) view.findViewById(R.id.linear_month_container);
         yearContainer = (LinearLayout) view.findViewById(R.id.linear_year_container);
+        yearPlusContainer = (LinearLayout) view.findViewById(R.id.linear_year_plus_container);
 
         thisWeekAdapter = new DataLogListAdapterCleanUp(inflater);
         thisMonthAdapter = new DataLogListAdapterCleanUp(inflater);
         thisYearAdapter = new DataLogListAdapterCleanUp(inflater);
+        yearPlusAdapter = new DataLogListAdapterCleanUp(inflater);
+
 
         thisWeek.setAdapter(thisWeekAdapter);
         thisMonth.setAdapter(thisMonthAdapter);
         thisYear.setAdapter(thisYearAdapter);
+        yearPlus.setAdapter(yearPlusAdapter);
         thisWeek.setOnItemClickListener(thisWeekClickListener);
         thisMonth.setOnItemClickListener(thisMonthClickListener);
         thisYear.setOnItemClickListener(thisYearClickListener);
+        yearPlus.setOnItemClickListener(yearPlusClickListener);
 
         thisWeeksDataSets = new ArrayList<>();
         thisMonthsDataSets = new ArrayList<>();
         thisYearsDataSets = new ArrayList<>();
+        yearPlusDataSets = new ArrayList<>();
         logsToDelete = new ArrayList<>();
 
         if (dataSetOnFlutter != null) {
-            Log.d(Constants.LOG_TAG, "here");
             if (isWithinThisWeek(dataSetOnFlutter)) {
                 weekContainer.setVisibility(View.VISIBLE);
                 thisWeeksDataSets.add(dataSetOnFlutter);
@@ -222,6 +231,10 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
                 yearContainer.setVisibility(View.VISIBLE);
                 thisYearsDataSets.add(dataSetOnFlutter);
                 thisYearAdapter.addDataLog(dataSetOnFlutter);
+            } else {
+                yearPlusContainer.setVisibility(View.VISIBLE);
+                yearPlusDataSets.add(dataSetOnFlutter);
+                yearPlusAdapter.addDataLog(dataSetOnFlutter);
             }
         }
 
@@ -239,6 +252,10 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
                     yearContainer.setVisibility(View.VISIBLE);
                     thisYearsDataSets.add(dataSet);
                     thisYearAdapter.addDataLog(dataSet);
+                } else {
+                    yearPlusContainer.setVisibility(View.VISIBLE);
+                    yearPlusDataSets.add(dataSet);
+                    yearPlusAdapter.addDataLog(dataSet);
                 }
             }
         }

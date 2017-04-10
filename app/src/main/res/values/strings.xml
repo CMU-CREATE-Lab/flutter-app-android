@@ -228,6 +228,7 @@
     <string name="select_a_data_log">Select a Data Log</string>
     <string name="send_failed">Must have a data log selected before you can send a data log.</string>
     <string name="done_recording">Your Flutter has finished recording. Loading data...</string>
+    <string name="over_a_year">Over A Year</string>
 
     <string-array name="time_array">
         <item>minute</item>
