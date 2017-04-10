@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -56,6 +57,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
     private ListView thisWeek;
     private ListView thisMonth;
     private ListView thisYear;
+    private LinearLayout weekContainer, monthContainer, yearContainer;
 
     private DataLogListAdapterCleanUp thisWeekAdapter;
     private DataLogListAdapterCleanUp thisMonthAdapter;
@@ -186,6 +188,10 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         thisMonth.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         thisYear.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
+        weekContainer = (LinearLayout) view.findViewById(R.id.linear_week_container);
+        monthContainer = (LinearLayout) view.findViewById(R.id.linear_month_container);
+        yearContainer = (LinearLayout) view.findViewById(R.id.linear_year_container);
+
         thisWeekAdapter = new DataLogListAdapterCleanUp(inflater);
         thisMonthAdapter = new DataLogListAdapterCleanUp(inflater);
         thisYearAdapter = new DataLogListAdapterCleanUp(inflater);
@@ -205,12 +211,15 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         if (dataSetOnFlutter != null) {
             Log.d(Constants.LOG_TAG, "here");
             if (isWithinThisWeek(dataSetOnFlutter)) {
+                weekContainer.setVisibility(View.VISIBLE);
                 thisWeeksDataSets.add(dataSetOnFlutter);
                 thisWeekAdapter.addDataLog(dataSetOnFlutter);
             } else if (isWithinThisMonth(dataSetOnFlutter)) {
+                monthContainer.setVisibility(View.VISIBLE);
                 thisMonthsDataSets.add(dataSetOnFlutter);
                 thisMonthAdapter.addDataLog(dataSetOnFlutter);
             } else if (isWithinThisYear(dataSetOnFlutter)) {
+                yearContainer.setVisibility(View.VISIBLE);
                 thisYearsDataSets.add(dataSetOnFlutter);
                 thisYearAdapter.addDataLog(dataSetOnFlutter);
             }
@@ -219,12 +228,15 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         for (DataSet dataSet : dataSetsOnDevice) {
             if (dataSet != null) {
                 if (isWithinThisWeek(dataSet)) {
+                    weekContainer.setVisibility(View.VISIBLE);
                     thisWeeksDataSets.add(dataSet);
                     thisWeekAdapter.addDataLog(dataSet);
                 } else if (isWithinThisMonth(dataSet)) {
+                    monthContainer.setVisibility(View.VISIBLE);
                     thisMonthsDataSets.add(dataSet);
                     thisMonthAdapter.addDataLog(dataSet);
                 } else if (isWithinThisYear(dataSet)) {
+                    yearContainer.setVisibility(View.VISIBLE);
                     thisYearsDataSets.add(dataSet);
                     thisYearAdapter.addDataLog(dataSet);
                 }
