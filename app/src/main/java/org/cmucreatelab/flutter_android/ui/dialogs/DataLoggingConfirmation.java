@@ -147,6 +147,17 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
     }
 
 
+    private static String minute(int minute) {
+        String result = "";
+
+        if (minute < 10) {
+            result = "0" + minute;
+        }
+
+        return result;
+    }
+
+
     private String populateMessage(DataLogDetails dataLogDetails) {
         int intervalsT = dataLogDetails.getIntervalInt();
         // in seconds
@@ -179,7 +190,7 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
         StringBuilder builder = new StringBuilder();
         builder.append(
                 "Your Flutter will record " + String.valueOf(sample) + " data points and finish at "
-                        + hour(hour) + ":" + minute + morningOrNight(amOrPm) + " on " + month(month) + " " + ordinal(day) + "."
+                        + hour(hour) + ":" + minute(minute) + morningOrNight(amOrPm) + " on " + month(month) + " " + ordinal(day) + "."
         );
 
         return builder.toString();
