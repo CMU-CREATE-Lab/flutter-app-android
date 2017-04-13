@@ -8,7 +8,10 @@ import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
 /**
@@ -130,6 +133,24 @@ public class MessageConstructor {
     }
 
 
+    public static MelodySmartMessage constructEnableFrequencyControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue) {
+        // Request: ‘foutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue’
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_FREQUENCY_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue));
+    }
+
+
+    public static MelodySmartMessage constructEnableDerivativeControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue) {
+        // Request: ‘doutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue’
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_DERIVATIVE_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue));
+    }
+
+
+    public static MelodySmartMessage constructEnableIntegralControl(Output output, Sensor input, int minOutputValue, int maxOutputValue, int minInputValue, int maxInputValue, int sensorCenterValue, int speed) {
+        // Request: ‘ioutput,minOutputValue,maxOutputValue,input,minInputValue,maxInputValue,sensorCenterValue,speed’
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.ENABLE_INTEGRAL_CONTROL)+output.getProtocolString()+","+Integer.toHexString(minOutputValue)+","+Integer.toHexString(maxOutputValue)+","+input.getPortNumber()+","+Integer.toHexString(minInputValue)+","+Integer.toHexString(maxInputValue)+","+Integer.toHexString(sensorCenterValue)+","+Integer.toHexString(speed));
+    }
+
+
     public static MelodySmartMessage constructRelationshipMessage(Output output, Settings settings) {
         MelodySmartMessage result = null;
 
@@ -175,6 +196,58 @@ public class MessageConstructor {
                 result = constructEnableAmplitudeControl(output, sensor, omax, omin, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
             } else {
                 result = constructEnableAmplitudeControl(output, sensor, omin, omax, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
+            }
+        } else if (settings.getClass() == SettingsFrequency.class) {
+            SettingsFrequency settingsFrequency = (SettingsFrequency) settings;
+            Sensor sensor = settings.getSensor();
+            // check for inverted sensor
+            if (sensor.isInverted()) {
+                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMax(), settingsFrequency.getOutputMin(), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMax()));
+            } else {
+                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMin(), settingsFrequency.getOutputMax(), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMax()));
+            }
+        } else if (settings.getClass() == SettingsChange.class) {
+            SettingsChange settingsChange = (SettingsChange) settings;
+            Sensor sensor = settings.getSensor();
+            // check for inverted sensor
+            if (sensor.isInverted()) {
+                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMax(), settingsChange.getOutputMin(), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMax()));
+            } else {
+                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMin(), settingsChange.getOutputMax(), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMax()));
+            }
+        } else if (settings.getClass() == SettingsCumulative.class) {
+            SettingsCumulative settingsCumulative = (SettingsCumulative) settings;
+            Sensor sensor = settings.getSensor();
+
+            // For buzzer pitch, output values are scaled by 10 (to reduce packet size)
+            int omin,omax;
+            if (output.getClass() == Pitch.class) {
+                omin = settingsCumulative.getOutputMin() / 10;
+                omax = settingsCumulative.getOutputMax() / 10;
+            } else {
+                omin = settingsCumulative.getOutputMin();
+                omax = settingsCumulative.getOutputMax();
+            }
+
+            // speed values range from 0-15
+            int speed = settingsCumulative.getAdvancedSettings().getSpeed();
+            if (speed < 0) {
+                Log.w(Constants.LOG_TAG, "tried settings Amplitude speed below 0; reset to 0.");
+                speed = 0;
+            }
+            if (speed > 15) {
+                Log.w(Constants.LOG_TAG, "tried settings Amplitude speed above 15; reset to 15.");
+                speed = 15;
+            }
+
+            // TODO @tasota sensor center value range?
+            int center = settingsCumulative.getAdvancedSettings().getSensorCenterValue();
+
+            // check for inverted sensor
+            if (sensor.isInverted()) {
+                result = constructEnableIntegralControl(output, sensor, omax, omin, sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMax()), center, speed);
+            } else {
+                result = constructEnableIntegralControl(output, sensor, omin, omax, sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMax()), center, speed);
             }
         } else {
             Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());

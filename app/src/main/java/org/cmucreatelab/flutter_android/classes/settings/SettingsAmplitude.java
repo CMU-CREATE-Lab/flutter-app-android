@@ -93,12 +93,4 @@ public class SettingsAmplitude extends Settings {
         return newInstance;
     }
 
-
-    public void invertOutputs() {
-        int temp;
-        temp = getOutputMax();
-        setOutputMax(getOutputMin());
-        setOutputMin(temp);
-    }
-
 }

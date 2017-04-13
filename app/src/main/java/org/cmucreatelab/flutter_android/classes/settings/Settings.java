@@ -4,7 +4,10 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
+import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
+import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -42,6 +45,14 @@ public abstract class Settings {
     }
 
 
+    public void invertOutputs() {
+        int temp;
+        temp = this.outputMax;
+        this.outputMax = this.outputMin;
+        this.outputMin = temp;
+    }
+
+
     /**
      * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
      * SettingsAmplitude. That way we can display changes the user makes and, if the settings are not saved,
@@ -73,6 +84,12 @@ public abstract class Settings {
             result = SettingsConstant.newInstance(oldInstance);
         } else if (relationship.getClass() == Amplitude.class) {
             result = SettingsAmplitude.newInstance(oldInstance);
+        } else if (relationship.getClass() == Frequency.class) {
+            result = SettingsFrequency.newInstance(oldInstance);
+        } else if (relationship.getClass() == Change.class) {
+            result = SettingsChange.newInstance(oldInstance);
+        } else if (relationship.getClass() == Cumulative.class) {
+            result = SettingsCumulative.newInstance(oldInstance);
         } else {
             Log.e(Constants.LOG_TAG, "Settings.newInstance: Cannot determine Relationship subclass");
         }

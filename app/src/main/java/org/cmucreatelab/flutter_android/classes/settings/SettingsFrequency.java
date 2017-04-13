@@ -1,19 +1,19 @@
 package org.cmucreatelab.flutter_android.classes.settings;
 
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 
 /**
- * Created by Steve on 10/25/2016.
+ * Created by mike on 4/13/17.
  *
- * SettingsProportional
+ * SettingsFrequency
  *
- * A class that represents the generic settings made with Proportional relationship
+ * A class that represents the generic settings made with Frequency relationship
  */
-public final class SettingsProportional extends Settings {
+public class SettingsFrequency extends Settings {
 
     // getters
     public int getOutputMax() { return outputMax; }
@@ -27,12 +27,12 @@ public final class SettingsProportional extends Settings {
     public void setAdvancedSettings (AdvancedSettings advancedSettings) { this.advancedSettings = advancedSettings; }
 
 
-    protected SettingsProportional(Settings settings) {
+    protected SettingsFrequency(Settings settings) {
         super(settings);
     }
 
 
-    protected SettingsProportional(int min, int max, Flutter flutter) {
+    protected SettingsFrequency(int min, int max, Flutter flutter) {
         super(min, max, flutter);
     }
 
@@ -45,7 +45,7 @@ public final class SettingsProportional extends Settings {
 
     @Override
     public Relationship getRelationship() {
-        return Proportional.getInstance();
+        return Frequency.getInstance();
     }
 
 
@@ -68,22 +68,22 @@ public final class SettingsProportional extends Settings {
 
     /**
      * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
-     * SettingsProportional. That way we can display changes the user makes and, if the settings are not saved,
+     * SettingsFrequency. That way we can display changes the user makes and, if the settings are not saved,
      * then the real SettingsProportional will not be overwritten.
      *
      * @param oldInstance The object that is to be copied.
-     * @return A new instance of SettingsProportional.
+     * @return A new instance of SettingsFrequency.
      */
-    public static SettingsProportional newInstance(Settings oldInstance) {
-        SettingsProportional newInstance = new SettingsProportional(oldInstance.outputMin, oldInstance.outputMax, oldInstance.flutter);
+    public static SettingsFrequency newInstance(Settings oldInstance) {
+        SettingsFrequency newInstance = new SettingsFrequency(oldInstance.outputMin, oldInstance.outputMax, oldInstance.flutter);
         newInstance.sensorPortNumber = oldInstance.sensorPortNumber;
         newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings);
         return newInstance;
     }
 
 
-    public static SettingsProportional newInstance(Flutter flutter) {
-        SettingsProportional newInstance = new SettingsProportional(0,100,flutter);
+    public static SettingsFrequency newInstance(Flutter flutter) {
+        SettingsFrequency newInstance = new SettingsFrequency(0,100,flutter);
         // TODO create new instance for Adv Settings?
         return newInstance;
     }
