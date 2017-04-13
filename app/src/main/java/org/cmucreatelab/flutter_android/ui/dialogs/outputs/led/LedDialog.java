@@ -19,6 +19,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -242,7 +243,10 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setImageResource(relationship.getGreenImageIdMd());
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipTypeId());
-        triColorLed.setRelationship(relationship);
+
+        triColorLed.getRedLed().setSettings(Settings.newInstance(triColorLed.getRedLed().getSettings(), relationship));
+        triColorLed.getGreenLed().setSettings(Settings.newInstance(triColorLed.getGreenLed().getSettings(), relationship));
+        triColorLed.getBlueLed().setSettings(Settings.newInstance(triColorLed.getBlueLed().getSettings(), relationship));
         stateHelper = LedDialogStateHelper.newInstance(triColorLed);
         updateViews();
     }

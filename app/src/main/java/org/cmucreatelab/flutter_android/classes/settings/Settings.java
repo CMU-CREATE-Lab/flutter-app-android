@@ -3,6 +3,9 @@ package org.cmucreatelab.flutter_android.classes.settings;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -48,16 +51,32 @@ public abstract class Settings {
      * @return A new instance of Settings.
      */
     public static Settings newInstance(Settings oldInstance) {
+        return newInstance(oldInstance, oldInstance.getRelationship());
+    }
+
+
+    /**
+     * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
+     * SettingsAmplitude. That way we can display changes the user makes and, if the settings are not saved,
+     * then the real Settings will not be overwritten.
+     *
+     * @param oldInstance The object that is to be copied.
+     * @param relationship The type of relationship that we want the new instance to be
+     * @return A new instance of Settings.
+     */
+    public static Settings newInstance(Settings oldInstance, Relationship relationship) {
         Settings result = null;
-        if (oldInstance.getClass() == SettingsProportional.class) {
+
+        if (relationship.getClass() == Proportional.class) {
             result = SettingsProportional.newInstance(oldInstance);
-        } else if (oldInstance.getClass() == SettingsConstant.class) {
+        } else if (relationship.getClass() == Constant.class) {
             result = SettingsConstant.newInstance(oldInstance);
-        } else if (oldInstance.getClass() == SettingsAmplitude.class) {
+        } else if (relationship.getClass() == Amplitude.class) {
             result = SettingsAmplitude.newInstance(oldInstance);
         } else {
-            Log.e(Constants.LOG_TAG, "Settings.newInstance: Cannot determine Settings subclass");
+            Log.e(Constants.LOG_TAG, "Settings.newInstance: Cannot determine Relationship subclass");
         }
+
         return result;
     }
 

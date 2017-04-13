@@ -18,16 +18,11 @@ import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
+import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -247,15 +242,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         currentTextViewDescrp.setText(R.string.relationship);
         currentTextViewItem.setText(relationship.getRelationshipType().toString());
 
-        if (relationship.getClass() == Proportional.class) {
-            servo.setSettings(SettingsProportional.newInstance(servo.getSettings()));
-        } else if (relationship.getClass() == Constant.class) {
-            servo.setSettings(SettingsConstant.newInstance(servo.getSettings()));
-        } else if (relationship.getClass() == Amplitude.class) {
-            servo.setSettings(SettingsAmplitude.newInstance(servo.getSettings()));
-        } else {
-            Log.e(Constants.LOG_TAG,"ServoDialog.onRelationshipChosen: unimplemented Relationship/Settings.");
-        }
+        servo.setSettings(Settings.newInstance(servo.getSettings(), relationship));
         stateHelper = ServoDialogStateHelper.newInstance(servo);
 
         updateViews();

@@ -151,7 +151,7 @@ public class TriColorLed implements FlutterOutput {
 
         return result;
     }
-    
+
 
     @Override
     public Output[] getOutputs() {
@@ -215,25 +215,6 @@ public class TriColorLed implements FlutterOutput {
             }
         } else {
             Log.e(Constants.LOG_TAG, "TriColorLed.setSensorPortNumber: RGB setting types do not match and not sure how to proceed.");
-        }
-    }
-
-
-    public void setRelationship(Relationship relationship) {
-        if (relationship.getClass() == Proportional.class) {
-            getRedLed().setSettings(SettingsProportional.newInstance(getRedLed().getSettings()));
-            getGreenLed().setSettings(SettingsProportional.newInstance(getGreenLed().getSettings()));
-            getBlueLed().setSettings(SettingsProportional.newInstance(getBlueLed().getSettings()));
-        } else if (relationship.getClass() == Constant.class) {
-            getRedLed().setSettings(SettingsConstant.newInstance(getRedLed().getSettings()));
-            getGreenLed().setSettings(SettingsConstant.newInstance(getGreenLed().getSettings()));
-            getBlueLed().setSettings(SettingsConstant.newInstance(getBlueLed().getSettings()));
-        } else if (relationship.getClass() == Amplitude.class) {
-            getRedLed().setSettings(SettingsAmplitude.newInstance(getRedLed().getSettings()));
-            getGreenLed().setSettings(SettingsAmplitude.newInstance(getGreenLed().getSettings()));
-            getBlueLed().setSettings(SettingsAmplitude.newInstance(getBlueLed().getSettings()));
-        } else {
-            Log.e(Constants.LOG_TAG, "TriColorLed.setRelationship: relationship not implemented");
         }
     }
 
