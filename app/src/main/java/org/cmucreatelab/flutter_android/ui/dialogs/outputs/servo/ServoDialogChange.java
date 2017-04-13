@@ -102,7 +102,6 @@ public class ServoDialogChange extends ServoDialogStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-        Log.w(Constants.LOG_TAG,"ServoDialogChange.setLinkedSensor: attribute not implemented");
         ((SettingsChange)getServo().getSettings()).setSensorPortNumber(sensor.getPortNumber());
     }
 

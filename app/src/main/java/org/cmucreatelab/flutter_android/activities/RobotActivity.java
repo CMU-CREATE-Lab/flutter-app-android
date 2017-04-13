@@ -25,7 +25,10 @@ import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -220,6 +223,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                         imageRes = session.getFlutter().getSensors()[((SettingsProportional) settings).getSensorPortNumber() - 1].getGreyImageIdSm();
                     } else if (settings.getClass() == SettingsAmplitude.class && ((SettingsAmplitude)settings).getSensorPortNumber() != 0) {
                         imageRes = session.getFlutter().getSensors()[((SettingsAmplitude) settings).getSensorPortNumber() - 1].getGreyImageIdSm();
+                    } else if (settings.getClass() == SettingsFrequency.class && ((SettingsFrequency)settings).getSensorPortNumber() != 0) {
+                        imageRes = session.getFlutter().getSensors()[((SettingsFrequency) settings).getSensorPortNumber() - 1].getGreyImageIdSm();
+                    } else if (settings.getClass() == SettingsChange.class && ((SettingsChange)settings).getSensorPortNumber() != 0) {
+                        imageRes = session.getFlutter().getSensors()[((SettingsChange) settings).getSensorPortNumber() - 1].getGreyImageIdSm();
+                    } else if (settings.getClass() == SettingsCumulative.class && ((SettingsCumulative)settings).getSensorPortNumber() != 0) {
+                        imageRes = session.getFlutter().getSensors()[((SettingsCumulative) settings).getSensorPortNumber() - 1].getGreyImageIdSm();
                     }
                     sensor.setImageResource(imageRes);
                 }

@@ -102,7 +102,6 @@ public class ServoDialogProportional extends ServoDialogStateHelper {
 
     @Override
     public void setLinkedSensor(Sensor sensor) {
-        Log.w(Constants.LOG_TAG,"ServoDialogProportional.setLinkedSensor: attribute not implemented");
         ((SettingsProportional)getServo().getSettings()).setSensorPortNumber(sensor.getPortNumber());
     }
 
