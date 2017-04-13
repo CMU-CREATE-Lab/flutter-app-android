@@ -4,7 +4,10 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerStateHelper;
@@ -32,6 +35,12 @@ public abstract class SpeakerVolumeStateHelper extends SpeakerStateHelper {
             result = SpeakerVolumeConstant.newInstance(speaker);
         } else if (speaker.getVolume().getSettings().getClass() == SettingsAmplitude.class) {
             result = SpeakerVolumeAmplitude.newInstance(speaker);
+        } else if (speaker.getVolume().getSettings().getClass() == SettingsFrequency.class) {
+            result = SpeakerVolumeFrequency.newInstance(speaker);
+        } else if (speaker.getVolume().getSettings().getClass() == SettingsChange.class) {
+            result = SpeakerVolumeChange.newInstance(speaker);
+        } else if (speaker.getVolume().getSettings().getClass() == SettingsCumulative.class) {
+            result = SpeakerVolumeCumulative.newInstance(speaker);
         } else {
             Log.w(Constants.LOG_TAG, "SpeakerVolumeStateHelper.newInstance: settings/relationship not implemented, returning null.");
             result = null;

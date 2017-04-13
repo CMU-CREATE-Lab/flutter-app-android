@@ -8,7 +8,10 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.DialogStateHelper;
@@ -44,6 +47,12 @@ public abstract class ServoDialogStateHelper implements DialogStateHelper<ServoD
             result = ServoDialogConstant.newInstance(servo);
         } else if (settings.getClass() == SettingsAmplitude.class) {
             result = ServoDialogAmplitude.newInstance(servo);
+        } else if (settings.getClass() == SettingsFrequency.class) {
+            result = ServoDialogFrequency.newInstance(servo);
+        } else if (settings.getClass() == SettingsChange.class) {
+            result = ServoDialogChange.newInstance(servo);
+        } else if (settings.getClass() == SettingsCumulative.class) {
+            result = ServoDialogCumulative.newInstance(servo);
         } else {
             Log.w(Constants.LOG_TAG,"ServoDialogStateHelper.newInstance: unimplmeneted relationship, returning ServoDialogNoRelationship.");
             result = ServoDialogNoRelationship.newInstance(servo);
