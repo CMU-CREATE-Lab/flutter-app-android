@@ -12,21 +12,25 @@ public class AdvancedSettings {
     private int inputMax;
     private int inputMin;
     private int speed;
+    private int sensorCenterValue;
 
     // getters
     public int getInputMax() { return inputMax; }
     public int getInputMin() { return inputMin; }
     public int getSpeed() { return speed; }
+    public int getSensorCenterValue() { return sensorCenterValue; }
     // setters
     public void setInputMax(int max) { inputMax = max; }
     public void setInputMin(int min) { inputMin = min; }
     public void setSpeed(int zero) { speed = zero; }
+    public void setSensorCenterValue(int sensorCenterValue) { this.sensorCenterValue = sensorCenterValue; }
 
 
     public AdvancedSettings() {
         inputMax = 100;
         inputMin = 0;
         speed = 0;
+        sensorCenterValue = 0;
     }
 
 
@@ -35,6 +39,7 @@ public class AdvancedSettings {
         newInstance.inputMax = oldInstance.inputMax;
         newInstance.inputMin = oldInstance.inputMin;
         newInstance.speed = oldInstance.speed;
+        newInstance.sensorCenterValue = oldInstance.sensorCenterValue;
         return newInstance;
     }
 

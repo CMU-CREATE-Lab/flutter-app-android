@@ -37,12 +37,15 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     private SeekBar seekBarMaxInput;
     private SeekBar seekBarMinInput;
     private SeekBar seekBarSpeed;
+    private SeekBar seekBarSensorCenterValue;
     private TextView textMaxInput;
     private TextView textMinInput;
     private TextView textSpeed;
+    private TextView textSensorCenterValue;
     private int maxInput;
     private int minInput;
     private int speed;
+    private int sensorCenterValue;
     private String sensorText;
     private AdvancedSettings advancedSettings;
 
@@ -105,6 +108,26 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     };
 
 
+    private SeekBar.OnSeekBarChangeListener seekBarSensorCenterValueListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            Log.d(Constants.LOG_TAG, "onSpeedChanged");
+            textSensorCenterValue.setText(getString(R.string.sensor_center_value) + " " + i + " / 15");
+            sensorCenterValue = i;
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+
     public static AdvancedSettingsDialog newInstance(Serializable serializable, Serializable output) {
         AdvancedSettingsDialog advancedSettingsDialog = new AdvancedSettingsDialog();
 
@@ -147,25 +170,31 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         seekBarMaxInput = (SeekBar) view.findViewById(R.id.seekbar_max_input);
         seekBarMinInput = (SeekBar) view.findViewById(R.id.seekbar_min_input);
         seekBarSpeed = (SeekBar) view.findViewById(R.id.seekbar_speed);
+        seekBarSensorCenterValue = (SeekBar) view.findViewById(R.id.seekbar_sensor_center_value);
         textMaxInput = (TextView) view.findViewById(R.id.text_max_input);
         textMinInput = (TextView) view.findViewById(R.id.text_min_input);
         textSpeed = (TextView) view.findViewById(R.id.text_speed);
+        textSensorCenterValue = (TextView) view.findViewById(R.id.text_sensor_center_value);
 
         // populate defaults
         maxInput = advancedSettings.getInputMax();
         minInput = advancedSettings.getInputMin();
         speed = advancedSettings.getSpeed();
+        sensorCenterValue = advancedSettings.getSensorCenterValue();
 
         seekBarMaxInput.setOnSeekBarChangeListener(seekBarMaxInputListener);
         seekBarMinInput.setOnSeekBarChangeListener(seekBarMinInputListener);
         seekBarSpeed.setOnSeekBarChangeListener(seekBarSpeedListener);
+        seekBarSensorCenterValue.setOnSeekBarChangeListener(seekBarSensorCenterValueListener);
         seekBarMaxInput.setProgress(maxInput);
         seekBarMinInput.setProgress(minInput);
         seekBarSpeed.setProgress(speed);
+        seekBarSensorCenterValue.setProgress(sensorCenterValue);
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");
         textSpeed.setText(getString(R.string.speed) + " " + speed + " / 15");
+        textSensorCenterValue.setText(getString(R.string.sensor_center_value) + " " + sensorCenterValue + " / 100");
 
         return builder.create();
     }
@@ -177,6 +206,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         advancedSettings.setInputMax(maxInput);
         advancedSettings.setInputMin(minInput);
         advancedSettings.setSpeed(speed);
+        advancedSettings.setSensorCenterValue(sensorCenterValue);
         dialogAdvancedSettingsListener.onAdvancedSettingsSet(advancedSettings);
         dismiss();
     }

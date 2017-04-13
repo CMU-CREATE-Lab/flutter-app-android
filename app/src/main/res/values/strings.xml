@@ -152,6 +152,7 @@
     <string name="link_settings">Link Settings:</string>
     <string name="time_constant">Time Constant:</string>
     <string name="speed">Speed:</string>
+    <string name="sensor_center_value">Center Value:</string>
     <string name="max_input">Max</string>
     <string name="min_input">Min</string>
     <string name="remove_link">Remove Link</string>
