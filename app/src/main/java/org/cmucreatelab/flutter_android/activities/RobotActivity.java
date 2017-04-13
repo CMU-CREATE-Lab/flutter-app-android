@@ -30,7 +30,11 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
@@ -40,8 +44,10 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener {
+public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
+        SensorTypeDialog.DialogSensorTypeListener{
 
+    private RobotActivity instance;
     private Session session;
     private boolean isUsingSensorData = true;
 
@@ -83,19 +89,36 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     };
 
 
-    private void updateStaticViews() {
+    private void updateSensorViews() {
         Sensor[] sensors = session.getFlutter().getSensors();
         TextView sensorText;
 
         sensorText = (TextView) findViewById(R.id.text_sensor_1);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[0].getTypeTextId());
+        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
+            sensorText.setText(sensors[0].getTypeTextId());
+        } else {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
+            sensorText.setText(R.string.set_sensor);
+        }
+
         sensorText = (TextView) findViewById(R.id.text_sensor_2);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[1].getTypeTextId());
+        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
+            sensorText.setText(sensors[1].getTypeTextId());
+        } else {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
+            sensorText.setText(R.string.set_sensor);
+        }
+
         sensorText = (TextView) findViewById(R.id.text_sensor_3);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[2].getTypeTextId());
+        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
+            sensorText.setText(sensors[2].getTypeTextId());
+        } else {
+            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
+            sensorText.setText(R.string.set_sensor);
+        }
     }
 
 
@@ -106,18 +129,23 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 Sensor[] sensors = session.getFlutter().getSensors();
                 TextView sensorReadingText;
 
-                if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
+                if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
                     sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
-                }
-                if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                else
+                    sensorReadingText.setText("");
+
+                sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
+                if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
                     sensorReadingText.setText(String.valueOf(sensors[1].getSensorReading()));
-                }
-                if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-                    sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                else
+                    sensorReadingText.setText("");
+
+                sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
+                if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
                     sensorReadingText.setText(String.valueOf(sensors[2].getSensorReading()));
-                }
+                else
+                    sensorReadingText.setText("");
             }
         });
     }
@@ -205,6 +233,32 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
+    // OnClickListeners
+
+    private void onClickSensor(int portNumber) {
+        SensorTypeDialog sensorTypeDialog = GreenSensorTypeDialog.newInstance(portNumber, instance);
+        sensorTypeDialog.show(getSupportFragmentManager(), "tag");
+    }
+    private View.OnClickListener sensor1OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickSensor(1);
+        }
+    };
+    private View.OnClickListener sensor2OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickSensor(2);
+        }
+    };
+    private View.OnClickListener sensor3OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickSensor(3);
+        }
+    };
+
+
     // Class methods
 
 
@@ -228,6 +282,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
         } else {
+            instance = this;
             this.session = globalHandler.sessionHandler.getSession();
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
@@ -239,7 +294,14 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
-            updateStaticViews();
+            TextView sensor1Text = (TextView) findViewById(R.id.text_sensor_1);
+            TextView sensor2Text = (TextView) findViewById(R.id.text_sensor_2);
+            TextView sensor3Text = (TextView) findViewById(R.id.text_sensor_3);
+            sensor1Text.setOnClickListener(sensor1OnClickListener);
+            sensor2Text.setOnClickListener(sensor2OnClickListener);
+            sensor3Text.setOnClickListener(sensor3OnClickListener);
+
+            updateSensorViews();
             updateDynamicViews();
         }
     }
@@ -468,9 +530,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                updateStaticViews();
+                updateSensorViews();
             }
         });
     }
 
+
+    @Override
+    public void onSensorTypeChosen(Sensor sensor) {
+        int portNumber = sensor.getPortNumber();
+        Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
+        Sensor[] sensors = session.getFlutter().getSensors();
+
+        // update references
+        sensors[portNumber-1] = sensor;
+
+        // send message to flutter with sensor type
+        short inputType = sensor.getSensorType();
+        GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
+
+        updateSensorViews();
+    }
 }

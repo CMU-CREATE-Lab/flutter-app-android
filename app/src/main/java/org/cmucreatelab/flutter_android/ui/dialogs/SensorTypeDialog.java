@@ -10,6 +10,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -36,11 +37,22 @@ import java.io.Serializable;
  *
  * A Dialog that prompts the user to choose what kind of sensors are in the ports. (SensorsActivity)
  */
-public class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
+public abstract class SensorTypeDialog extends DialogFragment implements View.OnClickListener {
 
     private String sensorText;
     private int portNumber;
     DialogSensorTypeListener sensorListener;
+
+    protected ImageView imageLight;
+    protected ImageView imageSoilMoisture;
+    protected ImageView imageDistance;
+    protected ImageView imageSound;
+    protected ImageView imageAirQuality;
+    protected ImageView imageHumidity;
+    protected ImageView imageTemperature;
+    protected ImageView imageBarometricPressure;
+    protected ImageView imageAnalogUnkown;
+    protected ImageView imageNoSensor;
 
 
     private String getSensorText(int portNumber) {
@@ -62,18 +74,6 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
     }
 
 
-    public static SensorTypeDialog newInstance(int portNumber, Serializable serializable) {
-        SensorTypeDialog sensorTypeDialog = new SensorTypeDialog();
-
-        Bundle args = new Bundle();
-        args.putInt(Constants.SerializableKeys.SENSOR_PORT_KEY, portNumber);
-        args.putSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY, serializable);
-        sensorTypeDialog.setArguments(args);
-
-        return sensorTypeDialog;
-    }
-
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -88,16 +88,27 @@ public class SensorTypeDialog extends DialogFragment implements View.OnClickList
         ((TextView) view.findViewById(R.id.text_sensor_type_dialog_title)).setText(getSensorText(portNumber));
 
         // bind click listeners
-        view.findViewById(R.id.image_light).setOnClickListener(this);
-        view.findViewById(R.id.image_soil_moisture).setOnClickListener(this);
-        view.findViewById(R.id.image_distance).setOnClickListener(this);
-        view.findViewById(R.id.image_sound).setOnClickListener(this);
-        view.findViewById(R.id.image_air_quality).setOnClickListener(this);
-        view.findViewById(R.id.image_humidity).setOnClickListener(this);
-        view.findViewById(R.id.image_temperature).setOnClickListener(this);
-        view.findViewById(R.id.image_barometric_pressure).setOnClickListener(this);
-        view.findViewById(R.id.image_analog_unknown).setOnClickListener(this);
-        view.findViewById(R.id.image_no_sensor).setOnClickListener(this);
+        imageLight = (ImageView) view.findViewById(R.id.image_light);
+        imageSoilMoisture = (ImageView) view.findViewById(R.id.image_soil_moisture);
+        imageDistance = (ImageView) view.findViewById(R.id.image_distance);
+        imageSound = (ImageView) view.findViewById(R.id.image_sound);
+        imageAirQuality = (ImageView) view.findViewById(R.id.image_air_quality);
+        imageHumidity = (ImageView) view.findViewById(R.id.image_humidity);
+        imageTemperature = (ImageView) view.findViewById(R.id.image_temperature);
+        imageBarometricPressure = (ImageView) view.findViewById(R.id.image_barometric_pressure);
+        imageAnalogUnkown = (ImageView) view.findViewById(R.id.image_analog_unknown);
+        imageNoSensor = (ImageView) view.findViewById(R.id.image_no_sensor);
+
+        imageLight.setOnClickListener(this);
+        imageSoilMoisture.setOnClickListener(this);
+        imageDistance.setOnClickListener(this);
+        imageSound.setOnClickListener(this);
+        imageAirQuality.setOnClickListener(this);
+        imageHumidity.setOnClickListener(this);
+        imageTemperature.setOnClickListener(this);
+        imageBarometricPressure.setOnClickListener(this);
+        imageAnalogUnkown.setOnClickListener(this);
+        imageNoSensor.setOnClickListener(this);
 
         Dialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

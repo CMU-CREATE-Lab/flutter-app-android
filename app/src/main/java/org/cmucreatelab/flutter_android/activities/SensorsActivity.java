@@ -20,6 +20,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningSensorDialog;
@@ -36,7 +39,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, RecordDataSensorDialog.DialogRecordDataSensorListener {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, BaseDataLoggingDialog.DialogRecordListener, DismissDialogListener {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -220,7 +223,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_1);
         currentLow = (TextView) findViewById(R.id.text_low_1);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_1);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(1, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(1, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -232,7 +235,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_2);
         currentLow = (TextView) findViewById(R.id.text_low_2);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_2);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(2, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(2, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -244,7 +247,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         currentHigh = (TextView) findViewById(R.id.text_high_3);
         currentLow = (TextView) findViewById(R.id.text_low_3);
         currentSensorType = (TextView) findViewById(R.id.text_sensor_3);
-        SensorTypeDialog sensorTypeDialog = SensorTypeDialog.newInstance(3, this);
+        SensorTypeDialog sensorTypeDialog = BlueSensorTypeDialog.newInstance(3, this);
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -272,12 +275,12 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                     String dataLogName = globalHandler.dataLoggingHandler.getDataName();
                     DataLogDetails dataLogDetails = globalHandler.dataLoggingHandler.loadDataLogDetails(instance);
                     RecordingWarningSensorDialog recordingWarningSensorDialog = RecordingWarningSensorDialog.newInstance(
-                            dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
+                            instance, dataLogName, dataLogDetails.getIntervalInt(), dataLogDetails.getIntervalString(), dataLogDetails.getTimePeriodInt(), dataLogDetails.getTimePeriodString()
                     );
                     recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
                 else {
-                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance);
+                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance, R.drawable.round_blue_button_bottom_right);
                     recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
             }
@@ -320,7 +323,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     @Override
-    public void onDataRecord(String name, int interval, int sample) {
+    public void onRecordData(String name, int interval, int sample) {
         Log.d(Constants.LOG_TAG, "SensorsActivity.onRecordData");
         globalHandler.dataLoggingHandler.startLogging(interval, sample, name);
     }
@@ -338,6 +341,13 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                 updateStaticViews();
             }
         });
+    }
+
+
+    @Override
+    public void onDialogDismissed() {
+        Log.d(Constants.LOG_TAG, "SensorsActivity.onDialogDismissed");
+        onResume();
     }
 
 }

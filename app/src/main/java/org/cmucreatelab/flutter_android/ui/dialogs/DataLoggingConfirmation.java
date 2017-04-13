@@ -1,7 +1,9 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -15,17 +17,32 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Steve on 2/27/2017.
  */
 
-public abstract class DataLoggingConfirmation extends BaseResizableDialog {
+public class DataLoggingConfirmation extends BaseResizableDialog {
 
-    protected Button buttonOk;
+    private static final String BUTTON_KEY = "button_key";
+    private static final String DISMISS_KEY = "dismiss_key";
 
     private GlobalHandler globalHandler;
+    private Button buttonOk;
+    private int buttondDrawableId;
+    private DismissDialogListener dismissDialogListener;
+
+
+    public static DataLoggingConfirmation newInstance(Serializable serializable, int buttonDrawableId) {
+        DataLoggingConfirmation dataLoggingConfirmation = new DataLoggingConfirmation();
+        Bundle args = new Bundle();
+        args.putSerializable(DISMISS_KEY, serializable);
+        args.putInt(BUTTON_KEY, buttonDrawableId);
+        dataLoggingConfirmation.setArguments(args);
+        return  dataLoggingConfirmation;
+    }
 
 
     private static int timeToSeconds(String time) {
@@ -194,6 +211,9 @@ public abstract class DataLoggingConfirmation extends BaseResizableDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DISMISS_KEY);
+        buttondDrawableId = getArguments().getInt(BUTTON_KEY);
+
         globalHandler = GlobalHandler.getInstance(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_datalogging_confirmation, null);
@@ -201,6 +221,7 @@ public abstract class DataLoggingConfirmation extends BaseResizableDialog {
         builder.setView(view);
         buttonOk = (Button) view.findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(buttonOkListener);
+        buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), buttondDrawableId));
         Button buttonCancel = (Button) view.findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(buttonCancelListener);
 
@@ -210,4 +231,10 @@ public abstract class DataLoggingConfirmation extends BaseResizableDialog {
         return builder.create();
     }
 
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogListener.onDialogDismissed();
+    }
 }

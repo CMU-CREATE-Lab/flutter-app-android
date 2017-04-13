@@ -35,6 +35,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
@@ -43,7 +44,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SaveToKindleDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SendDataLogFailedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.WarningDialog;
 import org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
@@ -55,7 +56,7 @@ import butterknife.ButterKnife;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, RecordDataLoggingDialog.DialogRecordDataLoggingListener,
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, BaseDataLoggingDialog.DialogRecordListener,
         OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener, DataRecordingTimer.TimeExpireListener,
         OpenLogState.OpenLogStateListener, ResumeState.ResumeStateListener, CleanUpBeforeState.CleanUpBeforeStateListener, CleanUpAfterState.CleanUpStateAfterListener, SaveToKindleState.SaveToKindleStateListener {
 
@@ -246,9 +247,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickOpenLog");
-            globalHandler.sessionHandler.createProgressDialog(instance);
-            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            dataLogsHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
+            if (dataLogsHelper.getDataSetOnFlutter() != null || dataLogsHelper.getDataSetsOnDevice().length > 0) {
+                globalHandler.sessionHandler.createProgressDialog(instance);
+                globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+                dataLogsHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
+            } else {
+                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_data_logs_to_open), getString(R.string.no_data_logs_to_open_details), R.drawable.round_orange_button_bottom);
+                warningDialog.show(getSupportFragmentManager(), "tag");
+            }
         }
     };
 
@@ -262,8 +268,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
                 emailDialog.show(getSupportFragmentManager(), "tag");
             } else {
-                SendDataLogFailedDialog sendDataLogFailedDialog = new SendDataLogFailedDialog();
-                sendDataLogFailedDialog.show(getSupportFragmentManager(), "tag");
+                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
+                warningDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
@@ -273,9 +279,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickCleanUp");
-            globalHandler.sessionHandler.createProgressDialog(instance);
-            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-            dataLogsHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
+            if (dataLogsHelper.getDataSetOnFlutter() != null || dataLogsHelper.getDataSetsOnDevice().length > 0) {
+                globalHandler.sessionHandler.createProgressDialog(instance);
+                globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
+                dataLogsHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
+            } else {
+                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_data_logs_to_clean_up), getString(R.string.no_data_logs_to_clean_up_details), R.drawable.round_orange_button_bottom);
+                warningDialog.show(getSupportFragmentManager(), "tag");
+            }
         }
     };
 
@@ -308,7 +319,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             );
                             recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
                         } else {
-                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance);
+                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance, R.drawable.round_orange_button_bottom_right);
                             recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
                         }
                     }

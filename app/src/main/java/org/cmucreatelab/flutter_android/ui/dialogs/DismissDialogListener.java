@@ -5,5 +5,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
  */
 
 public interface DismissDialogListener {
+    public String DISMISS_KEY = "dismiss_key";
     public void onDialogDismissed();
 }

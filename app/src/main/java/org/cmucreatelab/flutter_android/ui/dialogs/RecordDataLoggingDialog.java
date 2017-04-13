@@ -28,21 +28,14 @@ import butterknife.OnClick;
 
 public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Serializable {
 
-    private DialogRecordDataLoggingListener dialogRecordDataLoggingListener;
-    private DataLogsActivity dataLogsActivity;
 
-    private EditText dataSetNameText;
-    private EditText intervalsText;
-    private Spinner intervalSpinner;
-    private EditText timePeriodText;
-    private Spinner timePeriodSpinner;
-
-
-    public static RecordDataLoggingDialog newInstance(Serializable serializable) {
+    public static RecordDataLoggingDialog newInstance(Serializable serializable, int buttonDrawableId) {
         RecordDataLoggingDialog recordDataLoggingDialog = new RecordDataLoggingDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(DataLogsActivity.DATA_LOGS_ACTIVITY_KEY, serializable);
+        args.putSerializable(RECORD_KEY, serializable);
+        args.putSerializable(DISMISS_KEY, serializable);
+        args.putInt(BUTTON_KEY, buttonDrawableId);
         recordDataLoggingDialog.setArguments(args);
 
         return recordDataLoggingDialog;
@@ -52,8 +45,6 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        dialogRecordDataLoggingListener = (DialogRecordDataLoggingListener) getArguments().getSerializable(DataLogsActivity.DATA_LOGS_ACTIVITY_KEY);
-        dataLogsActivity = (DataLogsActivity) getArguments().getSerializable(DataLogsActivity.DATA_LOGS_ACTIVITY_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_datalogging_record_data, null);
@@ -80,73 +71,6 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
         timePeriodSpinner.setAdapter(adapter);
 
         return builder.create();
-    }
-
-
-    @OnClick(R.id.button_start_recording)
-    public void onClickButtonStartRecording() {
-        Log.d(Constants.LOG_TAG, "onClickButtonStartRecording");
-        String name = dataSetNameText.getText().toString();
-        if (!name.matches("")) {
-            String intervalString = intervalsText.getText().toString();
-            if (!intervalString.matches("")) {
-                String timerPeriodString = timePeriodText.getText().toString();
-                if (!timerPeriodString.matches("")) {
-                    if (!getIsWaitingForResponse()) {
-                        if (!getIsLogging()) {
-                            GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity());
-                            int iInt = Integer.parseInt(intervalsText.getText().toString());
-                            String iString = intervalSpinner.getSelectedItem().toString();
-                            int tInt = Integer.parseInt(timePeriodText.getText().toString());
-                            String tString = timePeriodSpinner.getSelectedItem().toString();
-                            globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
-
-                            int intervalsT = Integer.valueOf(intervalString);
-                            // in seconds
-                            int interval = 0;
-
-                            String temp = intervalSpinner.getSelectedItem().toString();
-                            interval = timeToSeconds(temp);
-                            interval = interval / intervalsT;
-
-                            int timePeriodT = Integer.valueOf(timerPeriodString);
-                            // in seconds
-                            int timePeriod = 0;
-                            temp = timePeriodSpinner.getSelectedItem().toString();
-                            timePeriod = timeToSeconds(temp);
-                            timePeriod = timePeriodT * timePeriod;
-                            int sample = timePeriod / interval;
-
-                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + name);
-                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + interval);
-                            Log.d(Constants.LOG_TAG, "RecordDataLoggingDialog - " + sample);
-
-                            dialogRecordDataLoggingListener.onRecordData(name, interval, sample);
-
-                            DataLoggingConfirmationDataLog dataLoggingConfirmationDataLog = DataLoggingConfirmationDataLog.newInstance(dataLogsActivity);
-                            dataLoggingConfirmationDataLog.show(getFragmentManager(), "tag");
-
-                            this.dismiss();
-                        } else {
-                            IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
-                            isRecordingDialog.show(getFragmentManager(), "tag");
-                            this.dismiss();
-                        }
-                    }
-                } else {
-                    timePeriodText.setError(getString(R.string.this_field_cannot_be_blank));
-                }
-            } else {
-                intervalsText.setError(getString(R.string.this_field_cannot_be_blank));
-            }
-        } else {
-            dataSetNameText.setError(getString(R.string.this_field_cannot_be_blank));
-        }
-    }
-
-
-    public interface DialogRecordDataLoggingListener {
-        public void onRecordData(String name, int interval, int sample);
     }
 
 }

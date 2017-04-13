@@ -16,18 +16,14 @@ import java.io.Serializable;
  * Created by Steve on 2/27/2017.
  */
 
-public class RecordingWarningDataDialog extends RecordingWarningDialog implements RecordingWarningDialog.WarningButtonListener {
-
-    private static final String DISMISS_KEY = "dismiss_key";
-
-    private DismissDialogListener dismissDialogListener;
+public class RecordingWarningDataDialog extends RecordingWarningDialog {
 
 
     public static RecordingWarningDataDialog newInstance(Serializable serializable, String name, int times, String time, int forTimes, String forTime) {
         RecordingWarningDataDialog recordingWarningDataDialog = new RecordingWarningDataDialog();
 
         Bundle args = new Bundle();
-        args.putSerializable(DISMISS_KEY, serializable);
+        args.putSerializable(DismissDialogListener.DISMISS_KEY, serializable);
         args.putString(NAME_KEY, name);
         args.putInt(TIMES_KEY, times);
         args.putString(TIME_KEY, time);
@@ -42,31 +38,9 @@ public class RecordingWarningDataDialog extends RecordingWarningDialog implement
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "RecordingWarningSensorDialog.onCreateDialog");
-        super.registerWarningListener(this);
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_right));
-        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DISMISS_KEY);
         return dialog;
     }
 
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        dismissDialogListener.onDialogDismissed();
-    }
-
-    @Override
-    public void onCancelRecording() {
-        Log.d(Constants.LOG_TAG, "RecordingWarningDataDialog.onCancelRecording");
-        GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
-        dismiss();
-    }
-
-
-    @Override
-    public void onButtonOk() {
-        Log.d(Constants.LOG_TAG, "RecordingWarningDataDialog.onButtonOk");
-        dismiss();
-    }
 }
