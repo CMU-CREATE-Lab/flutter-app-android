@@ -45,23 +45,23 @@ public class LedDialogProportional extends LedDialogStateHelper {
         // max
         ImageView maxColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
-        dialog.maxColor.setImageResource(getTriColorLed().getMaxSwatch());
+        dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_max_color_value);
         maxColorTxt.setText(dialog.getString(getTriColorLed().getRedLed().getSettings().getSensor().getHighTextId())+" Color");
-        maxColorValue.setText(getTriColorLed().getMaxColorText());
+        maxColorValue.setText(TriColorLed.getTextFromColor(getTriColorLed().getMaxColorHex()));
 
         // min
         minColorLayout.setVisibility(View.VISIBLE);
         ImageView minColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_min_color);
         minColorImg.setVisibility(View.GONE);
-        dialog.minColor.setImageResource(getTriColorLed().getMinSwatch());
+        dialog.minColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMinColorHex()));
         dialog.minColor.setVisibility(View.VISIBLE);
         TextView minColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_min_color);
         TextView minColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_min_color_value);
         minColorTxt.setText(dialog.getString(getTriColorLed().getRedLed().getSettings().getSensor().getLowTextId())+" Color");
-        minColorValue.setText(getTriColorLed().getMinColorText());
+        minColorValue.setText(TriColorLed.getTextFromColor(getTriColorLed().getMinColorHex()));
     }
 
 

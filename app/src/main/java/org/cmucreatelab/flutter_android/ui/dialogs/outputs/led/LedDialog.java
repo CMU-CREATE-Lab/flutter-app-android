@@ -262,9 +262,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        maxColor.setImageResource(triColorLed.getMaxSwatch());
+        maxColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMaxColorHex()));
         maxColor.setVisibility(View.VISIBLE);
-        currentTextViewItem.setText(triColorLed.getMaxColorText());
+        currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMaxColorHex()));
     }
 
 
@@ -282,9 +282,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        minColor.setImageResource(triColorLed.getMinSwatch());
+        minColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMinColorHex()));
         minColor.setVisibility(View.VISIBLE);
-        currentTextViewItem.setText(triColorLed.getMinColorText());
+        currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMinColorHex()));
     }
 
 

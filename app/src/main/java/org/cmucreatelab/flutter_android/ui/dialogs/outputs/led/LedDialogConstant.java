@@ -47,12 +47,12 @@ public class LedDialogConstant extends LedDialogStateHelper {
         // max
         ImageView maxColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
-        dialog.maxColor.setImageResource(getTriColorLed().getMaxSwatch());
+        dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_max_color_value);
         maxColorTxt.setText("Color");
-        maxColorValue.setText(getTriColorLed().getMaxColorText());
+        maxColorValue.setText(TriColorLed.getTextFromColor(getTriColorLed().getMaxColorHex()));
 
         // min
         minColorLayout.setVisibility(View.GONE);

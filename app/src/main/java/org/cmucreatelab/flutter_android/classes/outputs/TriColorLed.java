@@ -128,8 +128,9 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
-    public int getMaxSwatch() {
-        int color = Color.parseColor(getMaxColorHex());
+    public static int getSwatchFromColor(String colorHex) {
+        int color = Color.parseColor(colorHex);
+
         if (Constants.COLOR_RES.containsKey(color)) {
             return Constants.COLOR_RES.get(color);
         }
@@ -138,9 +139,9 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
-    public String getMaxColorText() {
+    public static String getTextFromColor(String colorHex) {
         String result;
-        int color = Color.parseColor(getMaxColorHex());
+        int color = Color.parseColor(colorHex);
 
         if (Constants.COLOR_NAMES.containsKey(color)) {
             result = Constants.COLOR_NAMES.get(color);
@@ -150,31 +151,7 @@ public class TriColorLed implements FlutterOutput {
 
         return result;
     }
-
-
-    public int getMinSwatch() {
-        int color = Color.parseColor(getMinColorHex());
-        if (Constants.COLOR_RES.containsKey(color)) {
-            return Constants.COLOR_RES.get(color);
-        }
-        // default to black if color isn't in COLOR_RES
-        return R.drawable.swatch_black_selected;
-    }
-
-
-    public String getMinColorText() {
-        String result;
-        int color = Color.parseColor(getMinColorHex());
-
-        if (Constants.COLOR_NAMES.containsKey(color)) {
-            result = Constants.COLOR_NAMES.get(color);
-        } else {
-            result = "Red: " + String.valueOf(Color.red(color)) + " Green: " + String.valueOf(Color.green(color)) + " Blue: " + String.valueOf(Color.blue(color));
-        }
-
-        return result;
-    }
-
+    
 
     @Override
     public Output[] getOutputs() {
