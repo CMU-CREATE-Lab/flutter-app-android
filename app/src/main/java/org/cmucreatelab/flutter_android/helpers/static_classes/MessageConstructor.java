@@ -160,7 +160,7 @@ public class MessageConstructor {
             }
 
             // speed values range from 0-15
-            int speed = settingsAmplitude.getAdvancedSettings().getZeroValue();
+            int speed = settingsAmplitude.getAdvancedSettings().getSpeed();
             if (speed < 0) {
                 Log.w(Constants.LOG_TAG, "tried settings Amplitude speed below 0; reset to 0.");
                 speed = 0;

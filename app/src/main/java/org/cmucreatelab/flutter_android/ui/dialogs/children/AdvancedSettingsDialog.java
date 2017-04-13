@@ -36,13 +36,13 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     private FlutterOutput flutterOutput;
     private SeekBar seekBarMaxInput;
     private SeekBar seekBarMinInput;
-    private SeekBar seekBarZeroPoint;
+    private SeekBar seekBarSpeed;
     private TextView textMaxInput;
     private TextView textMinInput;
-    private TextView textZeroPoint;
+    private TextView textSpeed;
     private int maxInput;
     private int minInput;
-    private int zeroPoint;
+    private int speed;
     private String sensorText;
     private AdvancedSettings advancedSettings;
 
@@ -85,12 +85,12 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     };
 
 
-    private SeekBar.OnSeekBarChangeListener seekBarZeroPointListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener seekBarSpeedListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.d(Constants.LOG_TAG, "onZeroPointChanged");
-            textZeroPoint.setText(getString(R.string.zero_point) + " " + i + " / 15");
-            zeroPoint = i;
+            Log.d(Constants.LOG_TAG, "onSpeedChanged");
+            textSpeed.setText(getString(R.string.speed) + " " + i + " / 15");
+            speed = i;
         }
 
         @Override
@@ -146,26 +146,26 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
 
         seekBarMaxInput = (SeekBar) view.findViewById(R.id.seekbar_max_input);
         seekBarMinInput = (SeekBar) view.findViewById(R.id.seekbar_min_input);
-        seekBarZeroPoint = (SeekBar) view.findViewById(R.id.seekbar_zero_point);
+        seekBarSpeed = (SeekBar) view.findViewById(R.id.seekbar_speed);
         textMaxInput = (TextView) view.findViewById(R.id.text_max_input);
         textMinInput = (TextView) view.findViewById(R.id.text_min_input);
-        textZeroPoint = (TextView) view.findViewById(R.id.text_zero_point);
+        textSpeed = (TextView) view.findViewById(R.id.text_speed);
 
         // populate defaults
         maxInput = advancedSettings.getInputMax();
         minInput = advancedSettings.getInputMin();
-        zeroPoint = advancedSettings.getZeroValue();
+        speed = advancedSettings.getSpeed();
 
         seekBarMaxInput.setOnSeekBarChangeListener(seekBarMaxInputListener);
         seekBarMinInput.setOnSeekBarChangeListener(seekBarMinInputListener);
-        seekBarZeroPoint.setOnSeekBarChangeListener(seekBarZeroPointListener);
+        seekBarSpeed.setOnSeekBarChangeListener(seekBarSpeedListener);
         seekBarMaxInput.setProgress(maxInput);
         seekBarMinInput.setProgress(minInput);
-        seekBarZeroPoint.setProgress(zeroPoint);
+        seekBarSpeed.setProgress(speed);
 
         textMaxInput.setText(getString(R.string.max_input) + " " + sensorText + ": " + maxInput + "%");
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");
-        textZeroPoint.setText(getString(R.string.zero_point) + " " + zeroPoint + " / 15");
+        textSpeed.setText(getString(R.string.speed) + " " + speed + " / 15");
 
         return builder.create();
     }
@@ -176,7 +176,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         Log.d(Constants.LOG_TAG, "AdvancedSettingsDialog.onClickSaveSettings");
         advancedSettings.setInputMax(maxInput);
         advancedSettings.setInputMin(minInput);
-        advancedSettings.setZeroValue(zeroPoint);
+        advancedSettings.setSpeed(speed);
         dialogAdvancedSettingsListener.onAdvancedSettingsSet(advancedSettings);
         dismiss();
     }

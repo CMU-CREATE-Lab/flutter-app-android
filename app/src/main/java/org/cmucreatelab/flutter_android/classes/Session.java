@@ -177,7 +177,7 @@ public class Session implements FlutterMessageListener {
                         settings.setOutputMax(omax);
                         settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
                         settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
-                        settings.getAdvancedSettings().setZeroValue(speed);
+                        settings.getAdvancedSettings().setSpeed(speed);
                         // check for inverted sensor
                         if (sensor.isInverted()) {
                             settings.invertOutputs();

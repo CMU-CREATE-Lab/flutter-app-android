@@ -11,23 +11,22 @@ public class AdvancedSettings {
 
     private int inputMax;
     private int inputMin;
-    private int zeroValue;
+    private int speed;
 
     // getters
     public int getInputMax() { return inputMax; }
     public int getInputMin() { return inputMin; }
-    // TODO @tasota this should be speed; zero value is not used anywhere else right now
-    public int getZeroValue() { return zeroValue; }
+    public int getSpeed() { return speed; }
     // setters
     public void setInputMax(int max) { inputMax = max; }
     public void setInputMin(int min) { inputMin = min; }
-    public void setZeroValue(int zero) { zeroValue = zero; }
+    public void setSpeed(int zero) { speed = zero; }
 
 
     public AdvancedSettings() {
         inputMax = 100;
         inputMin = 0;
-        zeroValue = 0;
+        speed = 0;
     }
 
 
@@ -35,7 +34,7 @@ public class AdvancedSettings {
         AdvancedSettings newInstance = new AdvancedSettings();
         newInstance.inputMax = oldInstance.inputMax;
         newInstance.inputMin = oldInstance.inputMin;
-        newInstance.zeroValue = oldInstance.zeroValue;
+        newInstance.speed = oldInstance.speed;
         return newInstance;
     }
 

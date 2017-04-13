@@ -151,7 +151,7 @@
     <string name="sensor_settings">Sensor Settings:</string>
     <string name="link_settings">Link Settings:</string>
     <string name="time_constant">Time Constant:</string>
-    <string name="zero_point">Zero Point:</string>
+    <string name="speed">Speed:</string>
     <string name="max_input">Max</string>
     <string name="min_input">Min</string>
     <string name="remove_link">Remove Link</string>
