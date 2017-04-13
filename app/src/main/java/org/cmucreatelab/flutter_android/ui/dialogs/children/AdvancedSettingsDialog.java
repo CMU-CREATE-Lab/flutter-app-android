@@ -157,6 +157,8 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
             } else {
                 Log.e(Constants.LOG_TAG,"AdvancedSettingsDialog.onCreateDialog: unimplemented relationship/settings");
             }
+        } else {
+            Log.wtf(Constants.LOG_TAG, "AdvancedSettingsDialog but settings does not have advanced settings!");
         }
 
         Log.i(Constants.LOG_TAG,"created AdvancedSettingsDialog for FlutterOutput=" + flutterOutput.getClass().getName());
@@ -195,6 +197,18 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         textMinInput.setText(getString(R.string.min_input) + " " + sensorText + ": " + minInput + "%");
         textSpeed.setText(getString(R.string.speed) + " " + speed + " / 15");
         textSensorCenterValue.setText(getString(R.string.sensor_center_value) + " " + sensorCenterValue + " / 100");
+
+        // hide speed
+        if (!settings.hasSpeed()) {
+            textSpeed.setVisibility(View.GONE);
+            seekBarSpeed.setVisibility(View.GONE);
+        }
+
+        // hide center value
+        if (!settings.hasSensorCenterValue()) {
+            textSensorCenterValue.setVisibility(View.GONE);
+            seekBarSensorCenterValue.setVisibility(View.GONE);
+        }
 
         return builder.create();
     }

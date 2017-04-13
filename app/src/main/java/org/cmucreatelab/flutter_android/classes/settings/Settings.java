@@ -83,6 +83,10 @@ public abstract class Settings {
 
     public abstract boolean hasAdvancedSettings();
 
+    public boolean hasSpeed() { return false; }
+
+    public boolean hasSensorCenterValue() { return false; }
+
     public abstract Relationship getRelationship();
 
     public abstract Sensor getSensor();

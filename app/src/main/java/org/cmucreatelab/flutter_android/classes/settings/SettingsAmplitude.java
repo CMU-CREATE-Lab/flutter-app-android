@@ -43,6 +43,12 @@ public class SettingsAmplitude extends Settings {
 
 
     @Override
+    public boolean hasSpeed() {
+        return true;
+    }
+
+
+    @Override
     public Relationship getRelationship() {
         return Amplitude.getInstance();
     }
