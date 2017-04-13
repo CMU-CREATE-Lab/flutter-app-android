@@ -4,7 +4,10 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
+import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
+import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
@@ -44,6 +47,12 @@ public abstract class LedDialogStateHelper implements DialogStateHelper<LedDialo
                 result = LedDialogConstant.newInstance(triColorLed);
             } else if (relationship.getClass() == Amplitude.class) {
                 result = LedDialogAmplitude.newInstance(triColorLed);
+            } else if (relationship.getClass() == Frequency.class) {
+                result = LedDialogFrequency.newInstance(triColorLed);
+            } else if (relationship.getClass() == Change.class) {
+                result = LedDialogChange.newInstance(triColorLed);
+            } else if (relationship.getClass() == Cumulative.class) {
+                result = LedDialogCumulative.newInstance(triColorLed);
             } else {
                 Log.w(Constants.LOG_TAG,"LedDialogStateHelper.newInstance: relationship not implemented");
                 result = LedDialogNoRelationship.newInstance(triColorLed);

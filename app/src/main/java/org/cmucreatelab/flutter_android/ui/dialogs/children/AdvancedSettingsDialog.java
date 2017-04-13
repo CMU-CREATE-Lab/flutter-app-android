@@ -15,6 +15,9 @@ import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -154,6 +157,12 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
                 this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional) settings).getAdvancedSettings());
             } else if (settings.getClass() == SettingsAmplitude.class) {
                 this.advancedSettings = AdvancedSettings.newInstance(((SettingsAmplitude) settings).getAdvancedSettings());
+            } else if (settings.getClass() == SettingsFrequency.class) {
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsFrequency) settings).getAdvancedSettings());
+            } else if (settings.getClass() == SettingsChange.class) {
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsChange) settings).getAdvancedSettings());
+            } else if (settings.getClass() == SettingsCumulative.class) {
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsCumulative) settings).getAdvancedSettings());
             } else {
                 Log.e(Constants.LOG_TAG,"AdvancedSettingsDialog.onCreateDialog: unimplemented relationship/settings");
             }
