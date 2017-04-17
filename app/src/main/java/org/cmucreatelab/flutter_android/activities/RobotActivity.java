@@ -26,7 +26,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
@@ -34,7 +33,6 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
@@ -52,12 +50,14 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-    private boolean isUsingSensorData = true;
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        private int seekBarValue=0;
+
         @Override
         public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
             Log.d(Constants.LOG_TAG, "onProgressChanged");
+            seekBarValue = i;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -66,15 +66,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
                     if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
+                        sensorReadingText.setText(String.valueOf(i));
                     }
                     if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
+                        sensorReadingText.setText(String.valueOf(i));
                     }
                     if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                         sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
-                        sensorReadingText.setText(String.valueOf(i) + "%");
+                        sensorReadingText.setText(String.valueOf(i));
                     }
                 }
             });
@@ -87,7 +87,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            if (session.isSimulatingData()) {
+                session.getFlutter().setSensorValues(seekBarValue,seekBarValue,seekBarValue);
+            }
         }
     };
 
@@ -151,6 +153,34 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     sensorReadingText.setText("");
             }
         });
+    }
+
+
+    private void updateSimulatedView() {
+        if (session.isSimulatingData()) {
+            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
+            sensorData.setTextColor(Color.GRAY);
+
+            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
+            simulateData.setTextColor(Color.WHITE);
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.VISIBLE);
+            simulatedSeekbar.setProgress(0);
+        } else {
+            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
+            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
+            sensorData.setTextColor(Color.WHITE);
+
+            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
+            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
+            simulateData.setTextColor(Color.GRAY);
+
+            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
+            simulatedSeekbar.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -323,7 +353,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             this.session.setFlutterMessageListener(this);
             updateLinkedViews();
-            if (isUsingSensorData) startSensorReading();
+            updateSimulatedView();
+            if (!session.isSimulatingData()) startSensorReading();
         }
     }
 
@@ -490,20 +521,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @OnClick(R.id.button_sensor_data)
     public void onClickSensorData() {
         Log.d(Constants.LOG_TAG, "onClickSensorData");
-        if (!isUsingSensorData) {
-            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
-            sensorData.setTextColor(Color.WHITE);
-
-            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
-            simulateData.setTextColor(Color.GRAY);
-
-            isUsingSensorData = true;
+        if (session.isSimulatingData()) {
+            session.setSimulatingData(false);
+            updateSimulatedView();
             startSensorReading();
-
-            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
-            simulatedSeekbar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -511,21 +532,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @OnClick(R.id.button_simulate_data)
     public void onClickSimulateData() {
         Log.d(Constants.LOG_TAG, "onClickSimulateData");
-        if (isUsingSensorData) {
-            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
-            sensorData.setTextColor(Color.GRAY);
-
-            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
-            simulateData.setTextColor(Color.WHITE);
-
-            isUsingSensorData = false;
+        if (!session.isSimulatingData()) {
+            session.getFlutter().setSensorValues(0,0,0);
+            session.setSimulatingData(true);
             stopSensorReading();
-
-            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
-            simulatedSeekbar.setVisibility(View.VISIBLE);
-            simulatedSeekbar.setProgress(0);
+            updateSimulatedView();
+            updateSensorViews();
         }
     }
 

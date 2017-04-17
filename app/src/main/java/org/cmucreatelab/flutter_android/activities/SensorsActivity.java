@@ -58,7 +58,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     private ProgressBar progress3;
 
     private Session session;
-    private boolean isPlayingSensors = true;
 
 
     private void updateDynamicViews() {
@@ -126,7 +125,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     // after pause/resume, determine if we should start sensor readings via 'isPlayingSensors' flag
     private void handleSensorReadingState() {
         Button button = (Button) findViewById(R.id.button_play_pause);
-        if (isPlayingSensors) {
+        if (!session.isSimulatingData()) {
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
             button.setText(R.string.pause_sensors);
             startSensorReading();
@@ -255,7 +254,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_play_pause)
     public void onClickPlayPause() {
         Log.d(Constants.LOG_TAG, "onClickPlayPause");
-        isPlayingSensors = !isPlayingSensors;
+        session.setSimulatingData(!session.isSimulatingData());
         handleSensorReadingState();
     }
 
