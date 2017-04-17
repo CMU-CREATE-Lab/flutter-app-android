@@ -7,6 +7,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
@@ -59,10 +60,13 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         TextView textSensor1 = (TextView) view.findViewById(R.id.text_sensor_1);
         TextView textSensor2 = (TextView) view.findViewById(R.id.text_sensor_2);
         TextView textSensor3 = (TextView) view.findViewById(R.id.text_sensor_3);
+        LinearLayout layout1 = (LinearLayout) view.findViewById(R.id.linear_sensor_1);
+        LinearLayout layout2 = (LinearLayout) view.findViewById(R.id.linear_sensor_2);
+        LinearLayout layout3 = (LinearLayout) view.findViewById(R.id.linear_sensor_3);
 
-        sensor1.setOnClickListener(this);
-        sensor2.setOnClickListener(this);
-        sensor3.setOnClickListener(this);
+        layout1.setOnClickListener(this);
+        layout2.setOnClickListener(this);
+        layout3.setOnClickListener(this);
 
         sensor1.setImageResource(sensors[0].getGreenImageId());
         sensor2.setImageResource(sensors[1].getGreenImageId());
@@ -80,13 +84,13 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         GlobalHandler globalHandler = GlobalHandler.getInstance(view.getContext());
         Sensor sensor = new NoSensor(0);
         switch (view.getId()) {
-            case R.id.image_sensor_1:
+            case R.id.linear_sensor_1:
                 sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[0];
                 break;
-            case R.id.image_sensor_2:
+            case R.id.linear_sensor_2:
                 sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[1];
                 break;
-            case R.id.image_sensor_3:
+            case R.id.linear_sensor_3:
                 sensor = globalHandler.sessionHandler.getSession().getFlutter().getSensors()[2];
                 break;
 
