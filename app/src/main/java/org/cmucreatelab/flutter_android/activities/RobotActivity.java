@@ -559,5 +559,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
 
         updateSensorViews();
+        updateLinkedViews();
     }
 }
