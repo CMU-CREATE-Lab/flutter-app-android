@@ -7,14 +7,23 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="325dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_data_log_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="30dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="75dp"
