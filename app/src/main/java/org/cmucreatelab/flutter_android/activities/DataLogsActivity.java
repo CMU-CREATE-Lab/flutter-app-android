@@ -191,9 +191,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
                 findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
 
+                TextView dataLogTitle = (TextView) findViewById(R.id.text_data_log_title);
                 TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
                 TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
                 TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
+                dataLogTitle.setText(dataSet.getDataName());
                 sensor1Type.setText(getString(dataSet.getSensors()[0].getTypeTextId()));
                 sensor2Type.setText(getString(dataSet.getSensors()[1].getTypeTextId()));
                 sensor3Type.setText(getString(dataSet.getSensors()[2].getTypeTextId()));

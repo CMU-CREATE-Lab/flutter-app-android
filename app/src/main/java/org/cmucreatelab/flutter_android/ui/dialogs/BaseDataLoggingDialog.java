@@ -90,25 +90,23 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
         String name = dataSetNameText.getText().toString();
         if (!name.matches("")) {
             String intervalString = intervalsText.getText().toString();
-            if (!intervalString.matches("")) {
+            if (!intervalString.matches("") && !intervalString.matches("0")) {
                 String timerPeriodString = timePeriodText.getText().toString();
-                if (!timerPeriodString.matches("")) {
+                if (!timerPeriodString.matches("") && !timerPeriodString.matches("0")) {
                     if (!getIsWaitingForResponse()) {
                         if (!getIsLogging()) {
                             GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity());
-                            int iInt = Integer.parseInt(intervalsText.getText().toString());
+                            int iInt = Integer.valueOf(intervalString);
                             String iString = intervalSpinner.getSelectedItem().toString();
-                            int tInt = Integer.parseInt(timePeriodText.getText().toString());
+                            int tInt = Integer.parseInt(timerPeriodString);
                             String tString = timePeriodSpinner.getSelectedItem().toString();
                             globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
 
-                            int intervalsT = Integer.valueOf(intervalString);
-                            // in seconds
                             int interval = 0;
 
                             String temp = intervalSpinner.getSelectedItem().toString();
                             interval = timeToSeconds(temp);
-                            interval = interval / intervalsT;
+                            interval = interval / iInt;
 
                             if (interval != 0) {
                                 int timePeriodT = Integer.valueOf(timerPeriodString);
@@ -126,8 +124,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
                                 this.dismiss();
                             } else {
-                                // TODO - warn the user that he or she cannot record data points more than once per second
-                                this.dismiss();
+                                intervalsText.setError(getString(R.string.please_enter_60_or_less));
                             }
                         } else {
                             IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
@@ -136,10 +133,10 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
                         }
                     }
                 } else {
-                    timePeriodText.setError(getString(R.string.this_field_cannot_be_blank));
+                    timePeriodText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
                 }
             } else {
-                intervalsText.setError(getString(R.string.this_field_cannot_be_blank));
+                intervalsText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
             }
         } else {
             dataSetNameText.setError(getString(R.string.this_field_cannot_be_blank));
