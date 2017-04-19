@@ -173,6 +173,12 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             else
                 toolbar.setTitle(R.string.unknown_device);
 
+            // Menu icon and text
+            TextView sensorMenuEntry = (TextView)findViewById(R.id.text_menu_sensor);
+            sensorMenuEntry.setTextColor(getResources().getColor(R.color.white));
+            sensorMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_sensor, 0, 0, 0);
+
+            // Flutter status icon (upper right)
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
             flutterStatusButtonName.setText(flutterName);
             flutterStatusText.setText(R.string.connection_connected);

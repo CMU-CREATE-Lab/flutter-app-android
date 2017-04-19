@@ -326,6 +326,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
+            // Menu icon and text
+            TextView robotMenuEntry = (TextView)findViewById(R.id.text_menu_robot);
+            robotMenuEntry.setTextColor(getResources().getColor(R.color.white));
+            robotMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_robot, 0, 0, 0);
+
+            // Flutter status icon (upper right)
             String flutterName = session.getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
             flutterStatusButtonName.setText(flutterName);

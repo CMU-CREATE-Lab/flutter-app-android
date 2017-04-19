@@ -32,10 +32,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="28dp"
                     android:drawablePadding="-16dp"
-                    android:drawableStart="@drawable/menu_icon_robot"
+                    android:drawableStart="@drawable/menu_icon_robot_colored"
                     android:gravity="center"
                     android:text="@string/robot"
-                    android:textColor="@color/white"
+                    android:textColor="#63bd6b"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -54,12 +54,12 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="28dp"
                     android:drawablePadding="-4dp"
-                    android:drawableStart="@drawable/menu_icon_sensor"
+                    android:drawableStart="@drawable/menu_icon_sensor_colored"
                     android:gravity="center"
                     android:paddingBottom="20dp"
                     android:paddingTop="30dp"
                     android:text="@string/sensors"
-                    android:textColor="@color/white"
+                    android:textColor="#4abde2"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -77,12 +77,12 @@
                     android:layout_marginEnd="4dp"
                     android:layout_marginStart="5dp"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/menu_icon_datalog"
+                    android:drawableStart="@drawable/menu_icon_datalog_colored"
                     android:gravity="center"
                     android:paddingBottom="30dp"
                     android:paddingTop="20dp"
                     android:text="@string/data_log"
-                    android:textColor="@color/white"
+                    android:textColor="#f2754d"
                     android:textSize="18sp" />
             </LinearLayout>
 
