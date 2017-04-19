@@ -95,6 +95,7 @@ public final class FlutterProtocol {
         public static final char ENABLE_FREQUENCY_CONTROL = 'f';
         public static final char ENABLE_DERIVATIVE_CONTROL = 'd';
         public static final char ENABLE_INTEGRAL_CONTROL = 'i';
+        public static final char SIMULATE_DATA = 'M';
     }
 
 //    Output correlations

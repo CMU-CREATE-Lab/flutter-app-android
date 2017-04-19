@@ -36,6 +36,8 @@ public class FlutterDataListener extends DataListener<MessageQueue> {
 
         parent.getDataService().enableNotifications(true);
 
+        // TODO @tasota this clears the Flutter simulation state when you connect, but really should just read in the state
+        parent.addMessage(MessageConstructor.constructStopSimulateData());
         // read sensor types
         Sensor[] sensors = session.getFlutter().getSensors();
         for (Sensor sensor : sensors) {

@@ -112,6 +112,17 @@ public class MessageConstructor {
     }
 
 
+    public static MelodySmartMessage constructSimulateData(int sensor1, int sensor2, int sensor3) {
+        // Request: “M,sensor1,sensor2,sensor3’
+        return new MelodySmartMessage(String.valueOf(FlutterProtocol.Commands.SIMULATE_DATA)+","+Integer.toHexString(sensor1)+","+Integer.toHexString(sensor2)+","+Integer.toHexString(sensor3));
+    }
+
+
+    public static MelodySmartMessage constructStopSimulateData() {
+        return constructSimulateData(255,255,255);
+    }
+
+
     // Links
 
 
