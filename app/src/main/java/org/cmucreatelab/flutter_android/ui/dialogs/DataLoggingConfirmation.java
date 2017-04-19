@@ -152,6 +152,8 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
 
         if (minute < 10) {
             result = "0" + minute;
+        } else {
+            result = String.valueOf(minute);
         }
 
         return result;

@@ -236,6 +236,8 @@
     <string name="no_data_logs_to_open">No Data Logs to Open</string>
     <string name="no_data_logs_to_open_details">There must be data logs available if you want to open a data log.</string>
     <string name="please_enter_60_or_less">Please enter a number that will record 60 times per minute or less.</string>
+    <string name="no_logs_saved_on_device">No logs saved on device</string>
+    <string name="no_logs_saved_on_flutter">No logs saved on flutter</string>
 
     <string-array name="time_array">
         <item>minute</item>

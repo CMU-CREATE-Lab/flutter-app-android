@@ -42,8 +42,9 @@ public class OpenLogDialog extends BaseResizableDialog {
     private DataSet[] dataSetsOnDevice;
 
     private ListView listDeviceDataSets;
-    private LinearLayout dataOnFlutterContainer, dataOnDeviceContainer;
     private DataLogListAdapter dataLogListAdapter;
+
+    private TextView noLogsDeviceTextView, noLogFlutterTextView;
 
 
     private AdapterView.OnItemClickListener dataLogListener = new AdapterView.OnItemClickListener() {
@@ -83,14 +84,14 @@ public class OpenLogDialog extends BaseResizableDialog {
         dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_ON_FLUTTER_KEY);
         dataSetsOnDevice = (DataSet[]) getArguments().getSerializable(DATA_SETS_ON_DEVICE_KEY);
         listDeviceDataSets = (ListView) view.findViewById(R.id.list_data_logs);
-        dataOnFlutterContainer = (LinearLayout) view.findViewById(R.id.linear_flutter_data_container);
-        dataOnDeviceContainer = (LinearLayout) view.findViewById(R.id.linear_device_data_container);
+        noLogFlutterTextView = (TextView) view.findViewById(R.id.text_no_log_flutter);
+        noLogsDeviceTextView = (TextView) view.findViewById(R.id.text_no_logs_device);
         dataLogListAdapter = new DataLogListAdapter(inflater);
 
         listDeviceDataSets.setOnItemClickListener(dataLogListener);
         listDeviceDataSets.setAdapter(dataLogListAdapter);
         if (dataSetsOnDevice.length > 0) {
-            dataOnDeviceContainer.setVisibility(View.VISIBLE);
+            noLogsDeviceTextView.setVisibility(View.GONE);
             for (DataSet dataSet : dataSetsOnDevice) {
                 dataLogListAdapter.addDataLog(dataSet);
             }
@@ -107,7 +108,7 @@ public class OpenLogDialog extends BaseResizableDialog {
         if (dataSetOnFlutter != null) {
             TextView textLogName = (TextView) view.findViewById(R.id.text_current_log_name);
             TextView textLogPoints = (TextView) view.findViewById(R.id.text_num_points);
-            dataOnFlutterContainer.setVisibility(View.VISIBLE);
+            noLogFlutterTextView.setVisibility(View.GONE);
 
             view.findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
             textLogName.setText(dataSetOnFlutter.getDataName());

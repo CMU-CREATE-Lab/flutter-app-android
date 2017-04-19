@@ -11,91 +11,96 @@
         android:gravity="center"
         android:padding="15dp"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/text_current_device_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/orange"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linear_flutter_data_container"
-        android:orientation="vertical"
+        android:id="@+id/text_no_log_flutter"
+        android:text="@string/no_logs_saved_on_flutter"
+        android:textSize="18sp"
+        android:textColor="#bbbbbb"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="15dp"/>
+
+    <RelativeLayout
+        android:id="@+id/relative_flutter_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:clickable="true"
+        android:background="?android:attr/selectableItemBackground"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/text_current_device_title"
-            android:layout_width="match_parent"
+            android:id="@+id/text_current_log_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:padding="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/orange"/>
+            android:textSize="24sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
 
-        <RelativeLayout
-            android:id="@+id/relative_flutter_log"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true">
 
             <TextView
-                android:id="@+id/text_current_log_name"
+                android:id="@+id/text_num_points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"/>
+                android:layout_gravity="center"/>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentEnd="true">
+                android:text="@string/data_points"/>
 
-                <TextView
-                    android:id="@+id/text_num_points"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:layout_gravity="center"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/data_points"/>
+    </RelativeLayout>
 
-            </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/saved_on_device"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/orange"/>
 
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linear_device_data_container"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:id="@+id/text_no_logs_device"
+        android:text="@string/no_logs_saved_on_device"
+        android:textSize="18sp"
+        android:textColor="#bbbbbb"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="15dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/saved_on_device"
-            android:textColor="@color/white"
-            android:padding="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/orange"/>
 
-        <ListView
-            android:id="@+id/list_data_logs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="2dp"/>
-
-    </LinearLayout>
+    <ListView
+        android:id="@+id/list_data_logs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="2dp"/>
 
 </merge>

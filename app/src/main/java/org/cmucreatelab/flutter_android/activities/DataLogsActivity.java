@@ -75,14 +75,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     private DataLogListAdapter dataLogListAdapter;
     private DataInstanceListAdapter dataInstanceListAdapter;
-    private LinearLayout dataOnFlutterContainer, dataOnDeviceContainer;
-    private RelativeLayout dataOnFlutterRealtiveContainer;
+    private RelativeLayout dataOnFlutterRelativeContainer;
     private ListView listDataLogsOnDevice, listDataInstance;
     private ProgressBar progressSensor1, progressSensor2, progressSensor3;
     private StatsRelativeLayout[] statsRelativeLayouts;
     private ImageView workingDataPointImage, imageSensor1, imageSensor2, imageSensor3;
     private Button buttonMean, buttonMedian, buttonMode, buttonMax, buttonMin;
-    private TextView openLogTextView, sendLogTextView, cleanUpTextView, recordDataTextView;
+    private TextView openLogTextView, sendLogTextView, cleanUpTextView, recordDataTextView, noLogsDeviceTextView, noLogsFlutterTextView;
 
 
     // utility methods used by the class
@@ -101,14 +100,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     findViewById(R.id.include_data_log_selected).setVisibility(View.GONE);
 
                     if (dataLogsHelper.getDataSetsOnDevice().length > 0)
-                        dataOnDeviceContainer.setVisibility(View.VISIBLE);
+                        noLogsDeviceTextView.setVisibility(View.GONE);
                     else
-                        dataOnDeviceContainer.setVisibility(View.GONE);
+                        noLogsDeviceTextView.setVisibility(View.VISIBLE);
 
                     if (dataLogsHelper.getDataSetOnFlutter() != null && dataLogsHelper.getDataSetOnFlutter().getData().size() > 0)
-                        dataOnFlutterContainer.setVisibility(View.VISIBLE);
+                        noLogsFlutterTextView.setVisibility(View.GONE);
                     else
-                        dataOnFlutterContainer.setVisibility(View.GONE);
+                        noLogsFlutterTextView.setVisibility(View.VISIBLE);
 
                     TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
                     TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
@@ -520,7 +519,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
-            findViewById(R.id.linear_flutter_data_container).setVisibility(View.GONE);
+            findViewById(R.id.relative_flutter_log).setVisibility(View.GONE);
         } else {
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
@@ -530,9 +529,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
         }
 
-        dataOnFlutterContainer = (LinearLayout) findViewById(R.id.linear_flutter_data_container);
-        dataOnDeviceContainer = (LinearLayout) findViewById(R.id.linear_device_data_container);
-        dataOnFlutterRealtiveContainer = (RelativeLayout) findViewById(R.id.relative_flutter_log);
+        noLogsFlutterTextView = (TextView) findViewById(R.id.text_no_log_flutter);
+        noLogsDeviceTextView = (TextView) findViewById(R.id.text_no_logs_device);
+        dataOnFlutterRelativeContainer = (RelativeLayout) findViewById(R.id.relative_flutter_log);
 
         progressSensor1 = (ProgressBar) findViewById(R.id.progress_sensor_1);
         progressSensor2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
@@ -568,7 +567,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         cleanUpTextView.setOnClickListener(cleanUpClickListener);
         recordDataTextView.setOnClickListener(recordDataClickListener);
 
-        dataOnFlutterRealtiveContainer.setOnClickListener(dataSetOnFlutterListener);
+        dataOnFlutterRelativeContainer.setOnClickListener(dataSetOnFlutterListener);
 
         dataLogListAdapter = new DataLogListAdapter(getLayoutInflater());
         dataInstanceListAdapter = new DataInstanceListAdapter(getLayoutInflater());
