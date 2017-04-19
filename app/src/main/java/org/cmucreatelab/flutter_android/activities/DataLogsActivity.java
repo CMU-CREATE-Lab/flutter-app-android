@@ -515,18 +515,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
         TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
+
+        // Menu icon and text
+        TextView datalogMenuEntry = (TextView)findViewById(R.id.text_menu_datalog);
+        datalogMenuEntry.setTextColor(getResources().getColor(R.color.white));
+        datalogMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_datalog, 0, 0, 0);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
             findViewById(R.id.relative_flutter_log).setVisibility(View.GONE);
         } else {
-
-            // Menu icon and text
-            TextView datalogMenuEntry = (TextView)findViewById(R.id.text_menu_datalog);
-            datalogMenuEntry.setTextColor(getResources().getColor(R.color.white));
-            datalogMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_datalog, 0, 0, 0);
-
             // Flutter status icon (upper right)
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);

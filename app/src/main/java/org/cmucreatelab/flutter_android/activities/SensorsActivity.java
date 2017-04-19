@@ -157,6 +157,11 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
+        // Menu icon and text
+        TextView sensorMenuEntry = (TextView)findViewById(R.id.text_menu_sensor);
+        sensorMenuEntry.setTextColor(getResources().getColor(R.color.white));
+        sensorMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_sensor, 0, 0, 0);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
             flutterStatusText.setText(R.string.connection_disconnected);
@@ -172,11 +177,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                 toolbar.setTitle(flutterName);
             else
                 toolbar.setTitle(R.string.unknown_device);
-
-            // Menu icon and text
-            TextView sensorMenuEntry = (TextView)findViewById(R.id.text_menu_sensor);
-            sensorMenuEntry.setTextColor(getResources().getColor(R.color.white));
-            sensorMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_sensor, 0, 0, 0);
 
             // Flutter status icon (upper right)
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);

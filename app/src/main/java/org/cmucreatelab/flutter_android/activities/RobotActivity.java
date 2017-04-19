@@ -315,6 +315,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
+        // Menu icon and text
+        TextView robotMenuEntry = (TextView)findViewById(R.id.text_menu_robot);
+        robotMenuEntry.setTextColor(getResources().getColor(R.color.white));
+        robotMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_robot, 0, 0, 0);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
             flutterStatusText.setText(R.string.connection_disconnected);
@@ -325,11 +330,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             this.session = globalHandler.sessionHandler.getSession();
             SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
             simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
-
-            // Menu icon and text
-            TextView robotMenuEntry = (TextView)findViewById(R.id.text_menu_robot);
-            robotMenuEntry.setTextColor(getResources().getColor(R.color.white));
-            robotMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_robot, 0, 0, 0);
 
             // Flutter status icon (upper right)
             String flutterName = session.getFlutter().getName();
