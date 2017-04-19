@@ -36,6 +36,7 @@ public class NoFlutterConnectedDialog extends BaseResizableDialog {
 
         Bundle args = new Bundle();
         args.putInt(noFlutterKey, description);
+        noFlutterConnectedDialog.setCancelable(false);
         noFlutterConnectedDialog.setArguments(args);
 
         return noFlutterConnectedDialog;
