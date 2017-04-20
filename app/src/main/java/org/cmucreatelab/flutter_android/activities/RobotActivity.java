@@ -89,6 +89,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         public void onStopTrackingTouch(SeekBar seekBar) {
             if (session.isSimulatingData()) {
                 session.getFlutter().setSensorValues(seekBarValue,seekBarValue,seekBarValue);
+                GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSimulateData(seekBarValue,seekBarValue,seekBarValue));
             }
         }
     };
