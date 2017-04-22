@@ -25,6 +25,70 @@
             android:src="@drawable/flutter_illustration_robot_page" />
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_servos_frames"
+            android:orientation="vertical"
+            android:layout_alignStart="@+id/image_flutter_illustration"
+            android:layout_alignTop="@+id/image_flutter_illustration"
+            android:layout_margin="5dp">
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_servo_3"/>
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_servo_2"/>
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_servo_1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/linear_leds_frames"
+            android:orientation="horizontal"
+            android:layout_toEndOf="@+id/linear_servos_frames"
+            android:layout_alignTop="@+id/image_flutter_illustration"
+            android:weightSum="3">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_led_1"
+                android:layout_weight="1"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_led_2"
+                android:layout_weight="1"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:id="@+id/frame_led_3"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/frame_speaker"
+            android:layout_toEndOf="@id/linear_leds_frames"
+            android:layout_alignTop="@id/image_flutter_illustration"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"/>
+
+        <LinearLayout
             android:id="@+id/linear_sensors"
             android:layout_width="315dp"
             android:layout_height="wrap_content"
@@ -176,7 +240,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/image_servo_3"
                 android:padding="2dp"
-                android:src="@drawable/question_icon" />
+                android:src="@drawable/question_icon"/>
 
             <RelativeLayout
                 android:id="@+id/relative_servo_2"

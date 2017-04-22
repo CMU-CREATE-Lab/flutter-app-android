@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -26,7 +27,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
@@ -34,7 +34,6 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
@@ -268,6 +267,78 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     };
 
 
+    private void onClickServo(int portNumber) {
+        Log.d(Constants.LOG_TAG, "RobotActivity.onClickServo " + portNumber);
+        Log.d(Constants.LOG_TAG, "onClickServo1");
+        Servo[] servos = session.getFlutter().getServos();
+
+        if (portNumber >= 0 || portNumber <= 2){
+            ServoDialog dialog = ServoDialog.newInstance(servos[portNumber-1], this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
+    }
+    private View.OnClickListener servo3FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickServo(3);
+        }
+    };
+    private View.OnClickListener servo2FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickServo(2);
+        }
+    };
+    private View.OnClickListener servo1FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickServo(1);
+        }
+    };
+
+
+    private void onClickLed(int portNumber) {
+        Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
+        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+        dialog.show(getSupportFragmentManager(), "tag");
+    }
+    private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickLed(1);
+        }
+    };
+    private View.OnClickListener led2FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickLed(2);
+        }
+    };
+    private View.OnClickListener led3FrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onClickLed(3);
+        }
+    };
+
+
+    private void onClickSpeaker() {
+        Log.d(Constants.LOG_TAG, "onClickSpeaker");
+        Speaker speaker = session.getFlutter().getSpeaker();
+
+        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+        dialog.show(getSupportFragmentManager(), "tag");
+    }
+    private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+           onClickSpeaker();
+        }
+    };
+
+
     // Class methods
 
 
@@ -309,6 +380,22 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             sensor1Text.setOnClickListener(sensor1OnClickListener);
             sensor2Text.setOnClickListener(sensor2OnClickListener);
             sensor3Text.setOnClickListener(sensor3OnClickListener);
+
+            FrameLayout frameServo1, frameServo2, frameServo3, frameled1, frameled2, frameled3, frameSpeaker;
+            frameServo1 = (FrameLayout) findViewById(R.id.frame_servo_1);
+            frameServo2 = (FrameLayout) findViewById(R.id.frame_servo_2);
+            frameServo3 = (FrameLayout) findViewById(R.id.frame_servo_3);
+            frameled1 = (FrameLayout) findViewById(R.id.frame_led_1);
+            frameled2 = (FrameLayout) findViewById(R.id.frame_led_2);
+            frameled3 = (FrameLayout) findViewById(R.id.frame_led_3);
+            frameSpeaker = (FrameLayout) findViewById(R.id.frame_speaker);
+            frameServo1.setOnClickListener(servo1FrameClickListener);
+            frameServo2.setOnClickListener(servo2FrameClickListener);
+            frameServo3.setOnClickListener(servo3FrameClickListener);
+            frameled1.setOnClickListener(led1FrameClickListener);
+            frameled2.setOnClickListener(led2FrameClickListener);
+            frameled3.setOnClickListener(led3FrameClickListener);
+            frameSpeaker.setOnClickListener(speakerFrameClickListener);
 
             updateSensorViews();
             updateDynamicViews();
@@ -368,115 +455,66 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     // onClick listeners
 
 
-    private void onClickServo1() {
-        Log.d(Constants.LOG_TAG, "onClickServo1");
-        Servo[] servos = session.getFlutter().getServos();
-
-        ServoDialog dialog = ServoDialog.newInstance(servos[0], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_servo_1)
     public void onClickServo1Image() {
-        onClickServo1();
+        onClickServo(1);
     }
     @OnClick(R.id.relative_servo_1)
     public void onClickServo1Relative() {
-        onClickServo1();
+        onClickServo(1);
     }
 
 
-    private void onClickServo2() {
-        Log.d(Constants.LOG_TAG, "onClickServo2");
-        Servo[] servos = session.getFlutter().getServos();
-
-        ServoDialog dialog = ServoDialog.newInstance(servos[1], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_servo_2)
     public void onClickServo2Image() {
-        onClickServo2();
+        onClickServo(2);
     }
     @OnClick(R.id.relative_servo_2)
     public void onClickServo2Relative() {
-        onClickServo2();
+        onClickServo(2);
     }
 
 
-    private void onClickServo3() {
-        Log.d(Constants.LOG_TAG, "onClickServo3");
-        Servo[] servos = session.getFlutter().getServos();
-
-        ServoDialog dialog = ServoDialog.newInstance(servos[2], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_servo_3)
     public void onClickServo3Image() {
-        onClickServo3();
+        onClickServo(3);
     }
     @OnClick(R.id.relative_servo_3)
     public void onclickServo3Relative() {
-        onClickServo3();
+        onClickServo(3);
     }
 
 
-    private void onClickLed1() {
-        Log.d(Constants.LOG_TAG, "onClickLed1");
-        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[0], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_led_1)
     public void onClickLed1Image() {
-        onClickLed1();
+        onClickLed(1);
     }
     @OnClick(R.id.relative_led_1)
     public void onClickLed1Relative() {
-        onClickLed1();
+        onClickLed(1);
     }
 
 
-    private void onClickLed2() {
-        Log.d(Constants.LOG_TAG, "onClickLed2");
-        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[1], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_led_2)
     public void onClickLed2Image() {
-        onClickLed2();
+        onClickLed(2);
     }
     @OnClick(R.id.relative_led_2)
     public void onClickLed2Relative() {
-        onClickLed2();
+        onClickLed(2);
     }
 
 
-    private void onClickLed3() {
-        Log.d(Constants.LOG_TAG, "onClickLed3");
-        TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[2], this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_led_3)
     public void onClickLed3Image() {
-        onClickLed3();
+        onClickLed(3);
     }
     @OnClick(R.id.relative_led_3)
     public void onClickLed3Relative() {
-        onClickLed3();
+        onClickLed(3);
     }
 
 
-    private void onClickSpeaker() {
-        Log.d(Constants.LOG_TAG, "onClickSpeaker");
-        Speaker speaker = session.getFlutter().getSpeaker();
-
-        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-        dialog.show(getSupportFragmentManager(), "tag");
-    }
     @OnClick(R.id.image_speaker)
     public void onClickSpeakerImage() {
         onClickSpeaker();
