@@ -17,6 +17,7 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
 /**
  * Created by mike on 12/28/16.
@@ -28,6 +29,7 @@ public class Session implements FlutterMessageListener {
 
     private Activity currentActivity;
     private Flutter flutter;
+    private boolean isSimulatingData;
     private FlutterConnectListener flutterConnectListener;
     private FlutterMessageListener flutterMessageListener;
     // getters/setters
@@ -35,10 +37,25 @@ public class Session implements FlutterMessageListener {
     public Flutter getFlutter() { return flutter; }
     public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
     public FlutterMessageListener getFlutterMessageListener() { return flutterMessageListener; }
+    public boolean isSimulatingData() { return isSimulatingData; }
     public void setCurrentActivity(Activity currentActivity) { this.currentActivity = currentActivity; }
     public void setFlutter(Flutter flutter) { this.flutter = flutter; }
     public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
+
+
+    public void setSimulatingData(boolean simulatingData) {
+        isSimulatingData = simulatingData;
+        if (simulatingData) {
+            int value1,value2,value3;
+            value1 = flutter.getSensors()[0].getSensorReading();
+            value2 = flutter.getSensors()[1].getSensorReading();
+            value3 = flutter.getSensors()[2].getSensorReading();
+            GlobalHandler.getInstance(currentActivity.getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSimulateData(value1,value2,value3));
+        } else {
+            GlobalHandler.getInstance(currentActivity.getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructStopSimulateData());
+        }
+    }
 
 
     public Session(Activity currentActivity, Flutter flutter, FlutterConnectListener flutterConnectListener, FlutterMessageListener flutterMessageListener) {
@@ -46,6 +63,7 @@ public class Session implements FlutterMessageListener {
         this.flutter = flutter;
         this.flutterConnectListener = flutterConnectListener;
         this.flutterMessageListener = flutterMessageListener;
+        this.isSimulatingData = false;
     }
 
 
@@ -68,11 +86,11 @@ public class Session implements FlutterMessageListener {
                     value1 = Integer.valueOf(args[1]).shortValue();
                     value2 = Integer.valueOf(args[2]).shortValue();
                     value3 = Integer.valueOf(args[3]).shortValue();
-
-                    Sensor[] sensors = getFlutter().getSensors();
-                    sensors[0].setSensorReading(value1);
-                    sensors[1].setSensorReading(value2);
-                    sensors[2].setSensorReading(value3);
+                    if (this.isSimulatingData()) {
+                        Log.w(Constants.LOG_TAG, "setting sensor values but flutter is flagged as simulating data; ignoring response.");
+                    } else {
+                        flutter.setSensorValues(value1, value2, value3);
+                    }
                 }
                 break;
             case FlutterProtocol.Commands.SET_OUTPUT:

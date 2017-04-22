@@ -10,7 +10,7 @@
     <string name="positive_response">OK</string>
 
     <!-- Errors -->
-    <string name="ble_unsupported">Your device does not support Bluetooth LE - Closing application</string>
+    <string name="ble_unsupported">Your tablet does not support Bluetooth LE - Closing application</string>
     <string name="unknown_device">Unknown Device</string>
 
     <!-- Prompts -->
@@ -161,7 +161,7 @@
     <string name="hz">Hz</string>
     <string name="clean_up">Clean Up</string>
     <string name="data_points">data points</string>
-    <string name="saved_on_device">Saved On Device</string>
+    <string name="saved_on_device">On Tablet</string>
     <string name="on">On</string>
     <string name="flutter">Flutter</string>
     <string name="no_relationship">No Relationship</string>
@@ -197,7 +197,7 @@
     <string name="connect_step_one">STEP 1:</string>
     <string name="connect_step_two">STEP 2:</string>
     <string name="flutter_name_default">Your Flutter</string>
-    <string name="non_large_layout_description">Flutter Links is currently optimized for a large screen experience. Please use Flutter Links with a device that has at least a 640dp x 480dp screen.</string>
+    <string name="non_large_layout_description">Flutter Links is currently optimized for a large screen experience. Please use Flutter Links with a tablet that has at least a 640dp x 480dp screen.</string>
     <string name="reading_data">Reading Flutter Data...</string>
 
     <!-- Colors -->
@@ -226,7 +226,7 @@
     <string name="data_log_details">Data Log Details:</string>
     <string name="collecting_data">Your flutter is now collecting data!</string>
     <string name="get_data_log">Get Data Log</string>
-    <string name="save_data_log_to_kindle">Save Data Log to Kindle</string>
+    <string name="save_data_log_to_kindle">Save Data Log to Tablet</string>
     <string name="select_a_data_log">Select a Data Log</string>
     <string name="select_a_data_log_details">Must have a data log selected before you can send a data log.</string>
     <string name="done_recording">Your Flutter has finished recording. Loading data...</string>
@@ -236,7 +236,7 @@
     <string name="no_data_logs_to_open">No Data Logs to Open</string>
     <string name="no_data_logs_to_open_details">There must be data logs available if you want to open a data log.</string>
     <string name="please_enter_60_or_less">Please enter a number that will record 60 times per minute or less.</string>
-    <string name="no_logs_saved_on_device">No logs saved on device</string>
+    <string name="no_logs_saved_on_device">No logs saved on tablet</string>
     <string name="no_logs_saved_on_flutter">No logs saved on flutter</string>
 
     <string-array name="time_array">

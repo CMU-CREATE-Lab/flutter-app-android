@@ -58,7 +58,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     private ProgressBar progress3;
 
     private Session session;
-    private boolean isPlayingSensors = true;
 
 
     private void updateDynamicViews() {
@@ -126,7 +125,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     // after pause/resume, determine if we should start sensor readings via 'isPlayingSensors' flag
     private void handleSensorReadingState() {
         Button button = (Button) findViewById(R.id.button_play_pause);
-        if (isPlayingSensors) {
+        if (!session.isSimulatingData()) {
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
             button.setText(R.string.pause_sensors);
             startSensorReading();
@@ -158,6 +157,11 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         TextView flutterStatusText = (TextView)findViewById(R.id.text_flutter_connection_status);
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
+        // Menu icon and text
+        TextView sensorMenuEntry = (TextView)findViewById(R.id.text_menu_sensor);
+        sensorMenuEntry.setTextColor(getResources().getColor(R.color.white));
+        sensorMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_sensor, 0, 0, 0);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
             flutterStatusText.setText(R.string.connection_disconnected);
@@ -174,6 +178,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             else
                 toolbar.setTitle(R.string.unknown_device);
 
+            // Flutter status icon (upper right)
             TextView flutterStatusButtonName = (TextView)findViewById(R.id.text_connected_flutter_name);
             flutterStatusButtonName.setText(flutterName);
             flutterStatusText.setText(R.string.connection_connected);
@@ -255,7 +260,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @OnClick(R.id.button_play_pause)
     public void onClickPlayPause() {
         Log.d(Constants.LOG_TAG, "onClickPlayPause");
-        isPlayingSensors = !isPlayingSensors;
+        session.setSimulatingData(!session.isSimulatingData());
         handleSensorReadingState();
     }
 

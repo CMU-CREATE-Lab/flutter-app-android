@@ -81,6 +81,13 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
     }
 
 
+    public void setSensorValues(int value1, int value2, int value3) {
+        sensors[0].setSensorReading(value1);
+        sensors[1].setSensorReading(value2);
+        sensors[2].setSensorReading(value3);
+    }
+
+
     public ArrayList<Output> getOutputs() {
         ArrayList<Output> result = new ArrayList<>();
 
