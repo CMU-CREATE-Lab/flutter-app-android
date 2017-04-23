@@ -95,7 +95,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
                         final TextView nameEntry = (TextView) View.inflate(getApplicationContext(), R.layout.list_item_device, null);
                         nameEntry.setTag(mLeDeviceAdapter.getCount() - 1);
-                        nameEntry.setText(name);
+                        // Ensure names in the list are formatted like they are on the back of the Flutter (2 words and then 1 word)
+                        Integer replaceIdx = name.indexOf(" ", name.indexOf(" ") + 1);
+                        String formattedName = name.substring(0, replaceIdx) + "\n" + name.substring(replaceIdx + 1);
+                        nameEntry.setText(formattedName);
                         // Height does not seem to carry over from the list_item_device.xml layout file...
                         nameEntry.setHeight(89);
                         // Margin does not seem to carry over from the content_scan.xml layout file...
