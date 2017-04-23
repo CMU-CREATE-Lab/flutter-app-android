@@ -10,9 +10,11 @@ import android.widget.Spinner;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 import java.io.Serializable;
 
@@ -59,6 +61,51 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     }
 
 
+    private boolean testName() {
+        boolean result = true;
+
+        String name = dataSetNameText.getText().toString();
+        for (DataSet dataSet : FileHandler.loadDataSetsFromFile(globalHandler)) {
+            if (name.equals(dataSet.getDataName())) {
+                dataSetNameText.setError("This name has already been used, use a different name.");
+                result = false;
+            }
+        }
+        if (name.equals(globalHandler.dataLoggingHandler.getDataName())) {
+            dataSetNameText.setError("This name has already been used, use a different name.");
+            result = false;
+        }
+        if(name.equals("")) {
+            dataSetNameText.setError(getString(R.string.empty_data_name));
+            result = false;
+        }
+
+        return result;
+    }
+
+
+    private boolean testInterval() {
+        boolean result = true;
+        String intervalString = intervalsText.getText().toString();
+        if (intervalString.matches("") || intervalString.matches("0")) {
+            intervalsText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
+            result = false;
+        }
+        return result;
+    }
+
+
+    private boolean testTimerPeriod() {
+        boolean result = true;
+        String timePeriodString = timePeriodText.getText().toString();
+        if (timePeriodString.equals("") || timePeriodString.equals("0")) {
+            timePeriodText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
+            result = false;
+        }
+        return result;
+    }
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -76,70 +123,45 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     }
 
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        if (dismissDialogListener != null)
-            dismissDialogListener.onDialogDismissed();
-    }
-
-
     @OnClick(R.id.button_start_recording)
     public void onClickButtonStartRecording() {
         Log.d(Constants.LOG_TAG, "onClickButtonStartRecording");
-        String name = dataSetNameText.getText().toString();
-        if (!name.matches("")) {
-            String intervalString = intervalsText.getText().toString();
-            if (!intervalString.matches("") && !intervalString.matches("0")) {
-                String timerPeriodString = timePeriodText.getText().toString();
-                if (!timerPeriodString.matches("") && !timerPeriodString.matches("0")) {
-                    if (!getIsWaitingForResponse()) {
-                        if (!getIsLogging()) {
-                            GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity());
-                            int iInt = Integer.valueOf(intervalString);
-                            String iString = intervalSpinner.getSelectedItem().toString();
-                            int tInt = Integer.parseInt(timerPeriodString);
-                            String tString = timePeriodSpinner.getSelectedItem().toString();
-                            globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
+        boolean isGoodName = testName();
+        boolean isGoodInterval = testInterval();
+        boolean isGoodTimePeriod = testTimerPeriod();
 
-                            int interval = 0;
+        if (isGoodName && isGoodInterval && isGoodTimePeriod && !isWaitingForResponse && !isLogging) {
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity());
+            int iInt = Integer.valueOf(intervalsText.getText().toString());
+            String iString = intervalSpinner.getSelectedItem().toString();
+            int tInt = Integer.parseInt(timePeriodText.getText().toString());
+            String tString = timePeriodSpinner.getSelectedItem().toString();
+            globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
 
-                            String temp = intervalSpinner.getSelectedItem().toString();
-                            interval = timeToSeconds(temp);
-                            interval = interval / iInt;
+            int interval = 0;
 
-                            if (interval != 0) {
-                                int timePeriodT = Integer.valueOf(timerPeriodString);
-                                // in seconds
-                                int timePeriod = 0;
-                                temp = timePeriodSpinner.getSelectedItem().toString();
-                                timePeriod = timeToSeconds(temp);
-                                timePeriod = timePeriodT * timePeriod;
-                                int sample = timePeriod / interval;
+            String temp = intervalSpinner.getSelectedItem().toString();
+            interval = timeToSeconds(temp);
+            interval = interval / iInt;
 
-                                dialogRecordListener.onRecordData(name, interval, sample);
+            if (interval != 0) {
+                int timePeriodT = Integer.valueOf(timePeriodText.getText().toString());
+                // in seconds
+                int timePeriod = 0;
+                temp = timePeriodSpinner.getSelectedItem().toString();
+                timePeriod = timeToSeconds(temp);
+                timePeriod = timePeriodT * timePeriod;
+                int sample = timePeriod / interval;
 
-                                DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
-                                dataLoggingConfirmation.show(getFragmentManager(), "tag");
+                dialogRecordListener.onRecordData(dataSetNameText.getText().toString(), interval, sample);
 
-                                this.dismiss();
-                            } else {
-                                intervalsText.setError(getString(R.string.please_enter_60_or_less));
-                            }
-                        } else {
-                            IsRecordingDialog isRecordingDialog = IsRecordingDialog.newInstance(this);
-                            isRecordingDialog.show(getFragmentManager(), "tag");
-                            this.dismiss();
-                        }
-                    }
-                } else {
-                    timePeriodText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
-                }
+                DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
+                dataLoggingConfirmation.show(getFragmentManager(), "tag");
+
+                this.dismiss();
             } else {
-                intervalsText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
+                intervalsText.setError(getString(R.string.please_enter_60_or_less));
             }
-        } else {
-            dataSetNameText.setError(getString(R.string.this_field_cannot_be_blank));
         }
     }
 
