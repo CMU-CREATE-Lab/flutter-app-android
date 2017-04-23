@@ -101,7 +101,8 @@ public final class Constants {
 
     // for activities
 
-    public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 20000;
+    public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 60000;
+    public static final int FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS = 15000;
 
     public static final class SerializableKeys {
         public static final String DIALOG_LED = "dialog_led";
