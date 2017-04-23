@@ -31,7 +31,7 @@ public class SessionHandler {
 
     public void createProgressDialog(BaseNavigationActivity activity) {
         if (progressDialog != null) {
-            progressDialog.dismiss();
+            dismissProgressDialog();
         }
         this.progressDialog = new ProgressDialog(activity);
         progressDialog.setTitle("Loading");

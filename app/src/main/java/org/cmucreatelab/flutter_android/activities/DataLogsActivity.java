@@ -618,6 +618,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.sessionHandler.dismissProgressDialog();
+    }
+
+    @Override
     public void onBackPressed() {
         if (workingDataSet == null) {
             if (this.isTaskRoot())

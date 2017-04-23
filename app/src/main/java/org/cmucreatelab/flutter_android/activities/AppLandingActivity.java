@@ -331,6 +331,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.sessionHandler.dismissProgressDialog();
+    }
 
     @Optional @OnClick(R.id.button_scan)
     public void onClickScan() {

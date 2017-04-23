@@ -102,6 +102,14 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Dialog dialog = getDialog();
+        if (dialog != null)
+            dialog.dismiss();
+    }
+
     @OnClick(R.id.button_flutter_connect_disconnect)
     public void onClickConnectDisconnect() {
         Log.d(Constants.LOG_TAG, "onClickConnectDisconnect");
