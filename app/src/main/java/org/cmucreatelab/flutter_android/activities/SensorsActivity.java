@@ -65,11 +65,25 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             @Override
             public void run() {
                 Sensor[] sensors = session.getFlutter().getSensors();
-                textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
+                if (sensors[0].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+                    textSensor1Reading.setText("");
+                } else {
+                    textSensor1Reading.setText(String.valueOf(sensors[0].getSensorReading()));
+                }
                 progress1.setProgress(sensors[0].getSensorReading());
-                textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
+
+                if (sensors[1].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+                    textSensor2Reading.setText("");
+                } else {
+                    textSensor2Reading.setText(String.valueOf(sensors[1].getSensorReading()));
+                }
                 progress2.setProgress(sensors[1].getSensorReading());
-                textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
+
+                    if (sensors[2].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+                    textSensor3Reading.setText("");
+                } else {
+                    textSensor3Reading.setText(String.valueOf(sensors[2].getSensorReading()));
+                }
                 progress3.setProgress(sensors[2].getSensorReading());
 
             }
@@ -221,7 +235,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick({R.id.image_sensor_1, R.id.image_sensor_1_2})
+    @OnClick(R.id.set_sensor_1)
     public void onClickSensor1() {
         Log.d(Constants.LOG_TAG, "onClickSensor1");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_1);
@@ -233,7 +247,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick({R.id.image_sensor_2, R.id.image_sensor_2_2})
+    @OnClick(R.id.set_sensor_2)
     public void onClickSensor2() {
         Log.d(Constants.LOG_TAG, "onClickSensor2");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_2);
@@ -245,7 +259,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick({R.id.image_sensor_3, R.id.image_sensor_3_2})
+    @OnClick(R.id.set_sensor_3)
     public void onClickSensor3() {
         Log.d(Constants.LOG_TAG, "onClickSensor3");
         this.selectedView = (ImageView) findViewById(R.id.image_sensor_3);
