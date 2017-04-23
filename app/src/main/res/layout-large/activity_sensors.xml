@@ -70,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/text_sensor_2"
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="10dp"
@@ -181,7 +181,7 @@
 
                 <TextView
                     android:id="@+id/text_sensor_1"
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="10dp"
@@ -293,7 +293,7 @@
 
                 <TextView
                     android:id="@+id/text_sensor_3"
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="10dp"
