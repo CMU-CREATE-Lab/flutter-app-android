@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/landing_page_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/landing_page_content"
     tools:context=".activities.AppLandingActivity">
 
     <include
@@ -133,7 +133,7 @@
         android:layout_width="600dp"
         android:layout_height="105dp"
         android:layout_above="@id/button_scan"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginStart="240dp"
         android:clickable="true"
         android:visibility="invisible">
@@ -156,11 +156,10 @@
 
     <RelativeLayout
         android:id="@+id/layout_timed_prompt"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="245dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="298dp"
+        android:layout_marginEnd="90dp"
         android:visibility="invisible">
 
         <TextView
