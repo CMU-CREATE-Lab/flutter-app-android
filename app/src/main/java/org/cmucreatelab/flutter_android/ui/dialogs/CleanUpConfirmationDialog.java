@@ -95,7 +95,7 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
         super.onDismiss(dialog);
         globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-        dataLogsActivity.getDataLogsHelper().registerStateAndUpdateLogs(new CleanUpAfterState(dataLogsActivity, deletedDataSet));
+        dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdateLogs(new CleanUpAfterState(dataLogsActivity, deletedDataSet));
     }
 
     @OnClick(R.id.button_cancel)
@@ -110,9 +110,9 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
         Log.d(Constants.LOG_TAG, "CleanUpConfirmationDialog.onClickDeleteLogs");
         for (DataSet dataSet : dataSets) {
             // if the dataSet is equal to the one on the flutter, then use DataLoggingHandler to communicate with the flutter.
-            if (dataSet.equals(dataLogsActivity.getDataLogsHelper().getDataSetOnFlutter())) {
+            if (dataSet.equals(dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter())) {
                 globalHandler.dataLoggingHandler.deleteLog();
-                deletedDataSet = dataLogsActivity.getDataLogsHelper().getDataSetOnFlutter();
+                deletedDataSet = dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter();
             } else {
                 FileHandler.deleteFile(globalHandler, dataSet);
                 deletedDataSet = dataSet;
