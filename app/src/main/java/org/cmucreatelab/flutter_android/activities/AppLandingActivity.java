@@ -94,13 +94,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         // TODO: RecyclerView is really what should be used here, rather than manually appending TextViews to a LinearLayout inside a HorizontalScrollView.
                         final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
                         final TextView nameEntry = (TextView) View.inflate(getApplicationContext(), R.layout.list_item_device, null);
-                        nameEntry.setTag(mLeDeviceAdapter.getCount() - 1);
                         // Ensure names in the list are formatted like they are on the back of the Flutter (2 words and then 1 word)
                         Integer replaceIdx = name.indexOf(" ", name.indexOf(" ") + 1);
                         String formattedName = name.substring(0, replaceIdx) + "\n" + name.substring(replaceIdx + 1);
                         nameEntry.setText(formattedName);
-                        // Height does not seem to carry over from the list_item_device.xml layout file...
+                        // Height and width don't seem to carry over from the list_item_device.xml layout file...
                         nameEntry.setHeight(89);
+                        nameEntry.setWidth(240);
                         // Margin does not seem to carry over from the content_scan.xml layout file...
                         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         llp.setMargins(0, 0, 8, 0); // left, top, right, bottom
@@ -108,7 +108,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         nameEntry.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Flutter flutter = (Flutter) mLeDeviceAdapter.getItem((Integer) (v.getTag()));
+                                Flutter flutter = (Flutter) mLeDeviceAdapter.getItem(list.indexOfChild(v));
                                 scanForDevice(false);
                                 RelativeLayout rl = (RelativeLayout) findViewById(R.id.landing_page_content);
                                 final int childCount = rl.getChildCount();
@@ -251,16 +251,16 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
             list.setOnScrollChangedListener(new ExtendedHorizontalScrollView.OnScrollChangedListener() {
                 @Override
-                public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                public void onScrollChanged(int x, int y, int oldX, int oldY) {
                     Integer maxScrollX = list.getChildAt(0).getMeasuredWidth() - list.getMeasuredWidth();
-                    if (l == 0) {
+                    if (x == 0) {
                         bPrevious.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_left));
                     }
-                    if (l > 0) {
+                    if (x > 0) {
                         bPrevious.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_left));
                         bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_right));
                     }
-                    if (l == maxScrollX) {
+                    if (x == maxScrollX) {
                         bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_right));
                     }
                 }
@@ -357,9 +357,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             if (mLeDeviceAdapter.getDeviceAddedTime(i) < systemTime - Constants.FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS) {
                                 mLeDeviceAdapter.removeDevice(i);
                                 final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
-                                TextView txtView = (TextView) list.findViewWithTag(i);
-                                if (txtView != null)
+                                TextView txtView = (TextView) list.getChildAt(i);
+                                if (txtView != null) {
                                     list.removeView(txtView);
+                                }
                             } else if (mLeDeviceAdapter.getDeviceAddedTime(i) < systemTime - Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS) {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
                             }
