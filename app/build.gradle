@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+def getLatestGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim();
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -18,7 +27,15 @@ android {
         }
     }
     applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", "v" + variant.versionName
+        def versionName
+        if (variant.buildType.isDebuggable()) {
+            // Set properties for debug
+            versionName = "dev-"  + getLatestGitHash()
+        } else {
+            // Set properties for release
+            versionName = "v" + variant.versionName
+        }
+        variant.resValue "string", "versionName", versionName
     }
 }
 
