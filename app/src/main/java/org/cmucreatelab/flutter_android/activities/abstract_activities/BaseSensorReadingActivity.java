@@ -42,8 +42,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
     @Override
     protected void onPause() {
         super.onPause();
-        if (GlobalHandler.getInstance(getApplicationContext()).melodySmartDeviceHandler.isConnected())
-            stopSensorReading();
+        stopSensorReading();
     }
 
 }
