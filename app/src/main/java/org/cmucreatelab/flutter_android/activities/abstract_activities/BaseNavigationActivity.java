@@ -8,12 +8,11 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.FlutterStatusActivity;
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
+import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.FlutterStatusDialog;
 
 import butterknife.OnClick;
@@ -49,7 +48,8 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d(Constants.LOG_TAG, "onPause - " + getClass() );
-        if (GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().isSimulatingData()) {
+        Session session = GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession();
+        if (session != null && session.isSimulatingData()) {
             Log.v(Constants.LOG_TAG, "stop simulating data (onPause)");
             GlobalHandler.getInstance(getApplicationContext()).sessionHandler.getSession().setSimulatingData(false);
         }
