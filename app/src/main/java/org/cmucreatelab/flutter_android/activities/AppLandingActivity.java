@@ -51,6 +51,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     private LeDeviceListAdapter mLeDeviceAdapter;
     private Timer mLeDeviceAdapterTimer;
+    private Timer noFlutterFoundTimer;
     private boolean layoutLarge = true;
     private boolean dataPopulated = false;
 
@@ -91,6 +92,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         String name = NamingHandler.generateName(getApplicationContext(), device.getAddress());
                         Flutter endResult = new Flutter(device, name);
                         mLeDeviceAdapter.addDevice(endResult);
+                        if (noFlutterFoundTimer != null) {
+                            noFlutterFoundTimer.cancel();
+                        }
                         // TODO: RecyclerView is really what should be used here, rather than manually appending TextViews to a LinearLayout inside a HorizontalScrollView.
                         final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
                         final TextView nameEntry = (TextView) View.inflate(getApplicationContext(), R.layout.list_item_device, null);
@@ -200,6 +204,32 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 }
             }
         });
+    }
+
+
+    private void returnToMainLandingScreenTimer() {
+        if (noFlutterFoundTimer != null) {
+            noFlutterFoundTimer.cancel();
+        }
+        noFlutterFoundTimer = new Timer();
+        noFlutterFoundTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mLeDeviceAdapter.getCount() == 0) {
+                            if (mLeDeviceAdapterTimer != null) {
+                                mLeDeviceAdapterTimer.cancel();
+                            }
+                            scanForDevice(false);
+                            Intent intent = new Intent(getApplicationContext(), AppLandingActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+        }, 60000);
     }
 
 
@@ -360,6 +390,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                                 TextView txtView = (TextView) list.getChildAt(i);
                                 if (txtView != null) {
                                     list.removeView(txtView);
+                                }
+                                if (mLeDeviceAdapter.getCount() == 0) {
+                                    returnToMainLandingScreenTimer();
                                 }
                             } else if (mLeDeviceAdapter.getDeviceAddedTime(i) < systemTime - Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS) {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
