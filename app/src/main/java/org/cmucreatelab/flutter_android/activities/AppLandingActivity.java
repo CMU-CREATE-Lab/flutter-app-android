@@ -150,7 +150,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
-        globalHandler.melodySmartDeviceHandler.setFlutterScanning(isScanning, mLeScanCallBack);
+        globalHandler.melodySmartDeviceHandler.setDeviceScanning(isScanning, mLeScanCallBack);
         if (isScanning) {
             scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
             scan.setText(R.string.scanning);
