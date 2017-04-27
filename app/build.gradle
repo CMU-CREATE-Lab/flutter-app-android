@@ -49,6 +49,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':melodysmart-module-android')
+    compile project(':volley-createlab-module-android')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile(name:'MelodySmart', ext:'aar')
