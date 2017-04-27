@@ -18,9 +18,7 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
 
 
     protected void startSensorReading() {
-        if (timer != null) {
-            timer.cancel();
-        }
+        stopSensorReading();
 
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -35,7 +33,9 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
 
 
     protected void stopSensorReading() {
-        timer.cancel();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
 
