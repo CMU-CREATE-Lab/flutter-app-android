@@ -4,12 +4,13 @@ import org.cmucreatelab.android.melodysmart.DeviceHandler;
 import org.cmucreatelab.android.melodysmart.MessageQueue;
 import org.cmucreatelab.android.melodysmart.listeners.DataListener;
 import org.cmucreatelab.android.melodysmart.listeners.DeviceListener;
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
 /**
  * Created by mike on 2/9/17.
  */
-public class FlutterDeviceHandler extends DeviceHandler<MessageQueue> {
+public class FlutterDeviceHandler extends DeviceHandler<MessageQueue<MelodySmartMessage>> {
 
     final private GlobalHandler globalHandler;
 
@@ -22,7 +23,7 @@ public class FlutterDeviceHandler extends DeviceHandler<MessageQueue> {
 
     @Override
     public MessageQueue initializeMessageQueue() {
-        return new MessageQueue(getDataService());
+        return new MessageQueue(this);
     }
 
 

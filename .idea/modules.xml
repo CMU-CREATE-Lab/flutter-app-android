@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/flutter-app-android.iml" filepath="$PROJECT_DIR$/flutter-app-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/melodysmart-module-android/melodysmart-module-android.iml" filepath="$PROJECT_DIR$/melodysmart-module-android/melodysmart-module-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/volley-createlab-module-android/volley-createlab-module-android.iml" filepath="$PROJECT_DIR$/volley-createlab-module-android/volley-createlab-module-android.iml" />
     </modules>
   </component>
 </project>

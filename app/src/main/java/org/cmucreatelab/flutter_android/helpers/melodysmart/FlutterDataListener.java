@@ -18,13 +18,14 @@ import java.util.ArrayList;
 /**
  * Created by mike on 2/9/17.
  */
-public class FlutterDataListener extends DataListener<MessageQueue> {
+public class FlutterDataListener extends DataListener<MelodySmartMessage, MessageQueue<MelodySmartMessage>> {
 
     final private Session session;
     final private DeviceHandler parent;
 
     
     public FlutterDataListener(Session session, DeviceHandler parent) {
+        super(parent);
         this.session = session;
         this.parent = parent;
     }
@@ -54,16 +55,25 @@ public class FlutterDataListener extends DataListener<MessageQueue> {
 
 
     @Override
-    public void onMessageReceived(MelodySmartMessage request, String response) {
-        if (Constants.IGNORE_READ_SENSORS && request.getRequest().charAt(0) == FlutterProtocol.Commands.READ_SENSOR_VALUES) {
+    public void onMessageReceived(MelodySmartMessage message) {
+        String request,response;
+
+        if (message.getRequests().size() == 0 || message.getResponses().size() == 0) {
+            Log.e(Constants.LOG_TAG,"onMessageReceived is request or response size of zero.");
+            return;
+        }
+        request = message.getRequests().get(0);
+        response = message.getResponses().get(0);
+
+        if (Constants.IGNORE_READ_SENSORS && request.charAt(0) == FlutterProtocol.Commands.READ_SENSOR_VALUES) {
             return;
         }
         Log.v(Constants.LOG_TAG, "FlutterDataListener.onMessageReceived");
         // handle parse
-        session.onFlutterMessageReceived(request.getRequest(), response);
+        session.onFlutterMessageReceived(request, response);
         // update views
         if (session.getFlutterMessageListener() != null) {
-            session.getFlutterMessageListener().onFlutterMessageReceived(request.getRequest(), response);
+            session.getFlutterMessageListener().onFlutterMessageReceived(request, response);
         } else {
             Log.w(Constants.LOG_TAG,"Tried to call callback onFlutterMessageReceived but session FlutterMessageListener is null.");
         }

@@ -1,1 +1,1 @@
-include ':app', ':melodysmart-module-android'
+include ':app', ':melodysmart-module-android', ':volley-createlab-module-android'

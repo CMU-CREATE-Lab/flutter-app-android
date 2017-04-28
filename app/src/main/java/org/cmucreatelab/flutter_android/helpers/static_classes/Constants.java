@@ -99,6 +99,12 @@ public final class Constants {
     // forces MessageQueue to throw away all "r" requests
     public static final boolean IGNORE_READ_SENSORS = false;
 
+    // determines how we want to send emails
+    public enum MailerType {
+        INTENT, HTTP_REQUEST
+    }
+    public static final MailerType SEND_EMAIL_AS = MailerType.INTENT;
+
     // for activities
 
     public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 60000;
