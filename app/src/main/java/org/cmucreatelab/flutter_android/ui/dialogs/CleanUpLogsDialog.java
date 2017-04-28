@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,6 +55,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
 
     private ListView thisWeek, thisMonth, thisYear, yearPlus;
     private LinearLayout weekContainer, monthContainer, yearContainer, yearPlusContainer;
+    private Button buttonDelete;
 
     private DataLogListAdapterCleanUp thisWeekAdapter, thisMonthAdapter, thisYearAdapter, yearPlusAdapter;
 
@@ -122,6 +124,12 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         } else {
             ((ImageView) view.findViewById(R.id.image_selector)).setImageResource(R.drawable.circle_not_selected);
             logsToDelete.remove(dataSets.get(index));
+        }
+
+        if (logsToDelete.size() > 0) {
+            buttonDelete.setEnabled(true);
+        } else {
+            buttonDelete.setEnabled(false);
         }
     }
 
@@ -218,6 +226,8 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         yearPlusDataSets = new ArrayList<>();
         logsToDelete = new ArrayList<>();
 
+        buttonDelete = (Button) view.findViewById(R.id.button_delete_logs);
+
         if (dataSetOnFlutter != null) {
             if (isWithinThisWeek(dataSetOnFlutter)) {
                 weekContainer.setVisibility(View.VISIBLE);
@@ -266,10 +276,12 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
 
     @OnClick(R.id.button_delete_logs)
     public void onClickDeleteLogs() {
-        Log.d(Constants.LOG_TAG, "CleanUpLogsDialog.onClickDeleteLogs");
-        CleanUpConfirmationDialog cleanUpConfirmationDialog = CleanUpConfirmationDialog.newInstance(baseNavigationActivity, logsToDelete.toArray(new DataSet[logsToDelete.size()]));
-        cleanUpConfirmationDialog.show(getFragmentManager(), "tag");
-        this.dismiss();
+        if (logsToDelete.size() > 0) {
+            Log.d(Constants.LOG_TAG, "CleanUpLogsDialog.onClickDeleteLogs");
+            CleanUpConfirmationDialog cleanUpConfirmationDialog = CleanUpConfirmationDialog.newInstance(baseNavigationActivity, logsToDelete.toArray(new DataSet[logsToDelete.size()]));
+            cleanUpConfirmationDialog.show(getFragmentManager(), "tag");
+            this.dismiss();
+        }
     }
 
 }
