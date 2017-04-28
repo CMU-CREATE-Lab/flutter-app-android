@@ -67,7 +67,13 @@ public class EmailDialog extends BaseResizableDialog {
     @OnClick(R.id.button_send_email)
     public void onClickSendEmail() {
         Log.d(Constants.LOG_TAG, "onClickSend");
-        EmailHandler.sendEmailServer(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog), GlobalHandler.getInstance(getActivity().getApplicationContext()).sessionHandler.getSession().getFlutter().getName());
+        if (Constants.SEND_EMAIL_AS == Constants.MailerType.INTENT) {
+            EmailHandler.sendEmailIntent(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
+        } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.INTENT) {
+            EmailHandler.sendEmailServer(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog), GlobalHandler.getInstance(getActivity().getApplicationContext()).sessionHandler.getSession().getFlutter().getName());
+        } else {
+            Log.e(Constants.LOG_TAG, "Unknown type for Constants.SEND_EMAIL_AS");
+        }
         this.dismiss();
     }
 
