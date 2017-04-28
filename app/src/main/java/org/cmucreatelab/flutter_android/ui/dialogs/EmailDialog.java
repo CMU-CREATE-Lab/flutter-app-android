@@ -1,9 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -18,7 +16,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
-import java.io.File;
 import java.io.Serializable;
 
 import butterknife.ButterKnife;
@@ -70,8 +67,7 @@ public class EmailDialog extends BaseResizableDialog {
     @OnClick(R.id.button_send_email)
     public void onClickSendEmail() {
         Log.d(Constants.LOG_TAG, "onClickSend");
-        // TODO @tasota include File currentDataLog in args
-        EmailHandler.sendEmail(this.getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
+        EmailHandler.sendEmailServer(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog), GlobalHandler.getInstance(getActivity().getApplicationContext()).sessionHandler.getSession().getFlutter().getName());
         this.dismiss();
     }
 
