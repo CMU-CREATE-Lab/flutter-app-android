@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -9,10 +8,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
-import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
@@ -37,6 +35,9 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     private DismissDialogListener dismissDialogListener;
     private int buttonDrawableId;
 
+    protected int finalInterval, finalSample;
+
+    protected WarningDialog warningDialog;
     protected EditText dataSetNameText;
     protected EditText intervalsText;
     protected Spinner intervalSpinner;
@@ -106,6 +107,18 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     }
 
 
+    protected WarningDialog.DismissAndCancelWarningListener warningDialogListener = new WarningDialog.DismissAndCancelWarningListener() {
+        @Override
+        public void onPositiveButton() {
+            Log.d(Constants.LOG_TAG, "this is getting dismissed");
+            dialogRecordListener.onRecordData(dataSetNameText.getText().toString(), finalInterval, finalSample);
+            DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
+            dataLoggingConfirmation.show(getFragmentManager(), "tag");
+            dismiss();
+        }
+    };
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -138,27 +151,31 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
             String tString = timePeriodSpinner.getSelectedItem().toString();
             globalHandler.dataLoggingHandler.saveDataLogDetails(getActivity(), iInt, iString, tInt, tString);
 
-            int interval = 0;
+            int inter = 0;
 
             String temp = intervalSpinner.getSelectedItem().toString();
-            interval = timeToSeconds(temp);
-            interval = interval / iInt;
+            inter = timeToSeconds(temp);
+            inter = inter / iInt;
 
-            if (interval != 0) {
+            if (inter != 0) {
                 int timePeriodT = Integer.valueOf(timePeriodText.getText().toString());
                 // in seconds
                 int timePeriod = 0;
                 temp = timePeriodSpinner.getSelectedItem().toString();
                 timePeriod = timeToSeconds(temp);
                 timePeriod = timePeriodT * timePeriod;
-                int sample = timePeriod / interval;
+                finalSample = timePeriod / inter;
+                finalInterval = inter;
 
-                dialogRecordListener.onRecordData(dataSetNameText.getText().toString(), interval, sample);
-
-                DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
-                dataLoggingConfirmation.show(getFragmentManager(), "tag");
-
-                this.dismiss();
+                if (finalSample < 200) {
+                    dialogRecordListener.onRecordData(dataSetNameText.getText().toString(), finalInterval, finalSample);
+                    DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, buttonDrawableId);
+                    dataLoggingConfirmation.show(getFragmentManager(), "tag");
+                    this.dismiss();
+                } else {
+                    Log.d(Constants.LOG_TAG, "about to show the warning dialog");
+                    warningDialog.show(getFragmentManager(), "tag");
+                }
             } else {
                 intervalsText.setError(getString(R.string.please_enter_60_or_less));
             }

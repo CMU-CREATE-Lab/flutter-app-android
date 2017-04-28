@@ -1,26 +1,45 @@
 package org.cmucreatelab.flutter_android.helpers.datalogging;
 
+import android.util.Log;
+
+import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
+
 /**
  * Created by Steve on 3/13/2017.
  */
 
 public class OpenLogState implements UpdateDataLogsState {
 
-    private OpenLogStateListener openLogStateListener;
+    private GlobalHandler globalHandler;
+    private DataLogsActivity dataLogsActivity;
 
 
-    public OpenLogState(OpenLogStateListener openLogStateListener) {
-        this.openLogStateListener = openLogStateListener;
+    public OpenLogState(DataLogsActivity dataLogsActivity) {
+        this.dataLogsActivity = dataLogsActivity;
+        this.globalHandler = GlobalHandler.getInstance(dataLogsActivity);
     }
 
 
+    /**
+     * Shows the open log dialog after the list of data logs has been updated
+     */
     @Override
     public void update() {
-        openLogStateListener.updateFromOpenLog();
+        dataLogsActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(Constants.LOG_TAG, "DataLogsActivity.updateFromOpenLogAfter");
+                globalHandler.sessionHandler.dismissProgressDialog();
+                OpenLogDialog openLogDialog = OpenLogDialog.newInstance(
+                        dataLogsActivity, dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter(), dataLogsActivity.getDataLogsUpdateHelper().getDataSetsOnDevice()
+                );
+                openLogDialog.show(dataLogsActivity.getSupportFragmentManager(), "tag");
+                dataLogsActivity.checkIfLogging();
+            }
+        });
     }
 
-
-    public interface OpenLogStateListener {
-        public void updateFromOpenLog();
-    }
 }

@@ -16,8 +16,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
  *
  * This class helps DataLogsActivity to update the list of data logs and then react appropriately to whoever did the updating
  */
-
-public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
+public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
 
     private GlobalHandler globalHandler;
     private UpdateDataLogsState updateDataLogsState;
@@ -26,7 +25,7 @@ public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener,
     private DataSet[] dataSetsOnDevice;
 
 
-    public DataLogsHelper(Context context) {
+    public DataLogsUpdateHelper(Context context) {
         this.globalHandler = GlobalHandler.getInstance(context);
     }
 
@@ -50,7 +49,7 @@ public class DataLogsHelper implements DataLoggingHandler.DataSetPointsListener,
 
     @Override
     public void onDataSetPopulated() {
-        Log.d(Constants.LOG_TAG, "DataLogsHelper.onDataSetPopulated");
+        Log.d(Constants.LOG_TAG, "DataLogsUpdateHelper.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
         this.updateDataLogsState.update();
     }

@@ -192,6 +192,12 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Starts recording data on the Flutter.
+     * @param interval How long to record in seconds.
+     * @param samples The number of data points to record within the given interval.
+     * @param logName The name that will be given to the data log.
+     */
     public void startLogging(int interval, int samples, String logName) {
         globalHandler = GlobalHandler.getInstance(appContext);
 
@@ -206,6 +212,14 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Saved the details of the recording data log.
+     * @param activity Current activity (needed to access SharedPreferences).
+     * @param intervalInt The interval integer supplied by the user.
+     * @param intervalString The interval String (ex. 'minute') supplied by the user.
+     * @param timePeriodInt The time period interger supplied by the user.
+     * @param timePeriodString The timer period String (ex 'minutes') supplied by the user.
+     */
     public void saveDataLogDetails(Activity activity, int intervalInt, String intervalString, int timePeriodInt, String timePeriodString) {
         SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -217,6 +231,11 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Loads the data log details from SharedPreferences.
+     * @param activity Current activity (needed to access SharedPreferences)
+     * @return The details of the data log contained within a DataLogDetails object.
+     */
     public DataLogDetails loadDataLogDetails(Activity activity) {
         SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
         int intervalInt = sharedPref.getInt(INTERVAL_INT_KEY, 0);
@@ -227,6 +246,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Populates the data logs name and the number of points currently available. Refer to the protocol for more info.
+     * @param dataSetPointsListener An event listener to be fired after this message has been fulfilled.
+     */
     public void populatePointsAvailable(DataSetPointsListener dataSetPointsListener) {
         Log.d(Constants.LOG_TAG, "populatePointsAvailable");
         this.dataSetPointsListener = dataSetPointsListener;
@@ -238,6 +261,10 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Populates the data set by calling for each data point. Refer to the protocol for more info.
+     * @param dataSetListener An event listener to be fired after this message has been fulfilled.
+     */
     public void populatedDataSet(DataSetListener dataSetListener) {
         this.dataSetListener = dataSetListener;
         this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
@@ -253,11 +280,17 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
+    /**
+     * Deletes the data log on the Flutter.
+     */
     public void deleteLog() {
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructDeleteLog());
     }
 
 
+    /**
+     * Stops the current recording.
+     */
     public void stopRecording() {
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructStopLogging());
     }
