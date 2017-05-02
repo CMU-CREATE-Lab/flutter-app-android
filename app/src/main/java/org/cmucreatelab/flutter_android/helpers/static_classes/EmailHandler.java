@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,7 +38,7 @@ public class EmailHandler {
 
 
     private static ArrayList<String[]> readCsv(File file) throws IOException {
-        CSVReader csvReader = null;
+        CSVReader csvReader;
         csvReader = new CSVReader(new FileReader(file.getPath()));
         ArrayList<String[]> list = (ArrayList<String[]>) csvReader.readAll();
         csvReader.close();
@@ -47,11 +48,11 @@ public class EmailHandler {
 
 
     private static String convertCsvFileToTabDelimitedString(File file) throws IOException {
-        String result,tmp;
+        String result, tmp;
         result = "";
         ArrayList<String[]> list = readCsv(file);
 
-        for (String[] line: list) {
+        for (String[] line : list) {
             tmp = "";
             if (line.length > 0) {
                 for (int i = 0; i < line.length; i++) {
@@ -77,7 +78,7 @@ public class EmailHandler {
 
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("message/rfc822");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{ email });
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
             intent.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJECT);
             intent.putExtra(Intent.EXTRA_TEXT, message);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -100,27 +101,37 @@ public class EmailHandler {
     }
 
 
-    public static void sendEmailServer(Activity activity, String email, String message, File dataLog, String flutterName) {
-        // TODO @tasota check for internet connection?
+    public static void sendEmailServer(final Activity activity, String email, String message, File dataLog, String flutterName) {
         int method = Request.Method.POST;
-        String url = "http://fluttermail.cmucreatelab.org/";
+        String url = Constants.MAIL_SERVER_URL;
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // TODO @tasota email successful
                 Log.d(Constants.LOG_TAG, "sendEmailServer.onResponse");
+                Toast.makeText(activity.getApplicationContext(), "Email successfully sent", Toast.LENGTH_LONG).show();
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // TODO @tasota error message dialog
                 Log.d(Constants.LOG_TAG, "sendEmailServer.onErrorResponse");
+                if (error == null || error.networkResponse == null) {
+                    new AlertDialog.Builder(activity)
+                            .setMessage(R.string.no_wifi_data_log_details)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                } else {
+                    Log.d(Constants.LOG_TAG, "sendEmailServer.onErrorResponse.statusCode " + error.networkResponse.statusCode);
+                    new AlertDialog.Builder(activity)
+                            .setMessage(R.string.email_server_error)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                }
             }
         };
 
         try {
-            StringFormRequest httpRequest = new StringFormRequest(method,url,listener,errorListener);
+            StringFormRequest httpRequest = new StringFormRequest(method, url, listener, errorListener);
             Map<String, String> params = httpRequest.getParams();
             params.put("flutter_name", flutterName);
             params.put("to", email);

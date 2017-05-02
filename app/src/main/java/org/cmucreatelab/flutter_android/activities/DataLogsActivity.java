@@ -1,6 +1,9 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +26,6 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpAfterState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpBeforeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsUpdateHelper;
@@ -35,7 +37,6 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -129,7 +130,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         dataLogListAdapter.addDataLog(dataSet);
                     }
 
-                } else if (workingDataPoint != null && workingDataSet != null){
+                } else if (workingDataPoint != null){
                     Sensor sensor1 = workingDataSet.getSensors()[0];
                     Sensor sensor2 = workingDataSet.getSensors()[1];
                     Sensor sensor3 = workingDataSet.getSensors()[2];
@@ -262,13 +263,19 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         @Override
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickSendLog");
-            if (workingDataSet != null) {
+
+            ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (workingDataSet == null) {
+                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
+                warningDialog.show(getSupportFragmentManager(), "tag");
+            } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
+                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_wifi), getString(R.string.no_wifi_data_log_details), R.drawable.round_orange_button_bottom);
+                warningDialog.show(getSupportFragmentManager(), "tag");
+            } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
                 emailDialog.show(getSupportFragmentManager(), "tag");
-            } else {
-                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
-                warningDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };

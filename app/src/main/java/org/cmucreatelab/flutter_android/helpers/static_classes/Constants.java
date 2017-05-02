@@ -103,7 +103,8 @@ public final class Constants {
     public enum MailerType {
         INTENT, HTTP_REQUEST
     }
-    public static final MailerType SEND_EMAIL_AS = MailerType.INTENT;
+    public static final String MAIL_SERVER_URL= "http://fluttermail.createlab.org/send_log";
+    public static final MailerType SEND_EMAIL_AS = MailerType.HTTP_REQUEST;
 
     // for activities
 
