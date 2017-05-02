@@ -13,11 +13,12 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.opencsv.CSVReader;
 
 import org.cmucreatelab.android.volleycreatelab.StringFormRequest;
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.HttpRequestHandler;
 
 import java.io.File;
 import java.io.FileReader;
@@ -56,11 +57,11 @@ public class EmailHandler {
             tmp = "";
             if (line.length > 0) {
                 for (int i = 0; i < line.length; i++) {
-                    tmp = tmp.concat(line[i] + ",");
+                    tmp = tmp.concat(line[i] + "\t");
                 }
                 tmp = tmp.substring(0, tmp.length() - 2);
                 result = result.concat(tmp);
-                result = result.concat("\t");
+                result = result.concat("\n");
             }
         }
         if (list.size() > 0) {
@@ -102,8 +103,10 @@ public class EmailHandler {
 
 
     public static void sendEmailServer(final Activity activity, String email, String message, File dataLog, String flutterName) {
+        final HttpRequestHandler httpRequestHandler = GlobalHandler.getInstance(activity.getApplicationContext()).httpRequestHandler;;
         int method = Request.Method.POST;
         String url = Constants.MAIL_SERVER_URL;
+
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -115,6 +118,7 @@ public class EmailHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(Constants.LOG_TAG, "sendEmailServer.onErrorResponse");
+                httpRequestHandler.clearRequestsFromRequestQueue();
                 if (error == null || error.networkResponse == null) {
                     new AlertDialog.Builder(activity)
                             .setMessage(R.string.no_wifi_data_log_details)
@@ -136,8 +140,10 @@ public class EmailHandler {
             params.put("flutter_name", flutterName);
             params.put("to", email);
             params.put("body", message);
+            String name = dataLog.getName();
+            params.put("data_name", name.substring(0, name.indexOf(".")));
             params.put("data", convertCsvFileToTabDelimitedString(dataLog));
-            Volley.newRequestQueue(activity).add(httpRequest);
+            httpRequestHandler.addRequestToRequestQueue(httpRequest);
         } catch (Exception e) {
             Log.e(Constants.LOG_TAG, "sendEmailServer caught exception:");
             e.printStackTrace();
