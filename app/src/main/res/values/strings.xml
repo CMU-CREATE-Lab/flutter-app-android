@@ -32,6 +32,12 @@
     <string name="scan_timeout_prompt">Don\'t see your Flutter?</string>
     <string name="rescan">Rescan</string>
     <string name="connect_flutter">CONNECT FLUTTER</string>
+    <string name="not_connected_title">Unable to Connect</string>
+    <string name="not_connected_message">Your Tablet was not able to connect to your Flutter. Please try again.</string>
+    <string name="not_connected_button">Try Again</string>
+    <string name="disconnected_title">Device Disconnected</string>
+    <string name="disconnected_message">Your Flutter was disconnected from your Tablet. Please reconnect.</string>
+    <string name="disconnected_button">Connect Flutter</string>
     <string name="data_los">DATA LOGS</string>
     <string name="speaker">SPEAKER</string>
     <string name="leds">LEDs</string>
