@@ -74,7 +74,7 @@ public class FlutterStatusActivity extends BaseNavigationActivity {
     public void onClickConnectDisconnect() {
         Log.d(Constants.LOG_TAG, "onClickConnectDisconnect");
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            globalHandler.melodySmartDeviceHandler.disconnect();
+            globalHandler.melodySmartDeviceHandler.disconnect(false);
         } else {
             Intent intent = new Intent(this, AppLandingActivity.class);
             startActivity(intent);

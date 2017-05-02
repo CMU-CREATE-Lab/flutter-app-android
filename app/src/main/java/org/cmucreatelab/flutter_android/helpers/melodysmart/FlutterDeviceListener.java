@@ -12,6 +12,8 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.ErrorDisconnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.ErrorNotConnectedDialog;
 
 /**
  * Created by mike on 2/9/17.
@@ -42,17 +44,24 @@ public class FlutterDeviceListener extends DeviceListener {
             session.getCurrentActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.getCurrentActivity(), R.style.AppTheme));
-                    adb.setMessage(bleError.getMessage());
-                    adb.setTitle("Disconnected");
-                    adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            session.getFlutterConnectListener().onFlutterDisconnected();
-                        }
-                    });
-                    AlertDialog dialog = adb.create();
-                    dialog.show();
+                    if (bleError.getType() == BLEError.Type.UNKNOWN_ERROR) {
+                        ErrorNotConnectedDialog.displayDialog(session.getCurrentActivity());
+                    } else if (bleError.getType() == BLEError.Type.TIMEOUT_ERROR) {
+                        ErrorDisconnectedDialog.displayDialog(session.getCurrentActivity());
+                    } else {
+                        Log.w(Constants.LOG_TAG, "Could not determine BLEError.Type; defaulting to generic popup with unhelpful error message.");
+                        AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.getCurrentActivity(), R.style.AppTheme));
+                        adb.setMessage(bleError.getMessage());
+                        adb.setTitle("Disconnected");
+                        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                session.getFlutterConnectListener().onFlutterDisconnected();
+                            }
+                        });
+                        AlertDialog dialog = adb.create();
+                        dialog.show();
+                    }
                 }
             });
         } else {
