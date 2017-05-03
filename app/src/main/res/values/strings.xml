@@ -252,6 +252,7 @@
     <string name="no_wifi">Connect to WiFi</string>
     <string name="no_wifi_data_log_details">You need to be connected to WiFi before you can send a data log.</string>
     <string name="email_server_error">There was an error sending the data log. Please try again later.</string>
+    <string name="invalid_email">Invalid Email Address</string>
 
     <string-array name="time_array">
         <item>minute</item>

@@ -17,6 +17,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,14 +68,24 @@ public class EmailDialog extends BaseResizableDialog {
     @OnClick(R.id.button_send_email)
     public void onClickSendEmail() {
         Log.d(Constants.LOG_TAG, "onClickSend");
-        if (Constants.SEND_EMAIL_AS == Constants.MailerType.INTENT) {
-            EmailHandler.sendEmailIntent(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
-        } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST) {
-            EmailHandler.sendEmailServer(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog), GlobalHandler.getInstance(getActivity().getApplicationContext()).sessionHandler.getSession().getFlutter().getName());
+        if (Pattern.matches(
+                "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\" +
+                        "x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2" +
+                        "[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+                , email.getText().toString()))
+        {
+            if (Constants.SEND_EMAIL_AS == Constants.MailerType.INTENT) {
+                EmailHandler.sendEmailIntent(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
+            } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST) {
+                EmailHandler.sendEmailServer(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog), GlobalHandler.getInstance(getActivity().getApplicationContext()).sessionHandler.getSession().getFlutter().getName());
+            } else {
+                Log.e(Constants.LOG_TAG, "Unknown type for Constants.SEND_EMAIL_AS");
+            }
+
+            this.dismiss();
         } else {
-            Log.e(Constants.LOG_TAG, "Unknown type for Constants.SEND_EMAIL_AS");
+            email.setError(getString(R.string.invalid_email));
         }
-        this.dismiss();
     }
 
 }
