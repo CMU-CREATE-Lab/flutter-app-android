@@ -28,10 +28,7 @@ public class FileHandler {
 
     private static final String DATA_SETS_PATH = "DATA_SETS";
 
-
-    // TODO - handle case when you try to save a file that is already there
-    // TODO - maybe append an integer to the end of the name
-    // TODO - maybe prompt the user when about to record the data log
+    
     public static void saveDataSetToFile(GlobalHandler globalHandler, DataSet dataSet) {
         try {
             File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
