@@ -65,6 +65,7 @@ public class DataSet implements Serializable {
     }
 
 
+    // TODO - do we want this to return a decimal value?
     public int[] getMedians() {
         Iterator it = data.entrySet().iterator();
         int[] medians = new int[3];
@@ -98,6 +99,7 @@ public class DataSet implements Serializable {
     }
 
 
+    // TODO - should probably handle when a data set has multiple modes
     public int[] getModes() {
         Iterator it = data.entrySet().iterator();
         int[] modes = new int[3];

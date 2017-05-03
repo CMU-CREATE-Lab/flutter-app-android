@@ -27,15 +27,16 @@ public class DataSetTest {
     @Before
     public void init() {
         data = new TreeMap<>();
-        for (int i = 0; i < 10; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(i), String.valueOf(i), String.valueOf(i)));
-        }
         dataSet = new DataSet(data, keys, "name", sensors);
     }
 
 
     @Test
     public void getMeans_isCorrect() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(i), String.valueOf(i), String.valueOf(i)));
+        }
+
         int[] expectedMeans = new int[3];
         for (int i = 0; i < expectedMeans.length; i++) {
             expectedMeans[i] = 5;
@@ -49,17 +50,69 @@ public class DataSetTest {
 
     @Test
     public void getMedians_isCorrect() throws Exception {
-        int[] expectedMedians = new int[3];
-        data.clear();
         for (int i = 0; i < 10; i++) {
             data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
         }
+
+        int[] expectedMedians = new int[3];
         for (int i = 0; i < expectedMedians.length; i++) {
             expectedMedians[i] = 5;
         }
         int[] actualMedians = dataSet.getMedians();
         for (int i = 0; i < expectedMedians.length; i++) {
             assertEquals(expectedMedians[i], actualMedians[i]);
+        }
+    }
+
+
+    @Test
+    public void getModes_isCorrect() throws Exception {
+        for (int i = 0; i < 9; i++) {
+            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+        }
+        data.put(String.valueOf(9), new DataPoint("", "", String.valueOf(9-1), String.valueOf(9-1), String.valueOf(9-1)));
+
+        int[] expectedModes = new int[3];
+        for (int i = 0; i < expectedModes.length; i++) {
+            expectedModes[i] = 8;
+        }
+        int[] actualModes = dataSet.getModes();
+        for (int i = 0; i < expectedModes.length; i++) {
+            assertEquals(expectedModes[i], actualModes[i]);
+        }
+    }
+
+
+    @Test
+    public void getMinimums_isCorrect() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+        }
+
+        int[] expectedMins = new int[3];
+        for (int i = 0; i < expectedMins.length; i++) {
+            expectedMins[i] = 0;
+        }
+        int[] actualMins = dataSet.getMinimums();
+        for (int i = 0; i < expectedMins.length; i++) {
+            assertEquals(expectedMins[i], actualMins[i]);
+        }
+    }
+
+
+    @Test
+    public void getMaximums_isCorrect() throws Exception {
+        for (int i = 0; i < 10; i++) {
+            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+        }
+
+        int[] expectedMaxs = new int[3];
+        for (int i = 0; i < expectedMaxs.length; i++) {
+            expectedMaxs[i] = 9;
+        }
+        int[] actualMaxs = dataSet.getMaximums();
+        for (int i = 0; i < expectedMaxs.length; i++) {
+            assertEquals(expectedMaxs[i], actualMaxs[i]);
         }
     }
 }
