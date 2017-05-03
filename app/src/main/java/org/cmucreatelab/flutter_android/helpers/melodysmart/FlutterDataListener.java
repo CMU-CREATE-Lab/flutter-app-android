@@ -84,7 +84,19 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
                 // update received messages progress
                 if (message.getRequests().size() > 0) {
                     String request = message.getRequests().get(0);
-                    globalHandler.sessionHandler.updateProgressDialogMessage("parsing request: " + request);
+                    char protocolCommand = request.charAt(0);
+                    switch (protocolCommand) {
+                        case 'M':
+                        case 'Y':
+                            globalHandler.sessionHandler.updateProgressDialogMessage("Loading Sensor Types");
+                            break;
+                        case 'O':
+                            globalHandler.sessionHandler.updateProgressDialogMessage("Loading Outputs");
+                            break;
+                        default:
+                            Log.e(Constants.LOG_TAG, "received response from an unexpected protocol command");
+                            break;
+                    }
                 }
 
                 // keep track of what is finished
