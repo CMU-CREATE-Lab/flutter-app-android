@@ -28,7 +28,7 @@ public class FileHandler {
 
     private static final String DATA_SETS_PATH = "DATA_SETS";
 
-    
+
     public static void saveDataSetToFile(GlobalHandler globalHandler, DataSet dataSet) {
         try {
             File root = new File(globalHandler.appContext.getFilesDir(), DATA_SETS_PATH);
