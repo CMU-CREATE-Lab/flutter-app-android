@@ -80,10 +80,13 @@ public class DataSet implements Serializable {
             }
         }
 
+        Arrays.sort(sensorValues[0]);
+        Arrays.sort(sensorValues[1]);
+        Arrays.sort(sensorValues[2]);
         if (data.size() % 2 == 0) {
-            medians[0] = (sensorValues[0][sensorValues[0].length / 2] + sensorValues[0][sensorValues[0].length / 2 - 1]) / 2;
-            medians[1] = (sensorValues[1][sensorValues[1].length / 2] + sensorValues[1][sensorValues[1].length / 2 - 1]) / 2;
-            medians[2] = (sensorValues[2][sensorValues[2].length / 2] + sensorValues[2][sensorValues[2].length / 2 - 1]) / 2;
+            medians[0] = (int) Math.round(((double)sensorValues[0][sensorValues[0].length / 2] + (double)sensorValues[0][sensorValues[0].length / 2 - 1]) / 2);
+            medians[1] = (int)Math.round(((double)sensorValues[1][sensorValues[1].length / 2] + (double)sensorValues[1][sensorValues[1].length / 2 - 1]) / 2);
+            medians[2] = (int)Math.round(((double)sensorValues[2][sensorValues[2].length / 2] + (double)sensorValues[2][sensorValues[2].length / 2 - 1]) / 2);
         }
         else {
             medians[0] = sensorValues[0][sensorValues[0].length / 2];
