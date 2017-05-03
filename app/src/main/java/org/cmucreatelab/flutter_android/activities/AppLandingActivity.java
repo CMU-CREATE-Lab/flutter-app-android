@@ -52,7 +52,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private Timer mLeDeviceAdapterTimer;
     private Timer noFlutterFoundTimer;
     private boolean layoutLarge = true;
-    private boolean dataPopulated = false;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
     private final BluetoothAdapter.LeScanCallback mLeScanCallBack = new BluetoothAdapter.LeScanCallback() {
@@ -341,7 +340,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         if (layoutLarge) {
             scanForDevice(false);
         }
-        if (globalHandler.melodySmartDeviceHandler.isConnected() && !dataPopulated) {
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -418,7 +417,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
         final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
         mLeDeviceAdapterTimer.cancel();
-        dataPopulated = false;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
