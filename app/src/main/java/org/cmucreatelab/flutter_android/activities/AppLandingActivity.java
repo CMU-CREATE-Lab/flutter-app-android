@@ -409,6 +409,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
+    // TODO @tasota this listener should live somewhere else (since the Activity changes after connecting)
     // FlutterConnectListener implementation
 
 
@@ -433,8 +434,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
-        Intent intent = new Intent(this, AppLandingActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, AppLandingActivity.class);
+//        startActivity(intent);
     }
 
 }

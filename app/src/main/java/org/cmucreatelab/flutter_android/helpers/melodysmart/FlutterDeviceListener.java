@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.helpers.melodysmart;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.bluecreation.melodysmart.BLEError;
 
 import org.cmucreatelab.android.melodysmart.listeners.DeviceListener;
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -66,6 +68,8 @@ public class FlutterDeviceListener extends DeviceListener {
             });
         } else {
             session.getFlutterConnectListener().onFlutterDisconnected();
+            Intent intent = new Intent(session.getCurrentActivity(), AppLandingActivity.class);
+            session.getCurrentActivity().startActivity(intent);
         }
     }
 
