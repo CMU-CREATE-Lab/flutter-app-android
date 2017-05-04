@@ -137,7 +137,7 @@ public class Session implements FlutterMessageListener {
             case FlutterProtocol.Commands.SET_LOG_NAME:
                 break;
             case FlutterProtocol.Commands.READ_LOG_NAME:
-                if (request.equals("N,")) {
+                if (response.equals("N,")) {
                     Log.w(Constants.LOG_TAG, "No datalog found on Flutter.");
                 } else if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_LOG_NAME="+response);
