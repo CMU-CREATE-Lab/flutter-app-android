@@ -1,9 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.datalogging;
 
-import android.util.Log;
-
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ public class DataSet implements Serializable {
     private TreeMap<String, DataPoint> data;
     private ArrayList<String> keys;
     private String dataName;
+    private String flutterName;
     private Sensor[] sensors;
 
 
@@ -34,13 +32,15 @@ public class DataSet implements Serializable {
         this.keys = null;
         this.dataName = null;
         this.sensors = null;
+        this.flutterName = null;
     }
 
 
-    public DataSet(TreeMap<String, DataPoint> data, ArrayList<String> keys, String dataName, Sensor[] sensors) {
+    public DataSet(TreeMap<String, DataPoint> data, ArrayList<String> keys, String dataName, String flutterName, Sensor[] sensors) {
         this.data = data;
         this.keys = keys;
         this.dataName = dataName;
+        this.flutterName = flutterName;
         this.sensors = sensors;
     }
 
@@ -224,6 +224,7 @@ public class DataSet implements Serializable {
     public TreeMap<String, DataPoint> getData() { return data; }
     public ArrayList<String> getKeys() { return keys; }
     public String getDataName() { return dataName; }
+    public String getFlutterName() { return flutterName; }
     public Sensor[] getSensors() { return this.sensors; }
 
 
@@ -231,6 +232,7 @@ public class DataSet implements Serializable {
     public void setData(TreeMap<String, DataPoint> data) { this.data = data; }
     public void setKeys(ArrayList<String> keys) { this.keys = keys; }
     public void setDataName(String name) { this.dataName = name; }
+    public void setFlutterName(String name) { flutterName = name; }
     public void setSensors(Sensor[] sensors) { this.sensors = sensors; }
 
 }

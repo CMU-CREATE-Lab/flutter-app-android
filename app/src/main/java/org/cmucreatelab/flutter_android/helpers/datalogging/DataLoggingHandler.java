@@ -304,7 +304,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
                 && dataSetListener != null) {
             Sensor[] sensors;
             sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
-            DataSet dataSet = new DataSet(data, keys, dataName, sensors);
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
+            DataSet dataSet = new DataSet(data, keys, dataName, flutterName, sensors);
             dataSetListener.onDataSetPopulated(dataSet);
         }
     }

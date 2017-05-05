@@ -38,6 +38,7 @@ public class FileHandler {
             StringBuilder sb = new StringBuilder();
             Iterator it = dataSet.getData().entrySet().iterator();
             Context context = globalHandler.appContext;
+            sb.append(dataSet.getFlutterName() + "\n");
             sb.append("Date,Time," + context.getString(dataSet.getSensors()[0].getTypeTextId()) + "," +
                     context.getString(dataSet.getSensors()[1].getTypeTextId()) + "," + context.getString(dataSet.getSensors()[2].getTypeTextId()) + "\n");
             while (it.hasNext()) {
@@ -77,9 +78,9 @@ public class FileHandler {
                     TreeMap<String, DataPoint> map = new TreeMap<>();
                     ArrayList<String> keys = new ArrayList<>();
                     String[] sensorNames = new String[3];
-
-                    for (int i = 0; i < list.size(); i++) {
-                        if (i ==0) {
+                    dataSet.setFlutterName(list.get(0)[0]);
+                    for (int i = 1; i < list.size(); i++) {
+                        if (i ==1) {
                             String[] array = list.get(i);
                             sensorNames[0] = array[2];
                             sensorNames[1] = array[3];
@@ -109,8 +110,10 @@ public class FileHandler {
                     dataSet.setData(map);
                     dataSet.setKeys(keys);
                     dataSet.setDataName(name);
+                    dataSet.setFlutterName(globalHandler.sessionHandler.getSession().getFlutter().getName());
                     dataSet.setSensors(sensors);
                     dataSets.add(dataSet);
+                    Log.d(Constants.LOG_TAG, "flutter name is " + dataSet.getFlutterName());
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
