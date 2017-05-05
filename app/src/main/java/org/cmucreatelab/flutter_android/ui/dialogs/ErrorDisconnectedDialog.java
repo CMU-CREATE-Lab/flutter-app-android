@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -73,6 +75,8 @@ public class ErrorDisconnectedDialog extends BaseResizableDialog {
     public void onClickConnectFlutter() {
         Log.d(Constants.LOG_TAG, "ErrorDisconnectedDialog.onClickConnectFlutter");
         GlobalHandler.getInstance(getActivity().getApplicationContext()).melodySmartDeviceHandler.disconnect(false);
+        Intent intent = new Intent(getActivity(), AppLandingActivity.class);
+        startActivity(intent);
     }
 
 }

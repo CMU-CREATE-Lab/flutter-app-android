@@ -29,24 +29,40 @@ public class SessionHandler {
     }
 
 
+    // TODO @tasota deprecated; Activity not needed as parameter to control ProgressDialog
     public void createProgressDialog(BaseNavigationActivity activity) {
-        if (progressDialog != null) {
-            dismissProgressDialog();
-        }
-        this.progressDialog = new ProgressDialog(activity);
-        progressDialog.setTitle("Loading");
-        updateProgressDialogMessage("Loading...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        createProgressDialog();
     }
 
 
-    public void updateProgressDialogMessage(String message) {
+    public void createProgressDialog() {
+        if (progressDialog != null) {
+            dismissProgressDialog();
+        }
+        session.getCurrentActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog = new ProgressDialog(session.getCurrentActivity());
+                progressDialog.setTitle("Loading");
+                updateProgressDialogMessage("Loading...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+            }
+        });
+    }
+
+
+    public void updateProgressDialogMessage(final String message) {
         if (progressDialog == null) {
             Log.e(Constants.LOG_TAG,"called updateProgressDialogMessage but progressDialog is null.");
             return;
         }
-        progressDialog.setMessage(message);
+        session.getCurrentActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.setMessage(message);
+            }
+        });
     }
 
 
@@ -56,7 +72,6 @@ public class SessionHandler {
             return;
         }
         progressDialog.dismiss();
-        progressDialog = null;
     }
 
 

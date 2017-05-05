@@ -68,6 +68,36 @@ public class Session implements FlutterMessageListener {
     }
 
 
+    // Integer/Hex Parsing helpers (avoid exceptions from malformed strings)
+
+
+    private Integer parseHex(String value) {
+        Integer result;
+        try {
+            result = Integer.valueOf(value, 16);
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG,"could not parse '"+value+"' as hex; returning 0.");
+            result = 0;
+        }
+        return result;
+    }
+
+
+    private Integer parseInt(String value) {
+        Integer result;
+        try {
+            result = Integer.valueOf(value);
+        } catch (Exception e) {
+            Log.e(Constants.LOG_TAG,"could not parse '"+value+"' as an integer; returning 0.");
+            result = 0;
+        }
+        return result;
+    }
+
+
+    // FlutterMessageListener methods
+
+
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.v(Constants.LOG_TAG, "onFlutterMessageReceived - " + " " + request + " "  + response);
@@ -84,9 +114,9 @@ public class Session implements FlutterMessageListener {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_SENSOR_VALUES="+response);
                 } else {
                     short value1,value2,value3;
-                    value1 = Integer.valueOf(args[1]).shortValue();
-                    value2 = Integer.valueOf(args[2]).shortValue();
-                    value3 = Integer.valueOf(args[3]).shortValue();
+                    value1 = parseInt(args[1]).shortValue();
+                    value2 = parseInt(args[2]).shortValue();
+                    value3 = parseInt(args[3]).shortValue();
                     if (this.isSimulatingData()) {
                         Log.w(Constants.LOG_TAG, "setting sensor values but flutter is flagged as simulating data; ignoring response.");
                     } else {
@@ -107,7 +137,9 @@ public class Session implements FlutterMessageListener {
             case FlutterProtocol.Commands.SET_LOG_NAME:
                 break;
             case FlutterProtocol.Commands.READ_LOG_NAME:
-                if (args.length != 2) {
+                if (response.equals("N,")) {
+                    Log.w(Constants.LOG_TAG, "No datalog found on Flutter.");
+                } else if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_LOG_NAME="+response);
                 } else {
 //                    String logName = args[1];
@@ -158,11 +190,11 @@ public class Session implements FlutterMessageListener {
                         Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
-                        omin = Integer.valueOf(args[2], 16);
-                        omax = Integer.valueOf(args[3], 16);
-                        portNumber = Integer.valueOf(args[4]);
-                        imin = Integer.valueOf(args[5], 16);
-                        imax = Integer.valueOf(args[6], 16);
+                        omin = parseHex(args[2]);
+                        omax = parseHex(args[3]);
+                        portNumber = parseHex(args[4]);
+                        imin = parseHex(args[5]);
+                        imax = parseHex(args[6]);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
                         SettingsProportional settings = SettingsProportional.newInstance(output.getSettings());
@@ -185,12 +217,12 @@ public class Session implements FlutterMessageListener {
                         Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
                     } else {
                         int omin, omax, imin, imax, portNumber, speed;
-                        omin = Integer.valueOf(args[2], 16);
-                        omax = Integer.valueOf(args[3], 16);
-                        portNumber = Integer.valueOf(args[4]);
-                        imin = Integer.valueOf(args[5], 16);
-                        imax = Integer.valueOf(args[6], 16);
-                        speed = Integer.valueOf(args[7], 16);
+                        omin = parseHex(args[2]);
+                        omax = parseHex(args[3]);
+                        portNumber = parseInt(args[4]);
+                        imin = parseHex(args[5]);
+                        imax = parseHex(args[6]);
+                        speed = parseHex(args[7]);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
                         SettingsAmplitude settings = SettingsAmplitude.newInstance(output.getSettings());
@@ -214,11 +246,11 @@ public class Session implements FlutterMessageListener {
                         Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
-                        omin = Integer.valueOf(args[2], 16);
-                        omax = Integer.valueOf(args[3], 16);
-                        portNumber = Integer.valueOf(args[4]);
-                        imin = Integer.valueOf(args[5], 16);
-                        imax = Integer.valueOf(args[6], 16);
+                        omin = parseHex(args[2]);
+                        omax = parseHex(args[3]);
+                        portNumber = parseInt(args[4]);
+                        imin = parseHex(args[5]);
+                        imax = parseHex(args[6]);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
                         SettingsFrequency settings = SettingsFrequency.newInstance(output.getSettings());
@@ -241,11 +273,11 @@ public class Session implements FlutterMessageListener {
                         Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
-                        omin = Integer.valueOf(args[2], 16);
-                        omax = Integer.valueOf(args[3], 16);
-                        portNumber = Integer.valueOf(args[4]);
-                        imin = Integer.valueOf(args[5], 16);
-                        imax = Integer.valueOf(args[6], 16);
+                        omin = parseHex(args[2]);
+                        omax = parseHex(args[3]);
+                        portNumber = parseInt(args[4]);
+                        imin = parseHex(args[5]);
+                        imax = parseHex(args[6]);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
                         SettingsChange settings = SettingsChange.newInstance(output.getSettings());
@@ -268,13 +300,13 @@ public class Session implements FlutterMessageListener {
                         Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
                     } else {
                         int omin, omax, imin, imax, portNumber, center, speed;
-                        omin = Integer.valueOf(args[2], 16);
-                        omax = Integer.valueOf(args[3], 16);
-                        portNumber = Integer.valueOf(args[4]);
-                        imin = Integer.valueOf(args[5], 16);
-                        imax = Integer.valueOf(args[6], 16);
-                        center = Integer.valueOf(args[7], 16);
-                        speed = Integer.valueOf(args[8], 16);
+                        omin = parseHex(args[2]);
+                        omax = parseHex(args[3]);
+                        portNumber = parseInt(args[4]);
+                        imin = parseHex(args[5]);
+                        imax = parseHex(args[6]);
+                        center = parseHex(args[7]);
+                        speed = parseHex(args[8]);
 
                         Sensor sensor = flutter.getSensors()[portNumber-1];
                         SettingsCumulative settings = SettingsCumulative.newInstance(output.getSettings());
@@ -296,7 +328,7 @@ public class Session implements FlutterMessageListener {
                 } else if (args.length == 2) {
                     // TODO @tasota use a real structure for (constant) SettingsProportional
                     int position;
-                    position = Integer.valueOf(args[1], 16);
+                    position = parseHex(args[1]);
 
                     SettingsConstant settingsConstant = SettingsConstant.newInstance(output.getSettings());
                     settingsConstant.setValue(position);
@@ -313,8 +345,8 @@ public class Session implements FlutterMessageListener {
                 if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_INPUT_TYPE="+response);
                 } else {
-                    int portNumber = Integer.valueOf(request.split(",")[1]);
-                    short inputType = Integer.valueOf(args[1]).shortValue();
+                    int portNumber = parseInt(request.split(",")[1]);
+                    short inputType = parseInt(args[1]).shortValue();
 
                     Sensor sensor = FlutterProtocol.sensorFromInputType(portNumber,inputType);
                     Log.v(Constants.LOG_TAG,"About to set portNumber="+portNumber+" to inputType="+inputType+"="+currentActivity.getString(sensor.getSensorTypeId()));

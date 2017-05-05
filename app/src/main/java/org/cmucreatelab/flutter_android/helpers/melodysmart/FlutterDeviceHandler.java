@@ -73,7 +73,7 @@ public class FlutterDeviceHandler extends DeviceHandler<MessageQueue<MelodySmart
 
     @Override
     public DataListener initializeDataListener() {
-        return new FlutterDataListener(globalHandler.sessionHandler.getSession(), this);
+        return new FlutterDataListener(globalHandler, this);
     }
 
 }
