@@ -190,16 +190,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
 
                 TextView dataLogTitle = (TextView) findViewById(R.id.text_data_log_title);
-                TextView sensor1Type = (TextView) findViewById(R.id.text_sensor_1_type);
-                TextView sensor2Type = (TextView) findViewById(R.id.text_sensor_2_type);
-                TextView sensor3Type = (TextView) findViewById(R.id.text_sensor_3_type);
+                ImageView sensor1Type = (ImageView) findViewById(R.id.image_sensor_1_type);
+                ImageView sensor2Type = (ImageView) findViewById(R.id.image_sensor_2_type);
+                ImageView sensor3Type = (ImageView) findViewById(R.id.image_sensor_3_type);
                 dataLogTitle.setText(dataSet.getDataName());
-                sensor1Type.setText(getString(dataSet.getSensors()[0].getTypeTextId()));
-                sensor2Type.setText(getString(dataSet.getSensors()[1].getTypeTextId()));
-                sensor3Type.setText(getString(dataSet.getSensors()[2].getTypeTextId()));
-                sensor1Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[0].getOrangeImageIdSm()), null, null);
-                sensor2Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[1].getOrangeImageIdSm()), null, null);
-                sensor3Type.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, dataSet.getSensors()[2].getOrangeImageIdSm()), null, null);
+                sensor1Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[0].getOrangeImageIdMd()));
+                sensor2Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[1].getOrangeImageIdMd()));
+                sensor3Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[2].getOrangeImageIdMd()));
 
                 dataInstanceListAdapter.clearDataPoints();
                 Iterator it = dataSet.getData().entrySet().iterator();
