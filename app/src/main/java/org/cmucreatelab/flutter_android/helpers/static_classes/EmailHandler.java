@@ -59,13 +59,13 @@ public class EmailHandler {
                 for (int i = 0; i < line.length; i++) {
                     tmp = tmp.concat(line[i] + "\t");
                 }
-                tmp = tmp.substring(0, tmp.length() - 2);
+                tmp = tmp.substring(0, tmp.length() - 1);
                 result = result.concat(tmp);
                 result = result.concat("\n");
             }
         }
         if (list.size() > 0) {
-            result = result.substring(0, result.length() - 2);
+            result = result.substring(0, result.length() - 1);
         }
 
         return result;

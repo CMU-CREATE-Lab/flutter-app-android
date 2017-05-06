@@ -52,9 +52,15 @@ public class LeDeviceListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public long getDeviceAddedTime(int position) {
+    public long getLastBroadcastTime(int position) {
         HashMap hm = mFlutters.get(position);
-        return (Long)hm.values().iterator().next();
+        return (Long) hm.values().iterator().next();
+    }
+
+    public void updateLastBroadcastTime(int position, long time) {
+        HashMap hm = mFlutters.get(position);
+        Flutter flutter = (Flutter) hm.keySet().iterator().next();
+        hm.put(flutter, time);
     }
 
     public void clearDevices() {
@@ -93,7 +99,7 @@ public class LeDeviceListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Flutter flutter = (Flutter)getItem(position);
+        Flutter flutter = (Flutter) getItem(position);
 
         final String deviceName = flutter.getName();
         if (deviceName != null && deviceName.length() > 0) {

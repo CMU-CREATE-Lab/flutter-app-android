@@ -51,6 +51,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private LeDeviceListAdapter mLeDeviceAdapter;
     private Timer mLeDeviceAdapterTimer;
     private Timer noFlutterFoundTimer;
+    private Timer warningPromptTimer;
     private boolean layoutLarge = true;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
@@ -64,6 +65,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     for (int i = 0; i < mLeDeviceAdapter.getCount(); i++) {
                         Flutter result = (Flutter) mLeDeviceAdapter.getItem(i);
                         if (result.getBluetoothDevice().equals(device)) {
+                            mLeDeviceAdapter.updateLastBroadcastTime(i, System.currentTimeMillis());
                             return;
                         }
                     }
@@ -382,7 +384,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     public void run() {
                         Long systemTime = System.currentTimeMillis();
                         for (int i = 0; i < mLeDeviceAdapter.getCount(); i++) {
-                            if (mLeDeviceAdapter.getDeviceAddedTime(i) < systemTime - Constants.FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS) {
+                            if (mLeDeviceAdapter.getLastBroadcastTime(i) < systemTime - Constants.FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS) {
                                 mLeDeviceAdapter.removeDevice(i);
                                 final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
                                 TextView txtView = (TextView) list.getChildAt(i);
@@ -392,7 +394,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                                 if (mLeDeviceAdapter.getCount() == 0) {
                                     returnToMainLandingScreenTimer();
                                 }
-                            } else if (mLeDeviceAdapter.getDeviceAddedTime(i) < systemTime - Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS) {
+                            } else if (mLeDeviceAdapter.getLastBroadcastTime(i) < systemTime - Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS) {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
                             }
                         }
@@ -400,6 +402,20 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 });
             }
         }, 0, 1000);
+
+        warningPromptTimer = new Timer();
+        warningPromptTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }, 10000);
+
     }
 
 

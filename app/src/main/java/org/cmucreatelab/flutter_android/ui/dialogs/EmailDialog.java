@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -28,6 +29,7 @@ import butterknife.OnClick;
  * EmailDialog
  *
  * A dialog that prompts the user to send an email of a data log.
+ *
  */
 public class EmailDialog extends BaseResizableDialog {
 
@@ -72,8 +74,7 @@ public class EmailDialog extends BaseResizableDialog {
                 "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\" +
                         "x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2" +
                         "[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
-                , email.getText().toString()))
-        {
+                , email.getText().toString())) {
             if (Constants.SEND_EMAIL_AS == Constants.MailerType.INTENT) {
                 EmailHandler.sendEmailIntent(getActivity(), email.getText().toString(), message.getText().toString(), FileHandler.getFileFromDataSet(globalHandler, currentDataLog));
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST) {
