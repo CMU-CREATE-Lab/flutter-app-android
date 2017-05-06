@@ -321,7 +321,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        // update references
+        // updatePoints references
         sensors[portNumber-1] = sensor;
 
         selectedView.setImageResource(sensor.getBlueImageId());

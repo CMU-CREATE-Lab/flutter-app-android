@@ -29,7 +29,7 @@ public class ResumeState implements UpdateDataLogsState {
      * Updates the main UI on the DataLogsActivity
      */
     @Override
-    public void update() {
+    public void updatePoints() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -39,6 +39,11 @@ public class ResumeState implements UpdateDataLogsState {
                 dataLogsActivity.checkIfLogging();
             }
         });
+    }
+
+    @Override
+    public void updateLogs() {
+
     }
 
 }

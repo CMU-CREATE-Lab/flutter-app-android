@@ -30,14 +30,16 @@ import static android.view.View.GONE;
 public class OpenLogDialog extends BaseResizableDialog {
 
     private static final String OPEN_LOG_LISTENER_KEY = "open_log_listener_key";
-    private static final String DATA_SET_ON_FLUTTER_KEY = "data_set_on_fltter_key";
+    private static final String NUMBER_OF_POINTS_KEY = "number_of_points_key";
+    private static final String DATA_LOG_NAME_KEY = "data_log_name_key";
     private static final String DATA_SETS_ON_DEVICE_KEY = "data_sets_on_device_key";
 
     private GlobalHandler globalHandler;
     private OpenLogDialog instance;
 
     private OpenLogListener openLogListener;
-    private DataSet dataSetOnFlutter;
+    private String flutterDataSetName;
+    private int numberOfPoints;
     private DataSet[] dataSetsOnDevice;
 
     private ListView listDeviceDataSets;
@@ -55,12 +57,13 @@ public class OpenLogDialog extends BaseResizableDialog {
     };
 
 
-    public static OpenLogDialog newInstance(Serializable openLogListener, Serializable dataSetOnFlutter, Serializable[] dataSetsOnDevice) {
+    public static OpenLogDialog newInstance(Serializable openLogListener, int numberOfPoints, String dataLogName, Serializable[] dataSetsOnDevice) {
         OpenLogDialog openLogDialog = new OpenLogDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(OPEN_LOG_LISTENER_KEY, openLogListener);
-        args.putSerializable(DATA_SET_ON_FLUTTER_KEY, dataSetOnFlutter);
+        args.putInt(NUMBER_OF_POINTS_KEY, numberOfPoints);
+        args.putString(DATA_LOG_NAME_KEY, dataLogName);
         args.putSerializable(DATA_SETS_ON_DEVICE_KEY, dataSetsOnDevice);
         openLogDialog.setArguments(args);
 
@@ -79,7 +82,8 @@ public class OpenLogDialog extends BaseResizableDialog {
         ButterKnife.bind(this, view);
 
         openLogListener = (OpenLogListener) getArguments().getSerializable(OPEN_LOG_LISTENER_KEY);
-        dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_ON_FLUTTER_KEY);
+        flutterDataSetName = getArguments().getString(DATA_LOG_NAME_KEY);
+        numberOfPoints = getArguments().getInt(NUMBER_OF_POINTS_KEY);
         dataSetsOnDevice = (DataSet[]) getArguments().getSerializable(DATA_SETS_ON_DEVICE_KEY);
         listDeviceDataSets = (ListView) view.findViewById(R.id.list_data_logs);
         noLogFlutterTextView = (TextView) view.findViewById(R.id.text_no_log_flutter);
@@ -103,14 +107,14 @@ public class OpenLogDialog extends BaseResizableDialog {
         logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
 
         // populate the data log on the flutter
-        if (dataSetOnFlutter != null) {
+        if (numberOfPoints > 0) {
             TextView textLogName = (TextView) view.findViewById(R.id.text_current_log_name);
             TextView textLogPoints = (TextView) view.findViewById(R.id.text_num_points);
             noLogFlutterTextView.setVisibility(View.GONE);
 
             view.findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
-            textLogName.setText(dataSetOnFlutter.getDataName());
-            textLogPoints.setText(String.valueOf(dataSetOnFlutter.getData().size()));
+            textLogName.setText(flutterDataSetName);
+            textLogPoints.setText(String.valueOf(numberOfPoints));
         }
 
         return builder.create();
@@ -119,7 +123,7 @@ public class OpenLogDialog extends BaseResizableDialog {
 
     @OnClick(R.id.relative_flutter_log)
     public void onClickDataLogOnFlutter() {
-        openLogListener.onOpenedLog(dataSetOnFlutter);
+        openLogListener.onOpenedLog(null);
         this.dismiss();
     }
 

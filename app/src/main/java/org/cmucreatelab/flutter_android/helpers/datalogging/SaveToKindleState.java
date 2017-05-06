@@ -6,6 +6,7 @@ import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 /**
  * Created by Steve on 3/13/2017.
@@ -29,18 +30,25 @@ public class SaveToKindleState implements UpdateDataLogsState {
      * Updates the UI in a unique manner
      */
     @Override
-    public void update() {
+    public void updatePoints() {
+        // empty
+    }
+
+    @Override
+    public void updateLogs() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Log.d(Constants.LOG_TAG, "DataLogsActivity.updateFromSaveToKindle");
                 globalHandler.sessionHandler.dismissProgressDialog();
-                for (DataSet dataSet : dataLogsActivity.getDataLogsUpdateHelper().getDataSetsOnDevice()) {
-                    if (dataSet.getDataName().equals(dataSetName)) {
-                        dataLogsActivity.loadDataSet(dataSet);
-                        dataLogsActivity.checkIfLogging();
-                        return;
+                if (dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter().getDataName().equals(dataSetName)) {
+                    dataLogsActivity.loadDataSet(dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
+                    dataLogsActivity.checkIfLogging();
+                    if (!globalHandler.dataLoggingHandler.isLogging()) {
+                        FileHandler.saveDataSetToFile(globalHandler, dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
+                        globalHandler.dataLoggingHandler.deleteLog();
                     }
+                    return;
                 }
             }
         });

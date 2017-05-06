@@ -9,7 +9,12 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 
 public interface UpdateDataLogsState {
     /**
-     * This is the update event that will fire so the DataLogsActivity can update accordingly
+     * This is the updatePoints event that will fire so the DataLogsActivity can update the points accordingly
      */
-    void update();
+    void updatePoints();
+
+    /**
+     * This is the updateLogs event that will fire so the DataLogsActivity can update the logs accordingly
+     */
+    void updateLogs();
 }

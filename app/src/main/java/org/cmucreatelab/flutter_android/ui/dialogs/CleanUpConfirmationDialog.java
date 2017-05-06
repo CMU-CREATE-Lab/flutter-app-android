@@ -95,7 +95,7 @@ public class CleanUpConfirmationDialog extends BaseResizableDialog  {
         super.onDismiss(dialog);
         globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
         globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
-        dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdateLogs(new CleanUpAfterState(dataLogsActivity, deletedDataSet));
+        dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdatePoints(new CleanUpAfterState(dataLogsActivity, deletedDataSet));
     }
 
     @OnClick(R.id.button_cancel)

@@ -2,9 +2,7 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.cmucreatelab.android.melodysmart.models.Timer;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -14,7 +12,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 /**
  * Created by Steve on 3/13/2017.
  *
- * This class helps DataLogsActivity to update the list of data logs and then react appropriately to whoever did the updating
+ * This class helps DataLogsActivity to updatePoints the list of data logs and then react appropriately to whoever did the updating
  */
 public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
 
@@ -30,20 +28,31 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
     }
 
 
+    public void registerStateAndUpdatePoints(UpdateDataLogsState updateDataLogsState) {
+        this.updateDataLogsState = updateDataLogsState;
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            this.globalHandler.dataLoggingHandler.populatePointsAvailable(this);
+        }
+        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
+    }
+
+
     public void registerStateAndUpdateLogs(UpdateDataLogsState updateDataLogsState) {
         this.updateDataLogsState = updateDataLogsState;
-        if (globalHandler.melodySmartDeviceHandler.isConnected())
-            this.globalHandler.dataLoggingHandler.populatePointsAvailable(this);
         dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
-        if (!globalHandler.melodySmartDeviceHandler.isConnected())
-            this.updateDataLogsState.update();
+        if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+            this.updateDataLogsState.updatePoints();
+        }
+        else {
+            this.globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(globalHandler.appContext, this);
+        }
 
     }
 
 
     @Override
     public void onDataSetPointsPopulated(boolean isSuccess) {
-        this.globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(globalHandler.appContext, this);
+        this.updateDataLogsState.updatePoints();
     }
 
 
@@ -51,7 +60,7 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
     public void onDataSetPopulated() {
         Log.d(Constants.LOG_TAG, "DataLogsUpdateHelper.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
-        this.updateDataLogsState.update();
+        this.updateDataLogsState.updateLogs();
     }
 
 

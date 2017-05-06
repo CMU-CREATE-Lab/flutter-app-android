@@ -617,7 +617,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        // update references
+        // updatePoints references
         sensors[portNumber-1] = sensor;
 
         // send message to flutter with sensor type

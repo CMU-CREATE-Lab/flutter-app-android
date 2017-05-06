@@ -31,7 +31,7 @@ public class CleanUpAfterState implements UpdateDataLogsState {
      *
      */
     @Override
-    public void update() {
+    public void updatePoints() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -47,9 +47,14 @@ public class CleanUpAfterState implements UpdateDataLogsState {
                         dataLogsActivity.setWorkingDataPoint(null);
                     }
                 }
-                dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdateLogs(new ResumeState(dataLogsActivity));
+                dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdatePoints(new ResumeState(dataLogsActivity));
             }
         });
+    }
+
+    @Override
+    public void updateLogs() {
+
     }
 
 }

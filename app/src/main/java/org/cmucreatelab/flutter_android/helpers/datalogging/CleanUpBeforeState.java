@@ -24,11 +24,18 @@ public class CleanUpBeforeState implements UpdateDataLogsState {
     }
 
 
+
+    @Override
+    public void updatePoints() {
+        // empty
+    }
+
+
     /**
      * Updates the list of data logs before the clean up dialog is shown so the list is most up to date.
      */
     @Override
-    public void update() {
+    public void updateLogs() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
