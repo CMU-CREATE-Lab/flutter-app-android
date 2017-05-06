@@ -284,6 +284,12 @@ public class DataLoggingHandler implements FlutterMessageListener {
      * Deletes the data log on the Flutter.
      */
     public void deleteLog() {
+        this.dataName = "";
+        this.data = new TreeMap<>();
+        this.isLogging = false;
+        this.keys = new ArrayList<>();
+        this.numberOfPoints = 0;
+        this.remainingPoints = 0;
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructDeleteLog());
     }
 
