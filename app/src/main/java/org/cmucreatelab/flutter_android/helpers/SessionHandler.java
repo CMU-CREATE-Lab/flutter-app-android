@@ -22,10 +22,12 @@ public class SessionHandler {
     private GlobalHandler globalHandler;
     private Session session;
     private ProgressDialog progressDialog;
+    private boolean sessionStarted;
 
 
     public SessionHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
+        this.sessionStarted = false;
     }
 
 
@@ -38,6 +40,10 @@ public class SessionHandler {
     public void createProgressDialog() {
         if (progressDialog != null) {
             dismissProgressDialog();
+        }
+        if (!sessionStarted) {
+            Log.e(Constants.LOG_TAG,"createProgressDialog with sessionStarted=false");
+            return;
         }
         session.getCurrentActivity().runOnUiThread(new Runnable() {
             @Override
@@ -55,6 +61,10 @@ public class SessionHandler {
     public void updateProgressDialogMessage(final String message) {
         if (progressDialog == null) {
             Log.e(Constants.LOG_TAG,"called updateProgressDialogMessage but progressDialog is null.");
+            return;
+        }
+        if (!sessionStarted) {
+            Log.e(Constants.LOG_TAG,"updateProgressDialogMessage with sessionStarted=false");
             return;
         }
         session.getCurrentActivity().runOnUiThread(new Runnable() {
@@ -78,8 +88,14 @@ public class SessionHandler {
     public void startSession(AppLandingActivity activity, Flutter flutter) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutter.getBluetoothDevice().getName());
         this.session = new Session(activity, flutter,activity,null);
+        this.sessionStarted = true;
         createProgressDialog(activity);
         globalHandler.melodySmartDeviceHandler.connect(this.getSession().getFlutter().getBluetoothDevice());
+    }
+
+
+    public void stopSession() {
+        this.sessionStarted = false;
     }
 
 

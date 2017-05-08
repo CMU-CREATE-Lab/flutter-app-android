@@ -603,6 +603,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
         } else {
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
+            globalHandler.sessionHandler.createProgressDialog(instance);
+            globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
 
             // Flutter status icon (upper right)
             TextView flutterStatusButtonName = (TextView) findViewById(R.id.text_connected_flutter_name);
@@ -612,9 +614,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
         }
 
-        globalHandler.sessionHandler.createProgressDialog(instance);
-        globalHandler.sessionHandler.updateProgressDialogMessage(getString(R.string.loading_data));
         dataLogsUpdateHelper.registerStateAndUpdatePoints(new ResumeState(this));
+        updateDynamicViews();
     }
 
     @Override

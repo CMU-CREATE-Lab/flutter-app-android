@@ -450,6 +450,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
+        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.stopSession();
 //        Intent intent = new Intent(this, AppLandingActivity.class);
 //        startActivity(intent);
     }
