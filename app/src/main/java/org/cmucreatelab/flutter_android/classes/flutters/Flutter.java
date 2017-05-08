@@ -94,6 +94,12 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         Sensor oldSensor = sensors[portNumber-1];
 
         // TODO @tasota update/invert/scale outputs as needed
+        if (oldSensor.hasCustomSensorRange()) {
+            Log.w(Constants.LOG_TAG, "updateSensorAtPort: old sensor has custom sensor range.");
+        }
+        if (sensor.hasCustomSensorRange()) {
+            Log.w(Constants.LOG_TAG, "updateSensorAtPort: new sensor has custom sensor range.");
+        }
 
         // updatePoints references
         sensors[portNumber-1] = sensor;

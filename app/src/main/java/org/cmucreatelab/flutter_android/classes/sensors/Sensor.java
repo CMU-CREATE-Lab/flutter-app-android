@@ -41,6 +41,15 @@ public abstract class Sensor implements Serializable {
 
 
     /**
+     * Indicates if the Sensor has a custom or inverted voltage range. Generally, if any of the
+     * methods {@link #isInverted()} {@link #voltageToPercent(int)} {@link #percentToVoltage(int)}
+     * are overridden, this method likely should be overridden as well and return true.
+     * @return True if the range of values for the sensor are modified; false otherwise.
+     */
+    public boolean hasCustomSensorRange() { return false; }
+
+
+    /**
      * Indicates whether the voltage from the Sensor is opposite of what is expected. For example,
      * distance sensor voltage is 0 when "far" but conceptually distant objects should have a
      * higher value.

@@ -107,6 +107,12 @@ public class SoundSensor extends Sensor {
 
 
     @Override
+    public boolean hasCustomSensorRange() {
+        return true;
+    }
+
+
+    @Override
     public boolean isInverted() {
         return INVERT_SENSOR;
     }
