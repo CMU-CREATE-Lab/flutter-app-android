@@ -41,7 +41,7 @@ public class BlueSensorTypeDialog extends SensorTypeDialog {
         imageHumidity.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_humidity_l_g_68));
         imageTemperature.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_temperature_l_g_68));
         imageBarometricPressure.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_barometric_l_g_68));
-        imageAnalogUnkown.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_analog_l_g_68));
+        imageAnalogUnknown.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_analog_l_g_68));
         imageNoSensor.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_blue_no_sensor));
 
         return dialog;

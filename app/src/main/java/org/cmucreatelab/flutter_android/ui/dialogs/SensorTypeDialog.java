@@ -28,8 +28,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
-import java.io.Serializable;
-
 /**
  * Created by Steve on 8/22/2016.
  *
@@ -51,7 +49,7 @@ public abstract class SensorTypeDialog extends DialogFragment implements View.On
     protected ImageView imageHumidity;
     protected ImageView imageTemperature;
     protected ImageView imageBarometricPressure;
-    protected ImageView imageAnalogUnkown;
+    protected ImageView imageAnalogUnknown;
     protected ImageView imageNoSensor;
 
 
@@ -96,7 +94,7 @@ public abstract class SensorTypeDialog extends DialogFragment implements View.On
         imageHumidity = (ImageView) view.findViewById(R.id.image_humidity);
         imageTemperature = (ImageView) view.findViewById(R.id.image_temperature);
         imageBarometricPressure = (ImageView) view.findViewById(R.id.image_barometric_pressure);
-        imageAnalogUnkown = (ImageView) view.findViewById(R.id.image_analog_unknown);
+        imageAnalogUnknown = (ImageView) view.findViewById(R.id.image_analog_unknown);
         imageNoSensor = (ImageView) view.findViewById(R.id.image_no_sensor);
 
         imageLight.setOnClickListener(this);
@@ -107,7 +105,7 @@ public abstract class SensorTypeDialog extends DialogFragment implements View.On
         imageHumidity.setOnClickListener(this);
         imageTemperature.setOnClickListener(this);
         imageBarometricPressure.setOnClickListener(this);
-        imageAnalogUnkown.setOnClickListener(this);
+        imageAnalogUnknown.setOnClickListener(this);
         imageNoSensor.setOnClickListener(this);
 
         Dialog dialog = builder.create();

@@ -41,7 +41,7 @@ public class GreenSensorTypeDialog extends SensorTypeDialog {
         imageHumidity.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_humidity_l_g_68));
         imageTemperature.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_temperature_l_g_68));
         imageBarometricPressure.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_barometric_l_g_68));
-        imageAnalogUnkown.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_analog_l_g_68));
+        imageAnalogUnknown.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_analog_l_g_68));
         imageNoSensor.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.sensor_green_no_sensor_l_g_68));
 
         return dialog;
