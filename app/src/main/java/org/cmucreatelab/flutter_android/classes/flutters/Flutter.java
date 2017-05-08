@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
 
+import org.cmucreatelab.android.melodysmart.DeviceHandler;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
@@ -15,6 +16,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +87,20 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         sensors[0].setSensorReading(value1);
         sensors[1].setSensorReading(value2);
         sensors[2].setSensorReading(value3);
+    }
+
+
+    public void updateSensorAtPort(DeviceHandler deviceHandler, int portNumber, Sensor sensor) {
+        Sensor oldSensor = sensors[portNumber-1];
+
+        // TODO @tasota update/invert/scale outputs as needed
+
+        // updatePoints references
+        sensors[portNumber-1] = sensor;
+
+        // send message to flutter with sensor type
+        short inputType = sensor.getSensorType();
+        deviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
     }
 
 

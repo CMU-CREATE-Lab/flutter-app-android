@@ -615,14 +615,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onSensorTypeChosen(Sensor sensor) {
         int portNumber = sensor.getPortNumber();
         Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
-        Sensor[] sensors = session.getFlutter().getSensors();
 
-        // updatePoints references
-        sensors[portNumber-1] = sensor;
-
-        // send message to flutter with sensor type
-        short inputType = sensor.getSensorType();
-        GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
+        // update sensor
+        GlobalHandler.getInstance(this).sessionHandler.getSession().getFlutter().updateSensorAtPort(GlobalHandler.getInstance(this).melodySmartDeviceHandler, portNumber, sensor);
 
         updateSensorViews();
         updateLinkedViews();

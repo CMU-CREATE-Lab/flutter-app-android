@@ -19,7 +19,6 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
-import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
@@ -319,25 +318,20 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     public void onSensorTypeChosen(Sensor sensor) {
         int portNumber = sensor.getPortNumber();
         Log.d(Constants.LOG_TAG, "onSensorTypeChosen; PORT #"+portNumber);
-        Sensor[] sensors = session.getFlutter().getSensors();
 
-        // updatePoints references
-        sensors[portNumber-1] = sensor;
+        // update sensor
+        GlobalHandler.getInstance(this).sessionHandler.getSession().getFlutter().updateSensorAtPort(GlobalHandler.getInstance(this).melodySmartDeviceHandler, portNumber, sensor);
 
         selectedView.setImageResource(sensor.getBlueImageId());
         currentSensorType.setText(getString(sensor.getSensorTypeId()));
 
-        if (sensors[portNumber-1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+        if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             currentHigh.setText(getString(sensor.getHighTextId()));
             currentLow.setText(getString(sensor.getLowTextId()));
         } else {
             currentHigh.setText("");
             currentLow.setText("");
         }
-
-        // send message to flutter with sensor type
-        short inputType = sensor.getSensorType();
-        GlobalHandler.getInstance(this).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
 
         updateDynamicViews();
     }
