@@ -53,6 +53,14 @@ public abstract class Settings {
     }
 
 
+    public void updateWithNewSensorType(Sensor oldSensor, Sensor newSensor) {
+        // TODO @tasota calculate the new input min-max (to be displayed)
+        if (oldSensor.isInverted() != newSensor.isInverted()) {
+            invertOutputs();
+        }
+    }
+
+
     /**
      * When opening a dialog on RobotsActivity, we want to create a new instance of its respective
      * SettingsAmplitude. That way we can display changes the user makes and, if the settings are not saved,

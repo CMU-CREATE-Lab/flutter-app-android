@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.cmucreatelab.android.melodysmart.DeviceHandler;
+import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
@@ -93,20 +94,44 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
     public void updateSensorAtPort(DeviceHandler deviceHandler, int portNumber, Sensor sensor) {
         Sensor oldSensor = sensors[portNumber-1];
 
-        // TODO @tasota update/invert/scale outputs as needed
-        if (oldSensor.hasCustomSensorRange()) {
-            Log.w(Constants.LOG_TAG, "updateSensorAtPort: old sensor has custom sensor range.");
-        }
-        if (sensor.hasCustomSensorRange()) {
-            Log.w(Constants.LOG_TAG, "updateSensorAtPort: new sensor has custom sensor range.");
-        }
-
-        // updatePoints references
+        // update the sensor
         sensors[portNumber-1] = sensor;
 
         // send message to flutter with sensor type
         short inputType = sensor.getSensorType();
         deviceHandler.addMessage(MessageConstructor.constructSetInputType(sensor, inputType));
+
+        // update all outputs that use sensor's portNumber
+        if (oldSensor.hasCustomSensorRange() || sensor.hasCustomSensorRange()) {
+            for (Servo servo : servos) {
+                if (servo.isLinked() && servo.getSettings().getSensor().getPortNumber() == portNumber) {
+                    // update
+                    servo.getSettings().updateWithNewSensorType(oldSensor,sensor);
+                }
+            }
+            for (TriColorLed led: triColorLeds) {
+                if (led.getRedLed().isLinked() && led.getRedLed().getSettings().getSensor().getPortNumber() == portNumber) {
+                    // update
+                    led.getRedLed().getSettings().updateWithNewSensorType(oldSensor,sensor);
+                }
+                if (led.getGreenLed().isLinked() && led.getGreenLed().getSettings().getSensor().getPortNumber() == portNumber) {
+                    // update
+                    led.getGreenLed().getSettings().updateWithNewSensorType(oldSensor,sensor);
+                }
+                if (led.getBlueLed().isLinked() && led.getBlueLed().getSettings().getSensor().getPortNumber() == portNumber) {
+                    // update
+                    led.getBlueLed().getSettings().updateWithNewSensorType(oldSensor,sensor);
+                }
+            }
+            if (speaker.getVolume().isLinked() && speaker.getVolume().getSettings().getSensor().getPortNumber() == portNumber) {
+                // update
+                speaker.getVolume().getSettings().updateWithNewSensorType(oldSensor,sensor);
+            }
+            if (speaker.getPitch().isLinked() && speaker.getPitch().getSettings().getSensor().getPortNumber() == portNumber) {
+                // update
+                speaker.getPitch().getSettings().updateWithNewSensorType(oldSensor,sensor);
+            }
+        }
     }
 
 

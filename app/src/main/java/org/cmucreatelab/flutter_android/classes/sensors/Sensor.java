@@ -46,7 +46,9 @@ public abstract class Sensor implements Serializable {
      * are overridden, this method likely should be overridden as well and return true.
      * @return True if the range of values for the sensor are modified; false otherwise.
      */
-    public boolean hasCustomSensorRange() { return false; }
+    public boolean hasCustomSensorRange() {
+        return false;
+    }
 
 
     /**

@@ -9,6 +9,7 @@ package org.cmucreatelab.flutter_android.classes.settings;
  */
 public class AdvancedSettings {
 
+    // TODO @tasota we need a voltage min/max (raw value sent to protocol) and a percent min/max
     private int inputMax;
     private int inputMin;
     private int speed;
