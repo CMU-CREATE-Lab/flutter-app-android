@@ -10,6 +10,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
 import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -40,7 +41,7 @@ public abstract class Settings {
         outputMin = min;
         outputMax = max;
         sensorPortNumber = 0;
-        advancedSettings = new AdvancedSettings();
+        advancedSettings = new AdvancedSettings(this);
         this.flutter = flutter;
     }
 
@@ -54,7 +55,13 @@ public abstract class Settings {
 
 
     public void updateWithNewSensorType(Sensor oldSensor, Sensor newSensor) {
-        // TODO @tasota calculate the new input min-max (to be displayed)
+        Log.v(Constants.LOG_TAG,"Settings.updateWithNewSensorType()");
+        if (newSensor.getClass() == NoSensor.class) {
+            advancedSettings.updateVoltageWithNewSensorType(0, 100);
+        } else {
+            advancedSettings.updateVoltageWithNewSensorType();
+        }
+        advancedSettings.updateVoltageWithNewSensorType();
         if (oldSensor.isInverted() != newSensor.isInverted()) {
             invertOutputs();
         }

@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.classes;
 
-import android.app.Activity;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
@@ -201,8 +200,8 @@ public class Session implements FlutterMessageListener {
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
-                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setVoltageMin(imin);
+                        settings.getAdvancedSettings().setVoltageMax(imax);
                         // check for inverted sensor
                         if (sensor.isInverted()) {
                             settings.invertOutputs();
@@ -229,8 +228,8 @@ public class Session implements FlutterMessageListener {
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
-                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setVoltageMin(imin);
+                        settings.getAdvancedSettings().setVoltageMax(imax);
                         settings.getAdvancedSettings().setSpeed(speed);
                         // check for inverted sensor
                         if (sensor.isInverted()) {
@@ -257,8 +256,8 @@ public class Session implements FlutterMessageListener {
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
-                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setVoltageMin(imin);
+                        settings.getAdvancedSettings().setVoltageMax(imax);
                         // check for inverted sensor
                         if (sensor.isInverted()) {
                             settings.invertOutputs();
@@ -284,8 +283,8 @@ public class Session implements FlutterMessageListener {
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
-                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setVoltageMin(imin);
+                        settings.getAdvancedSettings().setVoltageMax(imax);
                         // check for inverted sensor
                         if (sensor.isInverted()) {
                             settings.invertOutputs();
@@ -313,8 +312,8 @@ public class Session implements FlutterMessageListener {
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
                         settings.setOutputMax(omax);
-                        settings.getAdvancedSettings().setInputMin(sensor.voltageToPercent(imin));
-                        settings.getAdvancedSettings().setInputMax(sensor.voltageToPercent(imax));
+                        settings.getAdvancedSettings().setVoltageMin(imin);
+                        settings.getAdvancedSettings().setVoltageMax(imax);
                         settings.getAdvancedSettings().setSpeed(speed);
                         settings.getAdvancedSettings().setSensorCenterValue(center);
                         // check for inverted sensor

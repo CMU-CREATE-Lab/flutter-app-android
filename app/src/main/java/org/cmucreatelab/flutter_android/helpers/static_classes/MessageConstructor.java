@@ -170,9 +170,9 @@ public class MessageConstructor {
             Sensor sensor = settings.getSensor();
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMax(), settingsProportional.getOutputMin(), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMax()));
+                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMax(), settingsProportional.getOutputMin(), settingsProportional.getAdvancedSettings().getVoltageMin(), settingsProportional.getAdvancedSettings().getVoltageMax());
             } else {
-                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMin(), settingsProportional.getOutputMax(), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsProportional.getAdvancedSettings().getInputMax()));
+                result = constructEnableProportionalControl(output, sensor, settingsProportional.getOutputMin(), settingsProportional.getOutputMax(), settingsProportional.getAdvancedSettings().getVoltageMin(), settingsProportional.getAdvancedSettings().getVoltageMax());
             }
         } else if (settings.getClass() == SettingsConstant.class) {
             SettingsConstant settingsConstant = (SettingsConstant) settings;
@@ -204,27 +204,27 @@ public class MessageConstructor {
 
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableAmplitudeControl(output, sensor, omax, omin, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
+                result = constructEnableAmplitudeControl(output, sensor, omax, omin, settingsAmplitude.getAdvancedSettings().getVoltageMin(), settingsAmplitude.getAdvancedSettings().getVoltageMax(), speed);
             } else {
-                result = constructEnableAmplitudeControl(output, sensor, omin, omax, sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsAmplitude.getAdvancedSettings().getInputMax()), speed);
+                result = constructEnableAmplitudeControl(output, sensor, omin, omax, settingsAmplitude.getAdvancedSettings().getVoltageMin(), settingsAmplitude.getAdvancedSettings().getVoltageMax(), speed);
             }
         } else if (settings.getClass() == SettingsFrequency.class) {
             SettingsFrequency settingsFrequency = (SettingsFrequency) settings;
             Sensor sensor = settings.getSensor();
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMax(), settingsFrequency.getOutputMin(), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMax()));
+                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMax(), settingsFrequency.getOutputMin(), settingsFrequency.getAdvancedSettings().getVoltageMin(), settingsFrequency.getAdvancedSettings().getVoltageMax());
             } else {
-                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMin(), settingsFrequency.getOutputMax(), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsFrequency.getAdvancedSettings().getInputMax()));
+                result = constructEnableFrequencyControl(output, sensor, settingsFrequency.getOutputMin(), settingsFrequency.getOutputMax(), settingsFrequency.getAdvancedSettings().getVoltageMin(), settingsFrequency.getAdvancedSettings().getVoltageMax());
             }
         } else if (settings.getClass() == SettingsChange.class) {
             SettingsChange settingsChange = (SettingsChange) settings;
             Sensor sensor = settings.getSensor();
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMax(), settingsChange.getOutputMin(), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMax()));
+                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMax(), settingsChange.getOutputMin(), settingsChange.getAdvancedSettings().getVoltageMin(), settingsChange.getAdvancedSettings().getVoltageMax());
             } else {
-                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMin(), settingsChange.getOutputMax(), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsChange.getAdvancedSettings().getInputMax()));
+                result = constructEnableDerivativeControl(output, sensor, settingsChange.getOutputMin(), settingsChange.getOutputMax(), settingsChange.getAdvancedSettings().getVoltageMin(), settingsChange.getAdvancedSettings().getVoltageMax());
             }
         } else if (settings.getClass() == SettingsCumulative.class) {
             SettingsCumulative settingsCumulative = (SettingsCumulative) settings;
@@ -256,9 +256,9 @@ public class MessageConstructor {
 
             // check for inverted sensor
             if (sensor.isInverted()) {
-                result = constructEnableIntegralControl(output, sensor, omax, omin, sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMax()), center, speed);
+                result = constructEnableIntegralControl(output, sensor, omax, omin, settingsCumulative.getAdvancedSettings().getVoltageMin(), settingsCumulative.getAdvancedSettings().getVoltageMax(), center, speed);
             } else {
-                result = constructEnableIntegralControl(output, sensor, omin, omax, sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMin()), sensor.percentToVoltage(settingsCumulative.getAdvancedSettings().getInputMax()), center, speed);
+                result = constructEnableIntegralControl(output, sensor, omin, omax, settingsCumulative.getAdvancedSettings().getVoltageMin(), settingsCumulative.getAdvancedSettings().getVoltageMax(), center, speed);
             }
         } else {
             Log.e(Constants.LOG_TAG,"relationship not implemented in constructRelationshipMessage: " + settings.getRelationship().getClass());

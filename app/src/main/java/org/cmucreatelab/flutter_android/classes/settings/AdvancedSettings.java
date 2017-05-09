@@ -9,36 +9,68 @@ package org.cmucreatelab.flutter_android.classes.settings;
  */
 public class AdvancedSettings {
 
-    // TODO @tasota we need a voltage min/max (raw value sent to protocol) and a percent min/max
-    private int inputMax;
-    private int inputMin;
+    private int voltageMax;
+    private int voltageMin;
     private int speed;
     private int sensorCenterValue;
+    private Settings settings;
 
     // getters
-    public int getInputMax() { return inputMax; }
-    public int getInputMin() { return inputMin; }
+    public int getVoltageMax() { return voltageMax; }
+    public int getVoltageMin() { return voltageMin; }
     public int getSpeed() { return speed; }
     public int getSensorCenterValue() { return sensorCenterValue; }
     // setters
-    public void setInputMax(int max) { inputMax = max; }
-    public void setInputMin(int min) { inputMin = min; }
+    public void setVoltageMax(int max) { voltageMax = max; }
+    public void setVoltageMin(int min) { voltageMin = min; }
     public void setSpeed(int zero) { speed = zero; }
     public void setSensorCenterValue(int sensorCenterValue) { this.sensorCenterValue = sensorCenterValue; }
 
 
-    public AdvancedSettings() {
-        inputMax = 100;
-        inputMin = 0;
-        speed = 0;
-        sensorCenterValue = 0;
+    public int getPercentMin() {
+        return settings.getSensor().voltageToPercent(voltageMin);
     }
 
 
-    public static AdvancedSettings newInstance(AdvancedSettings oldInstance) {
-        AdvancedSettings newInstance = new AdvancedSettings();
-        newInstance.inputMax = oldInstance.inputMax;
-        newInstance.inputMin = oldInstance.inputMin;
+    public int getPercentMax() {
+        return settings.getSensor().voltageToPercent(voltageMax);
+    }
+
+
+    public void setPercentMin(int percent) {
+        this.voltageMin = settings.getSensor().percentToVoltage(percent);
+    }
+
+
+    public void setPercentMax(int percent) {
+        this.voltageMax = settings.getSensor().percentToVoltage(percent);
+    }
+
+
+    public void updateVoltageWithNewSensorType() {
+        updateVoltageWithNewSensorType(voltageMin, voltageMax);
+    }
+
+
+    public void updateVoltageWithNewSensorType(int min, int max) {
+        setVoltageMin(settings.getSensor().percentToVoltage(settings.getSensor().voltageToPercent(min)));
+        setVoltageMax(settings.getSensor().percentToVoltage(settings.getSensor().voltageToPercent(max)));
+    }
+
+
+    public AdvancedSettings(Settings settings) {
+        voltageMax = 100;
+        voltageMin = 0;
+        speed = 0;
+        sensorCenterValue = 0;
+        this.settings = settings;
+    }
+
+
+    public static AdvancedSettings newInstance(AdvancedSettings oldInstance, Settings newSettings) {
+        AdvancedSettings newInstance = new AdvancedSettings(newSettings);
+        newInstance.voltageMax = oldInstance.voltageMax;
+        newInstance.voltageMin = oldInstance.voltageMin;
         newInstance.speed = oldInstance.speed;
         newInstance.sensorCenterValue = oldInstance.sensorCenterValue;
         return newInstance;

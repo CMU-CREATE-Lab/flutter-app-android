@@ -56,7 +56,7 @@ public class SettingsConstant extends Settings {
     public static SettingsConstant newInstance(Settings oldInstance) {
         SettingsConstant newInstance = new SettingsConstant(oldInstance.outputMin, oldInstance.outputMax, oldInstance.flutter);
         newInstance.sensorPortNumber = oldInstance.sensorPortNumber;
-        newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings);
+        newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings, newInstance);
         return newInstance;
     }
 

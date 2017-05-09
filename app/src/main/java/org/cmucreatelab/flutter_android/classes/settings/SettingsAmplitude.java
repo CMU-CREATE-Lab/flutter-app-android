@@ -22,7 +22,6 @@ public class SettingsAmplitude extends Settings {
     // setters
     public void setOutputMax(int max) { outputMax = max; }
     public void setOutputMin(int min) { outputMin = min; }
-    public void setSensorPortNumber(int portNumber) { this.sensorPortNumber = portNumber; }
     public void setAdvancedSettings (AdvancedSettings advancedSettings) { this.advancedSettings = advancedSettings; }
 
 
@@ -33,6 +32,15 @@ public class SettingsAmplitude extends Settings {
 
     protected SettingsAmplitude(int min, int max, Flutter flutter) {
         super(min, max, flutter);
+    }
+
+
+    public void setSensorPortNumber(int portNumber) {
+        Sensor oldSensor, newSensor;
+        oldSensor = getSensor();
+        this.sensorPortNumber = portNumber;
+        newSensor = getSensor();
+        updateWithNewSensorType(oldSensor, newSensor);
     }
 
 
@@ -82,7 +90,7 @@ public class SettingsAmplitude extends Settings {
     public static SettingsAmplitude newInstance(Settings oldInstance) {
         SettingsAmplitude newInstance = new SettingsAmplitude(oldInstance.outputMin, oldInstance.outputMax, oldInstance.flutter);
         newInstance.sensorPortNumber = oldInstance.sensorPortNumber;
-        newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings);
+        newInstance.advancedSettings = AdvancedSettings.newInstance(oldInstance.advancedSettings, newInstance);
         return newInstance;
     }
 

@@ -154,15 +154,15 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         Settings settings = flutterOutput.getOutputs()[0].getSettings();
         if (settings.hasAdvancedSettings()) {
             if (settings.getClass() == SettingsProportional.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional) settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsProportional) settings).getAdvancedSettings(), settings);
             } else if (settings.getClass() == SettingsAmplitude.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsAmplitude) settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsAmplitude) settings).getAdvancedSettings(), settings);
             } else if (settings.getClass() == SettingsFrequency.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsFrequency) settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsFrequency) settings).getAdvancedSettings(), settings);
             } else if (settings.getClass() == SettingsChange.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsChange) settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsChange) settings).getAdvancedSettings(), settings);
             } else if (settings.getClass() == SettingsCumulative.class) {
-                this.advancedSettings = AdvancedSettings.newInstance(((SettingsCumulative) settings).getAdvancedSettings());
+                this.advancedSettings = AdvancedSettings.newInstance(((SettingsCumulative) settings).getAdvancedSettings(), settings);
             } else {
                 Log.e(Constants.LOG_TAG,"AdvancedSettingsDialog.onCreateDialog: unimplemented relationship/settings");
             }
@@ -188,8 +188,8 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         textSensorCenterValue = (TextView) view.findViewById(R.id.text_sensor_center_value);
 
         // populate defaults
-        maxInput = advancedSettings.getInputMax();
-        minInput = advancedSettings.getInputMin();
+        maxInput = advancedSettings.getPercentMax();
+        minInput = advancedSettings.getPercentMin();
         speed = advancedSettings.getSpeed();
         sensorCenterValue = advancedSettings.getSensorCenterValue();
 
@@ -226,8 +226,8 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
     @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {
         Log.d(Constants.LOG_TAG, "AdvancedSettingsDialog.onClickSaveSettings");
-        advancedSettings.setInputMax(maxInput);
-        advancedSettings.setInputMin(minInput);
+        advancedSettings.setPercentMax(maxInput);
+        advancedSettings.setPercentMin(minInput);
         advancedSettings.setSpeed(speed);
         advancedSettings.setSensorCenterValue(sensorCenterValue);
         dialogAdvancedSettingsListener.onAdvancedSettingsSet(advancedSettings);
