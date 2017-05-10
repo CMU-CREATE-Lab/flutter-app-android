@@ -26,6 +26,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
@@ -158,6 +159,7 @@ public abstract class SensorTypeDialog extends DialogFragment implements View.On
                 sensor = new NoSensor(portNumber);
                 break;
         }
+        GlobalHandler.getInstance(this.getActivity().getApplicationContext()).sessionHandler.getSession().setWasPortSetThisSession(portNumber);
         sensorListener.onSensorTypeChosen(sensor);
         this.dismiss();
     }

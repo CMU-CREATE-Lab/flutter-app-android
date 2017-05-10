@@ -32,6 +32,9 @@ public class Session implements FlutterMessageListener {
     private boolean isSimulatingData;
     private FlutterConnectListener flutterConnectListener;
     private FlutterMessageListener flutterMessageListener;
+    private boolean wasSensorOneSetThisSession;
+    private boolean wasSensorTwoSetThisSession;
+    private boolean wasSensorThreeSetThisSession;
     // getters/setters
     public BaseNavigationActivity getCurrentActivity() { return currentActivity; }
     public Flutter getFlutter() { return flutter; }
@@ -43,6 +46,35 @@ public class Session implements FlutterMessageListener {
     public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
 
+
+    public boolean wasPortSetThisSession(Integer portNumber) {
+        switch (portNumber) {
+            case 1:
+                return wasSensorOneSetThisSession;
+            case 2:
+                return wasSensorTwoSetThisSession;
+            case 3:
+                return wasSensorThreeSetThisSession;
+            default:
+                return false;
+        }
+    }
+
+    public void setWasPortSetThisSession(Integer portNumber) {
+        switch (portNumber) {
+            case 1:
+                wasSensorOneSetThisSession = true;
+                break;
+            case 2:
+                wasSensorTwoSetThisSession = true;
+                break;
+            case 3:
+                wasSensorThreeSetThisSession = true;
+                break;
+            default:
+                break;
+        }
+    }
 
     public void setSimulatingData(boolean simulatingData) {
         isSimulatingData = simulatingData;
@@ -64,6 +96,9 @@ public class Session implements FlutterMessageListener {
         this.flutterConnectListener = flutterConnectListener;
         this.flutterMessageListener = flutterMessageListener;
         this.isSimulatingData = false;
+        this.wasSensorOneSetThisSession = false;
+        this.wasSensorTwoSetThisSession = false;
+        this.wasSensorThreeSetThisSession = false;
     }
 
 
