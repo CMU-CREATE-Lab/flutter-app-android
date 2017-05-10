@@ -65,7 +65,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     for (int i = 0; i < mLeDeviceAdapter.getCount(); i++) {
                         Flutter result = (Flutter) mLeDeviceAdapter.getItem(i);
                         if (result.getBluetoothDevice().equals(device)) {
-                            mLeDeviceAdapter.updateLastBroadcastTime(i, System.currentTimeMillis());
+                            // TODO(dille): We should be keeping track of the last broadcast time but it seems to vary greatly
+                            // for Flutter boards. So until we start using the new BLE, keep this commented out.
+                            //mLeDeviceAdapter.updateLastBroadcastTime(i, System.currentTimeMillis());
                             return;
                         }
                     }
@@ -74,6 +76,20 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     // All Flutters have the same first 8 characters
                     String address = macAddress.substring(0, 8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS) && !Constants.addressBlackList.contains(macAddress)) {
+                        if (warningPromptTimer == null) {
+                            warningPromptTimer = new Timer();
+                            warningPromptTimer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                }
+                            }, 10000);
+                        }
                         // Clear out part one of landing page connection content
                         findViewById(R.id.image_flutter).setVisibility(View.INVISIBLE);
                         findViewById(R.id.text_connect_s1).setVisibility(View.INVISIBLE);
@@ -113,6 +129,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             @Override
                             public void onClick(View v) {
                                 Flutter flutter = (Flutter) mLeDeviceAdapter.getItem(list.indexOfChild(v));
+                                warningPromptTimer.cancel();
+                                mLeDeviceAdapterTimer.cancel();
                                 scanForDevice(false);
                                 RelativeLayout rl = (RelativeLayout) findViewById(R.id.landing_page_content);
                                 final int childCount = rl.getChildCount();
@@ -219,6 +237,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     @Override
                     public void run() {
                         if (mLeDeviceAdapter.getCount() == 0) {
+                            if (warningPromptTimer != null) {
+                                warningPromptTimer.cancel();
+                            }
                             if (mLeDeviceAdapterTimer != null) {
                                 mLeDeviceAdapterTimer.cancel();
                             }
@@ -384,7 +405,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     public void run() {
                         Long systemTime = System.currentTimeMillis();
                         for (int i = 0; i < mLeDeviceAdapter.getCount(); i++) {
-                            if (mLeDeviceAdapter.getLastBroadcastTime(i) < systemTime - Constants.FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS) {
+                            // TODO(dille): Note that getLastBroadcastTime is currently only showing the time of first broadcast.
+                            // See todo further about related to this BLE fun.
+                            if (mLeDeviceAdapter.getLastBroadcastTime(i) < systemTime - Constants.FLUTTER_WAITING_TIMEOUT_ONE_MINUTE) {
                                 mLeDeviceAdapter.removeDevice(i);
                                 final LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
                                 TextView txtView = (TextView) list.getChildAt(i);
@@ -403,19 +426,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             }
         }, 0, 1000);
 
-        warningPromptTimer = new Timer();
-        warningPromptTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        }, 10000);
-
     }
 
 
@@ -433,7 +443,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     public void onFlutterConnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterConnected");
         final GlobalHandler globalHandler = GlobalHandler.getInstance(this);
-        mLeDeviceAdapterTimer.cancel();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
