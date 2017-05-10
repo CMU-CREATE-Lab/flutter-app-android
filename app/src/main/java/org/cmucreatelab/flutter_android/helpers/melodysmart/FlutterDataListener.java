@@ -76,6 +76,7 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
             }
 
 
+            // ASSERT: Session is not null
             @Override
             public void onMessageReceived(MelodySmartMessage message) {
                 // perform actions based on response
@@ -88,10 +89,10 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
                     switch (protocolCommand) {
                         case 'M':
                         case 'Y':
-                            globalHandler.sessionHandler.updateProgressDialogMessage("Loading Sensor Types");
+                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Sensor Types");
                             break;
                         case 'O':
-                            globalHandler.sessionHandler.updateProgressDialogMessage("Loading Outputs");
+                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Outputs");
                             break;
                         default:
                             Log.e(Constants.LOG_TAG, "received response from an unexpected protocol command");

@@ -27,7 +27,9 @@ public class CleanUpBeforeState implements UpdateDataLogsState {
 
     @Override
     public void updatePoints() {
-        // empty
+        // not empty (get list to display when flutter isn't connected)
+        Log.v(Constants.LOG_TAG,"CleanUpBeforeState.updatePoints");
+        updateLogs();
     }
 
 

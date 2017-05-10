@@ -37,7 +37,7 @@ public class CleanUpAfterState implements UpdateDataLogsState {
             public void run() {
                 Log.d(Constants.LOG_TAG, "DataLogsActivity.updateFromCleanUpAfter");
                 globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
-                globalHandler.sessionHandler.updateProgressDialogMessage(dataLogsActivity.getString(R.string.loading_data));
+                globalHandler.sessionHandler.updateProgressDialogMessage(dataLogsActivity, dataLogsActivity.getString(R.string.loading_data));
 
                 // test if the current selected data log was one that got deleted
                 DataSet workingDataSet = dataLogsActivity.getWorkingDataSet();
