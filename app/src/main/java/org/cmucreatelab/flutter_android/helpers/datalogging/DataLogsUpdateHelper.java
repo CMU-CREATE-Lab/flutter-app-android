@@ -30,10 +30,12 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
 
     public void registerStateAndUpdatePoints(UpdateDataLogsState updateDataLogsState) {
         this.updateDataLogsState = updateDataLogsState;
+        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             this.globalHandler.dataLoggingHandler.populatePointsAvailable(this);
+        } else {
+            updateDataLogsState.updatePoints();
         }
-        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
     }
 
 

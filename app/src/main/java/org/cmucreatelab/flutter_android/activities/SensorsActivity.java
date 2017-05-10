@@ -289,7 +289,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         Log.d(Constants.LOG_TAG, "onClickRecordData");
         final SensorsActivity instance = this;
         globalHandler.sessionHandler.createProgressDialog(this);
-        globalHandler.sessionHandler.updateProgressDialogMessage("Loading data log information...");
+        globalHandler.sessionHandler.updateProgressDialogMessage(SensorsActivity.this, "Loading data log information...");
 
         globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
             @Override

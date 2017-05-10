@@ -22,35 +22,23 @@ public class SessionHandler {
     private GlobalHandler globalHandler;
     private Session session;
     private ProgressDialog progressDialog;
-    private boolean sessionStarted;
 
 
     public SessionHandler(GlobalHandler globalHandler) {
         this.globalHandler = globalHandler;
-        this.sessionStarted = false;
     }
 
 
-    // TODO @tasota deprecated; Activity not needed as parameter to control ProgressDialog
-    public void createProgressDialog(BaseNavigationActivity activity) {
-        createProgressDialog();
-    }
-
-
-    public void createProgressDialog() {
+    public void createProgressDialog(final BaseNavigationActivity activity) {
         if (progressDialog != null) {
             dismissProgressDialog();
         }
-        if (!sessionStarted) {
-            Log.e(Constants.LOG_TAG,"createProgressDialog with sessionStarted=false");
-            return;
-        }
-        session.getCurrentActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressDialog = new ProgressDialog(session.getCurrentActivity());
+                progressDialog = new ProgressDialog(activity);
                 progressDialog.setTitle("Loading");
-                updateProgressDialogMessage("Loading...");
+                updateProgressDialogMessage(activity, "Loading...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
             }
@@ -58,16 +46,12 @@ public class SessionHandler {
     }
 
 
-    public void updateProgressDialogMessage(final String message) {
+    public void updateProgressDialogMessage(BaseNavigationActivity activity, final String message) {
         if (progressDialog == null) {
             Log.e(Constants.LOG_TAG,"called updateProgressDialogMessage but progressDialog is null.");
             return;
         }
-        if (!sessionStarted) {
-            Log.e(Constants.LOG_TAG,"updateProgressDialogMessage with sessionStarted=false");
-            return;
-        }
-        session.getCurrentActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 progressDialog.setMessage(message);
@@ -88,14 +72,8 @@ public class SessionHandler {
     public void startSession(AppLandingActivity activity, Flutter flutter) {
         Log.d(Constants.LOG_TAG, "Starting session with " + flutter.getBluetoothDevice().getName());
         this.session = new Session(activity, flutter,activity,null);
-        this.sessionStarted = true;
         createProgressDialog(activity);
         globalHandler.melodySmartDeviceHandler.connect(this.getSession().getFlutter().getBluetoothDevice());
-    }
-
-
-    public void stopSession() {
-        this.sessionStarted = false;
     }
 
 

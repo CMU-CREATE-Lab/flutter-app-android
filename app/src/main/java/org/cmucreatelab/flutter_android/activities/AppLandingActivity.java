@@ -347,7 +347,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 @Override
                 public void run() {
                     globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
-                    globalHandler.sessionHandler.updateProgressDialogMessage(getResources().getString(R.string.reading_data));
+                    globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
                 }
             });
         }
@@ -450,7 +450,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
-        GlobalHandler.getInstance(getApplicationContext()).sessionHandler.stopSession();
 //        Intent intent = new Intent(this, AppLandingActivity.class);
 //        startActivity(intent);
     }
