@@ -199,10 +199,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             Integer topPadding = findViewById(R.id.frame_second_scan).getVisibility() == View.VISIBLE ? 0 : 41;
                             scan.setPadding(count * 4, topPadding, 0, 0);
                             scan.setText(Constants.scanningText[count]);
-                            count++;
-                            if (count == Constants.scanningText.length) {
-                                count = 0;
-                            }
+                            count = (count + 1) % Constants.scanningText.length;
                         }
                     });
                 }
