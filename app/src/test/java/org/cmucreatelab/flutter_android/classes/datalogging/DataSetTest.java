@@ -27,7 +27,7 @@ public class DataSetTest {
     @Before
     public void init() {
         data = new TreeMap<>();
-        dataSet = new DataSet(data, keys, "name", sensors);
+        dataSet = new DataSet(data, keys, "name", "flutter_name", sensors);
     }
 
 
