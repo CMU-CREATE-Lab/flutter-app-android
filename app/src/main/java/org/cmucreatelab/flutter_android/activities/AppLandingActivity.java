@@ -52,6 +52,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private Timer mLeDeviceAdapterTimer;
     private Timer noFlutterFoundTimer;
     private Timer warningPromptTimer;
+    private Timer scanningTextTimer;
     private boolean layoutLarge = true;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
@@ -88,7 +89,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                                         }
                                     });
                                 }
-                            }, 10000);
+                            }, Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS);
                         }
                         // Clear out part one of landing page connection content
                         findViewById(R.id.image_flutter).setVisibility(View.INVISIBLE);
@@ -100,10 +101,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         findViewById(R.id.image_flutter_name_tag).setVisibility(View.VISIBLE);
                         findViewById(R.id.text_connect_s3).setVisibility(View.VISIBLE);
                         findViewById(R.id.text_connect_s3_explanation).setVisibility(View.VISIBLE);
+                        findViewById(R.id.text_connect_s4).setVisibility(View.VISIBLE);
+                        findViewById(R.id.text_connect_s4_explanation).setVisibility(View.VISIBLE);
                         findViewById(R.id.text_flutter_tag_label).setVisibility(View.VISIBLE);
                         findViewById(R.id.image_content_scan_scroll_left).setVisibility(View.VISIBLE);
                         findViewById(R.id.image_content_scan_scroll_right).setVisibility(View.VISIBLE);
                         findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
+                        findViewById(R.id.button_scan).setPadding(0, 0, 0, 0);
                         // Get Flutter and add it scan list
                         String name = NamingHandler.generateName(getApplicationContext(), device.getAddress());
                         Flutter endResult = new Flutter(device, name);
@@ -131,6 +135,12 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                                 Flutter flutter = (Flutter) mLeDeviceAdapter.getItem(list.indexOfChild(v));
                                 warningPromptTimer.cancel();
                                 mLeDeviceAdapterTimer.cancel();
+                                if (noFlutterFoundTimer != null) {
+                                    noFlutterFoundTimer.cancel();
+                                }
+                                if (scanningTextTimer != null) {
+                                    scanningTextTimer.cancel();
+                                }
                                 scanForDevice(false);
                                 RelativeLayout rl = (RelativeLayout) findViewById(R.id.landing_page_content);
                                 final int childCount = rl.getChildCount();
@@ -163,16 +173,40 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void scanForDevice(boolean isScanning) {
-        Button scan = (Button) findViewById(R.id.button_scan);
+        final Button scan = (Button) findViewById(R.id.button_scan);
         LinearLayout listContainer = (LinearLayout) findViewById(R.id.frame_second_scan);
         LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         globalHandler.melodySmartDeviceHandler.setDeviceScanning(isScanning, mLeScanCallBack);
         if (isScanning) {
-            scan.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_white));
-            scan.setText(R.string.scanning);
+            scan.setEnabled(false);
+            scan.setBackgroundResource(0);
             scan.setTextColor(Color.BLACK);
+            if (scanningTextTimer != null) {
+                scanningTextTimer.cancel();
+            }
+            scanningTextTimer = new Timer();
+            scanningTextTimer.scheduleAtFixedRate(new TimerTask() {
+                int count = 0;
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Add padding left to prevent the text from shifting as it gets longer. (depends upon font size)
+                            // Tweak top padding because of the change from a button to just text.
+                            Integer topPadding = findViewById(R.id.frame_second_scan).getVisibility() == View.VISIBLE ? 0 : 41;
+                            scan.setPadding(count * 4, topPadding, 0, 0);
+                            scan.setText(Constants.scanningText[count]);
+                            count++;
+                            if (count == Constants.scanningText.length) {
+                                count = 0;
+                            }
+                        }
+                    });
+                }
+            }, 0, 500);
         } else {
             TextView landingPage = (TextView) findViewById(R.id.text_app_landing_title);
             landingPage.setText(R.string.connect_flutter);
@@ -393,6 +427,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
+        if (noFlutterFoundTimer != null) {
+            noFlutterFoundTimer.cancel();
+        }
         if (mLeDeviceAdapterTimer != null) {
             mLeDeviceAdapterTimer.cancel();
         }
@@ -417,8 +454,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                                 if (mLeDeviceAdapter.getCount() == 0) {
                                     returnToMainLandingScreenTimer();
                                 }
-                            } else if (mLeDeviceAdapter.getLastBroadcastTime(i) < systemTime - Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS) {
-                                findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
                             }
                         }
                     }

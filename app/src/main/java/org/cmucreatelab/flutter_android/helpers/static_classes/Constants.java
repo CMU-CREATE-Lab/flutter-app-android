@@ -110,7 +110,7 @@ public final class Constants {
 
     public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 2000;
     public static final int FLUTTER_WAITING_TIMEOUT_ONE_MINUTE = 60000;
-    public static final int FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS = 15000;
+    public static final int FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS = 10000;
 
     public static final class SerializableKeys {
         public static final String DIALOG_LED = "dialog_led";
@@ -142,6 +142,13 @@ public final class Constants {
         MAX,
         MIN
     }
+
+    public static final String scanningText[] = {
+            "SCANNING FOR FLUTTERS",
+            "SCANNING FOR FLUTTERS.",
+            "SCANNING FOR FLUTTERS..",
+            "SCANNING FOR FLUTTERS..."
+    };
 
     // Put any Melody Smart MAC addresses that you don't want to show up in the scan list here.
     public static final ArrayList<String> addressBlackList = new ArrayList<String>() {

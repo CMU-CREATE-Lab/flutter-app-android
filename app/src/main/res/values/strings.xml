@@ -203,11 +203,13 @@
     <string name="connect_step_one">STEP 1:</string>
     <string name="connect_step_two">STEP 2:</string>
     <string name="connect_step_three">STEP 3:</string>
+    <string name="connect_step_four">STEP 4:</string>
     <string name="flutter_name_default">Your Flutter</string>
     <string name="non_large_layout_description">Flutter Links is currently optimized for a large screen experience. Please use Flutter Links with a tablet that has at least a 640dp x 480dp screen.</string>
     <string name="reading_data">Reading Flutter Data...</string>
     <string name="flutter_tag_text">Your \nFlutter\'s Name</string>
-    <string name="connect_step_three_prompt">Look on the bottom of your Flutter and tap the matching name below.</string>
+    <string name="connect_step_three_prompt">Look on the bottom of your Flutter for its name.</string>
+    <string name="connect_step_four_prompt">Tap the matching name below to connect.</string>
 
     <!-- Colors -->
     <string name="color_red">Red</string>
