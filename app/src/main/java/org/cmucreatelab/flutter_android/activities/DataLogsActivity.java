@@ -667,6 +667,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onRecordData(String name, int interval, int sample) {
         Log.d(Constants.LOG_TAG, "onDataRecord");
         GlobalHandler.getInstance(getApplicationContext()).dataLoggingHandler.startLogging(interval, sample, name);
+        findViewById(R.id.data_recording_spinner).setVisibility(View.VISIBLE);
     }
 
 
@@ -709,6 +710,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
                                     Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                                 }
                             });

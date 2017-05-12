@@ -216,6 +216,7 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLoggingConfirmation.onClickButtonCancel");
             GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
+            getActivity().findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
             dismiss();
         }
     };
