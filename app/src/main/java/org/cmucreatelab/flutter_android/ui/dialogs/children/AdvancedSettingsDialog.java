@@ -115,7 +115,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.d(Constants.LOG_TAG, "onSpeedChanged");
-            textSensorCenterValue.setText(getString(R.string.sensor_center_value) + " " + i + " / 15");
+            textSensorCenterValue.setText(getString(R.string.sensor_center_value) + " " + i + " / 100");
             sensorCenterValue = i;
         }
 

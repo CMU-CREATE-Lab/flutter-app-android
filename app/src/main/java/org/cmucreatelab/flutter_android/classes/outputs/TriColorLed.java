@@ -157,6 +157,28 @@ public class TriColorLed implements FlutterOutput {
     }
 
 
+    public static int getCircleFromColor(String colorHex) {
+        int color = Color.parseColor(colorHex);
+
+        if (Constants.RES_CIRCLE.containsKey(color)) {
+            return Constants.RES_CIRCLE.get(color);
+        }
+        // default to black if color isn't in RES_CIRCLE
+        return R.drawable.circle_black;
+    }
+
+
+    public static int getHalfCircleFromColor(String colorHex) {
+        int color = Color.parseColor(colorHex);
+
+        if (Constants.RES_HALFCIRCLE.containsKey(color)) {
+            return Constants.RES_HALFCIRCLE.get(color);
+        }
+        // default to black if color isn't in RES_HALFCIRCLE
+        return R.drawable.halfcircle_black;
+    }
+
+
     public static int getSwatchFromColor(String colorHex) {
         int color = Color.parseColor(colorHex);
 
