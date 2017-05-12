@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -56,6 +58,10 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     private ProgressBar progress2;
     private ProgressBar progress3;
 
+    // animations
+    private AlphaAnimation blinkAnimation;
+
+    // state
     private Session session;
 
 
@@ -106,31 +112,44 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         Sensor sensor;
         Sensor[] sensors = session.getFlutter().getSensors();
 
-        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+        final ImageView sensorOneHighlight = (ImageView) findViewById(R.id.image_sensor_1_highlight);
+        final ImageView sensorTwoHighlight = (ImageView) findViewById(R.id.image_sensor_2_highlight);
+        final ImageView sensorThreeHighlight = (ImageView) findViewById(R.id.image_sensor_3_highlight);
+
+        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET || session.wasPortSetThisSession(1)) {
             selectedImage = (ImageView) findViewById(R.id.image_sensor_1);
             highText = (TextView) findViewById(R.id.text_high_1);
             lowText = (TextView) findViewById(R.id.text_low_1);
             typeText = (TextView) findViewById(R.id.text_sensor_1);
             sensor = sensors[0];
             updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+            sensorOneHighlight.clearAnimation();
+        } else {
+            sensorOneHighlight.startAnimation(blinkAnimation);
         }
 
-        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET || session.wasPortSetThisSession(2)) {
             selectedImage = (ImageView) findViewById(R.id.image_sensor_2);
             highText = (TextView) findViewById(R.id.text_high_2);
             lowText = (TextView) findViewById(R.id.text_low_2);
             typeText = (TextView) findViewById(R.id.text_sensor_2);
             sensor = sensors[1];
             updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+            sensorTwoHighlight.clearAnimation();
+        } else {
+            sensorTwoHighlight.startAnimation(blinkAnimation);
         }
 
-        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET || session.wasPortSetThisSession(3)) {
             selectedImage = (ImageView) findViewById(R.id.image_sensor_3);
             highText = (TextView) findViewById(R.id.text_high_3);
             lowText = (TextView) findViewById(R.id.text_low_3);
             typeText = (TextView) findViewById(R.id.text_sensor_3);
             sensor = sensors[2];
             updateStaticViewsForSensor(sensor,selectedImage,highText,lowText,typeText);
+            sensorThreeHighlight.clearAnimation();
+        } else {
+            sensorThreeHighlight.startAnimation(blinkAnimation);
         }
     }
 
@@ -193,6 +212,15 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             progress2 = (ProgressBar) findViewById(R.id.progress_sensor_2);
             progress3 = (ProgressBar) findViewById(R.id.progress_sensor_3);
 
+            // Create animation to highlight a sensor that's never been set
+            blinkAnimation = new AlphaAnimation((float)0.8, 0);
+            blinkAnimation.setDuration(900);
+            blinkAnimation.setStartOffset(150);
+            blinkAnimation.setRepeatCount(Animation.INFINITE);
+            blinkAnimation.setRepeatMode(Animation.REVERSE);
+
+            // update views
+            // NOTE: Must be last thing called
             updateDynamicViews();
             updateStaticViews();
         }
@@ -334,6 +362,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         }
 
         updateDynamicViews();
+        updateStaticViews();
     }
 
 
@@ -353,12 +382,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         updateDynamicViews();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateStaticViews();
-            }
-        });
     }
 
 

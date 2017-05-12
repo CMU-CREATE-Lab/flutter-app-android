@@ -2,7 +2,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.tab_volume;
 
 import android.support.v4.app.DialogFragment;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,10 +48,15 @@ public class SpeakerVolumeProportional extends SpeakerVolumeStateHelper {
 
         // sensor
         linkedSensor.setVisibility(View.VISIBLE);
-        ((ImageView)linkedSensor.getChildAt(0)).setImageResource(getSpeaker().getVolume().getSettings().getSensor().getGreenImageId());
-        ViewGroup sensorViewGroup = ((ViewGroup)linkedSensor.getChildAt(1));
-        ((TextView)sensorViewGroup.getChildAt(0)).setText(R.string.linked_sensor);
-        ((TextView)sensorViewGroup.getChildAt(1)).setText(getSpeaker().getVolume().getSettings().getSensor().getSensorTypeId());
+
+        ImageView currentImageView = (ImageView) linkedSensor.findViewById(R.id.image_sensor);
+        ImageView currentImageViewHighlight = (ImageView) linkedSensor.findViewById(R.id.image_sensor_highlight);
+        TextView currentTextViewDescrp = (TextView) linkedSensor.findViewById(R.id.text_sensor_link);
+        TextView currentTextViewItem = (TextView) linkedSensor.findViewById(R.id.text_sensor_type);
+
+        currentImageView.setImageResource(getSpeaker().getVolume().getSettings().getSensor().getGreenImageId());
+        currentTextViewDescrp.setText(R.string.linked_sensor);
+        currentTextViewItem.setText(getSpeaker().getVolume().getSettings().getSensor().getSensorTypeId());
 
         // max Volume
         ImageView maxVolumeImg = (ImageView) dialog.dialogView.findViewById(R.id.image_max_volume);

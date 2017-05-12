@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
+
 /**
  * Created by Steve on 10/17/2016.
  *
@@ -59,6 +63,8 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     private DialogLedListener dialogLedListener;
     private TriColorLed triColorLed;
 
+    // animations
+    private AlphaAnimation blinkAnimation;
 
     private void updateViews() {
         super.updateViews(dialogView, triColorLed.getRedLed());
@@ -67,6 +73,11 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
             Log.w(Constants.LOG_TAG,"LedDialog.updateViews assumes same relationship for all Leds but they are not the same.");
         }
         stateHelper.updateView(this);
+
+        if (triColorLed.getRedLed().getSettings().getSensor().getSensorType() == NOT_SET) {
+            ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+            currentImageViewHighlight.startAnimation(blinkAnimation);
+        }
 
         Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
         Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
@@ -108,6 +119,13 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         maxColor = (ImageView) view.findViewById(R.id.view_max_color);
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
+
+        // Create animation to highlight a sensor that's never been linked
+        blinkAnimation = new AlphaAnimation((float)0.8, 0);
+        blinkAnimation.setDuration(900);
+        blinkAnimation.setStartOffset(150);
+        blinkAnimation.setRepeatCount(Animation.INFINITE);
+        blinkAnimation.setRepeatMode(Animation.REVERSE);
 
         updateViews();
         return builder.create();
@@ -213,15 +231,15 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        View view = dialogView.findViewById(R.id.linear_set_linked_sensor);
-        ImageView currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        View layout = ((ViewGroup) view).getChildAt(1);
-        TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+        ImageView currentImageView = (ImageView) dialogView.findViewById(R.id.image_sensor);
+        ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+        TextView currentTextViewDescrp = (TextView) dialogView.findViewById(R.id.text_sensor_link);
+        TextView currentTextViewItem = (TextView) dialogView.findViewById(R.id.text_sensor_type);
 
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             currentImageView.setImageResource(sensor.getGreenImageId());
+            currentImageViewHighlight.clearAnimation();
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -25,7 +26,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.children.MaxPositionDialog.DialogMaxPositionListener;
@@ -38,6 +38,8 @@ import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
 /**
  * Created by Steve on 10/17/2016.
@@ -62,6 +64,8 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     private DialogServoListener dialogServoListener;
     private Servo servo;
 
+    // animations
+    private AlphaAnimation blinkAnimation;
 
     private void updateViews() {
         super.updateViews(dialogView, servo);
@@ -71,6 +75,11 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         this.minPosLayout = (LinearLayout) dialogView.findViewById(R.id.linear_set_min_pos);
 
         stateHelper.updateView(this);
+
+        if (servo.getSettings().getSensor().getSensorType() == NOT_SET) {
+            ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+            currentImageViewHighlight.startAnimation(blinkAnimation);
+        }
 
         Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
         Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
@@ -110,6 +119,13 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
 
         ButterKnife.bind(this, view);
+
+        // Create animation to highlight a sensor that's never been linked
+        blinkAnimation = new AlphaAnimation((float)0.8, 0);
+        blinkAnimation.setDuration(900);
+        blinkAnimation.setStartOffset(150);
+        blinkAnimation.setRepeatCount(Animation.INFINITE);
+        blinkAnimation.setRepeatMode(Animation.REVERSE);
 
         updateViews();
         return builder.create();
@@ -203,19 +219,15 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        View view,layout;
-        ImageView currentImageView;
-        TextView currentTextViewDescrp,currentTextViewItem;
+        ImageView currentImageView = (ImageView) dialogView.findViewById(R.id.image_sensor);
+        ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+        TextView currentTextViewDescrp = (TextView) dialogView.findViewById(R.id.text_sensor_link);
+        TextView currentTextViewItem = (TextView) dialogView.findViewById(R.id.text_sensor_type);
 
-        view = dialogView.findViewById(R.id.linear_set_linked_sensor);
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-
-        if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
+        if (sensor.getSensorType() != NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
             currentImageView.setImageResource(sensor.getGreenImageId());
+            currentImageViewHighlight.clearAnimation();
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
 

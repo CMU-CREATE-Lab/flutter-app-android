@@ -13,10 +13,18 @@
         android:layout_margin="5dp">
 
         <ImageView
+            android:id="@+id/image_sensor_highlight"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:visibility="invisible"
+            android:src="@drawable/circle_light_green" />
+
+        <ImageView
             android:id="@+id/image_sensor"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="-70dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/question_icon" />
 
         <LinearLayout
@@ -24,7 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="20dp">
 
             <TextView
@@ -58,7 +66,7 @@
             android:id="@+id/image_relationship"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
             android:src="@drawable/question_icon"/>
 
         <LinearLayout
@@ -66,7 +74,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="20dp">
 
             <TextView

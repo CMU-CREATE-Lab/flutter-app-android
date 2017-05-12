@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,6 +45,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
+
 /**
  * Created by Steve on 10/17/2016.
  *
@@ -65,6 +69,8 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
     private DialogSpeakerListener dialogSpeakerListener;
     private Speaker speaker;
 
+    // animations
+    private AlphaAnimation blinkAnimation;
 
     private void updateViews() {
         switch (stateHelper.getCurrentTab()) {
@@ -79,6 +85,11 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         }
 
         stateHelper.updateView(this);
+
+        if (speaker.getVolume().getSettings().getSensor().getSensorType() == NOT_SET && speaker.getPitch().getSettings().getSensor().getSensorType() == NOT_SET) {
+            ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+            currentImageViewHighlight.startAnimation(blinkAnimation);
+        }
 
         Button saveButton = (Button) dialogView.findViewById(R.id.button_save_link);
         Button removeButton = (Button) dialogView.findViewById(R.id.button_remove_link);
@@ -118,6 +129,13 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
         ButterKnife.bind(this, view);
+
+        // Create animation to highlight a sensor that's never been linked
+        blinkAnimation = new AlphaAnimation((float)0.8, 0);
+        blinkAnimation.setDuration(900);
+        blinkAnimation.setStartOffset(150);
+        blinkAnimation.setRepeatCount(Animation.INFINITE);
+        blinkAnimation.setRepeatMode(Animation.REVERSE);
 
         updateViews();
 
@@ -292,13 +310,13 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         if (sensor.getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
             Log.d(Constants.LOG_TAG, "onSensorChosen");
 
-            View view = dialogView.findViewById(R.id.linear_set_linked_sensor);
-            ImageView currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-            View layout = ((ViewGroup) view).getChildAt(1);
-            TextView currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-            TextView currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+            ImageView currentImageView = (ImageView) dialogView.findViewById(R.id.image_sensor);
+            ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+            TextView currentTextViewDescrp = (TextView) dialogView.findViewById(R.id.text_sensor_link);
+            TextView currentTextViewItem = (TextView) dialogView.findViewById(R.id.text_sensor_type);
 
             currentImageView.setImageResource(sensor.getGreenImageId());
+            currentImageViewHighlight.clearAnimation();
             currentTextViewDescrp.setText(R.string.linked_sensor);
             currentTextViewItem.setText(sensor.getSensorTypeId());
 
