@@ -358,8 +358,7 @@
                 android:layout_width="64dp"
                 android:layout_height="103dp"
                 android:layout_alignParentStart="true"
-                android:background="@drawable/link_active_l_e_d_speaker_b_g"
-                android:visibility="invisible">
+                android:background="@drawable/link_active_l_e_d_speaker_b_g">
 
                 <LinearLayout
                     android:id="@+id/linear_led_link_1"
@@ -388,6 +387,13 @@
                     android:layout_below="@id/linear_led_link_1"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+                <View
+                    android:id="@+id/view_halfcolor_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linear_led_link_1"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/halfcircle_black" />
 
             </RelativeLayout>
 
@@ -435,6 +441,13 @@
                     android:layout_below="@id/linear_led_link_2"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+                <View
+                    android:id="@+id/view_halfcolor_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linear_led_link_2"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/halfcircle_black" />
 
             </RelativeLayout>
 
@@ -482,6 +495,13 @@
                     android:layout_below="@id/linear_led_link_3"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+                <View
+                    android:id="@+id/view_halfcolor_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linear_led_link_3"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/halfcircle_black" />
 
             </RelativeLayout>
 

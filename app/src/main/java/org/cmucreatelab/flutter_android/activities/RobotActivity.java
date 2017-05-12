@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.graphics.Color;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -94,6 +95,29 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             }
         }
     };
+
+
+    private void updateLedCircleColors(final int ledNumber, TriColorLed triColorLed) {
+        Log.v(Constants.LOG_TAG, "updateLedCircleColors");
+        final View[] views = new View[] {
+                findViewById(R.id.view_halfcolor_1),
+                findViewById(R.id.view_halfcolor_2),
+                findViewById(R.id.view_halfcolor_3)
+        };
+        if (ledNumber > views.length || ledNumber <= 0) {
+            Log.e(Constants.LOG_TAG, "updateLedCircleColors received bad ledNumber="+ledNumber);
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO @tasota determine whether the relationship has 2 colors, and then set drawables to those colors
+                View v = views[ledNumber-1];
+                ClipDrawable cd = (ClipDrawable) v.getBackground();
+                cd.setLevel(5000);
+            }
+        });
+    }
 
 
     private void updateSensorViews() {
@@ -200,6 +224,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             ImageView questionMark = null;
             ImageView link;
             ImageView sensor;
+            int ledNumber = 0;
 
             switch (i) {
                 case 0:
@@ -221,16 +246,19 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_1);
                     questionMark = (ImageView) findViewById(R.id.image_led_1);
                     outputs[3] = triColorLeds[0].getRedLed();
+                    ledNumber = 1;
                     break;
                 case 4:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_2);
                     questionMark = (ImageView) findViewById(R.id.image_led_2);
                     outputs[4] = triColorLeds[1].getRedLed();
+                    ledNumber = 2;
                     break;
                 case 5:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_led_3);
                     questionMark = (ImageView) findViewById(R.id.image_led_3);
                     outputs[5] = triColorLeds[2].getRedLed();
+                    ledNumber = 3;
                     break;
                 case 6:
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker);
@@ -253,6 +281,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     link.setImageResource(outputs[i].getSettings().getRelationship().getGreyImageIdSm());
 
                     Settings settings = outputs[i].getSettings();
+
+                    if (ledNumber > 0) {
+                        TriColorLed led = triColorLeds[ledNumber-1];
+                        updateLedCircleColors(ledNumber, led);
+                    }
 
                     // TODO @tasota handle finding the sensor more cleanly?
                     int imageRes = new NoSensor(0).getGreyImageIdSm();
