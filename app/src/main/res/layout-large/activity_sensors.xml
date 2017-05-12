@@ -69,7 +69,7 @@
                         android:id="@+id/image_sensor_2_highlight"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/circle_blue"
+                        android:src="@drawable/sensor_circle_blue"
                         android:visibility="invisible" />
 
                     <ImageView
@@ -192,7 +192,7 @@
                         android:id="@+id/image_sensor_1_highlight"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/circle_blue"
+                        android:src="@drawable/sensor_circle_blue"
                         android:visibility="invisible" />
 
                     <ImageView
@@ -316,7 +316,7 @@
                         android:id="@+id/image_sensor_3_highlight"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/circle_blue"
+                        android:src="@drawable/sensor_circle_blue"
                         android:visibility="invisible" />
 
                     <ImageView
