@@ -62,7 +62,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         view.findViewById(R.id.linear_constant).setOnClickListener(this);
         view.findViewById(R.id.linear_amplitude).setOnClickListener(this);
         view.findViewById(R.id.linear_frequency).setOnClickListener(this);
-        view.findViewById(R.id.linear_cumulative).setOnClickListener(this);
+        //view.findViewById(R.id.linear_cumulative).setOnClickListener(this);
         view.findViewById(R.id.linear_change).setOnClickListener(this);
         /*view.findViewById(R.id.linear_proportional).setOnClickListener(this);
         view.findViewById(R.id.linear_frequency).setOnClickListener(this);
@@ -75,7 +75,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         //view.findViewById(R.id.linear_proportional).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_frequency).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_amplitude).setVisibility(View.GONE);
-        //view.findViewById(R.id.linear_cumulative).setVisibility(View.GONE);
+        view.findViewById(R.id.linear_cumulative).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_change).setVisibility(View.GONE);
         view.findViewById(R.id.linear_switch).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_constant).setVisibility(View.GONE);
