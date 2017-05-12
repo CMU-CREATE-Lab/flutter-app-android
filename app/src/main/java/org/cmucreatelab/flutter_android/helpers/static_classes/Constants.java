@@ -96,6 +96,40 @@ public final class Constants {
         put(ColorSwatches.BLACK, "Black");
     }};
 
+    public static final HashMap<Integer,Integer> RES_CIRCLE = new HashMap(){{
+        put(ColorSwatches.RED, R.drawable.circle_red);
+        put(ColorSwatches.ORANGE, R.drawable.circle_orange);
+        put(ColorSwatches.YELLOW, R.drawable.circle_yellow);
+        put(ColorSwatches.CHARTREUSE_GREEN, R.drawable.circle_chartreuse_green);
+        put(ColorSwatches.GREEN, R.drawable.circle_green);
+        put(ColorSwatches.SPRING_GREEN, R.drawable.circle_spring_green);
+        put(ColorSwatches.CYAN, R.drawable.circle_cyan);
+        put(ColorSwatches.AZURE, R.drawable.circle_azure);
+        put(ColorSwatches.BLUE, R.drawable.circle_blue);
+        put(ColorSwatches.VIOLET, R.drawable.circle_violet);
+        put(ColorSwatches.MAGENTA, R.drawable.circle_magenta);
+        put(ColorSwatches.ROSE, R.drawable.circle_rose);
+        put(ColorSwatches.WHITE, R.drawable.circle_white);
+        put(ColorSwatches.BLACK, R.drawable.circle_black);
+    }};
+
+    public static final HashMap<Integer,Integer> RES_HALFCIRCLE = new HashMap(){{
+        put(ColorSwatches.RED, R.drawable.halfcircle_red);
+        put(ColorSwatches.ORANGE, R.drawable.halfcircle_orange);
+        put(ColorSwatches.YELLOW, R.drawable.halfcircle_yellow);
+        put(ColorSwatches.CHARTREUSE_GREEN, R.drawable.halfcircle_chartreuse_green);
+        put(ColorSwatches.GREEN, R.drawable.halfcircle_green);
+        put(ColorSwatches.SPRING_GREEN, R.drawable.halfcircle_spring_green);
+        put(ColorSwatches.CYAN, R.drawable.halfcircle_cyan);
+        put(ColorSwatches.AZURE, R.drawable.halfcircle_azure);
+        put(ColorSwatches.BLUE, R.drawable.halfcircle_blue);
+        put(ColorSwatches.VIOLET, R.drawable.halfcircle_violet);
+        put(ColorSwatches.MAGENTA, R.drawable.halfcircle_magenta);
+        put(ColorSwatches.ROSE, R.drawable.halfcircle_rose);
+        put(ColorSwatches.WHITE, R.drawable.halfcircle_white);
+        put(ColorSwatches.BLACK, R.drawable.halfcircle_black);
+    }};
+
     // forces MessageQueue to throw away all "r" requests
     public static final boolean IGNORE_READ_SENSORS = false;
 

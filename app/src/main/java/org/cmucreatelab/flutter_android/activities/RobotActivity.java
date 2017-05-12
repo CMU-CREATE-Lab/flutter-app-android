@@ -23,6 +23,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -97,24 +98,48 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     };
 
 
-    private void updateLedCircleColors(final int ledNumber, TriColorLed triColorLed) {
+    private void updateLedCircleColors(final int ledNumber, final TriColorLed triColorLed) {
         Log.v(Constants.LOG_TAG, "updateLedCircleColors");
-        final View[] views = new View[] {
+        final View[] circle_views = new View[] {
+                findViewById(R.id.view_color_1),
+                findViewById(R.id.view_color_2),
+                findViewById(R.id.view_color_3)
+        };
+        final View[] halfcircle_views = new View[] {
                 findViewById(R.id.view_halfcolor_1),
                 findViewById(R.id.view_halfcolor_2),
                 findViewById(R.id.view_halfcolor_3)
         };
-        if (ledNumber > views.length || ledNumber <= 0) {
-            Log.e(Constants.LOG_TAG, "updateLedCircleColors received bad ledNumber="+ledNumber);
+        if (ledNumber > circle_views.length || ledNumber <= 0) {
+            Log.e(Constants.LOG_TAG, "updateLedCircleColors: received bad ledNumber="+ledNumber);
+            return;
+        }
+        if (!triColorLed.getRedLed().isLinked() && !triColorLed.getGreenLed().isLinked() && !triColorLed.getBlueLed().isLinked()) {
+            Log.e(Constants.LOG_TAG, "updateLedCircleColors: one of LEDs is currently not linked.");
             return;
         }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // TODO @tasota determine whether the relationship has 2 colors, and then set drawables to those colors
-                View v = views[ledNumber-1];
-                ClipDrawable cd = (ClipDrawable) v.getBackground();
-                cd.setLevel(5000);
+                View circleView = circle_views[ledNumber-1];
+                View halfCircleView = halfcircle_views[ledNumber-1];
+                int minCircle = TriColorLed.getHalfCircleFromColor(triColorLed.getMinColorHex());
+                int maxCircle = TriColorLed.getCircleFromColor(triColorLed.getMaxColorHex());
+
+                // set the full circle's background
+                circleView.setBackground( getResources().getDrawable(maxCircle) );
+
+                // NOTE: ClipDrawable levels range from 0-10000, from completely clipped to no clip
+                // set the half circle's background
+                ClipDrawable clipDrawable = (ClipDrawable) getResources().getDrawable( minCircle );
+                halfCircleView.setBackground(clipDrawable);
+                clipDrawable.setLevel(5000);
+                // if the link uses Constant relationship, do not display a minimum color
+                if (triColorLed.getRedLed().getSettings().getRelationship() == Constant.getInstance() ||
+                        triColorLed.getGreenLed().getSettings().getRelationship() == Constant.getInstance() ||
+                        triColorLed.getBlueLed().getSettings().getRelationship() == Constant.getInstance() ) {
+                    clipDrawable.setLevel(0);
+                }
             }
         });
     }
@@ -664,4 +689,5 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         updateSensorViews();
         updateLinkedViews();
     }
+
 }
