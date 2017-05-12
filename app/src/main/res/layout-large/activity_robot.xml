@@ -358,6 +358,7 @@
                 android:layout_width="64dp"
                 android:layout_height="103dp"
                 android:layout_alignParentStart="true"
+                android:visibility="invisible"
                 android:background="@drawable/link_active_l_e_d_speaker_b_g">
 
                 <LinearLayout
