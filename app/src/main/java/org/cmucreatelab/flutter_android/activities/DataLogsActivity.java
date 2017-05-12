@@ -34,9 +34,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataRecordingTimer;
 import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
-import org.cmucreatelab.flutter_android.helpers.datalogging.UpdateDataLogsState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
@@ -118,7 +116,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         name = globalHandler.sessionHandler.getSession().getFlutter().getName();
                     }
                     logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
-                    if (!globalHandler.dataLoggingHandler.getDataName().equals(null) && globalHandler.dataLoggingHandler.getNumberOfPoints() != 0) {
+                    if (!globalHandler.dataLoggingHandler.getDataName().equals(null) && globalHandler.dataLoggingHandler.getNumberOfPoints() != 0 && globalHandler.melodySmartDeviceHandler.isConnected()) {
                         findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
                         textLogName.setText(globalHandler.dataLoggingHandler.getDataName());
                         textLogPoints.setText(String.valueOf(globalHandler.dataLoggingHandler.getNumberOfPoints()));
