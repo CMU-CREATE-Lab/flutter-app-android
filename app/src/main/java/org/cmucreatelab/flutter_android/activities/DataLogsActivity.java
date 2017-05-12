@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
@@ -704,6 +705,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     if (isSuccess) {
                         if (globalHandler.dataLoggingHandler.isLogging()) {
                             dataRecordingTimer.startTimer();
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                         updateDynamicViews();
                     }

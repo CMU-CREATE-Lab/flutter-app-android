@@ -111,7 +111,7 @@ public class EmailHandler {
             @Override
             public void onResponse(String response) {
                 Log.d(Constants.LOG_TAG, "sendEmailServer.onResponse");
-                Toast.makeText(activity.getApplicationContext(), "Email successfully sent", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity.getApplicationContext(), R.string.email_sent_successfully, Toast.LENGTH_LONG).show();
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {

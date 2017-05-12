@@ -240,7 +240,7 @@
     <string name="save_data_log_to_kindle">Save Data Log to Tablet</string>
     <string name="select_a_data_log">Select a Data Log</string>
     <string name="select_a_data_log_details">Must have a data log selected before you can send a data log.</string>
-    <string name="done_recording">Your Flutter has finished recording. Loading data...</string>
+    <string name="done_recording">Your Flutter has finished recording data.</string>
     <string name="over_a_year">Over A Year</string>
     <string name="no_data_logs_to_clean_up">No Data Logs to Clean Up</string>
     <string name="no_data_logs_to_clean_up_details">There must be data logs available if you want to clean up data logs.</string>
@@ -255,6 +255,7 @@
     <string name="no_wifi_data_log_details">You need to be connected to WiFi before you can send a data log.</string>
     <string name="email_server_error">There was an error sending the data log. Please try again later.</string>
     <string name="invalid_email">Invalid Email Address</string>
+    <string name="email_sent_successfully">Email successfully sent.</string>
 
     <string-array name="time_array">
         <item>minute</item>
