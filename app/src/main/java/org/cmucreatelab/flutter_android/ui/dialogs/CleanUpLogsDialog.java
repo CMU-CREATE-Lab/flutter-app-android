@@ -1,9 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -19,7 +16,6 @@ import android.widget.ListView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapterCleanUp;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;

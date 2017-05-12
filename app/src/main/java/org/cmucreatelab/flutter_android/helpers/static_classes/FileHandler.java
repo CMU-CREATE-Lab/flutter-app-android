@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.helpers.static_classes;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.opencsv.CSVReader;
 

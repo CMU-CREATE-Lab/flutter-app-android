@@ -1,14 +1,12 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,8 +19,6 @@ import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.view.View.GONE;
 
 /**
  * Created by Steve on 2/6/2017.

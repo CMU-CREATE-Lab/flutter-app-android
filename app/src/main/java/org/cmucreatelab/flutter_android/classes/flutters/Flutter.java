@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import org.cmucreatelab.android.melodysmart.DeviceHandler;
-import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;

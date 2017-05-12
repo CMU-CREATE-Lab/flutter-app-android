@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;

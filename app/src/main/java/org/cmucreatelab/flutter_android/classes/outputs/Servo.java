@@ -3,8 +3,6 @@ package org.cmucreatelab.flutter_android.classes.outputs;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 
 /**
  * Created by Steve on 6/20/2016.

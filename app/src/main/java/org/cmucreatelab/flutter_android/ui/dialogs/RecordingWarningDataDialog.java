@@ -1,13 +1,11 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;

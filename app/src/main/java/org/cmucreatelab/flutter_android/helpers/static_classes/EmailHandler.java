@@ -103,7 +103,7 @@ public class EmailHandler {
 
 
     public static void sendEmailServer(final Activity activity, String email, String message, File dataLog, String flutterName) {
-        final HttpRequestHandler httpRequestHandler = GlobalHandler.getInstance(activity.getApplicationContext()).httpRequestHandler;;
+        final HttpRequestHandler httpRequestHandler = GlobalHandler.getInstance(activity.getApplicationContext()).httpRequestHandler;
         int method = Request.Method.POST;
         String url = Constants.MAIL_SERVER_URL;
 

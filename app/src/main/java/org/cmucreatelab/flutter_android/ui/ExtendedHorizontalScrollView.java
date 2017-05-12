@@ -3,7 +3,6 @@ package org.cmucreatelab.flutter_android.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 
 /**
  * Created by Paul on 4/22/2017.

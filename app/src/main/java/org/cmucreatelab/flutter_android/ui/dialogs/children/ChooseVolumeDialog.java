@@ -64,7 +64,7 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
         currentVolume = (TextView) view.findViewById(R.id.text_current_volume);
         seekBarVolume = (SeekBar) view.findViewById(R.id.seek_volume);
         seekBarVolume.setOnSeekBarChangeListener(seekBarChangeListener);
-        finalVolume = (Integer) getArguments().getSerializable(VOLUME_KEY);;
+        finalVolume = (Integer) getArguments().getSerializable(VOLUME_KEY);
         seekBarVolume.setProgress(finalVolume);
         currentVolume.setText(String.valueOf(finalVolume));
 

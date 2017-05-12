@@ -1,9 +1,6 @@
 package org.cmucreatelab.flutter_android.classes.sensors;
 
-import android.util.Log;
-
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 
 /**

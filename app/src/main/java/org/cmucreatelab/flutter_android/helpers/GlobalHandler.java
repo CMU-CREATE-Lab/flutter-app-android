@@ -2,9 +2,6 @@ package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.melodysmart.FlutterDeviceHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;

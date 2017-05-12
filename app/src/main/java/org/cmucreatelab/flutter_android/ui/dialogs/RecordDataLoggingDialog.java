@@ -1,11 +1,9 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,14 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Steve on 1/9/2017.

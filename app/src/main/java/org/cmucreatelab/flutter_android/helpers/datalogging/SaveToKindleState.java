@@ -3,7 +3,6 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;

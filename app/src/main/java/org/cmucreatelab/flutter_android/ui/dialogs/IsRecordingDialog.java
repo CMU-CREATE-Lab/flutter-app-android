@@ -8,7 +8,6 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
@@ -53,11 +52,11 @@ public class IsRecordingDialog extends BaseResizableDialog {
 
         // Get the correct color buttons
         if (((BaseDataLoggingDialog) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY)).getClass().getSimpleName().equals(RecordDataSensorDialog.class.getSimpleName())) {
-            ((Button) view.findViewById(R.id.button_stop_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_left));
-            ((Button) view.findViewById(R.id.button_keep_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
+            (view.findViewById(R.id.button_stop_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_left));
+            (view.findViewById(R.id.button_keep_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
         } else {
-            ((Button) view.findViewById(R.id.button_stop_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_left));
-            ((Button) view.findViewById(R.id.button_keep_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_right));
+            (view.findViewById(R.id.button_stop_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_left));
+            (view.findViewById(R.id.button_keep_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_right));
         }
 
         return builder.create();
