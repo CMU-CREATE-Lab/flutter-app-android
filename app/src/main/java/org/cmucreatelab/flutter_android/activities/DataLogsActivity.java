@@ -117,7 +117,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                         name = globalHandler.sessionHandler.getSession().getFlutter().getName();
                     }
                     logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
-                    if (!globalHandler.dataLoggingHandler.getDataName().equals(null) && globalHandler.dataLoggingHandler.getNumberOfPoints() != 0 && globalHandler.melodySmartDeviceHandler.isConnected()) {
+                    if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
+                        noLogsFlutterTextView.setText(R.string.no_flutter_connected_data_log);
+                        noLogsFlutterTextView.setVisibility(View.VISIBLE);
+                    } else if (!globalHandler.dataLoggingHandler.getDataName().equals(null) && globalHandler.dataLoggingHandler.getNumberOfPoints() != 0 ) {
                         findViewById(R.id.relative_flutter_log).setVisibility(View.VISIBLE);
                         textLogName.setText(globalHandler.dataLoggingHandler.getDataName());
                         textLogPoints.setText(String.valueOf(globalHandler.dataLoggingHandler.getNumberOfPoints()));
