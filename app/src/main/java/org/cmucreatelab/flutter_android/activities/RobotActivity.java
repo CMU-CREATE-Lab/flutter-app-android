@@ -193,8 +193,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Speaker speaker = session.getFlutter().getSpeaker();
 
         // servos link check
-        for (int i = 0; i < servos.length + triColorLeds.length + 1; i++) {
-            Output[] outputs = new Output[7];
+        for (int i = 0; i < servos.length + triColorLeds.length + 2; i++) {
+            Output[] outputs = new Output[8];
             RelativeLayout currentLayout = null;
             ViewGroup linkAndSensor;
             ImageView questionMark = null;
@@ -236,6 +236,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker);
                     questionMark = (ImageView) findViewById(R.id.image_speaker);
                     outputs[6] = speaker.getVolume();
+                    break;
+                case 7:
+                    currentLayout = (RelativeLayout) findViewById(R.id.relative_speaker2);
+                    questionMark = (ImageView) findViewById(R.id.image_speaker);
+                    outputs[7] = speaker.getPitch();
                     break;
             }
             if (outputs[i].isLinked()) {
@@ -568,6 +573,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
     @OnClick(R.id.relative_speaker)
     public void onClickSpeakerRelative() {
+        onClickSpeaker();
+    }
+    @OnClick(R.id.relative_speaker2)
+    public void onClickSpeakerRelative2() {
         onClickSpeaker();
     }
 

@@ -538,6 +538,47 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relative_speaker2"
+            android:layout_width="64dp"
+            android:layout_height="103dp"
+            android:layout_alignBottom="@+id/relative_leds"
+            android:layout_alignLeft="@+id/relative_speaker"
+            android:layout_marginStart="70dp"
+            android:layout_toEndOf="@id/relative_leds"
+            android:background="@drawable/link_active_l_e_d_speaker_b_g"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:id="@+id/linear_speaker_link2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_margin="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_launcher" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_launcher" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/linear_speaker_link2"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_green"
+                android:src="@drawable/speaker_icon" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
