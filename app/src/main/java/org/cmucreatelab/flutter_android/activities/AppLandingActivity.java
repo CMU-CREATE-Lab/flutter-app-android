@@ -157,10 +157,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         final ImageView bPrevious = (ImageView) findViewById(R.id.image_content_scan_scroll_left);
                         final ImageView bNext = (ImageView) findViewById(R.id.image_content_scan_scroll_right);
                         if (list.getChildCount() > 2) {
-                            bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_right));
+                            bNext.setImageResource(R.drawable.green_right);
                         } else {
-                            bPrevious.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_left));
-                            bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_right));
+                            bPrevious.setImageResource(R.drawable.grey_left);
+                            bNext.setImageResource(R.drawable.grey_right);
                         }
                     }
                 }
@@ -336,14 +336,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 public void onScrollChanged(int x, int y, int oldX, int oldY) {
                     Integer maxScrollX = list.getChildAt(0).getMeasuredWidth() - list.getMeasuredWidth();
                     if (x == 0) {
-                        bPrevious.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_left));
+                        bPrevious.setImageResource(R.drawable.grey_left);
                     }
                     if (x > 0) {
-                        bPrevious.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_left));
-                        bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.green_right));
+                        bPrevious.setImageResource(R.drawable.green_left);
+                        bNext.setImageResource(R.drawable.green_right);
                     }
                     if (x == maxScrollX) {
-                        bNext.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.grey_right));
+                        bNext.setImageResource(R.drawable.grey_right);
                     }
                 }
             });
