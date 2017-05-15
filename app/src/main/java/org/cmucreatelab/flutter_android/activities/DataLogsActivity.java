@@ -618,6 +618,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
+            if (globalHandler.dataLoggingHandler.isLogging()) {
+                findViewById(R.id.data_recording_spinner).setVisibility(View.VISIBLE);
+            }
         }
 
         dataLogsUpdateHelper.registerStateAndUpdatePoints(new ResumeState(this));
