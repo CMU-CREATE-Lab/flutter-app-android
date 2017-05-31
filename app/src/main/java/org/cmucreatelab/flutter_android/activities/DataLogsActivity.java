@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -197,9 +198,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 ImageView sensor2Type = (ImageView) findViewById(R.id.image_sensor_2_type);
                 ImageView sensor3Type = (ImageView) findViewById(R.id.image_sensor_3_type);
                 dataLogTitle.setText(dataSet.getDataName());
-                sensor1Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[0].getOrangeImageIdMd()));
-                sensor2Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[1].getOrangeImageIdMd()));
-                sensor3Type.setImageDrawable(ContextCompat.getDrawable(instance, dataSet.getSensors()[2].getOrangeImageIdMd()));
+                sensor1Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[0].getSensorType() != NOT_SET) ? dataSet.getSensors()[0].getOrangeImageIdMd() : R.drawable.grey_question_mark));
+                sensor2Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[1].getSensorType() != NOT_SET) ? dataSet.getSensors()[1].getOrangeImageIdMd() : R.drawable.grey_question_mark));
+                sensor3Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[2].getSensorType() != NOT_SET) ? dataSet.getSensors()[2].getOrangeImageIdMd() : R.drawable.grey_question_mark));
 
                 dataInstanceListAdapter.clearDataPoints();
                 Iterator it = dataSet.getData().entrySet().iterator();
