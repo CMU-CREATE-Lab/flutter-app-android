@@ -1,6 +1,9 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -33,11 +37,26 @@ import butterknife.OnClick;
 public class EmailDialog extends BaseResizableDialog {
 
     private static final String DATA_SET_KEY = "data_set_key";
+    private static final String EMAIL_KEY = "email_key";
 
     private GlobalHandler globalHandler;
     private EditText email;
     private EditText message;
     private DataSet currentDataLog;
+
+
+    private void saveEmail(String email) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(EMAIL_KEY, email);
+        editor.apply();
+    }
+
+
+    private String loadEmail() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        return sharedPref.getString(EMAIL_KEY, "");
+    }
 
 
     public static EmailDialog newInstance(Serializable dataSet) {
@@ -62,6 +81,9 @@ public class EmailDialog extends BaseResizableDialog {
         email = (EditText) view.findViewById(R.id.edit_text_email);
         message = (EditText) view.findViewById(R.id.edit_text_message);
         currentDataLog = (DataSet) getArguments().getSerializable(DATA_SET_KEY);
+
+        email.setText(loadEmail());
+
         return builder.create();
     }
 
@@ -81,6 +103,8 @@ public class EmailDialog extends BaseResizableDialog {
             } else {
                 Log.e(Constants.LOG_TAG, "Unknown type for Constants.SEND_EMAIL_AS");
             }
+
+            saveEmail(email.getText().toString());
 
             this.dismiss();
         } else {
