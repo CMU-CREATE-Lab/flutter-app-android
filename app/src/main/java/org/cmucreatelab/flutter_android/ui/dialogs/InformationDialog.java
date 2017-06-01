@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -29,13 +30,15 @@ public class InformationDialog extends BaseResizableDialog {
     private static final String DETAILS_KEY = "details_key";
     private static final String POSITIVE_ID_KEY = "positive_id_key";
     private static final String NEGATIVE_ID_KEY = "negative_id_key";
+    private static final String IMAGE_ID_KEY = "image_id_key";
     private static final String DISMISS_KEY = "dismiss_key";
 
     private DismissAndCancelWarningListener dismissAndCancelWarningListener;
     private String title;
     private String details;
-    private int positiveButtonDrawableId;
-    private int negativeButtonDrawableId;
+    private Integer positiveButtonDrawableId;
+    private Integer negativeButtonDrawableId;
+    private Integer imageId;
 
 
     // On Button click events
@@ -45,9 +48,9 @@ public class InformationDialog extends BaseResizableDialog {
         @Override
         public void onClick(View view) {
             if (dismissAndCancelWarningListener != null) {
-                InformationDialog.super.dismiss();
                 dismissAndCancelWarningListener.onPositiveButton();
             }
+            InformationDialog.super.dismiss();
         }
     };
 
@@ -84,17 +87,19 @@ public class InformationDialog extends BaseResizableDialog {
      * @param details The details of the warning.
      * @param positiveButtonDrawableId The drawableId of the positive button.
      * @param negativeButtonDrawableId The drawableId of the negative button.
+     * @param imageId The drawableId of an image that describes an item.
      * @param dismissAndCancelWarningListener The listener for what to do when this dialog is dismissed or canceled.
      * @return The warning dialog instance.
      */
-    public static InformationDialog newInstance(String title, String details, int positiveButtonDrawableId, int negativeButtonDrawableId, Serializable dismissAndCancelWarningListener) {
+    public static InformationDialog newInstance(String title, String details, int positiveButtonDrawableId, @Nullable Integer negativeButtonDrawableId, @Nullable Integer imageId, @Nullable  Serializable dismissAndCancelWarningListener) {
         Log.d(Constants.LOG_TAG, "making the instance...");
         InformationDialog informationDialog = new InformationDialog();
         Bundle args = new Bundle();
         args.putString(TITLE_KEY, title);
         args.putString(DETAILS_KEY, details);
         args.putInt(POSITIVE_ID_KEY, positiveButtonDrawableId);
-        args.putInt(NEGATIVE_ID_KEY, negativeButtonDrawableId);
+        args.putSerializable(NEGATIVE_ID_KEY, negativeButtonDrawableId);
+        args.putSerializable(IMAGE_ID_KEY, imageId);
         args.putSerializable(DISMISS_KEY, dismissAndCancelWarningListener);
         informationDialog.setArguments(args);
         return informationDialog;
@@ -108,7 +113,10 @@ public class InformationDialog extends BaseResizableDialog {
         super.onCreateDialog(savedInstanceState);
         title = getArguments().getString(TITLE_KEY);
         details = getArguments().getString(DETAILS_KEY);
-        dismissAndCancelWarningListener = (DismissAndCancelWarningListener) getArguments().getSerializable(DISMISS_KEY);
+
+        if (getArguments().getSerializable(DISMISS_KEY) != null) {
+            dismissAndCancelWarningListener = (DismissAndCancelWarningListener) getArguments().getSerializable(DISMISS_KEY);
+        }
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_information, null);
@@ -116,18 +124,19 @@ public class InformationDialog extends BaseResizableDialog {
         builder.setView(view);
 
         ((EmojiconTextView) view.findViewById(R.id.text_title)).setText(title);
-        ((TextView) view.findViewById(R.id.text_details)).setText(details);
+        TextView textDetails = (TextView) view.findViewById(R.id.text_details);
         Button buttonOk1 = (Button) view.findViewById(R.id.button_ok_1);
         Button buttonOk2 = (Button) view.findViewById(R.id.button_ok_2);
         Button negativeButton = (Button) view.findViewById(R.id.button_cancel);
         buttonOk1.setOnClickListener(positiveButtonClick);
         buttonOk2.setOnClickListener(positiveButtonClick);
         negativeButton.setOnClickListener(negativeButtonClick);
+        textDetails.setText(details);
 
 
-        positiveButtonDrawableId = getArguments().getInt(POSITIVE_ID_KEY);
-        if (getArguments().getInt(NEGATIVE_ID_KEY) != 0) {
-            negativeButtonDrawableId = getArguments().getInt(NEGATIVE_ID_KEY);
+        positiveButtonDrawableId = (Integer) getArguments().getSerializable(POSITIVE_ID_KEY);
+        if (getArguments().getSerializable(NEGATIVE_ID_KEY) != null) {
+            negativeButtonDrawableId = (Integer) getArguments().getSerializable(NEGATIVE_ID_KEY);
             buttonOk1.setVisibility(View.GONE);
             buttonOk2.setBackground(ContextCompat.getDrawable(getActivity(), positiveButtonDrawableId));
             negativeButton.setBackground(ContextCompat.getDrawable(getActivity(), negativeButtonDrawableId));
@@ -140,6 +149,12 @@ public class InformationDialog extends BaseResizableDialog {
                 }
             });
             view.findViewById(R.id.linear_button_container).setVisibility(View.GONE);
+        }
+
+        if (getArguments().getSerializable(IMAGE_ID_KEY) != null) {
+            imageId = (Integer) getArguments().getSerializable(IMAGE_ID_KEY);
+            textDetails.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), imageId), null, null, null);
+            textDetails.setCompoundDrawablePadding(5);
         }
 
         return builder.create();

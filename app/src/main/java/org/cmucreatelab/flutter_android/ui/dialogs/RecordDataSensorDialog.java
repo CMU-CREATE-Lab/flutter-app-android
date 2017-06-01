@@ -70,6 +70,7 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
                 getString(R.string.a_lot_of_data_points_details),
                 R.drawable.round_blue_button_bottom_right,
                 R.drawable.round_blue_button_bottom_left,
+                null,
                 warningDialogListener
         );
         informationDialog.setCancelable(false);

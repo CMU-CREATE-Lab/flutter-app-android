@@ -249,12 +249,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     private void sensorClick(Sensor sensor) {
         if (sensor.getSensorType() != NOT_SET) {
-            InformationDialog informationDialog = InformationDialog.newInstance(
+            InformationDialog sensorInfoDialog = InformationDialog.newInstance(
                     "Sensors for " + workingDataSet.getDataName(),
                     getString(sensor.getSensorTypeId()) + " sensor" + " plugged into port " + sensor.getPortNumber() + ".",
-                    R.drawable.round_orange_button_bottom
+                    R.drawable.round_orange_button_bottom,
+                    null,
+                    sensor.getOrangeImageIdMd(),
+                    null
             );
-            informationDialog.show(getSupportFragmentManager(), "tag");
+            sensorInfoDialog.show(getSupportFragmentManager(), "tag");
         }
     }
     private ImageView.OnClickListener sensor1ClickListener = new View.OnClickListener() {

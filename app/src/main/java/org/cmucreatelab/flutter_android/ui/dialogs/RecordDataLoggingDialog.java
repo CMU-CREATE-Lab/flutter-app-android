@@ -70,6 +70,7 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
                 getString(R.string.a_lot_of_data_points_details),
                 R.drawable.round_orange_button_bottom_right,
                 R.drawable.round_orange_button_bottom_left,
+                null,
                 warningDialogListener
         );
         informationDialog.setCancelable(false);
