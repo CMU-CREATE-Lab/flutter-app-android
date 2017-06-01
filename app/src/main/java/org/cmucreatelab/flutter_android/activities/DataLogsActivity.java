@@ -247,7 +247,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         if (sensor.getSensorType() != NOT_SET) {
             InformationDialog informationDialog = InformationDialog.newInstance(
                     "Sensors for " + workingDataSet.getDataName(),
-                    "Plugged into port " + sensor.getPortNumber() + "\n" + getString(sensor.getSensorTypeId()) + " sensor",
+                    getString(sensor.getSensorTypeId()) + " sensor" + " plugged into port " + sensor.getPortNumber() + ".",
                     R.drawable.round_orange_button_bottom
             );
             informationDialog.show(getSupportFragmentManager(), "tag");
