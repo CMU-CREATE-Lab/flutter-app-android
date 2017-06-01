@@ -257,6 +257,7 @@
     <string name="invalid_email">Invalid Email Address</string>
     <string name="email_sent_successfully">Email successfully sent.</string>
     <string name="no_flutter_connected_data_log">No Flutter connected</string>
+    <string name="too_many_bits">The data log name is too long, try using a shorter name.</string>
 
     <string-array name="time_array">
         <item>minute</item>

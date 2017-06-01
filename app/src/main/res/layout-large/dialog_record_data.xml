@@ -13,7 +13,7 @@
         android:textSize="24sp"
         android:text="@string/record_data_set"/>
 
-    <EditText
+    <com.rockerhieu.emojicon.EmojiconEditText
         android:id="@+id/edit_data_set_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

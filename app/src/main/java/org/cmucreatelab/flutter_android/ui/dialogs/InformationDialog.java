@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.rockerhieu.emojicon.EmojiconTextView;
+
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -109,11 +111,11 @@ public class InformationDialog extends BaseResizableDialog {
         dismissAndCancelWarningListener = (DismissAndCancelWarningListener) getArguments().getSerializable(DISMISS_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_send_data_failed, null);
+        final View view = inflater.inflate(R.layout.dialog_information, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
 
-        ((TextView) view.findViewById(R.id.text_title)).setText(title);
+        ((EmojiconTextView) view.findViewById(R.id.text_title)).setText(title);
         ((TextView) view.findViewById(R.id.text_details)).setText(details);
         Button buttonOk1 = (Button) view.findViewById(R.id.button_ok_1);
         Button buttonOk2 = (Button) view.findViewById(R.id.button_ok_2);

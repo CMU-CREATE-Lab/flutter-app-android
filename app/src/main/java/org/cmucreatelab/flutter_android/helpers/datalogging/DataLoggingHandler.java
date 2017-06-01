@@ -83,6 +83,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     public void readLogName(String output) {
+        Log.d(Constants.LOG_TAG, "DataLoggingHandler.readLogName");
         String temp = output.substring(2, output.length());
         dataName = temp;
     }
@@ -206,6 +207,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
         String intervalString = getIntervalInHex(interval);
         String samplesString = getSamplesInHex(samples);
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
+
+        this.dataName = logName;
 
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage("n," + logName));
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage(builder.toString()));

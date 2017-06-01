@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.rockerhieu.emojicon.EmojiconEditText;
+
 import org.cmucreatelab.flutter_android.R;
 
 import java.io.Serializable;
@@ -45,7 +47,7 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         builder.setView(view);
         ButterKnife.bind(this, view);
 
-        dataSetNameText = (EditText) view.findViewById(R.id.edit_data_set_name);
+        dataSetNameText = (EmojiconEditText) view.findViewById(R.id.edit_data_set_name);
         intervalsText = (EditText) view.findViewById(R.id.edit_number_of_intervals);
         intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
         timePeriodText = (EditText) view.findViewById(R.id.edit_time_period);

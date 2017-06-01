@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rockerhieu.emojicon.EmojiconTextView;
+
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.adapters.DataInstanceListAdapter;
@@ -108,15 +110,15 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     else
                         noLogsFlutterTextView.setVisibility(View.VISIBLE);
 
-                    TextView logTitle = (TextView) findViewById(R.id.text_current_device_title);
-                    TextView textLogName = (TextView) findViewById(R.id.text_current_log_name);
+                    TextView deviceTitle = (TextView) findViewById(R.id.text_current_device_title);
+                    EmojiconTextView textLogName = (EmojiconTextView) findViewById(R.id.text_current_log_name);
                     TextView textLogPoints = (TextView) findViewById(R.id.text_num_points);
 
                     String name = "";
                     if (globalHandler.melodySmartDeviceHandler.isConnected()) {
                         name = globalHandler.sessionHandler.getSession().getFlutter().getName();
                     }
-                    logTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
+                    deviceTitle.setText(getString(R.string.on) + " " + name + " " + getString(R.string.flutter));
                     if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
                         noLogsFlutterTextView.setText(R.string.no_flutter_connected_data_log);
                         noLogsFlutterTextView.setVisibility(View.VISIBLE);
@@ -192,11 +194,13 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 findViewById(R.id.include_data_log_landing).setVisibility(View.GONE);
                 findViewById(R.id.include_data_log_selected).setVisibility(View.VISIBLE);
 
-                TextView dataLogTitle = (TextView) findViewById(R.id.text_data_log_title);
+                EmojiconTextView dataLogTitle = (EmojiconTextView) findViewById(R.id.text_data_log_title);
                 ImageView sensor1Type = (ImageView) findViewById(R.id.image_sensor_1_type);
                 ImageView sensor2Type = (ImageView) findViewById(R.id.image_sensor_2_type);
                 ImageView sensor3Type = (ImageView) findViewById(R.id.image_sensor_3_type);
                 dataLogTitle.setText(dataSet.getDataName());
+                Log.d(Constants.LOG_TAG, "name = " + dataSet.getDataName());
+                Log.d(Constants.LOG_TAG, "length = " + dataSet.getDataName().getBytes().length);
                 sensor1Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[0].getSensorType() != NOT_SET) ? dataSet.getSensors()[0].getOrangeImageIdMd() : R.drawable.grey_question_mark));
                 sensor2Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[1].getSensorType() != NOT_SET) ? dataSet.getSensors()[1].getOrangeImageIdMd() : R.drawable.grey_question_mark));
                 sensor3Type.setImageDrawable(ContextCompat.getDrawable(instance, (dataSet.getSensors()[2].getSensorType() != NOT_SET) ? dataSet.getSensors()[2].getOrangeImageIdMd() : R.drawable.grey_question_mark));
@@ -712,6 +716,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         Log.d(Constants.LOG_TAG, "onDataRecord");
         GlobalHandler.getInstance(getApplicationContext()).dataLoggingHandler.startLogging(interval, sample, name);
         findViewById(R.id.data_recording_spinner).setVisibility(View.VISIBLE);
+
     }
 
 

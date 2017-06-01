@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.rockerhieu.emojicon.EmojiconTextView;
+
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -25,7 +27,7 @@ public class DataLogListAdapter extends BaseAdapter {
 
 
     private static class ViewHolder {
-        public TextView dataLogName;
+        public EmojiconTextView dataLogName;
         public TextView numberOfPoints;
     }
 
@@ -75,7 +77,7 @@ public class DataLogListAdapter extends BaseAdapter {
         if (view == null) {
             view = layoutInflater.inflate(R.layout.list_data_log, null);
             viewHolder = new ViewHolder();
-            viewHolder.dataLogName = (TextView) view.findViewById(R.id.text_current_log_name);
+            viewHolder.dataLogName = (EmojiconTextView) view.findViewById(R.id.text_current_log_name);
             viewHolder.numberOfPoints = (TextView) view.findViewById(R.id.text_num_points);
             view.setTag(viewHolder);
         } else {

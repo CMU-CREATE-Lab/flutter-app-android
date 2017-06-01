@@ -3,9 +3,17 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
@@ -21,11 +29,15 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 1/17/2017.
  */
-public abstract class BaseDataLoggingDialog extends BaseResizableDialog implements Serializable, DataLoggingHandler.DataSetPointsListener {
+public abstract class BaseDataLoggingDialog extends BaseResizableDialog implements Serializable, DataLoggingHandler.DataSetPointsListener,
+        EmojiconGridFragment.OnEmojiconClickedListener,
+        EmojiconsFragment.OnEmojiconBackspaceClickedListener{
 
     protected static final String RECORD_KEY = "record_key";
     protected static final String DISMISS_KEY = "dismiss_key";
     protected static final String BUTTON_KEY = "button_key";
+
+    private static final int MAX_BITS = 15;
 
     private GlobalHandler globalHandler;
     private boolean isLogging;
@@ -38,7 +50,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     protected int finalInterval, finalSample;
 
     protected InformationDialog informationDialog;
-    protected EditText dataSetNameText;
+    protected EmojiconEditText dataSetNameText;
     protected EditText intervalsText;
     protected Spinner intervalSpinner;
     protected EditText timePeriodText;
@@ -78,6 +90,10 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
         }
         if(name.equals("")) {
             dataSetNameText.setError(getString(R.string.empty_data_name));
+            result = false;
+        }
+        if (name.getBytes().length > MAX_BITS) {
+            dataSetNameText.setError(getString(R.string.too_many_bits));
             result = false;
         }
 
@@ -131,6 +147,25 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
         globalHandler.dataLoggingHandler.populatePointsAvailable(this);
         isLogging = false;
         isWaitingForResponse = true;
+
+        dataSetNameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().getBytes().length > MAX_BITS){
+                    dataSetNameText.setError(getString(R.string.too_many_bits));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         return dialog;
     }
@@ -189,6 +224,20 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
         if (isSuccess) {
             isLogging = globalHandler.dataLoggingHandler.isLogging();
         }
+    }
+
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+
+        EmojiconsFragment.input(dataSetNameText, emojicon);
+    }
+
+
+    @Override
+    public void onEmojiconBackspaceClicked(View view) {
+
+        EmojiconsFragment.backspace(dataSetNameText);
     }
 
 
