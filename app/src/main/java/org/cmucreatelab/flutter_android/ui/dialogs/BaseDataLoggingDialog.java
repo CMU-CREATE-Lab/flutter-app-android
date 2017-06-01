@@ -37,7 +37,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     protected static final String DISMISS_KEY = "dismiss_key";
     protected static final String BUTTON_KEY = "button_key";
 
-    private static final int MAX_BITS = 15;
+    private static final int MAX_BYTES = 15;
 
     private GlobalHandler globalHandler;
     private boolean isLogging;
@@ -92,7 +92,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
             dataSetNameText.setError(getString(R.string.empty_data_name));
             result = false;
         }
-        if (name.getBytes().length > MAX_BITS) {
+        if (name.getBytes().length > MAX_BYTES) {
             dataSetNameText.setError(getString(R.string.too_many_bits));
             result = false;
         }
@@ -156,7 +156,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().getBytes().length > MAX_BITS){
+                if(charSequence.toString().getBytes().length > MAX_BYTES){
                     dataSetNameText.setError(getString(R.string.too_many_bits));
                 }
             }
