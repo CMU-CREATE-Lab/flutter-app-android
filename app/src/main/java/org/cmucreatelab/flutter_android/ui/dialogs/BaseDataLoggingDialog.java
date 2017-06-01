@@ -37,7 +37,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
 
     protected int finalInterval, finalSample;
 
-    protected WarningDialog warningDialog;
+    protected InformationDialog informationDialog;
     protected EditText dataSetNameText;
     protected EditText intervalsText;
     protected Spinner intervalSpinner;
@@ -107,7 +107,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
     }
 
 
-    protected WarningDialog.DismissAndCancelWarningListener warningDialogListener = new WarningDialog.DismissAndCancelWarningListener() {
+    protected InformationDialog.DismissAndCancelWarningListener warningDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
         @Override
         public void onPositiveButton() {
             Log.d(Constants.LOG_TAG, "this is getting dismissed");
@@ -174,7 +174,7 @@ public abstract class BaseDataLoggingDialog extends BaseResizableDialog implemen
                     this.dismiss();
                 } else {
                     Log.d(Constants.LOG_TAG, "about to show the warning dialog");
-                    warningDialog.show(getFragmentManager(), "tag");
+                    informationDialog.show(getFragmentManager(), "tag");
                 }
             } else {
                 intervalsText.setError(getString(R.string.please_enter_60_or_less));

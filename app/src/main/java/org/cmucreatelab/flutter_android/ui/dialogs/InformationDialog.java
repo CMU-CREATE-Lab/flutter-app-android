@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Created by Steve on 3/13/2017.
  */
 
-public class WarningDialog extends BaseResizableDialog {
+public class InformationDialog extends BaseResizableDialog {
 
     private static final String TITLE_KEY = "title_key";
     private static final String DETAILS_KEY = "details_key";
@@ -43,7 +43,7 @@ public class WarningDialog extends BaseResizableDialog {
         @Override
         public void onClick(View view) {
             if (dismissAndCancelWarningListener != null) {
-                WarningDialog.super.dismiss();
+                InformationDialog.super.dismiss();
                 dismissAndCancelWarningListener.onPositiveButton();
             }
         }
@@ -65,14 +65,14 @@ public class WarningDialog extends BaseResizableDialog {
      * @param positiveButtonDrawableId The drawableId of the positive button.
      * @return The warning dialog instance.
      */
-    public static WarningDialog newInstance(String title, String details, int positiveButtonDrawableId) {
-        WarningDialog warningDialog = new WarningDialog();
+    public static InformationDialog newInstance(String title, String details, int positiveButtonDrawableId) {
+        InformationDialog informationDialog = new InformationDialog();
         Bundle args = new Bundle();
         args.putString(TITLE_KEY, title);
         args.putString(DETAILS_KEY, details);
         args.putInt(POSITIVE_ID_KEY, positiveButtonDrawableId);
-        warningDialog.setArguments(args);
-        return warningDialog;
+        informationDialog.setArguments(args);
+        return informationDialog;
     }
 
 
@@ -85,17 +85,17 @@ public class WarningDialog extends BaseResizableDialog {
      * @param dismissAndCancelWarningListener The listener for what to do when this dialog is dismissed or canceled.
      * @return The warning dialog instance.
      */
-    public static WarningDialog newInstance(String title, String details, int positiveButtonDrawableId, int negativeButtonDrawableId, Serializable dismissAndCancelWarningListener) {
+    public static InformationDialog newInstance(String title, String details, int positiveButtonDrawableId, int negativeButtonDrawableId, Serializable dismissAndCancelWarningListener) {
         Log.d(Constants.LOG_TAG, "making the instance...");
-        WarningDialog warningDialog = new WarningDialog();
+        InformationDialog informationDialog = new InformationDialog();
         Bundle args = new Bundle();
         args.putString(TITLE_KEY, title);
         args.putString(DETAILS_KEY, details);
         args.putInt(POSITIVE_ID_KEY, positiveButtonDrawableId);
         args.putInt(NEGATIVE_ID_KEY, negativeButtonDrawableId);
         args.putSerializable(DISMISS_KEY, dismissAndCancelWarningListener);
-        warningDialog.setArguments(args);
-        return warningDialog;
+        informationDialog.setArguments(args);
+        return informationDialog;
     }
 
 

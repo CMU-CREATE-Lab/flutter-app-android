@@ -2,7 +2,6 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -45,7 +44,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SaveToKindleDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.WarningDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
 import org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
@@ -244,6 +243,36 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     // OnClick Listeners
 
 
+    private void sensorClick(Sensor sensor) {
+        if (sensor.getSensorType() != NOT_SET) {
+            InformationDialog informationDialog = InformationDialog.newInstance(
+                    "Sensors for " + workingDataSet.getDataName(),
+                    "Plugged into port " + sensor.getPortNumber() + "\n" + getString(sensor.getSensorTypeId()) + " sensor",
+                    R.drawable.round_orange_button_bottom
+            );
+            informationDialog.show(getSupportFragmentManager(), "tag");
+        }
+    }
+    private ImageView.OnClickListener sensor1ClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            sensorClick(workingDataSet.getSensors()[0]);
+        }
+    };
+    private ImageView.OnClickListener sensor2ClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            sensorClick(workingDataSet.getSensors()[1]);
+        }
+    };
+    private ImageView.OnClickListener sensor3ClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            sensorClick(workingDataSet.getSensors()[2]);
+        }
+    };
+
+
     private TextView.OnClickListener openLogClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -255,8 +284,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
                 dataLogsUpdateHelper.registerStateAndUpdatePoints(new OpenLogState(instance));
             } else {
-                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_data_logs_to_open), getString(R.string.no_data_logs_to_open_details), R.drawable.round_orange_button_bottom);
-                warningDialog.show(getSupportFragmentManager(), "tag");
+                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_data_logs_to_open), getString(R.string.no_data_logs_to_open_details), R.drawable.round_orange_button_bottom);
+                informationDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
@@ -270,11 +299,11 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (workingDataSet == null) {
-                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
-                warningDialog.show(getSupportFragmentManager(), "tag");
+                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
+                informationDialog.show(getSupportFragmentManager(), "tag");
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
-                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_wifi), getString(R.string.no_wifi_data_log_details), R.drawable.round_orange_button_bottom);
-                warningDialog.show(getSupportFragmentManager(), "tag");
+                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_wifi), getString(R.string.no_wifi_data_log_details), R.drawable.round_orange_button_bottom);
+                informationDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
@@ -295,8 +324,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
             } else {
-                WarningDialog warningDialog = WarningDialog.newInstance(getString(R.string.no_data_logs_to_clean_up), getString(R.string.no_data_logs_to_clean_up_details), R.drawable.round_orange_button_bottom);
-                warningDialog.show(getSupportFragmentManager(), "tag");
+                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_data_logs_to_clean_up), getString(R.string.no_data_logs_to_clean_up_details), R.drawable.round_orange_button_bottom);
+                informationDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
@@ -549,6 +578,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         imageSensor1 = (ImageView) findViewById(R.id.image_sensor_1);
         imageSensor2 = (ImageView) findViewById(R.id.image_sensor_2);
         imageSensor3 = (ImageView) findViewById(R.id.image_sensor_3);
+
+        findViewById(R.id.image_sensor_1_type).setOnClickListener(sensor1ClickListener);
+        findViewById(R.id.image_sensor_2_type).setOnClickListener(sensor2ClickListener);
+        findViewById(R.id.image_sensor_3_type).setOnClickListener(sensor3ClickListener);
+
+        findViewById(R.id.image_sensor_1).setOnClickListener(sensor1ClickListener);
+        findViewById(R.id.image_sensor_2).setOnClickListener(sensor2ClickListener);
+        findViewById(R.id.image_sensor_3).setOnClickListener(sensor3ClickListener);
 
         buttonMean.setOnClickListener(meanClickListener);
         buttonMedian.setOnClickListener(medianClickListener);

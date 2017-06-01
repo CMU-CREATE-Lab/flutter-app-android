@@ -64,14 +64,14 @@ public class RecordDataLoggingDialog extends BaseDataLoggingDialog implements Se
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timePeriodSpinner.setAdapter(adapter);
 
-        warningDialog = WarningDialog.newInstance(
+        informationDialog = InformationDialog.newInstance(
                 getString(R.string.a_lot_of_data_points),
                 getString(R.string.a_lot_of_data_points_details),
                 R.drawable.round_orange_button_bottom_right,
                 R.drawable.round_orange_button_bottom_left,
                 warningDialogListener
         );
-        warningDialog.setCancelable(false);
+        informationDialog.setCancelable(false);
 
         return builder.create();
     }
