@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.sensors.SetSensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -78,7 +79,7 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
             triColorLeds[i] = new TriColorLed(i+1, this);
         }
         for (int i = 0; i < sensors.length; i++) {
-            sensors[i] = new NoSensor(i+1);
+            sensors[i] = new SetSensor(i+1);
         }
     }
 

@@ -150,31 +150,16 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         TextView sensorText;
 
         sensorText = (TextView) findViewById(R.id.text_sensor_1);
-        if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
-            sensorText.setText(sensors[0].getTypeTextId());
-        } else {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
-            sensorText.setText(R.string.set_sensor);
-        }
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
+        sensorText.setText(sensors[0].getTypeTextId());
 
         sensorText = (TextView) findViewById(R.id.text_sensor_2);
-        if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
-            sensorText.setText(sensors[1].getTypeTextId());
-        } else {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
-            sensorText.setText(R.string.set_sensor);
-        }
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
+        sensorText.setText(sensors[1].getTypeTextId());
 
         sensorText = (TextView) findViewById(R.id.text_sensor_3);
-        if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
-            sensorText.setText(sensors[2].getTypeTextId());
-        } else {
-            sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, R.drawable.questionmark_white_sm20), null, null);
-            sensorText.setText(R.string.set_sensor);
-        }
+        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
+        sensorText.setText(sensors[2].getTypeTextId());
     }
 
 

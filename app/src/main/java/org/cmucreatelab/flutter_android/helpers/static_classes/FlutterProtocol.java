@@ -8,6 +8,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.HumiditySensor;
 import org.cmucreatelab.flutter_android.classes.sensors.LightSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.sensors.SetSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoilMoistureSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SoundSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
@@ -69,7 +70,7 @@ public final class FlutterProtocol {
                 break;
             case InputTypes.NOT_SET:
             default:
-                result = new NoSensor(portNumber);
+                result = new SetSensor(portNumber);
         }
 
         return result;
