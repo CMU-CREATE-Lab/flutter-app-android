@@ -79,11 +79,18 @@
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/list_data_instance"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_datalog"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"/>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/list_data_instance"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 

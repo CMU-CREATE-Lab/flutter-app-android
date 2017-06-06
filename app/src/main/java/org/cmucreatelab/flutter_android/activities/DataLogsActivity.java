@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -83,6 +84,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private ImageView workingDataPointImage, imageSensor1, imageSensor2, imageSensor3;
     private Button buttonMean, buttonMedian, buttonMode, buttonMax, buttonMin;
     private TextView openLogTextView, sendLogTextView, cleanUpTextView, recordDataTextView, noLogsDeviceTextView, noLogsFlutterTextView;
+    private SwipeRefreshLayout refreshDataLog;
 
 
     // utility methods used by the class
@@ -244,7 +246,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
-    // OnClick Listeners
+    // Listeners
 
 
     private void sensorClick(Sensor sensor) {
@@ -537,6 +539,36 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     };
 
 
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
+                globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+                    @Override
+                    public void onDataSetPointsPopulated(boolean isSuccess) {
+                        globalHandler.dataLoggingHandler.populatedDataSet(new DataLoggingHandler.DataSetListener() {
+                            @Override
+                            public void onDataSetPopulated(final DataSet dataSet) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadDataSet(dataSet);
+                                        refreshDataLog.setRefreshing(false);
+                                        // resumes updating the data points
+                                        timerExpired();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            } else {
+                refreshDataLog.setRefreshing(false);
+            }
+        }
+    };
+
+
     // Activity methods
 
 
@@ -593,6 +625,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         findViewById(R.id.image_sensor_1).setOnClickListener(sensor1ClickListener);
         findViewById(R.id.image_sensor_2).setOnClickListener(sensor2ClickListener);
         findViewById(R.id.image_sensor_3).setOnClickListener(sensor3ClickListener);
+        refreshDataLog = (SwipeRefreshLayout) findViewById(R.id.refresh_datalog);
+        refreshDataLog.setOnRefreshListener(refreshListener);
 
         buttonMean.setOnClickListener(meanClickListener);
         buttonMedian.setOnClickListener(medianClickListener);
@@ -766,6 +800,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                                     Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                                 }
                             });
+                            if (workingDataSet != null) {
+                                if (workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
+                                    SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
+                                    dialog.show(getSupportFragmentManager(), "tag");
+                                }
+                            }
                         }
                         updateDynamicViews();
                     }
