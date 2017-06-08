@@ -1,20 +1,45 @@
 package org.cmucreatelab.flutter_android.helpers.datalogging;
 
+import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+
 /**
  * Created by Steve on 3/13/2017.
  *
- * Each class that implements this will define their own interface for DataLogsActivity to implement.
- * This interface will be a unique event in order for DataLogsActivity to know how to react.
+ * You must call the super equivalent for everything in this class
  */
 
-public interface UpdateDataLogsState {
-    /**
-     * This is the updatePoints event that will fire so the DataLogsActivity can update the points accordingly
-     */
-    void updatePoints();
+public abstract class UpdateDataLogsState {
+
+    protected GlobalHandler globalHandler;
+    protected DataLogsActivity dataLogsActivity;
+
+    public UpdateDataLogsState(DataLogsActivity dataLogsActivity) {
+        this.dataLogsActivity = dataLogsActivity;
+        globalHandler = GlobalHandler.getInstance(dataLogsActivity);
+    }
 
     /**
-     * This is the updateLogs event that will fire so the DataLogsActivity can update the logs accordingly
+     * This is the updatedPoints event that will fire so the DataLogsActivity can update the points accordingly
      */
-    void updateLogs();
+    public void updatedPoints() {
+        dataLogsActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                globalHandler.sessionHandler.dismissProgressDialog();
+            }
+        });
+    }
+
+    /**
+     * This is the updatedLogs event that will fire so the DataLogsActivity can update the logs accordingly
+     */
+    public void updatedLogs() {
+        dataLogsActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                globalHandler.sessionHandler.dismissProgressDialog();
+            }
+        });
+    }
 }

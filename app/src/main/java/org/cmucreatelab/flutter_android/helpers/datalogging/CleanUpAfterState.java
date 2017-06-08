@@ -12,18 +12,14 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  * Created by Steve on 3/13/2017.
  */
 
-public class CleanUpAfterState implements UpdateDataLogsState {
+public class CleanUpAfterState extends UpdateDataLogsState {
 
-
-    private GlobalHandler globalHandler;
-    private DataLogsActivity dataLogsActivity;
     private DataSet deletedDataSet;
 
 
     public CleanUpAfterState(DataLogsActivity dataLogsActivity, DataSet dataSet) {
-        this.dataLogsActivity = dataLogsActivity;
+        super(dataLogsActivity);
         this.deletedDataSet = dataSet;
-        this.globalHandler = GlobalHandler.getInstance(dataLogsActivity);
     }
 
 
@@ -31,7 +27,7 @@ public class CleanUpAfterState implements UpdateDataLogsState {
      *
      */
     @Override
-    public void updatePoints() {
+    public void updatedPoints() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -50,11 +46,6 @@ public class CleanUpAfterState implements UpdateDataLogsState {
                 dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdatePoints(new ResumeState(dataLogsActivity));
             }
         });
-    }
-
-    @Override
-    public void updateLogs() {
-
     }
 
 }

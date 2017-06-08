@@ -38,13 +38,12 @@ public class DataLoggingHandler implements FlutterMessageListener {
     private GlobalHandler globalHandler;
     private DataSetPointsListener dataSetPointsListener;
     private DataSetListener dataSetListener;
-    private int numberOfPoints;
+    private int numberOfPoints, totalPoints;
     private ArrayList<String> keys;
     private String dataName;
     private TreeMap<String, DataPoint> data;
 
     // TODO @tasota did we still need these to be tracking something?
-    private int remainingPoints;
     private boolean isLogging;
 
 
@@ -102,7 +101,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         temp = temp.substring(num.length()+1, temp.length());
         index = temp.indexOf(",");
         num = temp.substring(0, index);
-        remainingPoints = Integer.valueOf(num);
+        totalPoints = Integer.valueOf(num);
 
         // is logging
         temp = temp.substring(num.length()+1, temp.length());
@@ -292,7 +291,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         this.isLogging = false;
         this.keys = new ArrayList<>();
         this.numberOfPoints = 0;
-        this.remainingPoints = 0;
+        this.totalPoints = 0;
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructDeleteLog());
     }
 
@@ -308,7 +307,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
     @Override
     public void onFlutterMessageReceived(String request, String response) {
         Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
-        if (data.size() == numberOfPoints && data.size() != 0
+        if ((data.size() == numberOfPoints || data.size() == totalPoints) && data.size() != 0
                 && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
                 && dataSetListener != null) {
             Sensor[] sensors;

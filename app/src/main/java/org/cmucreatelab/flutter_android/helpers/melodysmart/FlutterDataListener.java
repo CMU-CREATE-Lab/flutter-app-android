@@ -51,7 +51,7 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
 
         // handle parse
         session.onFlutterMessageReceived(request, response);
-        // updatePoints views
+        // updatedPoints views
         if (session.getFlutterMessageListener() != null) {
             session.getFlutterMessageListener().onFlutterMessageReceived(request, response);
         } else {
@@ -82,7 +82,7 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
                 // perform actions based on response
                 handleMessageResponse(message);
 
-                // updatePoints received messages progress
+                // updatedPoints received messages progress
                 if (message.getRequests().size() > 0) {
                     String request = message.getRequests().get(0);
                     char protocolCommand = request.charAt(0);

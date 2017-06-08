@@ -11,30 +11,19 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
  * Created by Steve on 3/13/2017.
  */
 
-public class SaveToKindleState implements UpdateDataLogsState {
+public class SaveToKindleState extends UpdateDataLogsState {
 
-    private GlobalHandler globalHandler;
-    private DataLogsActivity dataLogsActivity;
     private String dataSetName;
 
 
     public SaveToKindleState(DataLogsActivity dataLogsActivity, String name) {
-        this.dataLogsActivity = dataLogsActivity;
+        super(dataLogsActivity);
         this.dataSetName = name;
-        this.globalHandler = GlobalHandler.getInstance(dataLogsActivity);
     }
 
 
-    /**
-     * Updates the UI in a unique manner
-     */
     @Override
-    public void updatePoints() {
-        // empty
-    }
-
-    @Override
-    public void updateLogs() {
+    public void updatedLogs() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

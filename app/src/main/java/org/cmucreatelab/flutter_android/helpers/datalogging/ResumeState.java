@@ -12,16 +12,11 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  * A class to let the DataLogsActivity know how to react after the data logs have been updated.
  */
 
-public class ResumeState implements UpdateDataLogsState {
-
-
-    private GlobalHandler globalHandler;
-    private DataLogsActivity dataLogsActivity;
+public class ResumeState extends UpdateDataLogsState {
 
 
     public ResumeState(DataLogsActivity dataLogsActivity) {
-        this.dataLogsActivity = dataLogsActivity;
-        this.globalHandler = GlobalHandler.getInstance(dataLogsActivity);
+        super(dataLogsActivity);
     }
 
 
@@ -29,7 +24,7 @@ public class ResumeState implements UpdateDataLogsState {
      * Updates the main UI on the DataLogsActivity
      */
     @Override
-    public void updatePoints() {
+    public void updatedPoints() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -39,11 +34,6 @@ public class ResumeState implements UpdateDataLogsState {
                 dataLogsActivity.checkIfLogging();
             }
         });
-    }
-
-    @Override
-    public void updateLogs() {
-
     }
 
 }

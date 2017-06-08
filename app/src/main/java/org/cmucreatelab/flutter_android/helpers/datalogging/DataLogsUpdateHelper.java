@@ -12,7 +12,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 /**
  * Created by Steve on 3/13/2017.
  *
- * This class helps DataLogsActivity to updatePoints the list of data logs and then react appropriately to whoever did the updating
+ * This class helps DataLogsActivity to updatedPoints the list of data logs and then react appropriately to whoever did the updating
  */
 public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
 
@@ -28,22 +28,22 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
     }
 
 
-    public void registerStateAndUpdatePoints(UpdateDataLogsState updateDataLogsState) {
+    public synchronized void registerStateAndUpdatePoints(UpdateDataLogsState updateDataLogsState) {
         this.updateDataLogsState = updateDataLogsState;
         dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             this.globalHandler.dataLoggingHandler.populatePointsAvailable(this);
         } else {
-            updateDataLogsState.updatePoints();
+            updateDataLogsState.updatedPoints();
         }
     }
 
 
-    public void registerStateAndUpdateLogs(UpdateDataLogsState updateDataLogsState) {
+    public synchronized void registerStateAndUpdateLogs(UpdateDataLogsState updateDataLogsState) {
         this.updateDataLogsState = updateDataLogsState;
         dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            this.updateDataLogsState.updatePoints();
+            this.updateDataLogsState.updatedPoints();
         }
         else {
             this.globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(globalHandler.appContext, this);
@@ -54,7 +54,7 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
 
     @Override
     public void onDataSetPointsPopulated(boolean isSuccess) {
-        this.updateDataLogsState.updatePoints();
+        this.updateDataLogsState.updatedPoints();
     }
 
 
@@ -62,7 +62,7 @@ public class DataLogsUpdateHelper implements DataLoggingHandler.DataSetPointsLis
     public void onDataSetPopulated() {
         Log.d(Constants.LOG_TAG, "DataLogsUpdateHelper.onDataSetPopulated");
         dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
-        this.updateDataLogsState.updateLogs();
+        this.updateDataLogsState.updatedLogs();
     }
 
 

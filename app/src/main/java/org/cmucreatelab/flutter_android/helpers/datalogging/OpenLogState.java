@@ -11,15 +11,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
  * Created by Steve on 3/13/2017.
  */
 
-public class OpenLogState implements UpdateDataLogsState {
-
-    private GlobalHandler globalHandler;
-    private DataLogsActivity dataLogsActivity;
+public class OpenLogState extends UpdateDataLogsState {
 
 
     public OpenLogState(DataLogsActivity dataLogsActivity) {
-        this.dataLogsActivity = dataLogsActivity;
-        this.globalHandler = GlobalHandler.getInstance(dataLogsActivity);
+        super(dataLogsActivity);
     }
 
 
@@ -27,7 +23,7 @@ public class OpenLogState implements UpdateDataLogsState {
      * Shows the open log dialog after the list of data logs has been updated
      */
     @Override
-    public void updatePoints() {
+    public void updatedPoints() {
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +40,7 @@ public class OpenLogState implements UpdateDataLogsState {
 
 
     @Override
-    public void updateLogs() {
+    public void updatedLogs() {
         dataLogsActivity.loadDataSet(dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
     }
 
