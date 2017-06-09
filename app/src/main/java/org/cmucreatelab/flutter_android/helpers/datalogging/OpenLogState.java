@@ -3,7 +3,6 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
 
@@ -11,7 +10,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
  * Created by Steve on 3/13/2017.
  */
 
-public class OpenLogState extends UpdateDataLogsState {
+public class OpenLogState extends UpdateDataLogState {
 
 
     public OpenLogState(DataLogsActivity dataLogsActivity) {
@@ -33,7 +32,6 @@ public class OpenLogState extends UpdateDataLogsState {
                         dataLogsActivity, globalHandler.dataLoggingHandler.getNumberOfPoints(), globalHandler.dataLoggingHandler.getDataName(), dataLogsActivity.getDataLogsUpdateHelper().getDataSetsOnDevice()
                 );
                 openLogDialog.show(dataLogsActivity.getSupportFragmentManager(), "tag");
-                dataLogsActivity.checkIfLogging();
             }
         });
     }
@@ -41,7 +39,13 @@ public class OpenLogState extends UpdateDataLogsState {
 
     @Override
     public void updatedLogs() {
-        dataLogsActivity.loadDataSet(dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
+        dataLogsActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dataLogsActivity.loadDataSet(dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
+                dataLogsActivity.getDataLogsUpdateHelper().registerStateAndUpdatePoints(new ResumeState(dataLogsActivity));
+            }
+        });
     }
 
 }

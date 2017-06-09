@@ -5,14 +5,13 @@ import android.util.Log;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 3/13/2017.
  */
 
-public class CleanUpAfterState extends UpdateDataLogsState {
+public class CleanUpAfterState extends UpdateDataLogState {
 
     private DataSet deletedDataSet;
 
@@ -22,12 +21,12 @@ public class CleanUpAfterState extends UpdateDataLogsState {
         this.deletedDataSet = dataSet;
     }
 
-
     /**
      *
      */
     @Override
     public void updatedPoints() {
+        super.updatedPoints();
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

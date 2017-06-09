@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -38,11 +39,13 @@ public class EmailDialog extends BaseResizableDialog {
 
     private static final String DATA_SET_KEY = "data_set_key";
     private static final String EMAIL_KEY = "email_key";
+    private static final String DISMISS_DIALOG_KEY = "dismiss_dialog_key";
 
     private GlobalHandler globalHandler;
     private EditText email;
     private EditText message;
     private DataSet currentDataLog;
+    private DismissDialogListener dismissDialogListener;
 
 
     private void saveEmail(String email) {
@@ -59,11 +62,12 @@ public class EmailDialog extends BaseResizableDialog {
     }
 
 
-    public static EmailDialog newInstance(Serializable dataSet) {
+    public static EmailDialog newInstance(Serializable dataSet, Serializable dismissListener) {
         EmailDialog emailDialog = new EmailDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(DATA_SET_KEY, dataSet);
+        args.putSerializable(DISMISS_DIALOG_KEY, dismissListener);
         emailDialog.setArguments(args);
 
         return emailDialog;
@@ -80,13 +84,21 @@ public class EmailDialog extends BaseResizableDialog {
         ButterKnife.bind(this, view);
         email = (EditText) view.findViewById(R.id.edit_text_email);
         message = (EditText) view.findViewById(R.id.edit_text_message);
+
         currentDataLog = (DataSet) getArguments().getSerializable(DATA_SET_KEY);
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DISMISS_DIALOG_KEY);
 
         email.setText(loadEmail());
 
         return builder.create();
     }
 
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogListener.onDialogDismissed();
+    }
 
     @OnClick(R.id.button_send_email)
     public void onClickSendEmail() {

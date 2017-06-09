@@ -3,31 +3,27 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.CleanUpLogsDialog;
 
 /**
  * Created by Steve on 3/13/2017.
  */
-public class CleanUpBeforeState extends UpdateDataLogsState {
-
-    private DataLogsUpdateHelper dataLogsUpdateHelper;
+public class CleanUpBeforeState extends UpdateDataLogState {
 
 
     public CleanUpBeforeState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
-        this.dataLogsUpdateHelper = dataLogsActivity.getDataLogsUpdateHelper();
     }
 
 
 
-    @Override
+    /*@Override
     public void updatedPoints() {
         // not empty (get list to display when flutter isn't connected)
         Log.v(Constants.LOG_TAG,"CleanUpBeforeState.updatedPoints");
-        updatedLogs();
-    }
+        updateLogs();
+    }*/
 
 
     /**
@@ -35,12 +31,12 @@ public class CleanUpBeforeState extends UpdateDataLogsState {
      */
     @Override
     public void updatedLogs() {
+        super.updatedLogs();
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Log.d(Constants.LOG_TAG, "DataLogsActivity.updateFromCleanUpBefore");
-                globalHandler.sessionHandler.dismissProgressDialog();
-                CleanUpLogsDialog cleanUpLogsDialog = CleanUpLogsDialog.newInstance(dataLogsActivity, dataLogsUpdateHelper.getDataSetOnFlutter(), dataLogsUpdateHelper.getDataSetsOnDevice());
+                CleanUpLogsDialog cleanUpLogsDialog = CleanUpLogsDialog.newInstance(dataLogsActivity, getDataSetOnFlutter(), getDataSetsOnDevice());
                 cleanUpLogsDialog.show(dataLogsActivity.getSupportFragmentManager(), "tag");
             }
         });

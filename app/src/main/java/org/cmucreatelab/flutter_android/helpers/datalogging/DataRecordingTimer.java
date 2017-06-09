@@ -18,23 +18,32 @@ public class DataRecordingTimer {
     };
 
     private int milliseconds;
+    private int initial;
     private TimeExpireListener timeExpireListener;
 
 
-    public DataRecordingTimer(int intervalInMs, TimeExpireListener timeExpireListener) {
+    public DataRecordingTimer(int intervalInMs) {
         this.milliseconds = intervalInMs;
-        this.timeExpireListener = timeExpireListener;
+        initial = 0;
     }
 
 
-    public void startTimer() {
+    public void startTimer(TimeExpireListener timeExpireListener) {
+        this.timeExpireListener = timeExpireListener;
         stopTimer();
-        handler.postDelayed(runnable, milliseconds);
+        if (initial == 0) {
+            handler.post(runnable);
+            initial--;
+        }
+        else
+            handler.postDelayed(runnable, milliseconds);
     }
 
 
     public void stopTimer() {
-        handler.removeCallbacks(runnable);
+        if (timeExpireListener != null) {
+            handler.removeCallbacks(runnable);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -37,10 +38,13 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
     private static final String ACTIVITY_KEY = "activity_key";
     private static final String DATA_SET_FLUTTER_KEY = "data_set_flutter_key";
     private static final String DATA_SETS_DEVICE_KEY = "data_sets_device_key";
+    private static final String DISMISS_DIALOG_LISTENER_KEY = "dismiss_dialog_listener_key";
+
     private static final double MILLISECONDS_IN_A_WEEK = 6.048e8;
     private static final double MILLISECONDS_IN_A_MONTH = 2.628e+9;
     private static final double MILLISECONDS_IN_YEAR = 3.154e+10;
 
+    private DismissDialogListener dismissDialogListener;
     private DataLogsActivity baseNavigationActivity;
     private DataSet dataSetOnFlutter;
     private DataSet[] dataSetsOnDevice;
@@ -169,6 +173,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         args.putSerializable(ACTIVITY_KEY, activity);
         args.putSerializable(DATA_SET_FLUTTER_KEY, dataSetOnFlutter);
         args.putSerializable(DATA_SETS_DEVICE_KEY, dataSetsOnDevice);
+        args.putSerializable(DISMISS_DIALOG_LISTENER_KEY, activity);
         result.setArguments(args);
 
         return result;
@@ -183,6 +188,7 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
         builder.setView(view);
         ButterKnife.bind(this, view);
 
+        dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DISMISS_DIALOG_LISTENER_KEY);
         baseNavigationActivity = (DataLogsActivity) getArguments().getSerializable(ACTIVITY_KEY);
         dataSetOnFlutter = (DataSet) getArguments().getSerializable(DATA_SET_FLUTTER_KEY);
         dataSetsOnDevice = (DataSet[]) getArguments().getSerializable(DATA_SETS_DEVICE_KEY);
@@ -270,12 +276,20 @@ public class CleanUpLogsDialog extends BaseResizableDialog {
     }
 
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (dismissDialogListener != null)
+            dismissDialogListener.onDialogDismissed();
+    }
+
     @OnClick(R.id.button_delete_logs)
     public void onClickDeleteLogs() {
         if (logsToDelete.size() > 0) {
             Log.d(Constants.LOG_TAG, "CleanUpLogsDialog.onClickDeleteLogs");
             CleanUpConfirmationDialog cleanUpConfirmationDialog = CleanUpConfirmationDialog.newInstance(baseNavigationActivity, logsToDelete.toArray(new DataSet[logsToDelete.size()]));
             cleanUpConfirmationDialog.show(getFragmentManager(), "tag");
+            dismissDialogListener = null;
             this.dismiss();
         }
     }

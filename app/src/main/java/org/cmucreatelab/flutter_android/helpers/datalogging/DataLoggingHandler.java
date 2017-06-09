@@ -252,7 +252,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
      * Populates the data logs name and the number of points currently available. Refer to the protocol for more info.
      * @param dataSetPointsListener An event listener to be fired after this message has been fulfilled.
      */
-    public void populatePointsAvailable(DataSetPointsListener dataSetPointsListener) {
+    public synchronized void populatePointsAvailable(DataSetPointsListener dataSetPointsListener) {
         Log.d(Constants.LOG_TAG, "populatePointsAvailable");
         this.dataSetPointsListener = dataSetPointsListener;
         globalHandler = GlobalHandler.getInstance(appContext);
@@ -267,7 +267,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
      * Populates the data set by calling for each data point. Refer to the protocol for more info.
      * @param dataSetListener An event listener to be fired after this message has been fulfilled.
      */
-    public void populatedDataSet(DataSetListener dataSetListener) {
+    public synchronized void populatedDataSet(DataSetListener dataSetListener) {
         this.dataSetListener = dataSetListener;
         this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         this.data.clear();
@@ -315,6 +315,9 @@ public class DataLoggingHandler implements FlutterMessageListener {
             String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             DataSet dataSet = new DataSet(data, keys, dataName, flutterName, sensors);
             dataSetListener.onDataSetPopulated(dataSet);
+        }
+        if (numberOfPoints == totalPoints) {
+            isLogging = false;
         }
     }
 

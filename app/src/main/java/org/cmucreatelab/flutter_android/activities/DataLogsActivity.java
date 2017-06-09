@@ -32,12 +32,13 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpBeforeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
-import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsUpdateHelper;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
-import org.cmucreatelab.flutter_android.helpers.datalogging.DataRecordingTimer;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsUpdateHelper;
 import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
+import org.cmucreatelab.flutter_android.helpers.datalogging.SendEmailLogState;
+import org.cmucreatelab.flutter_android.helpers.datalogging.UpdateDataLogState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
@@ -60,7 +61,7 @@ import butterknife.ButterKnife;
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, BaseDataLoggingDialog.DialogRecordListener,
-        OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener, DataRecordingTimer.TimeExpireListener {
+        OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -69,7 +70,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private DataLogsUpdateHelper dataLogsUpdateHelper;
     private DataSet workingDataSet;
     private DataPoint workingDataPoint;
-    private DataRecordingTimer dataRecordingTimer;
 
     private Constants.STATS statState;
     private Stat[] means, medians, modes, maxs, mins;
@@ -184,6 +184,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             }
         });
     }
+
+
+    // TODO - figure out the issue with opening flutter data set
 
 
     public void loadDataSet(final DataSet dataSet) {
@@ -315,7 +318,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 informationDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-                EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet);
+                dataLogsUpdateHelper.registerStateAndUpdatePoints(new SendEmailLogState(instance));
+                EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet, instance);
                 emailDialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -327,10 +331,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickCleanUp");
             if (dataLogsUpdateHelper.getDataSetOnFlutter() != null || dataLogsUpdateHelper.getDataSetsOnDevice().length > 0) {
-                if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-                    globalHandler.sessionHandler.createProgressDialog(instance);
-                    globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, getString(R.string.loading_data));
-                }
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
             } else {
                 InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_data_logs_to_clean_up), getString(R.string.no_data_logs_to_clean_up_details), R.drawable.round_orange_button_bottom);
@@ -418,7 +418,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
                 dialog.show(getSupportFragmentManager(), "tag");
             } else {
-                globalHandler.sessionHandler.createProgressDialog(instance);
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new OpenLogState(instance));
             }
         }
@@ -542,7 +541,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
+            if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
                 globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
                     @Override
                     public void onDataSetPointsPopulated(boolean isSuccess) {
@@ -554,8 +553,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                                     public void run() {
                                         loadDataSet(dataSet);
                                         refreshDataLog.setRefreshing(false);
-                                        // resumes updating the data points
-                                        timerExpired();
                                     }
                                 });
                             }
@@ -579,7 +576,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
         instance = this;
-        dataLogsUpdateHelper = new DataLogsUpdateHelper(this);
+        dataLogsUpdateHelper = DataLogsUpdateHelper.getInstance();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g_data));
@@ -669,8 +666,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         mins = new Stat[3];
         for (int i = 0; i < mins.length; i++)
             mins[i] = new Stat("Min", this);
-
-        dataRecordingTimer = new DataRecordingTimer(5000, this);
     }
 
 
@@ -723,8 +718,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         }
         else {
             workingDataSet = null;
-            globalHandler.sessionHandler.createProgressDialog(instance);
-            globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, getString(R.string.loading_data));
             dataLogsUpdateHelper.registerStateAndUpdatePoints(new ResumeState(this));
         }
     }
@@ -738,8 +731,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
                 dialog.show(getSupportFragmentManager(), "tag");
             } else {
-                globalHandler.sessionHandler.createProgressDialog(instance);
-                globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, getString(R.string.loading_data));
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new OpenLogState(this));
             }
         } else {
@@ -769,49 +760,34 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
     @Override
     public void onDialogDismissed() {
+        updateDynamicViews();
         globalHandler.sessionHandler.createProgressDialog(this);
         globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, getString(R.string.loading_data));
         dataLogsUpdateHelper.registerStateAndUpdatePoints(new ResumeState(this));
     }
 
 
-    public void checkIfLogging() {
+    public void updateFromTimer() {
+        // test to ensure the current state is Resume. We do not want to go into the resume state when in another state
         if (globalHandler.dataLoggingHandler.isLogging()) {
-            dataRecordingTimer.stopTimer();
-            timerExpired();
-        }
-    }
-
-
-    @Override
-    public void timerExpired() {
-        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
+            dataLogsUpdateHelper.registerStateAndUpdatePoints(dataLogsUpdateHelper.getUpdateDataLogState());
+        } else {
+            runOnUiThread(new Runnable() {
                 @Override
-                public void onDataSetPointsPopulated(boolean isSuccess) {
-                    if (isSuccess) {
-                        if (globalHandler.dataLoggingHandler.isLogging()) {
-                            dataRecordingTimer.startTimer();
-                        } else {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
-                                    Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
-                                }
-                            });
-                            if (workingDataSet != null) {
-                                if (workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
-                                    SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
-                                    dialog.show(getSupportFragmentManager(), "tag");
-                                }
-                            }
-                        }
-                        updateDynamicViews();
-                    }
+                public void run() {
+                    findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
+                    if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0)
+                        Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                 }
             });
+            if (workingDataSet != null) {
+                if (workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
+                    SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
+                    dialog.show(getSupportFragmentManager(), "tag");
+                }
+            }
         }
+        updateDynamicViews();
     }
 
 
