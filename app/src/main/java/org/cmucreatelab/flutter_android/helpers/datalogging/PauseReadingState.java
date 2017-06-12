@@ -6,10 +6,10 @@ import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
  * Created by Steve on 6/9/2017.
  */
 
-public class SendEmailLogState extends UpdateDataLogState {
+public class PauseReadingState extends UpdateDataLogState {
 
 
-    public SendEmailLogState(DataLogsActivity dataLogsActivity) {
+    public PauseReadingState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
         super.updateDataLogState = this;
     }

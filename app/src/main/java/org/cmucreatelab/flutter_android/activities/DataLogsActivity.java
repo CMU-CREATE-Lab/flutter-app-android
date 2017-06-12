@@ -37,8 +37,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsUpdateHelper
 import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
-import org.cmucreatelab.flutter_android.helpers.datalogging.SendEmailLogState;
-import org.cmucreatelab.flutter_android.helpers.datalogging.UpdateDataLogState;
+import org.cmucreatelab.flutter_android.helpers.datalogging.PauseReadingState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
@@ -318,7 +317,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 informationDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-                dataLogsUpdateHelper.registerStateAndUpdatePoints(new SendEmailLogState(instance));
+                dataLogsUpdateHelper.registerStateAndUpdatePoints(new PauseReadingState(instance));
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet, instance);
                 emailDialog.show(getSupportFragmentManager(), "tag");
             }
@@ -708,6 +707,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     protected void onPause() {
         super.onPause();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        dataLogsUpdateHelper.registerStateAndUpdateLogs(new PauseReadingState(this));
         globalHandler.sessionHandler.dismissProgressDialog();
     }
 
