@@ -39,8 +39,6 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensors_record_data, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
@@ -48,6 +46,8 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         ButterKnife.bind(this, view);
 
         dataSetNameText = (EmojiconEditText) view.findViewById(R.id.edit_data_set_name);
+        super.onCreateDialog(savedInstanceState);
+
         intervalsText = (EditText) view.findViewById(R.id.edit_number_of_intervals);
         intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
         timePeriodText = (EditText) view.findViewById(R.id.edit_time_period);
