@@ -79,6 +79,30 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_data_selected_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:padding="2dp"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/data_selected_spinner"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="2dp"/>
+
+        </LinearLayout>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_datalog"
             android:layout_width="match_parent"

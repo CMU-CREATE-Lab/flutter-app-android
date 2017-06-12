@@ -774,11 +774,18 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         // test to ensure the current state is Resume. We do not want to go into the resume state when in another state
         if (globalHandler.dataLoggingHandler.isLogging()) {
             dataLogsUpdateHelper.registerStateAndUpdatePoints(dataLogsUpdateHelper.getUpdateDataLogState());
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.linear_data_selected_spinner).setVisibility(View.VISIBLE);
+                }
+            });
         } else {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.linear_data_selected_spinner).setVisibility(View.GONE);
                     if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0)
                         Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                 }
