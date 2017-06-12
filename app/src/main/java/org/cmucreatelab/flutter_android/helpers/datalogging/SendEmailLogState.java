@@ -11,6 +11,7 @@ public class SendEmailLogState extends UpdateDataLogState {
 
     public SendEmailLogState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
+        super.updateDataLogState = this;
     }
 
 

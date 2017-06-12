@@ -346,7 +346,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickRecordData");
 
             if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-                NoFlutterConnectedDialog.displayDialog(DataLogsActivity.this, R.string.no_flutter_data_logs);
+                NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_data_logs);
+                // override this default behavior
+                noFlutterConnectedDialog.setCancelable(true);
+                noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 globalHandler.sessionHandler.createProgressDialog(instance);
                 globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, "Loading data log information...");

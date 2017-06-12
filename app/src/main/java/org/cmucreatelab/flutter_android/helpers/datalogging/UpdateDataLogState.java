@@ -21,35 +21,38 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
     protected DataLogsActivity dataLogsActivity;
 
     protected UpdateDataLogState updateDataLogState;
-    protected static DataSet dataSetOnFlutter;
-    protected static DataSet[] dataSetsOnDevice;
+    private static DataSet dataSetOnFlutter;
+    private static DataSet[] dataSetsOnDevice;
 
 
     public UpdateDataLogState(DataLogsActivity dataLogsActivity) {
         super(5000);
         this.dataLogsActivity = dataLogsActivity;
         globalHandler = GlobalHandler.getInstance(dataLogsActivity);
-        dataSetOnFlutter = new DataSet();
-        Log.d(Constants.LOG_TAG, "this should not be null");
+    }
+
+
+    public void updateDataLogsOnDevice() {
+        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
     }
 
 
     public synchronized void updatePoints() {
-        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
+        updateDataLogsOnDevice();
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
             globalHandler.sessionHandler.updateProgressDialogMessage(dataLogsActivity, "Updating data log points...");
             globalHandler.dataLoggingHandler.populatePointsAvailable(this);
         } else {
-            updatedPoints();
+            updateDataLogState.updatedPoints();
         }
     }
 
 
     public synchronized void updateLogs() {
-        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
+        updateDataLogsOnDevice();
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            //this.updateDataLogState.updatedPoints();
+            this.updateDataLogState.updatedLogs();
         }
         else {
             globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
@@ -136,7 +139,7 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
 
 
     // getters
-    public DataSet getDataSetOnFlutter() { return this.dataSetOnFlutter; }
-    public DataSet[] getDataSetsOnDevice() { return this.dataSetsOnDevice; }
+    public DataSet getDataSetOnFlutter() { return dataSetOnFlutter; }
+    public DataSet[] getDataSetsOnDevice() { return dataSetsOnDevice; }
 
 }

@@ -20,6 +20,7 @@ public class SaveToKindleState extends UpdateDataLogState {
         this.dataSetName = name;
         globalHandler.sessionHandler.dismissProgressDialog();
         stopTimer();
+        super.updateDataLogState = this;
     }
 
     @Override

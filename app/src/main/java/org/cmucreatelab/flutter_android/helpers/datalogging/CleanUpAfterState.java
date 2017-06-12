@@ -19,6 +19,7 @@ public class CleanUpAfterState extends UpdateDataLogState {
     public CleanUpAfterState(DataLogsActivity dataLogsActivity, DataSet dataSet) {
         super(dataLogsActivity);
         this.deletedDataSet = dataSet;
+        super.updateDataLogState = this;
     }
 
     /**

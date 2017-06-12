@@ -31,7 +31,7 @@ public class NoFlutterConnectedDialog extends BaseResizableDialog {
     private static final String noFlutterKey = "NO_FLUTTER_KEY";
 
 
-    private static NoFlutterConnectedDialog newInstance(int description) {
+    public static NoFlutterConnectedDialog newInstance(int description) {
         NoFlutterConnectedDialog noFlutterConnectedDialog = new NoFlutterConnectedDialog();
 
         Bundle args = new Bundle();

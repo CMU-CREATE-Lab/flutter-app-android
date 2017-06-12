@@ -14,16 +14,8 @@ public class CleanUpBeforeState extends UpdateDataLogState {
 
     public CleanUpBeforeState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
+        super.updateDataLogState = this;
     }
-
-
-
-    /*@Override
-    public void updatedPoints() {
-        // not empty (get list to display when flutter isn't connected)
-        Log.v(Constants.LOG_TAG,"CleanUpBeforeState.updatedPoints");
-        updateLogs();
-    }*/
 
 
     /**

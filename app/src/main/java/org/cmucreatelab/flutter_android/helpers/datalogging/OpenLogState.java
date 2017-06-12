@@ -15,6 +15,7 @@ public class OpenLogState extends UpdateDataLogState {
 
     public OpenLogState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
+        super.updateDataLogState = this;
     }
 
 

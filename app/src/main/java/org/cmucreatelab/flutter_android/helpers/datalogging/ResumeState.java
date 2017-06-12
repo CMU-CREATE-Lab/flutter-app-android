@@ -16,16 +16,17 @@ public class ResumeState extends UpdateDataLogState {
 
     public  ResumeState(DataLogsActivity dataLogsActivity) {
         super(dataLogsActivity);
+        super.updateDataLogState = this;
     }
 
 
     @Override
     public synchronized void updatePoints() {
-        dataSetsOnDevice = FileHandler.loadDataSetsFromFile(globalHandler);
+        updateDataLogsOnDevice();
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             startTimer();
         } else {
-            updateDataLogState.updatedPoints();
+            updatedPoints();
         }
     }
 
