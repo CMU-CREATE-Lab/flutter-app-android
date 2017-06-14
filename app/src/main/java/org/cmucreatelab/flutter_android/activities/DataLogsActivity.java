@@ -235,7 +235,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
 
                 if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
                     findViewById(R.id.linear_data_selected_spinner).setVisibility(View.VISIBLE);
+                    findViewById(R.id.refresh_datalog).setEnabled(true);
                 } else {
+                    findViewById(R.id.refresh_datalog).setEnabled(false);
                     findViewById(R.id.linear_data_selected_spinner).setVisibility(View.GONE);
                 }
 
@@ -789,6 +791,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 public void run() {
                     findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
                     findViewById(R.id.linear_data_selected_spinner).setVisibility(View.GONE);
+                    findViewById(R.id.refresh_datalog).setEnabled(false);
                     if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0)
                         Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                 }
