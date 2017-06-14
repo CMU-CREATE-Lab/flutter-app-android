@@ -794,7 +794,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                     findViewById(R.id.linear_data_selected_spinner).setVisibility(View.GONE);
                     refreshDataLog.setEnabled(false);
                     refreshDataLog.setRefreshing(false);
-                    if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0)
+                    if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0 && workingDataSet == null)
                         Toast.makeText(getApplicationContext(), R.string.done_recording, Toast.LENGTH_LONG).show();
                 }
             });
