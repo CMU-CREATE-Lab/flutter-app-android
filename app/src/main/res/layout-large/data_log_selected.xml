@@ -106,13 +106,13 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_datalog"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp">
 
             <ListView
                 android:id="@+id/list_data_instance"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"/>
+                android:layout_height="match_parent"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
