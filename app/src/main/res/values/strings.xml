@@ -259,6 +259,8 @@
     <string name="no_flutter_connected_data_log">No Flutter connected</string>
     <string name="too_many_bits">The data log name is too long, try using a shorter name.</string>
     <string name="data_selected_spinner">Swipe down to pull in the most recent data.</string>
+    <string name="currently_recording">Currently Recording</string>
+    <string name="currently_recording_description">You cannot send a data log that is currently being recorded.</string>
 
     <string-array name="time_array">
         <item>minute</item>

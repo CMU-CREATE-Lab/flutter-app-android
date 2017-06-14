@@ -315,6 +315,9 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
                 InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_wifi), getString(R.string.no_wifi_data_log_details), R.drawable.round_orange_button_bottom);
                 informationDialog.show(getSupportFragmentManager(), "tag");
+            } else if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
+                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.currently_recording), getString(R.string.currently_recording_description), R.drawable.round_orange_button_bottom);
+                informationDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
                 dataLogsUpdateHelper.registerStateAndUpdatePoints(new PauseReadingState(instance));
