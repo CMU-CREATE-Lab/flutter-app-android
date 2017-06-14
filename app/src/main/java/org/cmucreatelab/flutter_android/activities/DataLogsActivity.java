@@ -233,6 +233,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 else
                     imageSensor3.setImageDrawable(ContextCompat.getDrawable(instance, R.drawable.grey_question_mark));
 
+                if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
+                    findViewById(R.id.linear_data_selected_spinner).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.linear_data_selected_spinner).setVisibility(View.GONE);
+                }
+
                 removeAllStats();
                 isMin = false;
                 isMax = false;
@@ -777,12 +783,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         // test to ensure the current state is Resume. We do not want to go into the resume state when in another state
         if (globalHandler.dataLoggingHandler.isLogging()) {
             dataLogsUpdateHelper.registerStateAndUpdatePoints(dataLogsUpdateHelper.getUpdateDataLogState());
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    findViewById(R.id.linear_data_selected_spinner).setVisibility(View.VISIBLE);
-                }
-            });
         } else {
             runOnUiThread(new Runnable() {
                 @Override
