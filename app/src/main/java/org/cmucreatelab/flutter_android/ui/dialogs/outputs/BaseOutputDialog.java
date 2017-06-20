@@ -21,7 +21,7 @@ public abstract class BaseOutputDialog extends BaseResizableDialog {
 
     protected void updateViews(View view, Output output) {
         if (output.getSettings() != null) {
-            Log.v(Constants.LOG_TAG, "BaseResizableDialog.updateViews");
+            Log.v(Constants.LOG_TAG, "BaseOutputDialog.updateViews");
             Settings settings = output.getSettings();
             Button saveButton = (Button) view.findViewById(R.id.button_save_link);
             Button removeButton = (Button) view.findViewById(R.id.button_remove_link);

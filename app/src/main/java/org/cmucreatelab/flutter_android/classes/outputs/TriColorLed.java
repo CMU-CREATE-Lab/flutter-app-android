@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
@@ -66,7 +67,7 @@ public class TriColorLed implements FlutterOutput {
 
     // NOTE: this doesn't handle every hex value from 00 to ff (since it is using values from 0 to 100)
     private static String getHexValue(int percent) {
-        String value = Integer.toHexString((int)((float)percent/100.0 * 255));
+        String value = Integer.toHexString(Math.round(percent/100f * 255f));
         value = value.length() < 2 ? "0".concat(value) : value;
         return value;
     }
@@ -219,7 +220,7 @@ public class TriColorLed implements FlutterOutput {
             return 0;
         }
         float ratio = value / maxValue;
-        int result = (int) Math.ceil(ratio*newMaxValue);
+        int result = Math.round(ratio*newMaxValue);
         return result;
     }
 

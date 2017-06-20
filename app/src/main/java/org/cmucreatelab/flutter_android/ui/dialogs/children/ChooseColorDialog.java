@@ -31,7 +31,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
     protected static final String COLOR_KEY = "color_listener";
     protected static final String SELECTED_COLOR_KEY = "selected_color";
     private FrameLayout frameFinalColor;
-    protected int[] finalRGB;
+    protected Integer[] finalRGB;
     protected SetColorListener setColorListener;
 
     public static class DrawableColor {
@@ -81,7 +81,8 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         }
         this.currentlySelected = drawableColor;
         ((ImageView)dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatchSelected);
-        finalRGB = intToRGB(currentlySelected.color);
+
+        finalRGB = Constants.COLOR_PICKER_FLUTTER_RGB.get(currentlySelected.color);
         frameFinalColor.setBackgroundColor(currentlySelected.color);
     }
 

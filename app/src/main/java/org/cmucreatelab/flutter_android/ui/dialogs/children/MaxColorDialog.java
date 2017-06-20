@@ -51,7 +51,7 @@ public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDial
 
 
     public interface DialogHighColorListener {
-        public void onHighColorChosen(int[] rgb, int swatch);
+        public void onHighColorChosen(Integer[] rgb, int swatch);
     }
 
 }

@@ -51,7 +51,7 @@ public class MinColorDialog extends ChooseColorDialog implements ChooseColorDial
 
 
     public interface DialogLowColorListener {
-        public void onLowColorChosen(int[] rgb, int swatch);
+        public void onLowColorChosen(Integer[] rgb, int swatch);
     }
 
 }

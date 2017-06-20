@@ -271,7 +271,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
 
     @Override
-    public void onHighColorChosen(int[] rgb, int swatch) {
+    public void onHighColorChosen(Integer[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onHighColorChosen");
         View view = dialogView.findViewById(R.id.linear_set_max_color);
         ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
@@ -291,7 +291,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
 
     @Override
-    public void onLowColorChosen(int[] rgb, int swatch) {
+    public void onLowColorChosen(Integer[] rgb, int swatch) {
         Log.d(Constants.LOG_TAG, "onLowColorChosen");
         View view = dialogView.findViewById(R.id.linear_set_min_color);
         ViewGroup viewGroup = (ViewGroup) ((ViewGroup) view).getChildAt(0);
