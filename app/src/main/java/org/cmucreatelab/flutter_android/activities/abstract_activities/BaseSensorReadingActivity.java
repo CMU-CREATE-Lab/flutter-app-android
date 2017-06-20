@@ -1,8 +1,7 @@
 package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
 import java.io.Serializable;
 import java.util.Timer;
@@ -11,7 +10,7 @@ import java.util.TimerTask;
 /**
  * Created by Steve on 11/23/2016.
  */
-public abstract class BaseSensorReadingActivity extends BaseNavigationActivity implements FlutterMessageListener, Serializable {
+public abstract class BaseSensorReadingActivity extends BaseNavigationActivity implements Serializable {
 
 
     private Timer timer;
@@ -37,6 +36,9 @@ public abstract class BaseSensorReadingActivity extends BaseNavigationActivity i
             timer.cancel();
         }
     }
+
+
+    public abstract void updateSensorViews();
 
 
     @Override

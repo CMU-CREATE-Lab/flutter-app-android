@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.classes;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
@@ -155,6 +156,7 @@ public class Session implements FlutterMessageListener {
                         Log.w(Constants.LOG_TAG, "setting sensor values but flutter is flagged as simulating data; ignoring response.");
                     } else {
                         flutter.setSensorValues(value1, value2, value3);
+                        ((BaseSensorReadingActivity) currentActivity).updateSensorViews();
                     }
                 }
                 break;

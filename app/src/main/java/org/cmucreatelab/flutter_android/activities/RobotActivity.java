@@ -145,24 +145,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    private void updateSensorViews() {
-        Sensor[] sensors = session.getFlutter().getSensors();
-        TextView sensorText;
-
-        sensorText = (TextView) findViewById(R.id.text_sensor_1);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[0].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[0].getTypeTextId());
-
-        sensorText = (TextView) findViewById(R.id.text_sensor_2);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[1].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[1].getTypeTextId());
-
-        sensorText = (TextView) findViewById(R.id.text_sensor_3);
-        sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(this, sensors[2].getWhiteImageIdSm()), null, null);
-        sensorText.setText(sensors[2].getTypeTextId());
-    }
-
-
     private void updateDynamicViews() {
         runOnUiThread(new Runnable() {
             @Override
@@ -502,7 +484,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
-            this.session.setFlutterMessageListener(this);
+            //this.session.setFlutterMessageListener(this);
             updateLinkedViews();
             updateSimulatedView();
             if (!session.isSimulatingData()) startSensorReading();
@@ -652,12 +634,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
 
     @Override
-    public void onFlutterMessageReceived(String request, String response) {
+    public void updateSensorViews() {
         updateDynamicViews();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                updateSensorViews();
+                Sensor[] sensors = session.getFlutter().getSensors();
+                TextView sensorText;
+
+                sensorText = (TextView) findViewById(R.id.text_sensor_1);
+                sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, sensors[0].getWhiteImageIdSm()), null, null);
+                sensorText.setText(sensors[0].getTypeTextId());
+
+                sensorText = (TextView) findViewById(R.id.text_sensor_2);
+                sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, sensors[1].getWhiteImageIdSm()), null, null);
+                sensorText.setText(sensors[1].getTypeTextId());
+
+                sensorText = (TextView) findViewById(R.id.text_sensor_3);
+                sensorText.setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(instance, sensors[2].getWhiteImageIdSm()), null, null);
+                sensorText.setText(sensors[2].getTypeTextId());
             }
         });
     }

@@ -161,7 +161,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
             button.setText(R.string.pause_sensors);
             startSensorReading();
-            session.setFlutterMessageListener(this);
+            //session.setFlutterMessageListener(this);
         } else {
             button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
             button.setText(R.string.play_sensors);
@@ -195,7 +195,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
         } else {
             this.session = globalHandler.sessionHandler.getSession();
-            session.setFlutterMessageListener(this);
+            //session.setFlutterMessageListener(this);
 
             // set title
             String flutterName = session.getFlutter().getName();
@@ -251,7 +251,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
-            session.setFlutterMessageListener(this);
+            //session.setFlutterMessageListener(this);
             handleSensorReadingState();
         }
     }
@@ -380,7 +380,7 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
 
     @Override
-    public void onFlutterMessageReceived(String request, String response) {
+    public void updateSensorViews() {
         updateDynamicViews();
     }
 
