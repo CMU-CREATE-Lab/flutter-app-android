@@ -9,11 +9,9 @@ import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataPoint;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
-import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
-import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Steve on 12/14/2016.
  */
 
-public class DataLoggingHandler implements FlutterMessageListener {
+public class DataLoggingHandler {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
@@ -42,8 +40,6 @@ public class DataLoggingHandler implements FlutterMessageListener {
     private ArrayList<String> keys;
     private String dataName;
     private TreeMap<String, DataPoint> data;
-
-    // TODO @tasota did we still need these to be tracking something?
     private boolean isLogging;
 
 
@@ -81,105 +77,49 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    public void readLogName(String output) {
-        Log.d(Constants.LOG_TAG, "DataLoggingHandler.readLogName");
-        String temp = output.substring(2, output.length());
-        dataName = temp;
-    }
+    public void updateDataSet(long unixTime, short sensor1, short sensor2, short sensor3) {
+        Calendar calendar = Calendar.getInstance();
+        StringBuilder date = new StringBuilder();
+        StringBuilder time = new StringBuilder();
+        calendar.setTimeInMillis(unixTime*1000);
 
-
-    public void readNumberOfPoints(String output) {
-        Log.d(Constants.LOG_TAG, "readNumberOfPoints");
-        String temp = output.substring(2, output.length());
-
-        // number of points
-        int index = temp.indexOf(",");
-        String num = temp.substring(0, index);
-        numberOfPoints = Integer.valueOf(num);
-
-        // remaining points
-        temp = temp.substring(num.length()+1, temp.length());
-        index = temp.indexOf(",");
-        num = temp.substring(0, index);
-        totalPoints = Integer.valueOf(num);
-
-        // is logging
-        temp = temp.substring(num.length()+1, temp.length());
-        if (temp.equals("1"))
-            isLogging = true;
-        else
-            isLogging = false;
-
-        dataSetPointsListener.onDataSetPointsPopulated(true);
-    }
-
-
-    public void readPoint(String output) {
-        Log.d(Constants.LOG_TAG, "DataLoggingHandler.readPoint");
-        // TODO - temporary fix to corrupt data points
-        if (output.contains("ffffffff")) {
-            DataPoint dataPoint = new DataPoint();
-            Calendar calendar = Calendar.getInstance();
-            data.put(String.valueOf(calendar.getTimeInMillis()), dataPoint);
-            keys.add(String.valueOf(calendar.getTimeInMillis()));
-        } else {
-            String temp = output.substring(2, output.length());
-            String[] sensorValues = new String[3];
-
-            int index = temp.indexOf(",");
-            String dataPointTime = temp.substring(0, index);
-            Calendar calendar = Calendar.getInstance();
-            StringBuilder date = new StringBuilder();
-            StringBuilder time = new StringBuilder();
-            calendar.setTimeInMillis(Long.parseLong(dataPointTime, 16)*1000);
-
-            String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
-            String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-            String year = String.valueOf(calendar.get(Calendar.YEAR));
-            String hour = String.valueOf(calendar.get(Calendar.HOUR));
-            String minute = String.valueOf(calendar.get(Calendar.MINUTE));
-            String second = String.valueOf(calendar.get(Calendar.SECOND));
-            String amOrPm = "";
-            if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
-                amOrPm = "AM";
-            }
-            else {
-                amOrPm = "PM";
-            }
-
-            if (hour.equals("0")) {
-                hour = "12";
-            }
-
-            time.append(hour + ":");
-            if (minute.length() < 2) {
-                time.append("0" + minute);
-            } else {
-                time.append(minute);
-            }
-            if( second.length() < 2) {
-                time.append(":0" + second + " ");
-            } else {
-                time.append(":" + second + " ");
-            }
-
-            time.append(amOrPm);
-            date.append(month + "/" + day + "/" + year);
-
-            temp = temp.substring(dataPointTime.length()+1, temp.length());
-            sensorValues[0] = temp.substring(0, 2);
-            temp = temp.substring(sensorValues[0].length(), temp.length());
-            sensorValues[1] = temp.substring(0,2);
-            sensorValues[2] = temp.substring(sensorValues[1].length(), temp.length());
-            Integer sensor1 = Integer.parseInt(sensorValues[0], 16);
-            Integer sensor2 = Integer.parseInt(sensorValues[1], 16);
-            Integer sensor3 = Integer.parseInt(sensorValues[2], 16);
-
-            // populate treemap
-            DataPoint dataPoint = new DataPoint(date.toString(), time.toString(), sensor1.toString(), sensor2.toString(), sensor3.toString());
-            data.put(date.toString() + time.toString(), dataPoint);
-            keys.add(date.toString() + time.toString());
+        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String hour = String.valueOf(calendar.get(Calendar.HOUR));
+        String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+        String second = String.valueOf(calendar.get(Calendar.SECOND));
+        String amOrPm = "";
+        if (calendar.get(Calendar.AM_PM) == Calendar.AM) {
+            amOrPm = "AM";
         }
+        else {
+            amOrPm = "PM";
+        }
+
+        if (hour.equals("0")) {
+            hour = "12";
+        }
+
+        time.append(hour + ":");
+        if (minute.length() < 2) {
+            time.append("0" + minute);
+        } else {
+            time.append(minute);
+        }
+        if( second.length() < 2) {
+            time.append(":0" + second + " ");
+        } else {
+            time.append(":" + second + " ");
+        }
+
+        time.append(amOrPm);
+        date.append(month + "/" + day + "/" + year);
+
+        // populate treemap
+        DataPoint dataPoint = new DataPoint(date.toString(), time.toString(), sensor1, sensor2, sensor3);
+        data.put(date.toString() + time.toString(), dataPoint);
+        keys.add(date.toString() + time.toString());
     }
 
 
@@ -208,6 +148,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
         builder.append("l," + timestamp + "," + intervalString + "," + samplesString);
 
         this.dataName = logName;
+        isLogging = true;
 
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage("n," + logName));
         globalHandler.melodySmartDeviceHandler.addMessage(new MelodySmartMessage(builder.toString()));
@@ -256,10 +197,14 @@ public class DataLoggingHandler implements FlutterMessageListener {
         Log.d(Constants.LOG_TAG, "populatePointsAvailable");
         this.dataSetPointsListener = dataSetPointsListener;
         globalHandler = GlobalHandler.getInstance(appContext);
-        globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
 
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadLogName());
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructReadNumberPointsAvailable());
+    }
+
+
+    public synchronized void populateDataSetAvailable(Flutter.PopulatedDataSetListener listener) {
+        globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(appContext, listener);
     }
 
 
@@ -267,9 +212,8 @@ public class DataLoggingHandler implements FlutterMessageListener {
      * Populates the data set by calling for each data point. Refer to the protocol for more info.
      * @param dataSetListener An event listener to be fired after this message has been fulfilled.
      */
-    public synchronized void populatedDataSet(DataSetListener dataSetListener) {
+    public synchronized void sendPopulateDataSetMessage(DataSetListener dataSetListener) {
         this.dataSetListener = dataSetListener;
-        this.globalHandler.sessionHandler.getSession().setFlutterMessageListener(this);
         this.data.clear();
         this.keys.clear();
         if (numberOfPoints > 0) {
@@ -304,30 +248,33 @@ public class DataLoggingHandler implements FlutterMessageListener {
     }
 
 
-    @Override
-    public void onFlutterMessageReceived(String request, String response) {
-        Log.d(Constants.LOG_TAG, "onMessageReceived - Request: " + request.substring(0,1) + " Response: " + response);
-        if ((data.size() == numberOfPoints || data.size() == totalPoints) && data.size() != 0
-                && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
-                && dataSetListener != null) {
-            Sensor[] sensors;
-            sensors = globalHandler.sessionHandler.getSession().getFlutter().getSensors();
-            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
-            DataSet dataSet = new DataSet(data, keys, dataName, flutterName, sensors);
-            dataSetListener.onDataSetPopulated(dataSet);
-        }
-        if (numberOfPoints == totalPoints) {
-            isLogging = false;
-        }
-    }
-
-
     // getters
 
 
     public boolean isLogging() { return isLogging; }
     public String getDataName() { return dataName; }
     public int getNumberOfPoints() { return numberOfPoints; }
+    public int getTotalPoints() { return totalPoints; }
+    public ArrayList<String> getKeys() {return keys; }
+    public TreeMap<String, DataPoint> getData() { return data; }
+    public DataSetListener getDataSetListener() { return this.dataSetListener; }
+    public DataSetPointsListener getDataSetPointsListener() { return this.dataSetPointsListener; }
+
+
+    // setters
+
+
+    public void setIsLogging(boolean isLogging) {
+        this.isLogging = isLogging;
+    }
+    public void setNumberOfPoints(int num) {
+        numberOfPoints = num;
+    }
+    public void setTotalPoints(int total) {
+        totalPoints = total;
+    }
+    public void setDataName(String name) { dataName = name; }
+    public ArrayList<String> setKeys() { return keys; }
 
 
     public interface DataSetPointsListener {
@@ -336,7 +283,7 @@ public class DataLoggingHandler implements FlutterMessageListener {
 
 
     public interface DataSetListener {
-        public void onDataSetPopulated(DataSet dataSet);
+        public void onDataSetPopulated(DataSet dataset);
     }
 
 }

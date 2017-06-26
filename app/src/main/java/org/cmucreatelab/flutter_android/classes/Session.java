@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
+import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterConnectListener;
 import org.cmucreatelab.flutter_android.classes.flutters.FlutterMessageListener;
@@ -16,9 +17,12 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+
+import java.util.TreeMap;
 
 /**
  * Created by mike on 12/28/16.
@@ -32,7 +36,6 @@ public class Session implements FlutterMessageListener {
     private Flutter flutter;
     private boolean isSimulatingData;
     private FlutterConnectListener flutterConnectListener;
-    private FlutterMessageListener flutterMessageListener;
     private boolean wasSensorOneSetThisSession;
     private boolean wasSensorTwoSetThisSession;
     private boolean wasSensorThreeSetThisSession;
@@ -40,11 +43,9 @@ public class Session implements FlutterMessageListener {
     public BaseNavigationActivity getCurrentActivity() { return currentActivity; }
     public Flutter getFlutter() { return flutter; }
     public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
-    public FlutterMessageListener getFlutterMessageListener() { return flutterMessageListener; }
     public boolean isSimulatingData() { return isSimulatingData; }
     public void setCurrentActivity(BaseNavigationActivity currentActivity) { this.currentActivity = currentActivity; }
     public void setFlutter(Flutter flutter) { this.flutter = flutter; }
-    public void setFlutterMessageListener(FlutterMessageListener flutterMessageListener) { this.flutterMessageListener = flutterMessageListener; }
     public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
 
 
@@ -95,7 +96,6 @@ public class Session implements FlutterMessageListener {
         this.currentActivity = currentActivity;
         this.flutter = flutter;
         this.flutterConnectListener = flutterConnectListener;
-        this.flutterMessageListener = flutterMessageListener;
         this.isSimulatingData = false;
         this.wasSensorOneSetThisSession = false;
         this.wasSensorTwoSetThisSession = false;
@@ -135,7 +135,7 @@ public class Session implements FlutterMessageListener {
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
-        Log.v(Constants.LOG_TAG, "onFlutterMessageReceived - " + " " + request + " "  + response);
+        Log.v(Constants.LOG_TAG, "Session.onFlutterMessageReceived - " + request + " "  + response);
         if (response.equals("OK") || response.equals("FAIL")) {
             Log.v(Constants.LOG_TAG,"ignoring onFlutterMessageReceived="+response);
             return;
@@ -178,19 +178,25 @@ public class Session implements FlutterMessageListener {
                 } else if (args.length != 2) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_LOG_NAME="+response);
                 } else {
-//                    String logName = args[1];
-                    GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readLogName(response);
+                    String logName = args[1];
+                    DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
+                    dataLoggingHandler.setDataName(logName);
                 }
                 break;
             case FlutterProtocol.Commands.READ_NUMBER_POINTS_AVAILABLE:
                 if (args.length != 4) {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_NUMBER_POINTS_AVAILABLE="+response);
                 } else {
-//                    short numberOfPoints,totalNeeded;
-//                    boolean currentlyLogging = Boolean.valueOf(args[3]);
-//                    numberOfPoints = Integer.valueOf(args[1]).shortValue();
-//                    totalNeeded = Integer.valueOf(args[2]).shortValue();
-                    GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readNumberOfPoints(response);
+                    DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
+                    short numberOfPoints,totalNeeded;
+                    boolean currentlyLogging = !args[3].equals("0");
+                    numberOfPoints = Integer.valueOf(args[1]).shortValue();
+                    totalNeeded = Integer.valueOf(args[2]).shortValue();
+
+                    dataLoggingHandler.setIsLogging(currentlyLogging);
+                    dataLoggingHandler.setNumberOfPoints(numberOfPoints);
+                    dataLoggingHandler.setTotalPoints(totalNeeded);
+                    dataLoggingHandler.getDataSetPointsListener().onDataSetPointsPopulated(true);
                 }
                 break;
             case FlutterProtocol.Commands.READ_POINT:
@@ -198,17 +204,31 @@ public class Session implements FlutterMessageListener {
                     Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_POINT="+response);
                 } else {
                     // If the time is ffffffff, there is no point available
-                    // TODO - temporarily commented out until we figure out what exactly to do with corrupted points
-                    /*if (args[1].equals("ffffffff")) {
+                    if (args[1].equals("ffffffff")) {
                         Log.w(Constants.LOG_TAG,"no point available for READ_POINT (first arg is ffffffff)");
-                    } else {*/
-//                        long unixTime = Long.valueOf(args[1], 16);
-//                        short sensor1, sensor2, sensor3;
-//                        sensor1 = Integer.valueOf(args[2], 16).shortValue();
-//                        sensor2 = Integer.valueOf(args[3], 16).shortValue();
-//                        sensor3 = Integer.valueOf(args[4], 16).shortValue();
-                        GlobalHandler.getInstance(currentActivity).dataLoggingHandler.readPoint(response);
-                    //}
+                    } else {
+                        long unixTime = Long.valueOf(args[1], 16);
+                        short sensor1, sensor2, sensor3;
+                        String sensorValues = args[2];
+                        sensor1 = Integer.valueOf(sensorValues.substring(0,2), 16).shortValue();
+                        sensor2 = Integer.valueOf(sensorValues.substring(2, 4), 16).shortValue();
+                        sensor3 = Integer.valueOf(sensorValues.substring(4,6), 16).shortValue();
+
+                        DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
+                        dataLoggingHandler.updateDataSet(unixTime, sensor1, sensor2, sensor3);
+
+                        TreeMap data = dataLoggingHandler.getData();
+                        if ((data.size() == dataLoggingHandler.getNumberOfPoints() || data.size() == dataLoggingHandler.getTotalPoints()) && data.size() != 0
+                                && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
+                                && currentActivity != null) {
+                            Sensor[] sensors;
+                            sensors = getFlutter().getSensors();
+                            String flutterName = getFlutter().getName();
+                            final DataSet dataSet = new DataSet(data, dataLoggingHandler.getKeys() , dataLoggingHandler.getDataName(), flutterName, sensors);
+
+                            dataLoggingHandler.getDataSetListener().onDataSetPopulated(dataSet);
+                        }
+                    }
                 }
                 break;
             case FlutterProtocol.Commands.DELETE_LOG:

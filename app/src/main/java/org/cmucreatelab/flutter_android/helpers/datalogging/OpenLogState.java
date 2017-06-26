@@ -1,7 +1,9 @@
 package org.cmucreatelab.flutter_android.helpers.datalogging;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
@@ -33,6 +35,8 @@ public class OpenLogState extends UpdateDataLogState {
                         dataLogsActivity, globalHandler.dataLoggingHandler.getNumberOfPoints(), globalHandler.dataLoggingHandler.getDataName(), dataLogsActivity.getDataLogsUpdateHelper().getDataSetsOnDevice()
                 );
                 openLogDialog.show(dataLogsActivity.getSupportFragmentManager(), "tag");
+                if (globalHandler.dataLoggingHandler.getNumberOfPoints() > 0)
+                    Toast.makeText(dataLogsActivity, R.string.done_recording, Toast.LENGTH_LONG).show();
             }
         });
     }

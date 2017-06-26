@@ -23,12 +23,12 @@ public class DataPoint implements Comparable<DataPoint>, Serializable {
     }
 
 
-    public DataPoint(String date, String time, String sensor1Value, String sensor2Value, String sensor3Value) {
+    public DataPoint(String date, String time, short sensor1Value, short sensor2Value, short sensor3Value) {
         this.date = date;
         this.time = time;
-        this.sensor1Value = sensor1Value;
-        this.sensor2Value = sensor2Value;
-        this.sensor3Value = sensor3Value;
+        this.sensor1Value = String.valueOf(sensor1Value);
+        this.sensor2Value = String.valueOf(sensor2Value);
+        this.sensor3Value = String.valueOf(sensor3Value);
     }
 
 

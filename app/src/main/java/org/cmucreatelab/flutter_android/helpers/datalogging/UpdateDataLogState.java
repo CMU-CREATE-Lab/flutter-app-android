@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.helpers.datalogging;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
+import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -15,7 +16,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
  * You must call the super equivalent for everything in this class
  */
 
-public abstract class UpdateDataLogState extends DataRecordingTimer implements DataRecordingTimer.TimeExpireListener, DataLoggingHandler.DataSetPointsListener, Flutter.PopulatedDataSetListener {
+public abstract class UpdateDataLogState extends DataRecordingTimer implements DataRecordingTimer.TimeExpireListener, Flutter.PopulatedDataSetListener {
 
     protected GlobalHandler globalHandler;
     protected DataLogsActivity dataLogsActivity;
@@ -24,11 +25,14 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
     private static DataSet dataSetOnFlutter;
     private static DataSet[] dataSetsOnDevice;
 
+    private BaseNavigationActivity baseNavigationActivity;
+
 
     public UpdateDataLogState(DataLogsActivity dataLogsActivity) {
         super(5000);
         this.dataLogsActivity = dataLogsActivity;
         globalHandler = GlobalHandler.getInstance(dataLogsActivity);
+        baseNavigationActivity = dataLogsActivity;
     }
 
 
@@ -42,7 +46,7 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
             globalHandler.sessionHandler.updateProgressDialogMessage(dataLogsActivity, "Updating data log points...");
-            globalHandler.dataLoggingHandler.populatePointsAvailable(this);
+            globalHandler.dataLoggingHandler.populatePointsAvailable((DataLoggingHandler.DataSetPointsListener) baseNavigationActivity);
         } else {
             updateDataLogState.updatedPoints();
         }
@@ -57,7 +61,7 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
         else {
             globalHandler.sessionHandler.createProgressDialog(dataLogsActivity);
             globalHandler.sessionHandler.updateProgressDialogMessage(dataLogsActivity, "Updating data logs...");
-            this.globalHandler.sessionHandler.getSession().getFlutter().populateDataSet(globalHandler.appContext, this);
+            this.globalHandler.dataLoggingHandler.populateDataSetAvailable(this);
         }
     }
 
@@ -111,16 +115,15 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
     }
 
 
-    @Override
     public void onDataSetPointsPopulated(boolean isSuccess) {
         this.updatedPoints();
     }
 
 
     @Override
-    public void onDataSetPopulated() {
+    public void onDataSetPopulated(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "DataLogsUpdateHelper.onDataSetPopulated");
-        dataSetOnFlutter = globalHandler.sessionHandler.getSession().getFlutter().getDataSet();
+        dataSetOnFlutter = dataSet;
         this.updatedLogs();
     }
 

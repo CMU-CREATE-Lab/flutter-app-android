@@ -11,7 +11,6 @@ import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
-import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.sensors.SetSensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
@@ -200,7 +199,7 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         GlobalHandler globalHandler = GlobalHandler.getInstance(context);
         this.listener = listener;
         this.dataSet = new DataSet();
-        globalHandler.dataLoggingHandler.populatedDataSet(this);
+        globalHandler.dataLoggingHandler.sendPopulateDataSetMessage(this);
     }
 
 
@@ -208,12 +207,7 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
     public void onDataSetPopulated(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "Flutter.onDataSetPopulated");
         this.dataSet = dataSet;
-        listener.onDataSetPopulated();
-    }
-
-
-    public interface PopulatedDataSetListener {
-        void onDataSetPopulated();
+        listener.onDataSetPopulated(dataSet);
     }
 
 
@@ -247,4 +241,8 @@ public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener
         return flutterOutputs;
     }
 
+
+    public interface PopulatedDataSetListener {
+        void onDataSetPopulated(DataSet dataSet);
+    }
 }

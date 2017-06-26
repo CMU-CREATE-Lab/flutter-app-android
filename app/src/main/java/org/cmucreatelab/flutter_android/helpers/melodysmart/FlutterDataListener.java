@@ -49,14 +49,8 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
             return;
         }
 
-        // handle parse
+        // handle parse and react appropriately
         session.onFlutterMessageReceived(request, response);
-        // updatedPoints views
-        if (session.getFlutterMessageListener() != null) {
-            session.getFlutterMessageListener().onFlutterMessageReceived(request, response);
-        } else {
-            Log.w(Constants.LOG_TAG,"Tried to call callback onFlutterMessageReceived but session FlutterMessageListener is null.");
-        }
     }
 
     

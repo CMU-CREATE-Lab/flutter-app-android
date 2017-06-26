@@ -59,8 +59,8 @@ import butterknife.ButterKnife;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
-public class DataLogsActivity extends BaseNavigationActivity implements Serializable, BaseDataLoggingDialog.DialogRecordListener,
-        OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
+public class DataLogsActivity extends BaseNavigationActivity implements Serializable, DataLoggingHandler.DataSetPointsListener,
+        BaseDataLoggingDialog.DialogRecordListener, OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -559,7 +559,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 globalHandler.dataLoggingHandler.populatePointsAvailable(new DataLoggingHandler.DataSetPointsListener() {
                     @Override
                     public void onDataSetPointsPopulated(boolean isSuccess) {
-                        globalHandler.dataLoggingHandler.populatedDataSet(new DataLoggingHandler.DataSetListener() {
+                        globalHandler.dataLoggingHandler.sendPopulateDataSetMessage(new DataLoggingHandler.DataSetListener() {
                             @Override
                             public void onDataSetPopulated(final DataSet dataSet) {
                                 runOnUiThread(new Runnable() {
@@ -680,6 +680,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         mins = new Stat[3];
         for (int i = 0; i < mins.length; i++)
             mins[i] = new Stat("Min", this);
+
+        globalHandler.sessionHandler.getSession().setCurrentActivity(this);
     }
 
 
@@ -719,7 +721,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     protected void onPause() {
         super.onPause();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        dataLogsUpdateHelper.registerStateAndUpdateLogs(new PauseReadingState(this));
         globalHandler.sessionHandler.dismissProgressDialog();
     }
 
@@ -782,6 +783,12 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     }
 
 
+    @Override
+    public void onDataSetPointsPopulated(boolean isSuccess) {
+        dataLogsUpdateHelper.getUpdateDataLogState().onDataSetPointsPopulated(isSuccess);
+    }
+
+
     public void updateFromTimer() {
         // test to ensure the current state is Resume. We do not want to go into the resume state when in another state
         if (globalHandler.dataLoggingHandler.isLogging()) {
@@ -826,5 +833,4 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void setWorkingDataPoint(DataPoint dataPoint) {
         this.workingDataPoint = dataPoint;
     }
-
 }
