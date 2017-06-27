@@ -38,7 +38,7 @@ public class SessionHandler {
             public void run() {
                 progressDialog = new ProgressDialog(activity);
                 progressDialog.setTitle("Loading");
-                updateProgressDialogMessage(activity, "Loading...");
+                updateProgressDialogMessage(activity, "Loading...\n\nThis should take less than 1 minute");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
             }

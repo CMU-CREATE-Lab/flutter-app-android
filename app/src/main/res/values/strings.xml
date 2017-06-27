@@ -182,7 +182,7 @@
     <string name="this_field_cannot_be_blank">This field cannot be blank.</string>
     <string name="this_field_cannot_be_blank_or_zero">This field cannot be blank or zero.</string>
     <string name="no_flutter_data_logs">To record data, please first connect your Flutter.</string>
-    <string name="loading_data_log_on_flutter">Loading Data...</string>
+    <string name="loading_data_log_on_flutter">Loading Data...\n\nThis should take less than 1 minute</string>
     <string name="no_mail_app">No Email App To Resolve Intent</string>
     <string name="ok">Ok</string>
     <string name="loading_database">Loading Database...</string>

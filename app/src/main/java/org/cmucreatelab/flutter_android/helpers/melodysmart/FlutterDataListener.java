@@ -83,10 +83,10 @@ public class FlutterDataListener extends DataListener<MelodySmartMessage, Messag
                     switch (protocolCommand) {
                         case 'M':
                         case 'Y':
-                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Sensor Types");
+                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Sensor Types\n\nThis should take less than 1 minute");
                             break;
                         case 'O':
-                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Outputs");
+                            globalHandler.sessionHandler.updateProgressDialogMessage(globalHandler.sessionHandler.getSession().getCurrentActivity(), "Loading Outputs\n\nThis should take less than 1 minute");
                             break;
                         default:
                             Log.e(Constants.LOG_TAG, "received response from an unexpected protocol command");
