@@ -485,6 +485,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         // Start new activity
         Intent intent = new Intent(this, SensorsActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

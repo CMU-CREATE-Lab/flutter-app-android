@@ -225,7 +225,7 @@ public class Session implements FlutterMessageListener {
                             Sensor[] sensors;
                             sensors = getFlutter().getSensors();
                             String flutterName = getFlutter().getName();
-                            final DataSet dataSet = new DataSet(data, dataLoggingHandler.getKeys() , dataLoggingHandler.getDataName(), flutterName, sensors);
+                            final DataSet dataSet = new DataSet(data, dataLoggingHandler.getKeys(), dataLoggingHandler.getDataName(), flutterName, sensors);
 
                             dataLoggingHandler.getDataSetListener().onDataSetPopulated(dataSet);
                         }
