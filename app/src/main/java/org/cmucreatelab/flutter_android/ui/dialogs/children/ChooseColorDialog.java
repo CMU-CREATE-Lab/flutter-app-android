@@ -95,9 +95,10 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         this.dialogView = view;
         this.frameFinalColor = (FrameLayout) view.findViewById(R.id.frame_final_color);
         String selectedColor = (String) getArguments().getSerializable(SELECTED_COLOR_KEY);
+        Log.d(Constants.LOG_TAG, "color: " + selectedColor);
         int color = Color.parseColor(selectedColor);
-        if (colorSwatches.indexOfKey(color) >= 0) {
-            selectColor(colorSwatches.get(color));
+        if (colorSwatches.indexOfKey(Constants.TRUE_HEX_TO_SWATCH_HEX.get(color)) >= 0) {
+            selectColor(colorSwatches.get(Constants.TRUE_HEX_TO_SWATCH_HEX.get(color)));
         } else {
             Log.w(Constants.LOG_TAG,"could not find color swatch for color="+color);
             selectColor(colorSwatches.get(Constants.ColorSwatches.WHITE));

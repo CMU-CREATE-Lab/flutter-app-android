@@ -62,7 +62,7 @@ public final class Constants {
         public static final int BLACK = Color.parseColor("#333333");
     }
 
-    public static final class TrueColorRGG {
+    public static final class TrueColorRGB {
         public static final Integer[] RED = new Integer[]{255, 0, 0};
         public static final Integer[] ORANGE = new Integer[]{255, 56, 0};
         public static final Integer[] YELLOW = new Integer[]{255, 217, 0};
@@ -100,20 +100,37 @@ public final class Constants {
     }
 
     public static final HashMap<Integer, Integer[]> COLOR_PICKER_FLUTTER_RGB = new HashMap() {{
-        put(ColorSwatches.RED, TrueColorRGG.RED);
-        put(ColorSwatches.ORANGE, TrueColorRGG.ORANGE);
-        put(ColorSwatches.YELLOW, TrueColorRGG.YELLOW);
-        put(ColorSwatches.CHARTREUSE_GREEN, TrueColorRGG.CHARTREUSE_GREEN);
-        put(ColorSwatches.GREEN, TrueColorRGG.GREEN);
-        put(ColorSwatches.SPRING_GREEN, TrueColorRGG.SPRING_GREEN);
-        put(ColorSwatches.CYAN, TrueColorRGG.CYAN);
-        put(ColorSwatches.AZURE, TrueColorRGG.AZURE);
-        put(ColorSwatches.BLUE, TrueColorRGG.BLUE);
-        put(ColorSwatches.VIOLET, TrueColorRGG.VIOLET);
-        put(ColorSwatches.MAGENTA, TrueColorRGG.MAGENTA);
-        put(ColorSwatches.ROSE, TrueColorRGG.ROSE);
-        put(ColorSwatches.WHITE, TrueColorRGG.WHITE);
-        put(ColorSwatches.BLACK, TrueColorRGG.BLACK);
+        put(ColorSwatches.RED, TrueColorRGB.RED);
+        put(ColorSwatches.ORANGE, TrueColorRGB.ORANGE);
+        put(ColorSwatches.YELLOW, TrueColorRGB.YELLOW);
+        put(ColorSwatches.CHARTREUSE_GREEN, TrueColorRGB.CHARTREUSE_GREEN);
+        put(ColorSwatches.GREEN, TrueColorRGB.GREEN);
+        put(ColorSwatches.SPRING_GREEN, TrueColorRGB.SPRING_GREEN);
+        put(ColorSwatches.CYAN, TrueColorRGB.CYAN);
+        put(ColorSwatches.AZURE, TrueColorRGB.AZURE);
+        put(ColorSwatches.BLUE, TrueColorRGB.BLUE);
+        put(ColorSwatches.VIOLET, TrueColorRGB.VIOLET);
+        put(ColorSwatches.MAGENTA, TrueColorRGB.MAGENTA);
+        put(ColorSwatches.ROSE, TrueColorRGB.ROSE);
+        put(ColorSwatches.WHITE, TrueColorRGB.WHITE);
+        put(ColorSwatches.BLACK, TrueColorRGB.BLACK);
+    }};
+
+    public static final HashMap<Integer, Integer> TRUE_HEX_TO_SWATCH_HEX = new HashMap() {{
+       put(TrueColorHex.RED, ColorSwatches.RED);
+        put(TrueColorHex.ORANGE, ColorSwatches.ORANGE);
+        put(TrueColorHex.YELLOW, ColorSwatches.YELLOW);
+        put(TrueColorHex.CHARTREUSE_GREEN, ColorSwatches.CHARTREUSE_GREEN);
+        put(TrueColorHex.GREEN, ColorSwatches.GREEN);
+        put(TrueColorHex.SPRING_GREEN, ColorSwatches.SPRING_GREEN);
+        put(TrueColorHex.CYAN, ColorSwatches.CYAN);
+        put(TrueColorHex.AZURE, ColorSwatches.AZURE);
+        put(TrueColorHex.BLUE, ColorSwatches.BLUE);
+        put(TrueColorHex.VIOLET, ColorSwatches.VIOLET);
+        put(TrueColorHex.MAGENTA, ColorSwatches.MAGENTA);
+        put(TrueColorHex.ROSE, ColorSwatches.ROSE);
+        put(TrueColorHex.WHITE, ColorSwatches.WHITE);
+        put(TrueColorHex.BLACK, ColorSwatches.BLACK);
     }};
 
     public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
