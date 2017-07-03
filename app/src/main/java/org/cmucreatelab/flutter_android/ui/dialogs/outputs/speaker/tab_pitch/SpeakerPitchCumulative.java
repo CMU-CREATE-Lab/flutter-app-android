@@ -50,7 +50,7 @@ public class SpeakerPitchCumulative extends SpeakerPitchStateHelper {
         // sensor
         linkedSensor.setVisibility(View.VISIBLE);
         ((ImageView)linkedSensor.getChildAt(0)).setImageResource(getSpeaker().getPitch().getSettings().getSensor().getGreenImageId());
-        ViewGroup sensorViewGroup = ((ViewGroup)linkedSensor.getChildAt(1));
+        ViewGroup sensorViewGroup = ((ViewGroup)linkedSensor.getChildAt(2));
         ((TextView)sensorViewGroup.getChildAt(0)).setText(R.string.linked_sensor);
         ((TextView)sensorViewGroup.getChildAt(1)).setText(getSpeaker().getPitch().getSettings().getSensor().getSensorTypeId());
 
