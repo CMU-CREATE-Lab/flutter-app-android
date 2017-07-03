@@ -218,7 +218,8 @@ public class Session implements FlutterMessageListener {
                         dataLoggingHandler.updateDataSet(unixTime, sensor1, sensor2, sensor3);
 
                         TreeMap data = dataLoggingHandler.getData();
-                        GlobalHandler.getInstance(currentActivity).sessionHandler.updateProgressDialogMessage(currentActivity, "Loading point " + data.size() + " of " + dataLoggingHandler.getTotalPoints());
+                        GlobalHandler.getInstance(currentActivity).sessionHandler.updateProgressDialogMessage(currentActivity, "Loading point " + data.size() + " of " + dataLoggingHandler.getNumberOfPoints());
+
                         if ((data.size() == dataLoggingHandler.getNumberOfPoints() || data.size() == dataLoggingHandler.getTotalPoints()) && data.size() != 0
                                 && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
                                 && currentActivity != null) {
