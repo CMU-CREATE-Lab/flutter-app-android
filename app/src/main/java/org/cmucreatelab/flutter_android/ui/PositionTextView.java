@@ -17,6 +17,7 @@ public class PositionTextView extends TextView {
     private void init(Context context) {
         this.position = 0;
         this.isVisible = false;
+        this.setVisibility(INVISIBLE);
     }
 
 

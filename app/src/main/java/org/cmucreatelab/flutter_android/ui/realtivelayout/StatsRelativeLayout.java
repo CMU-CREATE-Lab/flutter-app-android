@@ -1,8 +1,11 @@
 package org.cmucreatelab.flutter_android.ui.realtivelayout;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +36,13 @@ public class StatsRelativeLayout extends RelativeLayout {
         int result = 0;
         float temp = (float) position / 100;
         result = (int) (temp * width);
-        Log.d(Constants.LOG_TAG, "Position - " + result);
         return result;
     }
 
 
     private boolean isViewOverlapping(View v1, View v2) {
+        Log.d(Constants.LOG_TAG, v1.getLeft() + " " + v1.getTop() + " " + v1.getRight() + " " + v1.getBottom());
+        Log.d(Constants.LOG_TAG, v2.getLeft() + " " + v2.getTop() + " " + v2.getRight() + " " + v2.getBottom());
         Rect R1=new Rect(v1.getLeft(), v1.getTop(), v1.getRight(), v1.getBottom());
         Rect R2=new Rect(v2.getLeft(), v2.getTop(), v2.getRight(), v2.getBottom());
         return R1.intersect(R2);
@@ -60,16 +64,19 @@ public class StatsRelativeLayout extends RelativeLayout {
             PositionTextView view = views.get(i);
             view.setId(i+100);
             view.setPadding(2,2,2,2);
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            /*if (100 - view.getPosition() >= 90)
-                params.addRule(RelativeLayout.ALIGN_PARENT_START);
-            else if (100 - view.getPosition() <= 10)
-                params.addRule(RelativeLayout.ALIGN_PARENT_END);
-            else
-                params.setMargins(positionToPixels(instance.getWidth(), view.getPosition()) - view.getWidth() / 2, 0, 0, 0);*/
 
-            view.setVisibility(INVISIBLE);
+            if (100 - view.getPosition() >= 90) {
+                params.addRule(RelativeLayout.ALIGN_PARENT_START);
+            } else if (100 - view.getPosition() <= 10) {
+                params.addRule(RelativeLayout.ALIGN_PARENT_END);
+            } else {
+                params.setMargins(positionToPixels(instance.getWidth(), view.getPosition()) - view.getWidth() / 2, 0, 0, 0);
+            }
             view.setLayoutParams(params);
 
             this.addView(view);
@@ -79,30 +86,9 @@ public class StatsRelativeLayout extends RelativeLayout {
     private ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
-            getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-            Collections.sort(views, new Comparator<PositionTextView>() {
-                @Override
-                public int compare(PositionTextView positionTextView, PositionTextView t1) {
-                    return ((Integer)positionTextView.getPosition()).compareTo(t1.getPosition());
-                }
-            });
-
             for (int i = 0; i < views.size(); i++) {
                 PositionTextView view = views.get(i);
-                view.setVisibility(VISIBLE);
                 RelativeLayout.LayoutParams params = (LayoutParams) view.getLayoutParams();
-
-                if (100 - view.getPosition() >= 90) {
-                    params.addRule(RelativeLayout.ALIGN_PARENT_START);
-                } else if (100 - view.getPosition() <= 10) {
-                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                } else {
-                    params.setMargins(positionToPixels(instance.getWidth(), view.getPosition()) - view.getWidth() / 2, 0, 0, 0);
-                    Log.d(Constants.LOG_TAG, "Width - " + view.getWidth());
-                }
-
-                view.setLayoutParams(params);
 
                 if (i > 0) {
                     if (isViewOverlapping(view, views.get(i - 1))) {
@@ -111,7 +97,9 @@ public class StatsRelativeLayout extends RelativeLayout {
                 }
 
                 view.setLayoutParams(params);
+                view.setVisibility(VISIBLE);
             }
+            instance.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         }
     };
 
@@ -140,6 +128,14 @@ public class StatsRelativeLayout extends RelativeLayout {
         init(context);
     }
 
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        for (View view : views) {
+            view.setVisibility(VISIBLE);
+        }
+    }
 
     public void add(Stat stat, int position) {
         stat.setVisible(true);

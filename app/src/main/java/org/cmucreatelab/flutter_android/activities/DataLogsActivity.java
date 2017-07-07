@@ -681,7 +681,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
         for (int i = 0; i < mins.length; i++)
             mins[i] = new Stat("Min", this);
 
-        globalHandler.sessionHandler.getSession().setCurrentActivity(this);
+        if (globalHandler.melodySmartDeviceHandler.isConnected())
+            globalHandler.sessionHandler.getSession().setCurrentActivity(this);
     }
 
 
