@@ -77,37 +77,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     // All Flutters have the same first 8 characters
                     String address = macAddress.substring(0, 8);
                     if (address.equals(Constants.FLUTTER_MAC_ADDRESS) && !Constants.addressBlackList.contains(macAddress)) {
-                        if (warningPromptTimer == null) {
-                            warningPromptTimer = new Timer();
-                            warningPromptTimer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
-                                        }
-                                    });
-                                }
-                            }, Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS);
-                        }
-                        // Clear out part one of landing page connection content
-                        findViewById(R.id.image_flutter).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.text_connect_s1).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.text_connect_s2).setVisibility(View.INVISIBLE);
-                        // Set up part two of landing page connection content
-                        final TextView landingPage = (TextView) findViewById(R.id.text_app_landing_title);
-                        landingPage.setText(R.string.choose_flutter);
-                        findViewById(R.id.image_flutter_name_tag).setVisibility(View.VISIBLE);
-                        findViewById(R.id.text_connect_s3).setVisibility(View.VISIBLE);
-                        findViewById(R.id.text_connect_s3_explanation).setVisibility(View.VISIBLE);
-                        findViewById(R.id.text_connect_s4).setVisibility(View.VISIBLE);
-                        findViewById(R.id.text_connect_s4_explanation).setVisibility(View.VISIBLE);
-                        findViewById(R.id.text_flutter_tag_label).setVisibility(View.VISIBLE);
-                        findViewById(R.id.image_content_scan_scroll_left).setVisibility(View.VISIBLE);
-                        findViewById(R.id.image_content_scan_scroll_right).setVisibility(View.VISIBLE);
-                        findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
-                        findViewById(R.id.button_scan).setPadding(0, 0, 0, 0);
                         // Get Flutter and add it scan list
                         String name = NamingHandler.generateName(getApplicationContext(), device.getAddress());
                         Flutter endResult = new Flutter(device, name);
@@ -173,6 +142,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void scanForDevice(boolean isScanning) {
+
         final Button scan = (Button) findViewById(R.id.button_scan);
         LinearLayout listContainer = (LinearLayout) findViewById(R.id.frame_second_scan);
         LinearLayout list = (LinearLayout) findViewById(R.id.scan_list);
@@ -180,9 +150,42 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
         globalHandler.melodySmartDeviceHandler.setDeviceScanning(isScanning, mLeScanCallBack);
         if (isScanning) {
+            // Change scan button into just text that says "scanning for flutters..."
             scan.setEnabled(false);
             scan.setBackgroundResource(0);
             scan.setTextColor(Color.BLACK);
+            scan.setText(Constants.scanningText[0]);
+            // Clear out part one of landing page connection content
+            findViewById(R.id.image_flutter).setVisibility(View.INVISIBLE);
+            findViewById(R.id.text_connect_s1).setVisibility(View.INVISIBLE);
+            findViewById(R.id.text_connect_s2).setVisibility(View.INVISIBLE);
+            // Set up part two of landing page connection content
+            final TextView landingPage = (TextView) findViewById(R.id.text_app_landing_title);
+            landingPage.setText(R.string.choose_flutter);
+            findViewById(R.id.image_flutter_name_tag).setVisibility(View.VISIBLE);
+            findViewById(R.id.text_connect_s3).setVisibility(View.VISIBLE);
+            findViewById(R.id.text_connect_s3_explanation).setVisibility(View.VISIBLE);
+            findViewById(R.id.text_connect_s4).setVisibility(View.VISIBLE);
+            findViewById(R.id.text_connect_s4_explanation).setVisibility(View.VISIBLE);
+            findViewById(R.id.text_flutter_tag_label).setVisibility(View.VISIBLE);
+            findViewById(R.id.image_content_scan_scroll_left).setVisibility(View.VISIBLE);
+            findViewById(R.id.image_content_scan_scroll_right).setVisibility(View.VISIBLE);
+            findViewById(R.id.frame_second_scan).setVisibility(View.VISIBLE);
+            // Add prompt, after a set amount of time, to remind the user to press 'Find Me'
+            if (warningPromptTimer == null) {
+                warningPromptTimer = new Timer();
+                warningPromptTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }, Constants.FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS);
+            }
             if (scanningTextTimer != null) {
                 scanningTextTimer.cancel();
             }
@@ -195,9 +198,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                         @Override
                         public void run() {
                             // Add padding left to prevent the text from shifting as it gets longer. (depends upon font size)
-                            // Tweak top padding because of the change from a button to just text.
-                            Integer topPadding = findViewById(R.id.frame_second_scan).getVisibility() == View.VISIBLE ? 0 : 41;
-                            scan.setPadding(count * 4, topPadding, 0, 0);
+                            scan.setPadding(count * 4, 0, 0, 0);
                             scan.setText(Constants.scanningText[count]);
                             count = (count + 1) % Constants.scanningText.length;
                         }

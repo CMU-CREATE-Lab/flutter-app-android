@@ -223,7 +223,7 @@ public final class Constants {
 
     public static final int FLUTTER_WAITING_TIMEOUT_IN_MILLISECONDS = 2000;
     public static final int FLUTTER_WAITING_TIMEOUT_ONE_MINUTE = 60000;
-    public static final int FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS = 15000;
+    public static final int FLUTTER_WAITING_PROMPT_TIMEOUT_IN_MILLISECONDS = 12000;
 
     public static final class SerializableKeys {
         public static final String DIALOG_LED = "dialog_led";
