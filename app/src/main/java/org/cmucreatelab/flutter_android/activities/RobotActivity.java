@@ -489,7 +489,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             updateSimulatedView();
             if (!session.isSimulatingData()) startSensorReading();
         }
-        session.setCurrentActivity(this);
     }
 
 
