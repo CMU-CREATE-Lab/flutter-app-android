@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDialog;
 
 import java.io.Serializable;
 
