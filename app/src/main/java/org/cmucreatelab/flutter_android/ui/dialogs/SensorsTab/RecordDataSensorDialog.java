@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import com.rockerhieu.emojicon.EmojiconEditText;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
 
 import java.io.Serializable;
 

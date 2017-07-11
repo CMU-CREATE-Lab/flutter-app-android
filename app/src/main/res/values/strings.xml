@@ -261,6 +261,8 @@
     <string name="data_selected_spinner">Swipe down to pull in the most recent data.</string>
     <string name="currently_recording">Currently Recording</string>
     <string name="currently_recording_description">You cannot send a data log that is currently being recorded.</string>
+    <string name="data_snapshot">Data Snapshot</string>
+    <string name="done">Done</string>
 
     <string-array name="time_array">
         <item>minute</item>

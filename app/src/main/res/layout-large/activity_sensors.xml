@@ -398,16 +398,13 @@
             android:weightSum="2">
 
             <Button
-                android:id="@+id/button_play_pause"
+                android:id="@+id/button_data_snapshot"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button"
-                android:drawablePadding="-15dp"
-                android:drawableStart="@drawable/button_icon_pause"
-                android:paddingLeft="15dp"
-                android:text="@string/pause_sensors"
+                android:text="@string/data_snapshot"
                 android:textColor="@color/white" />
 
 
@@ -420,7 +417,7 @@
                 android:background="@drawable/round_button"
                 android:drawablePadding="-20dp"
                 android:drawableStart="@drawable/button_icon_record"
-                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
                 android:text="@string/record_data"
                 android:textColor="@color/white" />
 

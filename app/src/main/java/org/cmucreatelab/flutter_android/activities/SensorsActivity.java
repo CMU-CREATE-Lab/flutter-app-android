@@ -16,18 +16,23 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseSensorReadingActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
+import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.BlueSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataSensorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningSensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.DataSnapshotDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordDataSensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordingWarningSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -156,15 +161,10 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
 
     // after pause/resume, determine if we should start sensor readings via 'isPlayingSensors' flag
     private void handleSensorReadingState() {
-        Button button = (Button) findViewById(R.id.button_play_pause);
         if (!session.isSimulatingData()) {
-            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_pause), null, null, null);
-            button.setText(R.string.pause_sensors);
             startSensorReading();
             //session.setFlutterMessageListener(this);
         } else {
-            button.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(this, R.drawable.button_icon_play), null, null, null);
-            button.setText(R.string.play_sensors);
             stopSensorReading();
         }
     }
@@ -303,11 +303,20 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     }
 
 
-    @OnClick(R.id.button_play_pause)
-    public void onClickPlayPause() {
-        Log.d(Constants.LOG_TAG, "onClickPlayPause");
-        session.setSimulatingData(!session.isSimulatingData());
-        handleSensorReadingState();
+    @OnClick(R.id.button_data_snapshot)
+    public void onClickDataSnapShot() {
+        Log.d(Constants.LOG_TAG, "onClickDataSnapshot");
+        Flutter flutter = GlobalHandler.getInstance(this).sessionHandler.getSession().getFlutter();
+        Sensor sensor1 = flutter.getSensors()[0];
+        Sensor sensor2 = flutter.getSensors()[1];
+        Sensor sensor3 = flutter.getSensors()[2];
+        DataSnapshotDialog dataSnapshotDialog = DataSnapshotDialog.newInstance(
+                sensor1.getSensorReading(), sensor1,
+                sensor2.getSensorReading(), sensor2,
+                sensor3.getSensorReading(), sensor3,
+                Calendar.getInstance().getTime().getTime()
+        );
+        dataSnapshotDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
