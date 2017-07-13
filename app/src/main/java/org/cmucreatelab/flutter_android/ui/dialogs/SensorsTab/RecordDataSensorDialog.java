@@ -1,38 +1,22 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab;
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.internal.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-
-import com.rockerhieu.emojicon.EmojiconEditText;
-
-import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
 
 import java.io.Serializable;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by Steve on 1/9/2017.
  */
-public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Serializable {
+public class RecordDataSensorDialog extends ReviewRecordingDialog implements Serializable {
 
 
-    public static RecordDataSensorDialog newInstance(Serializable serializable, int buttonDrawableId) {
+    /*public static RecordDataSensorDialog newInstance(Serializable serializable, int buttonDrawableId) {
         RecordDataSensorDialog recordDataSensorDialog = new RecordDataSensorDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(RECORD_KEY, serializable);
         args.putSerializable(DISMISS_KEY, serializable);
-        args.putInt(BUTTON_KEY, buttonDrawableId);
+        //args.putInt(BUTTON_KEY, buttonDrawableId);
         recordDataSensorDialog.setArguments(args);
 
         return recordDataSensorDialog;
@@ -51,21 +35,9 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         super.onCreateDialog(savedInstanceState);
 
         intervalsText = (EditText) view.findViewById(R.id.edit_number_of_intervals);
-        intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
+        intervalSpinner = (EditText) view.findViewById(R.id.edit_dropdown_interval);
         timePeriodText = (EditText) view.findViewById(R.id.edit_time_period);
-        timePeriodSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_time);
-
-        intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.time_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        intervalSpinner.setAdapter(adapter);
-
-        timePeriodSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_time);
-        adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.times_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timePeriodSpinner.setAdapter(adapter);
+        timePeriodSpinner = (EditText) view.findViewById(R.id.edit_dropdown_time);
 
         informationDialog = InformationDialog.newInstance(
                 getString(R.string.a_lot_of_data_points),
@@ -78,6 +50,6 @@ public class RecordDataSensorDialog extends BaseDataLoggingDialog implements Ser
         informationDialog.setCancelable(false);
 
         return builder.create();
-    }
+    }*/
 
 }

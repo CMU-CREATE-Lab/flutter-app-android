@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -15,6 +15,8 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.adapters.DataLogListAdapter;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 
 import java.io.Serializable;
 

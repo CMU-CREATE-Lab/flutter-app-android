@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -20,6 +20,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.datalogging.CleanUpAfterState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 import java.io.Serializable;
 
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 2/1/2017.
  */
-public class CleanUpConfirmationDialog extends BaseResizableDialog  {
+public class CleanUpConfirmationDialog extends BaseResizableDialog {
 
     private static final String ACTIVITY_KEY = "activity_key";
     private static final String DATA_LOGS_KEY = "data_logs_key";

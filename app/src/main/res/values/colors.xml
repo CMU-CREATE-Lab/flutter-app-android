@@ -5,9 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <item name="blue" type="color">#FF33B5E5</item>
+    <item name="light_blue" type="color">#ecf8fc</item>
     <item name="purple" type="color">#FFAA66CC</item>
     <item name="green" type="color">#FF99CC00</item>
     <item name="orange" type="color">#f2754d</item>
+    <item name="light_orange" type="color">#eec3b5</item>
     <item name="red" type="color">#FFFF4444</item>
     <item name="darkblue" type="color">#FF0099CC</item>
     <item name="darkpurple" type="color">#FF9933CC</item>
@@ -26,6 +28,7 @@
         <item>@color/purple</item>
         <item>@color/green</item>
         <item>@color/orange</item>
+        <item>@color/light_orange</item>
         <item>@color/red</item>
         <item>@color/darkblue</item>
         <item>@color/darkpurple</item>

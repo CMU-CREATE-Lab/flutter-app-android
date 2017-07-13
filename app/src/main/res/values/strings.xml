@@ -263,6 +263,12 @@
     <string name="currently_recording_description">You cannot send a data log that is currently being recorded.</string>
     <string name="data_snapshot">Data Snapshot</string>
     <string name="done">Done</string>
+    <string name="next">Next</string>
+    <string name="flutter_sample_question">How often should your Flutter take a sample?</string>
+    <string name="flutter_record_time_question">How long should your Flutter record data?</string>
+    <string name="back">Back</string>
+    <string name="name_your_data_set">Name your data set</string>
+    <string name="review_recording">Review Recording</string>
 
     <string-array name="time_array">
         <item>minute</item>

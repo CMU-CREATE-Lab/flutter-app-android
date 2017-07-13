@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,16 +21,15 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.FlutterSampleDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.DataSnapshotDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordDataSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordingWarningSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
-import java.sql.Date;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
@@ -45,7 +43,7 @@ import butterknife.OnClick;
  * An activity which handles the Sensors tab on the navigation bar.
  *
  */
-public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, BaseDataLoggingDialog.DialogRecordListener, DismissDialogListener {
+public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, ReviewRecordingDialog.DialogRecordListener, DismissDialogListener {
 
     public static final String SENSORS_ACTIVITY_KEY = "sensors_activity_key";
 
@@ -340,8 +338,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                     recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
                 else {
-                    RecordDataSensorDialog recordDataSensorDialog = RecordDataSensorDialog.newInstance(instance, R.drawable.round_blue_button_bottom_right);
-                    recordDataSensorDialog.show(getSupportFragmentManager(), "tag");
+                    FlutterSampleDialog flutterSampleDialog = FlutterSampleDialog.newInstance(new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, false);
+                    flutterSampleDialog.show(getSupportFragmentManager(), "tag");
                 }
             }
         });

@@ -39,15 +39,15 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.PauseReadingState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseDataLoggingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
-import org.cmucreatelab.flutter_android.ui.dialogs.EmailDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.OpenLogDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataLoggingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDataDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SaveToKindleDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.OpenLogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.RecordingWarningDataDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.SaveToKindleDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.FlutterSampleDialog;
 import org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
@@ -60,7 +60,7 @@ import butterknife.ButterKnife;
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, DataLoggingHandler.DataSetPointsListener,
-        BaseDataLoggingDialog.DialogRecordListener, OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
+        ReviewRecordingDialog.DialogRecordListener, OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
 
     public static final String DATA_LOGS_ACTIVITY_KEY = "data_logging_key";
 
@@ -377,8 +377,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             );
                             recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
                         } else {
-                            RecordDataLoggingDialog recordDataLoggingDialog = RecordDataLoggingDialog.newInstance(instance, R.drawable.round_orange_button_bottom_right);
-                            recordDataLoggingDialog.show(getSupportFragmentManager(), "tag");
+                            FlutterSampleDialog flutterSampleDialog = FlutterSampleDialog.newInstance(
+                                    new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, false
+                            );
+                            flutterSampleDialog.show(getSupportFragmentManager(), "tag");
                         }
                     }
                 });

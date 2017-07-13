@@ -27,6 +27,7 @@ public class DataLoggingHandler {
 
     private static final int MAX_INTERVAL = 65535;
     private static final int MAX_SAMPLES = 255;
+    private static final String DATA_LOG_NAME_KEY = "data_log_name_key";
     private static final String INTERVAL_INT_KEY = "interval_int_key";
     private static final String INTERVAL_STRING_KEY = "interval_string_key";
     private static final String TIME_PERIOD_INT_KEY = "time_period_int_key";
@@ -158,18 +159,16 @@ public class DataLoggingHandler {
     /**
      * Saved the details of the recording data log.
      * @param activity Current activity (needed to access SharedPreferences).
-     * @param intervalInt The interval integer supplied by the user.
-     * @param intervalString The interval String (ex. 'minute') supplied by the user.
-     * @param timePeriodInt The time period interger supplied by the user.
-     * @param timePeriodString The timer period String (ex 'minutes') supplied by the user.
+     * @param dataLogDetails The details of the current data log to be recorded
      */
-    public void saveDataLogDetails(Activity activity, int intervalInt, String intervalString, int timePeriodInt, String timePeriodString) {
+    public void saveDataLogDetails(Activity activity, DataLogDetails dataLogDetails) {
         SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(INTERVAL_INT_KEY, intervalInt);
-        editor.putString(INTERVAL_STRING_KEY, intervalString);
-        editor.putInt(TIME_PERIOD_INT_KEY, timePeriodInt);
-        editor.putString(TIME_PERIOD_STRING_KEY, timePeriodString);
+        editor.putString(DATA_LOG_NAME_KEY, dataLogDetails.getDataLogName());
+        editor.putInt(INTERVAL_INT_KEY, dataLogDetails.getIntervalInt());
+        editor.putString(INTERVAL_STRING_KEY, dataLogDetails.getIntervalString());
+        editor.putInt(TIME_PERIOD_INT_KEY, dataLogDetails.getTimePeriodInt());
+        editor.putString(TIME_PERIOD_STRING_KEY, dataLogDetails.getTimePeriodString());
         editor.apply();
     }
 
@@ -181,11 +180,12 @@ public class DataLoggingHandler {
      */
     public DataLogDetails loadDataLogDetails(Activity activity) {
         SharedPreferences sharedPref = activity.getSharedPreferences(Constants.PREFERENCES, Context.MODE_PRIVATE);
+        String dataLogName = sharedPref.getString(DATA_LOG_NAME_KEY, "Unknown Name");
         int intervalInt = sharedPref.getInt(INTERVAL_INT_KEY, 0);
         String intervalString = sharedPref.getString(INTERVAL_STRING_KEY, "minute");
         int timePeriodInt = sharedPref.getInt(TIME_PERIOD_INT_KEY, 0);
         String timePeriodString = sharedPref.getString(TIME_PERIOD_STRING_KEY, "minutes");
-        return new DataLogDetails(intervalInt, intervalString, timePeriodInt, timePeriodString);
+        return new DataLogDetails(dataLogName, intervalInt, intervalString, timePeriodInt, timePeriodString);
     }
 
 

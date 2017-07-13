@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,6 +16,8 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.datalogging.DataLogDetails;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 
 import java.io.Serializable;
 import java.util.*;
@@ -26,20 +28,20 @@ import java.util.*;
 
 public class DataLoggingConfirmation extends BaseResizableDialog {
 
-    private static final String BUTTON_KEY = "button_key";
+    private static final String WIZARD_ENUM_KEY = "wizard_enum_key";
     private static final String DISMISS_KEY = "dismiss_key";
 
     private GlobalHandler globalHandler;
     private Button buttonOk;
-    private int buttondDrawableId;
     private DismissDialogListener dismissDialogListener;
+    private Constants.RECORD_DATA_WIZARD_TYPE wizardType;
 
 
-    public static DataLoggingConfirmation newInstance(Serializable serializable, int buttonDrawableId) {
+    public static DataLoggingConfirmation newInstance(Serializable serializable, Constants.RECORD_DATA_WIZARD_TYPE wizardType) {
         DataLoggingConfirmation dataLoggingConfirmation = new DataLoggingConfirmation();
         Bundle args = new Bundle();
         args.putSerializable(DISMISS_KEY, serializable);
-        args.putInt(BUTTON_KEY, buttonDrawableId);
+        args.putSerializable(WIZARD_ENUM_KEY, wizardType);
         dataLoggingConfirmation.setArguments(args);
         return  dataLoggingConfirmation;
     }
@@ -216,7 +218,9 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
         public void onClick(View view) {
             Log.d(Constants.LOG_TAG, "DataLoggingConfirmation.onClickButtonCancel");
             GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
-            getActivity().findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
+            if (wizardType == Constants.RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB) {
+                getActivity().findViewById(R.id.data_recording_spinner).setVisibility(View.INVISIBLE);
+            }
             dismiss();
         }
     };
@@ -226,17 +230,19 @@ public class DataLoggingConfirmation extends BaseResizableDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         dismissDialogListener = (DismissDialogListener) getArguments().getSerializable(DISMISS_KEY);
-        buttondDrawableId = getArguments().getInt(BUTTON_KEY);
+        wizardType = (Constants.RECORD_DATA_WIZARD_TYPE) getArguments().getSerializable(WIZARD_ENUM_KEY);
 
         globalHandler = GlobalHandler.getInstance(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_datalogging_confirmation, null);
+        final View view = inflater.inflate(R.layout.dialog_record_data_confirmation, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         buttonOk = (Button) view.findViewById(R.id.button_ok);
         buttonOk.setOnClickListener(buttonOkListener);
-        buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), buttondDrawableId));
+        buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), Constants.WIZARD_TYPE_TO_CONFIRM_BUTTON.get(wizardType)));
         Button buttonCancel = (Button) view.findViewById(R.id.button_cancel);
+        buttonCancel.setBackground(ContextCompat.getDrawable(getActivity(), Constants.WIZARD_TYPE_TO_CANCEL_BACKGROUND.get(wizardType)));
+        buttonCancel.setTextColor(getResources().getColor(Constants.WIZARD_TYPE_TO_CANCEL_TEXT.get(wizardType)));
         buttonCancel.setOnClickListener(buttonCancelListener);
 
         String message = populateMessage(globalHandler.dataLoggingHandler.loadDataLogDetails(getActivity()));

@@ -13,6 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordDataSensorDialog;
 
 import java.io.Serializable;
@@ -52,7 +53,7 @@ public class IsRecordingDialog extends BaseResizableDialog {
         globalHandler = GlobalHandler.getInstance(getActivity());
 
         // Get the correct color buttons
-        if (((BaseDataLoggingDialog) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY)).getClass().getSimpleName().equals(RecordDataSensorDialog.class.getSimpleName())) {
+        if (((ReviewRecordingDialog) getArguments().getSerializable(SensorsActivity.SENSORS_ACTIVITY_KEY)).getClass().getSimpleName().equals(RecordDataSensorDialog.class.getSimpleName())) {
             (view.findViewById(R.id.button_stop_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_left));
             (view.findViewById(R.id.button_keep_recording)).setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
         } else {

@@ -247,6 +247,31 @@ public final class Constants {
         public static final String AIR_QUALITY = "Air Particles";
     }
 
+    public enum RECORD_DATA_WIZARD_TYPE {
+        SENSORS_TAB,
+        DATA_LOGS_TAB
+    }
+    public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_CANCEL_BACKGROUND = new HashMap() {{
+        put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.drawable.round_blue_button_bottom_left);
+        put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.drawable.round_orange_button_bottom_left);
+    }};
+    public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_CANCEL_TEXT = new HashMap() {{
+        put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.color.blue);
+        put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.color.orange);
+    }};
+    public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_NEXT_BACKGROUND = new HashMap() {{
+        put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.drawable.round_blue_button_bottom_right);
+        put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.drawable.round_orange_button_bottom_right);
+    }};
+    public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_REVIEW_BUTTON = new HashMap() {{
+        put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.drawable.round_blue_button_bottom);
+        put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.drawable.round_orange_button_bottom);
+    }};
+    public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_CONFIRM_BUTTON = new HashMap() {{
+        put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.drawable.round_blue_button_bottom_right);
+        put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.drawable.round_orange_button_bottom_right);
+    }};
+
     public static enum STATS {
         NONE,
         MEAN,
