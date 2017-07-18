@@ -131,6 +131,7 @@ public final class Constants {
         put(TrueColorHex.ROSE, ColorSwatches.ROSE);
         put(TrueColorHex.WHITE, ColorSwatches.WHITE);
         put(TrueColorHex.BLACK, ColorSwatches.BLACK);
+        put(TrueColorHex.WHITE_DEFAULT, ColorSwatches.WHITE);
     }};
 
     public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
