@@ -37,7 +37,7 @@ public class CleanUpAfterState extends UpdateDataLogState {
 
                 // test if the current selected data log was one that got deleted
                 DataSet workingDataSet = dataLogsActivity.getWorkingDataSet();
-                if (workingDataSet != null) {
+                if (workingDataSet != null && deletedDataSet != null) {
                     if (workingDataSet.getDataName().equals(deletedDataSet.getDataName())) {
                         dataLogsActivity.setWorkingDataSet(null);
                         dataLogsActivity.setWorkingDataPoint(null);
