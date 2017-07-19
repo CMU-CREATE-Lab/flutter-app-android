@@ -36,12 +36,12 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.GreenSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.led.LedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.servo.ServoDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.outputs.speaker.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 
 import java.util.ArrayList;
 
