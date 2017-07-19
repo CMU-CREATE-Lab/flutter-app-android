@@ -25,6 +25,7 @@ public class SaveToKindleState extends UpdateDataLogState {
 
     @Override
     public void updatedLogs() {
+        final UpdateDataLogState instance = this;
         dataLogsActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -35,6 +36,7 @@ public class SaveToKindleState extends UpdateDataLogState {
                     if (!globalHandler.dataLoggingHandler.isLogging()) {
                         FileHandler.saveDataSetToFile(globalHandler, dataLogsActivity.getDataLogsUpdateHelper().getDataSetOnFlutter());
                         globalHandler.dataLoggingHandler.deleteLog();
+                        instance.deleteDataSetOnFlutter();
                     }
                     return;
                 }

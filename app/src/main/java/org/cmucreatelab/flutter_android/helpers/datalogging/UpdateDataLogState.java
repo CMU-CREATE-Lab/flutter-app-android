@@ -41,6 +41,11 @@ public abstract class UpdateDataLogState extends DataRecordingTimer implements D
     }
 
 
+    public void deleteDataSetOnFlutter() {
+        dataSetOnFlutter = null;
+    }
+
+
     public synchronized void updatePoints() {
         updateDataLogsOnDevice();
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {

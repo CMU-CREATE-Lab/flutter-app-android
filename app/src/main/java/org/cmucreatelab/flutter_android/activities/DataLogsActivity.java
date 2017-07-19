@@ -37,7 +37,6 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLogsUpdateHelper
 import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
-import org.cmucreatelab.flutter_android.helpers.datalogging.PauseReadingState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
@@ -329,7 +328,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 informationDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
-                dataLogsUpdateHelper.registerStateAndUpdatePoints(new PauseReadingState(instance));
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet, instance);
                 emailDialog.show(getSupportFragmentManager(), "tag");
             }
@@ -746,7 +744,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     public void onOpenedLog(DataSet dataSet) {
         Log.d(Constants.LOG_TAG, "DataLogsActivity.onOpenedLog");
         if (dataSet == null) {
-            if (!globalHandler.dataLoggingHandler.isLogging()) {
+            if (!globalHandler.dataLoggingHandler.isLogging() ) {
                 SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
                 dialog.show(getSupportFragmentManager(), "tag");
             } else {
@@ -809,7 +807,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
             });
             if (workingDataSet != null) {
-                if (workingDataSet.getDataName().equals(dataLogsUpdateHelper.getDataSetOnFlutter().getDataName())) {
+                if (workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
                     SaveToKindleDialog dialog = SaveToKindleDialog.newInstance(instance, globalHandler.dataLoggingHandler.getDataName(), globalHandler.sessionHandler.getSession().getFlutter().getName());
                     dialog.show(getSupportFragmentManager(), "tag");
                 }
