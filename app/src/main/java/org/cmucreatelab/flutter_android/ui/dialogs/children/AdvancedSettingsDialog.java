@@ -175,7 +175,7 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_advanced_settings, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setTitle(getString(R.string.advanced_settings)).setView(view);
+        builder.setView(view);
         ButterKnife.bind(this, view);
 
         seekBarMaxInput = (SeekBar) view.findViewById(R.id.seekbar_max_input);
