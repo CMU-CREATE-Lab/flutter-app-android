@@ -58,6 +58,10 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         put(Constants.ColorSwatches.ROSE, new DrawableColor(Constants.ColorSwatches.ROSE, R.id.imageView_rose, R.drawable.swatch_rose, R.drawable.swatch_rose_selected));
         put(Constants.ColorSwatches.WHITE, new DrawableColor(Constants.ColorSwatches.WHITE, R.id.imageView_white, R.drawable.swatch_white, R.drawable.swatch_white_selected));
         put(Constants.ColorSwatches.BLACK, new DrawableColor(Constants.ColorSwatches.BLACK, R.id.imageView_black, R.drawable.swatch_black, R.drawable.swatch_black_selected));
+        put(Constants.ColorSwatches.WHITE, new DrawableColor(Constants.ColorSwatches.WHITE, R.id.imageView_white, R.drawable.swatch_white, R.drawable.swatch_white_selected));
+        put(Constants.ColorSwatches.BLACK, new DrawableColor(Constants.ColorSwatches.BLACK, R.id.imageView_black, R.drawable.swatch_black, R.drawable.swatch_black_selected));
+        put(Constants.ColorSwatches.WHITE_DEFAULT, new DrawableColor(Constants.ColorSwatches.WHITE, R.id.imageView_white, R.drawable.swatch_white, R.drawable.swatch_white_selected));
+        put(Constants.ColorSwatches.BLACK_DEFAULT, new DrawableColor(Constants.ColorSwatches.BLACK, R.id.imageView_black, R.drawable.swatch_black, R.drawable.swatch_black_selected));
     }};
     private DrawableColor currentlySelected = colorSwatches.get(Constants.ColorSwatches.WHITE);
     private View dialogView;

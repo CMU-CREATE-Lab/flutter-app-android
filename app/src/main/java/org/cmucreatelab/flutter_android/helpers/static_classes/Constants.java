@@ -60,6 +60,9 @@ public final class Constants {
         public static final int ROSE = Color.parseColor("#ff3399");
         public static final int WHITE = Color.parseColor("#f2f2f2");
         public static final int BLACK = Color.parseColor("#333333");
+
+        public static final int WHITE_DEFAULT = Color.parseColor("#ffffff");
+        public static final int BLACK_DEFAULT = Color.parseColor("#000000");
     }
 
     public static final class TrueColorRGB {
@@ -131,6 +134,8 @@ public final class Constants {
         put(TrueColorHex.ROSE, ColorSwatches.ROSE);
         put(TrueColorHex.WHITE, ColorSwatches.WHITE);
         put(TrueColorHex.BLACK, ColorSwatches.BLACK);
+        put(TrueColorHex.WHITE_DEFAULT, ColorSwatches.WHITE_DEFAULT);
+        put(TrueColorHex.BLACK_DEFAULT, ColorSwatches.BLACK_DEFAULT);
     }};
 
     public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
