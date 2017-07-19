@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.CleanUpLogsDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.CleanUpLogsDialog;
 
 /**
  * Created by Steve on 3/13/2017.

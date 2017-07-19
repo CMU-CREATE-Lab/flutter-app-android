@@ -21,13 +21,13 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.FlutterSampleDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard.ReviewRecordingDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.BlueSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.FlutterSampleDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.DataSnapshotDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab.RecordingWarningSensorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.DataSnapshotDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.RecordingWarningSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 
 import java.util.Calendar;

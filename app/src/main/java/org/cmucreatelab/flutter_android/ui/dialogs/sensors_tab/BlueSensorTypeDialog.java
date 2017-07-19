@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab;
+package org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab;
 
 import android.app.Dialog;
 import android.os.Bundle;

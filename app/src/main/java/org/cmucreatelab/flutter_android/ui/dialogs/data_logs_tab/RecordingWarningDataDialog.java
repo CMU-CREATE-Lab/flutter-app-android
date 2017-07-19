@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.SensorsTab;
+package org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -16,11 +16,11 @@ import java.io.Serializable;
  * Created by Steve on 2/27/2017.
  */
 
-public class RecordingWarningSensorDialog extends RecordingWarningDialog {
+public class RecordingWarningDataDialog extends RecordingWarningDialog {
 
 
-    public static RecordingWarningSensorDialog newInstance(Serializable serializable, String name, int times, String time, int forTimes, String forTime) {
-        RecordingWarningSensorDialog recordingWarningSensorDialog = new RecordingWarningSensorDialog();
+    public static RecordingWarningDataDialog newInstance(Serializable serializable, String name, int times, String time, int forTimes, String forTime) {
+        RecordingWarningDataDialog recordingWarningDataDialog = new RecordingWarningDataDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(DismissDialogListener.DISMISS_KEY, serializable);
@@ -29,9 +29,9 @@ public class RecordingWarningSensorDialog extends RecordingWarningDialog {
         args.putString(TIME_KEY, time);
         args.putInt(FOR_TIMES_KEY, forTimes);
         args.putString(FOR_TIME_KEY, forTime);
-        recordingWarningSensorDialog.setArguments(args);
+        recordingWarningDataDialog.setArguments(args);
 
-        return recordingWarningSensorDialog;
+        return recordingWarningDataDialog;
     }
 
 
@@ -39,7 +39,7 @@ public class RecordingWarningSensorDialog extends RecordingWarningDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "RecordingWarningSensorDialog.onCreateDialog");
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_blue_button_bottom_right));
+        buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_right));
         return dialog;
     }
 

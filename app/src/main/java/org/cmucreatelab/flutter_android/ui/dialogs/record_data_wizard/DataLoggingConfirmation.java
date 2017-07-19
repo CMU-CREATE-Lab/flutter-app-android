@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.RecordDataWizard;
+package org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab;
+package org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab;
 
 import android.app.Dialog;
 import android.content.Context;

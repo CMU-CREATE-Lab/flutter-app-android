@@ -6,7 +6,7 @@ import android.widget.Toast;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.DataLogsTab.OpenLogDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.OpenLogDialog;
 
 /**
  * Created by Steve on 3/13/2017.
