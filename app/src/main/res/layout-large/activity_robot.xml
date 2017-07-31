@@ -599,53 +599,37 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
+        <LinearLayout
+            android:id="@+id/linear_data_buttons"
+            android:layout_width="450dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="5dp">
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginStart="200dp">
 
-            <LinearLayout
-                android:id="@+id/linear_data_buttons"
-                android:layout_width="350dp"
+
+            <Button
+                android:id="@+id/button_simulate_sensors"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_weight="1"
+                android:background="@drawable/round_green_button"
+                android:text="@string/simulate_sensors"
+                android:textColor="@color/white"
+                android:layout_margin="20dp"/>
 
+            <Button
+                android:id="@+id/button_simulate_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_green_button"
+                android:text="@string/simulate_data"
+                android:textColor="@color/white"
+                android:layout_margin="20dp"/>
 
-                <Button
-                    android:id="@+id/button_sensor_data"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_green_button_left"
-                    android:text="@string/sensor_data"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/button_simulate_data"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_gray_white_right"
-                    android:text="@string/simulate_data"
-                    android:textColor="@color/gray" />
-
-            </LinearLayout>
-
-            <SeekBar
-                android:id="@+id/seekbar_simulated_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/linear_data_buttons"
-                android:max="100"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 

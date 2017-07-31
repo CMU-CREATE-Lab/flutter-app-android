@@ -269,6 +269,7 @@
     <string name="back">Back</string>
     <string name="name_your_data_set">Name your data set</string>
     <string name="review_recording">Review Recording</string>
+    <string name="simulate_sensors">Simulate Sensors</string>
 
     <string-array name="time_array">
         <item>minute</item>

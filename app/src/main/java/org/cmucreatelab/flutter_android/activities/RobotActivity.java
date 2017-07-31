@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -36,9 +36,10 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
@@ -49,7 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
-        SensorTypeDialog.DialogSensorTypeListener{
+        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed{
 
     private RobotActivity instance;
     private Session session;
@@ -171,34 +172,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                     sensorReadingText.setText("");
             }
         });
-    }
-
-
-    private void updateSimulatedView() {
-        if (session.isSimulatingData()) {
-            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_left));
-            sensorData.setTextColor(Color.GRAY);
-
-            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_right));
-            simulateData.setTextColor(Color.WHITE);
-
-            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
-            simulatedSeekbar.setVisibility(View.VISIBLE);
-            simulatedSeekbar.setProgress(0);
-        } else {
-            Button sensorData = (Button) findViewById(R.id.button_sensor_data);
-            sensorData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_green_button_left));
-            sensorData.setTextColor(Color.WHITE);
-
-            Button simulateData = (Button) findViewById(R.id.button_simulate_data);
-            simulateData.setBackground(ContextCompat.getDrawable(this, R.drawable.round_gray_white_right));
-            simulateData.setTextColor(Color.GRAY);
-
-            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
-            simulatedSeekbar.setVisibility(View.INVISIBLE);
-        }
     }
 
 
@@ -427,8 +400,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         } else {
             instance = this;
             this.session = globalHandler.sessionHandler.getSession();
-            SeekBar simulatedSeekbar = (SeekBar) findViewById(R.id.seekbar_simulated_data);
-            simulatedSeekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
             TextView sensor1Text = (TextView) findViewById(R.id.text_sensor_1);
             TextView sensor2Text = (TextView) findViewById(R.id.text_sensor_2);
@@ -484,9 +455,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
-            //this.session.setFlutterMessageListener(this);
             updateLinkedViews();
-            updateSimulatedView();
             if (!session.isSimulatingData()) startSensorReading();
         }
     }
@@ -606,13 +575,16 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    @OnClick(R.id.button_sensor_data)
+    @OnClick(R.id.button_simulate_sensors)
     public void onClickSensorData() {
         Log.d(Constants.LOG_TAG, "onClickSensorData");
-        if (session.isSimulatingData()) {
-            session.setSimulatingData(false);
-            updateSimulatedView();
-            startSensorReading();
+        if (!session.isSimulatingData()) {
+            session.getFlutter().setSensorValues(0,0,0);
+            session.setSimulatingData(true);
+            stopSensorReading();
+            updateSensorViews();
+            SimulateSensorsDialog simulateSensorsDialog = SimulateSensorsDialog.newInstance(session.getFlutter().getSensors(), this);
+            simulateSensorsDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 
@@ -624,8 +596,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             session.getFlutter().setSensorValues(0,0,0);
             session.setSimulatingData(true);
             stopSensorReading();
-            updateSimulatedView();
             updateSensorViews();
+            SimulateSensorsDialog simulateSensorsDialog = SimulateSensorsDialog.newInstance(session.getFlutter().getSensors(), this);
+            simulateSensorsDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 
@@ -665,6 +638,15 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
         updateSensorViews();
         updateLinkedViews();
+    }
+
+
+    @Override
+    public void onSimulateSensorsDismissed() {
+        if (session.isSimulatingData()) {
+            session.setSimulatingData(false);
+            startSensorReading();
+        }
     }
 
 }
