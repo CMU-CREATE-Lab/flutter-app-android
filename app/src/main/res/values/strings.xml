@@ -130,7 +130,6 @@
     <string name="relationship">Relationship</string>
     <string name="set_up_led">Set Up LED</string>
     <string name="sensor_data">Sensor Data</string>
-    <string name="simulate_data">Simulate Data</string>
     <string name="set_maximum_color">Set Maximum Color</string>
     <string name="set_minimum_color">Set Minimum Color</string>
     <string name="maximum_color">Maximum Color</string>
@@ -270,6 +269,7 @@
     <string name="name_your_data_set">Name your data set</string>
     <string name="review_recording">Review Recording</string>
     <string name="simulate_sensors">Simulate Sensors</string>
+    <string name="control_outputs">Control Outputs</string>
 
     <string-array name="time_array">
         <item>minute</item>

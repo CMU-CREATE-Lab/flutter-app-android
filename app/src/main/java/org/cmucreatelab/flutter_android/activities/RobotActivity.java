@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
@@ -589,17 +588,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    @OnClick(R.id.button_simulate_data)
-    public void onClickSimulateData() {
-        Log.d(Constants.LOG_TAG, "onClickSimulateData");
-        if (!session.isSimulatingData()) {
-            session.getFlutter().setSensorValues(0,0,0);
-            session.setSimulatingData(true);
-            stopSensorReading();
-            updateSensorViews();
-            SimulateSensorsDialog simulateSensorsDialog = SimulateSensorsDialog.newInstance(session.getFlutter().getSensors(), this);
-            simulateSensorsDialog.show(getSupportFragmentManager(), "tag");
-        }
+    @OnClick(R.id.button_control_outputs)
+    public void onClickControlOutputs() {
+        Log.d(Constants.LOG_TAG, "onClickControlOutputs");
     }
 
 

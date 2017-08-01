@@ -2,13 +2,17 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
@@ -26,7 +31,7 @@ import java.io.Serializable;
  * Created by Steve on 7/30/2017.
  */
 
-public class SimulateSensorsDialog extends BaseResizableDialog {
+public class SimulateSensorsDialog extends DialogFragment {
 
     private static final String SENSORS_KEY = "sensors_key";
     private static final String SIMULATE_SENSORS_DISMISSED_KEY = "simulate_sensors_dismissed_key";
@@ -37,6 +42,17 @@ public class SimulateSensorsDialog extends BaseResizableDialog {
     private SeekBar seekBarSensor1, seekBarSensor2, seekBarSensor3;
     private TextView textViewSensor1Value, textViewSensor2Value, textViewSensor3Value;
     private int seekBarSensor1Value, seekBarSensor2Value, seekBarSensor3Value;
+
+
+    private String getSensorTypeString(Sensor sensor) {
+        String result = getString(sensor.getTypeTextId());
+
+        if (sensor.getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+            result = getString(R.string.no_sensor);
+        }
+
+        return result;
+    }
 
 
     // Seekbar change listeners
@@ -102,6 +118,14 @@ public class SimulateSensorsDialog extends BaseResizableDialog {
     };
 
 
+    private Button.OnClickListener doneClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dismiss();
+        }
+    };
+
+
     public static SimulateSensorsDialog newInstance(Sensor[] sensors, Serializable simulateSensorsDismissed) {
         SimulateSensorsDialog simulateSensorsDialog = new SimulateSensorsDialog();
         Bundle args = new Bundle();
@@ -128,17 +152,17 @@ public class SimulateSensorsDialog extends BaseResizableDialog {
         simulateSensorsDismissed = (SimulateSensorsDismissed) getArguments().getSerializable(SIMULATE_SENSORS_DISMISSED_KEY);
         sensors = (Sensor[]) getArguments().getSerializable(SENSORS_KEY);
         ((ImageView) view.findViewById(R.id.image_sensor_1)).setImageDrawable(ContextCompat.getDrawable(getActivity(), sensors[0].getGreenImageId()));
-        ((TextView) view.findViewById(R.id.text_sensor_1_type)).setText(getString(sensors[0].getTypeTextId()));
+        ((TextView) view.findViewById(R.id.text_sensor_1_type)).setText(getSensorTypeString(sensors[0]));
         textViewSensor1Value = (TextView) view.findViewById(R.id.text_sensor_1_value);
         seekBarSensor1 = (SeekBar) view.findViewById(R.id.seekbar_sensor_1);
 
         ((ImageView) view.findViewById(R.id.image_sensor_2)).setImageDrawable(ContextCompat.getDrawable(getActivity(), sensors[1].getGreenImageId()));
-        ((TextView) view.findViewById(R.id.text_sensor_2_type)).setText(getString(sensors[1].getTypeTextId()));
+        ((TextView) view.findViewById(R.id.text_sensor_2_type)).setText(getSensorTypeString(sensors[1]));
         textViewSensor2Value = (TextView) view.findViewById(R.id.text_sensor_2_value);
         seekBarSensor2 = (SeekBar) view.findViewById(R.id.seekbar_sensor_2);
 
         ((ImageView) view.findViewById(R.id.image_sensor_3)).setImageDrawable(ContextCompat.getDrawable(getActivity(), sensors[2].getGreenImageId()));
-        ((TextView) view.findViewById(R.id.text_sensor_3_type)).setText(getString(sensors[2].getTypeTextId()));
+        ((TextView) view.findViewById(R.id.text_sensor_3_type)).setText(getSensorTypeString(sensors[2]));
         textViewSensor3Value = (TextView) view.findViewById(R.id.text_sensor_3_value);
         seekBarSensor3 = (SeekBar) view.findViewById(R.id.seekbar_sensor_3);
 
@@ -149,9 +173,21 @@ public class SimulateSensorsDialog extends BaseResizableDialog {
         textViewSensor3Value.setText(String.valueOf(seekBarSensor3.getProgress()));
         seekBarSensor3.setOnSeekBarChangeListener(seekBarSensor3Listener);
 
+        seekBarSensor1.setEnabled(sensors[0].getSensorType() == FlutterProtocol.InputTypes.NOT_SET ? false : true);
+        seekBarSensor2.setEnabled(sensors[1].getSensorType() == FlutterProtocol.InputTypes.NOT_SET ? false : true);
+        seekBarSensor3.setEnabled(sensors[2].getSensorType() == FlutterProtocol.InputTypes.NOT_SET ? false : true);
+
+        view.findViewById(R.id.button_done).setOnClickListener(doneClickListener);
+
         return builder.create();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
 
     @Override
     public void onDismiss(DialogInterface dialog) {

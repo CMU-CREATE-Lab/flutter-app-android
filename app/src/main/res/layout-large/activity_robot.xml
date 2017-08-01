@@ -620,12 +620,12 @@
                 android:layout_margin="20dp"/>
 
             <Button
-                android:id="@+id/button_simulate_data"
+                android:id="@+id/button_control_outputs"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/round_green_button"
-                android:text="@string/simulate_data"
+                android:text="@string/control_outputs"
                 android:textColor="@color/white"
                 android:layout_margin="20dp"/>
 
