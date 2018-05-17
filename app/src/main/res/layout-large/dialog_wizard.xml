@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="394dp"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="What type of relationship should the servo  and the sensor have?"
+        android:textColor="#39393a"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_title"
+        android:layout_weight="0.5"
+        android:paddingTop="15dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/linear_proportional"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="0dp"
+                android:drawableStart="@drawable/relationship_green_proportional_m_d_56"
+                android:gravity="fill"
+                android:text="@string/proportional" />
+
+            <TextView
+                android:id="@+id/linear_cumulative"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="0dp"
+                android:drawableStart="@drawable/relationship_green_cumulative_m_d_56"
+                android:gravity="fill"
+                android:text="@string/cumulative" />
+
+            <TextView
+                android:id="@+id/linear_change"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="0dp"
+                android:drawableStart="@drawable/relationship_green_change_m_d_56"
+                android:gravity="fill"
+                android:includeFontPadding="false"
+                android:text="@string/change" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/linear_frequency"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/relationship_green_frequency_m_d_56"
+                android:gravity="fill"
+                android:text="@string/frequency" />
+
+            <TextView
+                android:id="@+id/linear_amplitude"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/relationship_green_amplitude_m_d_56"
+                android:gravity="fill"
+                android:text="@string/amplitude" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/linear_constant"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/relationship_green_constant_m_d_56"
+                android:gravity="fill"
+                android:text="@string/constant" />
+
+            <TextView
+                android:id="@+id/linear_switch"
+                android:layout_width="141.9dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="0dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/relationship_green_switch_m_d_56"
+                android:gravity="fill"
+                android:text="@string/switch_relationship" />
+        </TableRow>
+
+    </TableLayout>
+
+    <include
+        layout="@layout/link_buttons_for_wizard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_position_container" />
+
+
+</LinearLayout>

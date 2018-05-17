@@ -4,31 +4,33 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg">
 
-    <include android:id="@+id/include_toolbar_dialog"
-        layout="@layout/toolbar_outputs"/>
+    <include
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs" />
 
     <RelativeLayout
         android:id="@+id/relative_color_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/include_toolbar_dialog"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp">
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp">
 
-        <include android:id="@+id/include_layout"
-            layout="@layout/list_output_dialog"/>
+        <include
+            android:id="@+id/include_layout"
+            layout="@layout/list_output_dialog" />
 
         <LinearLayout
             android:id="@+id/linear_set_min_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/include_layout"
             android:layout_alignParentStart="true"
+            android:layout_below="@id/include_layout"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp">
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -39,38 +41,38 @@
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:src="@drawable/question_icon"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/view_min_color"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:adjustViewBounds="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_min_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="@string/set_minimum_color"/>
+                    android:text="@string/set_minimum_color" />
 
                 <TextView
                     android:id="@+id/text_min_color_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_gravity="start" />
+                    android:layout_gravity="start"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -80,13 +82,13 @@
             android:id="@+id/linear_set_max_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/linear_set_min_color"
             android:layout_alignParentStart="true"
+            android:layout_below="@id/linear_set_min_color"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp">
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -98,14 +100,14 @@
                     android:layout_height="65dp"
                     android:layout_gravity="center"
                     android:src="@drawable/question_icon"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/view_max_color"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:adjustViewBounds="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
 
             </RelativeLayout>
@@ -113,24 +115,24 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
+                android:layout_marginEnd="20dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_max_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="@string/set_maximum_color"/>
+                    android:text="@string/set_maximum_color" />
 
                 <TextView
                     android:id="@+id/text_max_color_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_gravity="start" />
+                    android:layout_gravity="start"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -138,9 +140,10 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/link_buttons"
-        android:layout_height="wrap_content"
+    <include
+        layout="@layout/link_buttons"
         android:layout_width="wrap_content"
-        android:layout_below="@id/relative_color_container"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_color_container" />
 
 </RelativeLayout>

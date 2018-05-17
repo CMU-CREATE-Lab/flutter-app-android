@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="459dp"
+    android:layout_height="390dp"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="28dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Set the wet position"
+        android:textAlignment="center"
+        android:textColor="#39393a"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/image_servo_pointer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/image_servo_bg"
+            android:src="@drawable/link_servo_pointer_sm" />
+
+        <ImageView
+            android:id="@+id/image_servo_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/link_servo_b_g_sm" />
+
+    </RelativeLayout>
+
+    <SeekBar
+        android:id="@+id/seek_position"
+        android:layout_width="236dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:thumbOffset="1dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="46dp" />
+
+    <include
+        layout="@layout/link_buttons_for_wizard_part_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_position_container" />
+
+
+</LinearLayout>
