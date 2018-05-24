@@ -26,7 +26,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="57dp" />
+        android:layout_height="37dp" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -37,13 +37,28 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="38dp" />
+        android:layout_height="8dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textColor="#4a4a4a"
+        android:text="Dark Light"
+        android:textAlignment="center" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
     <include
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relative_position_container" />
+        />
 
 
 </LinearLayout>

@@ -161,7 +161,7 @@
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relative_position_container" />
+        />
 
 
 </LinearLayout>

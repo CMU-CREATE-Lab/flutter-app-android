@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="480dp"
-    android:layout_height="394dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <include
@@ -130,8 +130,7 @@
     <include
         layout="@layout/link_buttons_for_wizard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relative_position_container" />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

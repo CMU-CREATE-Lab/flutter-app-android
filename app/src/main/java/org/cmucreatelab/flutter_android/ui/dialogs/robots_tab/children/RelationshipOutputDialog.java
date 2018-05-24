@@ -53,7 +53,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_relationships, null);
+        final View view = inflater.inflate(R.layout.dialog_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
 
@@ -77,7 +77,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         //view.findViewById(R.id.linear_amplitude).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_cumulative).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_change).setVisibility(View.GONE);
-        view.findViewById(R.id.linear_switch).setVisibility(View.GONE);
+        //view.findViewById(R.id.linear_switch).setVisibility(View.GONE); // Please uncomment this line.
         //view.findViewById(R.id.linear_constant).setVisibility(View.GONE);
 
         return builder.create();

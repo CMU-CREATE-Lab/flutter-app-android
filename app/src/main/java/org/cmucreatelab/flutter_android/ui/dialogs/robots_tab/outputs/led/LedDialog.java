@@ -186,6 +186,12 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         dialog.show(this.getFragmentManager(), "tag");
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Dialog dialog = getDialog();
+        dialog.dismiss();
+    }
+
 
     @OnClick(R.id.linear_set_linked_sensor)
     public void onClickSetLinkedSensor(View view) {

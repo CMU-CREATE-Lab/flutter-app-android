@@ -327,7 +327,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private View.OnClickListener servo1FrameClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            onClickServo(1);
+            Sensor[] sensors = session.getFlutter().getSensors();
+            if (sensors[0].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
+                Log.i("I guess it is not set", "and this NOT_SET works!!!");
+            } else {
+                onClickServo(1);
+            }
         }
     };
 

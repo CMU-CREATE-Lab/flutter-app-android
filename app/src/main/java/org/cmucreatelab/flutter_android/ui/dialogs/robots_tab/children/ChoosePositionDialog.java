@@ -71,10 +71,10 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_position, null);
+        final View view = inflater.inflate(R.layout.dialog_wet_position_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view); // crashes after this line
 
         pointer = (ImageView) view.findViewById(R.id.image_servo_pointer);
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
@@ -90,7 +90,7 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
     }
 
 
-    @OnClick(R.id.button_set_position)
+    @OnClick(R.id.button_next_page)
     public void onClickSetPosition() {
         setPositionListener.onSetPosition();
     }
