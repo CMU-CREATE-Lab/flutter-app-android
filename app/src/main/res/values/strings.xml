@@ -251,6 +251,10 @@
     <string name="a_lot_of_data_points">A Lot of Data Points</string>
     <string name="a_lot_of_data_points_details">You are about to record a data log with 200 data points or more.  Loading this many data points onto your tablet will take a long time. Are you sure you want to continue?</string>
     <string name="no_wifi">Connect to WiFi</string>
+    <string name="flutter_advanced_settings">Advanced Settings</string>
+    <string name="flutter_reset_warning_title">Reset Flutter Warning</string>
+    <string name="flutter_second_reset_warning_title">Final Confirmation</string>
+    <string name="flutter_reset_warning_description">This action will delete all links and sensor settings from this Flutter.</string>
     <string name="no_wifi_data_log_details">You need to be connected to WiFi before you can send a data log.</string>
     <string name="email_server_error">There was an error sending the data log. Please try again later.</string>
     <string name="invalid_email">Invalid Email Address</string>

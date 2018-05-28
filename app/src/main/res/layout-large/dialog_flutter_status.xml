@@ -6,6 +6,9 @@
     android:orientation="vertical"
     android:paddingBottom="10dp">
 
+    <include android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs"/>
+
     <TextView
         android:id="@+id/text_flutter_status_name"
         android:layout_width="wrap_content"

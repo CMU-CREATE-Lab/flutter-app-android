@@ -121,4 +121,12 @@ public class FlutterStatusDialog extends BaseResizableDialog {
             getActivity().finish();
         }
     }
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            FlutterAdvancedSettingsDialog.displayDialog(this, 0);
+        }
+    }
 }
