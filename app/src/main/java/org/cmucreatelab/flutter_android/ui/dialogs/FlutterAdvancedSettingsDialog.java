@@ -18,8 +18,10 @@ import android.widget.TextView;
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
+import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
@@ -114,16 +116,23 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         public void onPositiveButton() {
             ArrayList<MelodySmartMessage> messages = new ArrayList<>();
             messages.add(MessageConstructor.constructRemoveAllRelations());
-            messages.add(MessageConstructor.constructSetInputType(session.getFlutter().getSensors()[0],
-                    FlutterProtocol.InputTypes.NOT_SET));
-            messages.add(MessageConstructor.constructSetInputType(session.getFlutter().getSensors()[1],
-                    FlutterProtocol.InputTypes.NOT_SET));
-            messages.add(MessageConstructor.constructSetInputType(session.getFlutter().getSensors()[2],
-                    FlutterProtocol.InputTypes.NOT_SET));
 
-            for (MelodySmartMessage message : messages) {
-                globalHandler.melodySmartDeviceHandler.addMessage(message);
+            for (int i = 0; i < session.getFlutter().getSensors().length; i++) {
+                messages.add(MessageConstructor.constructSetInputType(session.getFlutter().getSensors()[i],
+                        FlutterProtocol.InputTypes.NOT_SET));
+
+                session.getFlutter().getSensors()[i] = FlutterProtocol.sensorFromInputType(i + 1, FlutterProtocol.InputTypes.NOT_SET);
             }
+
+            for (Output output : session.getFlutter().getOutputs())
+                output.setIsLinked(false, output);
+
+            for (MelodySmartMessage message : messages)
+                globalHandler.melodySmartDeviceHandler.addMessage(message);
+
+            Intent intent = new Intent(getActivity(), RobotActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         }
     };
 }

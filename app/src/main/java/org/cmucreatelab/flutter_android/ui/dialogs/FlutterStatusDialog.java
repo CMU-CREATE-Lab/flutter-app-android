@@ -3,11 +3,13 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,14 +73,18 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
         this.session = globalHandler.sessionHandler.getSession();
 
-        TextView flutterStatusName = (TextView) view.findViewById(R.id.text_flutter_status_name);
+        TextView flutterStatusName = ((TextView) view.findViewById(R.id.text_output_title));
         TextView flutterStatusText = (TextView) view.findViewById(R.id.text_flutter_status);
         ImageView flutterStatusIcon = (ImageView) view.findViewById(R.id.image_flutter_status_pic);
         Button flutterConnectDisconnect = (Button) view.findViewById(R.id.button_flutter_connect_disconnect);
 
+        flutterStatusName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        flutterStatusName.setTypeface(Typeface.DEFAULT);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
+            flutterStatusName.setText(R.string.flutter_name_default);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
             flutterConnectDisconnect.setBackgroundResource(R.drawable.round_green_button);
             flutterConnectDisconnect.setText(R.string.connect_flutter);
