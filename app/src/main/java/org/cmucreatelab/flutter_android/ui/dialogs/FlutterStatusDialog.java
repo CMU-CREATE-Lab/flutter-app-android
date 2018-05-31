@@ -3,11 +3,13 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
-import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -37,8 +38,6 @@ public class FlutterStatusDialog extends BaseResizableDialog {
 
     private static final String flutterStatusKey = "FLUTTER_STATUS_KEY";
 
-    private GlobalHandler globalHandler;
-    private Session session;
 
     private static FlutterStatusDialog newInstance(int description) {
         FlutterStatusDialog flutterStatusDialog = new FlutterStatusDialog();
@@ -60,7 +59,7 @@ public class FlutterStatusDialog extends BaseResizableDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int resourceId = getArguments().getInt(flutterStatusKey);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_flutter_status, null);
@@ -68,24 +67,25 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         builder.setView(view);
         ButterKnife.bind(this, view);
 
-        globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
-        this.session = globalHandler.sessionHandler.getSession();
-
-        TextView flutterStatusName = (TextView) view.findViewById(R.id.text_flutter_status_name);
+        TextView flutterStatusName = ((TextView) view.findViewById(R.id.text_output_title));
         TextView flutterStatusText = (TextView) view.findViewById(R.id.text_flutter_status);
         ImageView flutterStatusIcon = (ImageView) view.findViewById(R.id.image_flutter_status_pic);
         Button flutterConnectDisconnect = (Button) view.findViewById(R.id.button_flutter_connect_disconnect);
 
+        flutterStatusName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        flutterStatusName.setTypeface(Typeface.DEFAULT);
+
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
             flutterStatusText.setText(R.string.connection_disconnected);
             flutterStatusText.setTextColor(Color.GRAY);
+            flutterStatusName.setText(R.string.flutter_name_default);
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
             flutterConnectDisconnect.setBackgroundResource(R.drawable.round_green_button);
             flutterConnectDisconnect.setText(R.string.connect_flutter);
         } else {
             flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
-            String flutterName = session.getFlutter().getName();
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             flutterStatusName.setText(flutterName);
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
             flutterConnectDisconnect.setBackgroundResource(R.drawable.round_reddish_button);
@@ -95,12 +95,14 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         return builder.create();
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
 
     @Override
     public void onPause() {
@@ -110,9 +112,12 @@ public class FlutterStatusDialog extends BaseResizableDialog {
             dialog.dismiss();
     }
 
+
     @OnClick(R.id.button_flutter_connect_disconnect)
     public void onClickConnectDisconnect() {
         Log.d(Constants.LOG_TAG, "onClickConnectDisconnect");
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
+
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.melodySmartDeviceHandler.disconnect(false);
         } else {
@@ -121,4 +126,16 @@ public class FlutterStatusDialog extends BaseResizableDialog {
             getActivity().finish();
         }
     }
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
+
+        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
+            FlutterAdvancedSettingsDialog.displayDialog(this, 0);
+        }
+    }
+
 }
