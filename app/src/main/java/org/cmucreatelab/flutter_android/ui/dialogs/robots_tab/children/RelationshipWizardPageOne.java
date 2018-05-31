@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
@@ -19,29 +20,29 @@ import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
 
 import java.io.Serializable;
 
-/**
- * Created by Steve on 9/1/2016.
- *
- * RelationshipOutputDialog
- *
- * A Dialog that shows which relationship is to be linked between sensor and output.
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/* Created by Mohit. This class greatly resembles RelationshipOutputDialog.java, but is used to
+   be a starting line for setting up the servos. This will only apply if no linked sensor is set
+   up.
  */
-// TODO - refactor the onClickListeners to look like the ServoDialog
-// TODO - limit the dimensions so when you choose different images the dimensions remain constant
-public class RelationshipOutputDialog extends BaseResizableDialog implements View.OnClickListener {
+
+public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener {
+    private Relationship relationship;
+
+    private RelationshipWizardPageOne.DialogRelationshipListener relationshipListener;
 
 
-    private DialogRelationshipListener relationshipListener;
-
-
-    public static RelationshipOutputDialog newInstance(Serializable serializable) {
-        RelationshipOutputDialog relationshipDialog = new RelationshipOutputDialog();
+    public static RelationshipWizardPageOne newInstance(Servo servo, Serializable serializable) {
+        RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
 
         Bundle args = new Bundle();
+        args.putSerializable(Servo.SERVO_KEY, servo);
         args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
         relationshipDialog.setArguments(args);
 
@@ -50,12 +51,13 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
-        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
+        relationshipListener = (RelationshipWizardPageOne.DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_relationships, null);
+        final View view = inflater.inflate(R.layout.dialog_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
+        ButterKnife.bind(this, view);
 
         // bind click listeners
         view.findViewById(R.id.linear_proportional).setOnClickListener(this);
@@ -86,7 +88,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
 
     @Override
     public void onClick(View view) {
-        Relationship relationship = NoRelationship.getInstance();
+        relationship = NoRelationship.getInstance();
         switch (view.getId()) {
             case R.id.linear_proportional:
                 Log.d(Constants.LOG_TAG, "onClickProportional");
@@ -117,8 +119,20 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
                 relationship = Constant.getInstance();
                 break;
         }
+
+    }
+
+    @OnClick(R.id.button_next_page)
+    public void onClickSetRelationship() {
         relationshipListener.onRelationshipChosen(relationship);
-        this.dismiss();
+        // send an intent to the sensor dialog
+        // if relationship = constant, then skip sensor dialog
+        if (relationship == Constant.getInstance()) {
+            // send an intent to the wet position
+        }
+        else {
+            // send an intent to the sensor dialog
+        }
     }
 
 
@@ -126,5 +140,4 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
     public interface DialogRelationshipListener {
         public void onRelationshipChosen(Relationship relationship);
     }
-
 }

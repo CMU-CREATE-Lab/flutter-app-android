@@ -39,6 +39,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.RelationshipWizardPageOne;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
@@ -181,8 +182,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Speaker speaker = session.getFlutter().getSpeaker();
 
         // servos link check
+        Output[] outputs = new Output[8];
         for (int i = 0; i < servos.length + triColorLeds.length + 2; i++) {
-            Output[] outputs = new Output[8];
+            // TODO @tasota I moved the array declaration of outputs outside of the for loop (Mohit)
             RelativeLayout currentLayout = null;
             ViewGroup linkAndSensor;
             ImageView questionMark = null;
@@ -306,10 +308,21 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickServo " + portNumber);
         Log.d(Constants.LOG_TAG, "onClickServo1");
         Servo[] servos = session.getFlutter().getServos();
+        Sensor[] sensors = session.getFlutter().getSensors();
+        //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
 
-        if (portNumber >= 0 || portNumber <= 2){
-            ServoDialog dialog = ServoDialog.newInstance(servos[portNumber-1], this);
-            dialog.show(getSupportFragmentManager(), "tag");
+        if (portNumber >= 0 || portNumber <= 2) {
+            if (servos[portNumber-1].isLinked() == false) {
+
+                //Log.i("Woohoo It works", "It works boom boom");
+                RelationshipWizardPageOne dialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+                dialog.show(getSupportFragmentManager(), "tag");
+
+            }
+            else {
+                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
+                dialog.show(getSupportFragmentManager(), "tag");
+            }
         }
     }
     private View.OnClickListener servo3FrameClickListener = new View.OnClickListener() {
@@ -327,12 +340,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private View.OnClickListener servo1FrameClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Sensor[] sensors = session.getFlutter().getSensors();
-            if (sensors[0].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
-                Log.i("I guess it is not set", "and this NOT_SET works!!!");
-            } else {
-                onClickServo(1);
-            }
+            onClickServo(1);
         }
     };
 
