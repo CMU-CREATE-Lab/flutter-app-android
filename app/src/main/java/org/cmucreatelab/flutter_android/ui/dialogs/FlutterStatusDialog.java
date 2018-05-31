@@ -20,7 +20,6 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
-import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -39,8 +38,6 @@ public class FlutterStatusDialog extends BaseResizableDialog {
 
     private static final String flutterStatusKey = "FLUTTER_STATUS_KEY";
 
-    private GlobalHandler globalHandler;
-    private Session session;
 
     private static FlutterStatusDialog newInstance(int description) {
         FlutterStatusDialog flutterStatusDialog = new FlutterStatusDialog();
@@ -62,16 +59,13 @@ public class FlutterStatusDialog extends BaseResizableDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int resourceId = getArguments().getInt(flutterStatusKey);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_flutter_status, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
-
-        globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
-        this.session = globalHandler.sessionHandler.getSession();
 
         TextView flutterStatusName = ((TextView) view.findViewById(R.id.text_output_title));
         TextView flutterStatusText = (TextView) view.findViewById(R.id.text_flutter_status);
@@ -91,7 +85,7 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         } else {
             flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
-            String flutterName = session.getFlutter().getName();
+            String flutterName = globalHandler.sessionHandler.getSession().getFlutter().getName();
             flutterStatusName.setText(flutterName);
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
             flutterConnectDisconnect.setBackgroundResource(R.drawable.round_reddish_button);
@@ -101,12 +95,14 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         return builder.create();
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
 
     @Override
     public void onPause() {
@@ -116,9 +112,12 @@ public class FlutterStatusDialog extends BaseResizableDialog {
             dialog.dismiss();
     }
 
+
     @OnClick(R.id.button_flutter_connect_disconnect)
     public void onClickConnectDisconnect() {
         Log.d(Constants.LOG_TAG, "onClickConnectDisconnect");
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
+
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.melodySmartDeviceHandler.disconnect(false);
         } else {
@@ -128,11 +127,15 @@ public class FlutterStatusDialog extends BaseResizableDialog {
         }
     }
 
+
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
+
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             FlutterAdvancedSettingsDialog.displayDialog(this, 0);
         }
     }
+
 }

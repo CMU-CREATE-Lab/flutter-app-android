@@ -11,15 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
-import org.cmucreatelab.flutter_android.activities.RobotActivity;
-import org.cmucreatelab.flutter_android.activities.abstract_activities.BaseNavigationActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -43,8 +37,6 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
 
     private static final String flutterAdvancedSettingsKey = "FLUTTER_ADVANCED_SETTINGS_KEY";
 
-    private GlobalHandler globalHandler;
-    private Session session;
 
     private static FlutterAdvancedSettingsDialog newInstance(int description) {
         FlutterAdvancedSettingsDialog flutterAdvancedSettingsDialog = new FlutterAdvancedSettingsDialog();
@@ -66,7 +58,6 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        int resourceId = getArguments().getInt(flutterAdvancedSettingsKey);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_flutter_advanced_settings, null);
@@ -74,11 +65,9 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         builder.setView(view);
         ButterKnife.bind(this, view);
 
-        globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
-        this.session = globalHandler.sessionHandler.getSession();
-
         return builder.create();
     }
+
 
     @Override
     public void onResume() {
@@ -86,6 +75,7 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
 
     @Override
     public void onPause() {
@@ -95,6 +85,7 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
             dialog.dismiss();
     }
 
+
     @OnClick(R.id.button_flutter_reset)
     public void onClickReset() {
         Log.d(Constants.LOG_TAG, "onClickFlutterReset");
@@ -102,6 +93,7 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         InformationDialog firstConfirmationDialog = InformationDialog.newInstance(getString(R.string.flutter_reset_warning_title), getString(R.string.flutter_reset_warning_description), R.drawable.round_reddish_button_bottom_right, R.drawable.button_gray_left_bottom, null, firstConfirmationDialogListener);
         firstConfirmationDialog.show(this.getFragmentManager(), "tag");
     }
+
 
     protected InformationDialog.DismissAndCancelWarningListener firstConfirmationDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
         @Override
@@ -111,28 +103,35 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         }
     };
 
+
     protected InformationDialog.DismissAndCancelWarningListener secondConfirmationDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
         @Override
         public void onPositiveButton() {
+            GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
+            Session session = globalHandler.sessionHandler.getSession();
             ArrayList<MelodySmartMessage> messages = new ArrayList<>();
-            messages.add(MessageConstructor.constructRemoveAllRelations());
 
+            // construct and send messages (remove relations, unset sensors)
+            messages.add(MessageConstructor.constructRemoveAllRelations());
             for (int i = 0; i < session.getFlutter().getSensors().length; i++) {
                 messages.add(MessageConstructor.constructSetInputType(session.getFlutter().getSensors()[i],
                         FlutterProtocol.InputTypes.NOT_SET));
 
                 session.getFlutter().getSensors()[i] = FlutterProtocol.sensorFromInputType(i + 1, FlutterProtocol.InputTypes.NOT_SET);
             }
-
-            for (Output output : session.getFlutter().getOutputs())
-                output.setIsLinked(false, output);
-
-            for (MelodySmartMessage message : messages)
+            for (MelodySmartMessage message : messages) {
                 globalHandler.melodySmartDeviceHandler.addMessage(message);
+            }
 
-            Intent intent = new Intent(getActivity(), RobotActivity.class);
+            // refresh ui
+            for (Output output : session.getFlutter().getOutputs()) {
+                output.setIsLinked(false, output);
+            }
+
+            Intent intent = new Intent(getActivity(), getActivity().getClass());
             startActivity(intent);
             getActivity().finish();
         }
     };
+
 }
