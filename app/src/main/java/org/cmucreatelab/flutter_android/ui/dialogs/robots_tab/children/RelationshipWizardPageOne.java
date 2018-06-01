@@ -21,6 +21,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
 
 import java.io.Serializable;
 
@@ -32,10 +33,10 @@ import butterknife.OnClick;
    up.
  */
 
-public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener {
+public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable {
     private Relationship relationship;
 
-    private RelationshipWizardPageOne.DialogRelationshipListener relationshipListener;
+    private DialogRelationshipListener relationshipListener;
 
 
     public static RelationshipWizardPageOne newInstance(Servo servo, Serializable serializable) {
@@ -50,8 +51,9 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstances) {
-        relationshipListener = (RelationshipWizardPageOne.DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
+        super.onCreateDialog(savedInstanceState);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_wizard, null);
@@ -122,7 +124,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 
     }
 
-    @OnClick(R.id.button_next_page)
+    @OnClick(R.id.button_save_link)
     public void onClickSetRelationship() {
         relationshipListener.onRelationshipChosen(relationship);
         // send an intent to the sensor dialog

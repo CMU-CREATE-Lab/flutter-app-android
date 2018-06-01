@@ -236,7 +236,7 @@ public final class Constants {
         public static final String DIALOG_SPEAKER = "dialog_speaker";
         public static String SENSOR_KEY = "sensor_key";
         public static String SENSOR_PORT_KEY = "sensor_text_key";
-        public static String RELATIONSHIP_KEY = "relationship_key";
+        public static String RELATIONSHIP_KEY = "relationship_key"; // previous = relationship_key
     }
 
     public static final class SensorTypeWords {

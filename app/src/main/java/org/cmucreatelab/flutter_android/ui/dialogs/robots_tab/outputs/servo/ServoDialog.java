@@ -60,14 +60,14 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public LinearLayout linkedSensor,minPosLayout;
     public ImageView advancedSettingsView;
 
-    private ServoDialogStateHelper stateHelper;
+    private static ServoDialogStateHelper stateHelper;
     private DialogServoListener dialogServoListener;
     private Servo servo;
 
     // animations
     private AlphaAnimation blinkAnimation;
 
-    private void updateViews() {
+    public void updateServoViews() {
         super.updateViews(dialogView, servo);
 
         this.advancedSettingsView = (ImageView) dialogView.findViewById(R.id.image_advanced_settings);
@@ -107,7 +107,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         // clone old object
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
-        stateHelper = ServoDialogStateHelper.newInstance(servo);
+        if (stateHelper == null) {
+            stateHelper = ServoDialogStateHelper.newInstance(servo);
+        }
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -127,7 +129,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         blinkAnimation.setRepeatCount(Animation.INFINITE);
         blinkAnimation.setRepeatMode(Animation.REVERSE);
 
-        updateViews();
+        updateServoViews();
         return builder.create();
     }
 
@@ -238,9 +240,26 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
             stateHelper.setLinkedSensor(sensor);
         }
-        updateViews();
+        updateServoViews();
     }
 
+
+    // added getters to use in RobotActivity.java
+    public View getDialogView() {
+        return dialogView;
+    }
+
+    public Servo getServo() {
+        return servo;
+    }
+
+    public ServoDialogStateHelper getStateHelper() {
+        return stateHelper;
+    }
+
+    public void setStateHelper(ServoDialogStateHelper stateHelper) {
+        this.stateHelper = stateHelper;
+    }
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
@@ -262,7 +281,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         servo.setSettings(Settings.newInstance(servo.getSettings(), relationship));
         stateHelper = ServoDialogStateHelper.newInstance(servo);
 
-        updateViews();
+        updateServoViews();
     }
 
 
