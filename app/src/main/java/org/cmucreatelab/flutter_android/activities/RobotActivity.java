@@ -56,8 +56,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-    private int currentPortNum; // variable used to get the current port number
     private Servo[] servos;
+    private ServoDialog dialog;
+    public Relationship relationChosen;
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         private int seekBarValue=0;
@@ -313,19 +314,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickServo1");
         servos = session.getFlutter().getServos();
         Sensor[] sensors = session.getFlutter().getSensors();
-        currentPortNum = portNumber;
         //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
+        dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
 
         if (portNumber >= 0 || portNumber <= 2) {
             if (servos[portNumber-1].isLinked() == false) {
-
-                //Log.i("Woohoo It works", "It works boom boom");
-                RelationshipWizardPageOne dialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
-                dialog.show(getSupportFragmentManager(), "tag");
+                // Show the user a step by step sequence of how to set up the servo
+                RelationshipWizardPageOne dialogR = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+                dialogR.show(getSupportFragmentManager(), "tag");
 
             }
             else {
-                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
                 dialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -354,8 +353,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
 
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-        dialog.show(getSupportFragmentManager(), "tag");
+        LedDialog dialogLD = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+        dialogLD.show(getSupportFragmentManager(), "tag");
     }
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
         @Override
@@ -381,8 +380,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
-        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-        dialog.show(getSupportFragmentManager(), "tag");
+        SpeakerDialog dialogSpeak = SpeakerDialog.newInstance(speaker, this);
+        dialogSpeak.show(getSupportFragmentManager(), "tag");
     }
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
         @Override
@@ -660,28 +659,26 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {
-        // get an instance of the servoDialog so that we can use its methods
-        ServoDialog servoDl = ServoDialog.newInstance(servos[currentPortNum - 1], this);
-
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
-        View view,layout;
-        ImageView currentImageView;
-        TextView currentTextViewDescrp,currentTextViewItem;
-
-        view = servoDl.getDialogView().findViewById(R.id.linear_set_relationship);
-        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-        layout = ((ViewGroup) view).getChildAt(1);
-        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-
-        currentImageView.setImageResource(relationship.getGreenImageIdMd());
-        currentTextViewDescrp.setText(R.string.relationship);
-        currentTextViewItem.setText(relationship.getRelationshipType().toString());
-
-        servoDl.getServo().setSettings(Settings.newInstance(servoDl.getServo().getSettings(), relationship));
-        servoDl.setStateHelper(ServoDialogStateHelper.newInstance(servoDl.getServo()));
-
-        servoDl.updateServoViews();
+        relationChosen = relationship;
+//        View view,layout;
+//        ImageView currentImageView;
+//        TextView currentTextViewDescrp,currentTextViewItem;
+//
+//        view = dialog.getDialogView().findViewById(R.id.linear_set_relationship);
+//        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+//        layout = ((ViewGroup) view).getChildAt(1);
+//        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+//        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+//
+//        currentImageView.setImageResource(relationship.getGreenImageIdMd());
+//        currentTextViewDescrp.setText(R.string.relationship);
+//        currentTextViewItem.setText(relationship.getRelationshipType().toString());
+//
+//        dialog.getServo().setSettings(Settings.newInstance(dialog.getServo().getSettings(), relationship));
+//        dialog.setStateHelper(ServoDialogStateHelper.newInstance(dialog.getServo()));
+//
+//        dialog.updateServoViews();
 
     }
 }

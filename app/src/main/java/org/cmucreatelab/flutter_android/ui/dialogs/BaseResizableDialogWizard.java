@@ -19,7 +19,7 @@ public class BaseResizableDialogWizard extends DialogFragment{
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(459), ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
         //getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 }
