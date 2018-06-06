@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,9 +17,6 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import java.io.Serializable;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Steve on 9/1/2016.
@@ -51,10 +47,9 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
         super.onCreateDialog(savedInstances);
         dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Constants.SerializableKeys.SENSOR_KEY);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_sensor_choice_wizard, null);
+        final View view = inflater.inflate(R.layout.dialog_sensors, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        ButterKnife.bind(this, view);
 
         Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
 
@@ -101,11 +96,6 @@ public class SensorOutputDialog extends BaseResizableDialog implements View.OnCl
 
         }
         dialogSensorListener.onSensorChosen(sensor);
-
-    }
-
-    @OnClick(R.id.button_next_page)
-    public void onClickNextPage(View view) {
         this.dismiss();
     }
 
