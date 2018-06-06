@@ -125,6 +125,7 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements Vi
 
     }
 
+
     @OnClick(R.id.button_next_page)
     public void onClickNextPage(View view) {
         // send an intent to the wet position dialog

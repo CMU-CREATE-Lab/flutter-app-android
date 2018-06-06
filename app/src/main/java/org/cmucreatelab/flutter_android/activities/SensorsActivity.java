@@ -72,7 +72,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // This is how you check if the sensors have not been set yet
                 Sensor[] sensors = session.getFlutter().getSensors();
                 if (sensors[0].getSensorType() == FlutterProtocol.InputTypes.NOT_SET) {
                     textSensor1Reading.setText("");

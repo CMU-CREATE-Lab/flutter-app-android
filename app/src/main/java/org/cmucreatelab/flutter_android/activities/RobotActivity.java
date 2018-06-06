@@ -56,8 +56,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-    private Servo[] servos;
-    private ServoDialog dialog;
     public Relationship relationChosen;
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -182,7 +180,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void updateLinkedViews() {
         Log.d(Constants.LOG_TAG, "updateLinkedViews");
-        servos = session.getFlutter().getServos();
+        Servo[] servos = session.getFlutter().getServos();
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
         Speaker speaker = session.getFlutter().getSpeaker();
 
@@ -312,19 +310,19 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickServo(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickServo " + portNumber);
         Log.d(Constants.LOG_TAG, "onClickServo1");
-        servos = session.getFlutter().getServos();
+        Servo[] servos = session.getFlutter().getServos();
         Sensor[] sensors = session.getFlutter().getSensors();
         //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
-        dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
 
         if (portNumber >= 0 || portNumber <= 2) {
             if (servos[portNumber-1].isLinked() == false) {
                 // Show the user a step by step sequence of how to set up the servo
-                RelationshipWizardPageOne dialogR = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
-                dialogR.show(getSupportFragmentManager(), "tag");
+                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+                wizardDialog.show(getSupportFragmentManager(), "tag");
 
             }
             else {
+                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
                 dialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -353,8 +351,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
 
-        LedDialog dialogLD = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-        dialogLD.show(getSupportFragmentManager(), "tag");
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+        dialog.show(getSupportFragmentManager(), "tag");
     }
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
         @Override
@@ -380,8 +378,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
-        SpeakerDialog dialogSpeak = SpeakerDialog.newInstance(speaker, this);
-        dialogSpeak.show(getSupportFragmentManager(), "tag");
+        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+        dialog.show(getSupportFragmentManager(), "tag");
     }
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
         @Override

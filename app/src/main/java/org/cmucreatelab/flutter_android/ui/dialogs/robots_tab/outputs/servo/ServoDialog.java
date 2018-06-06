@@ -60,14 +60,14 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public LinearLayout linkedSensor,minPosLayout;
     public ImageView advancedSettingsView;
 
-    private static ServoDialogStateHelper stateHelper;
+    private ServoDialogStateHelper stateHelper;
     private DialogServoListener dialogServoListener;
     private Servo servo;
 
     // animations
     private AlphaAnimation blinkAnimation;
 
-    public void updateServoViews() {
+    private void updateViews() {
         super.updateViews(dialogView, servo);
 
         this.advancedSettingsView = (ImageView) dialogView.findViewById(R.id.image_advanced_settings);
@@ -107,9 +107,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         // clone old object
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
-        if (stateHelper == null) {
-            stateHelper = ServoDialogStateHelper.newInstance(servo);
-        }
+        stateHelper = ServoDialogStateHelper.newInstance(servo);
         dialogServoListener = (DialogServoListener) getArguments().getSerializable(Constants.SerializableKeys.DIALOG_SERVO);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -129,7 +127,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         blinkAnimation.setRepeatCount(Animation.INFINITE);
         blinkAnimation.setRepeatMode(Animation.REVERSE);
 
-        updateServoViews();
+        updateViews();
         return builder.create();
     }
 
@@ -240,7 +238,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
             stateHelper.setLinkedSensor(sensor);
         }
-        updateServoViews();
+        updateViews();
     }
 
 
@@ -281,7 +279,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         servo.setSettings(Settings.newInstance(servo.getSettings(), relationship));
         stateHelper = ServoDialogStateHelper.newInstance(servo);
 
-        updateServoViews();
+        updateViews();
     }
 
 

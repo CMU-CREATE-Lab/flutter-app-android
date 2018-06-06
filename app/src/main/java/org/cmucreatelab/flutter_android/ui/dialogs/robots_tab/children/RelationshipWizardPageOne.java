@@ -36,8 +36,8 @@ import butterknife.OnClick;
  */
 
 public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener {
-    private Relationship relationship;
 
+    private Relationship relationship;
     private DialogRelationshipListener relationshipListener;
     private Button nextButton;
     public Sensor sensorChoice;
@@ -54,6 +54,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 
         return relationshipDialog;
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 
     }
 
+
     @OnClick(R.id.button_save_link)
     public void onClickSetRelationship() {
         relationshipListener.onRelationshipChosen(relationship);
@@ -155,6 +157,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
             dialogR.show(getActivity().getSupportFragmentManager(), "tag");
         }
     }
+
 
     @Override
     public void onSensorChosen(Sensor sensor) {
@@ -182,4 +185,5 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     public interface DialogRelationshipListener {
         public void onRelationshipChosen(Relationship relationship);
     }
+
 }
