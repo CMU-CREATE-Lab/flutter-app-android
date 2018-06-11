@@ -275,6 +275,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
+    private boolean speakerMuted = false;
 
     // OnClickListeners
 
@@ -454,6 +455,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
+            updateSpeakerVisibility();
             updateLinkedViews();
             if (!session.isSimulatingData()) startSensorReading();
         }
@@ -493,9 +495,29 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         for (MelodySmartMessage message : msgs) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
+        updateSpeakerVisibility();
         updateLinkedViews();
     }
 
+    private void updateSpeakerVisibility()
+    {
+        Speaker speaker = session.getFlutter().getSpeaker();
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+        TextView currentHertzText = (TextView) findViewById(R.id.text_current_hertz);
+        TextView currentVolumeText = (TextView) findViewById(R.id.text_current_volume);
+
+        //set visibility based on if volume or pitch is linked
+        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked()) {
+            speakerMuteToggle.setVisibility(View.VISIBLE);
+            currentHertzText.setVisibility(View.VISIBLE);
+            currentVolumeText.setVisibility(View.VISIBLE);
+        }
+        else {
+            speakerMuteToggle.setVisibility(View.INVISIBLE);
+            currentHertzText.setVisibility(View.INVISIBLE);
+            currentVolumeText.setVisibility(View.INVISIBLE);
+        }
+    }
 
     // onClick listeners
 
@@ -572,6 +594,30 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onClickSpeakerRelative2() {
         onClickSpeaker();
     }
+    @OnClick(R.id.image_speaker_mute_toggle)
+    public void onClickSpeakerMuteToggle() {
+        //flip the muted state of speaker
+        speakerMuted = !speakerMuted;
+
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+        Speaker speaker = session.getFlutter().getSpeaker();
+
+        MelodySmartMessage message;
+
+        //setting volume to 0
+        if (speakerMuted) {
+            speakerMuteToggle.setImageResource(R.drawable.speaker_mute);
+            message = MessageConstructor.constructSetOutput(speaker.getVolume(), 0);
+        }
+        //adding previously set speaker relation when unmuted
+        else {
+            speakerMuteToggle.setImageResource(R.drawable.speaker_unmute);
+            message = MessageConstructor.constructRelationshipMessage(speaker.getVolume(), speaker.getVolume().getSettings());
+        }
+
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.melodySmartDeviceHandler.addMessage(message);
+    }
 
 
     @OnClick(R.id.button_simulate_sensors)
@@ -586,7 +632,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             simulateSensorsDialog.show(getSupportFragmentManager(), "tag");
         }
     }
-
 
     @OnClick(R.id.button_control_outputs)
     public void onClickControlOutputs() {
