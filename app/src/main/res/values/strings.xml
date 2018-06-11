@@ -274,6 +274,9 @@
     <string name="review_recording">Review Recording</string>
     <string name="simulate_sensors">Simulate Sensors</string>
     <string name="control_outputs">Control Outputs</string>
+    <string name="initial_hertz_label">0 Hz</string>
+    <string name="initial_volume_label">Volume: 0</string>
+
 
     <string-array name="time_array">
         <item>minute</item>

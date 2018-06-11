@@ -544,7 +544,7 @@
             android:layout_toEndOf="@id/relative_leds"
             android:layout_below="@id/image_speaker_mute_toggle"
             android:visibility="invisible"
-            tools:text="0 Hz" />
+            android:text="@string/initial_hertz_label" />
 
         <TextView
             android:id="@+id/text_current_volume"
@@ -558,7 +558,7 @@
             android:layout_toEndOf="@id/relative_leds"
             android:layout_below="@id/text_current_hertz"
             android:visibility="invisible"
-            tools:text="Volume: 0" />
+            android:text="@string/initial_volume_label" />
 
         <RelativeLayout
             android:id="@+id/relative_speaker"

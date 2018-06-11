@@ -455,7 +455,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
-            updateSpeakerVisibility();
+            updateSpeakerToggleVisibility();
             updateLinkedViews();
             if (!session.isSimulatingData()) startSensorReading();
         }
@@ -495,28 +495,27 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         for (MelodySmartMessage message : msgs) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
-        updateSpeakerVisibility();
+        updateSpeakerToggleVisibility();
+
+        //flip the muted state of speaker
+        speakerMuted = false;
+
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+        speakerMuteToggle.setImageResource(R.drawable.speaker_unmute);
+
         updateLinkedViews();
     }
 
-    private void updateSpeakerVisibility()
+    private void updateSpeakerToggleVisibility()
     {
         Speaker speaker = session.getFlutter().getSpeaker();
         ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
-        TextView currentHertzText = (TextView) findViewById(R.id.text_current_hertz);
-        TextView currentVolumeText = (TextView) findViewById(R.id.text_current_volume);
 
         //set visibility based on if volume or pitch is linked
-        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked()) {
+        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked())
             speakerMuteToggle.setVisibility(View.VISIBLE);
-            currentHertzText.setVisibility(View.VISIBLE);
-            currentVolumeText.setVisibility(View.VISIBLE);
-        }
-        else {
+        else
             speakerMuteToggle.setVisibility(View.INVISIBLE);
-            currentHertzText.setVisibility(View.INVISIBLE);
-            currentVolumeText.setVisibility(View.INVISIBLE);
-        }
     }
 
     // onClick listeners
