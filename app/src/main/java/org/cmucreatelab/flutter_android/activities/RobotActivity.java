@@ -350,9 +350,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickLed(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
+        Servo[] servos = session.getFlutter().getServos();
+        if (servos[portNumber-1].isLinked() == false) {
+            // Show the user a step by step sequence of how to set up the servo
+            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+            wizardDialog.show(getSupportFragmentManager(), "tag");
 
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-        dialog.show(getSupportFragmentManager(), "tag");
+        }
+        else {
+            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
     }
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
         @Override

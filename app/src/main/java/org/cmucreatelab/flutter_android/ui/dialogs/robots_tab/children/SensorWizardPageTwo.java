@@ -2,10 +2,15 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +20,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
@@ -34,13 +40,15 @@ import butterknife.OnClick;
  * A Dialog that shows which sensor is to be linked with an output.
  * Called by the relationship dialog after clicking the "Next" button.
  */
-public class SensorWizardPageTwo extends BaseResizableDialogWizard implements View.OnClickListener, Serializable  {
+public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
+        View.OnClickListener, Serializable, MinPositionWizardPageThree.DialogMinPositionListener  {
 
 
     private DialogSensorListener dialogSensorListener;
     private Button nextButton;
     private Servo currentServo;
     private static ServoDialogStateHelper stateHelper;
+    public int minimumPosition;
 
 
 
@@ -129,8 +137,47 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements Vi
     @OnClick(R.id.button_next_page)
     public void onClickNextPage(View view) {
         // send an intent to the wet position dialog
-        //stateHelper.clickMin(this);
+        // TODO differentiate between the different min position dialogs that should appear at this point of time.
+        // Wet Position Dialogs that will display the degree should appear only when the servo button has been clicked.
+        // Color position dialogs that display a color selection should appear only when the led button has been clicked.
+        // Volume position dialogs that display a volume selection should only appear when the speaker button has been clicked.
+        MinPositionWizardPageThree dialog = MinPositionWizardPageThree.newInstance(currentServo, this);
+        dialog.show(getFragmentManager(), "tag");
+        this.dismiss();
     }
+
+    public void onMinPosChosen(int min) {
+        Log.d(Constants.LOG_TAG, "onMinPosChosen");
+
+        minimumPosition = min;
+
+//        View view,layout;
+//        ImageView currentImageView;
+//        TextView currentTextViewDescrp,currentTextViewItem;
+//        RotateAnimation rotateAnimation;
+//
+//        view = dialogView.findViewById(R.id.linear_set_min_pos);
+//        layout = ((ViewGroup) view).getChildAt(0);
+//        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+//        layout = ((ViewGroup) view).getChildAt(1);
+//        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+//        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+//
+//        rotateAnimation = new RotateAnimation(0, min, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+//        rotateAnimation.setFillEnabled(true);
+//        rotateAnimation.setFillAfter(true);
+//        rotateAnimation.setDuration(0);
+//        currentImageView.startAnimation(rotateAnimation);
+//
+//        stateHelper.setMinimumPosition(min, currentTextViewDescrp, currentTextViewItem);
+    }
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Dialog dialog = getDialog();
+        dialog.dismiss();
+    }
+
 
 
     // interface for an activity to listen for a choice

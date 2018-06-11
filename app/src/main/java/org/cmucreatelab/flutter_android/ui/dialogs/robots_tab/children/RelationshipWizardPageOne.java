@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -155,6 +156,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
             Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
             SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, this);
             dialogR.show(getActivity().getSupportFragmentManager(), "tag");
+            this.dismiss();
         }
     }
 
@@ -178,6 +180,20 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 //            stateHelper.setLinkedSensor(sensor);
 //        }
 //        updateServoViews();
+    }
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
+
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, currentServo);
+        dialog.show(this.getFragmentManager(), "tag");
+    }
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Dialog dialog = getDialog();
+        dialog.dismiss();
     }
 
 

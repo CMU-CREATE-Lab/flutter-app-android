@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <include
         android:id="@+id/include_toolbar_dialog"
         layout="@layout/toolbar_outputs" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="28dp" />
 
     <TextView
         android:id="@+id/text_question_sensor"
@@ -156,7 +152,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="56dp" />
+        android:layout_height="15dp" />
 
     <include
         layout="@layout/link_buttons_for_wizard_part_two"
