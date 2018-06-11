@@ -94,17 +94,7 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         firstConfirmationDialog.show(this.getFragmentManager(), "tag");
     }
 
-
     protected InformationDialog.DismissAndCancelWarningListener firstConfirmationDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
-        @Override
-        public void onPositiveButton() {
-            InformationDialog secondConfirmation = InformationDialog.newInstance(getString(R.string.flutter_second_reset_warning_title), getString(R.string.flutter_reset_warning_description), R.drawable.round_reddish_button_bottom_right, R.drawable.button_gray_left_bottom, null, secondConfirmationDialogListener);
-            secondConfirmation.show(getFragmentManager(), "tag");
-        }
-    };
-
-
-    protected InformationDialog.DismissAndCancelWarningListener secondConfirmationDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
         @Override
         public void onPositiveButton() {
             GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
