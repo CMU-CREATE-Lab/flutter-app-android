@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
@@ -42,10 +44,20 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     private DialogRelationshipListener relationshipListener;
     private Button nextButton;
     public Sensor sensorChoice;
+
     private Servo currentServo;
+    private TriColorLed currentLed;
+
+    // boolean variables for determining which type of button the user clicked on
+    private static boolean servoChosen = false;
+    private static boolean ledChosen = false;
+    private static boolean speakerChosen = false;
 
 
     public static RelationshipWizardPageOne newInstance(Servo servo, Serializable serializable) {
+        servoChosen = true;
+        ledChosen = false;
+        speakerChosen = false;
         RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
 
         Bundle args = new Bundle();
@@ -56,20 +68,58 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
         return relationshipDialog;
     }
 
+    public static RelationshipWizardPageOne newInstance2(TriColorLed led, Serializable serializable) {
+        servoChosen = false;
+        ledChosen = true;
+        speakerChosen = false;
+        RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
+
+        Bundle args = new Bundle();
+        args.putSerializable(TriColorLed.LED_KEY, led);
+        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
+        relationshipDialog.setArguments(args);
+
+        return relationshipDialog;
+    }
+
+    public static RelationshipWizardPageOne newInstance3(Speaker speaker, Serializable serializable) {
+        servoChosen = false;
+        ledChosen = false;
+        speakerChosen = true;
+        RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
+
+        Bundle args = new Bundle();
+        args.putSerializable(Speaker.SPEAKER_KEY, speaker);
+        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
+        relationshipDialog.setArguments(args);
+
+        return relationshipDialog;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
         super.onCreateDialog(savedInstanceState);
         currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
-
+        currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_wizard, null);
         nextButton = (Button) view.findViewById(R.id.button_save_link);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(currentServo.getPortNumber()));
-        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+
+        if (servoChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(currentServo.getPortNumber()));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+        }
+        else if (ledChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(currentLed.getPortNumber()));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+        }
+        else if (speakerChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
+        }
         ButterKnife.bind(this, view);
 
         // bind click listeners
@@ -153,11 +203,25 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
         }
         else {
             // send an intent to the sensor dialog (Page 2)
-            Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-            SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, this);
-            dialogR.show(getActivity().getSupportFragmentManager(), "tag");
-            this.dismiss();
+            if (servoChosen) {
+                Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, this);
+                dialogR.show(getActivity().getSupportFragmentManager(), "tag");
+            }
+            else if (ledChosen) {
+                TriColorLed leds = (TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(leds, this);
+                dialogR.show(getActivity().getSupportFragmentManager(), "tag");
+
+            }
+            else if (speakerChosen) {
+                Speaker speakers = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(speakers, this);
+                dialogR.show(getActivity().getSupportFragmentManager(), "tag");
+
+            }
         }
+        this.dismiss();
     }
 
 
@@ -182,6 +246,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 //        updateServoViews();
     }
 
+    // TODO This does not work (crashes)
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");

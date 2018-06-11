@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
+import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
@@ -46,18 +48,57 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
 
     private DialogSensorListener dialogSensorListener;
     private Button nextButton;
+
     private Servo currentServo;
+    private TriColorLed currentLed;
+
     private static ServoDialogStateHelper stateHelper;
     public int minimumPosition;
+
+    // boolean variables for determining which type of button the user clicked on
+    private static boolean servoChosen = false;
+    private static boolean ledChosen = false;
+    private static boolean speakerChosen = false;
 
 
 
     public static SensorWizardPageTwo newInstance(Servo servo, Serializable serializable) {
+        servoChosen = true;
+        ledChosen = false;
+        speakerChosen = false;
         SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
 
         Bundle args = new Bundle();
         args.putSerializable(Servo.SERVO_KEY, servo);
         args.putSerializable(Constants.SerializableKeys.SENSOR_KEY, serializable);
+        sensorDialog.setArguments(args);
+
+        return sensorDialog;
+    }
+
+    public static SensorWizardPageTwo newInstance(TriColorLed led, Serializable serializable) {
+        servoChosen = false;
+        ledChosen = true;
+        speakerChosen = false;
+        SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
+
+        Bundle args = new Bundle();
+        args.putSerializable(TriColorLed.LED_KEY, led);
+        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
+        sensorDialog.setArguments(args);
+
+        return sensorDialog;
+    }
+
+    public static SensorWizardPageTwo newInstance(Speaker speaker, Serializable serializable) {
+        servoChosen = false;
+        ledChosen = false;
+        speakerChosen = true;
+        SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
+
+        Bundle args = new Bundle();
+        args.putSerializable(Speaker.SPEAKER_KEY, speaker);
+        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
         sensorDialog.setArguments(args);
 
         return sensorDialog;
@@ -69,16 +110,30 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
         super.onCreateDialog(savedInstances);
         dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Constants.SerializableKeys.SENSOR_KEY);
         currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
+        currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
         if (stateHelper == null) {
             stateHelper = ServoDialogStateHelper.newInstance(currentServo);
         }
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensor_choice_wizard, null);
         nextButton = (Button) view.findViewById(R.id.button_next_page);
-        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(currentServo.getPortNumber()));
-        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+        if (servoChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(currentServo.getPortNumber()));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+            ((TextView) view.findViewById(R.id.text_question_sensor)).setText("Which sensor should servo " + String.valueOf(currentServo.getPortNumber()) + " react to?");
+
+        }
+        else if (ledChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(currentLed.getPortNumber()));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+            ((TextView) view.findViewById(R.id.text_question_sensor)).setText("Which sensor should led " + String.valueOf(currentLed.getPortNumber()) + " react to?");
+        }
+        else if (speakerChosen) {
+            ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_speaker));
+            ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
+            ((TextView) view.findViewById(R.id.text_question_sensor)).setText("Which sensor should the speaker react to?");
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        ((TextView) view.findViewById(R.id.text_question_sensor)).setText("Which sensor should servo " + String.valueOf(currentServo.getPortNumber()) + " react to?");
         builder.setView(view);
         ButterKnife.bind(this, view);
 

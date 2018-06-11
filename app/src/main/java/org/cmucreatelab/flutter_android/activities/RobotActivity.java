@@ -350,10 +350,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickLed(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-        Servo[] servos = session.getFlutter().getServos();
-        if (servos[portNumber-1].isLinked() == false) {
-            // Show the user a step by step sequence of how to set up the servo
-            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+        if (triColorLeds[portNumber-1].getBlueLed().isLinked() == false ||
+                triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
+                triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
+            // Show the user a step by step sequence of how to set up the led
+            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance2(triColorLeds[portNumber - 1], this);
             wizardDialog.show(getSupportFragmentManager(), "tag");
 
         }
@@ -386,8 +387,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
-        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-        dialog.show(getSupportFragmentManager(), "tag");
+        if (speaker.getPitch().isLinked() == false ||
+                speaker.getVolume().isLinked() == false) {
+            // Show the user a step by step sequence of how to set up the led
+            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance3(speaker, this);
+            wizardDialog.show(getSupportFragmentManager(), "tag");
+
+        }
+        else {
+            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
     }
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
         @Override
