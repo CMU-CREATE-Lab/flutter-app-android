@@ -12,19 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="26dp"
         android:src="@drawable/error_large_screen" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="283dp"
+        android:layout_width="274dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/image_flutter"
         android:padding="10dp"
         android:text="@string/non_large_layout_description"
-        android:textColor="@color/red" />
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/button_accept"
@@ -32,18 +32,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="146dp"
+        android:layout_marginTop="121dp"
         android:text="Ok" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="275dp"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/image_flutter"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="-57dp"
-        android:text="Large Screen Error"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:text="LARGE SCREEN"
         android:textAlignment="viewStart"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 

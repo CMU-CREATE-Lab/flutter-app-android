@@ -29,6 +29,8 @@ import butterknife.OnClick;
 public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements View.OnClickListener {
 
     private static boolean bleError = false;
+    private static boolean noBlueToothError = false;
+
     private static boolean emailError = false;
     private static boolean dataLogError = false;
     private static boolean recordingError = false;
@@ -65,6 +67,9 @@ public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements
         }
         else if (id == 9) {
             unknownDeviceError = true;
+        }
+        else if (id == 10) {
+            noBlueToothError = true;
         }
         ErrorNotifcationDialog errorNotifcationDialog = new ErrorNotifcationDialog();
         return errorNotifcationDialog;
