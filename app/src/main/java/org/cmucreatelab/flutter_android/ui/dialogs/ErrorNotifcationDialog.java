@@ -1,12 +1,15 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 
@@ -29,6 +32,7 @@ import butterknife.OnClick;
 public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements View.OnClickListener {
 
     private static boolean bleError = false;
+    private static boolean unsupportedBleDevice = false;
 
     private static boolean emailError = false;
     private static boolean dataLogError = false;
@@ -38,10 +42,12 @@ public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements
     private static boolean largeScreenError = false;
     private static boolean connectToWifiError = false;
     private static boolean unknownDeviceError = false;
+    private static BluetoothAdapter currentBlueTooth;
 
-    public static ErrorNotifcationDialog newInstance(int id) {
+    public static ErrorNotifcationDialog newInstance(int id, BluetoothAdapter bluetooth) {
         if (id == 1) {
             bleError = true;
+            currentBlueTooth = bluetooth;
         }
         else if (id == 2) {
             emailError = true;
@@ -67,6 +73,9 @@ public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements
         else if (id == 9) {
             unknownDeviceError = true;
         }
+        else if (id == 10) {
+            unsupportedBleDevice = true;
+        }
         ErrorNotifcationDialog errorNotifcationDialog = new ErrorNotifcationDialog();
         return errorNotifcationDialog;
     }
@@ -75,6 +84,16 @@ public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements
     public Dialog onCreateDialog(Bundle savedInstances) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_screen_size_error, null);
+        if (bleError) {
+            ((TextView) view.findViewById(R.id.error_title)).setText("BLE");
+            ((TextView) view.findViewById(R.id.text_error_description)).setText(getString(R.string.enable_bluetooth_msg));
+            ((ImageView) view.findViewById(R.id.error_image)).setImageResource(R.drawable.error_ble);
+        }
+        if (unsupportedBleDevice) {
+            ((TextView) view.findViewById(R.id.error_title)).setText("BLE");
+            ((TextView) view.findViewById(R.id.text_error_description)).setText(getString(R.string.ble_unsupported));
+            ((ImageView) view.findViewById(R.id.error_image)).setImageResource(R.drawable.error_ble);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -84,12 +103,22 @@ public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements
 
     @Override
     public void onClick(View view) {
-        this.dismiss();
+        //this.dismiss();
     }
 
     @OnClick(R.id.button_accept)
     public void onClickToDismiss() {
-        this.dismiss();
+        if (bleError) {
+            if (currentBlueTooth.isEnabled()) {
+                this.dismiss();
+            }
+        }
+        else if (unsupportedBleDevice) {
+            getActivity().finish();
+        }
+        else {
+            this.dismiss();
+        }
     }
 
 

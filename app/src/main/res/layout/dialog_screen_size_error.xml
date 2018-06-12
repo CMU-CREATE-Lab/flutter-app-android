@@ -21,7 +21,7 @@
         android:layout_width="274dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/image_flutter"
+        android:layout_alignTop="@+id/error_image"
         android:padding="10dp"
         android:text="@string/non_large_layout_description"
         android:textColor="@color/black" />
@@ -36,7 +36,7 @@
         android:text="Ok" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/error_title"
         android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

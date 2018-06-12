@@ -224,44 +224,15 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void showAlertBleUnsupported() {
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_screen_size_error, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
-        ((TextView) view.findViewById(R.id.text_error_description)).setText(getString(R.string.ble_unsupported));
-        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.error_ble);
-        Button okButton = (Button) view.findViewById(R.id.button_accept);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(10, null);
+        errorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     private void showAlertBluetoothDisabled(final BluetoothAdapter bluetoothAdapter) {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage(R.string.enable_bluetooth_msg);
-        adb.setTitle(R.string.enable_bluetooth);
-        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // nothing because we are overriding it
-            }
-        });
-
-        final AlertDialog dialog = adb.create();
-        dialog.setCancelable(false);
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(Constants.LOG_TAG, String.valueOf(bluetoothAdapter.isEnabled()));
-                if (bluetoothAdapter.isEnabled()) {
-                    dialog.dismiss();
-                }
-            }
-        });
+        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(1, bluetoothAdapter);
+        errorDialog.show(getSupportFragmentManager(), "tag");
+        errorDialog.setCancelable(false);
     }
 
 
@@ -416,7 +387,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         // alert dialog for notifying user large screen is needed
         if (layoutLarge == false && appearsOnce == false) {
             appearsOnce = true;
-            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7);
+            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7, null);
             errorDialog.show(getSupportFragmentManager(), "tag");
         }
     }
