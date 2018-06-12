@@ -30,6 +30,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
+import org.cmucreatelab.flutter_android.ui.dialogs.ErrorNotifcationDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +54,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private Timer noFlutterFoundTimer;
     private Timer warningPromptTimer;
     private Timer scanningTextTimer;
+    private boolean appearsOnce = false;
     private boolean layoutLarge = true;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
@@ -403,6 +405,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
                 }
             });
+        }
+
+        // alert dialog for notifying user large screen is needed
+        if (layoutLarge == false && appearsOnce == false) {
+            appearsOnce = true;
+            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7);
+            errorDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 
