@@ -11,9 +11,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -222,14 +224,18 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void showAlertBleUnsupported() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage(R.string.ble_unsupported);
-        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.dialog_screen_size_error, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AppTheme));
+        ((TextView) view.findViewById(R.id.text_error_description)).setText(getString(R.string.ble_unsupported));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.error_ble);
+        Button okButton = (Button) view.findViewById(R.id.button_accept);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 finish();
             }
         });
-        AlertDialog dialog = adb.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 
