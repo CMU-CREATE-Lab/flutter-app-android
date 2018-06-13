@@ -31,7 +31,7 @@ import butterknife.OnClick;
  *
  */
 public class MinPositionWizardPageThree extends ChoosePositionDialogWizard
-        implements ChoosePositionDialogWizard.SetPositionListener {
+        implements ChoosePositionDialogWizard.SetPositionListener, Serializable {
 
     private DialogMinPositionListener minPositionListener;
     private Servo currentServo;
@@ -68,8 +68,8 @@ public class MinPositionWizardPageThree extends ChoosePositionDialogWizard
 
     @OnClick(R.id.button_next_page)
     public void onClickSetPosition() {
-        //MaxPositionWizardPageFour dialog = MinPositionWizardPageThree.newInstance(currentServo, this);
-        //dialog.show(getFragmentManager(), "tag");
+        MaxPositionWizardPageFour dialog = MaxPositionWizardPageFour.newInstance(currentServo, null);
+        dialog.show(getFragmentManager(), "tag");
         this.dismiss();
     }
 

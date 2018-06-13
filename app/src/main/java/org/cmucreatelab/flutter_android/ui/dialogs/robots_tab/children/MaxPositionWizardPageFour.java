@@ -3,7 +3,9 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
@@ -36,6 +38,7 @@ public class MaxPositionWizardPageFour extends ChoosePositionDialogWizard implem
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
+        //((TextView) view.findViewById(R.id.set_wet)).setText("Set the dry position");
         maxPositionListener = (DialogMaxPositionListener) getArguments().getSerializable(POSITION_LISTENER_KEY);
         setPositionListener = this;
         return super.onCreateDialog(savedInstanceState);

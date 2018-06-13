@@ -98,9 +98,9 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
         else if (ledChosen) {
             currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
         }
-        if (stateHelper == null) {
-            stateHelper = ServoDialogStateHelper.newInstance(currentServo);
-        }
+//        if (stateHelper == null) {
+//            stateHelper = ServoDialogStateHelper.newInstance(currentServo);
+//        }
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_sensor_choice_wizard, null);
         nextButton = (Button) view.findViewById(R.id.button_next_page);
@@ -183,8 +183,16 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
         // Wet Position Dialogs that will display the degree should appear only when the servo button has been clicked.
         // Color position dialogs that display a color selection should appear only when the led button has been clicked.
         // Volume position dialogs that display a volume selection should only appear when the speaker button has been clicked.
-        MinPositionWizardPageThree dialog = MinPositionWizardPageThree.newInstance(currentServo, this);
-        dialog.show(getFragmentManager(), "tag");
+        if (servoChosen) {
+            MinPositionWizardPageThree dialog = MinPositionWizardPageThree.newInstance(currentServo, this);
+            dialog.show(getFragmentManager(), "tag");
+        }
+        else if (ledChosen) {
+
+        }
+        else if (speakerChosen) {
+
+        }
         this.dismiss();
     }
 
