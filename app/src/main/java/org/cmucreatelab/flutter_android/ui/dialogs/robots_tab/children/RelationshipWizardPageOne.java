@@ -36,6 +36,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /* Created by Mohit.
+ *
+ * The first page to the wizard. The start of it all! :)
+ * Is called by all three: servo, led, and speaker
+ *
  */
 
 public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener {
@@ -54,42 +58,31 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     private static boolean speakerChosen = false;
 
 
-    public static RelationshipWizardPageOne newInstance(Servo servo, Serializable serializable) {
-        servoChosen = true;
-        ledChosen = false;
-        speakerChosen = false;
-        RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
-
+    public static RelationshipWizardPageOne newInstance(Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
         Bundle args = new Bundle();
-        args.putSerializable(Servo.SERVO_KEY, servo);
-        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
-        relationshipDialog.setArguments(args);
 
-        return relationshipDialog;
-    }
+        if (servo != null) {
+            servoChosen = true;
+            args.putSerializable(Servo.SERVO_KEY, servo);
 
-    public static RelationshipWizardPageOne newInstance2(TriColorLed led, Serializable serializable) {
-        servoChosen = false;
-        ledChosen = true;
-        speakerChosen = false;
+            ledChosen = false;
+            speakerChosen = false;
+        }
+        else if (speaker != null) {
+            speakerChosen = true;
+            args.putSerializable(Speaker.SPEAKER_KEY, speaker);
+
+            servoChosen = false;
+            ledChosen = false;
+        }
+        else if (led != null) {
+            ledChosen = true;
+            args.putSerializable(TriColorLed.LED_KEY, led);
+
+            servoChosen = false;
+            speakerChosen = false;
+        }
         RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
-
-        Bundle args = new Bundle();
-        args.putSerializable(TriColorLed.LED_KEY, led);
-        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
-        relationshipDialog.setArguments(args);
-
-        return relationshipDialog;
-    }
-
-    public static RelationshipWizardPageOne newInstance3(Speaker speaker, Serializable serializable) {
-        servoChosen = false;
-        ledChosen = false;
-        speakerChosen = true;
-        RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
-
-        Bundle args = new Bundle();
-        args.putSerializable(Speaker.SPEAKER_KEY, speaker);
         args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
         relationshipDialog.setArguments(args);
 
@@ -100,8 +93,12 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         relationshipListener = (DialogRelationshipListener) getArguments().getSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY);
         super.onCreateDialog(savedInstanceState);
-        currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
-        currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
+        if (servoChosen) {
+            currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
+        }
+        else if (ledChosen) {
+            currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
+        }
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_wizard, null);
         nextButton = (Button) view.findViewById(R.id.button_save_link);
@@ -205,18 +202,18 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
             // send an intent to the sensor dialog (Page 2)
             if (servoChosen) {
                 Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, null, null, this);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
             }
             else if (ledChosen) {
                 TriColorLed leds = (TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(leds, this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, leds, null, this);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
 
             }
             else if (speakerChosen) {
                 Speaker speakers = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(speakers, this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, null, speakers,this);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
 
             }

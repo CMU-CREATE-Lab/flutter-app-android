@@ -317,7 +317,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (portNumber >= 0 || portNumber <= 2) {
             if (servos[portNumber-1].isLinked() == false) {
                 // Show the user a step by step sequence of how to set up the servo
-                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1], this);
+                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1],null, null, this);
                 wizardDialog.show(getSupportFragmentManager(), "tag");
 
             }
@@ -354,7 +354,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
                 triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
             // Show the user a step by step sequence of how to set up the led
-            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance2(triColorLeds[portNumber - 1], this);
+            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, triColorLeds[portNumber - 1],null, this);
             wizardDialog.show(getSupportFragmentManager(), "tag");
 
         }
@@ -390,7 +390,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         if (speaker.getPitch().isLinked() == false ||
                 speaker.getVolume().isLinked() == false) {
             // Show the user a step by step sequence of how to set up the led
-            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance3(speaker, this);
+            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, null, speaker, this);
             wizardDialog.show(getSupportFragmentManager(), "tag");
 
         }

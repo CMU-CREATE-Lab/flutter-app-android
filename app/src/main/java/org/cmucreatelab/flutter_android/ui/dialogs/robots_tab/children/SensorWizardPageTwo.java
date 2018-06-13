@@ -60,57 +60,44 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
     private static boolean ledChosen = false;
     private static boolean speakerChosen = false;
 
-
-
-    public static SensorWizardPageTwo newInstance(Servo servo, Serializable serializable) {
-        servoChosen = true;
-        ledChosen = false;
-        speakerChosen = false;
+    public static SensorWizardPageTwo newInstance(Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
+        Bundle args = new Bundle();
+        if (servo != null) {
+            servoChosen = true;
+            ledChosen = false;
+            speakerChosen = false;
+            args.putSerializable(Servo.SERVO_KEY, servo);
+        }
+        else if (led != null) {
+            servoChosen = false;
+            ledChosen = true;
+            speakerChosen = false;
+            args.putSerializable(TriColorLed.LED_KEY, led);
+        }
+        else if (speaker != null) {
+            servoChosen = false;
+            ledChosen = false;
+            speakerChosen = true;
+            args.putSerializable(Speaker.SPEAKER_KEY, speaker);
+        }
         SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
 
-        Bundle args = new Bundle();
-        args.putSerializable(Servo.SERVO_KEY, servo);
         args.putSerializable(Constants.SerializableKeys.SENSOR_KEY, serializable);
         sensorDialog.setArguments(args);
 
         return sensorDialog;
     }
 
-    public static SensorWizardPageTwo newInstance(TriColorLed led, Serializable serializable) {
-        servoChosen = false;
-        ledChosen = true;
-        speakerChosen = false;
-        SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
-
-        Bundle args = new Bundle();
-        args.putSerializable(TriColorLed.LED_KEY, led);
-        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
-        sensorDialog.setArguments(args);
-
-        return sensorDialog;
-    }
-
-    public static SensorWizardPageTwo newInstance(Speaker speaker, Serializable serializable) {
-        servoChosen = false;
-        ledChosen = false;
-        speakerChosen = true;
-        SensorWizardPageTwo sensorDialog = new SensorWizardPageTwo();
-
-        Bundle args = new Bundle();
-        args.putSerializable(Speaker.SPEAKER_KEY, speaker);
-        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
-        sensorDialog.setArguments(args);
-
-        return sensorDialog;
-    }
-
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
         dialogSensorListener = (DialogSensorListener) getArguments().getSerializable(Constants.SerializableKeys.SENSOR_KEY);
-        currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
-        currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
+        if (servoChosen) {
+            currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
+        }
+        else if (ledChosen) {
+            currentLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));
+        }
         if (stateHelper == null) {
             stateHelper = ServoDialogStateHelper.newInstance(currentServo);
         }
