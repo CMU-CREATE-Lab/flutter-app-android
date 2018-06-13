@@ -28,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="10dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/close" />
 
     </RelativeLayout>
@@ -41,16 +41,16 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp">
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_current_servo_pos_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:fontFamily="sans-serif"
                 android:textColor="#313132"
                 android:textSize="21sp"
@@ -60,7 +60,6 @@
                 android:id="@+id/image_servo_1"
                 android:layout_width="49dp"
                 android:layout_height="28dp"
-                android:layout_below="@id/text_current_servo_pos_1"
                 android:src="@drawable/servo_icon" />
 
             <TextView
@@ -75,21 +74,12 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <SeekBar
-                android:id="@+id/seek_servo_1"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/text_servo_1"
-                android:layout_toEndOf="@id/text_servo_1"
-                android:max="180"
-                android:thumbOffset="1dp" />
 
             <TextView
                 android:id="@+id/text_current_servo_pos_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#313132"
                 android:textSize="21sp"
@@ -99,14 +89,12 @@
                 android:id="@+id/image_servo_2"
                 android:layout_width="49dp"
                 android:layout_height="28dp"
-                android:layout_below="@id/text_current_servo_pos_2"
                 android:src="@drawable/servo_icon" />
 
             <TextView
                 android:id="@+id/text_servo_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image_servo_2"
                 android:layout_marginTop="2dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/servo_2"
@@ -114,21 +102,12 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <SeekBar
-                android:id="@+id/seek_servo_2"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/text_servo_2"
-                android:layout_toEndOf="@id/text_servo_2"
-                android:max="180"
-                android:thumbOffset="1dp" />
 
             <TextView
                 android:id="@+id/text_current_servo_pos_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="sans-serif"
                 android:textColor="#313132"
                 android:textSize="21sp"
@@ -152,38 +131,55 @@
                 android:textColor="#313132"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <SeekBar
+                android:id="@+id/seek_servo_1"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="54dp"
+                android:max="180" />
+
+            <SeekBar
+                android:id="@+id/seek_servo_2"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="71dp"
+                android:max="180" />
 
             <SeekBar
                 android:id="@+id/seek_servo_3"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/text_servo_3"
-                android:layout_toEndOf="@id/text_servo_3"
-                android:max="180"
-                android:thumbOffset="1dp" />
+                android:layout_marginTop="71dp"
 
+                android:max="180" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="40dp">
+            android:layout_marginStart="30dp"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image_led_1"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="23dp"
                 android:src="@drawable/led" />
 
             <TextView
                 android:id="@+id/text_led_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image_led_1"
                 android:layout_marginTop="2dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/led_1"
@@ -196,7 +192,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="59dp"
                 android:src="@drawable/led" />
 
             <TextView
@@ -216,7 +212,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="210dp"
+                android:layout_marginTop="59dp"
                 android:src="@drawable/led" />
 
             <TextView
@@ -231,13 +227,20 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="40dp"
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/image_led_color_1"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/text_led_1"
+                android:layout_marginTop="15dp"
                 android:adjustViewBounds="true" />
 
             <ImageView
@@ -245,8 +248,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="105dp"
-                android:layout_toEndOf="@id/text_led_2"
+                android:layout_marginTop="38dp"
                 android:adjustViewBounds="true" />
 
             <ImageView
@@ -254,12 +256,10 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="205dp"
-                android:layout_toEndOf="@id/text_led_3"
+                android:layout_marginTop="38dp"
                 android:adjustViewBounds="true" />
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -272,6 +272,7 @@
                 android:layout_width="34dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/speaker" />
 
             <TextView
@@ -346,8 +347,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:max="14"
-                android:thumbOffset="1dp" />
+                android:max="14" />
 
             <LinearLayout
                 android:layout_width="match_parent"
