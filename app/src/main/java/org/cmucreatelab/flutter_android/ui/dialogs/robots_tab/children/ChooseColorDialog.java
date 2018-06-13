@@ -121,7 +121,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
 
     @OnClick(R.id.button_set_color)
     public void onClickSetColor() {
-        setColorListener.onSetColor(currentlySelected.swatch);
+        setColorListener.onSetColor(currentlySelected.swatchSelected);
     }
 
 

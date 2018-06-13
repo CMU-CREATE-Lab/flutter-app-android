@@ -37,6 +37,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
@@ -635,6 +636,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @OnClick(R.id.button_control_outputs)
     public void onClickControlOutputs() {
         Log.d(Constants.LOG_TAG, "onClickControlOutputs");
+
+        ControlOutputsDialog controlOutputsDialog = new ControlOutputsDialog();
+        controlOutputsDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
