@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="900dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
             android:layout_centerVertical="true"
             android:src="@drawable/close" />
 
@@ -37,12 +38,13 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp">
 
             <TextView
                 android:id="@+id/text_current_servo_pos_1"
@@ -167,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="50dp">
+            android:layout_marginRight="40dp">
 
             <ImageView
                 android:id="@+id/image_led_1"
@@ -277,8 +279,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:textColor="#313132"
                 android:text="@string/lowercase_speaker"
+                android:textColor="#313132"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -287,14 +289,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_volume"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/volume"
                 android:textColor="#47474a"
@@ -320,9 +323,9 @@
 
             <ImageView
                 android:id="@+id/image_sheet_music"
-                android:layout_marginTop="5dp"
                 android:layout_width="238dp"
                 android:layout_height="89dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/link_pitch_staff" />
 
 
@@ -330,8 +333,8 @@
                 android:id="@+id/text_current_note_pitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:textColor="#4a4a4a"
@@ -376,7 +379,7 @@
 
     <Button
         android:id="@+id/button_done"
-        android:layout_width="900dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
