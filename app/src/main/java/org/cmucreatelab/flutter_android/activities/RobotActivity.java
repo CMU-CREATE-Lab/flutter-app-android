@@ -53,7 +53,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-
+    private boolean speakerMuted = false;
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         private int seekBarValue=0;
 
@@ -275,9 +275,21 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
-    private boolean speakerMuted = false;
+
+    private void updateSpeakerToggleVisibility() {
+        Speaker speaker = session.getFlutter().getSpeaker();
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+
+        //set visibility based on if volume or pitch is linked
+        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked())
+            speakerMuteToggle.setVisibility(View.VISIBLE);
+        else
+            speakerMuteToggle.setVisibility(View.INVISIBLE);
+    }
+
 
     // OnClickListeners
+
 
     private void onClickSensor(int portNumber) {
         SensorTypeDialog sensorTypeDialog = GreenSensorTypeDialog.newInstance(portNumber, instance);
@@ -506,17 +518,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         updateLinkedViews();
     }
 
-    private void updateSpeakerToggleVisibility()
-    {
-        Speaker speaker = session.getFlutter().getSpeaker();
-        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
-
-        //set visibility based on if volume or pitch is linked
-        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked())
-            speakerMuteToggle.setVisibility(View.VISIBLE);
-        else
-            speakerMuteToggle.setVisibility(View.INVISIBLE);
-    }
 
     // onClick listeners
 
