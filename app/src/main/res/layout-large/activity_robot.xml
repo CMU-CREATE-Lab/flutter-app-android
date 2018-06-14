@@ -195,12 +195,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_servo_3"
-                android:layout_width="155dp"
+                android:layout_width="103dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/link_active_servo_b_g"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -225,11 +225,47 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="101dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/servo_3_indicator"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/servo_new_indicator" />
+
+                <ImageView
+                    android:id="@+id/servo_3_foreground_green_indicator"
+                    android:layout_width="47dp"
+                    android:layout_height="23.25dp"
+                    android:layout_alignStart="@+id/servo_3_indicator"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:id="@+id/text_servo_3_max_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/servo_3_indicator"
+                    android:layout_below="@id/servo_3_foreground_green_indicator"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal"/>
+
+                <TextView
+                    android:id="@+id/text_servo_3_min_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/servo_3_indicator"
+                    android:layout_below="@id/servo_3_foreground_green_indicator"
+                    android:layout_marginStart="4.5dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal" />
+
 
             </RelativeLayout>
 
@@ -245,12 +281,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_servo_2"
-                android:layout_width="155dp"
+                android:layout_width="103dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/relative_servo_3"
                 android:background="@drawable/link_active_servo_b_g"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -275,11 +311,48 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="101dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/servo_2_indicator"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/servo_new_indicator" />
+
+
+                <ImageView
+                    android:id="@+id/servo_2_foreground_green_indicator"
+                    android:layout_width="47dp"
+                    android:layout_height="23.25dp"
+                    android:layout_alignStart="@+id/servo_2_indicator"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:id="@+id/text_servo_2_max_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/servo_2_indicator"
+                    android:layout_below="@id/servo_2_foreground_green_indicator"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/text_servo_2_min_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/servo_2_indicator"
+                    android:layout_below="@id/servo_2_foreground_green_indicator"
+                    android:layout_marginStart="4.5dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal" />
+
 
             </RelativeLayout>
 
@@ -295,12 +368,12 @@
 
             <RelativeLayout
                 android:id="@+id/relative_servo_1"
-                android:layout_width="155dp"
+                android:layout_width="103dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/relative_servo_2"
                 android:background="@drawable/link_active_servo_b_g"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/linear_sensor_link_1"
@@ -324,11 +397,47 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="101dp"
+                    android:id="@+id/servo_1_indicator"
+                    android:layout_width="51dp"
                     android:layout_height="51dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="9dp"
-                    android:src="@drawable/link_servo_b_g_sm" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/servo_new_indicator" />
+
+                <ImageView
+                    android:id="@+id/servo_1_foreground_green_indicator"
+                    android:layout_width="47dp"
+                    android:layout_height="23.25dp"
+                    android:layout_alignStart="@+id/servo_1_indicator"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:id="@+id/text_servo_1_max_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/servo_1_indicator"
+                    android:layout_below="@id/servo_1_foreground_green_indicator"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/text_servo_1_min_pos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/servo_1_indicator"
+                    android:layout_below="@id/servo_1_foreground_green_indicator"
+                    android:layout_marginStart="4.5dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#4a4a4a"
+                    android:textSize="9sp"
+                    android:textStyle="normal" />
+
 
             </RelativeLayout>
 
@@ -536,29 +645,29 @@
             android:id="@+id/text_current_hertz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/image_speaker_mute_toggle"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@id/relative_leds"
             android:fontFamily="sans-serif-medium"
+            android:text="@string/initial_hertz_label"
             android:textColor="#5a5c5e"
             android:textSize="20sp"
             android:textStyle="normal"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:layout_below="@id/image_speaker_mute_toggle"
-            android:visibility="invisible"
-            android:text="@string/initial_hertz_label" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/text_current_volume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/text_current_hertz"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@id/relative_leds"
             android:fontFamily="sans-serif-medium"
+            android:text="@string/initial_volume_label"
             android:textColor="#5a5c5e"
             android:textSize="20sp"
             android:textStyle="normal"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:layout_below="@id/text_current_hertz"
-            android:visibility="invisible"
-            android:text="@string/initial_volume_label" />
+            android:visibility="invisible" />
 
         <RelativeLayout
             android:id="@+id/relative_speaker"

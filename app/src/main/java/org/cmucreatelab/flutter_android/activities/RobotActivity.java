@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.ServoAngleDrawable;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
@@ -427,6 +429,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
             updateSensorViews();
             updateDynamicViews();
+            updateServoIndicators();
         }
     }
 
@@ -473,6 +476,68 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
         globalHandler.melodySmartDeviceHandler.addMessage(message);
         updateLinkedViews();
+        updateServoIndicators();
+    }
+
+    private void updateServoIndicators()
+    {
+        Servo[] servos = session.getFlutter().getServos();
+
+        int minPos[] = new int[servos.length];
+        int maxPos[] = new int[servos.length];
+
+        for (int i = 0; i < servos.length; i++) {
+            if (servos[i].isLinked()) {
+                Settings settings = servos[i].getSettings();
+                if (settings.getClass() == SettingsProportional.class && ((SettingsProportional) settings).getSensorPortNumber() != 0) {
+                    minPos[i] = ((SettingsProportional) settings).getOutputMin();
+                    maxPos[i] = ((SettingsProportional) settings).getOutputMax();
+                } else if (settings.getClass() == SettingsAmplitude.class && ((SettingsAmplitude) settings).getSensorPortNumber() != 0) {
+                    minPos[i] = ((SettingsAmplitude) settings).getOutputMin();
+                    maxPos[i] = ((SettingsAmplitude) settings).getOutputMax();
+                } else if (settings.getClass() == SettingsFrequency.class && ((SettingsFrequency) settings).getSensorPortNumber() != 0) {
+                    minPos[i] = ((SettingsFrequency) settings).getOutputMin();
+                    maxPos[i] = ((SettingsFrequency) settings).getOutputMax();
+                } else if (settings.getClass() == SettingsChange.class && ((SettingsChange) settings).getSensorPortNumber() != 0) {
+                    minPos[i] = ((SettingsChange) settings).getOutputMin();
+                    maxPos[i] = ((SettingsChange) settings).getOutputMax();
+                } else if (settings.getClass() == SettingsCumulative.class && ((SettingsCumulative) settings).getSensorPortNumber() != 0) {
+                    minPos[i] = ((SettingsCumulative) settings).getOutputMin();
+                    maxPos[i] = ((SettingsCumulative) settings).getOutputMax();
+                }
+            }
+        }
+
+        if (servos[0].isLinked()) {
+            TextView servo1MinPosText = (TextView) findViewById(R.id.text_servo_1_min_pos);
+            TextView servo1MaxPosText = (TextView) findViewById(R.id.text_servo_1_max_pos);
+            ImageView servo1GreenIndicator = (ImageView) findViewById(R.id.servo_1_foreground_green_indicator);
+            ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
+                    R.color.fluttergreen, minPos[0], maxPos[0], this);
+            servo1GreenIndicator.setImageDrawable(servoAngleDrawable);
+            servo1MinPosText.setText(minPos[0] + "°");
+            servo1MaxPosText.setText(maxPos[0] + "°");
+        }
+        if (servos[1].isLinked()) {
+            TextView servo2MinPosText = (TextView) findViewById(R.id.text_servo_2_min_pos);
+            TextView servo2MaxPosText = (TextView) findViewById(R.id.text_servo_2_max_pos);
+            ImageView servo2GreenIndicator = (ImageView) findViewById(R.id.servo_2_foreground_green_indicator);
+            ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
+                    R.color.fluttergreen, minPos[1], maxPos[1], this);
+            servo2GreenIndicator.setImageDrawable(servoAngleDrawable);
+            servo2MinPosText.setText(minPos[1] + "°");
+            servo2MaxPosText.setText(maxPos[1] + "°");
+        }
+        if (servos[2].isLinked()) {
+            TextView servo3MinPosText = (TextView) findViewById(R.id.text_servo_3_min_pos);
+            TextView servo3MaxPosText = (TextView) findViewById(R.id.text_servo_3_max_pos);
+            ImageView servo3GreenIndicator = (ImageView) findViewById(R.id.servo_3_foreground_green_indicator);
+            ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
+                    R.color.fluttergreen, minPos[2], maxPos[2], this);
+            servo3GreenIndicator.setImageDrawable(servoAngleDrawable);
+            servo3MinPosText.setText(minPos[2] + "°");
+            servo3MaxPosText.setText(maxPos[2] + "°");
+        }
     }
 
 
