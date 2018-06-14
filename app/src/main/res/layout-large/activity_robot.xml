@@ -236,11 +236,20 @@
                 <ImageView
                     android:id="@+id/servo_3_foreground_green_indicator"
                     android:layout_width="47dp"
-                    android:layout_height="23.25dp"
+                    android:layout_height="24dp"
                     android:layout_alignStart="@+id/servo_3_indicator"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="6dp" />
+                    android:layout_marginTop="5.5dp" />
+
+                <!--Another gray dot in center to go on top of green servo indicator-->
+                <ImageView
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:padding="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignStart="@id/servo_3_indicator"
+                    android:src="@drawable/servo_dark_gray_dot" />
 
                 <TextView
                     android:id="@+id/text_servo_3_max_pos"
@@ -319,15 +328,23 @@
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/servo_new_indicator" />
 
-
                 <ImageView
                     android:id="@+id/servo_2_foreground_green_indicator"
                     android:layout_width="47dp"
-                    android:layout_height="23.25dp"
+                    android:layout_height="24dp"
                     android:layout_alignStart="@+id/servo_2_indicator"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="6dp" />
+                    android:layout_marginTop="5.5dp" />
+
+                <!--Another gray dot in center to go on top of green servo indicator-->
+                <ImageView
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:padding="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignStart="@id/servo_2_indicator"
+                    android:src="@drawable/servo_dark_gray_dot" />
 
                 <TextView
                     android:id="@+id/text_servo_2_max_pos"
@@ -403,16 +420,26 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="8dp"
+                    android:layout_toEndOf="@+id/linear_sensor_link_1"
                     android:src="@drawable/servo_new_indicator" />
 
                 <ImageView
                     android:id="@+id/servo_1_foreground_green_indicator"
                     android:layout_width="47dp"
-                    android:layout_height="23.25dp"
+                    android:layout_height="24dp"
                     android:layout_alignStart="@+id/servo_1_indicator"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="6dp" />
+                    android:layout_marginTop="5.5dp" />
+
+                <!--Another gray dot in center to go on top of green servo indicator-->
+                <ImageView
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    android:padding="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignStart="@id/servo_1_indicator"
+                    android:src="@drawable/servo_dark_gray_dot" />
 
                 <TextView
                     android:id="@+id/text_servo_1_max_pos"
