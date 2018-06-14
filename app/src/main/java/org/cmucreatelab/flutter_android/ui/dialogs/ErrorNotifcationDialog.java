@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
 
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  * Supports all error messages. Just change imageView and TextView based on the error.
  */
 
-public class ErrorNotifcationDialog extends BaseResizableDialogWizard implements View.OnClickListener {
+public class ErrorNotifcationDialog extends BaseOutputDialog implements View.OnClickListener {
 
     private static boolean bleError = false;
     private static boolean unsupportedBleDevice = false;
