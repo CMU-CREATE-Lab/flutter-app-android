@@ -2,7 +2,6 @@ package org.cmucreatelab.flutter_android.activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +28,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsAmplitude;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsChange;
-import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsCumulative;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsFrequency;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
@@ -292,15 +290,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
-    public void onDialogDismissed(int dialogId)
-    {
-
+    private void updateServoIndicators() {
+        ServoAngleDrawable.updateServoIndicators(session, this);
     }
 
-    public void onColorSelected(int dialogId, int color)
-    {
-
-    }
 
     // OnClickListeners
 
@@ -500,128 +493,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         globalHandler.melodySmartDeviceHandler.addMessage(message);
         updateLinkedViews();
         updateServoIndicators();
-    }
-
-    private void updateServoIndicators()
-    {
-        Servo[] servos = session.getFlutter().getServos();
-
-        int minPos[] = new int[servos.length];
-        int maxPos[] = new int[servos.length];
-        boolean[] constant = {false, false, false};
-
-        for (int i = 0; i < servos.length; i++) {
-            if (servos[i].isLinked()) {
-                Settings settings = servos[i].getSettings();
-                if (settings.getClass() == SettingsProportional.class && ((SettingsProportional) settings).getSensorPortNumber() != 0) {
-                    minPos[i] = ((SettingsProportional) settings).getOutputMin();
-                    maxPos[i] = ((SettingsProportional) settings).getOutputMax();
-                } else if (settings.getClass() == SettingsAmplitude.class && ((SettingsAmplitude) settings).getSensorPortNumber() != 0) {
-                    minPos[i] = ((SettingsAmplitude) settings).getOutputMin();
-                    maxPos[i] = ((SettingsAmplitude) settings).getOutputMax();
-                } else if (settings.getClass() == SettingsFrequency.class && ((SettingsFrequency) settings).getSensorPortNumber() != 0) {
-                    minPos[i] = ((SettingsFrequency) settings).getOutputMin();
-                    maxPos[i] = ((SettingsFrequency) settings).getOutputMax();
-                } else if (settings.getClass() == SettingsChange.class && ((SettingsChange) settings).getSensorPortNumber() != 0) {
-                    minPos[i] = ((SettingsChange) settings).getOutputMin();
-                    maxPos[i] = ((SettingsChange) settings).getOutputMax();
-                } else if (settings.getClass() == SettingsCumulative.class && ((SettingsCumulative) settings).getSensorPortNumber() != 0) {
-                    minPos[i] = ((SettingsCumulative) settings).getOutputMin();
-                    maxPos[i] = ((SettingsCumulative) settings).getOutputMax();
-                } else if (settings.getClass() == SettingsConstant.class) {
-                    constant[i] = true;
-                    maxPos[i] = ((SettingsConstant) settings).getValue();
-                }
-            }
-        }
-
-        if (servos[0].isLinked()) {
-            TextView servo1MinPosText = (TextView) findViewById(R.id.text_servo_1_min_pos);
-            TextView servo1MaxPosText = (TextView) findViewById(R.id.text_servo_1_max_pos);
-            ImageView servo1GreenIndicator = (ImageView) findViewById(R.id.servo_1_foreground_green_indicator);
-
-
-            if (constant[0]) {
-                servo1MaxPosText.setText(maxPos[0] + "°");
-                servo1MinPosText.setVisibility(View.INVISIBLE);
-                ServoAngleDrawable servoAngleDrawable;
-                if (maxPos[0] >= 5) {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[0] - 5, maxPos[0], this);
-                }
-                else
-                {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[0], maxPos[0] + 5, this);
-                }
-                servo1GreenIndicator.setImageDrawable(servoAngleDrawable);
-            } else {
-                servo1MinPosText.setVisibility(View.VISIBLE);
-                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
-                        R.color.fluttergreen, minPos[0], maxPos[0], this);
-                servo1GreenIndicator.setImageDrawable(servoAngleDrawable);
-                servo1MinPosText.setText(minPos[0] + "°");
-                servo1MaxPosText.setText(maxPos[0] + "°");
-            }
-        }
-        if (servos[1].isLinked()) {
-            TextView servo2MinPosText = (TextView) findViewById(R.id.text_servo_2_min_pos);
-            TextView servo2MaxPosText = (TextView) findViewById(R.id.text_servo_2_max_pos);
-            ImageView servo2GreenIndicator = (ImageView) findViewById(R.id.servo_2_foreground_green_indicator);
-
-
-            if (constant[1]) {
-                servo2MaxPosText.setText(maxPos[1] + "°");
-                servo2MinPosText.setVisibility(View.INVISIBLE);
-                ServoAngleDrawable servoAngleDrawable;
-                if (maxPos[1] >= 5) {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[1] - 5, maxPos[1], this);
-                }
-                else
-                {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[1], maxPos[1] + 5, this);
-                }
-                servo2GreenIndicator.setImageDrawable(servoAngleDrawable);
-            } else {
-                servo2MinPosText.setVisibility(View.VISIBLE);
-                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
-                        R.color.fluttergreen, minPos[1], maxPos[1], this);
-                servo2GreenIndicator.setImageDrawable(servoAngleDrawable);
-                servo2MinPosText.setText(minPos[1] + "°");
-                servo2MaxPosText.setText(maxPos[1] + "°");
-            }
-        }
-        if (servos[2].isLinked()) {
-            TextView servo3MinPosText = (TextView) findViewById(R.id.text_servo_3_min_pos);
-            TextView servo3MaxPosText = (TextView) findViewById(R.id.text_servo_3_max_pos);
-            ImageView servo3GreenIndicator = (ImageView) findViewById(R.id.servo_3_foreground_green_indicator);
-
-
-            if (constant[2]) {
-                servo3MaxPosText.setText(maxPos[2] + "°");
-                servo3MinPosText.setVisibility(View.INVISIBLE);
-                ServoAngleDrawable servoAngleDrawable;
-                if (maxPos[2] >= 5) {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[2] - 5, maxPos[2], this);
-                }
-                else
-                {
-                    servoAngleDrawable = new ServoAngleDrawable(
-                            R.color.fluttergreen, maxPos[2], maxPos[2] + 5, this);
-                }
-                servo3GreenIndicator.setImageDrawable(servoAngleDrawable);
-            } else {
-                servo3MinPosText.setVisibility(View.VISIBLE);
-                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
-                        R.color.fluttergreen, minPos[2], maxPos[2], this);
-                servo3GreenIndicator.setImageDrawable(servoAngleDrawable);
-                servo3MinPosText.setText(minPos[2] + "°");
-                servo3MaxPosText.setText(maxPos[2] + "°");
-            }
-        }
     }
 
 
