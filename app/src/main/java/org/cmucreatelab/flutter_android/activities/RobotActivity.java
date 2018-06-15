@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
-        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed{
+        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {
 
     private RobotActivity instance;
     private Session session;
@@ -280,6 +280,16 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
     private boolean speakerMuted = false;
+
+    public void onDialogDismissed(int dialogId)
+    {
+
+    }
+
+    public void onColorSelected(int dialogId, int color)
+    {
+
+    }
 
     // OnClickListeners
 

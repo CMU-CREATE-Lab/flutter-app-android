@@ -46,6 +46,9 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 
     private TriColorLed[] leds;
     private ImageView led1SwatchImage, led2SwatchImage, led3SwatchImage;
+    private Integer led1RGB[];
+    private Integer led2RGB[];
+    private Integer led3RGB[];
     private boolean isLed1Changed = false, isLed2Changed = false, isLed3Changed = false;
 
     private Speaker speaker;
@@ -246,7 +249,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed1SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[0].getMinColorHex()), leds[0].getPortNumber(),ControlOutputsDialog.this);
+            String hex;
+            if (isLed1Changed)
+                hex = convertRgbToHex(led1RGB);
+            else
+                hex = leds[0].getMaxColorHex();
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[0].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -254,7 +262,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed2SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[1].getMinColorHex()), leds[1].getPortNumber(),ControlOutputsDialog.this);
+            String hex;
+            if (isLed2Changed)
+                hex = convertRgbToHex(led2RGB);
+            else
+                hex = leds[1].getMaxColorHex();
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[1].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -262,10 +275,20 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed3SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[2].getMinColorHex()), leds[2].getPortNumber(),ControlOutputsDialog.this);
+            String hex;
+            if (isLed3Changed)
+                hex = convertRgbToHex(led3RGB);
+            else
+                hex = leds[2].getMaxColorHex();
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[2].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
+
+    private String convertRgbToHex(Integer[] rgb)
+    {
+        return String.format("#%02x%02x%02x", rgb[0], rgb[1], rgb[2]);
+    }
 
     //after color is chosen for LEDs
 
@@ -274,14 +297,17 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             case 1:
                 isLed1Changed = true;
                 led1SwatchImage.setImageResource(swatch);
+                led1RGB = rgb;
                 break;
             case 2:
                 isLed2Changed = true;
                 led2SwatchImage.setImageResource(swatch);
+                led2RGB = rgb;
                 break;
             case 3:
                 isLed3Changed = true;
                 led3SwatchImage.setImageResource(swatch);
+                led3RGB = rgb;
                 break;
         }
 
@@ -424,16 +450,20 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         //led
 
         led1SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_1);
-        led1SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[0].getMinColorHex()));
+        led1SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[0].getMaxColorHex()));
         led1SwatchImage.setOnClickListener(imageLed1SwatchOnClickListener);
 
         led2SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_2);
-        led2SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[1].getMinColorHex()));
+        led2SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[1].getMaxColorHex()));
         led2SwatchImage.setOnClickListener(imageLed2SwatchOnClickListener);
 
         led3SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_3);
-        led3SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[2].getMinColorHex()));
+        led3SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[2].getMaxColorHex()));
         led3SwatchImage.setOnClickListener(imageLed3SwatchOnClickListener);
+
+        led1RGB = new Integer[3];
+        led2RGB = new Integer[3];
+        led3RGB = new Integer[3];
 
         //exiting out of dialog
 
