@@ -281,16 +281,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private boolean speakerMuted = false;
 
-    public void onDialogDismissed(int dialogId)
-    {
-
-    }
-
-    public void onColorSelected(int dialogId, int color)
-    {
-
-    }
-
     // OnClickListeners
 
     private void onClickSensor(int portNumber) {
