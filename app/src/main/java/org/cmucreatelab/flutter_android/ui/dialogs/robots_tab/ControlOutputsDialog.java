@@ -25,9 +25,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.LedOneColorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.LedThreeColorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.LedTwoColorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.LedConstantColorDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,9 +35,7 @@ import java.util.ArrayList;
  */
 
 public class ControlOutputsDialog extends DialogFragment implements Serializable,
-        LedOneColorDialog.DialogColorOneListener,
-        LedTwoColorDialog.DialogColorTwoListener,
-        LedThreeColorDialog.DialogColorThreeListener {
+        LedConstantColorDialog.DialogColorConstantListener {
 
     private GlobalHandler globalHandler;
 
@@ -250,7 +246,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed1SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedOneColorDialog.newInstance(TriColorLed.getTextFromColor(leds[0].getMinColorHex()), ControlOutputsDialog.this);
+            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[0].getMinColorHex()), leds[0].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -258,7 +254,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed2SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedTwoColorDialog.newInstance(TriColorLed.getTextFromColor(leds[1].getMinColorHex()), ControlOutputsDialog.this);
+            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[1].getMinColorHex()), leds[1].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -266,50 +262,33 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private Button.OnClickListener imageLed3SwatchOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DialogFragment dialog = LedThreeColorDialog.newInstance(TriColorLed.getTextFromColor(leds[2].getMinColorHex()), ControlOutputsDialog.this);
+            DialogFragment dialog = LedConstantColorDialog.newInstance(TriColorLed.getTextFromColor(leds[2].getMinColorHex()), leds[2].getPortNumber(),ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
 
     //after color is chosen for LEDs
 
-    public void onLed1ColorChosen(Integer[] rgb, int swatch) {
-        isLed1Changed = true;
-
-        led1SwatchImage.setImageResource(swatch);
-
-        ArrayList<MelodySmartMessage> ledMessages = new ArrayList<>();
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[0].getRedLed(), rgb[0]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[0].getGreenLed(), rgb[1]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[0].getBlueLed(), rgb[2]));
-
-        for (MelodySmartMessage message : ledMessages)
-            globalHandler.melodySmartDeviceHandler.addMessage(message);
-    }
-
-    public void onLed2ColorChosen(Integer[] rgb, int swatch) {
-        isLed2Changed = true;
-
-        led2SwatchImage.setImageResource(swatch);
+    public void onLedConstantColorChosen(Integer[] rgb, int port, int swatch) {
+        switch (port) {
+            case 1:
+                isLed1Changed = true;
+                led1SwatchImage.setImageResource(swatch);
+                break;
+            case 2:
+                isLed2Changed = true;
+                led2SwatchImage.setImageResource(swatch);
+                break;
+            case 3:
+                isLed3Changed = true;
+                led3SwatchImage.setImageResource(swatch);
+                break;
+        }
 
         ArrayList<MelodySmartMessage> ledMessages = new ArrayList<>();
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[1].getRedLed(), rgb[0]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[1].getGreenLed(), rgb[1]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[1].getBlueLed(), rgb[2]));
-
-        for (MelodySmartMessage message : ledMessages)
-            globalHandler.melodySmartDeviceHandler.addMessage(message);
-    }
-
-    public void onLed3ColorChosen(Integer[] rgb, int swatch) {
-        isLed3Changed = true;
-
-        led3SwatchImage.setImageResource(swatch);
-
-        ArrayList<MelodySmartMessage> ledMessages = new ArrayList<>();
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[2].getRedLed(), rgb[0]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[2].getGreenLed(), rgb[1]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[2].getBlueLed(), rgb[2]));
+        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getRedLed(), rgb[0]));
+        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getGreenLed(), rgb[1]));
+        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[0]));
 
         for (MelodySmartMessage message : ledMessages)
             globalHandler.melodySmartDeviceHandler.addMessage(message);

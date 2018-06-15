@@ -1,189 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs" />
 
     <TextView
-        android:text="Selected Color"
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:id="@+id/textView3" />
+        android:text="Selected Color" />
 
     <FrameLayout
         android:id="@+id/frame_final_color"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:padding="2dp"/>
+        android:padding="2dp" />
 
     <TextView
-        android:text="Swatches"
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:text="Swatches" />
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="4dp"
         android:gravity="center"
-        android:layout_margin="4dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/swatch_red"
-            android:adjustViewBounds="true"
             android:id="@+id/imageView_red"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_orange"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_red" />
+
+        <ImageView
             android:id="@+id/imageView_orange"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_yellow"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_orange" />
+
+        <ImageView
             android:id="@+id/imageView_yellow"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_chartreuse_green"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_yellow" />
+
+        <ImageView
             android:id="@+id/imageView_chartreuse_green"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_chartreuse_green" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="4dp"
         android:gravity="center"
-        android:layout_margin="4dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/swatch_green"
-            android:adjustViewBounds="true"
             android:id="@+id/imageView_green"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_spring_green"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_green" />
+
+        <ImageView
             android:id="@+id/imageView_spring_green"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_cyan"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_spring_green" />
+
+        <ImageView
             android:id="@+id/imageView_cyan"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_azure"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_cyan" />
+
+        <ImageView
             android:id="@+id/imageView_azure"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_azure" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="4dp"
         android:gravity="center"
-        android:layout_margin="4dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/swatch_blue"
-            android:adjustViewBounds="true"
             android:id="@+id/imageView_blue"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_violet"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_blue" />
+
+        <ImageView
             android:id="@+id/imageView_violet"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_magenta"
             android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_violet" />
+
+        <ImageView
             android:id="@+id/imageView_magenta"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_rose"
             android:adjustViewBounds="true"
-            android:id="@+id/imageView_rose"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_magenta" />
+
+        <ImageView
+            android:id="@+id/imageView_rose"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_rose" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="4dp"
         android:gravity="center"
-        android:layout_margin="4dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/swatch_white"
-            android:adjustViewBounds="true"
             android:id="@+id/imageView_white"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/swatch_black"
             android:adjustViewBounds="true"
-            android:id="@+id/imageView_black"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_white" />
+
+        <ImageView
+            android:id="@+id/imageView_black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/swatch_black" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_set_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_set_color"
+        android:background="@drawable/round_green_button_bottom"
         android:text="@string/set_color"
-        android:textColor="@color/white"
-        android:background="@drawable/round_green_button_bottom"/>
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

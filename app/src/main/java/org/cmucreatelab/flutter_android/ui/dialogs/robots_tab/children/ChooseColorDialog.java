@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -27,8 +29,8 @@ import butterknife.OnClick;
  * An abstract Dialog that handles the color picking.
  */
 public abstract class ChooseColorDialog extends BaseResizableDialog {
-
     protected static final String COLOR_KEY = "color_listener";
+    protected static final String PORT_NUMBER_KEY = "port_number";
     protected static final String SELECTED_COLOR_KEY = "selected_color";
     private FrameLayout frameFinalColor;
     protected Integer[] finalRGB;
@@ -112,6 +114,9 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         builder.setView(view);
         ButterKnife.bind(this, view);
 
+        TextView text_title = (TextView) view.findViewById(R.id.text_output_title);
+        text_title.setText(R.string.choose_color);
+
         return builder.create();
     }
 
@@ -124,6 +129,28 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         setColorListener.onSetColor(currentlySelected.swatchSelected);
     }
 
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+/*        ColorPickerDialogFragment f = ColorPickerDialogFragment
+                .newInstance(0, null, null, Color.BLACK, true);
+        f.show(getFragmentManager(), "d");*/
+    }
+
+    public void onDialogDismissed(int dialogId)
+    {
+
+    }
+
+    public void onColorSelected(int dialogId, int color)
+    {
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;
+        Log.i("R", Integer.toString(r));
+        Log.i("G", Integer.toString(g));
+        Log.i("B", Integer.toString(b));
+        frameFinalColor.setBackgroundColor(color);
+    }
 
     @OnClick(R.id.imageView_red)
     public void onClickRed(View view) {
