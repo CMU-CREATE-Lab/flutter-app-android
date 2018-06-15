@@ -26,68 +26,68 @@
             android:src="@drawable/flutter_illustration_robot_page" />
 
         <LinearLayout
+            android:id="@+id/linear_servos_frames"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/linear_servos_frames"
-            android:orientation="vertical"
             android:layout_alignStart="@+id/image_flutter_illustration"
             android:layout_alignTop="@+id/image_flutter_illustration"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <FrameLayout
+                android:id="@+id/frame_servo_3"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/frame_servo_3"/>
+                android:layout_height="50dp" />
 
             <FrameLayout
+                android:id="@+id/frame_servo_2"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/frame_servo_2"/>
+                android:layout_height="50dp" />
 
             <FrameLayout
+                android:id="@+id/frame_servo_1"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/frame_servo_1"/>
+                android:layout_height="50dp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linear_leds_frames"
             android:layout_width="315dp"
             android:layout_height="wrap_content"
-            android:id="@+id/linear_leds_frames"
-            android:orientation="horizontal"
-            android:layout_toEndOf="@+id/linear_servos_frames"
             android:layout_alignTop="@+id/image_flutter_illustration"
+            android:layout_toEndOf="@+id/linear_servos_frames"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
                 android:id="@+id/frame_led_1"
-                android:layout_weight="1"/>
-
-            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <FrameLayout
                 android:id="@+id/frame_led_2"
-                android:layout_weight="1"/>
-
-            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <FrameLayout
                 android:id="@+id/frame_led_3"
-                android:layout_weight="1"/>
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/frame_speaker"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:id="@+id/frame_speaker"
-            android:layout_toEndOf="@id/linear_leds_frames"
             android:layout_alignTop="@id/image_flutter_illustration"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="30dp"/>
+            android:layout_toEndOf="@id/linear_leds_frames" />
 
         <LinearLayout
             android:id="@+id/linear_sensors"
@@ -241,7 +241,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/image_servo_3"
                 android:padding="2dp"
-                android:src="@drawable/question_icon"/>
+                android:src="@drawable/question_icon" />
 
             <RelativeLayout
                 android:id="@+id/relative_servo_2"
@@ -358,8 +358,8 @@
                 android:layout_width="64dp"
                 android:layout_height="103dp"
                 android:layout_alignParentStart="true"
-                android:visibility="invisible"
-                android:background="@drawable/link_active_l_e_d_speaker_b_g">
+                android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                android:visibility="invisible">
 
                 <LinearLayout
                     android:id="@+id/linear_led_link_1"
@@ -388,6 +388,7 @@
                     android:layout_below="@id/linear_led_link_1"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+
                 <View
                     android:id="@+id/view_halfcolor_1"
                     android:layout_width="50dp"
@@ -442,6 +443,7 @@
                     android:layout_below="@id/linear_led_link_2"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+
                 <View
                     android:id="@+id/view_halfcolor_2"
                     android:layout_width="50dp"
@@ -496,6 +498,7 @@
                     android:layout_below="@id/linear_led_link_3"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/circle_green" />
+
                 <View
                     android:id="@+id/view_halfcolor_3"
                     android:layout_width="50dp"
@@ -517,6 +520,45 @@
             android:layout_toEndOf="@id/relative_leds"
             android:padding="2dp"
             android:src="@drawable/question_icon" />
+
+        <ImageView
+            android:id="@+id/image_speaker_mute_toggle"
+            android:layout_width="34dp"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/image_speaker"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@id/relative_leds"
+            android:padding="2dp"
+            android:src="@drawable/speaker_unmute"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/text_current_hertz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#5a5c5e"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@id/relative_leds"
+            android:layout_below="@id/image_speaker_mute_toggle"
+            android:visibility="invisible"
+            android:text="@string/initial_hertz_label" />
+
+        <TextView
+            android:id="@+id/text_current_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#5a5c5e"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@id/relative_leds"
+            android:layout_below="@id/text_current_hertz"
+            android:visibility="invisible"
+            android:text="@string/initial_volume_label" />
 
         <RelativeLayout
             android:id="@+id/relative_speaker"
@@ -604,30 +646,30 @@
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="200dp"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginStart="200dp">
+            android:weightSum="2">
 
 
             <Button
                 android:id="@+id/button_simulate_sensors"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_green_button"
                 android:text="@string/simulate_sensors"
-                android:textColor="@color/white"
-                android:layout_margin="20dp"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/button_control_outputs"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_green_button"
                 android:text="@string/control_outputs"
-                android:textColor="@color/white"
-                android:layout_margin="20dp"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
