@@ -52,6 +52,18 @@
         android:padding="20dp"/>
 
     <Button
+        android:id="@+id/increment_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/decrement_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minus" />
+
+    <Button
         android:id="@+id/button_set_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

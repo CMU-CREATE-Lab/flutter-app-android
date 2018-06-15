@@ -11,9 +11,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +32,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
+import org.cmucreatelab.flutter_android.ui.dialogs.ErrorNotifcationDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +56,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     private Timer noFlutterFoundTimer;
     private Timer warningPromptTimer;
     private Timer scanningTextTimer;
+    private boolean appearsOnce = false;
     private boolean layoutLarge = true;
 
     // TODO @tasota we could move this to its own class and have MelodySamrtDeviceHandler contain the instance
@@ -220,40 +224,15 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void showAlertBleUnsupported() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage(R.string.ble_unsupported);
-        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        });
-        AlertDialog dialog = adb.create();
-        dialog.show();
+        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(10, null);
+        errorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     private void showAlertBluetoothDisabled(final BluetoothAdapter bluetoothAdapter) {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage(R.string.enable_bluetooth_msg);
-        adb.setTitle(R.string.enable_bluetooth);
-        adb.setPositiveButton(R.string.positive_response, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // nothing because we are overriding it
-            }
-        });
-
-        final AlertDialog dialog = adb.create();
-        dialog.setCancelable(false);
-        dialog.show();
-        dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(Constants.LOG_TAG, String.valueOf(bluetoothAdapter.isEnabled()));
-                if (bluetoothAdapter.isEnabled()) {
-                    dialog.dismiss();
-                }
-            }
-        });
+        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(1, bluetoothAdapter);
+        errorDialog.show(getSupportFragmentManager(), "tag");
+        errorDialog.setCancelable(false);
     }
 
 
@@ -403,6 +382,13 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                     globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
                 }
             });
+        }
+
+        // alert dialog for notifying user large screen is needed
+        if (layoutLarge == false && appearsOnce == false) {
+            appearsOnce = true;
+            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7, null);
+            errorDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 
