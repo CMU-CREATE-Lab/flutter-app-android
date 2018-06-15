@@ -38,7 +38,6 @@ public abstract class ChoosePositionDialogWizard extends BaseResizableDialogWiza
     private SeekBar seekBarMaxMin;
     private Servo currentServo;
     private Button nextButton;
-    protected View view;
 
 
     protected SetPositionListener setPositionListener;
@@ -77,7 +76,7 @@ public abstract class ChoosePositionDialogWizard extends BaseResizableDialogWiza
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.dialog_wet_position_wizard, null);
+        final View view = inflater.inflate(R.layout.dialog_wet_position_wizard, null);
         currentServo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(currentServo.getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
@@ -101,10 +100,10 @@ public abstract class ChoosePositionDialogWizard extends BaseResizableDialogWiza
     }
 
 
-    @OnClick(R.id.button_next_page)
-    public void onClickSetPosition() {
-        setPositionListener.onSetPosition();
-    }
+//    @OnClick(R.id.button_next_page)
+//    public void onClickSetPosition() {
+//        setPositionListener.onSetPosition();
+//    }
 
 
     public interface SetPositionListener {

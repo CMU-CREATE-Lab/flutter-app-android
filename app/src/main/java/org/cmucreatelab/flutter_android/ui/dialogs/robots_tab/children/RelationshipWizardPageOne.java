@@ -29,6 +29,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
 import java.io.Serializable;
 
@@ -47,7 +48,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     private Relationship relationship;
     private DialogRelationshipListener relationshipListener;
     private Button nextButton;
-    public Sensor sensorChoice;
+    private static Serializable robotAct;
 
     private Servo currentServo;
     private TriColorLed currentLed;
@@ -84,6 +85,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
         }
         RelationshipWizardPageOne relationshipDialog = new RelationshipWizardPageOne();
         args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
+        robotAct = serializable;
         relationshipDialog.setArguments(args);
 
         return relationshipDialog;
@@ -202,18 +204,18 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
             // send an intent to the sensor dialog (Page 2)
             if (servoChosen) {
                 Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, null, null, this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(servos, null, null, this, robotAct);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
             }
             else if (ledChosen) {
                 TriColorLed leds = (TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, leds, null, this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, leds, null, this, robotAct);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
 
             }
             else if (speakerChosen) {
                 Speaker speakers = (Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY);
-                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, null, speakers,this);
+                SensorWizardPageTwo dialogR = SensorWizardPageTwo.newInstance(null, null, speakers, this, robotAct);
                 dialogR.show(getActivity().getSupportFragmentManager(), "tag");
 
             }
@@ -224,7 +226,8 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 
     @Override
     public void onSensorChosen(Sensor sensor) {
-        sensorChoice = sensor;
+        ServoUpdatedWithWizard.add("sensor", null, sensor, 9999, 9999);
+
 
 //        ImageView currentImageView = (ImageView) dialogView.findViewById(R.id.image_sensor);
 //        ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
@@ -248,7 +251,7 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
 
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, currentServo);
+        DialogFragment dialog = AdvancedSettingsDialog.newInstance(robotAct, currentServo);
         dialog.show(this.getFragmentManager(), "tag");
     }
 

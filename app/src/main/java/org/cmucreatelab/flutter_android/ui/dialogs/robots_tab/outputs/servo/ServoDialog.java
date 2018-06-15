@@ -63,6 +63,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     private ServoDialogStateHelper stateHelper;
     private DialogServoListener dialogServoListener;
     private Servo servo;
+    private static boolean isWizard;
 
     // animations
     private AlphaAnimation blinkAnimation;
@@ -87,8 +88,101 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         removeButton.setEnabled(stateHelper.canRemoveLink());
     }
 
+    private void updateWithWizard() {
+        updateWizardRelationship();
+        updateWizardSensor();
+        updateWizardMinPosition();
+        updateWizardMaxPosition();
 
-    public static ServoDialog newInstance(Servo servo, Serializable activity) {
+    }
+
+    private void updateWizardRelationship() {
+        Relationship relationship = ServoUpdatedWithWizard.getRelationship("relationship");
+        View view,layout;
+        ImageView currentImageView;
+        TextView currentTextViewDescrp,currentTextViewItem;
+
+        view = dialogView.findViewById(R.id.linear_set_relationship);
+        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
+        layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
+        currentImageView.setImageResource(relationship.getGreenImageIdMd());
+        currentTextViewDescrp.setText(R.string.relationship);
+        currentTextViewItem.setText(relationship.getRelationshipType().toString());
+
+        servo.setSettings(Settings.newInstance(servo.getSettings(), relationship));
+        stateHelper = ServoDialogStateHelper.newInstance(servo);
+    }
+
+    private void updateWizardSensor() {
+        Sensor sensor = ServoUpdatedWithWizard.getSensor("sensor");
+        ImageView currentImageView = (ImageView) dialogView.findViewById(R.id.image_sensor);
+        ImageView currentImageViewHighlight = (ImageView) dialogView.findViewById(R.id.image_sensor_highlight);
+        TextView currentTextViewDescrp = (TextView) dialogView.findViewById(R.id.text_sensor_link);
+        TextView currentTextViewItem = (TextView) dialogView.findViewById(R.id.text_sensor_type);
+
+        if (sensor.getSensorType() != NOT_SET) {
+            Log.d(Constants.LOG_TAG, "onSensorChosen");
+            currentImageView.setImageResource(sensor.getGreenImageId());
+            currentImageViewHighlight.clearAnimation();
+            currentTextViewDescrp.setText(R.string.linked_sensor);
+            currentTextViewItem.setText(sensor.getSensorTypeId());
+
+            stateHelper.setLinkedSensor(sensor);
+        }
+    }
+
+    private void updateWizardMinPosition() {
+        int min = ServoUpdatedWithWizard.getPosition("minPosition");
+        View view,layout;
+        ImageView currentImageView;
+        TextView currentTextViewDescrp,currentTextViewItem;
+        RotateAnimation rotateAnimation;
+
+        view = dialogView.findViewById(R.id.linear_set_min_pos);
+        layout = ((ViewGroup) view).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
+        rotateAnimation = new RotateAnimation(0, min, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setFillEnabled(true);
+        rotateAnimation.setFillAfter(true);
+        rotateAnimation.setDuration(0);
+        currentImageView.startAnimation(rotateAnimation);
+
+        stateHelper.setMinimumPosition(min, currentTextViewDescrp, currentTextViewItem);
+    }
+
+    private void updateWizardMaxPosition() {
+        Log.d(Constants.LOG_TAG, "onMaxPosChosen");
+        int max = ServoUpdatedWithWizard.getPosition("maxPosition");
+        View view,layout;
+        ImageView currentImageView;
+        TextView currentTextViewDescrp,currentTextViewItem;
+        RotateAnimation rotateAnimation;
+
+        view = dialogView.findViewById(R.id.linear_set_max_pos);
+        layout = ((ViewGroup) view).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        layout = ((ViewGroup) view).getChildAt(1);
+        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
+        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
+
+        rotateAnimation = new RotateAnimation(0, max, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setFillEnabled(true);
+        rotateAnimation.setFillAfter(true);
+        rotateAnimation.setDuration(0);
+        currentImageView.startAnimation(rotateAnimation);
+
+        stateHelper.setMaximumPosition(max, currentTextViewDescrp, currentTextViewItem);
+    }
+
+    public static ServoDialog newInstance(Servo servo, Serializable activity, boolean wizard) {
+        isWizard = wizard;
         ServoDialog servoDialog = new ServoDialog();
 
         Bundle args = new Bundle();
@@ -117,6 +211,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         builder.setView(view);
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  String.valueOf(servo.getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+        if(isWizard) {
+            updateWithWizard();
+        }
 
         ButterKnife.bind(this, view);
 

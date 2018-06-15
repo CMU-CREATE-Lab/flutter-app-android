@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.classes.relationships;
 
+import java.io.Serializable;
+
 /**
  * Created by Steve on 8/11/2016.
  *
@@ -8,7 +10,7 @@ package org.cmucreatelab.flutter_android.classes.relationships;
  * An interface which defines the base type of relationship.
  *
  */
-public interface Relationship {
+public interface Relationship extends Serializable {
 
     enum Type {
         NO_RELATIONSHIP,

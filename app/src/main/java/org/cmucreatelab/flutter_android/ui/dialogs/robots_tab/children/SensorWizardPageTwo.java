@@ -28,6 +28,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialogStateHelper;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
 import java.io.Serializable;
 
@@ -47,20 +48,21 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
 
 
     private DialogSensorListener dialogSensorListener;
+    private static Serializable robotAct;
     private Button nextButton;
 
     private Servo currentServo;
     private TriColorLed currentLed;
 
     private static ServoDialogStateHelper stateHelper;
-    public int minimumPosition;
 
     // boolean variables for determining which type of button the user clicked on
     private static boolean servoChosen = false;
     private static boolean ledChosen = false;
     private static boolean speakerChosen = false;
 
-    public static SensorWizardPageTwo newInstance(Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
+    public static SensorWizardPageTwo newInstance(Servo servo, TriColorLed led, Speaker speaker, Serializable serializable, Serializable robotActs) {
+        robotAct = robotActs;
         Bundle args = new Bundle();
         if (servo != null) {
             servoChosen = true;
@@ -184,7 +186,7 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
         // Color position dialogs that display a color selection should appear only when the led button has been clicked.
         // Volume position dialogs that display a volume selection should only appear when the speaker button has been clicked.
         if (servoChosen) {
-            MinPositionWizardPageThree dialog = MinPositionWizardPageThree.newInstance(currentServo, this);
+            MinPositionWizardPageThree dialog = MinPositionWizardPageThree.newInstance(currentServo, this, robotAct);
             dialog.show(getFragmentManager(), "tag");
         }
         else if (ledChosen) {
@@ -198,8 +200,7 @@ public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
 
     public void onMinPosChosen(int min) {
         Log.d(Constants.LOG_TAG, "onMinPosChosen");
-
-        minimumPosition = min;
+        ServoUpdatedWithWizard.add("minPosition", null, null, min, 9999);
 
 //        View view,layout;
 //        ImageView currentImageView;

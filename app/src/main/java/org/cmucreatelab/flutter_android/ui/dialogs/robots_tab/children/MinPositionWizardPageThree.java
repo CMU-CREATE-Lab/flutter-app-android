@@ -18,6 +18,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialogStateHelper;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
 import java.io.Serializable;
 
@@ -34,10 +35,12 @@ public class MinPositionWizardPageThree extends ChoosePositionDialogWizard
         implements ChoosePositionDialogWizard.SetPositionListener, Serializable {
 
     private DialogMinPositionListener minPositionListener;
+    private static Serializable robotAct;
     private Servo currentServo;
 
 
-    public static MinPositionWizardPageThree newInstance(Servo servo, Serializable serializable) {
+    public static MinPositionWizardPageThree newInstance(Servo servo, Serializable serializable, Serializable robotActs) {
+        robotAct = robotActs;
         MinPositionWizardPageThree minPositionDialog = new MinPositionWizardPageThree();
 
         Bundle args = new Bundle();
@@ -62,16 +65,18 @@ public class MinPositionWizardPageThree extends ChoosePositionDialogWizard
     @Override
     public void onSetPosition() {
         Log.d(Constants.LOG_TAG, "MinPositionDialog.onSetPosition");
-        minPositionListener.onMinPosChosen(finalPosition);
-        this.dismiss();
+        ServoUpdatedWithWizard.add("minPosition", null, null, finalPosition, 9999);
+        //minPositionListener.onMinPosChosen(finalPosition);
     }
 
     @OnClick(R.id.button_next_page)
     public void onClickSetPosition() {
-        MaxPositionWizardPageFour dialog = MaxPositionWizardPageFour.newInstance(currentServo, null);
+        setPositionListener.onSetPosition();
+        MaxPositionWizardPageFour dialog = MaxPositionWizardPageFour.newInstance(currentServo, null, robotAct);
         dialog.show(getFragmentManager(), "tag");
         this.dismiss();
     }
+
 
 
 

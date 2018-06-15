@@ -44,6 +44,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.Relations
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialogStateHelper;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 
 import java.util.ArrayList;
@@ -56,7 +57,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-    public Relationship relationChosen;
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         private int seekBarValue=0;
@@ -322,7 +322,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
             }
             else {
-                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
+                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this, false);
                 dialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -676,7 +676,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     @Override
     public void onRelationshipChosen(Relationship relationship) {
         Log.d(Constants.LOG_TAG, "onRelationshipChosen");
-        relationChosen = relationship;
+        ServoUpdatedWithWizard.add("relationship", relationship, null, 9999, 9999);
 //        View view,layout;
 //        ImageView currentImageView;
 //        TextView currentTextViewDescrp,currentTextViewItem;
