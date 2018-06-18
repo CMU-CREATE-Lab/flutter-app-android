@@ -272,6 +272,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         ButterKnife.bind(this);
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
+        // construct toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        // this is checking for if the layout being used is layout-large. if the view is null, we must be using non-large layout
+        if (toolbar == null) {
+            layoutLarge = false;
+            return;
+        }
+
         // Just in case someone got a hold of the app without BLE support
         PackageManager pm = getApplicationContext().getPackageManager();
         boolean isSupported = pm.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
@@ -285,13 +293,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 showAlertBluetoothDisabled(bluetoothAdapter);
             }
 
-            // construct toolbar
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-            // this is checking for if the layout being used is layout-large. if the view is null, we must be using non-large layout
-            if (toolbar == null) {
-                layoutLarge = false;
-                return;
-            }
             toolbar.setContentInsetsAbsolute(0, 0);
             toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.tab_b_g));
             setSupportActionBar(toolbar);
