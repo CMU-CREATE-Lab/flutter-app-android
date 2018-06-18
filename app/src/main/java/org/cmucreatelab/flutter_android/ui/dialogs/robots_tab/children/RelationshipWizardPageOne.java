@@ -43,7 +43,7 @@ import butterknife.OnClick;
  *
  */
 
-public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener {
+public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener, MinPositionWizardPageThree.DialogMinPositionListener {
 
     private Relationship relationship;
     private DialogRelationshipListener relationshipListener;
@@ -199,6 +199,17 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
         // if relationship = constant, then skip sensor dialog
         if (relationship == Constant.getInstance()) {
             // send an intent to the wet position (Page 3)
+            if (servoChosen) {
+                Servo servos = (Servo) getArguments().getSerializable(Servo.SERVO_KEY);
+                MinPositionWizardPageThree dialogR = MinPositionWizardPageThree.newInstance(servos, this, robotAct);
+                dialogR.show(getFragmentManager(), "tag");
+            }
+            else if (ledChosen) {
+
+            }
+            else if (speakerChosen) {
+
+            }
         }
         else {
             // send an intent to the sensor dialog (Page 2)
@@ -245,6 +256,11 @@ public class RelationshipWizardPageOne extends BaseResizableDialogWizard impleme
 //        }
 //        updateServoViews();
     }
+
+    public void onMinPosChosen(int min) {
+
+    }
+
 
     // TODO This does not work (crashes)
     @OnClick(R.id.image_advanced_settings)
