@@ -1,0 +1,10 @@
+<resources>
+
+    <declare-styleable name="colorpickerview_ColorPickerView">
+        <attr name="colorpickerview_alphaChannelVisible" format="boolean|reference"/>
+        <attr name="colorpickerview_alphaChannelText" format="string|reference" />
+        <attr name="colorpickerview_sliderColor" format="color|reference" />
+       	<attr name="colorpickerview_borderColor" format="color|reference" />
+    </declare-styleable>
+   
+</resources>

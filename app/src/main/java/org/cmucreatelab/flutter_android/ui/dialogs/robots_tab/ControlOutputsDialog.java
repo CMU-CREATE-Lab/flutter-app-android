@@ -314,7 +314,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         ArrayList<MelodySmartMessage> ledMessages = new ArrayList<>();
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getRedLed(), rgb[0]));
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getGreenLed(), rgb[1]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[0]));
+        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[2]));
 
         for (MelodySmartMessage message : ledMessages)
             globalHandler.melodySmartDeviceHandler.addMessage(message);

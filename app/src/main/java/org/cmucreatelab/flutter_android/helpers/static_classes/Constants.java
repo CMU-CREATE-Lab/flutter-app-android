@@ -119,7 +119,7 @@ public final class Constants {
         put(ColorSwatches.BLACK, TrueColorRGB.BLACK);
     }};
 
-    public static final HashMap<Integer, Integer> TRUE_HEX_TO_SWATCH_HEX = new HashMap() {{
+    public static final HashMap<Integer, Integer>TRUE_HEX_TO_SWATCH_HEX = new HashMap() {{
        put(TrueColorHex.RED, ColorSwatches.RED);
         put(TrueColorHex.ORANGE, ColorSwatches.ORANGE);
         put(TrueColorHex.YELLOW, ColorSwatches.YELLOW);

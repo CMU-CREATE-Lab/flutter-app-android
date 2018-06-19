@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -285,6 +286,10 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
         maxColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMaxColorHex()));
+        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
+            maxColor.setColorFilter(Color.parseColor(triColorLed.getMaxColorHex()));
+        else
+            maxColor.clearColorFilter();
         maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMaxColorHex()));
     }
@@ -305,6 +310,10 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
         minColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMinColorHex()));
+        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
+            minColor.setColorFilter(Color.parseColor(triColorLed.getMinColorHex()));
+        else
+            minColor.clearColorFilter();
         minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMinColorHex()));
     }
