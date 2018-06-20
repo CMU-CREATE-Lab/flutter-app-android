@@ -296,17 +296,32 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         switch (port) {
             case 1:
                 isLed1Changed = true;
-                led1SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led1SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led1SwatchImage.clearColorFilter();
+                    led1SwatchImage.setImageResource(swatch);
+                }
                 led1RGB = rgb;
                 break;
             case 2:
                 isLed2Changed = true;
-                led2SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led2SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led2SwatchImage.clearColorFilter();
+                    led2SwatchImage.setImageResource(swatch);
+                }
                 led2RGB = rgb;
                 break;
             case 3:
                 isLed3Changed = true;
-                led3SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led3SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led3SwatchImage.clearColorFilter();
+                    led3SwatchImage.setImageResource(swatch);
+                }
                 led3RGB = rgb;
                 break;
         }

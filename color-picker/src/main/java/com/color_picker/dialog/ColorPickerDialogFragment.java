@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.color_picker.R;
@@ -45,6 +46,7 @@ public class ColorPickerDialogFragment extends DialogFragment {
     private ColorPanelView mOldColorPanel;
     private ColorPanelView mNewColorPanel;
     private Button mOkButton;
+    private ImageView closeButton;
     private ColorPickerDialogListener mListener;
 
     public static ColorPickerDialogFragment newInstance(int dialogId, int initialColor) {
@@ -111,6 +113,7 @@ public class ColorPickerDialogFragment extends DialogFragment {
         mNewColorPanel = (ColorPanelView)
                 v.findViewById(R.id.colorpickerview__color_panel_new);
         mOkButton = (Button) v.findViewById(android.R.id.button1);
+        closeButton = (ImageView) v.findViewById(R.id.button_close);
 
 
         mColorPicker.setOnColorChangedListener(new ColorPickerView.OnColorChangedListener() {
@@ -121,7 +124,7 @@ public class ColorPickerDialogFragment extends DialogFragment {
             }
         });
 
-        mOkButton.setOnClickListener(new OnClickListener() {
+        OnClickListener closeListener = new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -129,14 +132,15 @@ public class ColorPickerDialogFragment extends DialogFragment {
                 getDialog().dismiss();
             }
 
-        });
+        };
+
+        mOkButton.setOnClickListener(closeListener);
+        closeButton.setOnClickListener(closeListener);
 
         String title = getArguments().getString("title");
 
         if (title != null) {
             titleView.setText(title);
-            titleView.setGravity(Gravity.CENTER_HORIZONTAL);
-            titleView.setTextSize(24);
         } else {
             titleView.setVisibility(View.GONE);
         }
