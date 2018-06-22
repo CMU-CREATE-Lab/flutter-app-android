@@ -59,6 +59,10 @@
             android:name=".activities.FlutterStatusActivity"
             android:screenOrientation="landscape"/>
 
+        <activity
+            android:name=".activities.TutorialsActivity"
+            android:screenOrientation="landscape"/>
+
     </application>
 
 </manifest>

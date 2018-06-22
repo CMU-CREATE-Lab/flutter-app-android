@@ -41,6 +41,9 @@
     <string name="data_los">DATA LOGS</string>
     <string name="speaker">SPEAKER</string>
     <string name="lowercase_speaker">Speaker</string>
+    <string name="tutorials">Tutorials</string>
+    <string name="glossary">Glossary</string>
+    <string name="voice_prompts">Voice Prompts</string>
     <string name="leds">LEDs</string>
     <string name="servos">Servos</string>
     <string name="sensors">Sensors</string>

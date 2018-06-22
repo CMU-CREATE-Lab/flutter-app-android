@@ -51,6 +51,8 @@ dependencies {
     compile project(':melodysmart-module-android')
     compile project(':volley-createlab-module-android')
     compile 'com.rockerhieu.emojicon:library:1.3.3'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
     testCompile 'junit:junit:4.12'
     // Optional -- Mockito framework
     testCompile 'org.mockito:mockito-core:1.10.19'

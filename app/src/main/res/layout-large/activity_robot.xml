@@ -1,818 +1,838 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e5f3df"
-    tools:context="org.cmucreatelab.flutter_android.activities.RobotActivity">
-
-    <include
-        android:id="@+id/include_toolbar_robot"
-        layout="@layout/main_toolbar" />
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/include_toolbar_robot">
+        android:background="#e5f3df">
 
-        <ImageView
-            android:id="@+id/image_flutter_illustration"
-            android:layout_width="550dp"
-            android:layout_height="235dp"
+        <include
+            android:id="@+id/include_toolbar_robot"
+            layout="@layout/main_toolbar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/flutter_illustration_robot_page" />
-
-        <LinearLayout
-            android:id="@+id/linear_servos_frames"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/image_flutter_illustration"
-            android:layout_alignTop="@+id/image_flutter_illustration"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:id="@+id/frame_servo_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <FrameLayout
-                android:id="@+id/frame_servo_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-            <FrameLayout
-                android:id="@+id/frame_servo_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear_leds_frames"
-            android:layout_width="315dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/image_flutter_illustration"
-            android:layout_toEndOf="@+id/linear_servos_frames"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <FrameLayout
-                android:id="@+id/frame_led_1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1" />
-
-            <FrameLayout
-                android:id="@+id/frame_led_2"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1" />
-
-            <FrameLayout
-                android:id="@+id/frame_led_3"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/frame_speaker"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_alignTop="@id/image_flutter_illustration"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/linear_leds_frames" />
-
-        <LinearLayout
-            android:id="@+id/linear_sensors"
-            android:layout_width="315dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/image_flutter_illustration"
-            android:layout_alignStart="@id/image_flutter_illustration"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="15dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/text_sensor_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/text_sensor_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/text_sensor_3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="315dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/linear_sensors"
-            android:layout_below="@+id/linear_sensors"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/text_sensor_1_reading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textSize="36sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_sensor_2_reading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textSize="36sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_sensor_3_reading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:textSize="36sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/linear_servos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/image_flutter_illustration"
-            android:layout_toStartOf="@id/image_flutter_illustration"
-            android:padding="5dp">
+            android:layout_toEndOf="@id/include_toolbar_robot">
 
             <ImageView
-                android:id="@+id/image_servo_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignBottom="@+id/relative_servo_3"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_servo_3"
-                android:layout_width="103dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/link_active_servo_b_g"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="12dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="top"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/sensor_light_grey_s_m_20" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/servo_3_indicator"
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/servo_new_indicator" />
-
-                <ImageView
-                    android:id="@+id/servo_3_foreground_green_indicator"
-                    android:layout_width="47dp"
-                    android:layout_height="24dp"
-                    android:layout_alignStart="@+id/servo_3_indicator"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5.5dp" />
-
-                <!--Another gray dot in center to go on top of green servo indicator-->
-                <ImageView
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:padding="22dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/servo_3_indicator"
-                    android:src="@drawable/servo_dark_gray_dot" />
-
-                <TextView
-                    android:id="@+id/text_servo_3_max_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/servo_3_indicator"
-                    android:layout_below="@id/servo_3_foreground_green_indicator"
-                    android:layout_marginEnd="4dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal"/>
-
-                <TextView
-                    android:id="@+id/text_servo_3_min_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/servo_3_indicator"
-                    android:layout_below="@id/servo_3_foreground_green_indicator"
-                    android:layout_marginStart="4.5dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal" />
-
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_servo_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignBottom="@+id/relative_servo_2"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/image_servo_3"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_servo_2"
-                android:layout_width="103dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/relative_servo_3"
-                android:background="@drawable/link_active_servo_b_g"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="12dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="top"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/sensor_light_grey_s_m_20" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/servo_2_indicator"
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/servo_new_indicator" />
-
-                <ImageView
-                    android:id="@+id/servo_2_foreground_green_indicator"
-                    android:layout_width="47dp"
-                    android:layout_height="24dp"
-                    android:layout_alignStart="@+id/servo_2_indicator"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5.5dp" />
-
-                <!--Another gray dot in center to go on top of green servo indicator-->
-                <ImageView
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:padding="22dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/servo_2_indicator"
-                    android:src="@drawable/servo_dark_gray_dot" />
-
-                <TextView
-                    android:id="@+id/text_servo_2_max_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/servo_2_indicator"
-                    android:layout_below="@id/servo_2_foreground_green_indicator"
-                    android:layout_marginEnd="4dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/text_servo_2_min_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/servo_2_indicator"
-                    android:layout_below="@id/servo_2_foreground_green_indicator"
-                    android:layout_marginStart="4.5dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal" />
-
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_servo_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignBottom="@+id/relative_servo_1"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/image_servo_2"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_servo_1"
-                android:layout_width="103dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/relative_servo_2"
-                android:background="@drawable/link_active_servo_b_g"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:id="@+id/linear_sensor_link_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="12dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/sensor_light_grey_s_m_20" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/servo_1_indicator"
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:layout_toEndOf="@+id/linear_sensor_link_1"
-                    android:src="@drawable/servo_new_indicator" />
-
-                <ImageView
-                    android:id="@+id/servo_1_foreground_green_indicator"
-                    android:layout_width="47dp"
-                    android:layout_height="24dp"
-                    android:layout_alignStart="@+id/servo_1_indicator"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5.5dp" />
-
-                <!--Another gray dot in center to go on top of green servo indicator-->
-                <ImageView
-                    android:layout_width="51dp"
-                    android:layout_height="51dp"
-                    android:padding="22dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignStart="@id/servo_1_indicator"
-                    android:src="@drawable/servo_dark_gray_dot" />
-
-                <TextView
-                    android:id="@+id/text_servo_1_max_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/servo_1_indicator"
-                    android:layout_below="@id/servo_1_foreground_green_indicator"
-                    android:layout_marginEnd="4dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/text_servo_1_min_pos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/servo_1_indicator"
-                    android:layout_below="@id/servo_1_foreground_green_indicator"
-                    android:layout_marginStart="4.5dp"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#4a4a4a"
-                    android:textSize="9sp"
-                    android:textStyle="normal" />
-
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relative_leds"
-            android:layout_width="310dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/image_flutter_illustration"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="30dp"
-            android:layout_toEndOf="@id/linear_servos"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/image_led_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_led_1"
-                android:layout_width="64dp"
-                android:layout_height="103dp"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/link_active_l_e_d_speaker_b_g"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:id="@+id/linear_led_link_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/view_color_1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_1"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/circle_green" />
-
-                <View
-                    android:id="@+id/view_halfcolor_1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_1"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/halfcircle_black" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_led_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
+                android:id="@+id/image_flutter_illustration"
+                android:layout_width="550dp"
+                android:layout_height="235dp"
                 android:layout_centerHorizontal="true"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_led_2"
-                android:layout_width="64dp"
-                android:layout_height="103dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/link_active_l_e_d_speaker_b_g"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:id="@+id/linear_led_link_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/view_color_2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_2"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/circle_green" />
-
-                <View
-                    android:id="@+id/view_halfcolor_2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_2"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/halfcircle_black" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image_led_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:padding="2dp"
-                android:src="@drawable/question_icon" />
-
-            <RelativeLayout
-                android:id="@+id/relative_led_3"
-                android:layout_width="64dp"
-                android:layout_height="103dp"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/link_active_l_e_d_speaker_b_g"
-                android:visibility="invisible">
-
-                <LinearLayout
-                    android:id="@+id/linear_led_link_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_launcher" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/view_color_3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_3"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/circle_green" />
-
-                <View
-                    android:id="@+id/view_halfcolor_3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/linear_led_link_3"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/halfcircle_black" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/image_speaker"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@+id/relative_leds"
-            android:layout_marginStart="70dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:padding="2dp"
-            android:src="@drawable/question_icon" />
-
-        <ImageView
-            android:id="@+id/image_speaker_mute_toggle"
-            android:layout_width="34dp"
-            android:layout_height="25dp"
-            android:layout_alignBottom="@+id/image_speaker"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:padding="2dp"
-            android:src="@drawable/speaker_unmute"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/text_current_hertz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_speaker_mute_toggle"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/initial_hertz_label"
-            android:textColor="#5a5c5e"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/text_current_volume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_current_hertz"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/initial_volume_label"
-            android:textColor="#5a5c5e"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:visibility="invisible" />
-
-        <RelativeLayout
-            android:id="@+id/relative_speaker"
-            android:layout_width="64dp"
-            android:layout_height="103dp"
-            android:layout_alignBottom="@+id/relative_leds"
-            android:layout_marginStart="70dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:background="@drawable/link_active_l_e_d_speaker_b_g"
-            android:visibility="invisible">
+                android:layout_centerVertical="true"
+                android:src="@drawable/flutter_illustration_robot_page" />
 
             <LinearLayout
-                android:id="@+id/linear_speaker_link"
+                android:id="@+id/linear_servos_frames"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_margin="12dp"
-                android:orientation="horizontal">
+                android:layout_alignStart="@+id/image_flutter_illustration"
+                android:layout_alignTop="@+id/image_flutter_illustration"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher" />
+                <FrameLayout
+                    android:id="@+id/frame_servo_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher" />
+                <FrameLayout
+                    android:id="@+id/frame_servo_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <FrameLayout
+                    android:id="@+id/frame_servo_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/linear_speaker_link"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/circle_green"
-                android:src="@drawable/speaker_icon" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relative_speaker2"
-            android:layout_width="64dp"
-            android:layout_height="103dp"
-            android:layout_alignBottom="@+id/relative_leds"
-            android:layout_alignLeft="@+id/relative_speaker"
-            android:layout_marginStart="70dp"
-            android:layout_toEndOf="@id/relative_leds"
-            android:background="@drawable/link_active_l_e_d_speaker_b_g"
-            android:visibility="invisible">
-
             <LinearLayout
-                android:id="@+id/linear_speaker_link2"
-                android:layout_width="wrap_content"
+                android:id="@+id/linear_leds_frames"
+                android:layout_width="315dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_margin="12dp"
-                android:orientation="horizontal">
+                android:layout_alignTop="@+id/image_flutter_illustration"
+                android:layout_toEndOf="@+id/linear_servos_frames"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher" />
+                <FrameLayout
+                    android:id="@+id/frame_led_1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher" />
+                <FrameLayout
+                    android:id="@+id/frame_led_2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
+
+                <FrameLayout
+                    android:id="@+id/frame_led_3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
+            <FrameLayout
+                android:id="@+id/frame_speaker"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_alignTop="@id/image_flutter_illustration"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/linear_leds_frames" />
+
+            <LinearLayout
+                android:id="@+id/linear_sensors"
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/image_flutter_illustration"
+                android:layout_alignStart="@id/image_flutter_illustration"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/text_sensor_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/text_sensor_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/text_sensor_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="315dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/linear_sensors"
+                android:layout_below="@+id/linear_sensors"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/text_sensor_1_reading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_sensor_2_reading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_sensor_3_reading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/linear_servos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/image_flutter_illustration"
+                android:layout_toStartOf="@id/image_flutter_illustration"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/image_servo_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignBottom="@+id/relative_servo_3"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_servo_3"
+                    android:layout_width="103dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/link_active_servo_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="top"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/sensor_light_grey_s_m_20" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/servo_3_indicator"
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/servo_new_indicator" />
+
+                    <ImageView
+                        android:id="@+id/servo_3_foreground_green_indicator"
+                        android:layout_width="47dp"
+                        android:layout_height="24dp"
+                        android:layout_alignStart="@+id/servo_3_indicator"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="5.5dp" />
+
+                    <!--Another gray dot in center to go on top of green servo indicator-->
+                    <ImageView
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignStart="@id/servo_3_indicator"
+                        android:layout_centerVertical="true"
+                        android:padding="22dp"
+                        android:src="@drawable/servo_dark_gray_dot" />
+
+                    <TextView
+                        android:id="@+id/text_servo_3_max_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/servo_3_indicator"
+                        android:layout_below="@id/servo_3_foreground_green_indicator"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/text_servo_3_min_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/servo_3_indicator"
+                        android:layout_below="@id/servo_3_foreground_green_indicator"
+                        android:layout_marginStart="4.5dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/image_servo_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignBottom="@+id/relative_servo_2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/image_servo_3"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_servo_2"
+                    android:layout_width="103dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/relative_servo_3"
+                    android:background="@drawable/link_active_servo_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="top"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/sensor_light_grey_s_m_20" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/servo_2_indicator"
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/servo_new_indicator" />
+
+                    <ImageView
+                        android:id="@+id/servo_2_foreground_green_indicator"
+                        android:layout_width="47dp"
+                        android:layout_height="24dp"
+                        android:layout_alignStart="@+id/servo_2_indicator"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="5.5dp" />
+
+                    <!--Another gray dot in center to go on top of green servo indicator-->
+                    <ImageView
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignStart="@id/servo_2_indicator"
+                        android:layout_centerVertical="true"
+                        android:padding="22dp"
+                        android:src="@drawable/servo_dark_gray_dot" />
+
+                    <TextView
+                        android:id="@+id/text_servo_2_max_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/servo_2_indicator"
+                        android:layout_below="@id/servo_2_foreground_green_indicator"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/text_servo_2_min_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/servo_2_indicator"
+                        android:layout_below="@id/servo_2_foreground_green_indicator"
+                        android:layout_marginStart="4.5dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/image_servo_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignBottom="@+id/relative_servo_1"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/image_servo_2"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_servo_1"
+                    android:layout_width="103dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/relative_servo_2"
+                    android:background="@drawable/link_active_servo_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:id="@+id/linear_sensor_link_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/sensor_light_grey_s_m_20" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/servo_1_indicator"
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toEndOf="@+id/linear_sensor_link_1"
+                        android:src="@drawable/servo_new_indicator" />
+
+                    <ImageView
+                        android:id="@+id/servo_1_foreground_green_indicator"
+                        android:layout_width="47dp"
+                        android:layout_height="24dp"
+                        android:layout_alignStart="@+id/servo_1_indicator"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="5.5dp" />
+
+                    <!--Another gray dot in center to go on top of green servo indicator-->
+                    <ImageView
+                        android:layout_width="51dp"
+                        android:layout_height="51dp"
+                        android:layout_alignStart="@id/servo_1_indicator"
+                        android:layout_centerVertical="true"
+                        android:padding="22dp"
+                        android:src="@drawable/servo_dark_gray_dot" />
+
+                    <TextView
+                        android:id="@+id/text_servo_1_max_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/servo_1_indicator"
+                        android:layout_below="@id/servo_1_foreground_green_indicator"
+                        android:layout_marginEnd="4dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/text_servo_1_min_pos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@id/servo_1_indicator"
+                        android:layout_below="@id/servo_1_foreground_green_indicator"
+                        android:layout_marginStart="4.5dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#4a4a4a"
+                        android:textSize="9sp"
+                        android:textStyle="normal" />
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_leds"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/image_flutter_illustration"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@id/linear_servos"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/image_led_1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_led_1"
+                    android:layout_width="64dp"
+                    android:layout_height="103dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:id="@+id/linear_led_link_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="12dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view_color_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_1"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/circle_green" />
+
+                    <View
+                        android:id="@+id/view_halfcolor_1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_1"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/halfcircle_black" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/image_led_2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_led_2"
+                    android:layout_width="64dp"
+                    android:layout_height="103dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:id="@+id/linear_led_link_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="12dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view_color_2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_2"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/circle_green" />
+
+                    <View
+                        android:id="@+id/view_halfcolor_2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_2"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/halfcircle_black" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/image_led_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:padding="2dp"
+                    android:src="@drawable/question_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relative_led_3"
+                    android:layout_width="64dp"
+                    android:layout_height="103dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:id="@+id/linear_led_link_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="12dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_launcher" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view_color_3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_3"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/circle_green" />
+
+                    <View
+                        android:id="@+id/view_halfcolor_3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linear_led_link_3"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/halfcircle_black" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
             <ImageView
+                android:id="@+id/image_speaker"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@id/linear_speaker_link2"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/circle_green"
-                android:src="@drawable/speaker_icon" />
+                android:layout_alignBottom="@+id/relative_leds"
+                android:layout_marginStart="70dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:padding="2dp"
+                android:src="@drawable/question_icon" />
+
+            <ImageView
+                android:id="@+id/image_speaker_mute_toggle"
+                android:layout_width="34dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/image_speaker"
+                android:layout_marginStart="210dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:padding="2dp"
+                android:src="@drawable/speaker_unmute"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_current_hertz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_speaker_mute_toggle"
+                android:layout_marginStart="210dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/initial_hertz_label"
+                android:textColor="#5a5c5e"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_current_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_current_hertz"
+                android:layout_marginStart="210dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/initial_volume_label"
+                android:textColor="#5a5c5e"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:visibility="invisible" />
+
+            <RelativeLayout
+                android:id="@+id/relative_speaker"
+                android:layout_width="64dp"
+                android:layout_height="103dp"
+                android:layout_alignBottom="@+id/relative_leds"
+                android:layout_marginStart="70dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:id="@+id/linear_speaker_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_launcher" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_launcher" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linear_speaker_link"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/circle_green"
+                    android:src="@drawable/speaker_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_speaker2"
+                android:layout_width="64dp"
+                android:layout_height="103dp"
+                android:layout_alignBottom="@+id/relative_leds"
+                android:layout_alignLeft="@+id/relative_speaker"
+                android:layout_marginStart="70dp"
+                android:layout_toEndOf="@id/relative_leds"
+                android:background="@drawable/link_active_l_e_d_speaker_b_g"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:id="@+id/linear_speaker_link2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_launcher" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_launcher" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linear_speaker_link2"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/circle_green"
+                    android:src="@drawable/speaker_icon" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_data_buttons"
+                android:layout_width="450dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="200dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <Button
+                    android:id="@+id/button_simulate_sensors"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_green_button"
+                    android:text="@string/simulate_sensors"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/button_control_outputs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_green_button"
+                    android:text="@string/control_outputs"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_data_buttons"
-            android:layout_width="450dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="200dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-
-            <Button
-                android:id="@+id/button_simulate_sensors"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_green_button"
-                android:text="@string/simulate_sensors"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/button_control_outputs"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_green_button"
-                android:text="@string/control_outputs"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
+        <include
+            android:id="@+id/include_flutter_status_button"
+            layout="@layout/flutter_status_button" />
 
     </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true">
 
-    <include
-        android:id="@+id/include_flutter_status_button"
-        layout="@layout/flutter_status_button" />
+        <include
+            android:id="@+id/include_side_nav_menu"
+            layout="@layout/side_nav_menu" />
+    </android.support.design.widget.NavigationView>
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

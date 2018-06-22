@@ -1,16 +1,21 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -48,6 +53,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.Serv
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -386,6 +392,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
+        onCreateDrawer();
         ButterKnife.bind(this);
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
