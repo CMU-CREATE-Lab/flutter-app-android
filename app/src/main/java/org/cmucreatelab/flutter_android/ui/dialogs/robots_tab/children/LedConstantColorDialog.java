@@ -9,11 +9,11 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import java.io.Serializable;
 
 /**
- * Created by Steve on 9/22/2016.
- * <p>
- * MinColorDialog
- * <p>
- * A Dialog that prompts the user to choose a low color.
+ * Created by Parv on 6/15/2018.
+ *
+ * LedConstantColorDialog
+ *
+ * A Dialog that prompts the user to choose a color.
  */
 public class LedConstantColorDialog extends ChooseColorDialog implements ChooseColorDialog.SetColorListener {
 
@@ -53,4 +53,5 @@ public class LedConstantColorDialog extends ChooseColorDialog implements ChooseC
     public interface DialogColorConstantListener {
         void onLedConstantColorChosen(Integer[] rgb, int portNumber, int swatch);
     }
+
 }

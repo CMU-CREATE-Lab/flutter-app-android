@@ -47,7 +47,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.RecordingWarnin
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.SaveToKindleDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.FlutterSampleDialog;
-import org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout;
+import org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
