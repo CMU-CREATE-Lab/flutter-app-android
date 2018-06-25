@@ -10,11 +10,11 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -45,7 +45,6 @@ import butterknife.Optional;
  * AppLandingActivity
  *
  * An activity that can scan for flutters nearby and connect to them.
- *
  */
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
@@ -291,7 +290,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_landing);
-        onCreateDrawer();
         ButterKnife.bind(this);
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
@@ -423,7 +421,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         globalHandler.sessionHandler.dismissProgressDialog();
     }
 
-    @Optional @OnClick(R.id.button_scan)
+    @Optional
+    @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
@@ -466,7 +465,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     @Override
     public void onBackPressed() {
-        // Disable back button for this Activity.
+        // Disable back button for this Activity except for the nav drawer.
+        if (drawerLayout.isDrawerOpen(Gravity.START))
+            drawerLayout.closeDrawer(Gravity.START);
     }
 
 

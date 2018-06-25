@@ -392,7 +392,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
-        onCreateDrawer();
         ButterKnife.bind(this);
         GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 

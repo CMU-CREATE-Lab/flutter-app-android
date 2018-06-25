@@ -6,9 +6,19 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/button_close_drawer"
+        android:layout_gravity="end"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/baseline_close_white_18dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="-30dp"
         android:src="@drawable/menu_applogo" />
 
     <Button

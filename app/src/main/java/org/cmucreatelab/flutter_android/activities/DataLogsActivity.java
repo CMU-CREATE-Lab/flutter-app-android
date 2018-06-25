@@ -587,7 +587,6 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_logs);
-        onCreateDrawer();
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(this);
         instance = this;

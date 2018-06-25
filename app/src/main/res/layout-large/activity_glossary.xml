@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activities.AppLandingActivity"
     tools:openDrawer="start">
 
     <include
-        android:id="@+id/include_base_activity_sensors"
-        layout="@layout/base_activity_sensors" />
+        android:id="@+id/include_base_activity_glossary"
+        layout="@layout/base_activity_glossary" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -18,7 +17,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
-
         <include
             android:id="@+id/include_side_nav_menu"
             layout="@layout/side_nav_menu" />

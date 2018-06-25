@@ -175,7 +175,6 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors);
-        onCreateDrawer();
         ButterKnife.bind(this);
         globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
