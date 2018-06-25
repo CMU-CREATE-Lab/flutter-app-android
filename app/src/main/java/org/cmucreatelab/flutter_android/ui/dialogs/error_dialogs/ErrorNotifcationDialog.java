@@ -1,11 +1,10 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs;
 
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,10 +14,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
 
 
-import java.io.Serializable;
-
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -30,11 +26,13 @@ import butterknife.OnClick;
  * Supports all error messages. Just change imageView and TextView based on the error.
  */
 
+// TODO @psdev1 treat this instead as an abstract class with each error type extending from ErrorNotifcationDialog
 public class ErrorNotifcationDialog extends BaseOutputDialog implements View.OnClickListener {
 
     private static boolean bleError = false;
     private static boolean unsupportedBleDevice = false;
 
+    // TODO @psdev1 remove static attributes and "id" arg in "newInstance" method.
     private static boolean emailError = false;
     private static boolean dataLogError = false;
     private static boolean recordingError = false;
