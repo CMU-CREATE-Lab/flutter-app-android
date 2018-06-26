@@ -137,7 +137,6 @@ public class InformationDialog extends BaseResizableDialog {
         positiveButtonDrawableId = (Integer) getArguments().getSerializable(POSITIVE_ID_KEY);
         if (getArguments().getSerializable(NEGATIVE_ID_KEY) != null) {
             negativeButtonDrawableId = (Integer) getArguments().getSerializable(NEGATIVE_ID_KEY);
-            buttonOk1.setVisibility(View.GONE);
             buttonOk2.setBackground(ContextCompat.getDrawable(getActivity(), positiveButtonDrawableId));
             negativeButton.setBackground(ContextCompat.getDrawable(getActivity(), negativeButtonDrawableId));
         } else {

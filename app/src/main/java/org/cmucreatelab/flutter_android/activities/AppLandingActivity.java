@@ -28,7 +28,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ErrorNotifcationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.BluetoothErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.LargeScreenErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnsupportedBleErrorDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -219,15 +221,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void showAlertBleUnsupported() {
-        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(10, null);
-        errorDialog.show(getSupportFragmentManager(), "tag");
+        UnsupportedBleErrorDialog unsupportedBleErrorDialog = UnsupportedBleErrorDialog.newInstance();
+        unsupportedBleErrorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     private void showAlertBluetoothDisabled(final BluetoothAdapter bluetoothAdapter) {
-        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(1, bluetoothAdapter);
-        errorDialog.show(getSupportFragmentManager(), "tag");
-        errorDialog.setCancelable(false);
+        BluetoothErrorDialog bluetoothErrorDialog = BluetoothErrorDialog.newInstance(bluetoothAdapter);
+        bluetoothErrorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -381,10 +382,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
 
         // alert dialog for notifying user large screen is needed
-        if (layoutLarge == false && appearsOnce == false) {
+        if (!layoutLarge && !appearsOnce) {
             appearsOnce = true;
-            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7, null);
-            errorDialog.show(getSupportFragmentManager(), "tag");
+            LargeScreenErrorDialog largeScreenErrorDialog = LargeScreenErrorDialog.newInstance();
+            largeScreenErrorDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 

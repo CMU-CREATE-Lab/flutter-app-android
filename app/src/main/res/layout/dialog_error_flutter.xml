@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_bg"
-    android:orientation="vertical"
-    tools:context=".activities.AppLandingActivity">
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:orientation="horizontal">
 
 
@@ -19,9 +16,9 @@
             android:id="@+id/error_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/error_large_screen" />
+            android:layout_margin="10dp"
+            android:layout_marginEnd="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,20 +30,17 @@
                 android:id="@+id/error_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_weight="1"
-                android:text="LARGE SCREEN"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_error_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:text="@string/non_large_layout_description"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -54,11 +48,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/horizontal_two_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_reddish_button_bottom_left"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_ok_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_green_button_bottom_right"
+            android:text="@string/ok"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/button_accept"
+        android:id="@+id/button_ok_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_green_button_bottom"
-        android:text="Ok" />
+        android:text="@string/ok"
+        android:textColor="@color/white" />
 
 </LinearLayout>
