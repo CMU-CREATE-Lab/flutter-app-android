@@ -36,8 +36,10 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
+import org.cmucreatelab.flutter_android.ui.ServoAngleDrawable;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.RelationshipWizardPageOne;
@@ -57,7 +59,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private RobotActivity instance;
     private Session session;
-
+    private boolean speakerMuted = false;
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         private int seekBarValue=0;
 
@@ -281,7 +283,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     }
 
 
+    private void updateSpeakerToggleVisibility() {
+        Speaker speaker = session.getFlutter().getSpeaker();
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+
+        //set visibility based on if volume or pitch is linked
+        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked())
+            speakerMuteToggle.setVisibility(View.VISIBLE);
+        else
+            speakerMuteToggle.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void updateServoIndicators() {
+        ServoAngleDrawable.updateServoIndicators(session, this);
+    }
+
+
     // OnClickListeners
+
 
     private void onClickSensor(int portNumber) {
         SensorTypeDialog sensorTypeDialog = GreenSensorTypeDialog.newInstance(portNumber, instance);
@@ -458,6 +478,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
             updateSensorViews();
             updateDynamicViews();
+            updateServoIndicators();
         }
     }
 
@@ -487,6 +508,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
             flutterStatusIcon.setImageResource(R.drawable.flutterconnectgraphic);
 
+            updateSpeakerToggleVisibility();
             updateLinkedViews();
             if (!session.isSimulatingData()) startSensorReading();
         }
@@ -503,6 +525,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onServoLinkListener");
         globalHandler.melodySmartDeviceHandler.addMessage(message);
         updateLinkedViews();
+        updateServoIndicators();
     }
 
 
@@ -526,6 +549,14 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         for (MelodySmartMessage message : msgs) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
+        updateSpeakerToggleVisibility();
+
+        //flip the muted state of speaker
+        speakerMuted = false;
+
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+        speakerMuteToggle.setImageResource(R.drawable.speaker_unmute);
+
         updateLinkedViews();
     }
 
@@ -605,6 +636,30 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onClickSpeakerRelative2() {
         onClickSpeaker();
     }
+    @OnClick(R.id.image_speaker_mute_toggle)
+    public void onClickSpeakerMuteToggle() {
+        //flip the muted state of speaker
+        speakerMuted = !speakerMuted;
+
+        ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
+        Speaker speaker = session.getFlutter().getSpeaker();
+
+        MelodySmartMessage message;
+
+        //setting volume to 0
+        if (speakerMuted) {
+            speakerMuteToggle.setImageResource(R.drawable.speaker_mute);
+            message = MessageConstructor.constructSetOutput(speaker.getVolume(), 0);
+        }
+        //adding previously set speaker relation when unmuted
+        else {
+            speakerMuteToggle.setImageResource(R.drawable.speaker_unmute);
+            message = MessageConstructor.constructRelationshipMessage(speaker.getVolume(), speaker.getVolume().getSettings());
+        }
+
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.melodySmartDeviceHandler.addMessage(message);
+    }
 
 
     @OnClick(R.id.button_simulate_sensors)
@@ -620,10 +675,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
-
     @OnClick(R.id.button_control_outputs)
     public void onClickControlOutputs() {
         Log.d(Constants.LOG_TAG, "onClickControlOutputs");
+
+        ControlOutputsDialog controlOutputsDialog = new ControlOutputsDialog();
+        controlOutputsDialog.show(getSupportFragmentManager(), "tag");
     }
 
 

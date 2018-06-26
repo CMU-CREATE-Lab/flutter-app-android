@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.realtivelayout;
+package org.cmucreatelab.flutter_android.ui.relativelayout;
 
 import android.app.Activity;
 import android.content.Context;

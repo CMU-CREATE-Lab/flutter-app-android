@@ -169,7 +169,7 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
 
-                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                <org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/relative_stats_1"
@@ -226,7 +226,7 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
 
-                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                <org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/relative_stats_2"
@@ -283,7 +283,7 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:progressDrawable="@drawable/progress_horizontal_orange"/>
 
-                <org.cmucreatelab.flutter_android.ui.realtivelayout.StatsRelativeLayout
+                <org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/relative_stats_3"
