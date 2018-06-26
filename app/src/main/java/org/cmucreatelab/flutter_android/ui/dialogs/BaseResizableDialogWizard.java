@@ -1,5 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ public class BaseResizableDialogWizard extends DialogFragment {
     public void onResume() {
         super.onResume();
         getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
 }
