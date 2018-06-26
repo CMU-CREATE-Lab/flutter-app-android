@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
 import java.io.Serializable;

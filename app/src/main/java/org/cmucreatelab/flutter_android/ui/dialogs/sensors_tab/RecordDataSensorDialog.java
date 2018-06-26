@@ -1,6 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab;
 
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 
 import java.io.Serializable;
 

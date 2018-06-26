@@ -1,9 +1,8 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;

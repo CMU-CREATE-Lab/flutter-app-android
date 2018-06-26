@@ -38,7 +38,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.EmailDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
@@ -46,7 +46,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.SaveToKindleDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.FlutterSampleDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSampleDialog;
 import org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
