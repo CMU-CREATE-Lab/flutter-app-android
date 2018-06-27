@@ -42,20 +42,20 @@
             android:textColor="@color/white"/>
 
         <Button
+            android:id="@+id/button_ok_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/button_ok_2"
-            android:text="@string/ok"
-            android:textColor="@color/white"/>
+            android:text="@android:string/ok"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_ok_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_ok_1"
-        android:text="@string/ok"
-        android:textColor="@color/white"/>
+        android:text="@android:string/ok"
+        android:textColor="@color/white" />
 
 </LinearLayout>
