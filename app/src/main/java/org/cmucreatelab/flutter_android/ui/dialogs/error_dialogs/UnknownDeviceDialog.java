@@ -22,7 +22,7 @@ public class UnknownDeviceDialog extends ErrorDialog {
 
         return unknownDeviceDialog;
     }
-    public void onClickToDismiss()
+    public void onClickDismiss()
     {
         dismiss();
     }

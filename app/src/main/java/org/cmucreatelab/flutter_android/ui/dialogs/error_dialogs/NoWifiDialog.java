@@ -22,7 +22,7 @@ public class NoWifiDialog extends ErrorDialog {
 
         return noWifiDialog;
     }
-    public void onClickToDismiss()
+    public void onClickDismiss()
     {
         dismiss();
     }

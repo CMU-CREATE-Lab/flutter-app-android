@@ -36,8 +36,8 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.ServoAngleDrawable;
-import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
@@ -418,7 +418,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         robotMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_robot, 0, 0, 0);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
+            ConnectFlutterDialog connectFlutterDialog = ConnectFlutterDialog.newInstance(ConnectFlutterDialog.ConnectFlutterPreviousScreen.ROBOT);
+            connectFlutterDialog.show(getSupportFragmentManager(), "tag");
         } else {
             instance = this;
             this.session = globalHandler.sessionHandler.getSession();
@@ -462,7 +463,8 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         ImageView flutterStatusIcon = (ImageView) findViewById(R.id.image_flutter_status_icon);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_robot);
+            ConnectFlutterDialog connectFlutterDialog = ConnectFlutterDialog.newInstance(ConnectFlutterDialog.ConnectFlutterPreviousScreen.ROBOT);
+            connectFlutterDialog.show(getSupportFragmentManager(), "tag");
 
             // Flutter status icon (upper right)
             flutterStatusText.setText(R.string.connection_disconnected);

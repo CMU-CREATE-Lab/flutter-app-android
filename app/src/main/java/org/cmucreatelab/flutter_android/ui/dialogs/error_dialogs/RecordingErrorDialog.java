@@ -5,25 +5,25 @@ import android.os.Bundle;
 import org.cmucreatelab.flutter_android.R;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
  */
 
 public class RecordingErrorDialog extends ErrorDialog {
 
     public static RecordingErrorDialog newInstance() {
-        RecordingErrorDialog unsupportedBleErrorDialog = new RecordingErrorDialog();
+        RecordingErrorDialog recordingErrorDialog = new RecordingErrorDialog();
         Bundle args = new Bundle();
 
-        args.putSerializable(ERROR_TITLE_KEY, R.string.analog_or_unknown);
-        args.putSerializable(ERROR_TEXT_KEY, R.string.analog_or_unknown);
-        args.putSerializable(ERROR_IMAGE_KEY, R.drawable.error_ble);
+        args.putSerializable(ERROR_TITLE_KEY, R.string.error_recording_title);
+        args.putSerializable(ERROR_TEXT_KEY, R.string.currently_recording_description);
+        args.putSerializable(ERROR_IMAGE_KEY, R.drawable.error_recording);
 
-        unsupportedBleErrorDialog.setArguments(args);
+        recordingErrorDialog.setArguments(args);
 
-        return unsupportedBleErrorDialog;
+        return recordingErrorDialog;
     }
-    public void onClickToDismiss()
+    public void onClickDismiss()
     {
-        getActivity().finish();
+        this.dismiss();
     }
 }

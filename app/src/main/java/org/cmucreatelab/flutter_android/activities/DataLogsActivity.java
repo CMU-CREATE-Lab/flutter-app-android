@@ -38,10 +38,13 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.DataLogErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.NoWifiDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.RecordingErrorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.EmailDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.SaveToKindleDialog;
@@ -303,8 +306,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
                 dataLogsUpdateHelper.registerStateAndUpdatePoints(new OpenLogState(instance));
             } else {
-                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_data_logs_to_open), getString(R.string.no_data_logs_to_open_details), R.drawable.round_orange_button_bottom);
-                informationDialog.show(getSupportFragmentManager(), "tag");
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_OPEN);
+                dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
@@ -318,14 +321,14 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (workingDataSet == null) {
-                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.select_a_data_log), getString(R.string.select_a_data_log_details), R.drawable.round_orange_button_bottom);
-                informationDialog.show(getSupportFragmentManager(), "tag");
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.MUST_HAVE_SELECTED);
+                dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
-                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_wifi), getString(R.string.no_wifi_data_log_details), R.drawable.round_orange_button_bottom);
-                informationDialog.show(getSupportFragmentManager(), "tag");
+                NoWifiDialog noWifiDialog = NoWifiDialog.newInstance();
+                noWifiDialog.show(getSupportFragmentManager(), "tag");
             } else if (globalHandler.dataLoggingHandler.isLogging() && workingDataSet.getDataName().equals(globalHandler.dataLoggingHandler.getDataName())) {
-                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.currently_recording), getString(R.string.currently_recording_description), R.drawable.round_orange_button_bottom);
-                informationDialog.show(getSupportFragmentManager(), "tag");
+                RecordingErrorDialog recordingErrorDialog = RecordingErrorDialog.newInstance();
+                recordingErrorDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 Log.d(Constants.LOG_TAG, "onClickTextSendLog");
                 EmailDialog emailDialog = EmailDialog.newInstance(workingDataSet, instance);
@@ -342,8 +345,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             if (dataLogsUpdateHelper.getDataSetOnFlutter() != null || dataLogsUpdateHelper.getDataSetsOnDevice().length > 0) {
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
             } else {
-                InformationDialog informationDialog = InformationDialog.newInstance(getString(R.string.no_data_logs_to_clean_up), getString(R.string.no_data_logs_to_clean_up_details), R.drawable.round_orange_button_bottom);
-                informationDialog.show(getSupportFragmentManager(), "tag");
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_CLEAN_UP);
+                dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }
     };
@@ -355,10 +358,8 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             Log.d(Constants.LOG_TAG, "DataLogsActivity.onClickRecordData");
 
             if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-                NoFlutterConnectedDialog noFlutterConnectedDialog = NoFlutterConnectedDialog.newInstance(R.string.no_flutter_data_logs);
-                // override this default behavior
-                noFlutterConnectedDialog.setCancelable(true);
-                noFlutterConnectedDialog.show(getSupportFragmentManager(), "tag");
+                ConnectFlutterDialog connectFlutterDialog = ConnectFlutterDialog.newInstance(ConnectFlutterDialog.ConnectFlutterPreviousScreen.RECORD_DATA);
+                connectFlutterDialog.show(getSupportFragmentManager(), "tag");
             } else {
                 globalHandler.sessionHandler.createProgressDialog(instance);
                 globalHandler.sessionHandler.updateProgressDialogMessage(DataLogsActivity.this, "Loading data log information...");

@@ -94,13 +94,6 @@ public class EmailDialog extends BaseResizableDialog {
 
         email.setText(loadEmail());
 
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() != NetworkInfo.State.CONNECTED) {
-            NoWifiDialog noWifiDialog = NoWifiDialog.newInstance();
-            noWifiDialog.show(getFragmentManager(), "tag");
-        }
-
         return builder.create();
     }
 

@@ -28,7 +28,7 @@ public class BluetoothErrorDialog extends ErrorDialog {
         return bluetoothErrorDialog;
     }
 
-    public void onClickToDismiss()
+    public void onClickDismiss()
     {
         if (currentBluetoothAdapter.isEnabled()) {
             this.dismiss();

@@ -30,7 +30,10 @@
     <string name="error_no_wifi_text">You need to be connected to WiFi before you can send a data log.</string>
 
     <string name="error_data_log_title">DATA LOG</string>
-    <string name="error_data_log_text">There was an error sending the data log. Please try again later.</string>
+
+    <string name="error_recording_title">RECORDING</string>
+
+    <string name="error_unable_to_connect_title">Unable to Connect</string>
 
     <!-- Prompts -->
     <string name="main_prompt">What would you like to do?</string>
@@ -52,10 +55,10 @@
     <string name="rescan">Rescan</string>
     <string name="connect_flutter">CONNECT FLUTTER</string>
     <string name="not_connected_title">Unable to Connect</string>
-    <string name="not_connected_message">Your Tablet was not able to connect to your Flutter. Please try again.</string>
+    <string name="not_connected_message">Your tablet was not able to connect to your Flutter. Please try again.</string>
     <string name="not_connected_button">Try Again</string>
     <string name="disconnected_title">Device Disconnected</string>
-    <string name="disconnected_message">Your Flutter was disconnected from your Tablet. Please reconnect.</string>
+    <string name="disconnected_message">Your Flutter was disconnected from your tablet. Please reconnect.</string>
     <string name="disconnected_button">Connect Flutter</string>
     <string name="data_los">DATA LOGS</string>
     <string name="speaker">SPEAKER</string>

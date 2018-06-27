@@ -5,8 +5,10 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import org.cmucreatelab.android.volleycreatelab.StringFormRequest;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.HttpRequestHandler;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.EmailErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.NoWifiDialog;
 
 import java.io.File;
 import java.io.FileReader;
@@ -72,7 +76,7 @@ public class EmailHandler {
     }
 
 
-    public static void sendEmailIntent(Activity activity, String email, String message, File currentDataLog) {
+    public static void sendEmailIntent(FragmentActivity activity, String email, String message, File currentDataLog) {
         if (currentDataLog != null) {
             Uri uri = FileProvider.getUriForFile(activity, "org.cmucreatelab.flutter_android.fileprovider", currentDataLog);
             Intent intent = new Intent();
@@ -87,10 +91,8 @@ public class EmailHandler {
 
             List<ResolveInfo> resolveInfos = activity.getPackageManager().queryIntentActivities(intent, 0);
             if (resolveInfos.size() == 0) {
-                new AlertDialog.Builder(activity)
-                        .setMessage(R.string.no_mail_app)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
+                EmailErrorDialog emailErrorDialog = EmailErrorDialog.newInstance(EmailErrorDialog.EmailErrorType.NO_EMAIL_APP);
+                emailErrorDialog.show(activity.getSupportFragmentManager(), "tag");
             } else {
                 String packageName = resolveInfos.get(0).activityInfo.packageName;
                 String name = resolveInfos.get(0).activityInfo.name;
@@ -102,7 +104,7 @@ public class EmailHandler {
     }
 
 
-    public static void sendEmailServer(final Activity activity, String email, String message, File dataLog, String flutterName) {
+    public static void sendEmailServer(final FragmentActivity activity, String email, String message, File dataLog, String flutterName) {
         final HttpRequestHandler httpRequestHandler = GlobalHandler.getInstance(activity.getApplicationContext()).httpRequestHandler;
         int method = Request.Method.POST;
         String url = Constants.MAIL_SERVER_URL;
@@ -120,16 +122,12 @@ public class EmailHandler {
                 Log.d(Constants.LOG_TAG, "sendEmailServer.onErrorResponse");
                 httpRequestHandler.clearRequestsFromRequestQueue();
                 if (error == null || error.networkResponse == null) {
-                    new AlertDialog.Builder(activity)
-                            .setMessage(R.string.no_wifi_data_log_details)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
+                    NoWifiDialog noWifiDialog = NoWifiDialog.newInstance();
+                    noWifiDialog.show(activity.getSupportFragmentManager(), "tag");
                 } else {
                     Log.d(Constants.LOG_TAG, "sendEmailServer.onErrorResponse.statusCode " + error.networkResponse.statusCode);
-                    new AlertDialog.Builder(activity)
-                            .setMessage(R.string.email_server_error)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
+                    EmailErrorDialog emailErrorDialog = EmailErrorDialog.newInstance(EmailErrorDialog.EmailErrorType.GENERAL);
+                    emailErrorDialog.show(activity.getSupportFragmentManager(), "tag");
                 }
             }
         };

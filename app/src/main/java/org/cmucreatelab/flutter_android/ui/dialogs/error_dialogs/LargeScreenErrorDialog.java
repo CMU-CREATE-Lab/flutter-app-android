@@ -11,18 +11,18 @@ import org.cmucreatelab.flutter_android.R;
 public class LargeScreenErrorDialog extends ErrorDialog {
 
     public static LargeScreenErrorDialog newInstance() {
-        LargeScreenErrorDialog unsupportedBleErrorDialog = new LargeScreenErrorDialog();
+        LargeScreenErrorDialog largeScreenErrorDialog = new LargeScreenErrorDialog();
         Bundle args = new Bundle();
 
         args.putSerializable(ERROR_TITLE_KEY, R.string.error_large_screen_title);
         args.putSerializable(ERROR_TEXT_KEY, R.string.error_large_screen_text);
         args.putSerializable(ERROR_IMAGE_KEY, R.drawable.error_large_screen);
 
-        unsupportedBleErrorDialog.setArguments(args);
+        largeScreenErrorDialog.setArguments(args);
 
-        return unsupportedBleErrorDialog;
+        return largeScreenErrorDialog;
     }
-    public void onClickToDismiss()
+    public void onClickDismiss()
     {
         getActivity().finish();
     }

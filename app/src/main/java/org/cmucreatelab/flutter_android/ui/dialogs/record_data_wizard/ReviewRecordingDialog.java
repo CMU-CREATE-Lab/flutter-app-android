@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.TooManyDataPointsErrorDialog;
 
 import java.io.Serializable;
 
@@ -56,7 +57,6 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
     private int finalInterval, finalSample;
 
     private DataLogDetails dataLogDetails;
-    private InformationDialog informationDialog;
     private EmojiconEditText dataSetNameText;
     private EditText intervalsText;
     private EditText intervalSpinner;
@@ -196,16 +196,6 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
         timePeriodText.setKeyListener(null);
         timePeriodSpinner.setKeyListener(null);
 
-        informationDialog = InformationDialog.newInstance(
-                getString(R.string.a_lot_of_data_points),
-                getString(R.string.a_lot_of_data_points_details),
-                R.drawable.round_orange_button_bottom_right,
-                R.drawable.round_orange_button_bottom_left,
-                null,
-                warningDialogListener
-        );
-        informationDialog.setCancelable(false);
-
         return builder.create();
     }
 
@@ -245,7 +235,8 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
                 this.dismiss();
             } else {
                 Log.d(Constants.LOG_TAG, "about to show the warning dialog");
-                informationDialog.show(getFragmentManager(), "tag");
+                TooManyDataPointsErrorDialog tooManyDataPointsErrorDialog = TooManyDataPointsErrorDialog.newInstance(warningDialogListener);
+                tooManyDataPointsErrorDialog.show(getFragmentManager(), "tag");
             }
         }
     }
