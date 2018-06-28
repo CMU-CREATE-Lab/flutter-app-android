@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.old;
 
 import android.app.Dialog;
 import android.os.Bundle;

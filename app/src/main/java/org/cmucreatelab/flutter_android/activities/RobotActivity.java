@@ -42,7 +42,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.RelationshipWizardPageOne;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.old.RelationshipWizardPageOne;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
