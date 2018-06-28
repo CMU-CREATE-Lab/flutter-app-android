@@ -33,15 +33,17 @@ import butterknife.OnClick;
 public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private int selectedSensorPort = -1;
+    private ServoWizard.State wizardState;
+//    private int selectedSensorPort = -1;
+//
+//    public static final String SELECTED_SENSOR = "selected_sensor";
 
-    public static final String SELECTED_SENSOR = "selected_sensor";
 
-
-    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard) {
+    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState) {
         Bundle args = new Bundle();
         ChooseSensorOutputDialogWizard dialogWizard = new ChooseSensorOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -75,6 +77,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
+        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
         populateSensors(view);
 
         return builder.create();
@@ -95,15 +98,15 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     private int getSensorPortFromId(int id) {
         switch(id) {
             case R.id.linear_sensor_1:
-                return 0;
-            case R.id.linear_sensor_2:
                 return 1;
-            case R.id.linear_sensor_3:
+            case R.id.linear_sensor_2:
                 return 2;
+            case R.id.linear_sensor_3:
+                return 3;
             default:
                 Log.w(Constants.LOG_TAG, "could not match sensor port from id");
         }
-        return -1;
+        return 0;
     }
 
     @OnClick({R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3})
@@ -111,7 +114,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         // TODO @tasota actions
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSensor");
         selectedView(view);
-        this.selectedSensorPort = getSensorPortFromId(view.getId());
+        wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
     }
 
     @OnClick(R.id.button_next_page)
@@ -119,7 +122,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
         args.putInt("page",3);
-        args.putInt(SELECTED_SENSOR, selectedSensorPort);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
     }
 

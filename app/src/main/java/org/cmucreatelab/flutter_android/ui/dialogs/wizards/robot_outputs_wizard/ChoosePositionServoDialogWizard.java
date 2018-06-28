@@ -33,9 +33,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
     private int selectedValue = 0;
+    private ServoWizard.State wizardState;
     private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
-    public static final String SELECTED_VALUE = "selected_value";
+//    public static final String SELECTED_VALUE = "selected_value";
     public static final String DIALOG_TYPE = "dialog_type";
 
     enum OUTPUT_TYPE {
@@ -72,11 +73,12 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     //// END pointer helper
 
 
-    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, OUTPUT_TYPE type) {
+    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
         ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(DIALOG_TYPE, type);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -91,6 +93,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
+        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
         this.outputType = (OUTPUT_TYPE)(getArguments().getSerializable(DIALOG_TYPE));
 
         // views
@@ -113,12 +116,14 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     public void onClickSave() {
         Bundle args = new Bundle();
         if (this.outputType == OUTPUT_TYPE.MIN) {
+            wizardState.outputMin = selectedValue;
             args.putInt("page", 4);
         } else {
+            wizardState.outputMax = selectedValue;
             args.putInt("page", 0);
         }
         args.putSerializable(DIALOG_TYPE, outputType);
-        args.putInt(SELECTED_VALUE, selectedValue);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
     }
 

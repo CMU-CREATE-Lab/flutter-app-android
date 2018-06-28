@@ -14,8 +14,15 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
+import org.cmucreatelab.flutter_android.classes.relationships.Change;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
+import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
+import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
+import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
@@ -34,18 +41,17 @@ import butterknife.OnClick;
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
+    private ServoWizard.State wizardState;
+//    private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
+//
+//    public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
 
-    public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
 
-
-    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard) {
+    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState) {
         Bundle args = new Bundle();
         ChooseRelationshipOutputDialogWizard dialogWizard = new ChooseRelationshipOutputDialogWizard();
-//        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);
-//        relationshipDialog.setArguments(args);
-//        robotAct = serializable;
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -61,6 +67,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
+        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
 
         return builder.create();
     }
@@ -79,27 +86,27 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
 
-    private Relationship.Type getRelationshipFromId(int id) {
+    private Relationship getRelationshipFromId(int id) {
         switch(id) {
             case R.id.linear_proportional:
                 Log.w(Constants.LOG_TAG, "proportional");
-                return Relationship.Type.PROPORTIONAL;
+                return Proportional.getInstance();
             case R.id.linear_cumulative:
-                return Relationship.Type.CUMULATIVE;
+                return Cumulative.getInstance();
             case R.id.linear_change:
-                return Relationship.Type.CHANGE;
+                return Change.getInstance();
             case R.id.linear_frequency:
-                return Relationship.Type.FREQUENCY;
+                return Frequency.getInstance();
             case R.id.linear_amplitude:
-                return Relationship.Type.AMPLITUDE;
+                return Amplitude.getInstance();
             case R.id.linear_constant:
-                return Relationship.Type.CONSTANT;
+                return Constant.getInstance();
             case R.id.linear_switch:
-                return Relationship.Type.SWITCH;
+                return Switch.getInstance();
             default:
                 Log.w(Constants.LOG_TAG, "found no relationship from getRelationshipFromId");
         }
-        return Relationship.Type.NO_RELATIONSHIP;
+        return NoRelationship.getInstance();
     }
 
     // TODO @tasota actions
@@ -109,7 +116,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     public void onClickRelationship(View view) {
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         selectedView(view);
-        this.selectedRelationshipType = getRelationshipFromId(view.getId());
+        wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
 
@@ -118,7 +125,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
         args.putInt("page",2);
-        args.putSerializable(SELECTED_RELATIONSHIP_TYPE, selectedRelationshipType);
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
     }
 
