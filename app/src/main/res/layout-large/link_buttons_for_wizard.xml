@@ -33,7 +33,6 @@
         android:layout_gravity="end"
         android:layout_weight="1"
         android:background="@drawable/round_green_button_bottom_right"
-        android:enabled="false"
         android:text="@string/next"
         android:textColor="@drawable/white_text_enable_disable" />
 

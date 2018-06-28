@@ -47,6 +47,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDia
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ServoWizard;
 
 import java.util.ArrayList;
 
@@ -335,9 +336,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
         if (portNumber >= 0 || portNumber <= 2) {
             if (servos[portNumber-1].isLinked() == false) {
-                // Show the user a step by step sequence of how to set up the servo
-                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1],null, null, this);
-                wizardDialog.show(getSupportFragmentManager(), "tag");
+                // TODO @tasota start wizard
+                new ServoWizard(this,servos[portNumber - 1]).start();
+//                // Show the user a step by step sequence of how to set up the servo
+//                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1],null, null, this);
+//                wizardDialog.show(getSupportFragmentManager(), "tag");
 
             }
             else {

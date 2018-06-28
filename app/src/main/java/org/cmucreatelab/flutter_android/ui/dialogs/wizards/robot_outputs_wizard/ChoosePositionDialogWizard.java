@@ -17,7 +17,7 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizardOld;
 
 import butterknife.ButterKnife;
 
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  *
  * The same class as ChoosePositionDialog.java except it will extend a different baseResizable Dialog
  */
-public abstract class ChoosePositionDialogWizard extends BaseResizableDialogWizard {
+public abstract class ChoosePositionDialogWizard extends BaseResizableDialogWizardOld {
 
     public static String POSITION_LISTENER_KEY = "position_listener";
     public static String POSITION_KEY = "position";

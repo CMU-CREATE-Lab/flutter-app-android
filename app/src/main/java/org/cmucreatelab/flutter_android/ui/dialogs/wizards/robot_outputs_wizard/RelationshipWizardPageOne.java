@@ -27,7 +27,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizardOld;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.AdvancedSettingsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
@@ -43,7 +43,7 @@ import butterknife.OnClick;
  *
  */
 
-public class RelationshipWizardPageOne extends BaseResizableDialogWizard implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener, MinPositionWizardPageThree.DialogMinPositionListener {
+public class RelationshipWizardPageOne extends BaseResizableDialogWizardOld implements View.OnClickListener, Serializable, SensorWizardPageTwo.DialogSensorListener, MinPositionWizardPageThree.DialogMinPositionListener {
 
     private Relationship relationship;
     private DialogRelationshipListener relationshipListener;

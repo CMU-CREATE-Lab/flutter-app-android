@@ -20,7 +20,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizardOld;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialogStateHelper;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 
@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * A Dialog that shows which sensor is to be linked with an output.
  * Called by the relationship dialog after clicking the "Next" button.
  */
-public class SensorWizardPageTwo extends BaseResizableDialogWizard implements
+public class SensorWizardPageTwo extends BaseResizableDialogWizardOld implements
         View.OnClickListener, Serializable, MinPositionWizardPageThree.DialogMinPositionListener  {
 
 
