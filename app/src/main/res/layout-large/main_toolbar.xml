@@ -18,6 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/drawer_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingTop="15dp"
+                android:paddingStart="15dp"
+                android:paddingBottom="15dp"
+                android:paddingEnd="15dp"
+                android:src="@drawable/baseline_menu_white_18dp"/>
+
             <LinearLayout
                 android:id="@+id/text_menu_robot_container"
                 android:layout_width="wrap_content"

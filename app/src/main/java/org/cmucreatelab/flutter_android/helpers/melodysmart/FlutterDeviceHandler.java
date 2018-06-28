@@ -9,7 +9,7 @@ import org.cmucreatelab.android.melodysmart.listeners.DeviceListener;
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.ErrorDisconnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnectFlutterDialog;
 
 /**
  * Created by mike on 2/9/17.
@@ -37,7 +37,8 @@ public class FlutterDeviceHandler extends DeviceHandler<MessageQueue<MelodySmart
     @Override
     public void disconnect() {
         Log.v(Constants.LOG_TAG, "FlutterDeviceHandler.disconnect");
-        ErrorDisconnectedDialog.displayDialog(globalHandler.sessionHandler.getSession().getCurrentActivity());
+        UnableToConnectFlutterDialog unableToConnectFlutterDialog = UnableToConnectFlutterDialog.newInstance(UnableToConnectFlutterDialog.FlutterIssueType.TIMEOUT_DISCONNECTED);
+        unableToConnectFlutterDialog.show(globalHandler.sessionHandler.getSession().getCurrentActivity().getSupportFragmentManager(), "tag");
     }
 
 

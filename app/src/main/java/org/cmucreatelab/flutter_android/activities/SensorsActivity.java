@@ -23,9 +23,9 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSampleDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.BlueSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
-import org.cmucreatelab.flutter_android.ui.dialogs.NoFlutterConnectedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.DataSnapshotDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.RecordingWarningSensorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.SensorTypeDialog;
@@ -190,7 +190,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         sensorMenuEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.menu_icon_sensor, 0, 0, 0);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
+            ConnectFlutterDialog connectFlutterDialog = ConnectFlutterDialog.newInstance(ConnectFlutterDialog.ConnectFlutterPreviousScreen.SENSORS);
+            connectFlutterDialog.show(getSupportFragmentManager(), "tag");
         } else {
             this.session = globalHandler.sessionHandler.getSession();
             //session.setFlutterMessageListener(this);
@@ -233,7 +234,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
         ImageView flutterStatusIcon = (ImageView)findViewById(R.id.image_flutter_status_icon);
 
         if (!globalHandler.melodySmartDeviceHandler.isConnected()) {
-            NoFlutterConnectedDialog.displayDialog(this, R.string.no_flutter_sensor);
+            ConnectFlutterDialog connectFlutterDialog = ConnectFlutterDialog.newInstance(ConnectFlutterDialog.ConnectFlutterPreviousScreen.SENSORS);
+            connectFlutterDialog.show(getSupportFragmentManager(), "tag");
 
             // Flutter status icon (upper right)
             flutterStatusText.setText(R.string.connection_disconnected);

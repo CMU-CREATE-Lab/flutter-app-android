@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -20,6 +23,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.NoWifiDialog;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;

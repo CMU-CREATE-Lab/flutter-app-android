@@ -11,7 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,7 +28,11 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ErrorNotifcationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.BluetoothErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.EmailErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.LargeScreenErrorDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnectFlutterDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnsupportedBleErrorDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,7 +47,6 @@ import butterknife.Optional;
  * AppLandingActivity
  *
  * An activity that can scan for flutters nearby and connect to them.
- *
  */
 public class AppLandingActivity extends BaseNavigationActivity implements FlutterConnectListener {
 
@@ -220,15 +223,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
 
     private void showAlertBleUnsupported() {
-        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(10, null);
-        errorDialog.show(getSupportFragmentManager(), "tag");
+        UnsupportedBleErrorDialog unsupportedBleErrorDialog = UnsupportedBleErrorDialog.newInstance();
+        unsupportedBleErrorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
     private void showAlertBluetoothDisabled(final BluetoothAdapter bluetoothAdapter) {
-        ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(1, bluetoothAdapter);
-        errorDialog.show(getSupportFragmentManager(), "tag");
-        errorDialog.setCancelable(false);
+        BluetoothErrorDialog bluetoothErrorDialog = BluetoothErrorDialog.newInstance(bluetoothAdapter);
+        bluetoothErrorDialog.show(getSupportFragmentManager(), "tag");
     }
 
 
@@ -382,10 +384,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
 
         // alert dialog for notifying user large screen is needed
-        if (layoutLarge == false && appearsOnce == false) {
+        if (!layoutLarge && !appearsOnce) {
             appearsOnce = true;
-            ErrorNotifcationDialog errorDialog = ErrorNotifcationDialog.newInstance(7, null);
-            errorDialog.show(getSupportFragmentManager(), "tag");
+            LargeScreenErrorDialog largeScreenErrorDialog = LargeScreenErrorDialog.newInstance();
+            largeScreenErrorDialog.show(getSupportFragmentManager(), "tag");
         }
     }
 
@@ -404,7 +406,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         globalHandler.sessionHandler.dismissProgressDialog();
     }
 
-    @Optional @OnClick(R.id.button_scan)
+    @Optional
+    @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
         scanForDevice(true);
@@ -447,7 +450,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
 
     @Override
     public void onBackPressed() {
-        // Disable back button for this Activity.
+        // Disable back button for this Activity except for the nav drawer.
+        if (drawerLayout.isDrawerOpen(Gravity.START))
+            drawerLayout.closeDrawer(Gravity.START);
     }
 
 

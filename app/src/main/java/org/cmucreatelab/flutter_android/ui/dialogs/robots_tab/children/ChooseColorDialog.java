@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -14,21 +13,25 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.color_picker.dialog.ColorPickerDialogFragment;
+
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
+
+import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by Steve on 9/7/2016.
- *
+ * <p>
  * ChooseColorDialog
- *
+ * <p>
  * An abstract Dialog that handles the color picking.
  */
-public abstract class ChooseColorDialog extends BaseResizableDialog {
+public abstract class ChooseColorDialog extends BaseResizableDialog implements ColorPickerDialogFragment.ColorPickerDialogListener, Serializable {
     protected static final String COLOR_KEY = "color_listener";
     protected static final String PORT_NUMBER_KEY = "port_number";
     protected static final String SELECTED_COLOR_KEY = "selected_color";
@@ -37,7 +40,8 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
     protected SetColorListener setColorListener;
 
     public static class DrawableColor {
-        final int color, imageView, swatch,swatchSelected;
+        final int color, imageView, swatch, swatchSelected;
+
         DrawableColor(int color, int imageView, int swatch, int swatchSelected) {
             this.color = color;
             this.imageView = imageView;
@@ -45,6 +49,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
             this.swatchSelected = swatchSelected;
         }
     }
+
     private SparseArray<DrawableColor> colorSwatches = new SparseArray() {{
         put(Constants.ColorSwatches.RED, new DrawableColor(Constants.ColorSwatches.RED, R.id.imageView_red, R.drawable.swatch_red, R.drawable.swatch_red_selected));
         put(Constants.ColorSwatches.ORANGE, new DrawableColor(Constants.ColorSwatches.ORANGE, R.id.imageView_orange, R.drawable.swatch_orange, R.drawable.swatch_orange_selected));
@@ -73,25 +78,39 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
         int b = (color >> 0) & 0xFF;
-        return new int[] {r, g, b};
+        return new int[]{r, g, b};
     }
 
 
     private void selectColor(DrawableColor drawableColor) {
         if (dialogView == null) {
-            Log.e(Constants.LOG_TAG,"cannot selectColor when dialogView is null");
+            Log.e(Constants.LOG_TAG, "cannot selectColor when dialogView is null");
             return;
         }
-        if (currentlySelected != null) {
-            ((ImageView)dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatch);
+        if (currentlySelected != null && currentlySelected.imageView != -1) {
+            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatch);
         }
         this.currentlySelected = drawableColor;
-        ((ImageView)dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatchSelected);
+        ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatchSelected);
 
         finalRGB = Constants.COLOR_PICKER_FLUTTER_RGB.get(currentlySelected.color);
         frameFinalColor.setBackgroundColor(currentlySelected.color);
     }
 
+    private void selectCustomColor(int color) {
+        if (currentlySelected != null && currentlySelected.imageView != -1) {
+            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatch);
+        }
+        this.currentlySelected = new DrawableColor(color, -1, -1, -1);
+
+        int[] rgb = intToRGB(color);
+        int r = rgb[0];
+        int g = rgb[1];
+        int b = rgb[2];
+
+        finalRGB = new Integer[]{r, g, b};
+        frameFinalColor.setBackgroundColor(color);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -103,11 +122,12 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
         String selectedColor = (String) getArguments().getSerializable(SELECTED_COLOR_KEY);
         Log.d(Constants.LOG_TAG, "color: " + selectedColor);
         int color = Color.parseColor(selectedColor);
-        if (colorSwatches.indexOfKey(Constants.TRUE_HEX_TO_SWATCH_HEX.get(color)) >= 0) {
+
+        Integer swatchHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(color);
+        if (swatchHex != null && colorSwatches.indexOfKey(swatchHex) >= 0) {
             selectColor(colorSwatches.get(Constants.TRUE_HEX_TO_SWATCH_HEX.get(color)));
         } else {
-            Log.w(Constants.LOG_TAG,"could not find color swatch for color="+color);
-            selectColor(colorSwatches.get(Constants.ColorSwatches.WHITE));
+            selectCustomColor(color);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
@@ -131,25 +151,13 @@ public abstract class ChooseColorDialog extends BaseResizableDialog {
 
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
-/*        ColorPickerDialogFragment f = ColorPickerDialogFragment
-                .newInstance(0, null, null, Color.BLACK, true);
-        f.show(getFragmentManager(), "d");*/
+        ColorPickerDialogFragment f = ColorPickerDialogFragment
+                .newInstance(0, "Advanced Color Picker", null, currentlySelected.color, false, this);
+        f.show(getActivity().getFragmentManager(), "d");
     }
 
-    public void onDialogDismissed(int dialogId)
-    {
-
-    }
-
-    public void onColorSelected(int dialogId, int color)
-    {
-        int r = (color >> 16) & 0xFF;
-        int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
-        Log.i("R", Integer.toString(r));
-        Log.i("G", Integer.toString(g));
-        Log.i("B", Integer.toString(b));
-        frameFinalColor.setBackgroundColor(color);
+    public void onColorSelected(int dialogId, int color) {
+        selectCustomColor(color);
     }
 
     @OnClick(R.id.imageView_red)

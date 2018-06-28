@@ -296,17 +296,32 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         switch (port) {
             case 1:
                 isLed1Changed = true;
-                led1SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led1SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led1SwatchImage.clearColorFilter();
+                    led1SwatchImage.setImageResource(swatch);
+                }
                 led1RGB = rgb;
                 break;
             case 2:
                 isLed2Changed = true;
-                led2SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led2SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led2SwatchImage.clearColorFilter();
+                    led2SwatchImage.setImageResource(swatch);
+                }
                 led2RGB = rgb;
                 break;
             case 3:
                 isLed3Changed = true;
-                led3SwatchImage.setImageResource(swatch);
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                    led3SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
+                else {
+                    led3SwatchImage.clearColorFilter();
+                    led3SwatchImage.setImageResource(swatch);
+                }
                 led3RGB = rgb;
                 break;
         }
@@ -314,7 +329,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         ArrayList<MelodySmartMessage> ledMessages = new ArrayList<>();
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getRedLed(), rgb[0]));
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getGreenLed(), rgb[1]));
-        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[0]));
+        ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[2]));
 
         for (MelodySmartMessage message : ledMessages)
             globalHandler.melodySmartDeviceHandler.addMessage(message);
@@ -332,22 +347,32 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private void revertRelationships() {
         ArrayList<MelodySmartMessage> messages = new ArrayList<>();
         if (isServo1Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(servos[0]));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     servos[0], servos[0].getSettings()));
             Log.i("Changed", "SERVO 1");
         }
         if (isServo2Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(servos[1]));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     servos[1], servos[1].getSettings()));
             Log.i("Changed", "SERVO 2");
         }
         if (isServo3Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(servos[2]));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     servos[2], servos[2].getSettings()));
             Log.i("Changed", "SERVO 3");
         }
 
         if (isLed1Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(leds[0].getRedLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[0].getGreenLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[0].getBlueLed()));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     leds[0].getRedLed(), leds[0].getRedLed().getSettings()));
             messages.add(MessageConstructor.constructRelationshipMessage(
@@ -358,6 +383,10 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
 
         if (isLed2Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(leds[1].getRedLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[1].getGreenLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[1].getBlueLed()));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     leds[1].getRedLed(), leds[1].getRedLed().getSettings()));
             messages.add(MessageConstructor.constructRelationshipMessage(
@@ -368,6 +397,10 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
 
         if (isLed3Changed) {
+            messages.add(MessageConstructor.constructRemoveRelation(leds[2].getRedLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[2].getGreenLed()));
+            messages.add(MessageConstructor.constructRemoveRelation(leds[2].getBlueLed()));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     leds[2].getRedLed(), leds[2].getRedLed().getSettings()));
             messages.add(MessageConstructor.constructRelationshipMessage(
@@ -378,12 +411,15 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
 
         if (isVolumeChanged) {
+            messages.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
+
             messages.add(MessageConstructor.constructRelationshipMessage(
                     speaker.getVolume(), speaker.getVolume().getSettings()));
             Log.i("Changed", "VOLUME");
         }
 
-        //always updates pitch as it is changed in init
+        //always updates pitch as it is always changed in init
+        messages.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
 
         messages.add(MessageConstructor.constructRelationshipMessage(
                 speaker.getPitch(), speaker.getPitch().getSettings()));

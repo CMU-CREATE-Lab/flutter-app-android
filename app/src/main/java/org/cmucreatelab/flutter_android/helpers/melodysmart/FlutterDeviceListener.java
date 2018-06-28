@@ -14,8 +14,7 @@ import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.ErrorDisconnectedDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.ErrorNotConnectedDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnectFlutterDialog;
 
 /**
  * Created by mike on 2/9/17.
@@ -47,9 +46,11 @@ public class FlutterDeviceListener extends DeviceListener {
                 @Override
                 public void run() {
                     if (bleError.getType() == BLEError.Type.UNKNOWN_ERROR) {
-                        ErrorNotConnectedDialog.displayDialog(session.getCurrentActivity());
+                        UnableToConnectFlutterDialog unableToConnectFlutterDialog = UnableToConnectFlutterDialog.newInstance(UnableToConnectFlutterDialog.FlutterIssueType.UNKNOWN_NOT_CONNECTED);
+                        unableToConnectFlutterDialog.show(session.getCurrentActivity().getSupportFragmentManager(), "tag");
                     } else if (bleError.getType() == BLEError.Type.TIMEOUT_ERROR) {
-                        ErrorDisconnectedDialog.displayDialog(session.getCurrentActivity());
+                        UnableToConnectFlutterDialog unableToConnectFlutterDialog = UnableToConnectFlutterDialog.newInstance(UnableToConnectFlutterDialog.FlutterIssueType.TIMEOUT_DISCONNECTED);
+                        unableToConnectFlutterDialog.show(session.getCurrentActivity().getSupportFragmentManager(), "tag");
                     } else {
                         Log.w(Constants.LOG_TAG, "Could not determine BLEError.Type; defaulting to generic popup with unhelpful error message.");
                         AlertDialog.Builder adb = new AlertDialog.Builder(new ContextThemeWrapper(session.getCurrentActivity(), R.style.AppTheme));
@@ -63,6 +64,9 @@ public class FlutterDeviceListener extends DeviceListener {
                         });
                         AlertDialog dialog = adb.create();
                         dialog.show();
+
+                        UnableToConnectFlutterDialog unableToConnectFlutterDialog = UnableToConnectFlutterDialog.newInstance(UnableToConnectFlutterDialog.FlutterIssueType.TIMEOUT_DISCONNECTED);
+                        unableToConnectFlutterDialog.show(session.getCurrentActivity().getSupportFragmentManager(), "tag");
                     }
                 }
             });

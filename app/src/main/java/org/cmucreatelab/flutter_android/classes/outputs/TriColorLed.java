@@ -190,6 +190,11 @@ public class TriColorLed implements FlutterOutput {
         return R.drawable.swatch_black_selected;
     }
 
+    public static boolean isSwatchInExistingSelection(String colorHex) {
+        int color = Color.parseColor(colorHex);
+
+        return Constants.COLOR_RES.containsKey(color);
+    }
 
     public static String getTextFromColor(String colorHex) {
         String result;
