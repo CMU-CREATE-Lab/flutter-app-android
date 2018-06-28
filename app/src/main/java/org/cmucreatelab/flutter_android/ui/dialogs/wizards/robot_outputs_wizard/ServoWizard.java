@@ -34,7 +34,7 @@ public class ServoWizard implements Serializable {
             case 2:
                 return ChooseSensorOutputDialogWizard.newInstance(this, servo,null, null, activity);
             case 3:
-                break;
+                return ChoosePositionServoDialogWizard.newInstance(this, servo,null, null, activity);
             case 4:
                 break;
         }

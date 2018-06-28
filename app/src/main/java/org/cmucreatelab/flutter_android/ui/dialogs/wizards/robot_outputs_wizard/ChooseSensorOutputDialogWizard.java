@@ -118,7 +118,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     public void onClickSave() {
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        args.putInt("page",1);
+        args.putInt("page",3);
         args.putInt(SELECTED_SENSOR, selectedSensorPort);
         changeDialog(args);
     }
