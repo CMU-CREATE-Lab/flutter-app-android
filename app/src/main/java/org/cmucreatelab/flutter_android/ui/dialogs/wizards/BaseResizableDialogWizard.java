@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

@@ -17,10 +17,9 @@ import android.widget.TextView;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Mohit on 6/7/2018.
