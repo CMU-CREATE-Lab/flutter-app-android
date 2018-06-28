@@ -98,9 +98,9 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
     /* Listeners */
 
 
-    protected InformationDialog.DismissAndCancelWarningListener warningDialogListener = new InformationDialog.DismissAndCancelWarningListener() {
+    protected TooManyDataPointsErrorDialog.DismissWarningListener warningDialogListener = new TooManyDataPointsErrorDialog.DismissWarningListener() {
         @Override
-        public void onPositiveButton() {
+        public void onOkButton() {
             Log.d(Constants.LOG_TAG, "this is getting dismissed");
             dialogRecordListener.onRecordData(dataSetNameText.getText().toString(), finalInterval, finalSample);
             DataLoggingConfirmation dataLoggingConfirmation = DataLoggingConfirmation.newInstance((Serializable) dismissDialogListener, wizardType);

@@ -6,11 +6,15 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.RecordingWarningDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.StopRecordingErrorDialog;
 
 import java.io.Serializable;
+
+import butterknife.OnClick;
 
 /**
  * Created by Steve on 2/27/2017.
@@ -41,6 +45,13 @@ public class RecordingWarningDataDialog extends RecordingWarningDialog {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         buttonOk.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.round_orange_button_bottom_right));
         return dialog;
+    }
+
+    @Override
+    public void onClickCancel() {
+        StopRecordingErrorDialog stopRecordingErrorDialog = StopRecordingErrorDialog.newInstance();
+        stopRecordingErrorDialog.show(getFragmentManager(), "tag");
+        dismiss();
     }
 
 }

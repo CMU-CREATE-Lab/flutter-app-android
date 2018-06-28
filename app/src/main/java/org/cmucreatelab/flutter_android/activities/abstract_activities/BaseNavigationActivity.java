@@ -27,9 +27,9 @@ import butterknife.Optional;
 
 /**
  * Created by Steve on 8/22/2016.
- * <p>
+ *
  * BaseNavigationActivity
- * <p>
+ *
  * An abstract activity used for the basic navigation bar on the bottom of most activities.
  */
 public abstract class BaseNavigationActivity extends AppCompatActivity {

@@ -9,6 +9,10 @@ import java.util.TimerTask;
 
 /**
  * Created by Steve on 11/23/2016.
+ *
+ * BaseSensorReadingActivity
+ *
+ * An abstract class for reading sensors that also includes the navigation bar.
  */
 public abstract class BaseSensorReadingActivity extends BaseNavigationActivity implements Serializable {
 

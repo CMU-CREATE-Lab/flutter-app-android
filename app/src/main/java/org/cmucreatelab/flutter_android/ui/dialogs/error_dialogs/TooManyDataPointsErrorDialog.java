@@ -2,24 +2,20 @@ package org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs;
 
 import android.os.Bundle;
 
-import com.rockerhieu.emojicon.EmojiconEditText;
-
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
-import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.DataLoggingConfirmation;
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
 
 import java.io.Serializable;
 
 /**
  * Created by parvs on 6/25/2018.
+ *
+ *
+ *
  */
-
 public class TooManyDataPointsErrorDialog extends ErrorConfirmationDialog {
-    static InformationDialog.DismissAndCancelWarningListener dismissAndCancelWarningListener;
+    static DismissWarningListener dismissAndCancelWarningListener;
 
-    public static TooManyDataPointsErrorDialog newInstance(InformationDialog.DismissAndCancelWarningListener dismissWarningListener) {
+    public static TooManyDataPointsErrorDialog newInstance(DismissWarningListener dismissWarningListener) {
         TooManyDataPointsErrorDialog tooManyDataPointsErrorDialog = new TooManyDataPointsErrorDialog();
         Bundle args = new Bundle();
 
@@ -34,14 +30,21 @@ public class TooManyDataPointsErrorDialog extends ErrorConfirmationDialog {
         return tooManyDataPointsErrorDialog;
     }
 
-    public void onClickConfirm()
-    {
-        dismissAndCancelWarningListener.onPositiveButton();
+    public void onClickConfirm() {
+        dismissAndCancelWarningListener.onOkButton();
         dismiss();
     }
 
-    public void onClickCancel()
-    {
+    public void onClickCancel() {
         this.dismiss();
+    }
+
+
+    /**
+     * This defines what should happen on dismiss and in onCancel.
+     * This listener is not required.
+     */
+    public interface DismissWarningListener extends Serializable {
+        void onOkButton();
     }
 }

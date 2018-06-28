@@ -174,7 +174,7 @@
     <string name="set_pitch">Set Pitch</string>
     <string name="warning">Warning</string>
     <string name="overwrite_message">The Flutter is currently recording data. Do you want it to stop?</string>
-    <string name="stop_the_current_recoring">Stop the current recording</string>
+    <string name="stop_the_current_recoring">Stop Recording</string>
     <string name="keep_the_current_recording">Keep the current recording</string>
     <string name="connect_step_one">STEP 1:</string>
     <string name="connect_step_two">STEP 2:</string>
