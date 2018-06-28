@@ -14,6 +14,8 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
@@ -21,6 +23,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.Wizard;
 
 import java.io.Serializable;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -31,6 +34,7 @@ import butterknife.OnClick;
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
+    private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
 
 
     public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
@@ -73,6 +77,28 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
 
+    private Relationship.Type getRelationshipFromId(int id) {
+        switch(id) {
+            case R.id.linear_proportional:
+                Log.w(Constants.LOG_TAG, "proportional");
+                return Relationship.Type.PROPORTIONAL;
+            case R.id.linear_cumulative:
+                return Relationship.Type.CUMULATIVE;
+            case R.id.linear_change:
+                return Relationship.Type.CHANGE;
+            case R.id.linear_frequency:
+                return Relationship.Type.FREQUENCY;
+            case R.id.linear_amplitude:
+                return Relationship.Type.AMPLITUDE;
+            case R.id.linear_constant:
+                return Relationship.Type.CONSTANT;
+            case R.id.linear_switch:
+                return Relationship.Type.SWITCH;
+            default:
+                Log.w(Constants.LOG_TAG, "found no relationship from getRelationshipFromId");
+        }
+        return Relationship.Type.NO_RELATIONSHIP;
+    }
 
     // TODO @tasota actions
     @OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
@@ -81,6 +107,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     public void onClickRelationship(View view) {
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         selectedView(view);
+        this.selectedRelationshipType = getRelationshipFromId(view.getId());
     }
 
 
