@@ -1,14 +1,17 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
+import org.cmucreatelab.flutter_android.classes.outputs.Output;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
+import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizardOld;
@@ -27,6 +30,7 @@ public class ServoWizard implements Serializable {
 
     public class State implements Serializable {
         private BaseResizableDialogWizard currentDialog;
+        public Interactions interaction;
         public Relationship relationshipType = NoRelationship.getInstance();
         public int selectedSensorPort=0,
                 outputMin=0,
@@ -34,22 +38,58 @@ public class ServoWizard implements Serializable {
     }
     public static final String STATE_KEY = "servo_wizard_state";
 
+    enum Interactions {
+        CLICK_BACK, CLICK_NEXT, CLICK_CANCEL
+    }
 
-    private BaseResizableDialogWizard goTo(int page) {
+    private BaseResizableDialogWizard findNext() {
         // TODO @tasota consider all cases and default dialog (not null)
-        switch(page) {
-            case 1:
-                return ChooseRelationshipOutputDialogWizard.newInstance(this, currentState);
-            case 2:
-                return ChooseSensorOutputDialogWizard.newInstance(this, currentState);
-            case 3:
-                return ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
-            case 4:
-                return ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
-            default:
-                break;
+        BaseResizableDialogWizard result = null;
+        if (currentState.currentDialog == null) {
+            Log.e(Constants.LOG_TAG, "found null in findNext");
+        } else if (currentState.currentDialog.getClass() == ChooseRelationshipOutputDialogWizard.class) {
+            if (currentState.interaction == Interactions.CLICK_NEXT) {
+                result = ChooseSensorOutputDialogWizard.newInstance(this, currentState);
+            }
+        } else if (currentState.currentDialog.getClass() == ChooseSensorOutputDialogWizard.class) {
+            if (currentState.interaction == Interactions.CLICK_NEXT) {
+                result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
+            }
+        }else if (currentState.currentDialog.getClass() == ChoosePositionServoDialogWizard.class) {
+            ChoosePositionServoDialogWizard positionDialog = (ChoosePositionServoDialogWizard)currentState.currentDialog;
+
+            if (positionDialog.getOutputType() == ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN) {
+                if (currentState.interaction == Interactions.CLICK_NEXT) {
+                    result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
+                }
+            } else {
+                if (currentState.interaction == Interactions.CLICK_NEXT) {
+                    // finish
+                }
+            }
+        } else {
+            Log.e(Constants.LOG_TAG, "did not match class in findNext: "+currentState.currentDialog.getClass());
         }
-        return null;
+
+        return result;
+    }
+
+
+    private static void generateSettings(State currentState, Output output) {
+        // TODO @tasota avoid crash when something wasn't set
+        if (currentState.relationshipType.getClass() == NoRelationship.class) {
+            currentState.relationshipType = Proportional.getInstance();
+        }
+        if (currentState.selectedSensorPort < 1 || currentState.selectedSensorPort > 3) {
+            currentState.selectedSensorPort = 1;
+        }
+
+        SettingsProportional newSettings = SettingsProportional.newInstance(output.getSettings());
+        newSettings.setSensorPortNumber(currentState.selectedSensorPort);
+        newSettings.setOutputMin(currentState.outputMin);
+        newSettings.setOutputMax(currentState.outputMax);
+        output.setSettings( Settings.newInstance(newSettings, currentState.relationshipType) );
+        output.setIsLinked(true, output);
     }
 
 
@@ -60,35 +100,21 @@ public class ServoWizard implements Serializable {
     }
 
     public void start() {
-        currentState.currentDialog = goTo(1);
+//        currentState.currentDialog = goTo(1);
+        currentState.currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this, currentState);
         currentState.currentDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
     public void changeDialog(Bundle options) {
-        int page = options.getInt("page");
         this.currentState = (State) options.getSerializable(STATE_KEY);
-        BaseResizableDialogWizard nextDialog = goTo(page);
+//        BaseResizableDialogWizard nextDialog = goTo(page);
+        BaseResizableDialogWizard nextDialog = findNext();
         if (nextDialog == null) {
             // finish
-
-            // TODO @tasota avoid crash when something wasn't set
-            if (currentState.relationshipType.getClass() == NoRelationship.class) {
-                currentState.relationshipType = Proportional.getInstance();
-            }
-            if (currentState.selectedSensorPort < 1 || currentState.selectedSensorPort > 3) {
-                currentState.selectedSensorPort = 1;
-            }
-
-            SettingsProportional newSettings = SettingsProportional.newInstance(servo.getSettings());
-            newSettings.setSensorPortNumber(currentState.selectedSensorPort);
-            newSettings.setOutputMin(currentState.outputMin);
-            newSettings.setOutputMax(currentState.outputMax);
-            servo.setSettings( Settings.newInstance(newSettings, currentState.relationshipType) );
-            servo.setIsLinked(true, servo);
+            generateSettings(this.currentState, this.servo);
 
             ServoDialog dialog = ServoDialog.newInstance(servo, activity, false);
             dialog.show(activity.getSupportFragmentManager(), "tag");
-
             currentState.currentDialog.dismiss();
         } else {
             nextDialog.show(activity.getSupportFragmentManager(), "tag");

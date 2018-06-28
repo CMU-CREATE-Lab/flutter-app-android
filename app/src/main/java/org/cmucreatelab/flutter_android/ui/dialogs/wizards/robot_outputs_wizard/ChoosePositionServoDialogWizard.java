@@ -34,6 +34,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     private View dialogView;
     private int selectedValue = 0;
     private ServoWizard.State wizardState;
+
     private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
 //    public static final String SELECTED_VALUE = "selected_value";
@@ -114,17 +115,20 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
+        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Bundle args = new Bundle();
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizardState.outputMin = selectedValue;
-            args.putInt("page", 4);
         } else {
             wizardState.outputMax = selectedValue;
-            args.putInt("page", 0);
         }
         args.putSerializable(DIALOG_TYPE, outputType);
         args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
+    }
+
+    public OUTPUT_TYPE getOutputType() {
+        return outputType;
     }
 
 }

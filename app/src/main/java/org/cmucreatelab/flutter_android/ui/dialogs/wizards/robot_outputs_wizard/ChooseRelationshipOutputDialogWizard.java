@@ -122,9 +122,9 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
     @OnClick(R.id.button_save_link)
     public void onClickSave() {
+        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        args.putInt("page",2);
         args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
     }

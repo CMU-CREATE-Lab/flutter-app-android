@@ -119,9 +119,9 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
+        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        args.putInt("page",3);
         args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         changeDialog(args);
     }
