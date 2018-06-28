@@ -23,22 +23,4 @@
 
     <item name="fluttergreen" type="color">#63bd6b</item>
 
-    <integer-array name="androidcolors">
-        <item>@color/blue</item>
-        <item>@color/purple</item>
-        <item>@color/green</item>
-        <item>@color/orange</item>
-        <item>@color/light_orange</item>
-        <item>@color/red</item>
-        <item>@color/darkblue</item>
-        <item>@color/darkpurple</item>
-        <item>@color/darkgreen</item>
-        <item>@color/darkorange</item>
-        <item>@color/darkred</item>
-        <item>@color/white</item>
-        <item>@color/gray</item>
-        <item>@color/darkgray</item>
-        <item>@color/black</item>
-    </integer-array>
-
 </resources>
