@@ -36,6 +36,8 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     private View dialogView;
     private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
 
+    public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
+
 
     public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
         Bundle args = new Bundle();
@@ -116,6 +118,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
         args.putInt("page",2);
+        args.putSerializable(SELECTED_RELATIONSHIP_TYPE, selectedRelationshipType);
         changeDialog(args);
     }
 
