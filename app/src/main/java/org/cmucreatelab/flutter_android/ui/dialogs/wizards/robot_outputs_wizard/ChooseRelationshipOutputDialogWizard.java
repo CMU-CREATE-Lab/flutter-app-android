@@ -39,7 +39,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
 
 
-    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
+    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard) {
         Bundle args = new Bundle();
         ChooseRelationshipOutputDialogWizard dialogWizard = new ChooseRelationshipOutputDialogWizard();
 //        args.putSerializable(Constants.SerializableKeys.RELATIONSHIP_KEY, serializable);

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
+import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizardOld;
 
@@ -30,12 +32,14 @@ public class ServoWizard implements Serializable {
         // TODO @tasota consider all cases and default dialog (not null)
         switch(page) {
             case 1:
-                return ChooseRelationshipOutputDialogWizard.newInstance(this, servo,null, null, activity);
+                return ChooseRelationshipOutputDialogWizard.newInstance(this);
             case 2:
-                return ChooseSensorOutputDialogWizard.newInstance(this, servo,null, null, activity);
+                return ChooseSensorOutputDialogWizard.newInstance(this);
             case 3:
-                return ChoosePositionServoDialogWizard.newInstance(this, servo,null, null, activity);
+                return ChoosePositionServoDialogWizard.newInstance(this, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
             case 4:
+                return ChoosePositionServoDialogWizard.newInstance(this, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
+            default:
                 break;
         }
         return null;
@@ -44,7 +48,7 @@ public class ServoWizard implements Serializable {
 
     public ServoWizard(RobotActivity activity, Servo servo) {
         this.activity = activity;
-        this.servo = servo;
+        this.servo = Servo.newInstance(servo);
     }
 
     public void start() {
@@ -55,9 +59,25 @@ public class ServoWizard implements Serializable {
     public void changeDialog(Bundle options) {
         int page = options.getInt("page");
         BaseResizableDialogWizard nextDialog = goTo(page);
-        nextDialog.show(activity.getSupportFragmentManager(), "tag");
-        currentDialog.dismiss();
-        this.currentDialog = nextDialog;
+        if (nextDialog == null) {
+            // finish
+
+            SettingsProportional newSettings = SettingsProportional.newInstance(servo.getSettings());
+            newSettings.setSensorPortNumber(1);
+            newSettings.setOutputMin(11);
+            newSettings.setOutputMax(22);
+            servo.setSettings(newSettings);
+            servo.setIsLinked(true, servo);
+
+            ServoDialog dialog = ServoDialog.newInstance(servo, activity, false);
+            dialog.show(activity.getSupportFragmentManager(), "tag");
+
+            currentDialog.dismiss();
+        } else {
+            nextDialog.show(activity.getSupportFragmentManager(), "tag");
+            currentDialog.dismiss();
+            this.currentDialog = nextDialog;
+        }
     }
 
 }

@@ -38,7 +38,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     public static final String SELECTED_SENSOR = "selected_sensor";
 
 
-    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
+    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard) {
         Bundle args = new Bundle();
         ChooseSensorOutputDialogWizard dialogWizard = new ChooseSensorOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);

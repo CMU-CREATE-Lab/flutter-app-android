@@ -33,8 +33,14 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
     private int selectedValue = 0;
+    private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
     public static final String SELECTED_VALUE = "selected_value";
+    public static final String DIALOG_TYPE = "dialog_type";
+
+    enum OUTPUT_TYPE {
+        MIN, MAX
+    }
 
     ////  pointer helper
     private ImageView pointer;
@@ -66,10 +72,11 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     //// END pointer helper
 
 
-    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
+    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
         ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
+        args.putSerializable(DIALOG_TYPE, type);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -84,6 +91,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
+        this.outputType = (OUTPUT_TYPE)(getArguments().getSerializable(DIALOG_TYPE));
 
         // views
         // TODO @tasota get real port #
@@ -104,7 +112,12 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
         Bundle args = new Bundle();
-        args.putInt("page",1);
+        if (this.outputType == OUTPUT_TYPE.MIN) {
+            args.putInt("page", 4);
+        } else {
+            args.putInt("page", 0);
+        }
+        args.putSerializable(DIALOG_TYPE, outputType);
         args.putInt(SELECTED_VALUE, selectedValue);
         changeDialog(args);
     }
