@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
@@ -29,6 +30,8 @@ import butterknife.OnClick;
 
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
+    private View dialogView;
+
 
     public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, Servo servo, TriColorLed led, Speaker speaker, Serializable serializable) {
         Bundle args = new Bundle();
@@ -51,16 +54,35 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
+        this.dialogView = view;
 
         return builder.create();
     }
 
-
-    @OnClick(R.id.linear_proportional)
-    public void onClickProportional() {
-        // TODO @tasota actions
-        Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickProportional");
+    private void clearSelection() {
+        int[] viewIds = { R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
+                R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
+                R.id.linear_switch
+        };
+        for (int id: viewIds)
+            dialogView.findViewById(id).setBackground(null);
     }
+
+    private void selectedView(View view) {
+        clearSelection();
+        view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
+    }
+
+
+    // TODO @tasota actions
+    @OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
+            R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
+            R.id.linear_switch })
+    public void onClickRelationship(View view) {
+        Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
+        selectedView(view);
+    }
+
 
     @OnClick(R.id.button_save_link)
     public void onClickSave() {
