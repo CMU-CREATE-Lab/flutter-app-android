@@ -373,17 +373,20 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickLed(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-        if (triColorLeds[portNumber-1].getBlueLed().isLinked() == false ||
-                triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
-                triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
-            // Show the user a step by step sequence of how to set up the led
-            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, triColorLeds[portNumber - 1],null, this);
-            wizardDialog.show(getSupportFragmentManager(), "tag");
-        }
-        else {
-            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-            dialog.show(getSupportFragmentManager(), "tag");
-        }
+        // TODO replace wizard
+//        if (triColorLeds[portNumber-1].getBlueLed().isLinked() == false ||
+//                triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
+//                triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
+//            // Show the user a step by step sequence of how to set up the led
+//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, triColorLeds[portNumber - 1],null, this);
+//            wizardDialog.show(getSupportFragmentManager(), "tag");
+//        }
+//        else {
+//            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+//            dialog.show(getSupportFragmentManager(), "tag");
+//        }
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
@@ -410,17 +413,20 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
-        if (speaker.getPitch().isLinked() == false ||
-                speaker.getVolume().isLinked() == false) {
-            // Show the user a step by step sequence of how to set up the led
-            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, null, speaker, this);
-            wizardDialog.show(getSupportFragmentManager(), "tag");
-
-        }
-        else {
-            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-            dialog.show(getSupportFragmentManager(), "tag");
-        }
+        // TODO replace wizard
+//        if (speaker.getPitch().isLinked() == false ||
+//                speaker.getVolume().isLinked() == false) {
+//            // Show the user a step by step sequence of how to set up the led
+//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, null, speaker, this);
+//            wizardDialog.show(getSupportFragmentManager(), "tag");
+//
+//        }
+//        else {
+//            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+//            dialog.show(getSupportFragmentManager(), "tag");
+//        }g
+        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+        dialog.show(getSupportFragmentManager(), "tag");
     }
 
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
