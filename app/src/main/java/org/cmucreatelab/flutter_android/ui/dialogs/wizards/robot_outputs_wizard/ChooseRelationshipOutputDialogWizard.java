@@ -125,7 +125,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        wizard.changeDialog(args);
+        wizard.changeDialog(args, null);
     }
 
 
@@ -135,7 +135,11 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        wizard.changeDialog(args);
+        if (wizardState.relationshipType == Constant.getInstance()) {
+            wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+        } else {
+            wizard.changeDialog(args, ChooseSensorOutputDialogWizard.newInstance(wizard));
+        }
     }
 
 }

@@ -17,6 +17,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 
@@ -115,7 +116,16 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        wizard.changeDialog(args);
+
+        if (this.outputType == OUTPUT_TYPE.MIN) {
+            wizard.changeDialog(args, ChooseSensorOutputDialogWizard.newInstance(wizard));
+        } else {
+            if (wizardState.relationshipType == Constant.getInstance()) {
+                wizard.changeDialog(args, ChooseRelationshipOutputDialogWizard.newInstance(wizard));
+            } else {
+                wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+            }
+        }
     }
 
     @OnClick(R.id.button_next_page)
@@ -129,7 +139,12 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizardState.outputMax = selectedValue;
         }
         args.putSerializable(DIALOG_TYPE, outputType);
-        wizard.changeDialog(args);
+        if (this.outputType == OUTPUT_TYPE.MIN) {
+            wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+        } else {
+            wizard.finish();
+        }
+
     }
 
     public OUTPUT_TYPE getOutputType() {
