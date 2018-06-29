@@ -26,6 +26,7 @@ public class ServoWizard implements Serializable {
 
     RobotActivity activity;
     Servo servo;
+
     private State currentState;
     private boolean isFinished = false;
 
@@ -37,7 +38,7 @@ public class ServoWizard implements Serializable {
                 outputMin=0,
                 outputMax=100;
     }
-    public static final String STATE_KEY = "servo_wizard_state";
+//    public static final String STATE_KEY = "servo_wizard_state";
 
     enum Interactions {
         CLICK_BACK, CLICK_NEXT, CLICK_CANCEL
@@ -50,31 +51,31 @@ public class ServoWizard implements Serializable {
             Log.e(Constants.LOG_TAG, "found null in findNext");
         } else if (currentState.currentDialog.getClass() == ChooseRelationshipOutputDialogWizard.class) {
             if (currentState.interaction == Interactions.CLICK_NEXT) {
-                result = ChooseSensorOutputDialogWizard.newInstance(this, currentState);
+                result = ChooseSensorOutputDialogWizard.newInstance(this);
             } else if (currentState.interaction == Interactions.CLICK_BACK) {
                 // cancel
             }
         } else if (currentState.currentDialog.getClass() == ChooseSensorOutputDialogWizard.class) {
             if (currentState.interaction == Interactions.CLICK_NEXT) {
-                result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
+                result = ChoosePositionServoDialogWizard.newInstance(this, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
             } else if (currentState.interaction == Interactions.CLICK_BACK) {
-                result = ChooseRelationshipOutputDialogWizard.newInstance(this, currentState);
+                result = ChooseRelationshipOutputDialogWizard.newInstance(this);
             }
         }else if (currentState.currentDialog.getClass() == ChoosePositionServoDialogWizard.class) {
             ChoosePositionServoDialogWizard positionDialog = (ChoosePositionServoDialogWizard)currentState.currentDialog;
 
             if (positionDialog.getOutputType() == ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN) {
                 if (currentState.interaction == Interactions.CLICK_NEXT) {
-                    result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
+                    result = ChoosePositionServoDialogWizard.newInstance(this, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
                 } else if (currentState.interaction == Interactions.CLICK_BACK) {
-                    result = ChooseSensorOutputDialogWizard.newInstance(this, currentState);
+                    result = ChooseSensorOutputDialogWizard.newInstance(this);
                 }
             } else {
                 if (currentState.interaction == Interactions.CLICK_NEXT) {
                     // finish
                     isFinished = true;
                 } else if (currentState.interaction == Interactions.CLICK_BACK) {
-                    result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
+                    result = ChoosePositionServoDialogWizard.newInstance(this, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
                 }
             }
         } else {
@@ -111,12 +112,12 @@ public class ServoWizard implements Serializable {
 
     public void start() {
 //        currentState.currentDialog = goTo(1);
-        currentState.currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this, currentState);
+        currentState.currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this);
         currentState.currentDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
     public void changeDialog(Bundle options) {
-        this.currentState = (State) options.getSerializable(STATE_KEY);
+//        this.currentState = (State) options.getSerializable(STATE_KEY);
 //        BaseResizableDialogWizard nextDialog = goTo(page);
         BaseResizableDialogWizard nextDialog = findNext();
         if (nextDialog == null) {
@@ -135,6 +136,10 @@ public class ServoWizard implements Serializable {
             currentState.currentDialog.dismiss();
             currentState.currentDialog = nextDialog;
         }
+    }
+
+    public State getCurrentState() {
+        return currentState;
     }
 
 }

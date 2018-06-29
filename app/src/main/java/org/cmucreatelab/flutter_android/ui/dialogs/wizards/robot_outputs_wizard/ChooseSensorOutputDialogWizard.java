@@ -33,17 +33,16 @@ import butterknife.OnClick;
 public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private ServoWizard.State wizardState;
+//    private ServoWizard.State wizardState;
 //    private int selectedSensorPort = -1;
 //
 //    public static final String SELECTED_SENSOR = "selected_sensor";
 
 
-    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState) {
+    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard) {
         Bundle args = new Bundle();
         ChooseSensorOutputDialogWizard dialogWizard = new ChooseSensorOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -77,7 +76,6 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
-        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
         populateSensors(view);
 
         return builder.create();
@@ -112,6 +110,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     @OnClick({R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3})
     public void onClickSensor(View view) {
         // TODO @tasota actions
+        ServoWizard.State wizardState = wizard.getCurrentState();
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSensor");
         selectedView(view);
         wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
@@ -119,19 +118,19 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
 }

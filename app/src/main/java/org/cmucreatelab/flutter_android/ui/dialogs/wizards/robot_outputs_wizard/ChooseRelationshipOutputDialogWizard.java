@@ -43,17 +43,15 @@ import butterknife.OnClick;
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private ServoWizard.State wizardState;
 //    private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
 //
 //    public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
 
 
-    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState) {
+    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard) {
         Bundle args = new Bundle();
         ChooseRelationshipOutputDialogWizard dialogWizard = new ChooseRelationshipOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -69,7 +67,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
-        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
 
         return builder.create();
     }
@@ -116,6 +113,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
             R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
             R.id.linear_switch })
     public void onClickRelationship(View view) {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         selectedView(view);
         wizardState.relationshipType = getRelationshipFromId(view.getId());
@@ -124,20 +122,20 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
     @OnClick(R.id.button_remove_link)
     public void onClickBack() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
 
     @OnClick(R.id.button_save_link)
     public void onClickSave() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
 }

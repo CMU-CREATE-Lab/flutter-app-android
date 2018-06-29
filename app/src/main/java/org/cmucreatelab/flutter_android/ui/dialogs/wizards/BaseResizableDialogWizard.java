@@ -18,7 +18,7 @@ Just simply changed the number of pixels for the dialog size.
 // TODO @tasota extend BaseResizableDialog
 public class BaseResizableDialogWizard extends DialogFragment {
 
-    private ServoWizard wizard;
+    public ServoWizard wizard;
     public static String KEY_WIZARD = "key_wizard";
 
 
@@ -47,7 +47,7 @@ public class BaseResizableDialogWizard extends DialogFragment {
 //    public void onDismiss(DialogInterface dialog) {
 //        super.onDismiss(dialog);
 //    }
-    public void changeDialog(Bundle options) {
-        wizard.changeDialog(options);
-    }
+//    public void changeDialog(Bundle options) {
+//        wizard.changeDialog(options);
+//    }
 }

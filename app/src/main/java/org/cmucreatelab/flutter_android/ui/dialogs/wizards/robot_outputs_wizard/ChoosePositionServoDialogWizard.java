@@ -33,7 +33,6 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
     private int selectedValue = 0;
-    private ServoWizard.State wizardState;
 
     private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
@@ -74,12 +73,11 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     //// END pointer helper
 
 
-    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, ServoWizard.State wizardState, OUTPUT_TYPE type) {
+    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
         ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(DIALOG_TYPE, type);
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -94,7 +92,6 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
-        this.wizardState = (ServoWizard.State)(getArguments().getSerializable(ServoWizard.STATE_KEY));
         this.outputType = (OUTPUT_TYPE)(getArguments().getSerializable(DIALOG_TYPE));
 
         // views
@@ -115,14 +112,15 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
         wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Bundle args = new Bundle();
         if (this.outputType == OUTPUT_TYPE.MIN) {
@@ -131,8 +129,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizardState.outputMax = selectedValue;
         }
         args.putSerializable(DIALOG_TYPE, outputType);
-        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
-        changeDialog(args);
+        wizard.changeDialog(args);
     }
 
     public OUTPUT_TYPE getOutputType() {
