@@ -23,7 +23,6 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.NoSensor;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
@@ -42,10 +41,8 @@ import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterD
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.ControlOutputsDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.GreenSensorTypeDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.old.RelationshipWizardPageOne;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoUpdatedWithWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ServoWizard;
 
@@ -55,7 +52,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
-        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed, RelationshipWizardPageOne.DialogRelationshipListener{
+        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {
 
     private RobotActivity instance;
     private Session session;
@@ -336,15 +333,10 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
         if (portNumber >= 0 || portNumber <= 2) {
             if (servos[portNumber-1].isLinked() == false) {
-                // TODO @tasota start wizard
                 new ServoWizard(this,servos[portNumber - 1]).start();
-//                // Show the user a step by step sequence of how to set up the servo
-//                RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(servos[portNumber - 1],null, null, this);
-//                wizardDialog.show(getSupportFragmentManager(), "tag");
-
             }
             else {
-                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this, false);
+                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
                 dialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -751,28 +743,4 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
-    @Override
-    public void onRelationshipChosen(Relationship relationship) {
-        Log.d(Constants.LOG_TAG, "onRelationshipChosen");
-        ServoUpdatedWithWizard.add("relationship", relationship, null, 9999, 9999);
-//        View view,layout;
-//        ImageView currentImageView;
-//        TextView currentTextViewDescrp,currentTextViewItem;
-//
-//        view = dialog.getDialogView().findViewById(R.id.linear_set_relationship);
-//        currentImageView = (ImageView) ((ViewGroup) view).getChildAt(0);
-//        layout = ((ViewGroup) view).getChildAt(1);
-//        currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
-//        currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
-//
-//        currentImageView.setImageResource(relationship.getGreenImageIdMd());
-//        currentTextViewDescrp.setText(R.string.relationship);
-//        currentTextViewItem.setText(relationship.getRelationshipType().toString());
-//
-//        dialog.getServo().setSettings(Settings.newInstance(dialog.getServo().getSettings(), relationship));
-//        dialog.setStateHelper(ServoDialogStateHelper.newInstance(dialog.getServo()));
-//
-//        dialog.updateServoViews();
-
-    }
 }

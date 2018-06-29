@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public abstract class Wizard implements Serializable {
 
-    private BaseResizableDialogWizardOld currentDialog;
+    private BaseResizableDialogWizard currentDialog;
 
     public abstract void start();
 

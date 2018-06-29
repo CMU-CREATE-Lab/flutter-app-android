@@ -72,7 +72,7 @@ public class ServoWizard implements Serializable {
 
     public void finish() {
         generateSettings(this.currentState, this.servo);
-        ServoDialog dialog = ServoDialog.newInstance(servo, activity, false);
+        ServoDialog dialog = ServoDialog.newInstance(servo, activity);
         dialog.show(activity.getSupportFragmentManager(), "tag");
         currentState.currentDialog.dismiss();
     }
