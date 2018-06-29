@@ -81,6 +81,7 @@ public class ServoWizard implements Serializable {
         if (nextDialog == null) {
             Log.e(Constants.LOG_TAG, "found null nextDialog; ending wizard");
             currentState.currentDialog.dismiss();
+            return;
         }
 
         nextDialog.show(activity.getSupportFragmentManager(), "tag");

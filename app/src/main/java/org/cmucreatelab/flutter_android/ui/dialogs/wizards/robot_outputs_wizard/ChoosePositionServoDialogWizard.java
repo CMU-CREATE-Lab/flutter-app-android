@@ -14,14 +14,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
-
-import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,7 +32,6 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
-//    public static final String SELECTED_VALUE = "selected_value";
     public static final String DIALOG_TYPE = "dialog_type";
 
     enum OUTPUT_TYPE {
@@ -84,6 +78,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         return dialogWizard;
     }
 
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -111,6 +106,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         return builder.create();
     }
 
+
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
         ServoWizard.State wizardState = wizard.getCurrentState();
@@ -127,6 +123,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             }
         }
     }
+
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
@@ -147,8 +144,11 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     }
 
-    public OUTPUT_TYPE getOutputType() {
-        return outputType;
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Bundle args = new Bundle();
+        wizard.changeDialog(args, null);
     }
 
 }

@@ -1,8 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
 
 import android.app.Dialog;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -10,12 +8,8 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
 import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
@@ -26,13 +20,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.Wizard;
 
-import java.io.Serializable;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -43,9 +32,6 @@ import butterknife.OnClick;
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-//    private Relationship.Type selectedRelationshipType = Relationship.Type.NO_RELATIONSHIP;
-//
-//    public static final String SELECTED_RELATIONSHIP_TYPE = "selected_relationship_type";
 
 
     public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard) {
@@ -58,19 +44,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     }
 
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_wizard, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setView(view);
-        ButterKnife.bind(this, view);
-        this.dialogView = view;
-
-        return builder.create();
-    }
-
     private void clearSelection() {
         int[] viewIds = { R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
                 R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
@@ -80,10 +53,12 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
             dialogView.findViewById(id).setBackground(null);
     }
 
+
     private void selectedView(View view) {
         clearSelection();
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
+
 
     private Relationship getRelationshipFromId(int id) {
         switch(id) {
@@ -108,7 +83,21 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         return NoRelationship.getInstance();
     }
 
-    // TODO @tasota actions
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View view = inflater.inflate(R.layout.dialog_wizard, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
+        builder.setView(view);
+        ButterKnife.bind(this, view);
+        this.dialogView = view;
+
+        return builder.create();
+    }
+
+
     @OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
             R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
             R.id.linear_switch })
@@ -140,6 +129,13 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         } else {
             wizard.changeDialog(args, ChooseSensorOutputDialogWizard.newInstance(wizard));
         }
+    }
+
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Bundle args = new Bundle();
+        wizard.changeDialog(args, null);
     }
 
 }
