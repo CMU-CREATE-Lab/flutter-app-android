@@ -114,7 +114,6 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
         Bundle args = new Bundle();
         wizard.changeDialog(ChooseRelationshipOutputDialogWizard.newInstance(wizard));
     }
@@ -122,7 +121,6 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
         wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
@@ -131,7 +129,6 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
-        Bundle args = new Bundle();
         wizard.changeDialog(null);
     }
 

@@ -113,7 +113,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
     @OnClick(R.id.button_remove_link)
     public void onClickBack() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
         wizard.changeDialog(null);
     }
 
@@ -132,7 +131,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
-        Bundle args = new Bundle();
         wizard.changeDialog(null);
     }
 
