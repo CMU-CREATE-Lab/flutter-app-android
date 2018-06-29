@@ -21,6 +21,8 @@ import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,7 +36,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     private View dialogView;
 
 
-    public static ChooseRelationshipOutputDialogWizard newInstance(ServoWizard wizard) {
+    public static ChooseRelationshipOutputDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseRelationshipOutputDialogWizard dialogWizard = new ChooseRelationshipOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
@@ -112,22 +114,18 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     @OnClick(R.id.button_remove_link)
     public void onClickBack() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
-        Bundle args = new Bundle();
-        wizard.changeDialog(args, null);
+        wizard.changeDialog(null);
     }
 
 
     @OnClick(R.id.button_save_link)
     public void onClickSave() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
-        Bundle args = new Bundle();
         if (wizardState.relationshipType == Constant.getInstance()) {
-            wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
         } else {
-            wizard.changeDialog(args, ChooseSensorOutputDialogWizard.newInstance(wizard));
+            wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
         }
     }
 
@@ -135,7 +133,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     @OnClick(R.id.button_close)
     public void onClickClose() {
         Bundle args = new Bundle();
-        wizard.changeDialog(args, null);
+        wizard.changeDialog(null);
     }
 
 }

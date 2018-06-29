@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,6 +17,9 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseRelationshipOutputDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,7 +37,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     public static final String DIALOG_TYPE = "dialog_type";
 
-    enum OUTPUT_TYPE {
+    public enum OUTPUT_TYPE {
         MIN, MAX
     }
 
@@ -68,7 +71,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     //// END pointer helper
 
 
-    public static ChoosePositionServoDialogWizard newInstance(ServoWizard wizard, OUTPUT_TYPE type) {
+    public static ChoosePositionServoDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
         ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
@@ -110,16 +113,14 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
-        Bundle args = new Bundle();
 
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizard.changeDialog(args, ChooseSensorOutputDialogWizard.newInstance(wizard));
+            wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
         } else {
             if (wizardState.relationshipType == Constant.getInstance()) {
-                wizard.changeDialog(args, ChooseRelationshipOutputDialogWizard.newInstance(wizard));
+                wizard.changeDialog(ChooseRelationshipOutputDialogWizard.newInstance(wizard));
             } else {
-                wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
             }
         }
     }
@@ -128,16 +129,13 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
-        Bundle args = new Bundle();
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizardState.outputMin = selectedValue;
         } else {
             wizardState.outputMax = selectedValue;
         }
-        args.putSerializable(DIALOG_TYPE, outputType);
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            wizard.changeDialog( ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
         } else {
             wizard.finish();
         }
@@ -147,8 +145,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
-        Bundle args = new Bundle();
-        wizard.changeDialog(args, null);
+        wizard.changeDialog(null);
     }
 
 }

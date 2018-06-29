@@ -44,7 +44,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDia
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ServoWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import java.util.ArrayList;
 

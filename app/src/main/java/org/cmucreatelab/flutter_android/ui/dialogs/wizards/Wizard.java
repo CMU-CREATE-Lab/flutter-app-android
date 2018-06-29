@@ -1,7 +1,5 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards;
 
-import android.os.Bundle;
-
 import java.io.Serializable;
 
 /**
@@ -11,15 +9,10 @@ import java.io.Serializable;
  */
 public abstract class Wizard implements Serializable {
 
-    private BaseResizableDialogWizard currentDialog;
-
     public abstract void start();
 
-    public abstract void changeDialog(Bundle options);
-//    public void changeDialog(BaseResizableDialogWizardOld dialog, Bundle options) {
-//        // find the next dialog
-//        // show next dialog
-//        // dismiss current dialog
-//    }
+    public abstract void finish();
+
+    public abstract void changeDialog(BaseResizableDialogWizard nextDialog);
 
 }

@@ -16,6 +16,8 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,7 +31,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     private View dialogView;
 
 
-    public static ChooseSensorOutputDialogWizard newInstance(ServoWizard wizard) {
+    public static ChooseSensorOutputDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseSensorOutputDialogWizard dialogWizard = new ChooseSensorOutputDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
@@ -113,26 +115,24 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_back_page)
     public void onClickBack() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
         Bundle args = new Bundle();
-        wizard.changeDialog(args, ChooseRelationshipOutputDialogWizard.newInstance(wizard));
+        wizard.changeDialog(ChooseRelationshipOutputDialogWizard.newInstance(wizard));
     }
 
 
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
         ServoWizard.State wizardState = wizard.getCurrentState();
-        wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSave");
         Bundle args = new Bundle();
-        wizard.changeDialog(args, ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+        wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
     }
 
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
         Bundle args = new Bundle();
-        wizard.changeDialog(args, null);
+        wizard.changeDialog(null);
     }
 
 }
