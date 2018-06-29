@@ -27,6 +27,7 @@ public class ServoWizard implements Serializable {
     RobotActivity activity;
     Servo servo;
     private State currentState;
+    private boolean isFinished = false;
 
     public class State implements Serializable {
         private BaseResizableDialogWizard currentDialog;
@@ -50,10 +51,14 @@ public class ServoWizard implements Serializable {
         } else if (currentState.currentDialog.getClass() == ChooseRelationshipOutputDialogWizard.class) {
             if (currentState.interaction == Interactions.CLICK_NEXT) {
                 result = ChooseSensorOutputDialogWizard.newInstance(this, currentState);
+            } else if (currentState.interaction == Interactions.CLICK_BACK) {
+                // cancel
             }
         } else if (currentState.currentDialog.getClass() == ChooseSensorOutputDialogWizard.class) {
             if (currentState.interaction == Interactions.CLICK_NEXT) {
                 result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
+            } else if (currentState.interaction == Interactions.CLICK_BACK) {
+                result = ChooseRelationshipOutputDialogWizard.newInstance(this, currentState);
             }
         }else if (currentState.currentDialog.getClass() == ChoosePositionServoDialogWizard.class) {
             ChoosePositionServoDialogWizard positionDialog = (ChoosePositionServoDialogWizard)currentState.currentDialog;
@@ -61,10 +66,15 @@ public class ServoWizard implements Serializable {
             if (positionDialog.getOutputType() == ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN) {
                 if (currentState.interaction == Interactions.CLICK_NEXT) {
                     result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX);
+                } else if (currentState.interaction == Interactions.CLICK_BACK) {
+                    result = ChooseSensorOutputDialogWizard.newInstance(this, currentState);
                 }
             } else {
                 if (currentState.interaction == Interactions.CLICK_NEXT) {
                     // finish
+                    isFinished = true;
+                } else if (currentState.interaction == Interactions.CLICK_BACK) {
+                    result = ChoosePositionServoDialogWizard.newInstance(this, currentState, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN);
                 }
             }
         } else {
@@ -110,11 +120,15 @@ public class ServoWizard implements Serializable {
 //        BaseResizableDialogWizard nextDialog = goTo(page);
         BaseResizableDialogWizard nextDialog = findNext();
         if (nextDialog == null) {
-            // finish
-            generateSettings(this.currentState, this.servo);
+            if (isFinished) {
+                // finish
+                generateSettings(this.currentState, this.servo);
 
-            ServoDialog dialog = ServoDialog.newInstance(servo, activity, false);
-            dialog.show(activity.getSupportFragmentManager(), "tag");
+                ServoDialog dialog = ServoDialog.newInstance(servo, activity, false);
+                dialog.show(activity.getSupportFragmentManager(), "tag");
+            } else {
+                Log.e(Constants.LOG_TAG, "found null nextDialog but isFinished==false; ending wizard");
+            }
             currentState.currentDialog.dismiss();
         } else {
             nextDialog.show(activity.getSupportFragmentManager(), "tag");

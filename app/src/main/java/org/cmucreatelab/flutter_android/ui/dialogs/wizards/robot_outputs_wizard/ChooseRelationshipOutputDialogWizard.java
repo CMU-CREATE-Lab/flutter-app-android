@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard;
 
 import android.app.Dialog;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -117,6 +119,15 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         selectedView(view);
         wizardState.relationshipType = getRelationshipFromId(view.getId());
+    }
+
+
+    @OnClick(R.id.button_remove_link)
+    public void onClickBack() {
+        wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
+        Bundle args = new Bundle();
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
+        changeDialog(args);
     }
 
 

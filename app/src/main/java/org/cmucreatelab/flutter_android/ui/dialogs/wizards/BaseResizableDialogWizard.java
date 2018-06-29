@@ -15,6 +15,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 Just simply changed the number of pixels for the dialog size.
 */
 
+// TODO @tasota extend BaseResizableDialog
 public class BaseResizableDialogWizard extends DialogFragment {
 
     private ServoWizard wizard;

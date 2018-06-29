@@ -14,7 +14,6 @@
         android:layout_gravity="start"
         android:layout_weight="1"
         android:background="@drawable/round_reddish_button_bottom_left"
-        android:enabled="false"
         android:backgroundTint="@color/green"
         android:text="@string/cancel"
         android:textColor="@drawable/white_text_enable_disable" />

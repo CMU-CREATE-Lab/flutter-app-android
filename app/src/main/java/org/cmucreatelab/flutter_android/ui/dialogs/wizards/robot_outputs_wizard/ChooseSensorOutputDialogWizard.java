@@ -117,6 +117,14 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
     }
 
+    @OnClick(R.id.button_back_page)
+    public void onClickBack() {
+        wizardState.interaction = ServoWizard.Interactions.CLICK_BACK;
+        Bundle args = new Bundle();
+        args.putSerializable(ServoWizard.STATE_KEY, wizardState);
+        changeDialog(args);
+    }
+
     @OnClick(R.id.button_next_page)
     public void onClickSave() {
         wizardState.interaction = ServoWizard.Interactions.CLICK_NEXT;
