@@ -1,5 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +50,10 @@ public class LedDialogConstant extends LedDialogStateHelper {
         // max
         ImageView maxColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
-        dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
+        if (!TriColorLed.isSwatchInExistingSelection(getTriColorLed().getMaxColorHex()))
+            dialog.maxColor.setImageDrawable(getCustomSwatchWithBorder(getTriColorLed().getMaxColorHex(), dialog));
+        else
+            dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_max_color_value);
@@ -58,6 +64,14 @@ public class LedDialogConstant extends LedDialogStateHelper {
         minColorLayout.setVisibility(View.GONE);
     }
 
+    private LayerDrawable getCustomSwatchWithBorder(String hexColor, LedDialog dialog)
+    {
+        LayerDrawable layerDrawable = (LayerDrawable) dialog.getActivity().getApplicationContext().getResources().getDrawable(R.drawable.universal_swatch);
+
+        ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
+
+        return layerDrawable;
+    }
 
     @Override
     public void setAdvancedSettings(AdvancedSettings advancedSettings) {

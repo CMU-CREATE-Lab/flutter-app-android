@@ -76,6 +76,7 @@ public abstract class LedDialogStateHelperWithAdvancedSettings extends LedDialog
 
         return layerDrawable;
     }
+
     @Override
     public void setAdvancedSettings(AdvancedSettings advancedSettings) {
         getTriColorLed().setAdvancedSettings(advancedSettings);
