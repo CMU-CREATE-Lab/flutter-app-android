@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Mohit on 6/12/2018.
- * <p>
- * ErrorNotificationDialog
- * <p>
- * A Dialog that shows a small pop up when there is something wrong with how the device is set up.
- * Supports all error messages. Just change imageView and TextView based on the error.
+ * Created by Parv.
+ *
+ * ErrorDialog
+ *
+ * A dialog for error screens that has a dismiss button.
  */
 
 public abstract class ErrorDialog extends BaseResizableDialog {

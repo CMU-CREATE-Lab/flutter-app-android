@@ -7,7 +7,12 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
+ *
+ * ConnectFlutterDialog
+ *
+ * An error dialog that shows up when the flutter needs to be connected.
+ *
  */
 
 public class ConnectFlutterDialog extends ErrorDialog {

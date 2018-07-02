@@ -16,6 +16,11 @@ import org.cmucreatelab.flutter_android.classes.sensors.AirQualitySensor;
 
 /**
  * Created by Steve on 1/30/2017.
+ *
+ * SensorFactory
+ *
+ * A class for retrieving the type of a sensor.
+ *
  */
 public class SensorFactory {
 

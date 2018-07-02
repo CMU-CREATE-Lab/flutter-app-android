@@ -9,7 +9,7 @@ import org.cmucreatelab.flutter_android.R;
  *
  * EmailErrorDialog
  *
- * An
+ * An error dialog that shows up when there was an error sending an email.
  */
 
 public class EmailErrorDialog extends ErrorDialog {

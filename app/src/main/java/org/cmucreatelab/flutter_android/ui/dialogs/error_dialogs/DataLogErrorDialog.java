@@ -5,7 +5,11 @@ import android.os.Bundle;
 import org.cmucreatelab.flutter_android.R;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
+ *
+ * DataLogErrorDialog
+ *
+ * An error dialog for various errors that can occur in the data logs tab.
  */
 
 public class DataLogErrorDialog extends ErrorDialog {

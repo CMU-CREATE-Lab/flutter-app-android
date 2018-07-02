@@ -6,6 +6,10 @@ import com.android.volley.toolbox.Volley;
 
 /**
  * Created by mike on 5/2/17.
+ *
+ * HttpRequestHandler
+ *
+ * A class for helping with sending an http request for sending an email through the data log tab.
  */
 
 public class HttpRequestHandler {

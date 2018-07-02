@@ -9,10 +9,11 @@ import java.util.HashMap;
 
 /**
  * Created by Steve on 5/26/2016.
- * <p>
+ *
  * Constants
- * <p>
+ *
  * A class that handles global constants that is used throughout the app.
+ *
  */
 public final class Constants {
 

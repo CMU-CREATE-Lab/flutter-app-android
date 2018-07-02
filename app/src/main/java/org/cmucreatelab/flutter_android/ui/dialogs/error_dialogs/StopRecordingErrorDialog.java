@@ -6,7 +6,9 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
+ *
+ * An error dialog that shows for confirmation if a user wants to stop the recording of data.
  */
 
 public class StopRecordingErrorDialog extends ErrorConfirmationDialog {

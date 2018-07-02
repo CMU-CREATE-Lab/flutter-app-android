@@ -6,6 +6,11 @@ import org.cmucreatelab.flutter_android.R;
 
 /**
  * Created by Parv on 6/25/2018.
+ *
+ * RecordingErrorDialog
+ *
+ * An error dialog that shows when a user tries to record a second time for data logs.
+ *
  */
 
 public class RecordingErrorDialog extends ErrorDialog {

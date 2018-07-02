@@ -13,6 +13,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnect
 
 /**
  * Created by mike on 2/9/17.
+ *
+ * FlutterDeviceHandler
+ *
+ * A class to manage communications with the Flutter.
+ *
  */
 public class FlutterDeviceHandler extends DeviceHandler<MessageQueue<MelodySmartMessage>> {
 

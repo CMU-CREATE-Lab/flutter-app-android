@@ -5,7 +5,11 @@ import android.os.Bundle;
 import org.cmucreatelab.flutter_android.R;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
+ *
+ * UnsupportedBleErrorDialog
+ *
+ * An error that shows when the app is launched on a device without BLE.
  */
 
 public class UnsupportedBleErrorDialog extends ErrorDialog {

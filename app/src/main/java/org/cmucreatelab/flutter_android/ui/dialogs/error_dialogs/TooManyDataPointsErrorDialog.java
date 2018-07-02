@@ -7,9 +7,11 @@ import org.cmucreatelab.flutter_android.R;
 import java.io.Serializable;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
  *
+ * TooManyDataPointsErrorDialog
  *
+ * An error dialog that shows up when a user tries to record a log with more than 200 points.
  *
  */
 public class TooManyDataPointsErrorDialog extends ErrorConfirmationDialog {
