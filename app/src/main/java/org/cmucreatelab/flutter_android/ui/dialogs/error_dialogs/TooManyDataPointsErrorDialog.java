@@ -2,8 +2,6 @@ package org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs;
 
 import android.os.Bundle;
 
-import com.rockerhieu.emojicon.EmojiconEditText;
-
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
