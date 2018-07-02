@@ -47,7 +47,6 @@ public abstract class LedDialogStateHelperWithAdvancedSettings extends LedDialog
             dialog.maxColor.setImageDrawable(getCustomSwatchWithBorder(getTriColorLed().getMaxColorHex(), dialog));
         else
             dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
-        dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_max_color);
         TextView maxColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_max_color_value);

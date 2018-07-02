@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
@@ -117,11 +116,6 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 findViewById(R.id.view_color_2),
                 findViewById(R.id.view_color_3)
         };
-        final View[] halfcircle_views = new View[]{
-                findViewById(R.id.view_halfcolor_1),
-                findViewById(R.id.view_halfcolor_2),
-                findViewById(R.id.view_halfcolor_3)
-        };
         if (ledNumber > circle_views.length || ledNumber <= 0) {
             Log.e(Constants.LOG_TAG, "updateLedCircleColors: received bad ledNumber=" + ledNumber);
             return;
@@ -134,8 +128,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             @Override
             public void run() {
                 View circleView = circle_views[ledNumber - 1];
-                Log.e("RED COMBO", triColorLed.getMinColorHex());
-                Log.e("RED extra", Integer.toString(Color.parseColor("#ff3333")));
+
                 Integer maxHex = Color.parseColor(triColorLed.getMaxColorHex());
                 if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
                     maxHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMaxColorHex()));
@@ -144,7 +137,21 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
                     minHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMinColorHex()));
 
-                RotateDrawable rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle);
+                RotateDrawable rotateDrawable;
+
+                switch (ledNumber)
+                {
+                    case 1:
+                        rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle_led_one);
+                        break;
+                    case 2:
+                        rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle_led_two);
+                        break;
+                    default:
+                        rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle_led_three);
+                        break;
+                }
+
                 GradientDrawable gradientDrawable = (GradientDrawable) rotateDrawable.getDrawable();
 
                 // if the link uses Constant relationship, do not display a minimum color
