@@ -28,10 +28,11 @@ import butterknife.OnClick;
 
 /**
  * Created by psdev1 on 5/26/2018.
- * <p>
+ *
  * FlutterAdvancedSettingsDialog
- * <p>
- * A Dialog that shows the advanced settings of a Flutter.
+ *
+ * A dialog that shows the advanced settings of a Flutter.
+ *
  */
 public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
 

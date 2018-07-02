@@ -9,11 +9,10 @@ import java.util.HashMap;
 
 /**
  * Created by Steve on 5/26/2016.
- *
+ * <p>
  * Constants
- *
+ * <p>
  * A class that handles global constants that is used throughout the app.
- *
  */
 public final class Constants {
 
@@ -119,8 +118,8 @@ public final class Constants {
         put(ColorSwatches.BLACK, TrueColorRGB.BLACK);
     }};
 
-    public static final HashMap<Integer, Integer>TRUE_HEX_TO_SWATCH_HEX = new HashMap() {{
-       put(TrueColorHex.RED, ColorSwatches.RED);
+    public static final HashMap<Integer, Integer> TRUE_HEX_TO_SWATCH_HEX = new HashMap() {{
+        put(TrueColorHex.RED, ColorSwatches.RED);
         put(TrueColorHex.ORANGE, ColorSwatches.ORANGE);
         put(TrueColorHex.YELLOW, ColorSwatches.YELLOW);
         put(TrueColorHex.CHARTREUSE_GREEN, ColorSwatches.CHARTREUSE_GREEN);
@@ -138,7 +137,7 @@ public final class Constants {
         put(TrueColorHex.BLACK_DEFAULT, ColorSwatches.BLACK_DEFAULT);
     }};
 
-    public static final HashMap<Integer,Integer> COLOR_RES = new HashMap(){{
+    public static final HashMap<Integer, Integer> COLOR_RES = new HashMap() {{
         put(TrueColorHex.RED, R.drawable.swatch_red_selected);
         put(TrueColorHex.ORANGE, R.drawable.swatch_orange_selected);
         put(TrueColorHex.YELLOW, R.drawable.swatch_yellow_selected);
@@ -157,7 +156,7 @@ public final class Constants {
         put(TrueColorHex.BLACK_DEFAULT, R.drawable.swatch_black_selected);
     }};
 
-    public static final HashMap<Integer,String> COLOR_NAMES = new HashMap(){{
+    public static final HashMap<Integer, String> COLOR_NAMES = new HashMap() {{
         put(TrueColorHex.RED, "Red");
         put(TrueColorHex.ORANGE, "Orange");
         put(TrueColorHex.YELLOW, "Yellow");
@@ -176,7 +175,7 @@ public final class Constants {
         put(TrueColorHex.BLACK_DEFAULT, "Black");
     }};
 
-    public static final HashMap<Integer,Integer> RES_CIRCLE = new HashMap(){{
+    public static final HashMap<Integer, Integer> RES_CIRCLE = new HashMap() {{
         put(TrueColorHex.RED, R.drawable.circle_red);
         put(TrueColorHex.ORANGE, R.drawable.circle_orange);
         put(TrueColorHex.YELLOW, R.drawable.circle_yellow);
@@ -195,7 +194,7 @@ public final class Constants {
         put(TrueColorHex.BLACK_DEFAULT, R.drawable.circle_black);
     }};
 
-    public static final HashMap<Integer,Integer> RES_HALFCIRCLE = new HashMap(){{
+    public static final HashMap<Integer, Integer> RES_HALFCIRCLE = new HashMap() {{
         put(TrueColorHex.RED, R.drawable.halfcircle_red);
         put(TrueColorHex.ORANGE, R.drawable.halfcircle_orange);
         put(TrueColorHex.YELLOW, R.drawable.halfcircle_yellow);
@@ -221,7 +220,8 @@ public final class Constants {
     public enum MailerType {
         INTENT, HTTP_REQUEST
     }
-    public static final String MAIL_SERVER_URL= "http://fluttermail.createlab.org/send_log";
+
+    public static final String MAIL_SERVER_URL = "http://fluttermail.createlab.org/send_log";
     public static final MailerType SEND_EMAIL_AS = MailerType.HTTP_REQUEST;
 
     // for activities
@@ -256,6 +256,7 @@ public final class Constants {
         SENSORS_TAB,
         DATA_LOGS_TAB
     }
+
     public static final HashMap<RECORD_DATA_WIZARD_TYPE, Integer> WIZARD_TYPE_TO_CANCEL_BACKGROUND = new HashMap() {{
         put(RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, R.drawable.round_blue_button_bottom_left);
         put(RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, R.drawable.round_orange_button_bottom_left);

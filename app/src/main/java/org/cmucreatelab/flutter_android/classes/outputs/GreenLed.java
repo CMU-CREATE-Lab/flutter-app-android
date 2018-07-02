@@ -5,6 +5,11 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 
 /**
  * Created by Steve on 12/13/2016.
+ *
+ * GreenLed
+ *
+ * A class that represents a green LED on the flutter.
+ *
  */
 public class GreenLed extends Output {
 

@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 1/4/2017.
+ *
+ * DataPoint
+ *
+ * A class that represents one data point for data logging.
+ *
  */
 public class DataPoint implements Comparable<DataPoint>, Serializable {
 

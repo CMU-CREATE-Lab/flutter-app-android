@@ -16,6 +16,11 @@ import java.util.ArrayList;
 
 /**
  * Created by Steve on 1/3/2017.
+ *
+ * DataInstanceListAdapter
+ *
+ * An adapter to handle displaying the data points in the data log screen.
+ *
  */
 public class DataInstanceListAdapter extends BaseAdapter {
 

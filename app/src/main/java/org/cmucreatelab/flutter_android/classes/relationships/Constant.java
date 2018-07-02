@@ -4,6 +4,11 @@ import org.cmucreatelab.flutter_android.R;
 
 /**
  * Created by Steve on 10/21/2016.
+ *
+ * Constant
+ *
+ * A class that represents a constant relationship.
+ *
  */
 public class Constant implements Relationship {
 

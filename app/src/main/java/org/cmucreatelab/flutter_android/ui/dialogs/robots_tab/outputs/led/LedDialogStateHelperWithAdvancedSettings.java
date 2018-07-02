@@ -1,5 +1,11 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +43,10 @@ public abstract class LedDialogStateHelperWithAdvancedSettings extends LedDialog
         // max
         ImageView maxColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_max_color);
         maxColorImg.setVisibility(View.GONE);
+        if (!TriColorLed.isSwatchInExistingSelection(getTriColorLed().getMaxColorHex()))
+            dialog.maxColor.setImageDrawable(getCustomSwatchWithBorder(getTriColorLed().getMaxColorHex(), dialog));
+        else
+            dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMaxColorHex()));
         dialog.maxColor.setVisibility(View.VISIBLE);
         TextView maxColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_max_color);
@@ -48,7 +58,10 @@ public abstract class LedDialogStateHelperWithAdvancedSettings extends LedDialog
         minColorLayout.setVisibility(View.VISIBLE);
         ImageView minColorImg = (ImageView) dialog.dialogView.findViewById(R.id.image_min_color);
         minColorImg.setVisibility(View.GONE);
-        dialog.minColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMinColorHex()));
+        if (!TriColorLed.isSwatchInExistingSelection(getTriColorLed().getMinColorHex()))
+            dialog.minColor.setImageDrawable(getCustomSwatchWithBorder(getTriColorLed().getMinColorHex(), dialog));
+        else
+            dialog.minColor.setImageResource(TriColorLed.getSwatchFromColor(getTriColorLed().getMinColorHex()));
         dialog.minColor.setVisibility(View.VISIBLE);
         TextView minColorTxt = (TextView) dialog.dialogView.findViewById(R.id.text_min_color);
         TextView minColorValue = (TextView) dialog.dialogView.findViewById(R.id.text_min_color_value);
@@ -56,7 +69,14 @@ public abstract class LedDialogStateHelperWithAdvancedSettings extends LedDialog
         minColorValue.setText(TriColorLed.getTextFromColor(getTriColorLed().getMinColorHex()));
     }
 
+    private LayerDrawable getCustomSwatchWithBorder(String hexColor, LedDialog dialog)
+    {
+        LayerDrawable layerDrawable = (LayerDrawable) dialog.getActivity().getApplicationContext().getResources().getDrawable(R.drawable.universal_swatch);
 
+        ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
+
+        return layerDrawable;
+    }
     @Override
     public void setAdvancedSettings(AdvancedSettings advancedSettings) {
         getTriColorLed().setAdvancedSettings(advancedSettings);

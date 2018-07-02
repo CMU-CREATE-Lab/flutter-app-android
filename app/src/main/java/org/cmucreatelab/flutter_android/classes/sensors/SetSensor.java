@@ -4,6 +4,11 @@ import org.cmucreatelab.flutter_android.R;
 
 /**
  * Created by Steve on 6/2/2017.
+ *
+ * SetSensor
+ *
+ * A class that denotes a sensor that can be set.
+ *
  */
 
 public class SetSensor extends NoSensor {

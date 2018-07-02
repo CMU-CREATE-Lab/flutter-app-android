@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -297,31 +299,25 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             case 1:
                 isLed1Changed = true;
                 if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
-                    led1SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
-                else {
-                    led1SwatchImage.clearColorFilter();
+                    led1SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
+                else
                     led1SwatchImage.setImageResource(swatch);
-                }
                 led1RGB = rgb;
                 break;
             case 2:
                 isLed2Changed = true;
                 if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
-                    led2SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
-                else {
-                    led2SwatchImage.clearColorFilter();
+                    led2SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
+                else
                     led2SwatchImage.setImageResource(swatch);
-                }
                 led2RGB = rgb;
                 break;
             case 3:
                 isLed3Changed = true;
                 if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
-                    led3SwatchImage.setColorFilter(Color.parseColor(convertRgbToHex(rgb)));
-                else {
-                    led3SwatchImage.clearColorFilter();
+                    led3SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
+                else
                     led3SwatchImage.setImageResource(swatch);
-                }
                 led3RGB = rgb;
                 break;
         }
@@ -435,6 +431,8 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         super.onCreateDialog(savedInstanceState);
         globalHandler = GlobalHandler.getInstance(getActivity());
 
+
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_control_outputs, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
@@ -486,15 +484,24 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         //led
 
         led1SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_1);
-        led1SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[0].getMaxColorHex()));
+        if (TriColorLed.isSwatchInExistingSelection(leds[0].getMaxColorHex()))
+            led1SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[0].getMaxColorHex()));
+        else
+            led1SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[0].getMaxColorHex()));
         led1SwatchImage.setOnClickListener(imageLed1SwatchOnClickListener);
 
         led2SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_2);
-        led2SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[1].getMaxColorHex()));
+        if (TriColorLed.isSwatchInExistingSelection(leds[1].getMaxColorHex()))
+            led2SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[1].getMaxColorHex()));
+        else
+            led2SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[1].getMaxColorHex()));
         led2SwatchImage.setOnClickListener(imageLed2SwatchOnClickListener);
 
         led3SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_3);
-        led3SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[2].getMaxColorHex()));
+        if (TriColorLed.isSwatchInExistingSelection(leds[2].getMaxColorHex()))
+            led3SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[2].getMaxColorHex()));
+        else
+            led3SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[2].getMaxColorHex()));
         led3SwatchImage.setOnClickListener(imageLed3SwatchOnClickListener);
 
         led1RGB = new Integer[3];
@@ -507,6 +514,15 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         view.findViewById(R.id.button_close).setOnClickListener(doneClickListener);
 
         return builder.create();
+    }
+
+    public LayerDrawable getCustomSwatchWithBorder(String hexColor)
+    {
+        LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
+
+        ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
+
+        return layerDrawable;
     }
 
 

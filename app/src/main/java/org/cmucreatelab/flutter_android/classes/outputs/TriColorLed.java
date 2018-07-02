@@ -18,6 +18,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 12/13/2016.
+ *
+ * TriColorLed
+ *
+ * A class t
  */
 public class TriColorLed implements FlutterOutput {
 

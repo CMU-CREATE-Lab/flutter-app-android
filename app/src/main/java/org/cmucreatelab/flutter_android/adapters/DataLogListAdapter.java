@@ -18,6 +18,11 @@ import java.util.ArrayList;
 
 /**
  * Created by Steve on 1/3/2017.
+ *
+ * DataLogListAdapter
+ *
+ * An adapter to display the data logs in the data log screen.
+ *
  */
 public class DataLogListAdapter extends BaseAdapter {
 

@@ -27,6 +27,8 @@ import java.util.TreeMap;
 /**
  * Created by mike on 12/28/16.
  *
+ * Session
+ *
  * Provides access to the current session's flutter and activities/listeners.
  *
  */

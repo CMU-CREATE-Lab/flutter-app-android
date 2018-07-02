@@ -20,6 +20,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 11/14/2016.
+ *
+ * ChoosePitchDialog
+ *
+ * An abstract Dialog that handles the pitch choosing.
+ *
  */
 public abstract class ChoosePitchDialog extends BaseResizableDialog {
 

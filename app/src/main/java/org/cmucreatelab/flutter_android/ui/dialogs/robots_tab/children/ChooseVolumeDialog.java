@@ -20,6 +20,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 11/14/2016.
+ *
+ * ChooseVolumeDialog
+ *
+ * An abstract Dialog that handles the volume choosing.
+ *
  */
 public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
 

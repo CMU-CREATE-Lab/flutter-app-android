@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -285,11 +287,10 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.maximum_color);
-        maxColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMaxColorHex()));
         if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
-            maxColor.setColorFilter(Color.parseColor(triColorLed.getMaxColorHex()));
+            maxColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMaxColorHex()));
         else
-            maxColor.clearColorFilter();
+            maxColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMaxColorHex()));
         maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMaxColorHex()));
     }
@@ -309,15 +310,23 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        minColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMinColorHex()));
         if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
-            minColor.setColorFilter(Color.parseColor(triColorLed.getMinColorHex()));
+            minColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMinColorHex()));
         else
-            minColor.clearColorFilter();
+            minColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMinColorHex()));
+
         minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMinColorHex()));
     }
 
+    public LayerDrawable getCustomSwatchWithBorder(String hexColor)
+    {
+        LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
+
+        ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
+
+        return layerDrawable;
+    }
 
     public interface DialogLedListener {
         public void onLedLinkListener(ArrayList<MelodySmartMessage> msgs);

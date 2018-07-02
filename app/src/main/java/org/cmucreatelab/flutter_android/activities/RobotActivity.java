@@ -1,7 +1,10 @@
 package org.cmucreatelab.flutter_android.activities;
 
 import android.graphics.Color;
-import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.RotateDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +53,13 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Created by Steve.
+ * <p>
+ * RobotActivity
+ * <p>
+ * An activity where the user can interact with the flutter board.
+ */
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
         SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {
 
@@ -124,28 +134,39 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             @Override
             public void run() {
                 View circleView = circle_views[ledNumber - 1];
-                View halfCircleView = halfcircle_views[ledNumber - 1];
-                int minCircle = TriColorLed.getHalfCircleFromColor(triColorLed.getMinColorHex());
-                int maxCircle = TriColorLed.getCircleFromColor(triColorLed.getMaxColorHex());
+                Log.e("RED COMBO", triColorLed.getMinColorHex());
+                Log.e("RED extra", Integer.toString(Color.parseColor("#ff3333")));
+                Integer maxHex = Color.parseColor(triColorLed.getMaxColorHex());
+                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
+                    maxHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMaxColorHex()));
 
-                // set the full circle's background
-                circleView.setBackground(getResources().getDrawable(maxCircle));
+                Integer minHex = Color.parseColor(triColorLed.getMinColorHex());
+                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
+                    minHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMinColorHex()));
 
-                // NOTE: ClipDrawable levels range from 0-10000, from completely clipped to no clip
-                // set the half circle's background
-                ClipDrawable clipDrawable = (ClipDrawable) getResources().getDrawable(minCircle);
-                halfCircleView.setBackground(clipDrawable);
-                clipDrawable.setLevel(5000);
+                RotateDrawable rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle);
+                GradientDrawable gradientDrawable = (GradientDrawable) rotateDrawable.getDrawable();
+
                 // if the link uses Constant relationship, do not display a minimum color
                 if (triColorLed.getRedLed().getSettings().getRelationship() == Constant.getInstance() ||
                         triColorLed.getGreenLed().getSettings().getRelationship() == Constant.getInstance() ||
-                        triColorLed.getBlueLed().getSettings().getRelationship() == Constant.getInstance()) {
-                    clipDrawable.setLevel(0);
-                }
+                        triColorLed.getBlueLed().getSettings().getRelationship() == Constant.getInstance())
+                    gradientDrawable.setColors(new int[]{maxHex, maxHex});
+                else
+                    gradientDrawable.setColors(new int[]{minHex, maxHex});
+
+                circleView.setBackground(rotateDrawable);
             }
         });
     }
 
+    public LayerDrawable getCustomSwatchWithBorder(String hexColor) {
+        LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
+
+        ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
+
+        return layerDrawable;
+    }
 
     private void updateDynamicViews() {
         runOnUiThread(new Runnable() {

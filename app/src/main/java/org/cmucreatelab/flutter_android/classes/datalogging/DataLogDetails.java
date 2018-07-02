@@ -4,8 +4,12 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 2/27/2017.
+ *
+ * DataLogDetails
+ *
+ * A class that stores the details of a data log.
+ *
  */
-
 public class DataLogDetails implements Serializable {
 
     private String dataLogName;

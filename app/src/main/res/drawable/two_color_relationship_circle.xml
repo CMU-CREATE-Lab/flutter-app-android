@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <gradient
+        android:type="linear"
+        android:startColor="@color/colorAccent"
+        android:endColor="@color/colorPrimaryDark"
+        />
+
+</shape>-->
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="90"
+    android:toDegrees="90"
+    android:pivotX="50%"
+    android:pivotY="50%">
+    <shape android:shape="oval">
+
+        <gradient
+            android:centerX="-1"
+            android:endColor="@color/colorPrimaryDark"
+            android:startColor="@color/colorAccent"
+            android:type="sweep" />
+        <stroke
+            android:width="2dp"
+            android:color="#d7d7d7" />
+    </shape>
+</rotate>

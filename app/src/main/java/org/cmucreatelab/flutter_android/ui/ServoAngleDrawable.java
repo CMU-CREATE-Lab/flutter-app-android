@@ -30,6 +30,7 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
  * ServoAngleDrawable
  *
  * Represents the icon displayed for a Servo with varying angles. Also contains a static helper for refreshing views on RobotActivity
+ *
  */
 public class ServoAngleDrawable extends Drawable {
 

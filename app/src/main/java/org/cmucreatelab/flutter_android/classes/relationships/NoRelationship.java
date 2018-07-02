@@ -5,7 +5,7 @@ import org.cmucreatelab.flutter_android.R;
 /**
  * Created by Steve on 9/1/2016.
  *
- *
+ * NoRelationship
  *
  * A class that represents there is no current Relationship set.
  */

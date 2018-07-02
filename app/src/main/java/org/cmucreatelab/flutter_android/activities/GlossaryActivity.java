@@ -13,7 +13,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Parv.
  *
- * TutorialsActivity
+ * GlossaryActivity
+ *
+ * An activity to display the glossary for terms related to Flutter.
  *
  */
 public class GlossaryActivity extends BaseNavigationActivity {

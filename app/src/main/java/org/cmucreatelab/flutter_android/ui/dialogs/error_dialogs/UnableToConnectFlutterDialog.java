@@ -7,7 +7,13 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
 
 /**
- * Created by parvs on 6/25/2018.
+ * Created by Parv on 6/25/2018.
+ *
+ * UnableToConnectFlutterDialog
+ *
+ * An error dialog that displays when the flutter is unable to connect or is
+ * disconnected from the tablet.
+ *
  */
 
 public class UnableToConnectFlutterDialog extends ErrorDialog {

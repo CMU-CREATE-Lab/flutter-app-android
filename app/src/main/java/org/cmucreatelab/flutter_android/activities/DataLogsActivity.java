@@ -61,6 +61,14 @@ import butterknife.ButterKnife;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol.InputTypes.NOT_SET;
 
+/**
+ * Created by Steve.
+ *
+ * DataLogsActivity
+ *
+ * An activity that logs data from the flutter board and saves it.
+ *
+ */
 public class DataLogsActivity extends BaseNavigationActivity implements Serializable, DataLoggingHandler.DataSetPointsListener,
         ReviewRecordingDialog.DialogRecordListener, OpenLogDialog.OpenLogListener, SaveToKindleDialog.SaveToKindleListener, DismissDialogListener {
 

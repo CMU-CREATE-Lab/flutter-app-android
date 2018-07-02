@@ -26,9 +26,9 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 9/7/2016.
- * <p>
+ *
  * ChooseColorDialog
- * <p>
+ *
  * An abstract Dialog that handles the color picking.
  */
 public abstract class ChooseColorDialog extends BaseResizableDialog implements ColorPickerDialogFragment.ColorPickerDialogListener, Serializable {

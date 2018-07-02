@@ -17,6 +17,11 @@ import java.util.ArrayList;
 
 /**
  * Created by Steve on 2/1/2017.
+ *
+ * DataLogListAdapterCleanUp
+ *
+ * An adapter to display the logs that can be cleaned up.
+ *
  */
 public class DataLogListAdapterCleanUp extends BaseAdapter {
 
