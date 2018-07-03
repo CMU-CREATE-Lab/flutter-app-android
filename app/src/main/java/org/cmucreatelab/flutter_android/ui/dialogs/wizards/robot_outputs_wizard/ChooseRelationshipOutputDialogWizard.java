@@ -8,6 +8,9 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
@@ -34,7 +37,8 @@ import butterknife.OnClick;
 public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-
+    private Button nextButton;
+    private boolean relationshipSelected = false;
 
     public static ChooseRelationshipOutputDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
@@ -95,6 +99,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
+        nextButton = (Button) view.findViewById(R.id.button_next);
 
         return builder.create();
     }
@@ -106,25 +111,30 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     public void onClickRelationship(View view) {
         ServoWizard.State wizardState = wizard.getCurrentState();
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
+        nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
+        relationshipSelected = true;
         selectedView(view);
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
 
-    @OnClick(R.id.button_remove_link)
+    @OnClick(R.id.button_cancel)
     public void onClickBack() {
         wizard.changeDialog(null);
     }
 
 
-    @OnClick(R.id.button_save_link)
-    public void onClickSave() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
-        Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickSave");
-        if (wizardState.relationshipType == Constant.getInstance()) {
-            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
-        } else {
-            wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
+    @OnClick(R.id.button_next)
+    public void onClickNext() {
+        Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickNext");
+
+        if (relationshipSelected) {
+            ServoWizard.State wizardState = wizard.getCurrentState();
+            if (wizardState.relationshipType == Constant.getInstance()) {
+                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            } else {
+                wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
+            }
         }
     }
 

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/include_toolbar_dialog"
-        layout="@layout/toolbar_outputs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/toolbar_outputs" />
 
     <TextView
         android:id="@+id/set_wet"
@@ -25,45 +24,51 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="35dp" />
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/text_current_angle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="180"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/text_current_angle"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="150dp"
-                android:layout_toLeftOf="@+id/image_servo_bg"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/image_servo_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/link_servo_b_g_sm" />
+            android:id="@+id/servo_indicator_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="34dp">
 
             <ImageView
                 android:id="@+id/image_servo_pointer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/image_servo_bg"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="100dp"
+                android:layout_width="74dp"
+                android:layout_height="12dp"
+                android:layout_alignBottom="@+id/image_servo_bg"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="42.5dp"
                 android:src="@drawable/link_servo_pointer_sm" />
 
+            <ImageView
+                android:id="@+id/image_servo_bg"
+                android:layout_width="257dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/link_servo_b_g_sm" />
+
         </RelativeLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <SeekBar
         android:id="@+id/seek_position"
@@ -73,10 +78,6 @@
         android:max="180"
         android:paddingLeft="2dp"
         android:paddingRight="2dp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="39dp" />
 
     <include
         layout="@layout/link_buttons_for_wizard_part_two"

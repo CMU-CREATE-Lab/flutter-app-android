@@ -110,7 +110,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    @OnClick(R.id.button_back_page)
+    @OnClick(R.id.button_back)
     public void onClickBack() {
         ServoWizard.State wizardState = wizard.getCurrentState();
 
@@ -126,7 +126,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    @OnClick(R.id.button_next_page)
+    @OnClick(R.id.button_next)
     public void onClickSave() {
         ServoWizard.State wizardState = wizard.getCurrentState();
         if (this.outputType == OUTPUT_TYPE.MIN) {

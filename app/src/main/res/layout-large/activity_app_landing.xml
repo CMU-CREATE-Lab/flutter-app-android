@@ -8,12 +8,6 @@
     tools:context=".activities.AppLandingActivity"
     tools:openDrawer="start">
 
-<!--    <include
-        android:id="@+id/include_base_activity_app_landing"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/base_activity_app_landing" />-->
-
     <RelativeLayout
         android:id="@+id/landing_page_content"
         android:layout_width="match_parent"

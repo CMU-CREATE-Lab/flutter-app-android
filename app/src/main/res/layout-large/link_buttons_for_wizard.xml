@@ -2,37 +2,29 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="58dp"
     android:gravity="bottom"
     android:orientation="horizontal"
-    android:weightSum="2">
+    android:weightSum="3">
 
     <Button
-        android:id="@+id/button_remove_link"
-        android:layout_width="154.8dp"
-        android:layout_height="58dp"
-        android:layout_gravity="start"
-        android:layout_weight="1"
-        android:background="@drawable/round_reddish_button_bottom_left"
-        android:backgroundTint="@color/green"
-        android:text="@string/cancel"
-        android:textColor="@drawable/white_text_enable_disable" />
-
-    <ImageView
-        android:id="@+id/image_vertical_border"
-        android:layout_width="1dp"
+        android:id="@+id/button_cancel"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#999" />
+        android:layout_weight="1"
+        android:background="@drawable/light_green_button_bottom_left"
+        android:textStyle="bold"
+        android:text="@string/cancel"
+        android:textColor="@color/fluttergreen" />
 
     <Button
-        android:id="@+id/button_save_link"
-        android:layout_width="304.8dp"
-        android:layout_height="58dp"
-        android:layout_gravity="end"
-        android:layout_weight="1"
-        android:background="@drawable/round_green_button_bottom_right"
+        android:id="@+id/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textStyle="bold"
+        android:background="@drawable/button_gray_right_bottom"
         android:text="@string/next"
-        android:textColor="@drawable/white_text_enable_disable" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

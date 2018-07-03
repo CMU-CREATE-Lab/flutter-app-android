@@ -21,8 +21,7 @@ public class BaseResizableDialogWizard extends BaseResizableDialog {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        getDialog().getWindow().setLayout(convertDpToPx(475), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
