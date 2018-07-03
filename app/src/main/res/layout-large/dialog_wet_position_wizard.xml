@@ -13,6 +13,7 @@
         android:id="@+id/set_wet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:text="Set the wet position"
@@ -22,13 +23,9 @@
         android:textStyle="normal" />
 
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -37,8 +34,10 @@
             android:id="@+id/text_current_angle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="180"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/zero_degrees"
             android:textSize="50sp"
             android:textStyle="bold" />
 
@@ -55,29 +54,34 @@
                 android:layout_width="74dp"
                 android:layout_height="12dp"
                 android:layout_alignBottom="@+id/image_servo_bg"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="42.5dp"
-                android:src="@drawable/link_servo_pointer_sm" />
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="46dp"
+                android:src="@drawable/servo_pointer" />
 
             <ImageView
                 android:id="@+id/image_servo_bg"
                 android:layout_width="257dp"
                 android:layout_height="120dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/link_servo_b_g_sm" />
+                android:src="@drawable/big_link_servo_bg_lg" />
 
         </RelativeLayout>
 
+        <SeekBar
+            android:id="@+id/seek_position"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/servo_indicator_layout"
+            android:layout_gravity="center"
+            android:layout_marginEnd="28dp"
+            android:layout_marginTop="25dp"
+            android:max="180"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp" />
+
     </RelativeLayout>
 
-    <SeekBar
-        android:id="@+id/seek_position"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:max="180"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp" />
 
     <include
         layout="@layout/link_buttons_for_wizard_part_two"

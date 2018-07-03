@@ -124,6 +124,7 @@
     <string name="set_maximum_pitch">Set Maximum Pitch</string>
     <string name="pitch">Pitch</string>
     <string name="zero">0</string>
+    <string name="zero_degrees">0°</string>
     <string name="one_hundred">100</string>
     <string name="far">Far</string>
     <string name="near">Near</string>

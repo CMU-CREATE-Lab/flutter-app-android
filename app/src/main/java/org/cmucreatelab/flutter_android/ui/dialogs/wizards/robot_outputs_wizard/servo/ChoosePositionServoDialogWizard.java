@@ -7,8 +7,10 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -54,6 +56,11 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         pointer.startAnimation(rotateAnimation);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
 
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -92,6 +99,9 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         ButterKnife.bind(this, view);
         this.dialogView = view;
         this.outputType = (OUTPUT_TYPE)(getArguments().getSerializable(DIALOG_TYPE));
+
+        Button nextButton = (Button) view.findViewById(R.id.button_next);
+        nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
         // views
         // TODO @tasota get real port #
