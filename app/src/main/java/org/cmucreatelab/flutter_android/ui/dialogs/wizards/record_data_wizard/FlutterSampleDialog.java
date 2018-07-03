@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -25,26 +25,25 @@ import java.util.HashMap;
  * Created by Steve on 7/11/2017.
  */
 
-public class FlutterTimeRecordDialog extends BaseResizableDialog {
+public class FlutterSampleDialog extends BaseResizableDialog {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";
     private static final String SERIALIZABLE_KEY = "serializable_key";
     private static final String WIZARD_ENUM_KEY = "wizard_enum_key";
     private static final String REVIEW_ENABLED_KEY = "review_enabled_key";
 
-    private EditText timePeriodText;
-    private Spinner timePeriodSpinner;
-
+    private EditText intervalsText;
+    private Spinner intervalSpinner;
     private Serializable dismissAndDialogRecordListener;
     private DataLogDetails dataLogDetails;
     private boolean isReviewEnabled;
     private Constants.RECORD_DATA_WIZARD_TYPE wizardType;
 
     private final HashMap<String, Integer> TIME_INDEX = new HashMap(){{
-        put("minutes", 0);
-        put("hours", 1);
-        put("days", 2);
-        put("weeks", 3);
+        put("minute", 0);
+        put("hour", 1);
+        put("day", 2);
+        put("week", 3);
     }};
 
 
@@ -56,23 +55,23 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
      * @param isReviewEnabled - Whether the dialog was navigation from the review recording dialog.
      * @return
      */
-    public static FlutterTimeRecordDialog newInstance(Serializable dataLogDetails, Serializable serializable, Constants.RECORD_DATA_WIZARD_TYPE wizardEnum, boolean isReviewEnabled) {
-        FlutterTimeRecordDialog flutterTimeRecordDialog = new FlutterTimeRecordDialog();
+    public static FlutterSampleDialog newInstance(Serializable dataLogDetails, Serializable serializable, Serializable wizardEnum, boolean isReviewEnabled) {
+        FlutterSampleDialog flutterSampleDialog = new FlutterSampleDialog();
         Bundle args = new Bundle();
         args.putSerializable(DATA_LOG_DETAILS_KEY, dataLogDetails);
         args.putSerializable(SERIALIZABLE_KEY, serializable);
         args.putSerializable(WIZARD_ENUM_KEY, wizardEnum);
         args.putBoolean(REVIEW_ENABLED_KEY, isReviewEnabled);
-        flutterTimeRecordDialog.setArguments(args);
-        return flutterTimeRecordDialog;
+        flutterSampleDialog.setArguments(args);
+        return  flutterSampleDialog;
     }
 
 
-    private boolean testTimerPeriod() {
+    private boolean testInterval() {
         boolean result = true;
-        String timePeriodString = timePeriodText.getText().toString();
-        if (timePeriodString.equals("") || timePeriodString.equals("0")) {
-            timePeriodText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
+        String intervalString = intervalsText.getText().toString();
+        if (intervalString.matches("") || intervalString.matches("0")) {
+            intervalsText.setError(getString(R.string.this_field_cannot_be_blank_or_zero));
             result = false;
         }
         return result;
@@ -82,13 +81,9 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
     /* OnClick Listeners */
 
 
-    private View.OnClickListener backOnClick = new View.OnClickListener() {
+    private View.OnClickListener cancelOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            FlutterSampleDialog flutterSampleDialog = FlutterSampleDialog.newInstance(
-                    dataLogDetails, dismissAndDialogRecordListener, wizardType, false
-            );
-            flutterSampleDialog.show(getActivity().getSupportFragmentManager(), "tag");
             dismiss();
         }
     };
@@ -97,14 +92,14 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
     private View.OnClickListener nextOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (testTimerPeriod()) {
+            if (testInterval()) {
                 if (!isReviewEnabled) {
-                    dataLogDetails.setTimePeriodInt(Integer.parseInt(timePeriodText.getText().toString()));
-                    dataLogDetails.setTimePeriodString(timePeriodSpinner.getSelectedItem().toString());
-                    FlutterNameRecordingDialog flutterNameRecordingDialog = FlutterNameRecordingDialog.newInstance(
+                    dataLogDetails.setIntervalInt(Integer.parseInt(intervalsText.getText().toString()));
+                    dataLogDetails.setIntervalString(intervalSpinner.getSelectedItem().toString());
+                    FlutterTimeRecordDialog flutterTimeRecordDialog = FlutterTimeRecordDialog.newInstance(
                             dataLogDetails, dismissAndDialogRecordListener, wizardType, isReviewEnabled
                     );
-                    flutterNameRecordingDialog.show(getActivity().getSupportFragmentManager(), "tag");
+                    flutterTimeRecordDialog.show(getActivity().getSupportFragmentManager(), "tag");
                     dismiss();
                 } else {
                     ReviewRecordingDialog reviewRecordingDialog = ReviewRecordingDialog.newInstance(dataLogDetails, dismissAndDialogRecordListener, wizardType);
@@ -115,44 +110,43 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
         }
     };
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_flutter_record_time, null);
+        final View view = inflater.inflate(R.layout.dialog_flutter_sample, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
 
         dismissAndDialogRecordListener = getArguments().getSerializable(SERIALIZABLE_KEY);
         dataLogDetails = (DataLogDetails) getArguments().getSerializable(DATA_LOG_DETAILS_KEY);
-        wizardType = (Constants.RECORD_DATA_WIZARD_TYPE) getArguments().getSerializable(WIZARD_ENUM_KEY);
         isReviewEnabled = getArguments().getBoolean(REVIEW_ENABLED_KEY);
+        wizardType = (Constants.RECORD_DATA_WIZARD_TYPE) getArguments().getSerializable(WIZARD_ENUM_KEY);
 
-        int backButtonId = Constants.WIZARD_TYPE_TO_CANCEL_BACKGROUND.get(wizardType);
-        int backButtonTextId = Constants.WIZARD_TYPE_TO_CANCEL_TEXT.get(wizardType);
+        int cancelButtonId = Constants.WIZARD_TYPE_TO_CANCEL_BACKGROUND.get(wizardType);
+        int cancelButtonTextId = Constants.WIZARD_TYPE_TO_CANCEL_TEXT.get(wizardType);
         int nextButtonId = Constants.WIZARD_TYPE_TO_NEXT_BACKGROUND.get(wizardType);
 
-        timePeriodText = (EditText) view.findViewById(R.id.edit_time_period);
-        timePeriodSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_time);
+        intervalsText = (EditText) view.findViewById(R.id.edit_number_of_intervals);
+        intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.times_array, android.R.layout.simple_spinner_item);
+                R.array.time_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timePeriodSpinner.setAdapter(adapter);
+        intervalSpinner.setAdapter(adapter);
 
-        timePeriodText.setText(dataLogDetails.getTimePeriodInt() > 0 ? String.valueOf(dataLogDetails.getTimePeriodInt()) : "");
-        timePeriodSpinner.setSelection(TIME_INDEX.containsKey(dataLogDetails.getTimePeriodString()) ? TIME_INDEX.get(dataLogDetails.getTimePeriodString()) : 0);
+        intervalsText.setText(dataLogDetails.getIntervalInt() > 0 ? String.valueOf(dataLogDetails.getIntervalInt()) : "");
+        intervalSpinner.setSelection(TIME_INDEX.containsKey(dataLogDetails.getIntervalString()) ? TIME_INDEX.get(dataLogDetails.getIntervalString()) : 0);
 
-        Button back = (Button) view.findViewById(R.id.button_back_cancel);
+        Button cancel = (Button) view.findViewById(R.id.button_back_cancel);
         Button next = (Button) view.findViewById(R.id.button_next);
-        back.setText(getString(R.string.back));
-        back.setTextColor(getResources().getColor(backButtonTextId));
+        cancel.setText(getString(R.string.cancel));
+        cancel.setTextColor(getResources().getColor(cancelButtonTextId));
         next.setText(isReviewEnabled ? getString(R.string.review_recording) : getString(R.string.next));
-        back.setBackground(ContextCompat.getDrawable(getActivity(), backButtonId));
+        cancel.setBackground(ContextCompat.getDrawable(getActivity(), cancelButtonId));
         next.setBackground(ContextCompat.getDrawable(getActivity(), nextButtonId));
-        back.setOnClickListener(backOnClick);
+        cancel.setOnClickListener(cancelOnClick);
         next.setOnClickListener(nextOnClick);
 
         return builder.create();

@@ -46,6 +46,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDia
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import java.util.ArrayList;
 
@@ -211,8 +212,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Speaker speaker = session.getFlutter().getSpeaker();
 
         // servos link check
+        Output[] outputs = new Output[8];
         for (int i = 0; i < servos.length + triColorLeds.length + 2; i++) {
-            Output[] outputs = new Output[8];
+            // TODO @tasota I moved the array declaration of outputs outside of the for loop (Mohit)
             RelativeLayout currentLayout = null;
             ViewGroup linkAndSensor;
             ImageView questionMark = null;
@@ -354,10 +356,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickServo " + portNumber);
         Log.d(Constants.LOG_TAG, "onClickServo1");
         Servo[] servos = session.getFlutter().getServos();
+        Sensor[] sensors = session.getFlutter().getSensors();
+        //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
 
         if (portNumber >= 0 || portNumber <= 2) {
-            ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
-            dialog.show(getSupportFragmentManager(), "tag");
+            if (servos[portNumber-1].isLinked() == false) {
+                new ServoWizard(this,servos[portNumber - 1]).start();
+            }
+            else {
+                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
+                dialog.show(getSupportFragmentManager(), "tag");
+            }
         }
     }
 
@@ -384,8 +393,19 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickLed(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber - 1], this);
+        // TODO replace wizard
+//        if (triColorLeds[portNumber-1].getBlueLed().isLinked() == false ||
+//                triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
+//                triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
+//            // Show the user a step by step sequence of how to set up the led
+//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, triColorLeds[portNumber - 1],null, this);
+//            wizardDialog.show(getSupportFragmentManager(), "tag");
+//        }
+//        else {
+//            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+//            dialog.show(getSupportFragmentManager(), "tag");
+//        }
+        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
 
@@ -413,6 +433,18 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
+        // TODO replace wizard
+//        if (speaker.getPitch().isLinked() == false ||
+//                speaker.getVolume().isLinked() == false) {
+//            // Show the user a step by step sequence of how to set up the led
+//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, null, speaker, this);
+//            wizardDialog.show(getSupportFragmentManager(), "tag");
+//
+//        }
+//        else {
+//            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+//            dialog.show(getSupportFragmentManager(), "tag");
+//        }g
         SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }

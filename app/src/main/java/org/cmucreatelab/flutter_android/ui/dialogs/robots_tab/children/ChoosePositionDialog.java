@@ -75,7 +75,6 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
-
         pointer = (ImageView) view.findViewById(R.id.image_servo_pointer);
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);

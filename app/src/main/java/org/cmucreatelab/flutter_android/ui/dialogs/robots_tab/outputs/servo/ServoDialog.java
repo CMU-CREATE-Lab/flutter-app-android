@@ -175,6 +175,11 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         dialog.show(this.getFragmentManager(), "tag");
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Dialog dialog = getDialog();
+        dialog.dismiss();
+    }
 
     @OnClick(R.id.linear_set_linked_sensor)
     public void onClickSetLinkedSensor(View view) {
@@ -237,6 +242,23 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         updateViews();
     }
 
+
+    // added getters to use in RobotActivity.java
+    public View getDialogView() {
+        return dialogView;
+    }
+
+    public Servo getServo() {
+        return servo;
+    }
+
+    public ServoDialogStateHelper getStateHelper() {
+        return stateHelper;
+    }
+
+    public void setStateHelper(ServoDialogStateHelper stateHelper) {
+        this.stateHelper = stateHelper;
+    }
 
     @Override
     public void onRelationshipChosen(Relationship relationship) {

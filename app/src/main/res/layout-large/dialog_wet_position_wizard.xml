@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg">
+
+    <include
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/set_wet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:text="Set the wet position"
+        android:textAlignment="center"
+        android:textColor="#39393a"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_current_angle"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="150dp"
+                android:layout_toLeftOf="@+id/image_servo_bg"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/image_servo_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/link_servo_b_g_sm" />
+
+            <ImageView
+                android:id="@+id/image_servo_pointer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/image_servo_bg"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="100dp"
+                android:src="@drawable/link_servo_pointer_sm" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seek_position"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:max="180"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="39dp" />
+
+    <include
+        layout="@layout/link_buttons_for_wizard_part_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

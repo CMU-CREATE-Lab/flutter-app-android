@@ -152,6 +152,12 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         stateHelper.clickAdvancedSettings(this);
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Dialog dialog = getDialog();
+        dialog.dismiss();
+    }
+
 
     @OnClick(R.id.button_save_link)
     public void onClickSaveSettings() {

@@ -11,7 +11,7 @@ def getLatestGitHash = { ->
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "org.cmucreatelab.flutter_android"

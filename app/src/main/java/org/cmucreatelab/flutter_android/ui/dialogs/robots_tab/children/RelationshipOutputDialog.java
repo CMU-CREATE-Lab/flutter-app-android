@@ -77,7 +77,7 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         //view.findViewById(R.id.linear_amplitude).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_cumulative).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_change).setVisibility(View.GONE);
-        view.findViewById(R.id.linear_switch).setVisibility(View.GONE);
+        //view.findViewById(R.id.linear_switch).setVisibility(View.GONE); // Please uncomment this line.
         //view.findViewById(R.id.linear_constant).setVisibility(View.GONE);
 
         return builder.create();

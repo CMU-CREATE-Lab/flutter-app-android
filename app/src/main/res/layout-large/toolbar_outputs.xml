@@ -29,5 +29,13 @@
        android:layout_centerInParent="true"
        android:textStyle="bold"
        android:textSize="24sp"/>
+   <Button
+       android:id="@+id/button_close"
+       android:layout_width="60dp"
+       android:layout_height="60dp"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentEnd="true"
+       android:background="@drawable/close"
+       android:textColor="@color/white" />
 
 </RelativeLayout>

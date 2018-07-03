@@ -13,7 +13,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.record_data_wizard.ReviewRecordingDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.RecordDataSensorDialog;
 
 import java.io.Serializable;
