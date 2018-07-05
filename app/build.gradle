@@ -11,7 +11,7 @@ def getLatestGitHash = { ->
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '27.0.3'
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "org.cmucreatelab.flutter_android"
@@ -30,7 +30,7 @@ android {
         def versionName
         if (variant.buildType.isDebuggable()) {
             // Set properties for debug
-            versionName = "dev-"  + getLatestGitHash()
+            versionName = "dev-" + getLatestGitHash()
         } else {
             // Set properties for release
             versionName = "v" + variant.versionName
@@ -43,26 +43,25 @@ repositories {
     flatDir {
         dirs 'libs'
         dirs project(':melodysmart-module-android').file('libs')
+        dirs project(':generic-ble-module-android').file('libs')
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':melodysmart-module-android')
+    compile project(':generic-ble-module-android')
     compile project(':volley-createlab-module-android')
     compile 'com.rockerhieu.emojicon:library:1.3.3'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
     testCompile 'junit:junit:4.12'
     // Optional -- Mockito framework
     testCompile 'org.mockito:mockito-core:1.10.19'
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile('com.android.support:appcompat-v7:22.2.1')
     compile(name: 'MelodySmart', ext: 'aar')
     compile('com.jakewharton:butterknife:8.5.1') {
         /* Multiple dex file define error (DexException) is thrown, since duplicates of the
            following libraries are being included with Butterknife starting in 8.5.x. We must
            therefore exclude them.
-
            Running 'gradle -q app:dependencies' is a great way to see the dependency tree of an app.
          */
         exclude module: 'support-annotations'

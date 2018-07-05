@@ -1,1 +1,1 @@
-include ':app', ':melodysmart-module-android', ':volley-createlab-module-android', ':color-picker'
+include ':app', ':generic-ble-module-android', ':melodysmart-module-android', ':volley-createlab-module-android', ':color-picker'

@@ -6,3 +6,7 @@
 	path = volley-createlab-module-android
 	url = https://github.com/CMU-CREATE-Lab/volley-createlab-module-android.git
 	ignore = dirty
+[submodule "generic-ble-module-android"]
+	path = generic-ble-module-android
+	url = https://github.com/CMU-CREATE-Lab/generic-ble-module-android.git
+	ignore = dirty
