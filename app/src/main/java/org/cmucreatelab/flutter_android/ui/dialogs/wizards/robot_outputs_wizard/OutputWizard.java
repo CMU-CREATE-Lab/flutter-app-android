@@ -21,42 +21,38 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
     private RobotActivity activity;
     private T output;
-    private State currentState;
 
-    public class State implements Serializable {
+    public abstract class State implements Serializable {
         private BaseResizableDialogWizard currentDialog;
-        public Relationship relationshipType = NoRelationship.getInstance();
-        public int selectedSensorPort=0,
-                outputMin=0,
-                outputMax=100;
     }
+
+
+    public abstract void createState();
 
 
     public OutputWizard(RobotActivity activity, T output) {
         this.activity = activity;
         this.output = output;
-        this.currentState = new State();
+        createState();
     }
 
 
-    public State getCurrentState() {
-        return currentState;
-    }
+    public abstract State getCurrentState();
 
 
     @Override
     public void start() {
-        currentState.currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this);
-        currentState.currentDialog.show(activity.getSupportFragmentManager(), "tag");
+        getCurrentState().currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this);
+        getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
 
     @Override
     public void finish() {
-        generateSettings(this.currentState, this.output);
+        generateSettings(this.output);
         BaseOutputDialog dialog = generateOutputDialog(output, activity);
         dialog.show(activity.getSupportFragmentManager(), "tag");
-        currentState.currentDialog.dismiss();
+        getCurrentState().currentDialog.dismiss();
     }
 
 
@@ -64,17 +60,17 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
     public void changeDialog(BaseResizableDialogWizard nextDialog) {
         if (nextDialog == null) {
             Log.e(Constants.LOG_TAG, "found null nextDialog; ending wizard");
-            currentState.currentDialog.dismiss();
+            getCurrentState().currentDialog.dismiss();
             return;
         }
 
         nextDialog.show(activity.getSupportFragmentManager(), "tag");
-        currentState.currentDialog.dismiss();
-        currentState.currentDialog = nextDialog;
+        getCurrentState().currentDialog.dismiss();
+        getCurrentState().currentDialog = nextDialog;
     }
 
 
-    public abstract void generateSettings(OutputWizard.State currentState, T output);
+    public abstract void generateSettings(T output);
 
 
     public abstract BaseOutputDialog generateOutputDialog(T output, RobotActivity activity);

@@ -108,7 +108,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
 
     private void updateViewWithOptions() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
         if (selectedView != null) {
@@ -141,7 +141,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick({R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3})
     public void onClickSensor(View view) {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSensor");
         wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
         updateViewWithOptions();
@@ -157,8 +157,9 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_next)
     public void onClickSave() {
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickNext");
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
-        if (getViewFromSensorPort(wizard.getCurrentState().selectedSensorPort) != null) {
+        if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
             wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
         }
     }

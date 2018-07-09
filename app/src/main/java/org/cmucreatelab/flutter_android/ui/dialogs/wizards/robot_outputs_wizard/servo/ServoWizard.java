@@ -1,10 +1,10 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
-import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
@@ -17,13 +17,34 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 
 public class ServoWizard extends OutputWizard<Servo> {
 
+    private ServoWizardState currentState;
+
+    public class ServoWizardState extends OutputWizard<Servo>.State {
+        public Relationship relationshipType = NoRelationship.getInstance();
+        public int selectedSensorPort=0,
+                outputMin=0,
+                outputMax=180;
+    }
+
+
+    @Override
+    public void createState() {
+        currentState = new ServoWizardState();
+    }
+
+
+    @Override
+    public State getCurrentState() {
+        return currentState;
+    }
+
 
     public ServoWizard(RobotActivity activity, Servo servo) {
         super(activity, Servo.newInstance(servo));
     }
 
 
-    public void generateSettings(OutputWizard.State currentState, Servo output) {
+    public void generateSettings(Servo output) {
         // TODO @tasota avoid crash when something wasn't set
         if (currentState.relationshipType.getClass() == NoRelationship.class) {
             currentState.relationshipType = Proportional.getInstance();

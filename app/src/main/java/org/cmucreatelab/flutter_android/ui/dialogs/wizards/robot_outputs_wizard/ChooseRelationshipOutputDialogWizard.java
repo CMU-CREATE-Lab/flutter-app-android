@@ -108,7 +108,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
 
     private void updateViewWithOptions() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         View selectedView = getViewFromRelationship(wizardState.relationshipType);
 
         if (selectedView != null) {
@@ -142,7 +142,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
             R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
             R.id.linear_switch })
     public void onClickRelationship(View view) {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         wizardState.relationshipType = getRelationshipFromId(view.getId());
         updateViewWithOptions();
@@ -158,7 +158,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     @OnClick(R.id.button_next)
     public void onClickNext() {
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickNext");
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {

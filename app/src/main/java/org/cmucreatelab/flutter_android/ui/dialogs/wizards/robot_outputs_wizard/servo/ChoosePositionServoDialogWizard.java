@@ -90,14 +90,12 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
 
     private void updateViewWithOptions() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
-
-        if (this.outputType == OUTPUT_TYPE.MIN)
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+        if (this.outputType == OUTPUT_TYPE.MIN) {
             seekBarMaxMin.setProgress(wizardState.outputMin);
-        else
-            //Last dialog, so position will always default to 180
-            seekBarMaxMin.setProgress(180);
-
+        } else {
+            seekBarMaxMin.setProgress(wizardState.outputMax);
+        }
         updatePointer();
     }
 
@@ -137,7 +135,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_back)
     public void onClickBack() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
@@ -153,7 +151,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_next)
     public void onClickSave() {
-        ServoWizard.State wizardState = wizard.getCurrentState();
+        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizardState.outputMin = selectedValue;
         } else {
