@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
@@ -38,7 +36,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
     private View dialogView;
     private Button nextButton;
-    private boolean relationshipSelected = false;
 
     public static ChooseRelationshipOutputDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
@@ -90,6 +87,41 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     }
 
 
+    private View getViewFromRelationship(Relationship relationship) {
+        if (relationship.equals(Proportional.getInstance())) {
+            return dialogView.findViewById(R.id.linear_proportional);
+        } else if (relationship.equals(Cumulative.getInstance())) {
+            return dialogView.findViewById(R.id.linear_cumulative);
+        } else if (relationship.equals(Change.getInstance())) {
+            return dialogView.findViewById(R.id.linear_change);
+        } else if (relationship.equals(Frequency.getInstance())) {
+            return dialogView.findViewById(R.id.linear_frequency);
+        } else if (relationship.equals(Amplitude.getInstance())) {
+            return dialogView.findViewById(R.id.linear_amplitude);
+        } else if (relationship.equals(Constant.getInstance())) {
+            return dialogView.findViewById(R.id.linear_constant);
+        } else if (relationship.equals(Switch.getInstance())) {
+            return dialogView.findViewById(R.id.linear_switch);
+        }
+        return null;
+    }
+
+
+    private void updateViewWithOptions() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
+        View selectedView = getViewFromRelationship(wizardState.relationshipType);
+
+        if (selectedView != null) {
+            nextButton.setEnabled(true);
+            nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
+            selectedView(selectedView);
+        } else {
+            nextButton.setEnabled(false);
+            clearSelection();
+        }
+    }
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -100,6 +132,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         ButterKnife.bind(this, view);
         this.dialogView = view;
         nextButton = (Button) view.findViewById(R.id.button_next);
+        updateViewWithOptions();
 
         return builder.create();
     }
@@ -111,10 +144,8 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     public void onClickRelationship(View view) {
         ServoWizard.State wizardState = wizard.getCurrentState();
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
-        nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
-        relationshipSelected = true;
-        selectedView(view);
         wizardState.relationshipType = getRelationshipFromId(view.getId());
+        updateViewWithOptions();
     }
 
 
@@ -127,15 +158,22 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     @OnClick(R.id.button_next)
     public void onClickNext() {
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickNext");
+        ServoWizard.State wizardState = wizard.getCurrentState();
 
-        if (relationshipSelected) {
-            ServoWizard.State wizardState = wizard.getCurrentState();
+        if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {
                 wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
             } else {
                 wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
             }
         }
+    }
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
+        // TODO finish wizard, display summary/advanced dialog
     }
 
 

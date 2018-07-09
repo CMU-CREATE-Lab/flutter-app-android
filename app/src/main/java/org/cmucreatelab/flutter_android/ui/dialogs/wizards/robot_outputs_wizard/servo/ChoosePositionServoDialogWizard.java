@@ -89,6 +89,9 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     }
 
 
+    // TODO updateViewWithOptions
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
@@ -150,6 +153,13 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizard.finish();
         }
 
+    }
+
+
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
+        // TODO finish wizard, display summary/advanced dialog
     }
 
 
