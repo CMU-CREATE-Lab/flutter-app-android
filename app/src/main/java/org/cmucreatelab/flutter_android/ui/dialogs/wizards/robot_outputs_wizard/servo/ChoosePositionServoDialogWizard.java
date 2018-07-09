@@ -89,7 +89,17 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    // TODO updateViewWithOptions
+    private void updateViewWithOptions() {
+        ServoWizard.State wizardState = wizard.getCurrentState();
+
+        if (this.outputType == OUTPUT_TYPE.MIN)
+            seekBarMaxMin.setProgress(wizardState.outputMin);
+        else
+            //Last dialog, so position will always default to 180
+            seekBarMaxMin.setProgress(180);
+
+        updatePointer();
+    }
 
 
     @Override
@@ -118,6 +128,8 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
+
+        updateViewWithOptions();
 
         return builder.create();
     }
@@ -148,7 +160,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizardState.outputMax = selectedValue;
         }
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizard.changeDialog( ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
         } else {
             wizard.finish();
         }

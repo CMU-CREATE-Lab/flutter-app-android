@@ -112,11 +112,11 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
         View selectedView = getViewFromRelationship(wizardState.relationshipType);
 
         if (selectedView != null) {
-            nextButton.setEnabled(true);
+            nextButton.setClickable(true);
             nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
             selectedView(selectedView);
         } else {
-            nextButton.setEnabled(false);
+            nextButton.setClickable(false);
             clearSelection();
         }
     }

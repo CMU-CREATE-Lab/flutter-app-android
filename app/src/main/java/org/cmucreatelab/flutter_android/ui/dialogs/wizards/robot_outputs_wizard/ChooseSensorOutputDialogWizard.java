@@ -16,6 +16,7 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
@@ -50,6 +51,11 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         TextView textSensor1 = (TextView) view.findViewById(R.id.text_sensor_1);
         TextView textSensor2 = (TextView) view.findViewById(R.id.text_sensor_2);
         TextView textSensor3 = (TextView) view.findViewById(R.id.text_sensor_3);
+
+        //Set the linear layouts of the sensors to not be clickable if the sensor is not set
+		view.findViewById(R.id.linear_sensor_1).setClickable(sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
+		view.findViewById(R.id.linear_sensor_2).setClickable(sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
+		view.findViewById(R.id.linear_sensor_3).setClickable(sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
 
         sensor1.setImageResource(sensors[0].getGreenImageId());
         sensor2.setImageResource(sensors[1].getGreenImageId());
@@ -106,11 +112,11 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
         if (selectedView != null) {
-            nextButton.setEnabled(true);
+            nextButton.setClickable(true);
             nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
             selectedView(selectedView);
         } else {
-            nextButton.setEnabled(false);
+            nextButton.setClickable(false);
             clearSelection();
         }
     }

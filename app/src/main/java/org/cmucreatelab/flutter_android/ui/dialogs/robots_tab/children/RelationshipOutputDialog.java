@@ -108,10 +108,6 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
                 Log.d(Constants.LOG_TAG, "onClickChange");
                 relationship = Change.getInstance();
                 break;
-            case R.id.linear_switch:
-                Log.d(Constants.LOG_TAG, "onClickSwitch");
-                relationship = Switch.getInstance();
-                break;
             case R.id.linear_constant:
                 Log.d(Constants.LOG_TAG, "onClickConstant");
                 relationship = Constant.getInstance();
