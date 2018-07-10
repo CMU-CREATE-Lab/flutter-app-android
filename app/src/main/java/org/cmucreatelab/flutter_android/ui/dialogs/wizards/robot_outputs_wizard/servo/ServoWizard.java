@@ -43,6 +43,11 @@ public class ServoWizard extends OutputWizard<Servo> {
         super(activity, Servo.newInstance(servo));
     }
 
+    @Override
+    public void start() {
+        startDialog(ChooseRelationshipServoDialogWizard.newInstance(this));
+    }
+
 
     public void generateSettings(Servo output) {
         // TODO @tasota avoid crash when something wasn't set
@@ -57,7 +62,7 @@ public class ServoWizard extends OutputWizard<Servo> {
         newSettings.setSensorPortNumber(currentState.selectedSensorPort);
         newSettings.setOutputMin(currentState.outputMin);
         newSettings.setOutputMax(currentState.outputMax);
-        output.setSettings( Settings.newInstance(newSettings, currentState.relationshipType) );
+        output.setSettings(Settings.newInstance(newSettings, currentState.relationshipType) );
         output.setIsLinked(true, output);
     }
 

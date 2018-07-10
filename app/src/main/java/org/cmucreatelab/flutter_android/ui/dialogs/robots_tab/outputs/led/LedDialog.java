@@ -170,6 +170,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getRedLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getGreenLed()));
         msg.add(MessageConstructor.constructRemoveRelation(triColorLed.getBlueLed()));
+
         triColorLed.getRedLed().setIsLinked(false, triColorLed.getRedLed());
         triColorLed.getGreenLed().setIsLinked(false, triColorLed.getGreenLed());
         triColorLed.getBlueLed().setIsLinked(false, triColorLed.getBlueLed());

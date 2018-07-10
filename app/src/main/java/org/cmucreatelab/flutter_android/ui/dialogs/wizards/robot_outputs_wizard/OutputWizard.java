@@ -47,10 +47,13 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
 
     @Override
-    public void start() {
-        getCurrentState().currentDialog = ChooseRelationshipServoDialogWizard.newInstance(this);
-        getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
-    }
+    public abstract void start();
+
+
+	public void startDialog(BaseResizableDialogWizard startDialog) {
+		getCurrentState().currentDialog = startDialog;
+		getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
+	}
 
 
     @Override

@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
@@ -18,11 +22,11 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
  * Created by Parv on 7/10/18.
  */
 
-public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizard
+public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
 {
-    public static ChooseSensorServoDialogWizard newInstance(OutputWizard wizard) {
+    public static ChooseSensorLedDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
-        ChooseSensorServoDialogWizard dialogWizard = new ChooseSensorServoDialogWizard();
+        ChooseSensorLedDialogWizard dialogWizard = new ChooseSensorLedDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         dialogWizard.setArguments(args);
 
@@ -30,7 +34,7 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
     }
 
 	public void updateViewWithOptions() {
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 		View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
 		if (selectedView != null) {
@@ -44,25 +48,25 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
 	}
 
 	public void updateSelectedSensorPort(View view) {
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 		wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
 	}
 
 	public void updateTitle(View view)
 	{
-		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
-		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
+		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
 	}
 
 
 	public void onClickBack() {
-		wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
+		wizard.changeDialog(ChooseRelationshipLedDialogWizard.newInstance(wizard));
 	}
 
 
     public void onClickNext() {
 		Log.d(LOG_TAG, "onClickNext() called");
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 
         if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
             wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));

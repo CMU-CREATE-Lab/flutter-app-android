@@ -46,6 +46,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.SimulateSensorsDia
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.ServoDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.LedWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import java.util.ArrayList;
@@ -358,15 +359,13 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Servo[] servos = session.getFlutter().getServos();
         //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
 
-        if (portNumber >= 0 || portNumber <= 2) {
-            if (!servos[portNumber-1].isLinked()) {
-                new ServoWizard(this, servos[portNumber - 1]).start();
-            }
-            else {
-                ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
-                dialog.show(getSupportFragmentManager(), "tag");
-            }
-        }
+		if (!servos[portNumber-1].isLinked()) {
+			new ServoWizard(this, servos[portNumber - 1]).start();
+		}
+		else {
+			ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
+			dialog.show(getSupportFragmentManager(), "tag");
+		}
     }
 
     private View.OnClickListener servo3FrameClickListener = new View.OnClickListener() {
@@ -392,20 +391,16 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     private void onClickLed(int portNumber) {
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
-        // TODO replace wizard
-//        if (triColorLeds[portNumber-1].getBlueLed().isLinked() == false ||
-//                triColorLeds[portNumber-1].getGreenLed().isLinked() == false ||
-//                triColorLeds[portNumber-1].getRedLed().isLinked() == false) {
-//            // Show the user a step by step sequence of how to set up the led
-//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, triColorLeds[portNumber - 1],null, this);
-//            wizardDialog.show(getSupportFragmentManager(), "tag");
-//        }
-//        else {
-//            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-//            dialog.show(getSupportFragmentManager(), "tag");
-//        }
-        LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-        dialog.show(getSupportFragmentManager(), "tag");
+
+		if (!triColorLeds[portNumber-1].getRedLed().isLinked() ||
+				!triColorLeds[portNumber-1].getGreenLed().isLinked() ||
+				!triColorLeds[portNumber-1].getBlueLed().isLinked()) {
+			new LedWizard(this, triColorLeds[portNumber - 1]).start();
+		}
+		else {
+			LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
+			dialog.show(getSupportFragmentManager(), "tag");
+		}
     }
 
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {

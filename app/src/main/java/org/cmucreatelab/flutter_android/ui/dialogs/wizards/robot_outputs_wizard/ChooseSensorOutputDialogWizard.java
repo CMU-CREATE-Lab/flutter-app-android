@@ -18,7 +18,6 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -129,9 +128,7 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
 
 
     @OnClick(R.id.button_back)
-    public void onClickBack() {
-        wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
-    }
+    public abstract void onClickBack();
 
 
     @OnClick(R.id.button_next)
