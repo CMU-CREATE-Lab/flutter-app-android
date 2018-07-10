@@ -12,14 +12,14 @@
         android:layout_height="35dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/baseline_close_white_18dp" />
+        android:src="@drawable/round_close_white_36" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="-30dp"
-        android:src="@drawable/menu_applogo" />
+        android:src="@drawable/app_logo" />
 
     <Button
         android:id="@+id/nav_tutorials"
