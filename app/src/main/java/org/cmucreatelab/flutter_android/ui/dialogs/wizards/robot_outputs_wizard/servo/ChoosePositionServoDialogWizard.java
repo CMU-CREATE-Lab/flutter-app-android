@@ -20,7 +20,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseRelationshipOutputDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
 
 import butterknife.ButterKnife;
@@ -138,10 +137,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
+            wizard.changeDialog(ChooseSensorServoDialogWizard.newInstance(wizard));
         } else {
             if (wizardState.relationshipType == Constant.getInstance()) {
-                wizard.changeDialog(ChooseRelationshipOutputDialogWizard.newInstance(wizard));
+                wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
             } else {
                 wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
             }

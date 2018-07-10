@@ -68,19 +68,6 @@
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:text="@string/cumulative" />
-
-                <TextView
-                    android:id="@+id/linear_change"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="15dp"
-                    android:drawableStart="@drawable/relationship_green_change_m_d_56"
-                    android:gravity="fill"
-                    android:includeFontPadding="false"
-                    android:paddingBottom="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/change" />
             </TableRow>
 
             <TableRow
@@ -129,6 +116,18 @@
                     android:text="@string/constant" />
 
                 <TextView
+                    android:id="@+id/linear_change"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/relationship_green_change_m_d_56"
+                    android:gravity="fill"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/change" />
+
+                <TextView
                     android:id="@+id/linear_switch"
                     android:layout_height="wrap_content"
                     android:drawablePadding="15dp"
@@ -138,7 +137,8 @@
                     android:paddingEnd="15dp"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
-                    android:text="Switch" />
+                    android:visibility="gone"
+                    android:text="@string/switch_relationship" />
             </TableRow>
 
         </TableLayout>

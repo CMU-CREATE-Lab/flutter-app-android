@@ -356,12 +356,11 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickServo " + portNumber);
         Log.d(Constants.LOG_TAG, "onClickServo1");
         Servo[] servos = session.getFlutter().getServos();
-        Sensor[] sensors = session.getFlutter().getSensors();
         //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
 
         if (portNumber >= 0 || portNumber <= 2) {
-            if (servos[portNumber-1].isLinked() == false) {
-                new ServoWizard(this,servos[portNumber - 1]).start();
+            if (!servos[portNumber-1].isLinked()) {
+                new ServoWizard(this, servos[portNumber - 1]).start();
             }
             else {
                 ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);

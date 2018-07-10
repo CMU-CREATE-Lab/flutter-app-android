@@ -23,6 +23,7 @@ import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseSensorServoDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import butterknife.ButterKnife;
@@ -32,38 +33,28 @@ import butterknife.OnClick;
  * Created by mike on 6/27/18.
  */
 
-public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
+public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private Button nextButton;
-
-    public static ChooseRelationshipOutputDialogWizard newInstance(OutputWizard wizard) {
-        Bundle args = new Bundle();
-        ChooseRelationshipOutputDialogWizard dialogWizard = new ChooseRelationshipOutputDialogWizard();
-        args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
-        dialogWizard.setArguments(args);
-
-        return dialogWizard;
-    }
+	protected Button nextButton;
 
 
-    private void clearSelection() {
+    protected void clearSelection() {
         int[] viewIds = { R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
-                R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
-                R.id.linear_switch
+                R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant
         };
         for (int id: viewIds)
             dialogView.findViewById(id).setBackground(null);
     }
 
 
-    private void selectedView(View view) {
+	protected void selectedView(View view) {
         clearSelection();
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
 
 
-    private Relationship getRelationshipFromId(int id) {
+	protected Relationship getRelationshipFromId(int id) {
         switch(id) {
             case R.id.linear_proportional:
                 Log.w(Constants.LOG_TAG, "proportional");
@@ -78,8 +69,6 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
                 return Amplitude.getInstance();
             case R.id.linear_constant:
                 return Constant.getInstance();
-            case R.id.linear_switch:
-                return Switch.getInstance();
             default:
                 Log.w(Constants.LOG_TAG, "found no relationship from getRelationshipFromId");
         }
@@ -87,7 +76,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     }
 
 
-    private View getViewFromRelationship(Relationship relationship) {
+    protected View getViewFromRelationship(Relationship relationship) {
         if (relationship.equals(Proportional.getInstance())) {
             return dialogView.findViewById(R.id.linear_proportional);
         } else if (relationship.equals(Cumulative.getInstance())) {
@@ -107,44 +96,36 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
     }
 
 
-    private void updateViewWithOptions() {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
-        View selectedView = getViewFromRelationship(wizardState.relationshipType);
-
-        if (selectedView != null) {
-            nextButton.setClickable(true);
-            nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
-            selectedView(selectedView);
-        } else {
-            nextButton.setClickable(false);
-            clearSelection();
-        }
-    }
-
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_wizard, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_relationship_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
         this.dialogView = view;
         nextButton = (Button) view.findViewById(R.id.button_next);
         updateViewWithOptions();
+		updateTitle(view);
 
         return builder.create();
     }
 
 
-    @OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
+    public abstract void updateViewWithOptions();
+
+	public abstract void updateRelationshipType(View view);
+
+	public abstract void updateTitle(View view);
+
+
+	@OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
             R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
             R.id.linear_switch })
     public void onClickRelationship(View view) {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
-        wizardState.relationshipType = getRelationshipFromId(view.getId());
+        updateRelationshipType(view);
         updateViewWithOptions();
     }
 
@@ -156,18 +137,7 @@ public class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWiz
 
 
     @OnClick(R.id.button_next)
-    public void onClickNext() {
-        Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickNext");
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
-
-        if (getViewFromRelationship(wizardState.relationshipType) != null) {
-            if (wizardState.relationshipType == Constant.getInstance()) {
-                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
-            } else {
-                wizard.changeDialog(ChooseSensorOutputDialogWizard.newInstance(wizard));
-            }
-        }
-    }
+	public abstract void onClickNext();
 
 
     @OnClick(R.id.image_advanced_settings)

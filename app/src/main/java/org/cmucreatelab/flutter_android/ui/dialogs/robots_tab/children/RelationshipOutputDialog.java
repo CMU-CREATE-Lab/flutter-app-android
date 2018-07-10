@@ -17,7 +17,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.relationships.Switch;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
@@ -69,7 +68,6 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         view.findViewById(R.id.linear_amplitude).setOnClickListener(this);
         view.findViewById(R.id.linear_cumulative).setOnClickListener(this);
         view.findViewById(R.id.linear_change).setOnClickListener(this);
-        view.findViewById(R.id.linear_switch).setOnClickListener(this);
         view.findViewById(R.id.linear_constant).setOnClickListener(this);*/
         // TODO @tasota hidden for now; implement later
         //view.findViewById(R.id.linear_proportional).setVisibility(View.GONE);
@@ -77,7 +75,6 @@ public class RelationshipOutputDialog extends BaseResizableDialog implements Vie
         //view.findViewById(R.id.linear_amplitude).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_cumulative).setVisibility(View.GONE);
         //view.findViewById(R.id.linear_change).setVisibility(View.GONE);
-        //view.findViewById(R.id.linear_switch).setVisibility(View.GONE); // Please uncomment this line.
         //view.findViewById(R.id.linear_constant).setVisibility(View.GONE);
 
         return builder.create();

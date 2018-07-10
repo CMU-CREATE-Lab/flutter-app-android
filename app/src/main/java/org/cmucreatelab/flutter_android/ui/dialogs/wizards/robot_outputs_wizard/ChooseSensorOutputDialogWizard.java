@@ -18,8 +18,7 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,23 +27,13 @@ import butterknife.OnClick;
  * Created by mike on 6/27/18.
  */
 
-public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
+public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-    private Button nextButton;
-
-    public static ChooseSensorOutputDialogWizard newInstance(OutputWizard wizard) {
-        Bundle args = new Bundle();
-        ChooseSensorOutputDialogWizard dialogWizard = new ChooseSensorOutputDialogWizard();
-        args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
-        dialogWizard.setArguments(args);
-
-        return dialogWizard;
-    }
-
+    protected Button nextButton;
 
     private void populateSensors(View view) {
-        Sensor sensors[] = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
+        Sensor[] sensors = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
         ImageView sensor1 = (ImageView) view.findViewById(R.id.image_sensor_1);
         ImageView sensor2 = (ImageView) view.findViewById(R.id.image_sensor_2);
         ImageView sensor3 = (ImageView) view.findViewById(R.id.image_sensor_3);
@@ -66,20 +55,20 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    private void clearSelection() {
+    protected void clearSelection() {
         int[] viewIds = {R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3};
         for (int id : viewIds)
             dialogView.findViewById(id).setBackground(null);
     }
 
 
-    private void selectedView(View view) {
+    protected void selectedView(View view) {
         clearSelection();
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
 
 
-    private int getSensorPortFromId(int id) {
+    protected int getSensorPortFromId(int id) {
         switch (id) {
             case R.id.linear_sensor_1:
                 return 1;
@@ -94,7 +83,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    private View getViewFromSensorPort(int sensorPort) {
+    protected View getViewFromSensorPort(int sensorPort) {
         switch (sensorPort) {
             case 1:
                 return dialogView.findViewById(R.id.linear_sensor_1);
@@ -107,26 +96,17 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    private void updateViewWithOptions() {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
-        View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
+    public abstract void updateViewWithOptions();
 
-        if (selectedView != null) {
-            nextButton.setClickable(true);
-            nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
-            selectedView(selectedView);
-        } else {
-            nextButton.setClickable(false);
-            clearSelection();
-        }
-    }
+	public abstract void updateSelectedSensorPort(View view);
 
+	public abstract void updateTitle(View view);
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_sensor_choice_wizard, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_sensor_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -134,6 +114,7 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
         populateSensors(view);
         nextButton = (Button) view.findViewById(R.id.button_next);
         updateViewWithOptions();
+        updateTitle(view);
 
         return builder.create();
     }
@@ -141,28 +122,20 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick({R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3})
     public void onClickSensor(View view) {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickSensor");
-        wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
+        updateSelectedSensorPort(view);
         updateViewWithOptions();
     }
 
 
     @OnClick(R.id.button_back)
     public void onClickBack() {
-        wizard.changeDialog(ChooseRelationshipOutputDialogWizard.newInstance(wizard));
+        wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
     }
 
 
     @OnClick(R.id.button_next)
-    public void onClickSave() {
-        Log.v(Constants.LOG_TAG, "ChooseSensorOutputDialogWizard.onClickNext");
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
-
-        if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
-            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
-        }
-    }
+    public abstract void onClickNext();
 
 
     @OnClick(R.id.image_advanced_settings)
@@ -176,5 +149,4 @@ public class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
     public void onClickClose() {
         wizard.changeDialog(null);
     }
-
 }

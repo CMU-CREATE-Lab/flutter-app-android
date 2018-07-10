@@ -10,6 +10,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.Wizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
 
 import java.io.Serializable;
 
@@ -39,10 +40,15 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
     public abstract State getCurrentState();
 
+    public T getOutput()
+	{
+		return output;
+	}
+
 
     @Override
     public void start() {
-        getCurrentState().currentDialog = ChooseRelationshipOutputDialogWizard.newInstance(this);
+        getCurrentState().currentDialog = ChooseRelationshipServoDialogWizard.newInstance(this);
         getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
     }
 
