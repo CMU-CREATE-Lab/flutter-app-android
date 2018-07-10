@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
@@ -90,6 +91,15 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private void updateViewWithOptions() {
         ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+
+        //start off at 0 for constant relationships
+        if (wizardState.relationshipType == Constant.getInstance()) {
+            wizardState.outputMax = 0;
+        }
+        else {
+        	wizardState.outputMax = 180;
+		}
+
         if (this.outputType == OUTPUT_TYPE.MIN) {
             seekBarMaxMin.setProgress(wizardState.outputMin);
         } else {
@@ -114,10 +124,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
         // views
-        // TODO @tasota get real port #
-        //String.valueOf(currentServo.getPortNumber())
-        String portNumber = "1";
-        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " +  portNumber);
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
 
         // grab info
@@ -137,8 +144,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (this.outputType == OUTPUT_TYPE.MIN) {
+            wizardState.outputMin = selectedValue;
             wizard.changeDialog(ChooseSensorServoDialogWizard.newInstance(wizard));
         } else {
+            wizardState.outputMax = selectedValue;
             if (wizardState.relationshipType == Constant.getInstance()) {
                 wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
             } else {
@@ -149,16 +158,14 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
 
     @OnClick(R.id.button_next)
-    public void onClickSave() {
+    public void onClickNext() {
         ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizardState.outputMin = selectedValue;
-        } else {
-            wizardState.outputMax = selectedValue;
-        }
-        if (this.outputType == OUTPUT_TYPE.MIN) {
             wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
         } else {
+            wizardState.outputMax = selectedValue;
             wizard.finish();
         }
 
