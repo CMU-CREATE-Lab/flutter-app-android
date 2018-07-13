@@ -24,6 +24,8 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
 {
+	LedWizard.LedWizardState wizardState;
+
     public static ChooseSensorLedDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseSensorLedDialogWizard dialogWizard = new ChooseSensorLedDialogWizard();
@@ -34,7 +36,6 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
     }
 
 	public void updateViewWithOptions() {
-		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 		View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
 		if (selectedView != null) {
@@ -48,7 +49,6 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
 	}
 
 	public void updateSelectedSensorPort(View view) {
-		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 		wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
 	}
 
@@ -56,6 +56,11 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
 	{
 		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+	}
+
+	public void updateWizardState()
+	{
+		wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 	}
 
 
@@ -66,7 +71,6 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
 
     public void onClickNext() {
 		Log.d(LOG_TAG, "onClickNext() called");
-		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 
         if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
             wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));

@@ -39,6 +39,8 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutputDialogWizard {
 
+	ServoWizard.ServoWizardState wizardState;
+
     public static ChooseRelationshipServoDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseRelationshipServoDialogWizard dialogWizard = new ChooseRelationshipServoDialogWizard();
@@ -49,7 +51,6 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
     }
 
     public void updateViewWithOptions() {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         View selectedView = getViewFromRelationship(wizardState.relationshipType);
 
         if (selectedView != null) {
@@ -63,7 +64,6 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
     }
 
     public void updateRelationshipType(View view) {
-        ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
@@ -73,9 +73,13 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
 	}
 
+	public void updateWizardState()
+	{
+		wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+	}
+
     public void onClickNext() {
 		Log.d(LOG_TAG, "onClickNext() called");
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {

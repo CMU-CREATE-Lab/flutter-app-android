@@ -175,6 +175,10 @@
     <string name="set_pitch">Set Pitch</string>
     <string name="warning">Warning</string>
     <string name="overwrite_message">The Flutter is currently recording data. Do you want it to stop?</string>
+    <string name="servo_relationship_prompt">What type of relationship should the servo  and the sensor have?</string>
+    <string name="servo_sensor_prompt">Which sensor should the servo react to?</string>
+    <string name="led_relationship_prompt">What type of relationship should the LED  and the sensor have?</string>
+    <string name="led_sensor_prompt">Which sensor should the LED react to?</string>
     <string name="stop_the_current_recoring">Stop Recording</string>
     <string name="keep_the_current_recording">Keep the current recording</string>
     <string name="connect_step_one">STEP 1:</string>

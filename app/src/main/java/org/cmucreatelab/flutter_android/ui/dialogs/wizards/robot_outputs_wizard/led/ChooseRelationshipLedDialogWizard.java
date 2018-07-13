@@ -25,6 +25,8 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputDialogWizard {
 
+    LedWizard.LedWizardState wizardState;
+
     public static ChooseRelationshipLedDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseRelationshipLedDialogWizard dialogWizard = new ChooseRelationshipLedDialogWizard();
@@ -35,7 +37,6 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
     }
 
     public void updateViewWithOptions() {
-        LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
         View selectedView = getViewFromRelationship(wizardState.relationshipType);
 
         if (selectedView != null) {
@@ -49,7 +50,6 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
     }
 
     public void updateRelationshipType(View view) {
-        LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
@@ -59,9 +59,13 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
 	}
 
+    public void updateWizardState()
+    {
+        wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
+    }
+
     public void onClickNext() {
 		Log.d(LOG_TAG, "onClickNext() called");
-		LedWizard.LedWizardState wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {

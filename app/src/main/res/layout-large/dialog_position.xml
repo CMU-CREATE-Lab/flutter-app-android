@@ -49,7 +49,6 @@
         android:max="180"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        android:thumbOffset="1dp"
         android:paddingTop="20dp"/>
 
     <RelativeLayout

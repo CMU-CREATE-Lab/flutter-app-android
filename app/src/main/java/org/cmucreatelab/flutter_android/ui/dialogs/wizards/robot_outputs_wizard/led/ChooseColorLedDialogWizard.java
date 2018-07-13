@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -23,6 +23,9 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseSensorServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,9 +34,9 @@ import butterknife.OnClick;
  * Created by mike on 6/28/18.
  */
 
-public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
+public class ChooseColorLedDialogWizard extends BaseResizableDialogWizard {
 
-    ServoWizard.ServoWizardState wizardState;
+    LedWizard.LedWizardState wizardState;
 
     private int selectedValue = 0;
 
@@ -46,58 +49,21 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         MIN, MAX
     }
 
-
-    ////  pointer helper
-    private ImageView pointer;
-    private TextView curentPosition;
-    private SeekBar seekBarMaxMin;
-
-
-    private void updatePointer() {
-        RotateAnimation rotateAnimation = new RotateAnimation(selectedValue - 1, selectedValue, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setFillEnabled(true);
-        rotateAnimation.setFillAfter(true);
-        pointer.startAnimation(rotateAnimation);
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
+        //getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
     public void updateWizardState() {
-        wizardState = (ServoWizard.ServoWizardState) (wizard.getCurrentState());
+        wizardState = (LedWizard.LedWizardState) (wizard.getCurrentState());
     }
 
 
-    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            Log.v(Constants.LOG_TAG, "onProgressChanged: selectedValue=" + selectedValue);
-            selectedValue = i;
-            curentPosition.setText(String.valueOf(selectedValue) + (char) 0x00B0);
-            updatePointer();
-        }
-
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-        }
-
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-        }
-    };
-    //// END pointer helper
-
-
-    public static ChoosePositionServoDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
+    public static ChooseColorLedDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
-        ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
+        ChooseColorLedDialogWizard dialogWizard = new ChooseColorLedDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(DIALOG_TYPE, type);
         dialogWizard.setArguments(args);
@@ -109,17 +75,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     private void updateViewWithOptions() {
         //start off at 0 for constant relationships
         if (wizardState.relationshipType == Constant.getInstance()) {
-            wizardState.outputMax = 0;
-        } else if (wizardState.outputMax == 0) {
-            wizardState.outputMax = 180;
-        }
-
-        if (this.outputType == OUTPUT_TYPE.MIN) {
-            seekBarMaxMin.setProgress(wizardState.outputMin);
-        } else {
-            seekBarMaxMin.setProgress(wizardState.outputMax);
-        }
-        updatePointer();
+            //wizardState.outputMax = 0;
+        } //else if (wizardState.outputMax == 0) {
+            //wizardState.outputMax = 180;
+       // }
     }
 
 
@@ -137,12 +96,6 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
         updateWizardState();
-
-        // grab info
-        pointer = (ImageView) view.findViewById(R.id.image_servo_pointer);
-        curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
-        seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
-        seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
 
         updateViewWithOptions();
         updateTextViews(view);
@@ -178,14 +131,14 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_back)
     public void onClickBack() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizardState.outputMin = selectedValue;
+            //wizardState.outputMin = selectedValue;
             wizard.changeDialog(ChooseSensorServoDialogWizard.newInstance(wizard));
         } else {
-            wizardState.outputMax = selectedValue;
+            //wizardState.outputMax = selectedValue;
             if (wizardState.relationshipType == Constant.getInstance()) {
                 wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
             } else {
-                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN));
             }
         }
     }
@@ -194,10 +147,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_next)
     public void onClickNext() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizardState.outputMin = selectedValue;
-            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            //wizardState.outputMin = selectedValue;
+            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX));
         } else {
-            wizardState.outputMax = selectedValue;
+            //wizardState.outputMax = selectedValue;
             wizard.finish();
         }
 

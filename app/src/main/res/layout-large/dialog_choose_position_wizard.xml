@@ -10,13 +10,12 @@
         layout="@layout/toolbar_outputs" />
 
     <TextView
-        android:id="@+id/set_wet"
+        android:id="@+id/text_set_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
-        android:text="Set the wet position"
         android:textAlignment="center"
         android:textColor="#39393a"
         android:textSize="20sp"

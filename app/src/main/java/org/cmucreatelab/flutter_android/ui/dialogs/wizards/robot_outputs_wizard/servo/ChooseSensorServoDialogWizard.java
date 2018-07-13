@@ -20,6 +20,8 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizard
 {
+	ServoWizard.ServoWizardState wizardState;
+
     public static ChooseSensorServoDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
         ChooseSensorServoDialogWizard dialogWizard = new ChooseSensorServoDialogWizard();
@@ -30,7 +32,6 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
     }
 
 	public void updateViewWithOptions() {
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 		View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
 		if (selectedView != null) {
@@ -44,7 +45,6 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
 	}
 
 	public void updateSelectedSensorPort(View view) {
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 		wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
 	}
 
@@ -59,10 +59,13 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
 		wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
 	}
 
+	public void updateWizardState()
+	{
+		wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
+	}
 
     public void onClickNext() {
 		Log.d(LOG_TAG, "onClickNext() called");
-		ServoWizard.ServoWizardState wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
 
         if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
             wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));

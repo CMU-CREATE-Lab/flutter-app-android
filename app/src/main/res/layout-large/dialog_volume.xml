@@ -56,7 +56,6 @@
         android:max="100"
         android:paddingRight="2dp"
         android:paddingLeft="2dp"
-        android:thumbOffset="1dp"
         android:padding="20dp"/>
 
     <Button

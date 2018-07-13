@@ -6,9 +6,7 @@
 
     <include
         android:id="@+id/include_toolbar_dialog"
-        layout="@layout/toolbar_outputs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/toolbar_outputs"/>
 
     <TextView
         android:id="@+id/set_wet"

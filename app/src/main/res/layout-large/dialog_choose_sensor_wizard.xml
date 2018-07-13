@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
-        android:text="Which sensor should Servo 1 react to?"
+        android:text="@string/servo_sensor_prompt"
         android:textColor="#39393a"
         android:textSize="20sp"
         android:textStyle="normal" />

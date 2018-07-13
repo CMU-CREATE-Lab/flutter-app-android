@@ -27,7 +27,7 @@
             android:gravity="center_horizontal"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            android:text="What type of relationship should the servo  and the sensor have?"
+            android:text="@string/servo_relationship_prompt"
             android:textColor="#39393a"
             android:textSize="20sp"
             android:textStyle="normal" />
@@ -47,6 +47,7 @@
                     android:id="@+id/linear_proportional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_proportional_m_d_56"
                     android:gravity="fill"
@@ -60,6 +61,7 @@
                     android:id="@+id/linear_cumulative"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_cumulative_m_d_56"
                     android:gravity="fill"
@@ -77,6 +79,7 @@
                 <TextView
                     android:id="@+id/linear_frequency"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_frequency_m_d_56"
                     android:gravity="fill"
@@ -89,6 +92,7 @@
                 <TextView
                     android:id="@+id/linear_amplitude"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_amplitude_m_d_56"
                     android:gravity="fill"
@@ -106,6 +110,7 @@
                 <TextView
                     android:id="@+id/linear_constant"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_constant_m_d_56"
                     android:gravity="fill"
@@ -118,6 +123,7 @@
                 <TextView
                     android:id="@+id/linear_change"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:drawablePadding="15dp"
                     android:drawableStart="@drawable/relationship_green_change_m_d_56"
                     android:gravity="fill"
@@ -137,8 +143,8 @@
                     android:paddingEnd="15dp"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
-                    android:visibility="gone"
-                    android:text="@string/switch_relationship" />
+                    android:text="@string/switch_relationship"
+                    android:visibility="gone" />
             </TableRow>
 
         </TableLayout>

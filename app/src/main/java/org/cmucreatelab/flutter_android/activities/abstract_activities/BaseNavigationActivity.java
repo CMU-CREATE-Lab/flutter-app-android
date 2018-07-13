@@ -64,7 +64,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         }
         catch (NullPointerException npe)
         {
-            Log.i("Small Screen Device", "Can't instantiate drawer");
+            Log.e("Small Screen Device", "Can't instantiate drawer");
         }
     }
 

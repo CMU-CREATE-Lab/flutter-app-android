@@ -103,7 +103,10 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
         ButterKnife.bind(this, view);
         this.dialogView = view;
         nextButton = (Button) view.findViewById(R.id.button_next);
-        updateViewWithOptions();
+
+		//have to update wizard state before updating others
+		updateWizardState();
+		updateViewWithOptions();
 		updateTitle(view);
 
         return builder.create();
@@ -115,6 +118,8 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 	public abstract void updateRelationshipType(View view);
 
 	public abstract void updateTitle(View view);
+
+	public abstract void updateWizardState();
 
 
 	@OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
