@@ -54,11 +54,9 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         put(Constants.ColorSwatches.RED, new DrawableColor(Constants.ColorSwatches.RED, R.id.imageView_red, R.drawable.swatch_red, R.drawable.swatch_red_selected));
         put(Constants.ColorSwatches.ORANGE, new DrawableColor(Constants.ColorSwatches.ORANGE, R.id.imageView_orange, R.drawable.swatch_orange, R.drawable.swatch_orange_selected));
         put(Constants.ColorSwatches.YELLOW, new DrawableColor(Constants.ColorSwatches.YELLOW, R.id.imageView_yellow, R.drawable.swatch_yellow, R.drawable.swatch_yellow_selected));
-        put(Constants.ColorSwatches.CHARTREUSE_GREEN, new DrawableColor(Constants.ColorSwatches.CHARTREUSE_GREEN, R.id.imageView_chartreuse_green, R.drawable.swatch_chartreuse_green, R.drawable.swatch_chartreuse_green_selected));
         put(Constants.ColorSwatches.GREEN, new DrawableColor(Constants.ColorSwatches.GREEN, R.id.imageView_green, R.drawable.swatch_green, R.drawable.swatch_green_selected));
         put(Constants.ColorSwatches.SPRING_GREEN, new DrawableColor(Constants.ColorSwatches.SPRING_GREEN, R.id.imageView_spring_green, R.drawable.swatch_spring_green, R.drawable.swatch_spring_green_selected));
         put(Constants.ColorSwatches.CYAN, new DrawableColor(Constants.ColorSwatches.CYAN, R.id.imageView_cyan, R.drawable.swatch_cyan, R.drawable.swatch_cyan_selected));
-        put(Constants.ColorSwatches.AZURE, new DrawableColor(Constants.ColorSwatches.AZURE, R.id.imageView_azure, R.drawable.swatch_azure, R.drawable.swatch_azure_selected));
         put(Constants.ColorSwatches.BLUE, new DrawableColor(Constants.ColorSwatches.BLUE, R.id.imageView_blue, R.drawable.swatch_blue, R.drawable.swatch_blue_selected));
         put(Constants.ColorSwatches.VIOLET, new DrawableColor(Constants.ColorSwatches.VIOLET, R.id.imageView_violet, R.drawable.swatch_violet, R.drawable.swatch_violet_selected));
         put(Constants.ColorSwatches.MAGENTA, new DrawableColor(Constants.ColorSwatches.MAGENTA, R.id.imageView_magenta, R.drawable.swatch_magenta, R.drawable.swatch_magenta_selected));
@@ -88,10 +86,10 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
             return;
         }
         if (currentlySelected != null && currentlySelected.imageView != -1) {
-            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatch);
+            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(0);
         }
         this.currentlySelected = drawableColor;
-        ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatchSelected);
+        ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(R.drawable.rectangle_green_border);
 
         finalRGB = Constants.COLOR_PICKER_FLUTTER_RGB.get(currentlySelected.color);
         frameFinalColor.setBackgroundColor(currentlySelected.color);
@@ -99,7 +97,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
 
     private void selectCustomColor(int color) {
         if (currentlySelected != null && currentlySelected.imageView != -1) {
-            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setImageResource(currentlySelected.swatch);
+            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(0);
         }
         this.currentlySelected = new DrawableColor(color, -1, -1, -1);
 
@@ -178,12 +176,6 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         selectColor(colorSwatches.get(Constants.ColorSwatches.YELLOW));
     }
 
-    @OnClick(R.id.imageView_chartreuse_green)
-    public void onClickChartreuseGreen(View view) {
-        Log.d(Constants.LOG_TAG, "onClickChartreuseGreen");
-        selectColor(colorSwatches.get(Constants.ColorSwatches.CHARTREUSE_GREEN));
-    }
-
     @OnClick(R.id.imageView_green)
     public void onClickGreen(View view) {
         Log.d(Constants.LOG_TAG, "onClickGreen");
@@ -200,12 +192,6 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
     public void onClickCyan(View view) {
         Log.d(Constants.LOG_TAG, "onClickCyan");
         selectColor(colorSwatches.get(Constants.ColorSwatches.CYAN));
-    }
-
-    @OnClick(R.id.imageView_azure)
-    public void onClickAzure(View view) {
-        Log.d(Constants.LOG_TAG, "onClickAzure");
-        selectColor(colorSwatches.get(Constants.ColorSwatches.AZURE));
     }
 
     @OnClick(R.id.imageView_blue)

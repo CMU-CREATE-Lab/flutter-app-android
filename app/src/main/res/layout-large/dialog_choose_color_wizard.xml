@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
 
     <include
-        layout="@layout/toolbar_outputs"
-        android:id="@+id/include_toolbar_dialog" />
+        android:id="@+id/include_toolbar_dialog"
+        layout="@layout/toolbar_outputs" />
 
     <TextView
-        android:id="@+id/text_set_color"
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
+        android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
-        android:textAlignment="center"
-        android:textColor="#39393a"
-        android:textSize="20sp"
-        android:textStyle="normal" />
+        android:padding="5dp"
+        android:text="Selected Color"
+        android:textSize="16sp" />
 
-    <Space
+    <FrameLayout
+        android:id="@+id/frame_final_color"
         android:layout_width="match_parent"
-        android:layout_height="8dp" />
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="2dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -107,6 +113,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -143,10 +150,6 @@
             android:src="@drawable/swatch_black" />
 
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
 
     <include
         layout="@layout/link_buttons_for_wizard"
