@@ -25,8 +25,8 @@ public class LedWizard extends OutputWizard<TriColorLed> {
     public class LedWizardState extends State {
         public Relationship relationshipType = NoRelationship.getInstance();
         public int selectedSensorPort = 0;
-		public int[] outputsMin = new int[]{0, 0, 0};
-		public int[] outputsMax = new int[]{255, 255, 255};
+		public Integer[] outputsMin = new Integer[]{255, 255, 255};
+        public Integer[] outputsMax = new Integer[]{0, 0, 0};
     }
 
 

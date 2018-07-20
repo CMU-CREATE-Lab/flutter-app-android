@@ -7,14 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
@@ -22,9 +18,9 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
  * Created by Parv on 7/10/18.
  */
 
-public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
-{
-	LedWizard.LedWizardState wizardState;
+public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard {
+    LedWizard.LedWizardState wizardState;
+
 
     public static ChooseSensorLedDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
@@ -35,45 +31,47 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard
         return dialogWizard;
     }
 
-	public void updateViewWithOptions() {
-		View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
-		if (selectedView != null) {
-			nextButton.setClickable(true);
-			nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
-			selectedView(selectedView);
-		} else {
-			nextButton.setClickable(false);
-			clearSelection();
-		}
-	}
+    public void updateViewWithOptions() {
+        View selectedView = getViewFromSensorPort(wizardState.selectedSensorPort);
 
-	public void updateSelectedSensorPort(View view) {
-		wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
-	}
-
-	public void updateTitle(View view)
-	{
-		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
-		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
-	}
-
-	public void updateWizardState()
-	{
-		wizardState = (LedWizard.LedWizardState)(wizard.getCurrentState());
-	}
+        if (selectedView != null) {
+            nextButton.setClickable(true);
+            nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
+            selectedView(selectedView);
+        } else {
+            nextButton.setClickable(false);
+            clearSelection();
+        }
+    }
 
 
-	public void onClickBack() {
-		wizard.changeDialog(ChooseRelationshipLedDialogWizard.newInstance(wizard));
-	}
+    public void updateSelectedSensorPort(View view) {
+        wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
+    }
+
+
+    public void updateTitle(View view) {
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+    }
+
+
+    public void updateWizardState() {
+        wizardState = (LedWizard.LedWizardState) (wizard.getCurrentState());
+    }
+
+
+    public void onClickBack() {
+        wizard.changeDialog(ChooseRelationshipLedDialogWizard.newInstance(wizard));
+    }
 
 
     public void onClickNext() {
-		Log.d(LOG_TAG, "onClickNext() called");
+        Log.d(LOG_TAG, "onClickNext() called");
 
         if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
-            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN, TriColorLed.convertRgbToHex(wizardState.outputsMin)));
         }
     }
 }

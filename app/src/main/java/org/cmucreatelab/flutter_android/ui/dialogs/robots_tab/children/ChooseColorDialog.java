@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by Steve on 9/7/2016.
@@ -69,7 +70,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         put(Constants.ColorSwatches.BLACK_DEFAULT, new DrawableColor(Constants.ColorSwatches.BLACK, R.id.imageView_black, R.drawable.swatch_black, R.drawable.swatch_black_selected));
     }};
     private DrawableColor currentlySelected = colorSwatches.get(Constants.ColorSwatches.WHITE);
-    private View dialogView;
+    protected View dialogView;
 
 
     private static int[] intToRGB(int color) {
@@ -128,6 +129,8 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
             selectCustomColor(color);
         }
 
+        dialogView.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -143,6 +146,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
 
 
     @OnClick(R.id.button_set_color)
+    @Optional
     public void onClickSetColor() {
         setColorListener.onSetColor(currentlySelected.swatchSelected);
     }

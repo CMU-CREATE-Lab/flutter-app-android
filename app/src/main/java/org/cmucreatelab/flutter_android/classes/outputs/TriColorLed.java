@@ -121,6 +121,10 @@ public class TriColorLed implements FlutterOutput {
         return "#000000";
     }
 
+    public static String convertRgbToHex(Integer[] rgb)
+    {
+        return String.format("#%02x%02x%02x", rgb[0], rgb[1], rgb[2]);
+    }
 
     public String getMinColorHex() {
         if (getRedLed().getSettings().getClass() == getGreenLed().getSettings().getClass() && getGreenLed().getSettings().getClass() == getBlueLed().getSettings().getClass()) {

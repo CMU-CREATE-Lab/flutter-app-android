@@ -152,7 +152,7 @@
     </LinearLayout>
 
     <include
-        layout="@layout/link_buttons_for_wizard"
+        layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -108,7 +108,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private void updateViewWithOptions() {
         //start off at 0 for constant relationships
-        if (wizardState.relationshipType == Constant.getInstance()) {
+        if (wizardState.relationshipType instanceof Constant) {
             wizardState.outputMax = 0;
         } else if (wizardState.outputMax == 0) {
             wizardState.outputMax = 180;
@@ -160,7 +160,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
 
     private String getPositionPrompt() {
-        if (wizardState.relationshipType == Constant.getInstance()) {
+        if (!(wizardState.relationshipType instanceof Constant)) {
             Sensor[] sensors = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
 
             switch (outputType) {
@@ -182,7 +182,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizard.changeDialog(ChooseSensorServoDialogWizard.newInstance(wizard));
         } else {
             wizardState.outputMax = selectedValue;
-            if (wizardState.relationshipType == Constant.getInstance()) {
+            if (wizardState.relationshipType instanceof Constant) {
                 wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
             } else {
                 wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));

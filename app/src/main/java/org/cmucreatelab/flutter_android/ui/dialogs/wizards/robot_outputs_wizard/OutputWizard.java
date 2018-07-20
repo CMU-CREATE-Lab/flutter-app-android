@@ -7,6 +7,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.Wizard;
@@ -24,7 +25,7 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
     private T output;
 
     public abstract class State implements Serializable {
-        private BaseResizableDialogWizard currentDialog;
+        private BaseResizableDialog currentDialog;
     }
 
 
@@ -50,7 +51,7 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
     public abstract void start();
 
 
-	public void startDialog(BaseResizableDialogWizard startDialog) {
+	public void startDialog(BaseResizableDialog startDialog) {
 		getCurrentState().currentDialog = startDialog;
 		getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
 	}
@@ -66,7 +67,7 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
 
     @Override
-    public void changeDialog(BaseResizableDialogWizard nextDialog) {
+    public void changeDialog(BaseResizableDialog nextDialog) {
         if (nextDialog == null) {
             Log.e(Constants.LOG_TAG, "found null nextDialog; ending wizard");
             getCurrentState().currentDialog.dismiss();

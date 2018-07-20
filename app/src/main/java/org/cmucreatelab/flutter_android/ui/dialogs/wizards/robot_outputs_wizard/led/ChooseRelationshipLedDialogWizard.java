@@ -69,7 +69,7 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {
-                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX, TriColorLed.convertRgbToHex(wizardState.outputsMax)));
             } else {
                 wizard.changeDialog(ChooseSensorLedDialogWizard.newInstance(wizard));
             }
