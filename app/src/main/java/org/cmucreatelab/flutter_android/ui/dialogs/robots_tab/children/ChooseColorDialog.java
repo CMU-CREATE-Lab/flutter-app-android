@@ -234,6 +234,11 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         selectColor(colorSwatches.get(Constants.ColorSwatches.BLACK));
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        dismiss();
+    }
+
 
     // interface for children
 
