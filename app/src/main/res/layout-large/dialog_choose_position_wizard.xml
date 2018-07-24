@@ -49,20 +49,28 @@
             android:layout_marginEnd="34dp">
 
             <ImageView
-                android:id="@+id/image_servo_pointer"
-                android:layout_width="74dp"
-                android:layout_height="12dp"
-                android:layout_alignBottom="@+id/image_servo_bg"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="46dp"
-                android:src="@drawable/servo_pointer" />
-
-            <ImageView
                 android:id="@+id/image_servo_bg"
                 android:layout_width="257dp"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/link_servo_bg_lg" />
+                android:src="@drawable/servo_new_picking_indicator" />
+
+            <ImageView
+                android:id="@+id/image_servo_pointer"
+                android:layout_width="68.5dp"
+                android:layout_height="12dp"
+                android:layout_alignBottom="@+id/image_servo_bg"
+                android:layout_marginBottom="69.5dp"
+                android:layout_marginStart="60.25dp"
+                android:src="@drawable/servo_pointer_green" />
+
+            <!--Another gray dot in center to go on top of green servo indicator-->
+            <ImageView
+                android:layout_width="257dp"
+                android:layout_height="150dp"
+                android:layout_centerVertical="true"
+                android:padding="64dp"
+                android:src="@drawable/servo_dark_gray_dot" />
 
         </RelativeLayout>
 

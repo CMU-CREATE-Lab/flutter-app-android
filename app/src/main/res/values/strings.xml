@@ -227,6 +227,7 @@
     <string name="flutter_sample_question">How often should your Flutter take a sample?</string>
     <string name="flutter_record_time_question">How long should your Flutter record data?</string>
     <string name="back">Back</string>
+    <string name="both">Both</string>
     <string name="name_your_data_set">Name your data set</string>
     <string name="review_recording">Review Recording</string>
     <string name="simulate_sensors">Simulate Sensors</string>

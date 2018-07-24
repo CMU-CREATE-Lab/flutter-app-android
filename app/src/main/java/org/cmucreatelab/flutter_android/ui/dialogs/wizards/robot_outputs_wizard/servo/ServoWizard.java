@@ -62,7 +62,7 @@ public class ServoWizard extends OutputWizard<Servo> {
         newSettings.setSensorPortNumber(currentState.selectedSensorPort);
         newSettings.setOutputMin(currentState.outputMin);
         newSettings.setOutputMax(currentState.outputMax);
-        output.setSettings(Settings.newInstance(newSettings, currentState.relationshipType) );
+        output.setSettings(Settings.newInstance(newSettings, currentState.relationshipType));
         output.setIsLinked(true, output);
     }
 

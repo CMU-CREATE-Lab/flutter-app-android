@@ -438,7 +438,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 //        else {
 //            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
 //            dialog.show(getSupportFragmentManager(), "tag");
-//        }g
+//        }
         SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
         dialog.show(getSupportFragmentManager(), "tag");
     }
