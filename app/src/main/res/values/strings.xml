@@ -117,6 +117,8 @@
     <string name="maximum_color">Maximum Color</string>
     <string name="minimum_color">Minimum Color</string>
     <string name="set_up_speaker">Set Up Speaker</string>
+    <string name="set_up_volume_speaker">Set Up Volume for Speaker</string>
+    <string name="set_up_pitch_speaker">Set Up Pitch for Speaker</string>
     <string name="volume">Volume</string>
     <string name="set_maximum_volume">Set Maximum Volume</string>
     <string name="set_minimum_volume">Set Minimum Volume</string>

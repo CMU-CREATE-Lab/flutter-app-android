@@ -99,7 +99,7 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
 
     private void updateTextViews() {
         // views
-        ((TextView) dialogView.findViewById(R.id.text_output_title)).setText("Set up " + getPositionPrompt() + " Color for LED " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
+        ((TextView) dialogView.findViewById(R.id.text_output_title)).setText("Set Up " + getPositionPrompt() + " Color for LED " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
         ((ImageView) dialogView.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
         //((TextView) dialogView.findViewById(R.id.text_set_color)).setText(getPositionPrompt());
     }
@@ -116,7 +116,7 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
                     return getString(sensors[wizardState.selectedSensorPort - 1].getHighTextId());
             }
         } else {
-            return "Set the constant color";
+            return "Constant";
         }
     }
 

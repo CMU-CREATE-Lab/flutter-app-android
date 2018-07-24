@@ -39,7 +39,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private OUTPUT_TYPE outputType = OUTPUT_TYPE.MAX;
 
-    public static final String DIALOG_TYPE = "dialog_type";
+    private static final String DIALOG_TYPE = "dialog_type";
 
 
     public enum OUTPUT_TYPE {

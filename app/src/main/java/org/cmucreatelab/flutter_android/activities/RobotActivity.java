@@ -48,6 +48,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo.Serv
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.LedWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker.SpeakerWizard;
 
 import java.util.ArrayList;
 
@@ -427,20 +428,13 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "onClickSpeaker");
         Speaker speaker = session.getFlutter().getSpeaker();
 
-        // TODO replace wizard
-//        if (speaker.getPitch().isLinked() == false ||
-//                speaker.getVolume().isLinked() == false) {
-//            // Show the user a step by step sequence of how to set up the led
-//            RelationshipWizardPageOne wizardDialog = RelationshipWizardPageOne.newInstance(null, null, speaker, this);
-//            wizardDialog.show(getSupportFragmentManager(), "tag");
-//
-//        }
-//        else {
-//            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-//            dialog.show(getSupportFragmentManager(), "tag");
-//        }
-        SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
-        dialog.show(getSupportFragmentManager(), "tag");
+        if (!speaker.getVolume().isLinked() || !speaker.getPitch().isLinked()) {
+            new SpeakerWizard(this, speaker).start();
+        }
+        else {
+            SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
     }
 
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {

@@ -115,7 +115,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_choose_color_swatches, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_color, null);
         this.dialogView = view;
         this.frameFinalColor = (FrameLayout) view.findViewById(R.id.frame_final_color);
         String selectedColor = (String) getArguments().getSerializable(SELECTED_COLOR_KEY);

@@ -33,26 +33,25 @@ import butterknife.OnClick;
 public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
-	protected Button nextButton;
+    protected Button nextButton;
 
 
     protected void clearSelection() {
-        int[] viewIds = { R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
-                R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant
-        };
-        for (int id: viewIds)
+        int[] viewIds = {R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change, R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant};
+        for (int id : viewIds) {
             dialogView.findViewById(id).setBackground(null);
+        }
     }
 
 
-	protected void selectedView(View view) {
+    protected void selectedView(View view) {
         clearSelection();
         view.setBackground(ContextCompat.getDrawable(dialogView.getContext(), R.drawable.rectangle_green_border));
     }
 
 
-	protected Relationship getRelationshipFromId(int id) {
-        switch(id) {
+    protected Relationship getRelationshipFromId(int id) {
+        switch (id) {
             case R.id.linear_proportional:
                 Log.w(Constants.LOG_TAG, "proportional");
                 return Proportional.getInstance();
@@ -104,10 +103,10 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
         this.dialogView = view;
         nextButton = (Button) view.findViewById(R.id.button_next);
 
-		//have to update wizard state before updating others
-		updateWizardState();
-		updateViewWithOptions();
-		updateTitle(view);
+        //have to update wizard state before updating others
+        updateWizardState();
+        updateViewWithOptions();
+        updateTitle(view);
 
         return builder.create();
     }
@@ -115,16 +114,14 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 
     public abstract void updateViewWithOptions();
 
-	public abstract void updateRelationshipType(View view);
+    public abstract void updateRelationshipType(View view);
 
-	public abstract void updateTitle(View view);
+    public abstract void updateTitle(View view);
 
-	public abstract void updateWizardState();
+    public abstract void updateWizardState();
 
 
-	@OnClick({ R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change,
-            R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant,
-            R.id.linear_switch })
+    @OnClick({R.id.linear_proportional, R.id.linear_cumulative, R.id.linear_change, R.id.linear_frequency, R.id.linear_amplitude, R.id.linear_constant, R.id.linear_switch})
     public void onClickRelationship(View view) {
         Log.v(Constants.LOG_TAG, "ChooseRelationshipOutputDialogWizard.onClickRelationship");
         updateRelationshipType(view);
@@ -133,13 +130,13 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 
 
     @OnClick(R.id.button_cancel)
-    public void onClickBack() {
+    public void onClickCancel() {
         wizard.changeDialog(null);
     }
 
 
     @OnClick(R.id.button_next)
-	public abstract void onClickNext();
+    public abstract void onClickNext();
 
 
     @OnClick(R.id.image_advanced_settings)

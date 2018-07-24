@@ -2,17 +2,14 @@ package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.led.LedDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.speaker.SpeakerDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.ChooseRelationshipLedDialogWizard;
 
 /**
  * Created by Parv on 7/10/18.
@@ -23,7 +20,8 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
     private SpeakerWizardState currentState;
 
     public class SpeakerWizardState extends State {
-        public Relationship voluemRelationshipType = NoRelationship.getInstance();
+        public SpeakerWizardType speakerWizardType = null;
+        public Relationship volumeRelationshipType = NoRelationship.getInstance();
         public Relationship pitchRelationshipType = NoRelationship.getInstance();
         public int selectedSensorPortVolume = 0, selectedSensorPortPitch = 0;
 		public int volumeMin = 0, pitchMin = 262;
@@ -49,12 +47,12 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
 
 	@Override
 	public void start() {
-		startDialog(ChooseRelationshipLedDialogWizard.newInstance(this));
+		startDialog(ChooseSpeakerTypeDialogWizard.newInstance(this));
 	}
 
     public void generateSettings(Speaker output) {
-        if (currentState.voluemRelationshipType.getClass() == NoRelationship.class) {
-            currentState.voluemRelationshipType = Proportional.getInstance();
+        if (currentState.volumeRelationshipType.getClass() == NoRelationship.class) {
+            currentState.volumeRelationshipType = Proportional.getInstance();
         }
         if (currentState.pitchRelationshipType.getClass() == NoRelationship.class) {
             currentState.pitchRelationshipType = Proportional.getInstance();
@@ -70,7 +68,7 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
         newVolumeSettings.setSensorPortNumber(currentState.selectedSensorPortPitch);
         newVolumeSettings.setOutputMin(currentState.volumeMin);
         newVolumeSettings.setOutputMax(currentState.volumeMax);
-        output.getVolume().setSettings(Settings.newInstance(newVolumeSettings, currentState.voluemRelationshipType));
+        output.getVolume().setSettings(Settings.newInstance(newVolumeSettings, currentState.volumeRelationshipType));
 
         SettingsProportional newPitchSettings = SettingsProportional.newInstance(output.getPitch().getSettings());
         newPitchSettings.setSensorPortNumber(currentState.selectedSensorPortPitch);

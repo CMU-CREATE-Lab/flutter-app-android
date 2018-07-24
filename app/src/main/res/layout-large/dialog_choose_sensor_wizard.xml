@@ -10,13 +10,12 @@
         layout="@layout/toolbar_outputs" />
 
     <TextView
-        android:id="@+id/text_question_sensor"
+        android:id="@+id/text_sensor_prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
-        android:text="@string/servo_sensor_prompt"
         android:textColor="#39393a"
         android:textSize="20sp"
         android:textStyle="normal" />

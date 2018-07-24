@@ -20,6 +20,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/text_relationship_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -27,7 +28,6 @@
             android:gravity="center_horizontal"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            android:text="@string/servo_relationship_prompt"
             android:textColor="#39393a"
             android:textSize="20sp"
             android:textStyle="normal" />

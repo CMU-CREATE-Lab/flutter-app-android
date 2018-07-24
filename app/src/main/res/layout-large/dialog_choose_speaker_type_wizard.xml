@@ -13,38 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/button_volume"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"
-            android:padding="15dp"
             android:src="@drawable/link_icon_volume_high" />
 
         <ImageView
             android:id="@+id/button_pitch"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="20dp"
             android:adjustViewBounds="true"
-            android:padding="15dp"
             android:src="@drawable/link_icon_pitch" />
     </LinearLayout>
 
     <Button
         android:id="@+id/button_both"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/round_green_button"
         android:text="@string/both"
         android:textColor="@color/white"
         android:textSize="22sp"
+        android:layout_marginBottom="20dp"
         android:textStyle="bold" />
 
 </LinearLayout>
