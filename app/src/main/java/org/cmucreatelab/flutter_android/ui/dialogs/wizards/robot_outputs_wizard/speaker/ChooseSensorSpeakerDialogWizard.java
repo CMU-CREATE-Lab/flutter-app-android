@@ -1,39 +1,37 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.outputs.Servo;
+import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseRelationshipOutputDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.ChooseSensorLedDialogWizard;
-
-import butterknife.OnClick;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
 /**
- * Created by Parv on 6/27/18.
+ * Created by Parv on 7/10/18.
  */
 
-public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOutputDialogWizard {
-
+public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWizard {
     SpeakerWizard.SpeakerWizardState wizardState;
     private static final String SPEAKER_TYPE = "speaker_type";
     private SpeakerType speakerType;
 
 
-    public static ChooseRelationshipSpeakerDialogWizard newInstance(OutputWizard wizard, SpeakerType speakerType) {
+    public static ChooseSensorSpeakerDialogWizard newInstance(OutputWizard wizard, SpeakerType speakerType) {
         Bundle args = new Bundle();
-        ChooseRelationshipSpeakerDialogWizard dialogWizard = new ChooseRelationshipSpeakerDialogWizard();
+        ChooseSensorSpeakerDialogWizard dialogWizard = new ChooseSensorSpeakerDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(SPEAKER_TYPE, speakerType);
         dialogWizard.setArguments(args);
@@ -42,20 +40,12 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
     }
 
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        this.speakerType = (SpeakerType) (getArguments().getSerializable(SPEAKER_TYPE));
-        return super.onCreateDialog(savedInstanceState);
-    }
-
-
     public void updateViewWithOptions() {
         View selectedView;
         if (speakerType.equals(SpeakerType.VOLUME)) {
-            selectedView = getViewFromRelationship(wizardState.volumeRelationshipType);
+            selectedView = getViewFromSensorPort(wizardState.selectedSensorPortVolume);
         } else {
-            selectedView = getViewFromRelationship(wizardState.pitchRelationshipType);
+            selectedView = getViewFromSensorPort(wizardState.selectedSensorPortPitch);
         }
 
         if (selectedView != null) {
@@ -69,11 +59,11 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
     }
 
 
-    public void updateRelationshipType(View view) {
+    public void updateSelectedSensorPort(View view) {
         if (speakerType.equals(SpeakerType.VOLUME)) {
-            wizardState.volumeRelationshipType = getRelationshipFromId(view.getId());
+            wizardState.selectedSensorPortVolume = getSensorPortFromId(view.getId());
         } else {
-            wizardState.pitchRelationshipType = getRelationshipFromId(view.getId());
+            wizardState.selectedSensorPortPitch = getSensorPortFromId(view.getId());
         }
     }
 
@@ -82,14 +72,17 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
         if (speakerType.equals(SpeakerType.VOLUME)) {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
-            ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.volume_speaker_relationship_prompt));
+            ((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.volume_speaker_sensor_prompt));
         } else {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
-            ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.pitch_speaker_relationship_prompt));
+            ((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.pitch_speaker_sensor_prompt));
         }
+    }
 
-        ((Button) view.findViewById(R.id.button_cancel)).setText(getString(R.string.back));
+
+    public void onClickBack() {
+        wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
     }
 
 
@@ -98,30 +91,23 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
     }
 
 
-    @Override
-    @OnClick(R.id.button_cancel)
-    public void onClickCancel() {
-        wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
-    }
-
-
     public void onClickNext() {
         Log.d(LOG_TAG, "onClickNext() called");
 
         if (speakerType.equals(SpeakerType.VOLUME)) {
-            if (getViewFromRelationship(wizardState.volumeRelationshipType) != null) {
+            if (getViewFromSensorPort(wizardState.selectedSensorPortVolume) != null) {
                 if (wizardState.volumeRelationshipType instanceof Constant) {
 
                 } else {
-                    wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
+                    //wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard));
                 }
             }
         } else {
-            if (getViewFromRelationship(wizardState.pitchRelationshipType) != null) {
+            if (getViewFromSensorPort(wizardState.selectedSensorPortPitch) != null) {
                 if (wizardState.pitchRelationshipType instanceof Constant) {
 
                 } else {
-                    wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
+                    //wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard));
                 }
             }
         }

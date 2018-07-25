@@ -31,6 +31,7 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
     private View dialogView;
     protected Button nextButton;
 
+
     private void populateSensors(View view) {
         Sensor[] sensors = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
         ImageView sensor1 = (ImageView) view.findViewById(R.id.image_sensor_1);
@@ -41,9 +42,9 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
         TextView textSensor3 = (TextView) view.findViewById(R.id.text_sensor_3);
 
         //Set the linear layouts of the sensors to not be clickable if the sensor is not set
-		view.findViewById(R.id.linear_sensor_1).setClickable(sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
-		view.findViewById(R.id.linear_sensor_2).setClickable(sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
-		view.findViewById(R.id.linear_sensor_3).setClickable(sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
+        view.findViewById(R.id.linear_sensor_1).setClickable(sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
+        view.findViewById(R.id.linear_sensor_2).setClickable(sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
+        view.findViewById(R.id.linear_sensor_3).setClickable(sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET);
 
         sensor1.setImageResource(sensors[0].getGreenImageId());
         sensor2.setImageResource(sensors[1].getGreenImageId());
@@ -56,8 +57,9 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
 
     protected void clearSelection() {
         int[] viewIds = {R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3};
-        for (int id : viewIds)
+        for (int id : viewIds) {
             dialogView.findViewById(id).setBackground(null);
+        }
     }
 
 
@@ -97,9 +99,10 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
 
     public abstract void updateViewWithOptions();
 
-	public abstract void updateSelectedSensorPort(View view);
+    public abstract void updateSelectedSensorPort(View view);
 
-	public abstract void updateTitle(View view);
+    public abstract void updateText(View view);
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -114,14 +117,16 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
         nextButton = (Button) view.findViewById(R.id.button_next);
 
         //have to update wizard state before updating others
-		updateWizardState();
-		updateViewWithOptions();
-        updateTitle(view);
+        updateWizardState();
+        updateViewWithOptions();
+        updateText(view);
 
         return builder.create();
     }
 
-	public abstract void updateWizardState();
+
+    public abstract void updateWizardState();
+
 
     @OnClick({R.id.linear_sensor_1, R.id.linear_sensor_2, R.id.linear_sensor_3})
     public void onClickSensor(View view) {

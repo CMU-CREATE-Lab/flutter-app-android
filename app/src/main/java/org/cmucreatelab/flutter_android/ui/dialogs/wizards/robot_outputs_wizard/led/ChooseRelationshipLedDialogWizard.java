@@ -20,7 +20,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
 /**
- * Created by mike on 6/27/18.
+ * Created by Parv on 6/27/18.
  */
 
 public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputDialogWizard {
@@ -53,10 +53,11 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
-	public void updateTitle(View view)
+	public void updateText(View view)
 	{
 		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+        ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.led_relationship_prompt));
 	}
 
     public void updateWizardState()
@@ -69,7 +70,7 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {
-                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX, TriColorLed.convertRgbToHex(wizardState.outputsMax)));
+                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX));
             } else {
                 wizard.changeDialog(ChooseSensorLedDialogWizard.newInstance(wizard));
             }

@@ -2,14 +2,11 @@ package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,13 +17,9 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.ChooseColorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.MinColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
 
-import java.io.Serializable;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -57,17 +50,22 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
         getDialog().getWindow().setLayout(convertDpToPx(450), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+
     public void updateWizardState() {
         wizardState = (LedWizard.LedWizardState) (wizard.getCurrentState());
     }
 
 
-    public static ChooseColorLedDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type, String color) {
+    public static ChooseColorLedDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
         ChooseColorLedDialogWizard dialogWizard = new ChooseColorLedDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(DIALOG_TYPE, type);
-        args.putSerializable(SELECTED_COLOR_KEY, color);
+        if (type.equals(OUTPUT_TYPE.MIN)) {
+            args.putSerializable(SELECTED_COLOR_KEY, TriColorLed.convertRgbToHex(((LedWizard.LedWizardState) wizard.getCurrentState()).outputsMin));
+        } else {
+            args.putSerializable(SELECTED_COLOR_KEY, TriColorLed.convertRgbToHex(((LedWizard.LedWizardState) wizard.getCurrentState()).outputsMax));
+        }
         dialogWizard.setArguments(args);
 
         return dialogWizard;
@@ -131,7 +129,7 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
             if (wizardState.relationshipType instanceof Constant) {
                 wizard.changeDialog(ChooseRelationshipLedDialogWizard.newInstance(wizard));
             } else {
-                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN, TriColorLed.convertRgbToHex(wizardState.outputsMin)));
+                wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN));
             }
         }
     }
@@ -141,7 +139,7 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
     public void onClickNext() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
             wizardState.outputsMin = finalRGB;
-            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX, TriColorLed.convertRgbToHex(wizardState.outputsMax)));
+            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MAX));
         } else {
             wizardState.outputsMax = finalRGB;
             wizard.finish();

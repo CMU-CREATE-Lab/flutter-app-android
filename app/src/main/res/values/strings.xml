@@ -181,6 +181,10 @@
     <string name="servo_sensor_prompt">Which sensor should the servo react to?</string>
     <string name="led_relationship_prompt">What type of relationship should the LED  and the sensor have?</string>
     <string name="led_sensor_prompt">Which sensor should the LED react to?</string>
+    <string name="volume_speaker_relationship_prompt">What type of relationship should the volume  and the sensor have?</string>
+    <string name="volume_speaker_sensor_prompt">Which sensor should the volume react to?</string>
+    <string name="pitch_speaker_relationship_prompt">What type of relationship should the pitch  and the sensor have?</string>
+    <string name="pitch_speaker_sensor_prompt">Which sensor should the pitch react to?</string>
     <string name="stop_the_current_recoring">Stop Recording</string>
     <string name="keep_the_current_recording">Keep the current recording</string>
     <string name="connect_step_one">STEP 1:</string>

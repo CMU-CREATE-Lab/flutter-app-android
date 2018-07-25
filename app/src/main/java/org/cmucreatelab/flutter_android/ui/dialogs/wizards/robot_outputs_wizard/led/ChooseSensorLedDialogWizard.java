@@ -51,9 +51,10 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard 
     }
 
 
-    public void updateTitle(View view) {
+    public void updateText(View view) {
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
+        ((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.led_sensor_prompt));
     }
 
 
@@ -71,7 +72,7 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard 
         Log.d(LOG_TAG, "onClickNext() called");
 
         if (getViewFromSensorPort(wizardState.selectedSensorPort) != null) {
-            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN, TriColorLed.convertRgbToHex(wizardState.outputsMin)));
+            wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN));
         }
     }
 }

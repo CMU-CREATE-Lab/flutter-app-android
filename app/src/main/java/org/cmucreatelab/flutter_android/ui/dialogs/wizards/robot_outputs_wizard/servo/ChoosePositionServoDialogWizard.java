@@ -54,7 +54,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
 
     private void updatePointer() {
-        RotateAnimation rotateAnimation = new RotateAnimation(selectedValue - 1, selectedValue, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation rotateAnimation = new RotateAnimation(selectedValue - 2, selectedValue - 1, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setFillEnabled(true);
         rotateAnimation.setFillAfter(true);
         pointer.startAnimation(rotateAnimation);
