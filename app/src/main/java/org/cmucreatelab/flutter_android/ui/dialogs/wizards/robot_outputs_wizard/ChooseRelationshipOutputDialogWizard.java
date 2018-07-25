@@ -142,7 +142,7 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        // TODO finish wizard, display summary/advanced dialog
+        wizard.finish();
     }
 
 

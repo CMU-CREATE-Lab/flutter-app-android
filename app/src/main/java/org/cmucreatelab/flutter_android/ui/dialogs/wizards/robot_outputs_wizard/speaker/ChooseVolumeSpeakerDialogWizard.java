@@ -1,4 +1,4 @@
-package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
+package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -28,12 +27,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by mike on 6/28/18.
+ * Created by Parv on 6/28/18.
  */
 
-public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
+public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
 
-    ServoWizard.ServoWizardState wizardState;
+    SpeakerWizard.SpeakerWizardState wizardState;
 
     private int selectedValue = 0;
 
@@ -47,19 +46,8 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-    ////  pointer helper
-    private ImageView pointer;
     private TextView curentPosition;
     private SeekBar seekBarMaxMin;
-
-
-    private void updatePointer() {
-        RotateAnimation rotateAnimation = new RotateAnimation(selectedValue - 2, selectedValue, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setFillEnabled(true);
-        rotateAnimation.setFillAfter(true);
-        pointer.startAnimation(rotateAnimation);
-    }
-
 
     @Override
     public void onResume() {
@@ -69,7 +57,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
 
     public void updateWizardState() {
-        wizardState = (ServoWizard.ServoWizardState) (wizard.getCurrentState());
+        wizardState = (SpeakerWizard.SpeakerWizardState) (wizard.getCurrentState());
     }
 
 
@@ -78,8 +66,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.v(Constants.LOG_TAG, "onProgressChanged: selectedValue=" + selectedValue);
             selectedValue = i;
-            curentPosition.setText(String.valueOf(selectedValue) + (char) 0x00B0);
-            updatePointer();
+            curentPosition.setText(String.valueOf(selectedValue));
         }
 
 
@@ -92,12 +79,11 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
     };
-    //// END pointer helper
 
 
-    public static ChoosePositionServoDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
+    public static ChooseVolumeSpeakerDialogWizard newInstance(OutputWizard wizard, OUTPUT_TYPE type) {
         Bundle args = new Bundle();
-        ChoosePositionServoDialogWizard dialogWizard = new ChoosePositionServoDialogWizard();
+        ChooseVolumeSpeakerDialogWizard dialogWizard = new ChooseVolumeSpeakerDialogWizard();
         args.putSerializable(BaseResizableDialogWizard.KEY_WIZARD, wizard);
         args.putSerializable(DIALOG_TYPE, type);
         dialogWizard.setArguments(args);
@@ -108,18 +94,17 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private void updateViewWithOptions() {
         //start off at 0 for constant relationships
-        if (wizardState.relationshipType instanceof Constant) {
-            wizardState.outputMax = 0;
-        } else if (wizardState.outputMax == 0) {
-            wizardState.outputMax = 180;
+        if (wizardState.volumeRelationshipType instanceof Constant) {
+            wizardState.volumeMax = 0;
+        } else if (wizardState.volumeMax == 0) {
+            wizardState.volumeMax = 100;
         }
 
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            seekBarMaxMin.setProgress(wizardState.outputMin);
+            seekBarMaxMin.setProgress(wizardState.volumeMin);
         } else {
-            seekBarMaxMin.setProgress(wizardState.outputMax);
+            seekBarMaxMin.setProgress(wizardState.volumeMax);
         }
-        updatePointer();
     }
 
 
@@ -139,9 +124,8 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         updateWizardState();
 
         // grab info
-        pointer = (ImageView) view.findViewById(R.id.image_servo_pointer);
-        curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
-        seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
+        curentPosition = (TextView) view.findViewById(R.id.text_current_volume);
+        seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_volume);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
 
         updateViewWithOptions();
@@ -153,21 +137,21 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private void updateTextViews(View view) {
         // views
-        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
-        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
         ((TextView) view.findViewById(R.id.text_set_position)).setText(getPositionPrompt());
     }
 
 
     private String getPositionPrompt() {
-        if (!(wizardState.relationshipType instanceof Constant)) {
+        if (!(wizardState.volumeRelationshipType instanceof Constant)) {
             Sensor[] sensors = GlobalHandler.getInstance(this.getActivity()).sessionHandler.getSession().getFlutter().getSensors();
 
             switch (outputType) {
                 case MIN:
-                    return "Set the " + getString(sensors[wizardState.selectedSensorPort - 1].getLowTextId()).toLowerCase() + " position";
+                    return "Set the " + getString(sensors[wizardState.selectedSensorPortVolume - 1].getLowTextId()).toLowerCase() + " position";
                 default:
-                    return "Set the " + getString(sensors[wizardState.selectedSensorPort - 1].getHighTextId()).toLowerCase() + " position";
+                    return "Set the " + getString(sensors[wizardState.selectedSensorPortVolume - 1].getHighTextId()).toLowerCase() + " position";
             }
         } else {
             return "Set the constant position";
@@ -178,14 +162,13 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_back)
     public void onClickBack() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizardState.outputMin = selectedValue;
-            wizard.changeDialog(ChooseSensorServoDialogWizard.newInstance(wizard));
+            wizardState.volumeMin = selectedValue;
         } else {
-            wizardState.outputMax = selectedValue;
-            if (wizardState.relationshipType instanceof Constant) {
-                wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
+            wizardState.volumeMax = selectedValue;
+            if (wizardState.volumeRelationshipType instanceof Constant) {
+
             } else {
-                wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MIN));
+                wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MIN));
             }
         }
     }
@@ -194,10 +177,10 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_next)
     public void onClickNext() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
-            wizardState.outputMin = selectedValue;
-            wizard.changeDialog(ChoosePositionServoDialogWizard.newInstance(wizard, ChoosePositionServoDialogWizard.OUTPUT_TYPE.MAX));
+            wizardState.volumeMin = selectedValue;
+            wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
         } else {
-            wizardState.outputMax = selectedValue;
+            wizardState.volumeMax = selectedValue;
             wizard.finish();
         }
 

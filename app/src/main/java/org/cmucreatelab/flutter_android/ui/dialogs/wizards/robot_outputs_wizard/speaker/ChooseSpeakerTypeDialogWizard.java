@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by mike on 6/28/18.
+ * Created by Parv on 6/28/18.
  */
 
 public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
@@ -67,7 +67,7 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_both)
     public void onClickBoth() {
         wizardState.speakerWizardType = SpeakerWizardType.BOTH;
-
+        wizard.changeDialog(ExplanationSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
     }
 
 

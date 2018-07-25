@@ -57,12 +57,6 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
         if (currentState.pitchRelationshipType.getClass() == NoRelationship.class) {
             currentState.pitchRelationshipType = Proportional.getInstance();
         }
-        if (currentState.selectedSensorPortVolume < 1 || currentState.selectedSensorPortVolume > 3) {
-            currentState.selectedSensorPortVolume = 1;
-        }
-        if (currentState.selectedSensorPortPitch < 1 || currentState.selectedSensorPortPitch > 3) {
-            currentState.selectedSensorPortPitch = 1;
-        }
 
         SettingsProportional newVolumeSettings = SettingsProportional.newInstance(output.getVolume().getSettings());
         newVolumeSettings.setSensorPortNumber(currentState.selectedSensorPortPitch);

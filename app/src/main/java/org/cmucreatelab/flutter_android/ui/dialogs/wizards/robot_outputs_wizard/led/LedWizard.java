@@ -52,12 +52,8 @@ public class LedWizard extends OutputWizard<TriColorLed> {
 	}
 
     public void generateSettings(TriColorLed output) {
-        // TODO @tasota avoid crash when something wasn't set
         if (currentState.relationshipType.getClass() == NoRelationship.class) {
             currentState.relationshipType = Proportional.getInstance();
-        }
-        if (currentState.selectedSensorPort < 1 || currentState.selectedSensorPort > 3) {
-            currentState.selectedSensorPort = 1;
         }
 
 		output.setSensorPortNumber(currentState.selectedSensorPort);

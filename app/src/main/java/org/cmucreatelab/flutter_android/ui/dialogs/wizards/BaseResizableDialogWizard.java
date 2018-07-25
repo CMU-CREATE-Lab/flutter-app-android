@@ -30,6 +30,7 @@ public class BaseResizableDialogWizard extends BaseResizableDialog {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         this.wizard = (OutputWizard)(getArguments().getSerializable(KEY_WIZARD));
+        setCancelable(false);
         return super.onCreateDialog(savedInstanceState);
     }
 

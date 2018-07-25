@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,6 +41,12 @@ public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWiz
         return dialogWizard;
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        this.speakerType = (SpeakerType) (getArguments().getSerializable(SPEAKER_TYPE));
+        return super.onCreateDialog(savedInstanceState);
+    }
 
     public void updateViewWithOptions() {
         View selectedView;
@@ -82,7 +90,7 @@ public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWiz
 
 
     public void onClickBack() {
-        wizard.changeDialog(ChooseRelationshipServoDialogWizard.newInstance(wizard));
+        wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, speakerType));
     }
 
 

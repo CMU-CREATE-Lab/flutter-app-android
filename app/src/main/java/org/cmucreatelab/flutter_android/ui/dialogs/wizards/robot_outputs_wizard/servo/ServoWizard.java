@@ -50,12 +50,8 @@ public class ServoWizard extends OutputWizard<Servo> {
 
 
     public void generateSettings(Servo output) {
-        // TODO @tasota avoid crash when something wasn't set
         if (currentState.relationshipType.getClass() == NoRelationship.class) {
             currentState.relationshipType = Proportional.getInstance();
-        }
-        if (currentState.selectedSensorPort < 1 || currentState.selectedSensorPort > 3) {
-            currentState.selectedSensorPort = 1;
         }
 
         SettingsProportional newSettings = SettingsProportional.newInstance(output.getSettings());

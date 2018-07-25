@@ -48,6 +48,9 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
+        this.speakerType = (SpeakerType) (getArguments().getSerializable(SPEAKER_TYPE));
+
+        view.findViewById(R.id.button_next).setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
         updateWizardState();
 
@@ -61,9 +64,11 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
         if (speakerType.equals(SpeakerType.VOLUME)) {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
+            ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_volume));
         } else {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
+            ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_pitch));
         }
     }
 
@@ -74,16 +79,14 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
 
 
     @OnClick(R.id.button_next)
-    public void onClickPitch() {
-        wizardState.speakerWizardType = SpeakerWizardType.PITCH;
-        wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
+    public void onClickNext() {
+        wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, speakerType));
     }
 
 
     @OnClick(R.id.button_back)
-    public void onClickVolume() {
-        wizardState.speakerWizardType = SpeakerWizardType.VOLUME;
-        wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
+    public void onClickBack() {
+        wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
     }
 
 

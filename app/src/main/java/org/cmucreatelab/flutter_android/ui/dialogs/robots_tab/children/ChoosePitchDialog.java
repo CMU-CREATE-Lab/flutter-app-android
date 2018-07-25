@@ -36,6 +36,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     private TextView currentPitch;
     private ImageView sheetMusic;
     private SeekBar seekBarPitch;
+    protected View dialogView;
 
     protected int finalPitch;
     protected SetPitchListener setPitchListener;
@@ -195,6 +196,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_pitch, null);
+        dialogView = view;
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
