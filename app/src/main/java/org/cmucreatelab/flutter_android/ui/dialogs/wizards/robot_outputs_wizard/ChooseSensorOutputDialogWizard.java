@@ -144,13 +144,6 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
     public abstract void onClickNext();
 
 
-    @OnClick(R.id.image_advanced_settings)
-    public void onClickAdvancedSettings() {
-        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        wizard.finish();
-    }
-
-
     @OnClick(R.id.button_close)
     public void onClickClose() {
         wizard.changeDialog(null);

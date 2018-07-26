@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
@@ -67,6 +69,8 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_both)
     public void onClickBoth() {
         wizardState.speakerWizardType = SpeakerWizardType.BOTH;
+        wizardState.volumeRelationshipType = NoRelationship.getInstance();
+        wizardState.pitchRelationshipType = NoRelationship.getInstance();
         wizard.changeDialog(ExplanationSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
     }
 
@@ -74,6 +78,8 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_pitch)
     public void onClickPitch() {
         wizardState.speakerWizardType = SpeakerWizardType.PITCH;
+        wizardState.pitchRelationshipType = NoRelationship.getInstance();
+        wizardState.volumeRelationshipType = Constant.getInstance();
         wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
     }
 
@@ -81,6 +87,8 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
     @OnClick(R.id.button_volume)
     public void onClickVolume() {
         wizardState.speakerWizardType = SpeakerWizardType.VOLUME;
+        wizardState.volumeRelationshipType = NoRelationship.getInstance();
+        wizardState.pitchRelationshipType = Constant.getInstance();
         wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
     }
 

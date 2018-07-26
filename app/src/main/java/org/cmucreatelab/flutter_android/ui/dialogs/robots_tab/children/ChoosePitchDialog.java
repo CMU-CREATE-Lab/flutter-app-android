@@ -17,6 +17,7 @@ import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by Steve on 11/14/2016.
@@ -32,17 +33,16 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     public static String PITCH_LISTENER_KEY = "pitch_listener";
     public static String PITCH_KEY = "pitch";
 
-    private TextView currentNote;
-    private TextView currentPitch;
-    private ImageView sheetMusic;
-    private SeekBar seekBarPitch;
-    protected View dialogView;
+    protected TextView currentNote;
+    protected TextView currentPitch;
+    protected ImageView sheetMusic;
+    protected SeekBar seekBarPitch;
 
     protected int finalPitch;
     protected SetPitchListener setPitchListener;
 
 
-    private int getFrequency(int progress) {
+    protected int getFrequency(int progress) {
         int result = 0;
 
         switch (progress) {
@@ -127,8 +127,8 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     }
 
 
-    private void populateViewWithPitch(int pitch) {
-        int progress=0;
+    protected void populateViewWithPitch(int pitch) {
+        int progress;
 
         if (pitch <= Constants.MusicNoteFrequencies.C_4) {
             progress = 0;
@@ -171,7 +171,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     }
 
 
-    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+    protected SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             Log.v(Constants.LOG_TAG, "onProgressChanged");
@@ -196,7 +196,6 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_pitch, null);
-        dialogView = view;
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -214,6 +213,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
 
 
     @OnClick(R.id.button_set_pitch)
+    @Optional
     public void onClickSetPitch() {
         setPitchListener.onSetPitch();
     }

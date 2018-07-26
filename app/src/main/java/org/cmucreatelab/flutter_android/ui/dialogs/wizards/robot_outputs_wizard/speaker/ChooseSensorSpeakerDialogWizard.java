@@ -9,15 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
-import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseSensorOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChoosePositionServoDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
@@ -41,12 +35,14 @@ public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWiz
         return dialogWizard;
     }
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         this.speakerType = (SpeakerType) (getArguments().getSerializable(SPEAKER_TYPE));
         return super.onCreateDialog(savedInstanceState);
     }
+
 
     public void updateViewWithOptions() {
         View selectedView;
@@ -101,22 +97,13 @@ public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWiz
 
     public void onClickNext() {
         Log.d(LOG_TAG, "onClickNext() called");
-
         if (speakerType.equals(SpeakerType.VOLUME)) {
             if (getViewFromSensorPort(wizardState.selectedSensorPortVolume) != null) {
-                if (wizardState.volumeRelationshipType instanceof Constant) {
-
-                } else {
-                    //wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard));
-                }
+                wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MIN));
             }
         } else {
             if (getViewFromSensorPort(wizardState.selectedSensorPortPitch) != null) {
-                if (wizardState.pitchRelationshipType instanceof Constant) {
-
-                } else {
-                    //wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard));
-                }
+                wizard.changeDialog(ChoosePitchSpeakerDialogWizard.newInstance(wizard, ChoosePitchSpeakerDialogWizard.OUTPUT_TYPE.MIN));
             }
         }
     }

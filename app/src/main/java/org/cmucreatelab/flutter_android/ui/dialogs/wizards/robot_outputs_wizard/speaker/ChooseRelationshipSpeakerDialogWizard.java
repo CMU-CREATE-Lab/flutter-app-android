@@ -111,7 +111,7 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
         if (speakerType.equals(SpeakerType.VOLUME)) {
             if (getViewFromRelationship(wizardState.volumeRelationshipType) != null) {
                 if (wizardState.volumeRelationshipType instanceof Constant) {
-
+                    wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
                 } else {
                     wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
                 }
@@ -119,7 +119,7 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
         } else {
             if (getViewFromRelationship(wizardState.pitchRelationshipType) != null) {
                 if (wizardState.pitchRelationshipType instanceof Constant) {
-
+                    wizard.changeDialog(ChoosePitchSpeakerDialogWizard.newInstance(wizard, ChoosePitchSpeakerDialogWizard.OUTPUT_TYPE.MAX));
                 } else {
                     wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
                 }

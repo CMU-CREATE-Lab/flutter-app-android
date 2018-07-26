@@ -5,24 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.ChooseColorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.ChoosePitchDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.ChooseRelationshipLedDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.ChooseSensorLedDialogWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.LedWizard;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -73,32 +70,59 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View view = inflater.inflate(R.layout.dialog_choose_pitch_wizard, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
+        builder.setView(view);
+        ButterKnife.bind(this, view);
+
+        currentNote = (TextView) view.findViewById(R.id.text_current_note);
+        currentPitch = (TextView) view.findViewById(R.id.text_current_pitch);
+        sheetMusic = (ImageView) view.findViewById(R.id.image_sheet_music);
+        seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
+        seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
+
+
+
         this.wizard = (OutputWizard) (getArguments().getSerializable(KEY_WIZARD));
 
         this.outputType = (OUTPUT_TYPE) (getArguments().getSerializable(DIALOG_TYPE));
 
-        dialogView.findViewById(R.id.link_buttons_wizard).setVisibility(View.VISIBLE);
-        dialogView.findViewById(R.id.button_next).setBackgroundResource(R.drawable.round_green_button_bottom_right);
-        dialogView.findViewById(R.id.button_set_color).setVisibility(View.GONE);
+        view.findViewById(R.id.button_next).setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
         updateWizardState();
 
-        updateTextViews();
+        updateViewWithOptions();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
-        builder.setView(dialogView);
-        ButterKnife.bind(this, dialogView);
+        updateTextViews(view);
+
+        builder.setView(view);
+        ButterKnife.bind(this, view);
 
         return builder.create();
     }
 
+    private void updateViewWithOptions() {
+        //start off at 0 for constant relationships
+        if (wizardState.pitchRelationshipType instanceof Constant) {
+            wizardState.pitchMax = 0;
+        } else if (wizardState.pitchMax == 0) {
+            wizardState.pitchMax = 1047;
+        }
 
-    private void updateTextViews() {
+        if (outputType.equals(OUTPUT_TYPE.MIN)) {
+            populateViewWithPitch(wizardState.pitchMin);
+        } else {
+            populateViewWithPitch(wizardState.pitchMax);
+        }
+    }
+
+
+    private void updateTextViews(View view) {
         // views
-        ((TextView) dialogView.findViewById(R.id.text_output_title)).setText("Set Up " + getPositionPrompt() + " Pitch" + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
-        ((ImageView) dialogView.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
-        //((TextView) dialogView.findViewById(R.id.text_set_color)).setText(getPositionPrompt());
+        ((TextView) view.findViewById(R.id.text_output_title)).setText("Set Up " + getPositionPrompt() + " Pitch");
+        ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
+        //((TextView) view.findViewById(R.id.text_set_color)).setText(getPositionPrompt());
     }
 
 
@@ -120,20 +144,45 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
     @OnClick(R.id.button_back)
     public void onClickBack() {
-
+        if (outputType.equals(OUTPUT_TYPE.MIN)) {
+            wizardState.pitchMin = finalPitch;
+            wizard.changeDialog(ChooseSensorSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
+        } else {
+            wizardState.pitchMax = finalPitch;
+            if (!wizardState.speakerWizardType.equals(SpeakerWizardType.VOLUME)) {
+                if (wizardState.pitchRelationshipType instanceof Constant) {
+                    wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
+                } else {
+                    wizard.changeDialog(ChoosePitchSpeakerDialogWizard.newInstance(wizard, ChoosePitchSpeakerDialogWizard.OUTPUT_TYPE.MIN));
+                }
+            }
+            else
+                wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
+        }
     }
 
 
     @OnClick(R.id.button_next)
     public void onClickNext() {
-
+        if (outputType.equals(OUTPUT_TYPE.MIN)) {
+            wizardState.pitchMin = finalPitch;
+            wizard.changeDialog(ChoosePitchSpeakerDialogWizard.newInstance(wizard, ChoosePitchSpeakerDialogWizard.OUTPUT_TYPE.MAX));
+        } else {
+            wizardState.pitchMax = finalPitch;
+            if (wizardState.speakerWizardType.equals(SpeakerWizardType.PITCH)) {
+                wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
+            }
+            else {
+                wizard.finish();
+            }
+        }
     }
 
 
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-
+        wizard.finish();
     }
 
 

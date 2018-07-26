@@ -135,6 +135,13 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
     }
 
 
+    @OnClick(R.id.image_advanced_settings)
+    public void onClickAdvancedSettings() {
+        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
+        wizard.finish();
+    }
+
+
     @OnClick(R.id.button_next)
     public void onClickNext() {
         if (this.outputType == OUTPUT_TYPE.MIN) {
@@ -144,13 +151,6 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
             wizardState.outputsMax = finalRGB;
             wizard.finish();
         }
-    }
-
-
-    @OnClick(R.id.image_advanced_settings)
-    public void onClickAdvancedSettings() {
-        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        super.onClickAdvancedSettings();
     }
 
 

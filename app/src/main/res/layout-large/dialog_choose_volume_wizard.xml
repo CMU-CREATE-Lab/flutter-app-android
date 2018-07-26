@@ -10,10 +10,10 @@
         layout="@layout/toolbar_outputs" />
 
     <TextView
-        android:id="@+id/text_set_position"
+        android:id="@+id/text_set_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:textAlignment="center"
@@ -82,7 +82,7 @@
                 android:layout_alignEnd="@id/image_volume_bg"
                 android:layout_below="@+id/image_volume_bg"
                 android:layout_marginTop="35dp"
-                android:max="180" />
+                android:max="100" />
 
         </RelativeLayout>
 

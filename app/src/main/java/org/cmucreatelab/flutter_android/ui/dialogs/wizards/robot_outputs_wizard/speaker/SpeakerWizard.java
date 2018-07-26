@@ -59,7 +59,7 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
         }
 
         SettingsProportional newVolumeSettings = SettingsProportional.newInstance(output.getVolume().getSettings());
-        newVolumeSettings.setSensorPortNumber(currentState.selectedSensorPortPitch);
+        newVolumeSettings.setSensorPortNumber(currentState.selectedSensorPortVolume);
         newVolumeSettings.setOutputMin(currentState.volumeMin);
         newVolumeSettings.setOutputMax(currentState.volumeMax);
         output.getVolume().setSettings(Settings.newInstance(newVolumeSettings, currentState.volumeRelationshipType));
