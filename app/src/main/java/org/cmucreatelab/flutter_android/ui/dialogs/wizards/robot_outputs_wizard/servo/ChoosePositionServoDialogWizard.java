@@ -108,7 +108,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     private void updateViewWithOptions() {
         //start off at 0 for constant relationships
-        if (wizardState.relationshipType instanceof Constant) {
+        if (wizardState.relationshipType instanceof Constant && wizardState.outputMax == 180) {
             wizardState.outputMax = 0;
         } else if (wizardState.outputMax == 0) {
             wizardState.outputMax = 180;
@@ -202,14 +202,6 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         }
 
     }
-
-
-    @OnClick(R.id.image_advanced_settings)
-    public void onClickAdvancedSettings() {
-        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        wizard.finish();
-    }
-
 
     @OnClick(R.id.button_close)
     public void onClickClose() {

@@ -86,14 +86,10 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
 
     @OnClick(R.id.button_back)
     public void onClickBack() {
-        wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
-    }
-
-
-    @OnClick(R.id.image_advanced_settings)
-    public void onClickAdvancedSettings() {
-        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        // TODO finish wizard, display summary/advanced dialog
+        if (speakerType.equals(SpeakerType.VOLUME))
+            wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
+        else
+            wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
     }
 
 

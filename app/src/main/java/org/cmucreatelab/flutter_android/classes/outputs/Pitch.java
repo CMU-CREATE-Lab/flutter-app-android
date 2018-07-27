@@ -12,8 +12,8 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
  */
 public class Pitch extends Output implements FlutterOutput {
 
-    private static final int MINIMUM = 262;
-    private static final int MAXIMUM = 1047;
+    public static final int MINIMUM = 262;
+    public static final int MAXIMUM = 1047;
     private static final String TYPE = "f";
     private static final Output.Type outputType = Type.PITCH;
     private static final int imageId = R.mipmap.ic_launcher;

@@ -1,6 +1,7 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
+import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
 import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
@@ -24,8 +25,8 @@ public class SpeakerWizard extends OutputWizard<Speaker> {
         public Relationship volumeRelationshipType = NoRelationship.getInstance();
         public Relationship pitchRelationshipType = NoRelationship.getInstance();
         public int selectedSensorPortVolume = 0, selectedSensorPortPitch = 0;
-		public int volumeMin = 0, pitchMin = 262;
-        public int volumeMax = 100, pitchMax = 1047;
+		public int volumeMin = 0, pitchMin = Pitch.MINIMUM;
+        public int volumeMax = 100, pitchMax = Pitch.MAXIMUM;
     }
 
 

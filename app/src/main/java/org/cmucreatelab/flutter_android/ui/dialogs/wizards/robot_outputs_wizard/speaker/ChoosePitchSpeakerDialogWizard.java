@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
+import org.cmucreatelab.flutter_android.classes.outputs.Pitch;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
@@ -104,10 +105,10 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
     private void updateViewWithOptions() {
         //start off at 0 for constant relationships
-        if (wizardState.pitchRelationshipType instanceof Constant) {
-            wizardState.pitchMax = 0;
-        } else if (wizardState.pitchMax == 0) {
-            wizardState.pitchMax = 1047;
+        if (wizardState.pitchRelationshipType instanceof Constant && wizardState.pitchMax == Pitch.MAXIMUM) {
+            wizardState.pitchMax = Pitch.MINIMUM;
+        } else if (wizardState.pitchMax == Pitch.MINIMUM) {
+            wizardState.pitchMax = Pitch.MAXIMUM;
         }
 
         if (outputType.equals(OUTPUT_TYPE.MIN)) {

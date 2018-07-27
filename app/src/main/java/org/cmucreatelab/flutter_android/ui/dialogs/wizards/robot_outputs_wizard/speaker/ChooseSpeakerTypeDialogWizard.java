@@ -93,15 +93,6 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
     }
 
 
-
-
-    @OnClick(R.id.image_advanced_settings)
-    public void onClickAdvancedSettings() {
-        Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
-        // TODO finish wizard, display summary/advanced dialog
-    }
-
-
     @OnClick(R.id.button_close)
     public void onClickClose() {
         wizard.changeDialog(null);

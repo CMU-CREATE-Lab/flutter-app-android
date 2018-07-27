@@ -14,7 +14,6 @@ import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseRelationshipOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.led.ChooseSensorLedDialogWizard;
 
 import butterknife.OnClick;
 
@@ -101,7 +100,15 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
     @Override
     @OnClick(R.id.button_cancel)
     public void onClickCancel() {
-        wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
+        if (wizardState.speakerWizardType.equals(SpeakerWizardType.BOTH)) {
+            if (speakerType.equals(SpeakerType.VOLUME)) {
+                wizard.changeDialog(ExplanationSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
+            } else {
+                wizard.changeDialog(ExplanationSpeakerDialogWizard.newInstance(wizard, SpeakerType.PITCH));
+            }
+        } else {
+            wizard.changeDialog(ChooseSpeakerTypeDialogWizard.newInstance(wizard));
+        }
     }
 
 
