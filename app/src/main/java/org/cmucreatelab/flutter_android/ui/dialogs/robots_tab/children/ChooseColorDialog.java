@@ -129,7 +129,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
             selectCustomColor(color);
         }
 
-        dialogView.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
+        view.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);

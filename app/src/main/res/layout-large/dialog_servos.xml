@@ -36,20 +36,29 @@
                 android:layout_gravity="center">
 
                 <ImageView
-                    android:id="@+id/image_min_pos"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/image_servo_bg_min"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="17dp"
-                    android:src="@drawable/link_servo_pointer_sm"/>
-
-                <ImageView
                     android:id="@+id/image_servo_bg_min"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/link_servo_b_g_sm"/>
+                    android:src="@drawable/servo_new_indicator"/>
+
+                <ImageView
+                    android:id="@+id/image_min_pos"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_servo_bg_min"
+                    android:layout_marginStart="1.5dp"
+                    android:layout_marginBottom="30.5dp"
+                    android:src="@drawable/servo_pointer_green_sm"/>
+
+                <!--Another gray dot in center to go on top of green servo indicator-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@id/servo_3_indicator"
+                    android:layout_centerVertical="true"
+                    android:padding="27.25dp"
+                    android:src="@drawable/servo_dark_gray_dot" />
 
             </RelativeLayout>
 
@@ -97,20 +106,29 @@
                 android:layout_gravity="center">
 
                 <ImageView
-                    android:id="@+id/image_max_pos"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/image_servo_bg_max"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="17dp"
-                    android:src="@drawable/link_servo_pointer_sm"/>
-
-                <ImageView
                     android:id="@+id/image_servo_bg_max"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/link_servo_b_g_sm"/>
+                    android:src="@drawable/servo_new_indicator"/>
+
+                <ImageView
+                    android:id="@+id/image_max_pos"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_servo_bg_max"
+                    android:layout_marginStart="1.5dp"
+                    android:layout_marginBottom="30.5dp"
+                    android:src="@drawable/servo_pointer_green_sm" />
+
+                <!--Another gray dot in center to go on top of green servo indicator-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@id/servo_3_indicator"
+                    android:layout_centerVertical="true"
+                    android:padding="27.25dp"
+                    android:src="@drawable/servo_dark_gray_dot" />
 
             </RelativeLayout>
 

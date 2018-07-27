@@ -3,7 +3,9 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 import java.io.Serializable;
@@ -16,17 +18,17 @@ import java.io.Serializable;
  * A Dialog that prompts the user to choose a high color.
  */
 public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDialog.SetColorListener {
-
-
     private DialogHighColorListener highColorListener;
+    protected static final String HIGH_TEXT_KEY = "high_text";
+    private String highText;
 
-
-    public static MaxColorDialog newInstance(String color, Serializable serializable) {
+    public static MaxColorDialog newInstance(String color, String highText, Serializable serializable) {
         MaxColorDialog maxColorDialog = new MaxColorDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(SELECTED_COLOR_KEY, color);
         args.putSerializable(COLOR_KEY, serializable);
+        args.putString(HIGH_TEXT_KEY, highText);
         maxColorDialog.setArguments(args);
 
         return maxColorDialog;
@@ -37,8 +39,12 @@ public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDial
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         highColorListener = (DialogHighColorListener) getArguments().getSerializable(COLOR_KEY);
+        highText = getArguments().getString(HIGH_TEXT_KEY);
         setColorListener = this;
-        return super.onCreateDialog(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        TextView text_title = (TextView) dialog.findViewById(R.id.text_output_title);
+        text_title.setText("Choose " + highText + " Color");
+        return dialog;
     }
 
 

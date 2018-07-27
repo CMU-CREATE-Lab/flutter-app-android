@@ -294,7 +294,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         view = dialogView.findViewById(R.id.linear_set_max_pos);
         layout = ((ViewGroup) view).getChildAt(0);
-        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(1);
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);
@@ -318,7 +318,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         view = dialogView.findViewById(R.id.linear_set_min_pos);
         layout = ((ViewGroup) view).getChildAt(0);
-        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(0);
+        currentImageView = (ImageView) ((ViewGroup) layout).getChildAt(1);
         layout = ((ViewGroup) view).getChildAt(1);
         currentTextViewDescrp = (TextView) ((ViewGroup) layout).getChildAt(0);
         currentTextViewItem = (TextView) ((ViewGroup) layout).getChildAt(1);

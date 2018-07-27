@@ -216,7 +216,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_max_color)
     public void onClickSetMaximumColor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaximumColor");
-        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(),this);
+        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(), getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId()),this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
@@ -224,7 +224,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_min_color)
     public void onclickSetMinimumColor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMinimumColor");
-        DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorHex(),this);
+        DialogFragment dialog = MinColorDialog.newInstance(triColorLed.getMinColorHex(), getString(triColorLed.getRedLed().getSettings().getSensor().getLowTextId()), this);
         dialog.show(this.getFragmentManager(), "tag");
     }
 
