@@ -65,14 +65,14 @@ import butterknife.OnClick;
  * <p>
  * An activity where the user can interact with the flutter board.
  */
-public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener,
-        SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {
+public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener, SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {
 
     private RobotActivity instance;
     private Session session;
     private boolean speakerMuted = false;
     private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         private int seekBarValue = 0;
+
 
         @Override
         public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
@@ -100,10 +100,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
             });
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -117,11 +119,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
     private void updateLedCircleColors(final int ledNumber, final TriColorLed triColorLed) {
         Log.v(Constants.LOG_TAG, "updateLedCircleColors");
-        final View[] circle_views = new View[]{
-                findViewById(R.id.view_color_1),
-                findViewById(R.id.view_color_2),
-                findViewById(R.id.view_color_3)
-        };
+        final View[] circle_views = new View[]{findViewById(R.id.view_color_1), findViewById(R.id.view_color_2), findViewById(R.id.view_color_3)};
         if (ledNumber > circle_views.length || ledNumber <= 0) {
             Log.e(Constants.LOG_TAG, "updateLedCircleColors: received bad ledNumber=" + ledNumber);
             return;
@@ -136,17 +134,18 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 View circleView = circle_views[ledNumber - 1];
 
                 Integer maxHex = Color.parseColor(triColorLed.getMaxColorHex());
-                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
+                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex())) {
                     maxHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMaxColorHex()));
+                }
 
                 Integer minHex = Color.parseColor(triColorLed.getMinColorHex());
-                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
+                if (TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex())) {
                     minHex = Constants.TRUE_HEX_TO_SWATCH_HEX.get(Color.parseColor(triColorLed.getMinColorHex()));
+                }
 
                 RotateDrawable rotateDrawable;
 
-                switch (ledNumber)
-                {
+                switch (ledNumber) {
                     case 1:
                         rotateDrawable = (RotateDrawable) getResources().getDrawable(R.drawable.two_color_relationship_circle_led_one);
                         break;
@@ -161,17 +160,17 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 GradientDrawable gradientDrawable = (GradientDrawable) rotateDrawable.getDrawable();
 
                 // if the link uses Constant relationship, do not display a minimum color
-                if (triColorLed.getRedLed().getSettings().getRelationship() == Constant.getInstance() ||
-                        triColorLed.getGreenLed().getSettings().getRelationship() == Constant.getInstance() ||
-                        triColorLed.getBlueLed().getSettings().getRelationship() == Constant.getInstance())
+                if (triColorLed.getRedLed().getSettings().getRelationship() == Constant.getInstance() || triColorLed.getGreenLed().getSettings().getRelationship() == Constant.getInstance() || triColorLed.getBlueLed().getSettings().getRelationship() == Constant.getInstance()) {
                     gradientDrawable.setColors(new int[]{maxHex, maxHex});
-                else
+                } else {
                     gradientDrawable.setColors(new int[]{minHex, maxHex});
+                }
 
                 circleView.setBackground(rotateDrawable);
             }
         });
     }
+
 
     public LayerDrawable getCustomSwatchWithBorder(String hexColor) {
         LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
@@ -181,6 +180,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         return layerDrawable;
     }
 
+
     private void updateDynamicViews() {
         runOnUiThread(new Runnable() {
             @Override
@@ -189,22 +189,25 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 TextView sensorReadingText;
 
                 sensorReadingText = (TextView) findViewById(R.id.text_sensor_1_reading);
-                if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
+                if (sensors[0].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText.setText(String.valueOf(sensors[0].getSensorReading()));
-                else
+                } else {
                     sensorReadingText.setText("");
+                }
 
                 sensorReadingText = (TextView) findViewById(R.id.text_sensor_2_reading);
-                if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
+                if (sensors[1].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText.setText(String.valueOf(sensors[1].getSensorReading()));
-                else
+                } else {
                     sensorReadingText.setText("");
+                }
 
                 sensorReadingText = (TextView) findViewById(R.id.text_sensor_3_reading);
-                if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET)
+                if (sensors[2].getSensorType() != FlutterProtocol.InputTypes.NOT_SET) {
                     sensorReadingText.setText(String.valueOf(sensors[2].getSensorReading()));
-                else
+                } else {
                     sensorReadingText.setText("");
+                }
             }
         });
     }
@@ -312,16 +315,19 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
+
     private void updateSpeakerToggleVisibility() {
         Speaker speaker = session.getFlutter().getSpeaker();
         ImageView speakerMuteToggle = (ImageView) findViewById(R.id.image_speaker_mute_toggle);
 
         //set visibility based on if volume or pitch is linked
-        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked())
+        if (speaker.getVolume().isLinked() || speaker.getPitch().isLinked()) {
             speakerMuteToggle.setVisibility(View.VISIBLE);
-        else
+        } else {
             speakerMuteToggle.setVisibility(View.INVISIBLE);
+        }
     }
+
 
     private void updatePointer(ImageView servoPointer, int selectedValue) {
         RotateAnimation rotateAnimation = new RotateAnimation(selectedValue - 1, selectedValue, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -329,6 +335,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         rotateAnimation.setFillAfter(true);
         servoPointer.startAnimation(rotateAnimation);
     }
+
 
     private void updateServoIndicators() {
         Servo[] servos = session.getFlutter().getServos();
@@ -384,8 +391,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 updatePointer(servoOnePointer, maxPos[0]);
             } else {
                 servo1MinPosText.setVisibility(View.VISIBLE);
-                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
-                        R.color.fluttergreen, minPos[0], maxPos[0], this);
+                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(R.color.fluttergreen, minPos[0], maxPos[0], this);
                 servo1GreenIndicator.setImageDrawable(servoAngleDrawable);
                 servo1MinPosText.setText(minPos[0] + "°");
                 servo1MaxPosText.setText(maxPos[0] + "°");
@@ -406,8 +412,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
                 updatePointer(servoTwoPointer, maxPos[1]);
             } else {
                 servo2MinPosText.setVisibility(View.VISIBLE);
-                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(
-                        R.color.fluttergreen, minPos[1], maxPos[1], this);
+                ServoAngleDrawable servoAngleDrawable = new ServoAngleDrawable(R.color.fluttergreen, minPos[1], maxPos[1], this);
                 servo2GreenIndicator.setImageDrawable(servoAngleDrawable);
                 servo2MinPosText.setText(minPos[1] + "°");
                 servo2MaxPosText.setText(maxPos[1] + "°");
@@ -445,6 +450,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         sensorTypeDialog.show(getSupportFragmentManager(), "tag");
     }
 
+
     private View.OnClickListener sensor1OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -471,14 +477,14 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Servo[] servos = session.getFlutter().getServos();
         //Log.i("SesnorType", "IsThis: " + sensors[portNumber-1].getSensorType());
 
-		if (!servos[portNumber-1].isLinked()) {
-			new ServoWizard(this, servos[portNumber - 1]).start();
-		}
-		else {
-			ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
-			dialog.show(getSupportFragmentManager(), "tag");
-		}
+        if (!servos[portNumber - 1].isLinked()) {
+            new ServoWizard(this, servos[portNumber - 1]).start();
+        } else {
+            ServoDialog dialog = ServoDialog.newInstance(servos[portNumber - 1], this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
     }
+
 
     private View.OnClickListener servo3FrameClickListener = new View.OnClickListener() {
         @Override
@@ -504,16 +510,14 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         Log.d(Constants.LOG_TAG, "RobotActivity.onClickLed " + portNumber);
         TriColorLed[] triColorLeds = session.getFlutter().getTriColorLeds();
 
-		if (!triColorLeds[portNumber-1].getRedLed().isLinked() ||
-				!triColorLeds[portNumber-1].getGreenLed().isLinked() ||
-				!triColorLeds[portNumber-1].getBlueLed().isLinked()) {
-			new LedWizard(this, triColorLeds[portNumber - 1]).start();
-		}
-		else {
-			LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber-1], this);
-			dialog.show(getSupportFragmentManager(), "tag");
-		}
+        if (!triColorLeds[portNumber - 1].getRedLed().isLinked() || !triColorLeds[portNumber - 1].getGreenLed().isLinked() || !triColorLeds[portNumber - 1].getBlueLed().isLinked()) {
+            new LedWizard(this, triColorLeds[portNumber - 1]).start();
+        } else {
+            LedDialog dialog = LedDialog.newInstance(triColorLeds[portNumber - 1], this);
+            dialog.show(getSupportFragmentManager(), "tag");
+        }
     }
+
 
     private View.OnClickListener led1FrameClickListener = new View.OnClickListener() {
         @Override
@@ -541,12 +545,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
         if (!speaker.getVolume().isLinked() || !speaker.getPitch().isLinked()) {
             new SpeakerWizard(this, speaker).start();
-        }
-        else {
+        } else {
             SpeakerDialog dialog = SpeakerDialog.newInstance(speaker, this);
             dialog.show(getSupportFragmentManager(), "tag");
         }
     }
+
 
     private View.OnClickListener speakerFrameClickListener = new View.OnClickListener() {
         @Override
@@ -641,7 +645,9 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
 
             updateSpeakerToggleVisibility();
             updateLinkedViews();
-            if (!session.isSimulatingData()) startSensorReading();
+            if (!session.isSimulatingData()) {
+                startSensorReading();
+            }
         }
     }
 
@@ -700,6 +706,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         onClickServo(1);
     }
 
+
     @OnClick(R.id.relative_servo_1)
     public void onClickServo1Relative() {
         onClickServo(1);
@@ -710,6 +717,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onClickServo2Image() {
         onClickServo(2);
     }
+
 
     @OnClick(R.id.relative_servo_2)
     public void onClickServo2Relative() {
@@ -722,6 +730,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         onClickServo(3);
     }
 
+
     @OnClick(R.id.relative_servo_3)
     public void onclickServo3Relative() {
         onClickServo(3);
@@ -732,6 +741,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onClickLed1Image() {
         onClickLed(1);
     }
+
 
     @OnClick(R.id.relative_led_1)
     public void onClickLed1Relative() {
@@ -744,6 +754,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         onClickLed(2);
     }
 
+
     @OnClick(R.id.relative_led_2)
     public void onClickLed2Relative() {
         onClickLed(2);
@@ -754,6 +765,7 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
     public void onClickLed3Image() {
         onClickLed(3);
     }
+
 
     @OnClick(R.id.relative_led_3)
     public void onClickLed3Relative() {
@@ -766,15 +778,18 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         onClickSpeaker();
     }
 
+
     @OnClick(R.id.relative_speaker)
     public void onClickSpeakerRelative() {
         onClickSpeaker();
     }
 
+
     @OnClick(R.id.relative_speaker2)
     public void onClickSpeakerRelative2() {
         onClickSpeaker();
     }
+
 
     @OnClick(R.id.image_speaker_mute_toggle)
     public void onClickSpeakerMuteToggle() {
@@ -815,11 +830,12 @@ public class RobotActivity extends BaseSensorReadingActivity implements ServoDia
         }
     }
 
+
     @OnClick(R.id.button_control_outputs)
     public void onClickControlOutputs() {
         Log.d(Constants.LOG_TAG, "onClickControlOutputs");
 
-        ControlOutputsDialog controlOutputsDialog = new ControlOutputsDialog();
+        ControlOutputsDialog controlOutputsDialog = ControlOutputsDialog.newInstance(speakerMuted);
         controlOutputsDialog.show(getSupportFragmentManager(), "tag");
     }
 

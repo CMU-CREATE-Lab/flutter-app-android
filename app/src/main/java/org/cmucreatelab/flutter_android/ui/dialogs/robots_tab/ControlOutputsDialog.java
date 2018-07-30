@@ -36,8 +36,9 @@ import java.util.ArrayList;
  * Created by Parv on 6/12/2018.
  */
 
-public class ControlOutputsDialog extends DialogFragment implements Serializable,
-        LedConstantColorDialog.DialogColorConstantListener {
+public class ControlOutputsDialog extends DialogFragment implements Serializable, LedConstantColorDialog.DialogColorConstantListener {
+    private static final String SPEAKER_MUTED_KEY = "SPEAKER_MUTED";
+    private boolean speakerMuted;
 
     private GlobalHandler globalHandler;
 
@@ -61,6 +62,18 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     private ImageView sheetMusic;
     private boolean isVolumeChanged = false;
 
+
+    public static ControlOutputsDialog newInstance(boolean speakerMuted) {
+        ControlOutputsDialog controlOutputsDialog = new ControlOutputsDialog();
+        Bundle args = new Bundle();
+
+        args.putBoolean(SPEAKER_MUTED_KEY, speakerMuted);
+
+        controlOutputsDialog.setArguments(args);
+
+        return controlOutputsDialog;
+    }
+
     // Seekbar change listeners
 
     private SeekBar.OnSeekBarChangeListener seekBarServo1Listener = new SeekBar.OnSeekBarChangeListener() {
@@ -70,10 +83,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             isServo1Changed = true;
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -89,10 +104,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             isServo2Changed = true;
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -114,6 +131,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 
         }
 
+
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             MelodySmartMessage message = MessageConstructor.constructSetOutput(servos[2], seekBar.getProgress());
@@ -134,6 +152,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 
         }
 
+
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             MelodySmartMessage message = MessageConstructor.constructSetOutput(speaker.getVolume(), seekBar.getProgress());
@@ -149,10 +168,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             textViewNotePitch.setText(currentNote + " - " + String.valueOf(finalPitch) + " " + getString(R.string.hz));
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -160,6 +181,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             globalHandler.melodySmartDeviceHandler.addMessage(message);
         }
     };
+
 
     private int getFrequency(int progress) {
         int result = 0;
@@ -252,11 +274,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         @Override
         public void onClick(View view) {
             String hex;
-            if (isLed1Changed)
+            if (isLed1Changed) {
                 hex = convertRgbToHex(led1RGB);
-            else
+            } else {
                 hex = leds[0].getMaxColorHex();
-            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[0].getPortNumber(),ControlOutputsDialog.this);
+            }
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[0].getPortNumber(), ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -265,11 +288,12 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         @Override
         public void onClick(View view) {
             String hex;
-            if (isLed2Changed)
+            if (isLed2Changed) {
                 hex = convertRgbToHex(led2RGB);
-            else
+            } else {
                 hex = leds[1].getMaxColorHex();
-            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[1].getPortNumber(),ControlOutputsDialog.this);
+            }
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[1].getPortNumber(), ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
@@ -278,46 +302,51 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         @Override
         public void onClick(View view) {
             String hex;
-            if (isLed3Changed)
+            if (isLed3Changed) {
                 hex = convertRgbToHex(led3RGB);
-            else
+            } else {
                 hex = leds[2].getMaxColorHex();
-            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[2].getPortNumber(),ControlOutputsDialog.this);
+            }
+            DialogFragment dialog = LedConstantColorDialog.newInstance(hex, leds[2].getPortNumber(), ControlOutputsDialog.this);
             dialog.show(getFragmentManager(), "tag");
         }
     };
 
-    private String convertRgbToHex(Integer[] rgb)
-    {
+
+    private String convertRgbToHex(Integer[] rgb) {
         return String.format("#%02x%02x%02x", rgb[0], rgb[1], rgb[2]);
     }
 
     //after color is chosen for LEDs
 
+
     public void onLedConstantColorChosen(Integer[] rgb, int port, int swatch) {
         switch (port) {
             case 1:
                 isLed1Changed = true;
-                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb))) {
                     led1SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
-                else
+                } else {
                     led1SwatchImage.setImageResource(swatch);
+                }
                 led1RGB = rgb;
                 break;
             case 2:
                 isLed2Changed = true;
-                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb))) {
                     led2SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
-                else
+                } else {
                     led2SwatchImage.setImageResource(swatch);
+                }
                 led2RGB = rgb;
                 break;
             case 3:
                 isLed3Changed = true;
-                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb)))
+                if (!TriColorLed.isSwatchInExistingSelection(convertRgbToHex(rgb))) {
                     led3SwatchImage.setImageDrawable(getCustomSwatchWithBorder(convertRgbToHex(rgb)));
-                else
+                } else {
                     led3SwatchImage.setImageResource(swatch);
+                }
                 led3RGB = rgb;
                 break;
         }
@@ -327,9 +356,11 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getGreenLed(), rgb[1]));
         ledMessages.add(MessageConstructor.constructSetOutput(leds[port - 1].getBlueLed(), rgb[2]));
 
-        for (MelodySmartMessage message : ledMessages)
+        for (MelodySmartMessage message : ledMessages) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
     }
+
 
     private Button.OnClickListener doneClickListener = new View.OnClickListener() {
         @Override
@@ -339,28 +370,26 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
     };
 
+
     //reverts every relationship to what it was prior to opening the dialog
     private void revertRelationships() {
         ArrayList<MelodySmartMessage> messages = new ArrayList<>();
         if (isServo1Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[0]));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    servos[0], servos[0].getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(servos[0], servos[0].getSettings()));
             Log.i("Changed", "SERVO 1");
         }
         if (isServo2Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[1]));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    servos[1], servos[1].getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(servos[1], servos[1].getSettings()));
             Log.i("Changed", "SERVO 2");
         }
         if (isServo3Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[2]));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    servos[2], servos[2].getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(servos[2], servos[2].getSettings()));
             Log.i("Changed", "SERVO 3");
         }
 
@@ -369,12 +398,9 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             messages.add(MessageConstructor.constructRemoveRelation(leds[0].getGreenLed()));
             messages.add(MessageConstructor.constructRemoveRelation(leds[0].getBlueLed()));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[0].getRedLed(), leds[0].getRedLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[0].getGreenLed(), leds[0].getGreenLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[0].getBlueLed(), leds[0].getBlueLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[0].getRedLed(), leds[0].getRedLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[0].getGreenLed(), leds[0].getGreenLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[0].getBlueLed(), leds[0].getBlueLed().getSettings()));
             Log.i("Changed", "LED 1");
         }
 
@@ -383,12 +409,9 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             messages.add(MessageConstructor.constructRemoveRelation(leds[1].getGreenLed()));
             messages.add(MessageConstructor.constructRemoveRelation(leds[1].getBlueLed()));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[1].getRedLed(), leds[1].getRedLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[1].getGreenLed(), leds[1].getGreenLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[1].getBlueLed(), leds[1].getBlueLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[1].getRedLed(), leds[1].getRedLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[1].getGreenLed(), leds[1].getGreenLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[1].getBlueLed(), leds[1].getBlueLed().getSettings()));
             Log.i("Changed", "LED 2");
         }
 
@@ -397,33 +420,34 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             messages.add(MessageConstructor.constructRemoveRelation(leds[2].getGreenLed()));
             messages.add(MessageConstructor.constructRemoveRelation(leds[2].getBlueLed()));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[2].getRedLed(), leds[2].getRedLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[2].getGreenLed(), leds[2].getGreenLed().getSettings()));
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    leds[2].getBlueLed(), leds[2].getBlueLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[2].getRedLed(), leds[2].getRedLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[2].getGreenLed(), leds[2].getGreenLed().getSettings()));
+            messages.add(MessageConstructor.constructRelationshipMessage(leds[2].getBlueLed(), leds[2].getBlueLed().getSettings()));
             Log.i("Changed", "LED 3");
         }
 
-        if (isVolumeChanged) {
-            messages.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
+        if (!speakerMuted) {
+            if (isVolumeChanged) {
+                messages.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
 
-            messages.add(MessageConstructor.constructRelationshipMessage(
-                    speaker.getVolume(), speaker.getVolume().getSettings()));
-            Log.i("Changed", "VOLUME");
+                messages.add(MessageConstructor.constructRelationshipMessage(speaker.getVolume(), speaker.getVolume().getSettings()));
+                Log.i("Changed", "VOLUME");
+            }
+        } else {
+            messages.add(MessageConstructor.constructSetOutput(speaker.getVolume(), 0));
         }
 
         //always updates pitch as it is always changed in init
         messages.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
 
-        messages.add(MessageConstructor.constructRelationshipMessage(
-                speaker.getPitch(), speaker.getPitch().getSettings()));
+        messages.add(MessageConstructor.constructRelationshipMessage(speaker.getPitch(), speaker.getPitch().getSettings()));
         Log.i("Changed", "PITCH");
 
-        for (MelodySmartMessage message : messages)
+        for (MelodySmartMessage message : messages) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
+        }
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -431,7 +455,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         super.onCreateDialog(savedInstanceState);
         globalHandler = GlobalHandler.getInstance(getActivity());
 
-
+        speakerMuted = getArguments().getBoolean(SPEAKER_MUTED_KEY);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_control_outputs, null);
@@ -484,24 +508,27 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         //led
 
         led1SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_1);
-        if (TriColorLed.isSwatchInExistingSelection(leds[0].getMaxColorHex()))
+        if (TriColorLed.isSwatchInExistingSelection(leds[0].getMaxColorHex())) {
             led1SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[0].getMaxColorHex()));
-        else
+        } else {
             led1SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[0].getMaxColorHex()));
+        }
         led1SwatchImage.setOnClickListener(imageLed1SwatchOnClickListener);
 
         led2SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_2);
-        if (TriColorLed.isSwatchInExistingSelection(leds[1].getMaxColorHex()))
+        if (TriColorLed.isSwatchInExistingSelection(leds[1].getMaxColorHex())) {
             led2SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[1].getMaxColorHex()));
-        else
+        } else {
             led2SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[1].getMaxColorHex()));
+        }
         led2SwatchImage.setOnClickListener(imageLed2SwatchOnClickListener);
 
         led3SwatchImage = (ImageView) view.findViewById(R.id.image_led_color_3);
-        if (TriColorLed.isSwatchInExistingSelection(leds[2].getMaxColorHex()))
+        if (TriColorLed.isSwatchInExistingSelection(leds[2].getMaxColorHex())) {
             led3SwatchImage.setImageResource(TriColorLed.getSwatchFromColor(leds[2].getMaxColorHex()));
-        else
+        } else {
             led3SwatchImage.setImageDrawable(getCustomSwatchWithBorder(leds[2].getMaxColorHex()));
+        }
         led3SwatchImage.setOnClickListener(imageLed3SwatchOnClickListener);
 
         led1RGB = new Integer[3];
@@ -516,8 +543,8 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         return builder.create();
     }
 
-    public LayerDrawable getCustomSwatchWithBorder(String hexColor)
-    {
+
+    public LayerDrawable getCustomSwatchWithBorder(String hexColor) {
         LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
 
         ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
@@ -531,6 +558,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         super.onResume();
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
+
 
     @Override
     public void onDismiss(DialogInterface dialog) {
