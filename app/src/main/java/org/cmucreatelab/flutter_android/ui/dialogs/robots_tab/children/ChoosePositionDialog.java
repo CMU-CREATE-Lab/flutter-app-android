@@ -7,6 +7,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -38,8 +39,9 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
     protected SetPositionListener setPositionListener;
     protected int finalPosition;
 
+
     private void updatePointer() {
-        RotateAnimation rotateAnimation = new RotateAnimation(finalPosition-1, finalPosition, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation rotateAnimation = new RotateAnimation(finalPosition - 1, finalPosition, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setFillEnabled(true);
         rotateAnimation.setFillAfter(true);
         pointer.startAnimation(rotateAnimation);
@@ -55,10 +57,12 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
             updatePointer();
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -71,7 +75,7 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_position, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_position_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -79,6 +83,12 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
+
+        ((TextView) view.findViewById(R.id.text_output_title)).setText("Set the Position");
+
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
+        view.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
+        view.findViewById(R.id.text_set_position).setVisibility(View.GONE);
 
         finalPosition = (Integer) getArguments().getSerializable(POSITION_KEY);
         seekBarMaxMin.setProgress(finalPosition);
@@ -89,19 +99,34 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
     }
 
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        dismiss();
+    }
+
+
     @OnClick(R.id.button_set_position)
     public void onClickSetPosition() {
         setPositionListener.onSetPosition();
     }
+
 
     @OnClick(R.id.button_increment)
     public void onClickIncrementProgressBar() {
         seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() + 1);
     }
 
+
     @OnClick(R.id.button_decrement)
     public void onClickDecrementProgressBar() {
         seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() - 1);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(410), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

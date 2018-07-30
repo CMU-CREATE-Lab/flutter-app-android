@@ -7,6 +7,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,7 +26,6 @@ import butterknife.Optional;
  * ChoosePitchDialog
  *
  * An abstract Dialog that handles the pitch choosing.
- *
  */
 public abstract class ChoosePitchDialog extends BaseResizableDialog {
 
@@ -161,7 +161,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         } else if (pitch <= Constants.MusicNoteFrequencies.C_6) {
             progress = 14;
         } else {
-            Log.w(Constants.LOG_TAG,"Found pitch above " + Constants.MusicNoteFrequencies.C_6 + " Hz; using this value instead.");
+            Log.w(Constants.LOG_TAG, "Found pitch above " + Constants.MusicNoteFrequencies.C_6 + " Hz; using this value instead.");
             progress = 14;
         }
 
@@ -179,10 +179,12 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
             currentPitch.setText(String.valueOf(finalPitch) + " " + getString(R.string.hz));
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -195,7 +197,7 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_pitch, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_pitch_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -206,9 +208,22 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
         seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
 
+        ((TextView) view.findViewById(R.id.text_output_title)).setText("Set the Pitch");
+
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
+        view.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
+        view.findViewById(R.id.text_set_pitch).setVisibility(View.GONE);
+
         populateViewWithPitch((Integer) getArguments().getSerializable(PITCH_KEY));
 
         return builder.create();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(400), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
@@ -223,4 +238,8 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
         public void onSetPitch();
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        dismiss();
+    }
 }

@@ -49,7 +49,7 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(450), ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setLayout(convertDpToPx(400), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
@@ -83,13 +83,13 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
         seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
         seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
 
-
-
         this.wizard = (OutputWizard) (getArguments().getSerializable(KEY_WIZARD));
 
         this.outputType = (OUTPUT_TYPE) (getArguments().getSerializable(DIALOG_TYPE));
 
         view.findViewById(R.id.button_next).setBackgroundResource(R.drawable.round_green_button_bottom_right);
+
+        view.findViewById(R.id.button_set_pitch).setVisibility(View.GONE);
 
         updateWizardState();
 
@@ -121,9 +121,9 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
     private void updateTextViews(View view) {
         // views
-        ((TextView) view.findViewById(R.id.text_output_title)).setText("Set Up " + getPositionPrompt() + " Pitch");
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
-        //((TextView) view.findViewById(R.id.text_set_color)).setText(getPositionPrompt());
+        ((TextView) view.findViewById(R.id.text_set_pitch)).setText(getPositionPrompt());
     }
 
 
@@ -133,12 +133,12 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
             switch (outputType) {
                 case MIN:
-                    return getString(sensors[wizardState.selectedSensorPortPitch - 1].getLowTextId());
+                    return "Set the " + getString(sensors[wizardState.selectedSensorPortPitch - 1].getLowTextId()).toLowerCase() + " pitch";
                 default:
-                    return getString(sensors[wizardState.selectedSensorPortPitch - 1].getHighTextId());
+                    return "Set the " + getString(sensors[wizardState.selectedSensorPortPitch - 1].getHighTextId()).toLowerCase() + " pitch";
             }
         } else {
-            return "Constant";
+            return "Set the constant pitch";
         }
     }
 

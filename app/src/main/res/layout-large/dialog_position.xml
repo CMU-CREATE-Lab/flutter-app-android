@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="150dp"
+    android:layout_width="150dp"
     android:layout_height="match_parent"
-    android:weightSum="4"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical"
+    android:weightSum="4">
 
     <TextView
         android:id="@+id/text_current_angle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:padding="5dp"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:padding="5dp"/>
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="2"
         android:layout_gravity="center"
+        android:layout_weight="2"
         android:padding="5dp">
 
         <ImageView
@@ -27,16 +28,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/image_servo_bg"
-            android:layout_marginStart="16.4dp"
             android:layout_marginBottom="1.75dp"
-            android:src="@drawable/link_servo_pointer_sm"/>
+            android:layout_marginStart="16.4dp"
+            android:src="@drawable/link_servo_pointer_sm" />
 
         <ImageView
             android:id="@+id/image_servo_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/link_servo_b_g_sm"/>
+            android:src="@drawable/link_servo_b_g_sm" />
 
     </RelativeLayout>
 
@@ -44,18 +45,18 @@
         android:id="@+id/seek_position"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:max="180"
-        android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        android:paddingTop="20dp"/>
+        android:paddingRight="20dp"
+        android:paddingTop="20dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/button_decrement"
@@ -80,8 +81,8 @@
         android:id="@+id/button_set_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_green_button_bottom"
         android:text="@string/set_position"
-        android:textColor="@color/white"
-        android:background="@drawable/round_green_button_bottom"/>
+        android:textColor="@color/white" />
 
 </LinearLayout>

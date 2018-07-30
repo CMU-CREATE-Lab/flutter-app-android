@@ -8,6 +8,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -24,9 +25,8 @@ import butterknife.OnClick;
  * ChooseVolumeDialog
  *
  * An abstract Dialog that handles the volume choosing.
- *
  */
-public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
+public abstract class ChooseVolumeDialog extends BaseResizableDialog {
 
     public static String VOLUME_LISTENER_KEY = "volume_listener";
     public static String VOLUME_KEY = "volume";
@@ -45,10 +45,12 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
             currentVolume.setText(String.valueOf(finalVolume));
         }
 
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
         }
+
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
@@ -61,7 +63,7 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.dialog_volume, null);
+        final View view = inflater.inflate(R.layout.dialog_choose_volume_wizard, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -73,7 +75,20 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
         seekBarVolume.setProgress(finalVolume);
         currentVolume.setText(String.valueOf(finalVolume));
 
+        ((TextView) view.findViewById(R.id.text_output_title)).setText("Set the Volume");
+
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
+        view.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
+        view.findViewById(R.id.text_set_volume).setVisibility(View.GONE);
+
         return builder.create();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 
@@ -87,4 +102,8 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog  {
         public void onSetVolume();
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        dismiss();
+    }
 }

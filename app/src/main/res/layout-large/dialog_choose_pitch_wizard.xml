@@ -9,16 +9,28 @@
         android:id="@+id/include_toolbar_dialog"
         layout="@layout/toolbar_outputs" />
 
+    <TextView
+        android:id="@+id/text_set_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="#39393a"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -90,8 +102,17 @@
     </LinearLayout>
 
     <include
+        android:id="@+id/link_buttons_wizard"
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_set_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_green_button_bottom"
+        android:text="@string/set_pitch"
+        android:textColor="@color/white" />
 
 </LinearLayout>

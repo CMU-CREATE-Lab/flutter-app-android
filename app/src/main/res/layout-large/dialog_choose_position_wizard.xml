@@ -30,17 +30,17 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_current_angle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginStart="30dp"
                 android:gravity="center"
                 android:text="@string/zero_degrees"
                 android:textSize="50sp"
@@ -120,9 +120,17 @@
 
 
     <include
+        android:id="@+id/link_buttons_wizard"
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/button_set_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_green_button_bottom"
+        android:text="@string/set_position"
+        android:textColor="@color/white" />
 
 </LinearLayout>

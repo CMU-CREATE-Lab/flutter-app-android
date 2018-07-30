@@ -13,7 +13,6 @@
         android:id="@+id/text_set_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:textAlignment="center"
@@ -91,9 +90,17 @@
 
 
     <include
+        android:id="@+id/link_buttons_wizard"
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/button_set_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_green_button_bottom"
+        android:text="@string/set_volume"
+        android:textColor="@color/white" />
 
 </LinearLayout>

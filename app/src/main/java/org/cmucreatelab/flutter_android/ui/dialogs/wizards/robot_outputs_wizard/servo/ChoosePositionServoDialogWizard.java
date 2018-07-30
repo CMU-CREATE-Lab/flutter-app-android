@@ -158,6 +158,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
         updateViewWithOptions();
         updateTextViews(view);
+        view.findViewById(R.id.button_set_position).setVisibility(View.GONE);
 
         return builder.create();
     }

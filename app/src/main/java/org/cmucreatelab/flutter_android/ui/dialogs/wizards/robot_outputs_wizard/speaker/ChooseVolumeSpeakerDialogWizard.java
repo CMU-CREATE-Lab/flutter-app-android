@@ -119,6 +119,8 @@ public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
         Button nextButton = (Button) view.findViewById(R.id.button_next);
         nextButton.setBackgroundResource(R.drawable.round_green_button_bottom_right);
 
+        view.findViewById(R.id.button_set_volume).setVisibility(View.GONE);
+
         updateWizardState();
 
         // grab info
