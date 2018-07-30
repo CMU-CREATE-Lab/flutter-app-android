@@ -8,6 +8,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.cmucreatelab.flutter_android.R;
@@ -109,6 +110,12 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
         updateText(view);
 
         return builder.create();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(400), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

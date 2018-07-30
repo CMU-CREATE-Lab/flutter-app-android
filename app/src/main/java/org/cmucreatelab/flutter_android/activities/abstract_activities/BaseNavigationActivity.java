@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.DataLogsActivity;
@@ -22,6 +24,8 @@ import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.FlutterStatusDialog;
 
+import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Optional;
 
@@ -35,6 +39,8 @@ import butterknife.Optional;
 public abstract class BaseNavigationActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    @BindView(R.id.switch_voice_prompts) Switch voicePromptToggle;
+
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -42,37 +48,47 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         onCreateDrawer();
     }
 
+
     private void onCreateDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(
-                this, drawerLayout, 0, 0);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
 
         try {
             drawerLayout.setDrawerListener(drawerToggle);
         }
-        catch (NullPointerException npe)
-        {
+        catch (NullPointerException npe) {
             Log.i("Small Screen Device", "Can't instantiate drawer");
         }
     }
 
+
+    @OnCheckedChanged(R.id.switch_voice_prompts)
+    public void onSwitchChanged(CompoundButton compoundButton, boolean checked) {
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        globalHandler.setVoicePromptsActivatedState(checked);
+    }
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
+        voicePromptToggle.setChecked(globalHandler.isVoicePromptsActivated());
         try {
             drawerToggle.syncState();
         }
-        catch (NullPointerException npe)
-        {
+        catch (NullPointerException npe) {
             Log.e("Small Screen Device", "Can't instantiate drawer");
         }
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -82,6 +98,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,6 +160,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     @Optional
     @OnClick(R.id.image_flutter_status_button)
     public void onClickFlutterStatus() {
@@ -150,17 +168,20 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         FlutterStatusDialog.displayDialog(this, 0);
     }
 
+
     @Optional
     @OnClick(R.id.drawer_menu_button)
     public void onClickMenuNavButton() {
         drawerLayout.openDrawer(Gravity.START);
     }
 
+
     @Optional
     @OnClick(R.id.button_close_drawer)
     public void onClickCloseDrawerButton() {
         drawerLayout.closeDrawer(Gravity.START);
     }
+
 
     @Optional
     @OnClick(R.id.nav_tutorials)
@@ -169,6 +190,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TutorialsActivity.class);
         startActivity(intent);
     }
+
 
     @Optional
     @OnClick(R.id.nav_glossary)

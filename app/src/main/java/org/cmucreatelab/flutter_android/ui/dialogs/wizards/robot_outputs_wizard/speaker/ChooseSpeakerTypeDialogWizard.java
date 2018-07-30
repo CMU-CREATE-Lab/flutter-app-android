@@ -4,16 +4,15 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
 import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
 
@@ -62,9 +61,11 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.speaker);
     }
 
+
     public void updateWizardState() {
         wizardState = (SpeakerWizard.SpeakerWizardState) (wizard.getCurrentState());
     }
+
 
     @OnClick(R.id.button_both)
     public void onClickBoth() {
@@ -72,6 +73,13 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
         wizardState.volumeRelationshipType = NoRelationship.getInstance();
         wizardState.pitchRelationshipType = NoRelationship.getInstance();
         wizard.changeDialog(ExplanationSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

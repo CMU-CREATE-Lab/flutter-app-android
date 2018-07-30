@@ -30,7 +30,6 @@ import java.util.TreeMap;
  * Session
  *
  * Provides access to the current session's flutter and activities/listeners.
- *
  */
 public class Session implements FlutterMessageListener {
 
@@ -41,14 +40,42 @@ public class Session implements FlutterMessageListener {
     private boolean wasSensorOneSetThisSession;
     private boolean wasSensorTwoSetThisSession;
     private boolean wasSensorThreeSetThisSession;
+
+
     // getters/setters
-    public BaseNavigationActivity getCurrentActivity() { return currentActivity; }
-    public Flutter getFlutter() { return flutter; }
-    public FlutterConnectListener getFlutterConnectListener() { return flutterConnectListener; }
-    public boolean isSimulatingData() { return isSimulatingData; }
-    public void setCurrentActivity(BaseNavigationActivity currentActivity) { this.currentActivity = currentActivity; }
-    public void setFlutter(Flutter flutter) { this.flutter = flutter; }
-    public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) { this.flutterConnectListener = flutterConnectListener; }
+    public BaseNavigationActivity getCurrentActivity() {
+        return currentActivity;
+    }
+
+
+    public Flutter getFlutter() {
+        return flutter;
+    }
+
+
+    public FlutterConnectListener getFlutterConnectListener() {
+        return flutterConnectListener;
+    }
+
+
+    public boolean isSimulatingData() {
+        return isSimulatingData;
+    }
+
+
+    public void setCurrentActivity(BaseNavigationActivity currentActivity) {
+        this.currentActivity = currentActivity;
+    }
+
+
+    public void setFlutter(Flutter flutter) {
+        this.flutter = flutter;
+    }
+
+
+    public void setFlutterConnectListener(FlutterConnectListener flutterConnectListener) {
+        this.flutterConnectListener = flutterConnectListener;
+    }
 
 
     public boolean wasPortSetThisSession(Integer portNumber) {
@@ -63,6 +90,7 @@ public class Session implements FlutterMessageListener {
                 return false;
         }
     }
+
 
     public void setWasPortSetThisSession(Integer portNumber) {
         switch (portNumber) {
@@ -80,14 +108,15 @@ public class Session implements FlutterMessageListener {
         }
     }
 
+
     public void setSimulatingData(boolean simulatingData) {
         isSimulatingData = simulatingData;
         if (simulatingData) {
-            int value1,value2,value3;
+            int value1, value2, value3;
             value1 = flutter.getSensors()[0].getSensorReading();
             value2 = flutter.getSensors()[1].getSensorReading();
             value3 = flutter.getSensors()[2].getSensorReading();
-            GlobalHandler.getInstance(currentActivity.getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSimulateData(value1,value2,value3));
+            GlobalHandler.getInstance(currentActivity.getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructSimulateData(value1, value2, value3));
         } else {
             GlobalHandler.getInstance(currentActivity.getApplicationContext()).melodySmartDeviceHandler.addMessage(MessageConstructor.constructStopSimulateData());
         }
@@ -112,8 +141,9 @@ public class Session implements FlutterMessageListener {
         Integer result;
         try {
             result = Integer.valueOf(value, 16);
-        } catch (Exception e) {
-            Log.e(Constants.LOG_TAG,"could not parse '"+value+"' as hex; returning 0.");
+        }
+        catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "could not parse '" + value + "' as hex; returning 0.");
             result = 0;
         }
         return result;
@@ -124,8 +154,9 @@ public class Session implements FlutterMessageListener {
         Integer result;
         try {
             result = Integer.valueOf(value);
-        } catch (Exception e) {
-            Log.e(Constants.LOG_TAG,"could not parse '"+value+"' as an integer; returning 0.");
+        }
+        catch (Exception e) {
+            Log.e(Constants.LOG_TAG, "could not parse '" + value + "' as an integer; returning 0.");
             result = 0;
         }
         return result;
@@ -137,20 +168,20 @@ public class Session implements FlutterMessageListener {
 
     @Override
     public void onFlutterMessageReceived(String request, String response) {
-        Log.v(Constants.LOG_TAG, "Session.onFlutterMessageReceived - " + request + " "  + response);
+        Log.v(Constants.LOG_TAG, "Session.onFlutterMessageReceived - " + request + " " + response);
         if (response.equals("OK") || response.equals("FAIL")) {
-            Log.v(Constants.LOG_TAG,"ignoring onFlutterMessageReceived="+response);
+            Log.v(Constants.LOG_TAG, "ignoring onFlutterMessageReceived=" + response);
             return;
         }
         String[] args = response.split(",");
 
         char command = args[0].charAt(0);
-        switch(command) {
+        switch (command) {
             case FlutterProtocol.Commands.READ_SENSOR_VALUES:
                 if (args.length != 4) {
-                    Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_SENSOR_VALUES="+response);
+                    Log.e(Constants.LOG_TAG, "invalid number of arguments for READ_SENSOR_VALUES=" + response);
                 } else {
-                    short value1,value2,value3;
+                    short value1, value2, value3;
                     value1 = parseInt(args[1]).shortValue();
                     value2 = parseInt(args[2]).shortValue();
                     value3 = parseInt(args[3]).shortValue();
@@ -178,7 +209,7 @@ public class Session implements FlutterMessageListener {
                 if (response.equals("N,")) {
                     Log.w(Constants.LOG_TAG, "No datalog found on Flutter.");
                 } else if (args.length != 2) {
-                    Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_LOG_NAME="+response);
+                    Log.e(Constants.LOG_TAG, "invalid number of arguments for READ_LOG_NAME=" + response);
                 } else {
                     String logName = args[1];
                     DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
@@ -187,10 +218,10 @@ public class Session implements FlutterMessageListener {
                 break;
             case FlutterProtocol.Commands.READ_NUMBER_POINTS_AVAILABLE:
                 if (args.length != 4) {
-                    Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_NUMBER_POINTS_AVAILABLE="+response);
+                    Log.e(Constants.LOG_TAG, "invalid number of arguments for READ_NUMBER_POINTS_AVAILABLE=" + response);
                 } else {
                     DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
-                    short numberOfPoints,totalNeeded;
+                    short numberOfPoints, totalNeeded;
                     boolean currentlyLogging = !args[3].equals("0");
                     numberOfPoints = Integer.valueOf(args[1]).shortValue();
                     totalNeeded = Integer.valueOf(args[2]).shortValue();
@@ -203,18 +234,18 @@ public class Session implements FlutterMessageListener {
                 break;
             case FlutterProtocol.Commands.READ_POINT:
                 if (args.length != 3) {
-                    Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_POINT="+response);
+                    Log.e(Constants.LOG_TAG, "invalid number of arguments for READ_POINT=" + response);
                 } else {
                     // If the time is ffffffff, there is no point available
                     if (args[1].equals("ffffffff")) {
-                        Log.w(Constants.LOG_TAG,"no point available for READ_POINT (first arg is ffffffff)");
+                        Log.w(Constants.LOG_TAG, "no point available for READ_POINT (first arg is ffffffff)");
                     } else {
                         long unixTime = Long.valueOf(args[1], 16);
                         short sensor1, sensor2, sensor3;
                         String sensorValues = args[2];
-                        sensor1 = Integer.valueOf(sensorValues.substring(0,2), 16).shortValue();
+                        sensor1 = Integer.valueOf(sensorValues.substring(0, 2), 16).shortValue();
                         sensor2 = Integer.valueOf(sensorValues.substring(2, 4), 16).shortValue();
-                        sensor3 = Integer.valueOf(sensorValues.substring(4,6), 16).shortValue();
+                        sensor3 = Integer.valueOf(sensorValues.substring(4, 6), 16).shortValue();
 
                         DataLoggingHandler dataLoggingHandler = GlobalHandler.getInstance(currentActivity).dataLoggingHandler;
                         dataLoggingHandler.updateDataSet(unixTime, sensor1, sensor2, sensor3);
@@ -222,9 +253,7 @@ public class Session implements FlutterMessageListener {
                         TreeMap data = dataLoggingHandler.getData();
                         GlobalHandler.getInstance(currentActivity).sessionHandler.updateProgressDialogMessage(currentActivity, "Loading point " + data.size() + " of " + dataLoggingHandler.getNumberOfPoints());
 
-                        if ((data.size() == dataLoggingHandler.getNumberOfPoints() || data.size() == dataLoggingHandler.getTotalPoints()) && data.size() != 0
-                                && request.substring(0,1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT))
-                                && currentActivity != null) {
+                        if ((data.size() == dataLoggingHandler.getNumberOfPoints() || data.size() == dataLoggingHandler.getTotalPoints()) && data.size() != 0 && request.substring(0, 1).equals(String.valueOf(FlutterProtocol.Commands.READ_POINT)) && currentActivity != null) {
                             Sensor[] sensors;
                             sensors = getFlutter().getSensors();
                             String flutterName = getFlutter().getName();
@@ -243,11 +272,11 @@ public class Session implements FlutterMessageListener {
                 Output output = flutter.findOutputWithProtocolString(protocolString);
                 if (args[1].equals("x")) {
                     output.setIsLinked(false, output);
-                    Log.v(Constants.LOG_TAG,"UNLINK "+protocolString);
+                    Log.v(Constants.LOG_TAG, "UNLINK " + protocolString);
                 } else if (args[1].equals("p")) {
                     // PROPORTIONAL
                     if (args.length != 7) {
-                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                        Log.e(Constants.LOG_TAG, "Invalid number of arguments for READ_OUTPUT_STATE=" + response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
                         omin = parseHex(args[2]);
@@ -256,7 +285,7 @@ public class Session implements FlutterMessageListener {
                         imin = parseHex(args[5]);
                         imax = parseHex(args[6]);
 
-                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Sensor sensor = flutter.getSensors()[portNumber - 1];
                         SettingsProportional settings = SettingsProportional.newInstance(output.getSettings());
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
@@ -269,12 +298,12 @@ public class Session implements FlutterMessageListener {
                         }
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK (proportional) "+protocolString);
+                        Log.v(Constants.LOG_TAG, "LINK (proportional) " + protocolString);
                     }
                 } else if (args[1].equals("a")) {
                     // AMPLITUDE
                     if (args.length != 8) {
-                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                        Log.e(Constants.LOG_TAG, "Invalid number of arguments for READ_OUTPUT_STATE=" + response);
                     } else {
                         int omin, omax, imin, imax, portNumber, speed;
                         omin = parseHex(args[2]);
@@ -284,7 +313,7 @@ public class Session implements FlutterMessageListener {
                         imax = parseHex(args[6]);
                         speed = parseHex(args[7]);
 
-                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Sensor sensor = flutter.getSensors()[portNumber - 1];
                         SettingsAmplitude settings = SettingsAmplitude.newInstance(output.getSettings());
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
@@ -298,12 +327,12 @@ public class Session implements FlutterMessageListener {
                         }
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK (amplitude) "+protocolString);
+                        Log.v(Constants.LOG_TAG, "LINK (amplitude) " + protocolString);
                     }
                 } else if (args[1].equals("f")) {
                     // FREQUENCY
                     if (args.length != 7) {
-                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                        Log.e(Constants.LOG_TAG, "Invalid number of arguments for READ_OUTPUT_STATE=" + response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
                         omin = parseHex(args[2]);
@@ -312,7 +341,7 @@ public class Session implements FlutterMessageListener {
                         imin = parseHex(args[5]);
                         imax = parseHex(args[6]);
 
-                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Sensor sensor = flutter.getSensors()[portNumber - 1];
                         SettingsFrequency settings = SettingsFrequency.newInstance(output.getSettings());
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
@@ -325,12 +354,12 @@ public class Session implements FlutterMessageListener {
                         }
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK (frequency) "+protocolString);
+                        Log.v(Constants.LOG_TAG, "LINK (frequency) " + protocolString);
                     }
                 } else if (args[1].equals("d")) {
                     // CHANGE
                     if (args.length != 7) {
-                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                        Log.e(Constants.LOG_TAG, "Invalid number of arguments for READ_OUTPUT_STATE=" + response);
                     } else {
                         int omin, omax, imin, imax, portNumber;
                         omin = parseHex(args[2]);
@@ -339,7 +368,7 @@ public class Session implements FlutterMessageListener {
                         imin = parseHex(args[5]);
                         imax = parseHex(args[6]);
 
-                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Sensor sensor = flutter.getSensors()[portNumber - 1];
                         SettingsChange settings = SettingsChange.newInstance(output.getSettings());
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
@@ -352,12 +381,12 @@ public class Session implements FlutterMessageListener {
                         }
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK (change) "+protocolString);
+                        Log.v(Constants.LOG_TAG, "LINK (change) " + protocolString);
                     }
                 } else if (args[1].equals("i")) {
                     // CUMULATIVE
                     if (args.length != 9) {
-                        Log.e(Constants.LOG_TAG,"Invalid number of arguments for READ_OUTPUT_STATE="+response);
+                        Log.e(Constants.LOG_TAG, "Invalid number of arguments for READ_OUTPUT_STATE=" + response);
                     } else {
                         int omin, omax, imin, imax, portNumber, center, speed;
                         omin = parseHex(args[2]);
@@ -368,7 +397,7 @@ public class Session implements FlutterMessageListener {
                         center = parseHex(args[7]);
                         speed = parseHex(args[8]);
 
-                        Sensor sensor = flutter.getSensors()[portNumber-1];
+                        Sensor sensor = flutter.getSensors()[portNumber - 1];
                         SettingsCumulative settings = SettingsCumulative.newInstance(output.getSettings());
                         settings.setSensorPortNumber(sensor.getPortNumber());
                         settings.setOutputMin(omin);
@@ -383,7 +412,7 @@ public class Session implements FlutterMessageListener {
                         }
                         output.setSettings(settings);
                         output.setIsLinked(true, output);
-                        Log.v(Constants.LOG_TAG,"LINK (cumulative) "+protocolString);
+                        Log.v(Constants.LOG_TAG, "LINK (cumulative) " + protocolString);
                     }
                 } else if (args.length == 2) {
                     // TODO @tasota use a real structure for (constant) SettingsProportional
@@ -394,31 +423,30 @@ public class Session implements FlutterMessageListener {
                     settingsConstant.setValue(position);
                     output.setSettings(settingsConstant);
                     output.setIsLinked(true, output);
-                    Log.v(Constants.LOG_TAG,"LINK (constant) "+protocolString);
+                    Log.v(Constants.LOG_TAG, "LINK (constant) " + protocolString);
                 } else {
-                    Log.e(Constants.LOG_TAG,"failed to parse output state (not implemented): "+args[1]);
+                    Log.e(Constants.LOG_TAG, "failed to parse output state (not implemented): " + args[1]);
                 }
                 break;
             case FlutterProtocol.Commands.SET_INPUT_TYPE:
                 break;
             case FlutterProtocol.Commands.READ_INPUT_TYPE:
                 if (args.length != 2) {
-                    Log.e(Constants.LOG_TAG,"invalid number of arguments for READ_INPUT_TYPE="+response);
+                    Log.e(Constants.LOG_TAG, "invalid number of arguments for READ_INPUT_TYPE=" + response);
                 } else {
                     int portNumber = parseInt(request.split(",")[1]);
                     short inputType = parseInt(args[1]).shortValue();
 
-                    Sensor sensor = FlutterProtocol.sensorFromInputType(portNumber,inputType);
-                    Log.v(Constants.LOG_TAG,"About to set portNumber="+portNumber+" to inputType="+inputType+"="+currentActivity.getString(sensor.getSensorTypeId()));
-                    this.flutter.getSensors()[portNumber-1] = sensor;
+                    Sensor sensor = FlutterProtocol.sensorFromInputType(portNumber, inputType);
+                    Log.v(Constants.LOG_TAG, "About to set portNumber=" + portNumber + " to inputType=" + inputType + "=" + currentActivity.getString(sensor.getSensorTypeId()));
+                    this.flutter.getSensors()[portNumber - 1] = sensor;
                 }
                 break;
             case FlutterProtocol.Commands.ENABLE_PROPORTIONAL_CONTROL:
                 break;
             default:
-                Log.e(Constants.LOG_TAG,"could not match command for response="+response);
+                Log.e(Constants.LOG_TAG, "could not match command for response=" + response);
                 break;
         }
     }
-
 }

@@ -94,14 +94,14 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         setPositionListener.onSetPosition();
     }
 
-    @OnClick(R.id.increment_button)
+    @OnClick(R.id.button_increment)
     public void onClickIncrementProgressBar() {
-        seekBarMaxMin.setProgress((int)seekBarMaxMin.getProgress() + 1);
+        seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() + 1);
     }
 
-    @OnClick(R.id.decrement_button)
+    @OnClick(R.id.button_decrement)
     public void onClickDecrementProgressBar() {
-        seekBarMaxMin.setProgress((int)seekBarMaxMin.getProgress() - 1);
+        seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() - 1);
     }
 
 

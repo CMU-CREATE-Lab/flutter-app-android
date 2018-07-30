@@ -64,7 +64,19 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setLayout(convertDpToPx(390), ViewGroup.LayoutParams.WRAP_CONTENT);
+        getDialog().getWindow().setLayout(convertDpToPx(410), ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+
+    @OnClick(R.id.button_increment)
+    public void onClickIncrementProgressBar() {
+        seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() + 1);
+    }
+
+
+    @OnClick(R.id.button_decrement)
+    public void onClickDecrementProgressBar() {
+        seekBarMaxMin.setProgress(seekBarMaxMin.getProgress() - 1);
     }
 
 
@@ -202,6 +214,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         }
 
     }
+
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
