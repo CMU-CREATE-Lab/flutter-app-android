@@ -98,9 +98,9 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
         @Override
         public void onClick(View view) {
             if (testTimerPeriod()) {
+                dataLogDetails.setTimePeriodInt(Integer.parseInt(timePeriodText.getText().toString()));
+                dataLogDetails.setTimePeriodString(timePeriodSpinner.getSelectedItem().toString());
                 if (!isReviewEnabled) {
-                    dataLogDetails.setTimePeriodInt(Integer.parseInt(timePeriodText.getText().toString()));
-                    dataLogDetails.setTimePeriodString(timePeriodSpinner.getSelectedItem().toString());
                     FlutterNameRecordingDialog flutterNameRecordingDialog = FlutterNameRecordingDialog.newInstance(
                             dataLogDetails, dismissAndDialogRecordListener, wizardType, isReviewEnabled
                     );

@@ -239,6 +239,10 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
                 tooManyDataPointsErrorDialog.show(getFragmentManager(), "tag");
             }
         }
+        else
+        {
+            //TODO: @psdev1 add a dialog if the user wants to sample too many times in an interval
+        }
     }
 
 

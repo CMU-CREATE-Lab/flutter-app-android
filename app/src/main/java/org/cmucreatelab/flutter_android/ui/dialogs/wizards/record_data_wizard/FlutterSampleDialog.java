@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -93,9 +94,9 @@ public class FlutterSampleDialog extends BaseResizableDialog {
         @Override
         public void onClick(View view) {
             if (testInterval()) {
+                dataLogDetails.setIntervalInt(Integer.parseInt(intervalsText.getText().toString()));
+                dataLogDetails.setIntervalString(intervalSpinner.getSelectedItem().toString());
                 if (!isReviewEnabled) {
-                    dataLogDetails.setIntervalInt(Integer.parseInt(intervalsText.getText().toString()));
-                    dataLogDetails.setIntervalString(intervalSpinner.getSelectedItem().toString());
                     FlutterTimeRecordDialog flutterTimeRecordDialog = FlutterTimeRecordDialog.newInstance(
                             dataLogDetails, dismissAndDialogRecordListener, wizardType, isReviewEnabled
                     );
