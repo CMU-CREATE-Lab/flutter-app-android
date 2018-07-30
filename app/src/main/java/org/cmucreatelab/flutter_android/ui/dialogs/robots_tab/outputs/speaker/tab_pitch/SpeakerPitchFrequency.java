@@ -113,7 +113,7 @@ public class SpeakerPitchFrequency extends SpeakerPitchStateHelper {
     @Override
     public void setMinimum(int minimum) {
         SettingsFrequency settingsFrequency = (SettingsFrequency) getSpeaker().getPitch().getSettings();
-        settingsFrequency.setOutputMax(minimum);
+        settingsFrequency.setOutputMin(minimum);
     }
 
 

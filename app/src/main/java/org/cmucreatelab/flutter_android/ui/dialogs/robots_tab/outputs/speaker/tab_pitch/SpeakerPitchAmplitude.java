@@ -114,7 +114,7 @@ public class SpeakerPitchAmplitude extends SpeakerPitchStateHelper {
     @Override
     public void setMinimum(int minimum) {
         SettingsProportional settingsAmplitude = (SettingsProportional) getSpeaker().getPitch().getSettings();
-        settingsAmplitude.setOutputMax(minimum);
+        settingsAmplitude.setOutputMin(minimum);
     }
 
 

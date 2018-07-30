@@ -113,7 +113,7 @@ public class SpeakerPitchChange extends SpeakerPitchStateHelper {
     @Override
     public void setMinimum(int minimum) {
         SettingsChange settingsChange = (SettingsChange) getSpeaker().getPitch().getSettings();
-        settingsChange.setOutputMax(minimum);
+        settingsChange.setOutputMin(minimum);
     }
 
 

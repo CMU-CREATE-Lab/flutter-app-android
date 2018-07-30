@@ -113,7 +113,7 @@ public class SpeakerPitchCumulative extends SpeakerPitchStateHelper {
     @Override
     public void setMinimum(int minimum) {
         SettingsCumulative settingsCumulative = (SettingsCumulative) getSpeaker().getPitch().getSettings();
-        settingsCumulative.setOutputMax(minimum);
+        settingsCumulative.setOutputMin(minimum);
     }
 
 

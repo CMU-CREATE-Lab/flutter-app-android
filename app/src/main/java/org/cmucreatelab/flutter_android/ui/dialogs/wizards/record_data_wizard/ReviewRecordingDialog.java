@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.rockerhieu.emojicon.EmojiconEditText;
 import com.rockerhieu.emojicon.EmojiconGridFragment;
@@ -34,9 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by Steve on 1/17/2017.
  */
-public class ReviewRecordingDialog extends BaseResizableDialog implements Serializable, DataLoggingHandler.DataSetPointsListener,
-        EmojiconGridFragment.OnEmojiconClickedListener,
-        EmojiconsFragment.OnEmojiconBackspaceClickedListener{
+public class ReviewRecordingDialog extends BaseResizableDialog implements Serializable, DataLoggingHandler.DataSetPointsListener {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";
     private static final String RECORD_KEY = "record_key";
@@ -59,7 +58,7 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
     private DataLogDetails dataLogDetails;
     private EmojiconEditText dataSetNameText;
     private EditText intervalsText;
-    private EditText intervalSpinner;
+    private Spinner intervalSpinner;
     private EditText timePeriodText;
     private EditText timePeriodSpinner;
 
@@ -171,30 +170,24 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
         dataLogDetails = (DataLogDetails) getArguments().getSerializable(DATA_LOG_DETAILS_KEY);
         dataSetNameText = (EmojiconEditText) view.findViewById(R.id.edit_data_set_name);
         intervalsText = (EditText) view.findViewById(R.id.edit_number_of_intervals);
-        intervalSpinner = (EditText) view.findViewById(R.id.edit_dropdown_interval);
+        intervalSpinner = (Spinner) view.findViewById(R.id.spinner_dropdown_interval);
         timePeriodText = (EditText) view.findViewById(R.id.edit_time_period);
         timePeriodSpinner = (EditText) view.findViewById(R.id.edit_dropdown_time);
         view.findViewById(R.id.button_start_recording).setBackground(ContextCompat.getDrawable(getActivity(), buttonDrawableId));
 
-        dataSetNameText.setOnClickListener(dataNameClicked);
+/*        dataSetNameText.setOnClickListener(dataNameClicked);
         view.findViewById(R.id.linear_interval_container).setOnClickListener(intervalClicked);
         intervalsText.setOnClickListener(intervalClicked);
         intervalSpinner.setOnClickListener(intervalClicked);
         view.findViewById(R.id.linear_time_period_container).setOnClickListener(timePeriodClicked);
         timePeriodText.setOnClickListener(timePeriodClicked);
-        timePeriodSpinner.setOnClickListener(timePeriodClicked);
+        timePeriodSpinner.setOnClickListener(timePeriodClicked);*/
 
         dataSetNameText.setText(dataLogDetails.getDataLogName());
         intervalsText.setText(String.valueOf(dataLogDetails.getIntervalInt()));
-        intervalSpinner.setText(dataLogDetails.getIntervalString());
+        //intervalSpinner.setText(dataLogDetails.getIntervalString());
         timePeriodText.setText(String.valueOf(dataLogDetails.getTimePeriodInt()));
         timePeriodSpinner.setText(dataLogDetails.getTimePeriodString());
-
-        dataSetNameText.setKeyListener(null);
-        intervalsText.setKeyListener(null);
-        intervalSpinner.setKeyListener(null);
-        timePeriodText.setKeyListener(null);
-        timePeriodSpinner.setKeyListener(null);
 
         return builder.create();
     }
@@ -253,21 +246,6 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
             isLogging = globalHandler.dataLoggingHandler.isLogging();
         }
     }
-
-
-    @Override
-    public void onEmojiconClicked(Emojicon emojicon) {
-
-        EmojiconsFragment.input(dataSetNameText, emojicon);
-    }
-
-
-    @Override
-    public void onEmojiconBackspaceClicked(View view) {
-
-        EmojiconsFragment.backspace(dataSetNameText);
-    }
-
 
     public boolean getIsLogging() { return this.isLogging; }
     public boolean getIsWaitingForResponse() { return this.isWaitingForResponse; }
