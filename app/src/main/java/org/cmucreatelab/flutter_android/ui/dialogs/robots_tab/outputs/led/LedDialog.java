@@ -296,11 +296,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable, Advance
         stateHelper.setMaximumColor(rgb[0], rgb[1], rgb[2]);
 
         currentImageView.setVisibility(View.GONE);
-        if (triColorLed.getRedLed().getSettings().getRelationship() instanceof Constant) {
-            currentTextViewDescrp.setText("Color");
-        } else {
-            currentTextViewDescrp.setText(R.string.maximum_color);
-        }
         if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex())) {
             maxColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMaxColorHex()));
         } else {
@@ -324,7 +319,6 @@ public class LedDialog extends BaseOutputDialog implements Serializable, Advance
         stateHelper.setMinimumColor(rgb[0], rgb[1], rgb[2]);
 
         currentImageView.setVisibility(View.GONE);
-        currentTextViewDescrp.setText(R.string.minimum_color);
         if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex())) {
             minColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMinColorHex()));
         } else {
