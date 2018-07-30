@@ -42,8 +42,8 @@ public class MaxColorDialog extends ChooseColorDialog implements ChooseColorDial
         highText = getArguments().getString(HIGH_TEXT_KEY);
         setColorListener = this;
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        TextView text_title = (TextView) dialog.findViewById(R.id.text_output_title);
-        text_title.setText("Choose " + highText + " Color");
+        TextView textTitle = (TextView) dialogView.findViewById(R.id.text_output_title);
+        textTitle.setText("Choose " + highText + " Color");
         return dialog;
     }
 

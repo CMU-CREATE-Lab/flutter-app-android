@@ -21,9 +21,10 @@ import android.widget.TextView;
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.relationships.Constant;
+import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
 import org.cmucreatelab.flutter_android.classes.settings.AdvancedSettings;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -51,12 +52,7 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterPro
  *
  * A Dialog that shows the options for creating a link between Led and a Sensor
  */
-public class LedDialog extends BaseOutputDialog implements Serializable,
-        AdvancedSettingsDialog.DialogAdvancedSettingsListener,
-        SensorOutputDialog.DialogSensorListener,
-        RelationshipOutputDialog.DialogRelationshipListener,
-        MaxColorDialog.DialogHighColorListener,
-        MinColorDialog.DialogLowColorListener {
+public class LedDialog extends BaseOutputDialog implements Serializable, AdvancedSettingsDialog.DialogAdvancedSettingsListener, SensorOutputDialog.DialogSensorListener, RelationshipOutputDialog.DialogRelationshipListener, MaxColorDialog.DialogHighColorListener, MinColorDialog.DialogLowColorListener {
 
     public View dialogView;
     public ImageView maxColor;
@@ -69,11 +65,12 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     // animations
     private AlphaAnimation blinkAnimation;
 
+
     private void updateViews() {
         super.updateViews(dialogView, triColorLed.getRedLed());
 
         if (triColorLed.getRedLed().getSettings().getClass() != triColorLed.getGreenLed().getSettings().getClass() || triColorLed.getGreenLed().getSettings().getClass() != triColorLed.getBlueLed().getSettings().getClass()) {
-            Log.w(Constants.LOG_TAG,"LedDialog.updateViews assumes same relationship for all Leds but they are not the same.");
+            Log.w(Constants.LOG_TAG, "LedDialog.updateViews assumes same relationship for all Leds but they are not the same.");
         }
         stateHelper.updateView(this);
 
@@ -116,7 +113,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         this.dialogView = view;
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
-        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " +  String.valueOf(triColorLed.getPortNumber()));
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(triColorLed.getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
         ButterKnife.bind(this, view);
 
@@ -124,7 +121,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         minColor = (ImageView) view.findViewById(R.id.view_min_color);
 
         // Create animation to highlight a sensor that's never been linked
-        blinkAnimation = new AlphaAnimation((float)0.8, 0);
+        blinkAnimation = new AlphaAnimation((float) 0.8, 0);
         blinkAnimation.setDuration(900);
         blinkAnimation.setStartOffset(150);
         blinkAnimation.setRepeatCount(Animation.INFINITE);
@@ -155,7 +152,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getBlueLed().setIsLinked(true, triColorLed.getBlueLed());
 
         // overwrite old object
-        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber() - 1] = triColorLed;
 
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
@@ -176,7 +173,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         triColorLed.getBlueLed().setIsLinked(false, triColorLed.getBlueLed());
 
         // overwrite old object
-        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber()-1] = triColorLed;
+        GlobalHandler.getInstance(getActivity()).sessionHandler.getSession().getFlutter().getTriColorLeds()[triColorLed.getPortNumber() - 1] = triColorLed;
 
         dialogLedListener.onLedLinkListener(msg);
         this.dismiss();
@@ -189,6 +186,7 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, triColorLed);
         dialog.show(this.getFragmentManager(), "tag");
     }
+
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
@@ -216,7 +214,12 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
     @OnClick(R.id.linear_set_max_color)
     public void onClickSetMaximumColor(View view) {
         Log.d(Constants.LOG_TAG, "onClickSetMaximumColor");
-        DialogFragment dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(), getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId()),this);
+        DialogFragment dialog;
+        if (triColorLed.getRedLed().getSettings().getRelationship() instanceof Constant) {
+            dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(), "Constant", this);
+        } else {
+            dialog = MaxColorDialog.newInstance(triColorLed.getMaxColorHex(), getString(triColorLed.getRedLed().getSettings().getSensor().getHighTextId()), this);
+        }
         dialog.show(this.getFragmentManager(), "tag");
     }
 
@@ -293,11 +296,16 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
         stateHelper.setMaximumColor(rgb[0], rgb[1], rgb[2]);
 
         currentImageView.setVisibility(View.GONE);
-        currentTextViewDescrp.setText(R.string.maximum_color);
-        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex()))
+        if (triColorLed.getRedLed().getSettings().getRelationship() instanceof Constant) {
+            currentTextViewDescrp.setText("Color");
+        } else {
+            currentTextViewDescrp.setText(R.string.maximum_color);
+        }
+        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMaxColorHex())) {
             maxColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMaxColorHex()));
-        else
+        } else {
             maxColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMaxColorHex()));
+        }
         maxColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMaxColorHex()));
     }
@@ -317,23 +325,25 @@ public class LedDialog extends BaseOutputDialog implements Serializable,
 
         currentImageView.setVisibility(View.GONE);
         currentTextViewDescrp.setText(R.string.minimum_color);
-        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex()))
+        if (!TriColorLed.isSwatchInExistingSelection(triColorLed.getMinColorHex())) {
             minColor.setImageDrawable(getCustomSwatchWithBorder(triColorLed.getMinColorHex()));
-        else
+        } else {
             minColor.setImageResource(TriColorLed.getSwatchFromColor(triColorLed.getMinColorHex()));
+        }
 
         minColor.setVisibility(View.VISIBLE);
         currentTextViewItem.setText(TriColorLed.getTextFromColor(triColorLed.getMinColorHex()));
     }
 
-    public LayerDrawable getCustomSwatchWithBorder(String hexColor)
-    {
+
+    public LayerDrawable getCustomSwatchWithBorder(String hexColor) {
         LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
 
         ((GradientDrawable) layerDrawable.findDrawableByLayerId(R.id.color_main_swatch)).setColor(Color.parseColor(hexColor));
 
         return layerDrawable;
     }
+
 
     public interface DialogLedListener {
         public void onLedLinkListener(ArrayList<MelodySmartMessage> msgs);

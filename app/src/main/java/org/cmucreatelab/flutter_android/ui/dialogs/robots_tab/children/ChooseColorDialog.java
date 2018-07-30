@@ -135,8 +135,8 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         builder.setView(view);
         ButterKnife.bind(this, view);
 
-        TextView text_title = (TextView) view.findViewById(R.id.text_output_title);
-        text_title.setText(R.string.choose_color);
+        TextView textTitle = (TextView) view.findViewById(R.id.text_output_title);
+        textTitle.setText(R.string.choose_color);
 
         return builder.create();
     }

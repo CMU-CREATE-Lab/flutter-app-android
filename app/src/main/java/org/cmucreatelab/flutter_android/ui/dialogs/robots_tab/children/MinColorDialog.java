@@ -42,9 +42,9 @@ public class MinColorDialog extends ChooseColorDialog implements ChooseColorDial
         lowText = getArguments().getString(LOW_TEXT_KEY);
         setColorListener = this;
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        TextView text_title = (TextView) dialog.findViewById(R.id.text_output_title);
-        text_title.setText("Choose " + lowText + " Color");
-        return super.onCreateDialog(savedInstanceState);
+        TextView textTitle = (TextView) dialogView.findViewById(R.id.text_output_title);
+        textTitle.setText("Choose " + lowText + " Color");
+        return dialog;
     }
 
 
