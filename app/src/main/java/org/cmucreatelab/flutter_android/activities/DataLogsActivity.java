@@ -38,6 +38,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSamplePresetDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.DataLogErrorDialog;
@@ -384,10 +385,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             );
                             recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
                         } else {
-                            FlutterSampleDialog flutterSampleDialog = FlutterSampleDialog.newInstance(
+                            FlutterSamplePresetDialog flutterSamplePresetDialog = FlutterSamplePresetDialog.newInstance(
                                     new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, false
                             );
-                            flutterSampleDialog.show(getSupportFragmentManager(), "tag");
+                            flutterSamplePresetDialog.show(getSupportFragmentManager(), "tag");
                         }
                     }
                 });

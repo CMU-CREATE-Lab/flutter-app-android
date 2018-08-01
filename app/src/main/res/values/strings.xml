@@ -230,10 +230,15 @@
     <string name="data_selected_spinner">Swipe down to pull in the most recent data.</string>
     <string name="currently_recording_description">You cannot send a data log that is currently being recorded.</string>
     <string name="data_snapshot">Data Snapshot</string>
+    <string name="choose_my_own">Choose My Own</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="flutter_sample_question">How often should your Flutter take a sample?</string>
+    <string name="flutter_preset_sample_question">How much data do you want to collect?</string>
     <string name="flutter_record_time_question">How long should your Flutter record data?</string>
+    <string name="sixty_times_minute_minute">Sample 60 times a minute for 1 minute</string>
+    <string name="sixty_times_hour_hour">Sample 60 times an hour for 1 hour</string>
+    <string name="two_times_hour_day">Sample 2 times per hour for 1 day</string>
     <string name="back">Back</string>
     <string name="both">Both</string>
     <string name="name_your_data_set">Name your data set</string>
