@@ -1,155 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg"
-    android:orientation="vertical">
+    android:background="@drawable/dialog_bg">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_record_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/text_record_title"
             android:layout_gravity="center"
-            android:text="@string/record_data_set"
+            android:textStyle="bold"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:text="@string/record_data_set"/>
 
         <com.rockerhieu.emojicon.EmojiconEditText
             android:id="@+id/edit_data_set_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
             android:hint="@string/data_set_name"
-            android:imeOptions="actionNext"
-            android:inputType="none" />
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="none"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
             android:text="@string/for_how_long"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <LinearLayout
-            android:id="@+id/linear_interval_container"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/linear_interval_container"
             android:layout_marginBottom="15dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="10dp"
+            android:clickable="true">
 
             <FrameLayout
                 android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:focusable="false"
                 android:background="@drawable/spinner_dropdown_bg">
 
                 <EditText
                     android:id="@+id/edit_number_of_intervals"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:hint="@string/zero"
-                    android:inputType="number"
-                    android:padding="2dp" />
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:focusable="false"/>
 
             </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/times_per"
+                android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:padding="2dp"
-                android:text="@string/times_per"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:focusable="false"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/spinner_dropdown_bg"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/spinner_dropdown_bg">
+                android:focusable="false">
 
-                <Spinner
-                    android:id="@+id/spinner_dropdown_interval"
+                <EditText
+                    android:id="@+id/edit_dropdown_interval"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:hint="@string/zero"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:padding="2dp"
-                    android:spinnerMode="dropdown" />
+                    android:focusable="false"/>
 
             </FrameLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear_time_period_container"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/linear_time_period_container"
             android:layout_marginBottom="15dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/for_word"
+                android:textStyle="bold"
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:padding="2dp"
-                android:text="@string/for_word"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:focusable="false"/>
 
             <FrameLayout
                 android:layout_width="75dp"
                 android:layout_height="50dp"
+                android:background="@drawable/spinner_dropdown_bg"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/spinner_dropdown_bg">
+                android:focusable="false">
 
                 <EditText
                     android:id="@+id/edit_time_period"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:hint="@string/zero"
-                    android:inputType="number"
-                    android:padding="2dp" />
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:focusable="false"/>
 
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@drawable/spinner_dropdown_bg"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/spinner_dropdown_bg">
+                android:focusable="false">
 
                 <EditText
                     android:id="@+id/edit_dropdown_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:hint="@string/zero"
-                    android:padding="2dp" />
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:focusable="false"/>
 
             </FrameLayout>
 
@@ -161,8 +170,8 @@
         android:id="@+id/button_start_recording"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:text="@string/start_recording"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginTop="25dp"/>
 
 </LinearLayout>
