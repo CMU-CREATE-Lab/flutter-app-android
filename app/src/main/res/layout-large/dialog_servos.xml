@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/servo_new_indicator"/>
+                    android:src="@drawable/servo_new_picking_indicator"/>
 
                 <ImageView
                     android:id="@+id/image_min_pos"
