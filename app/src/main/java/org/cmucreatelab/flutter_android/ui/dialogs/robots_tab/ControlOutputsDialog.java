@@ -318,8 +318,6 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     }
 
     //after color is chosen for LEDs
-
-
     public void onLedConstantColorChosen(Integer[] rgb, int port, int swatch) {
         switch (port) {
             case 1:

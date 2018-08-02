@@ -157,6 +157,7 @@
     <string name="no_relationship">No Relationship</string>
     <string name="time">Time</string>
     <string name="record_data_set">Record Data Set</string>
+    <string name="reset_flutter">Reset Flutter</string>
     <string name="for_how_long">For how long?</string>
     <string name="times_per">times per</string>
     <string name="data_set_name">Data Set Name</string>
