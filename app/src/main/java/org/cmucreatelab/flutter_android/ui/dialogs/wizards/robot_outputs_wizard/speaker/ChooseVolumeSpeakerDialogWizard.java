@@ -197,9 +197,4 @@ public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
             }
         }
     }
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
-    }
 }

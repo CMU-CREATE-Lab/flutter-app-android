@@ -91,10 +91,4 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
         else
             wizard.changeDialog(ChooseVolumeSpeakerDialogWizard.newInstance(wizard, ChooseVolumeSpeakerDialogWizard.OUTPUT_TYPE.MAX));
     }
-
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
-    }
 }

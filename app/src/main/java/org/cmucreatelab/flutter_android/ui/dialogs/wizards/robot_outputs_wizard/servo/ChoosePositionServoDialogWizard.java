@@ -157,18 +157,25 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
 
         updateViewWithOptions();
-        updateTextViews(view);
+        updateTextAndAudio(view);
         view.findViewById(R.id.button_set_position).setVisibility(View.GONE);
 
         return builder.create();
     }
 
 
-    private void updateTextViews(View view) {
+    private void updateTextAndAudio(View view) {
         // views
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
         ((TextView) view.findViewById(R.id.text_set_position)).setText(getPositionPrompt());
+
+        if (wizardState.relationshipType instanceof Constant)
+            audioPlayer.addAudio(R.raw.a_08);
+        else
+            audioPlayer.addAudio(R.raw.a_10);
+
+        audioPlayer.playAudio();
     }
 
 
@@ -214,11 +221,5 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
             wizard.finish();
         }
 
-    }
-
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
     }
 }

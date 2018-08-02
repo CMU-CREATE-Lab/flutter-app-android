@@ -1,8 +1,11 @@
 package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +23,7 @@ import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.activities.TutorialsActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
+import org.cmucreatelab.flutter_android.helpers.AudioPlayer;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.FlutterStatusDialog;
@@ -39,7 +43,10 @@ import butterknife.Optional;
 public abstract class BaseNavigationActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-    @BindView(R.id.switch_voice_prompts) Switch voicePromptToggle;
+    @BindView(R.id.switch_voice_prompts)
+    Switch voicePromptToggle;
+    protected AudioPlayer audioPlayer;
+    private static final String VOICE_PROMPTS_ACTIVATED_KEY = "voice_prompts_activated";
 
 
     @Override
@@ -64,16 +71,20 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     @OnCheckedChanged(R.id.switch_voice_prompts)
     public void onSwitchChanged(CompoundButton compoundButton, boolean checked) {
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        globalHandler.setVoicePromptsActivatedState(checked);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(VOICE_PROMPTS_ACTIVATED_KEY, checked);
+        editor.apply();
     }
 
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        voicePromptToggle.setChecked(globalHandler.isVoicePromptsActivated());
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        voicePromptToggle.setChecked(preferences.getBoolean(VOICE_PROMPTS_ACTIVATED_KEY, false));
+
         try {
             drawerToggle.syncState();
         }
@@ -92,6 +103,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        audioPlayer.stop();
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
         } else {
@@ -103,6 +115,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        audioPlayer = AudioPlayer.getInstance(this.getApplicationContext());
         Log.d(Constants.LOG_TAG, "onCreate - " + getClass());
     }
 

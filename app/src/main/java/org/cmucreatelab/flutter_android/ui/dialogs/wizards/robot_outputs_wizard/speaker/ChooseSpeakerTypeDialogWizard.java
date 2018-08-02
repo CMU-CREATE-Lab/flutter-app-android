@@ -99,10 +99,4 @@ public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
         wizardState.pitchRelationshipType = Constant.getInstance();
         wizard.changeDialog(ChooseRelationshipSpeakerDialogWizard.newInstance(wizard, SpeakerType.VOLUME));
     }
-
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
-    }
 }

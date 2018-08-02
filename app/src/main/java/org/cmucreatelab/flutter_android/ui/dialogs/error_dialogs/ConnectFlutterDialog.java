@@ -1,10 +1,21 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by Parv on 6/25/2018.
@@ -45,6 +56,15 @@ public class ConnectFlutterDialog extends ErrorDialog {
 
         return connectFlutterDialog;
     }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstances) {
+        Dialog dialog = super.onCreateDialog(savedInstances);
+        audioPlayer.addAudio(R.raw.a_03);
+        audioPlayer.playAudio();
+        return dialog;
+    }
+
 
     public void onClickDismiss() {
         Intent intent = new Intent(getActivity(), AppLandingActivity.class);

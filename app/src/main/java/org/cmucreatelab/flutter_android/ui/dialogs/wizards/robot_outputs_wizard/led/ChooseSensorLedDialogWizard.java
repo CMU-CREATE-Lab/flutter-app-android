@@ -51,7 +51,7 @@ public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard 
     }
 
 
-    public void updateText(View view) {
+    public void updateTextAndAudio(View view) {
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);
         ((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.led_sensor_prompt));

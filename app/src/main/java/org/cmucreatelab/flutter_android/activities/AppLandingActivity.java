@@ -184,6 +184,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             @Override
                             public void run() {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
+                                audioPlayer.addAudio(R.raw.a_03);
+                                audioPlayer.playAudio();
                             }
                         });
                     }
@@ -268,6 +270,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
+
+        audioPlayer.addAudio(R.raw.a_01);
+        audioPlayer.playAudio();
+
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
         // construct toolbar
@@ -410,6 +416,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
+        audioPlayer.addAudio(R.raw.a_02);
+        audioPlayer.playAudio();
         scanForDevice(true);
         if (noFlutterFoundTimer != null) {
             noFlutterFoundTimer.cancel();
@@ -444,7 +452,6 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                 });
             }
         }, 0, 1000);
-
     }
 
 

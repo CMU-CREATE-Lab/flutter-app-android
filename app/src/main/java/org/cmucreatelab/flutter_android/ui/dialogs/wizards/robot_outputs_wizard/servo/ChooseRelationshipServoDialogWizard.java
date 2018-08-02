@@ -67,11 +67,14 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
-	public void updateText(View view)
+	public void updateTextAndAudio(View view)
 	{
 		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
         ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.servo_relationship_prompt));
+
+        audioPlayer.addAudio(R.raw.a_06);
+        audioPlayer.playAudio();
 	}
 
 	public void updateWizardState()

@@ -48,11 +48,14 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
 		wizardState.selectedSensorPort = getSensorPortFromId(view.getId());
 	}
 
-	public void updateText(View view)
+	public void updateTextAndAudio(View view)
 	{
 		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_servo) + " " + String.valueOf(((Servo) wizard.getOutput()).getPortNumber()));
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
 		((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.servo_sensor_prompt));
+
+		audioPlayer.addAudio(R.raw.a_07);
+		audioPlayer.playAudio();
 	}
 
 

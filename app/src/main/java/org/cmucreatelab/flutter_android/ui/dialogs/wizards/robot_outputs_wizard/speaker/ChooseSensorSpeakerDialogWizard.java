@@ -72,7 +72,7 @@ public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWiz
     }
 
 
-    public void updateText(View view) {
+    public void updateTextAndAudio(View view) {
         if (speakerType.equals(SpeakerType.VOLUME)) {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);

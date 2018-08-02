@@ -53,7 +53,7 @@ public class ChooseRelationshipLedDialogWizard extends ChooseRelationshipOutputD
         wizardState.relationshipType = getRelationshipFromId(view.getId());
     }
 
-	public void updateText(View view)
+	public void updateTextAndAudio(View view)
 	{
 		((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_led) + " " + String.valueOf(((TriColorLed) wizard.getOutput()).getPortNumber()));
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.led);

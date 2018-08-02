@@ -40,6 +40,7 @@ public abstract class ErrorDialog extends BaseResizableDialog {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
+        super.onCreateDialog(savedInstances);
         errorTitle = getString(getArguments().getInt(ERROR_TITLE_KEY));
         errorText = getString(getArguments().getInt(ERROR_TEXT_KEY));
         errorImage = getArguments().getInt(ERROR_IMAGE_KEY);

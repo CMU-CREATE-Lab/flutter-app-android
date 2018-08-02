@@ -44,4 +44,10 @@ public class BaseResizableDialogWizard extends BaseResizableDialog {
         Log.i(Constants.LOG_TAG, "onClickAdvancedSettings");
         wizard.finish();
     }
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        audioPlayer.stop();
+        wizard.changeDialog(null);
+    }
 }

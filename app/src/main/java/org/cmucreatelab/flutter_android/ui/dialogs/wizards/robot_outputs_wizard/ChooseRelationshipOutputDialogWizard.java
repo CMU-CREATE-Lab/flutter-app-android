@@ -107,7 +107,7 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
         //have to update wizard state before updating others
         updateWizardState();
         updateViewWithOptions();
-        updateText(view);
+        updateTextAndAudio(view);
 
         return builder.create();
     }
@@ -123,7 +123,7 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 
     public abstract void updateRelationshipType(View view);
 
-    public abstract void updateText(View view);
+    public abstract void updateTextAndAudio(View view);
 
     public abstract void updateWizardState();
 
@@ -144,11 +144,4 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 
     @OnClick(R.id.button_next)
     public abstract void onClickNext();
-
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
-    }
-
 }

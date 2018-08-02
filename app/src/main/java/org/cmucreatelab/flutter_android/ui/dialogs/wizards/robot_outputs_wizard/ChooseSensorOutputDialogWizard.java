@@ -101,7 +101,7 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
 
     public abstract void updateSelectedSensorPort(View view);
 
-    public abstract void updateText(View view);
+    public abstract void updateTextAndAudio(View view);
 
 
     @Override
@@ -119,7 +119,7 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
         //have to update wizard state before updating others
         updateWizardState();
         updateViewWithOptions();
-        updateText(view);
+        updateTextAndAudio(view);
 
         return builder.create();
     }
@@ -142,10 +142,4 @@ public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialog
 
     @OnClick(R.id.button_next)
     public abstract void onClickNext();
-
-
-    @OnClick(R.id.button_close)
-    public void onClickClose() {
-        wizard.changeDialog(null);
-    }
 }
