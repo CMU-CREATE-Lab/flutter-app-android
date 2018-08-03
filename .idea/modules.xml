@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Desktop-flutter-app-android.iml" filepath="$PROJECT_DIR$/Desktop-flutter-app-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/color-picker/color-picker.iml" filepath="$PROJECT_DIR$/color-picker/color-picker.iml" />
       <module fileurl="file://$PROJECT_DIR$/flutter-app-android.iml" filepath="$PROJECT_DIR$/flutter-app-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/flutter-app-android-app.iml" filepath="$PROJECT_DIR$/app/flutter-app-android-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/color-picker/flutter-app-android-color-picker.iml" filepath="$PROJECT_DIR$/color-picker/flutter-app-android-color-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melodysmart-module-android/flutter-app-android-melodysmart-module-android.iml" filepath="$PROJECT_DIR$/melodysmart-module-android/flutter-app-android-melodysmart-module-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/volley-createlab-module-android/flutter-app-android-volley-createlab-module-android.iml" filepath="$PROJECT_DIR$/volley-createlab-module-android/flutter-app-android-volley-createlab-module-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/melodysmart-module-android/melodysmart-module-android.iml" filepath="$PROJECT_DIR$/melodysmart-module-android/melodysmart-module-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/volley-createlab-module-android/volley-createlab-module-android.iml" filepath="$PROJECT_DIR$/volley-createlab-module-android/volley-createlab-module-android.iml" />
     </modules>
