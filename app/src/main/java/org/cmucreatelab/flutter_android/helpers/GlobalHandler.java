@@ -22,7 +22,6 @@ public class GlobalHandler {
     public EmailHandler emailHandler;
     public DataLoggingHandler dataLoggingHandler;
     public HttpRequestHandler httpRequestHandler;
-    private boolean voicePromptsActivated = false;
 
     // Singleton Implementation
 
@@ -45,14 +44,5 @@ public class GlobalHandler {
         this.emailHandler = new EmailHandler();
         this.dataLoggingHandler = new DataLoggingHandler(appContext);
         this.httpRequestHandler = new HttpRequestHandler(this);
-    }
-
-    public boolean isVoicePromptsActivated() {
-        return voicePromptsActivated;
-    }
-
-
-    public void setVoicePromptsActivatedState(boolean state) {
-        voicePromptsActivated = state;
     }
 }

@@ -13,10 +13,12 @@ import org.cmucreatelab.flutter_android.activities.AppLandingActivity;
  *
  * An error dialog that displays when the flutter is unable to connect or is
  * disconnected from the tablet.
- *
  */
 
 public class UnableToConnectFlutterDialog extends ErrorDialog {
+
+    private FlutterIssueType flutterIssueType;
+
 
     public static UnableToConnectFlutterDialog newInstance(FlutterIssueType flutterIssueType) {
         UnableToConnectFlutterDialog unableToConnectFlutterDialog = new UnableToConnectFlutterDialog();
@@ -26,8 +28,7 @@ public class UnableToConnectFlutterDialog extends ErrorDialog {
         args.putSerializable(ERROR_IMAGE_KEY, R.drawable.error_unable_to_connect);
         args.putSerializable(BUTTON_TEXT_KEY, R.string.not_connected_button);
 
-        switch (flutterIssueType)
-        {
+        switch (flutterIssueType) {
             case TIMEOUT_DISCONNECTED:
             case INDETERMINATE:
                 args.putSerializable(ERROR_TEXT_KEY, R.string.disconnected_message);
@@ -37,12 +38,32 @@ public class UnableToConnectFlutterDialog extends ErrorDialog {
                 break;
         }
 
+        unableToConnectFlutterDialog.flutterIssueType = flutterIssueType;
+
         unableToConnectFlutterDialog.setArguments(args);
 
         return unableToConnectFlutterDialog;
     }
 
+
+    @Override
+    public void playAudio() {
+        switch (flutterIssueType) {
+            case TIMEOUT_DISCONNECTED:
+            case INDETERMINATE:
+                flutterAudioPlayer.addAudio(R.raw.a_37);
+                break;
+            case UNKNOWN_NOT_CONNECTED:
+                flutterAudioPlayer.addAudio(R.raw.a_35);
+                break;
+        }
+
+        flutterAudioPlayer.playAudio();
+    }
+
+
     public void onClickDismiss() {
+        super.onClickDismiss();
         Intent intent = new Intent(getActivity(), AppLandingActivity.class);
         startActivity(intent);
         getActivity().finish();

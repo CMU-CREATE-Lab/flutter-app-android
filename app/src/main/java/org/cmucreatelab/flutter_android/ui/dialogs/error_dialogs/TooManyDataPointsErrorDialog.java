@@ -12,10 +12,10 @@ import java.io.Serializable;
  * TooManyDataPointsErrorDialog
  *
  * An error dialog that shows up when a user tries to record a log with more than 200 points.
- *
  */
 public class TooManyDataPointsErrorDialog extends ErrorConfirmationDialog {
     static DismissWarningListener dismissAndCancelWarningListener;
+
 
     public static TooManyDataPointsErrorDialog newInstance(DismissWarningListener dismissWarningListener) {
         TooManyDataPointsErrorDialog tooManyDataPointsErrorDialog = new TooManyDataPointsErrorDialog();
@@ -32,13 +32,17 @@ public class TooManyDataPointsErrorDialog extends ErrorConfirmationDialog {
         return tooManyDataPointsErrorDialog;
     }
 
+
     public void onClickConfirm() {
+        super.onClickConfirm();
         dismissAndCancelWarningListener.onOkButton();
         dismiss();
     }
 
+
     public void onClickCancel() {
-        this.dismiss();
+        super.onClickCancel();
+        dismiss();
     }
 
 

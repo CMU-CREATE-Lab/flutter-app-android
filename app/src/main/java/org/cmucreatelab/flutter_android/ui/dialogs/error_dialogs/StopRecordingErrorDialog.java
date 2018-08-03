@@ -27,14 +27,16 @@ public class StopRecordingErrorDialog extends ErrorConfirmationDialog {
         return stopRecordingErrorDialog;
     }
 
-    public void onClickConfirm()
-    {
+
+    public void onClickConfirm() {
+        super.onClickConfirm();
         GlobalHandler.getInstance(getActivity()).dataLoggingHandler.stopRecording();
-        this.dismiss();
+        dismiss();
     }
 
-    public void onClickCancel()
-    {
-        this.dismiss();
+
+    public void onClickCancel() {
+        super.onClickCancel();
+        dismiss();
     }
 }

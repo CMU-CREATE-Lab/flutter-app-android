@@ -13,9 +13,6 @@ import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
-
-import java.io.Serializable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,6 +35,7 @@ public abstract class ErrorDialog extends BaseResizableDialog {
     protected int errorImage;
     protected View currrentView;
 
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
         super.onCreateDialog(savedInstances);
@@ -46,8 +44,8 @@ public abstract class ErrorDialog extends BaseResizableDialog {
         errorImage = getArguments().getInt(ERROR_IMAGE_KEY);
         try {
             buttonText = getString(getArguments().getInt(BUTTON_TEXT_KEY));
-        } catch (Resources.NotFoundException e)
-        {
+        }
+        catch (Resources.NotFoundException e) {
             buttonText = null;
         }
 
@@ -65,16 +63,26 @@ public abstract class ErrorDialog extends BaseResizableDialog {
         view.findViewById(R.id.horizontal_two_button_container).setVisibility(View.GONE);
 
         Button buttonOkOne = (Button) view.findViewById(R.id.button_ok_one);
-        if (buttonText != null)
+        if (buttonText != null) {
             buttonOkOne.setText(buttonText);
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
+        playAudio();
         return builder.create();
     }
 
+
+    public void playAudio() {
+        //Nothing in abstract base class; to be overridden
+    }
+
+
     @OnClick(R.id.button_ok_one)
-    public abstract void onClickDismiss();
+    public void onClickDismiss() {
+        flutterAudioPlayer.stop();
+    }
 }
 

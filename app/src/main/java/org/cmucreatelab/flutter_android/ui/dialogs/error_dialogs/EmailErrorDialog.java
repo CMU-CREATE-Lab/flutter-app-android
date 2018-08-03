@@ -35,10 +35,18 @@ public class EmailErrorDialog extends ErrorDialog {
         return emailErrorDialog;
     }
 
-    public void onClickDismiss()
-    {
+    @Override
+    public void playAudio() {
+        flutterAudioPlayer.addAudio(R.raw.a_34);
+        flutterAudioPlayer.playAudio();
+    }
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         dismiss();
     }
+
 
     public enum EmailErrorType {
         GENERAL, NO_EMAIL_APP

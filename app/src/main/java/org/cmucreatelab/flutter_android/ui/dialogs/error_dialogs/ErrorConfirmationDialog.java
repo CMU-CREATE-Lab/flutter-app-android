@@ -34,6 +34,7 @@ public abstract class ErrorConfirmationDialog extends BaseResizableDialog {
     private String errorTitle, errorText, buttonText;
     private int errorImage;
 
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstances) {
         errorTitle = getString(getArguments().getInt(ERROR_TITLE_KEY));
@@ -41,8 +42,8 @@ public abstract class ErrorConfirmationDialog extends BaseResizableDialog {
         errorImage = getArguments().getInt(ERROR_IMAGE_KEY);
         try {
             buttonText = getString(getArguments().getInt(BUTTON_TEXT_KEY));
-        } catch (Resources.NotFoundException e)
-        {
+        }
+        catch (Resources.NotFoundException e) {
             buttonText = null;
         }
 
@@ -59,8 +60,9 @@ public abstract class ErrorConfirmationDialog extends BaseResizableDialog {
         buttonOkOne.setVisibility(View.GONE);
 
         Button buttonOkTwo = (Button) view.findViewById(R.id.button_ok_two);
-        if (buttonText != null)
+        if (buttonText != null) {
             buttonOkTwo.setText(buttonText);
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
@@ -68,10 +70,16 @@ public abstract class ErrorConfirmationDialog extends BaseResizableDialog {
         return builder.create();
     }
 
+
     @OnClick(R.id.button_ok_two)
-    public abstract void onClickConfirm();
+    public void onClickConfirm() {
+        flutterAudioPlayer.stop();
+    }
+
 
     @OnClick(R.id.button_cancel)
-    public abstract void onClickCancel();
+    public void onClickCancel() {
+        flutterAudioPlayer.stop();
+    }
 }
 

@@ -95,7 +95,7 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
         updateViewWithOptions();
 
-        updateTextViews(view);
+        updateTextAndAudio(view);
 
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -119,11 +119,14 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
     }
 
 
-    private void updateTextViews(View view) {
+    private void updateTextAndAudio(View view) {
         // views
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
         ((TextView) view.findViewById(R.id.text_set_pitch)).setText(getPositionPrompt());
+
+        flutterAudioPlayer.addAudio(R.raw.a_21);
+        flutterAudioPlayer.playAudio();
     }
 
 

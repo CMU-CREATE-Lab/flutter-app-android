@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ServoWizard;
 
 import butterknife.OnClick;
 
@@ -47,7 +46,7 @@ public class BaseResizableDialogWizard extends BaseResizableDialog {
 
     @OnClick(R.id.button_close)
     public void onClickClose() {
-        audioPlayer.stop();
+        flutterAudioPlayer.stop();
         wizard.changeDialog(null);
     }
 }

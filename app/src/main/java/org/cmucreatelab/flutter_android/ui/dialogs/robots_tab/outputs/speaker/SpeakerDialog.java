@@ -117,6 +117,9 @@ public class SpeakerDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
 
+        flutterAudioPlayer.addAudio(R.raw.a_09);
+        flutterAudioPlayer.playAudio();
+
         // clone old object
         speaker = Speaker.newInstance((Speaker) getArguments().getSerializable(Speaker.SPEAKER_KEY));
         stateHelper = SpeakerStateHelper.newInstance(SpeakerStateHelper.TabType.VOLUME, speaker);

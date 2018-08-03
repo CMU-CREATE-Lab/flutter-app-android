@@ -26,8 +26,9 @@ public class LargeScreenErrorDialog extends ErrorDialog {
 
         return largeScreenErrorDialog;
     }
-    public void onClickDismiss()
-    {
+
+
+    public void onClickDismiss() {
         getActivity().finish();
     }
 }

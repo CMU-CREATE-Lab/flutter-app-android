@@ -10,7 +10,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.color_picker.dialog.ColorPickerDialogFragment;
@@ -87,10 +86,10 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
             return;
         }
         if (currentlySelected != null && currentlySelected.imageView != -1) {
-            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(0);
+            dialogView.findViewById(currentlySelected.imageView).setBackgroundResource(0);
         }
         this.currentlySelected = drawableColor;
-        ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(R.drawable.rectangle_green_border);
+        dialogView.findViewById(currentlySelected.imageView).setBackgroundResource(R.drawable.rectangle_green_border);
 
         finalRGB = Constants.COLOR_PICKER_FLUTTER_RGB.get(currentlySelected.color);
         frameFinalColor.setBackgroundColor(currentlySelected.color);
@@ -98,7 +97,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
 
     private void selectCustomColor(int color) {
         if (currentlySelected != null && currentlySelected.imageView != -1) {
-            ((ImageView) dialogView.findViewById(currentlySelected.imageView)).setBackgroundResource(0);
+            dialogView.findViewById(currentlySelected.imageView).setBackgroundResource(0);
         }
         this.currentlySelected = new DrawableColor(color, -1, -1, -1);
 
@@ -137,6 +136,9 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
 
         TextView textTitle = (TextView) view.findViewById(R.id.text_output_title);
         textTitle.setText(R.string.choose_color);
+
+        flutterAudioPlayer.addAudio(R.raw.a_11);
+        flutterAudioPlayer.playAudio();
 
         return builder.create();
     }

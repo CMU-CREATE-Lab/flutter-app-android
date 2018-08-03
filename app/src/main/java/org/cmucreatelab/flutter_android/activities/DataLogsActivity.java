@@ -38,7 +38,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.OpenLogState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.ResumeState;
 import org.cmucreatelab.flutter_android.helpers.datalogging.SaveToKindleState;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSamplePresetDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterPresetDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.DataLogErrorDialog;
@@ -50,7 +50,6 @@ import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.OpenLogDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.RecordingWarningDataDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.SaveToKindleDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSampleDialog;
 import org.cmucreatelab.flutter_android.ui.relativelayout.StatsRelativeLayout;
 
 import java.io.Serializable;
@@ -315,7 +314,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
                 dataLogsUpdateHelper.registerStateAndUpdatePoints(new OpenLogState(instance));
             } else {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_OPEN);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.NONE_AVAILABLE_OPEN);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -330,7 +329,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (workingDataSet == null) {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.MUST_HAVE_SELECTED);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.MUST_HAVE_SELECTED);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
                 NoWifiDialog noWifiDialog = NoWifiDialog.newInstance();
@@ -354,7 +353,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             if (dataLogsUpdateHelper.getDataSetOnFlutter() != null || dataLogsUpdateHelper.getDataSetsOnDevice().length > 0) {
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
             } else {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_CLEAN_UP);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.NONE_AVAILABLE_CLEAN_UP);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -385,10 +384,10 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                             );
                             recordingWarningDataDialog.show(getSupportFragmentManager(), "tag");
                         } else {
-                            FlutterSamplePresetDialog flutterSamplePresetDialog = FlutterSamplePresetDialog.newInstance(
+                            FlutterPresetDialog flutterPresetDialog = FlutterPresetDialog.newInstance(
                                     new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.DATA_LOGS_TAB, false
                             );
-                            flutterSamplePresetDialog.show(getSupportFragmentManager(), "tag");
+                            flutterPresetDialog.show(getSupportFragmentManager(), "tag");
                         }
                     }
                 });

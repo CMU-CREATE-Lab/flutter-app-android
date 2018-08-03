@@ -29,9 +29,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.BluetoothErrorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.EmailErrorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.LargeScreenErrorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnsupportedBleErrorDialog;
 
 import java.util.Timer;
@@ -184,8 +182,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             @Override
                             public void run() {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
-                                audioPlayer.addAudio(R.raw.a_03);
-                                audioPlayer.playAudio();
+//                                flutterAudioPlayer.addAudio(R.raw.a_03);
+//                                flutterAudioPlayer.playAudio();
                             }
                         });
                     }
@@ -271,8 +269,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
 
-        audioPlayer.addAudio(R.raw.a_01);
-        audioPlayer.playAudio();
+        flutterAudioPlayer.addAudio(R.raw.a_01);
+        flutterAudioPlayer.playAudio();
 
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
 
@@ -416,8 +414,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
-        audioPlayer.addAudio(R.raw.a_02);
-        audioPlayer.playAudio();
+        flutterAudioPlayer.addAudio(R.raw.a_02);
+        flutterAudioPlayer.playAudio();
         scanForDevice(true);
         if (noFlutterFoundTimer != null) {
             noFlutterFoundTimer.cancel();

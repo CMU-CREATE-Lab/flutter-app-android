@@ -95,6 +95,10 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         curentPosition.setText(String.valueOf(finalPosition) + (char) 0x00B0);
         updatePointer();
 
+        flutterAudioPlayer.addAudio(R.raw.a_08);
+
+        flutterAudioPlayer.playAudio();
+
         return builder.create();
     }
 

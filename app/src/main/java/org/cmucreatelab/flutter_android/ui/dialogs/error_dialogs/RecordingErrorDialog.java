@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.R;
  * RecordingErrorDialog
  *
  * An error dialog that shows when a user tries to record a second time for data logs.
- *
  */
 
 public class RecordingErrorDialog extends ErrorDialog {
@@ -27,8 +26,16 @@ public class RecordingErrorDialog extends ErrorDialog {
 
         return recordingErrorDialog;
     }
-    public void onClickDismiss()
-    {
+
+    @Override
+    public void playAudio() {
+        flutterAudioPlayer.addAudio(R.raw.a_27);
+        flutterAudioPlayer.playAudio();
+    }
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         this.dismiss();
     }
 }

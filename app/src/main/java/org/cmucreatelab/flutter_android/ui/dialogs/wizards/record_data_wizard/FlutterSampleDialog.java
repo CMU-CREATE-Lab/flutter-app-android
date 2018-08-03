@@ -150,6 +150,9 @@ public class FlutterSampleDialog extends BaseResizableDialog {
         cancel.setOnClickListener(cancelOnClick);
         next.setOnClickListener(nextOnClick);
 
+        flutterAudioPlayer.addAudio(R.raw.a_23);
+        flutterAudioPlayer.playAudio();
+
         return builder.create();
     }
 }

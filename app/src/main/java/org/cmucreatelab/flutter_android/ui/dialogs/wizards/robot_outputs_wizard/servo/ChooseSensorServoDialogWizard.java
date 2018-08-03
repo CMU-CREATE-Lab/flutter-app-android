@@ -54,8 +54,8 @@ public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizar
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
 		((TextView) view.findViewById(R.id.text_sensor_prompt)).setText(getString(R.string.servo_sensor_prompt));
 
-		audioPlayer.addAudio(R.raw.a_07);
-		audioPlayer.playAudio();
+		flutterAudioPlayer.addAudio(R.raw.a_07);
+		flutterAudioPlayer.playAudio();
 	}
 
 

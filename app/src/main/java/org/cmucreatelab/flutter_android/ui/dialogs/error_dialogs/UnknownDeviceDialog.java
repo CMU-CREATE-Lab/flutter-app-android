@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.R;
  * UnknownDeviceDialog
  *
  * An error dialog that shows when an unknown device is connected.
- *
  */
 
 public class UnknownDeviceDialog extends ErrorDialog {
@@ -27,8 +26,10 @@ public class UnknownDeviceDialog extends ErrorDialog {
 
         return unknownDeviceDialog;
     }
-    public void onClickDismiss()
-    {
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         dismiss();
     }
 }

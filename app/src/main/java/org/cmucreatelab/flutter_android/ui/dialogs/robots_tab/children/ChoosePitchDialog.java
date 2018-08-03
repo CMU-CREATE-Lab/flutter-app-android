@@ -216,6 +216,9 @@ public abstract class ChoosePitchDialog extends BaseResizableDialog {
 
         populateViewWithPitch((Integer) getArguments().getSerializable(PITCH_KEY));
 
+        flutterAudioPlayer.addAudio(R.raw.a_21);
+        flutterAudioPlayer.playAudio();
+
         return builder.create();
     }
 

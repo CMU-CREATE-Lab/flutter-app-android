@@ -52,7 +52,8 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.FlutterPro
  *
  * A Dialog that shows the options for creating a link between Led and a Sensor
  */
-public class LedDialog extends BaseOutputDialog implements Serializable, AdvancedSettingsDialog.DialogAdvancedSettingsListener, SensorOutputDialog.DialogSensorListener, RelationshipOutputDialog.DialogRelationshipListener, MaxColorDialog.DialogHighColorListener, MinColorDialog.DialogLowColorListener {
+public class
+LedDialog extends BaseOutputDialog implements Serializable, AdvancedSettingsDialog.DialogAdvancedSettingsListener, SensorOutputDialog.DialogSensorListener, RelationshipOutputDialog.DialogRelationshipListener, MaxColorDialog.DialogHighColorListener, MinColorDialog.DialogLowColorListener {
 
     public View dialogView;
     public ImageView maxColor;
@@ -102,6 +103,9 @@ public class LedDialog extends BaseOutputDialog implements Serializable, Advance
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
+
+        flutterAudioPlayer.addAudio(R.raw.a_09);
+        flutterAudioPlayer.playAudio();
 
         // clone old object
         triColorLed = TriColorLed.newInstance((TriColorLed) getArguments().getSerializable(TriColorLed.LED_KEY));

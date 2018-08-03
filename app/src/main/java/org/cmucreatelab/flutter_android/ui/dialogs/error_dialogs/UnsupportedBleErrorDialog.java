@@ -26,8 +26,9 @@ public class UnsupportedBleErrorDialog extends ErrorDialog {
 
         return unsupportedBleErrorDialog;
     }
-    public void onClickDismiss()
-    {
+
+
+    public void onClickDismiss() {
         getActivity().finish();
     }
 }

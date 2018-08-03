@@ -4,14 +4,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
 
@@ -54,21 +52,25 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
 
         updateWizardState();
 
-        updateTextViews(view);
+        updateTextAndAudio(view);
 
         return builder.create();
     }
 
 
-    private void updateTextViews(View view) {
+    private void updateTextAndAudio(View view) {
         if (speakerType.equals(SpeakerType.VOLUME)) {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
             ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_volume));
+            flutterAudioPlayer.addAudio(R.raw.a_14);
+            flutterAudioPlayer.playAudio();
         } else {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
             ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_pitch));
+            flutterAudioPlayer.addAudio(R.raw.a_18);
+            flutterAudioPlayer.playAudio();
         }
     }
 

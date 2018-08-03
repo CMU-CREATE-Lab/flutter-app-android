@@ -1,6 +1,5 @@
 package org.cmucreatelab.flutter_android.activities.abstract_activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -23,7 +22,7 @@ import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.activities.SensorsActivity;
 import org.cmucreatelab.flutter_android.activities.TutorialsActivity;
 import org.cmucreatelab.flutter_android.classes.Session;
-import org.cmucreatelab.flutter_android.helpers.AudioPlayer;
+import org.cmucreatelab.flutter_android.helpers.FlutterAudioPlayer;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.FlutterStatusDialog;
@@ -45,7 +44,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     @BindView(R.id.switch_voice_prompts)
     Switch voicePromptToggle;
-    protected AudioPlayer audioPlayer;
+    protected FlutterAudioPlayer flutterAudioPlayer;
     private static final String VOICE_PROMPTS_ACTIVATED_KEY = "voice_prompts_activated";
 
 
@@ -103,7 +102,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        audioPlayer.stop();
+        flutterAudioPlayer.stop();
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
         } else {
@@ -115,7 +114,7 @@ public abstract class BaseNavigationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        audioPlayer = AudioPlayer.getInstance(this.getApplicationContext());
+        flutterAudioPlayer = FlutterAudioPlayer.getInstance(this.getApplicationContext());
         Log.d(Constants.LOG_TAG, "onCreate - " + getClass());
     }
 

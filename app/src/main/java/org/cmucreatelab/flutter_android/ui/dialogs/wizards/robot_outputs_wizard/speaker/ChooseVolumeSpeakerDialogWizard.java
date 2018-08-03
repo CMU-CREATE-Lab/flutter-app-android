@@ -129,17 +129,20 @@ public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
 
         updateViewWithOptions();
-        updateTextViews(view);
+        updateTextAndAudio(view);
 
         return builder.create();
     }
 
 
-    private void updateTextViews(View view) {
+    private void updateTextAndAudio(View view) {
         // views
         ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
         ((TextView) view.findViewById(R.id.text_set_volume)).setText(getPositionPrompt());
+
+        flutterAudioPlayer.addAudio(R.raw.a_16);
+        flutterAudioPlayer.playAudio();
     }
 
 

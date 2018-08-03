@@ -21,8 +21,7 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSampleDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterSamplePresetDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.FlutterPresetDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.record_data_wizard.ReviewRecordingDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.ConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.sensors_tab.BlueSensorTypeDialog;
@@ -341,8 +340,8 @@ public class SensorsActivity extends BaseSensorReadingActivity implements Sensor
                     recordingWarningSensorDialog.show(getSupportFragmentManager(), "tag");
                 }
                 else {
-                    FlutterSamplePresetDialog flutterSamplePresetDialog = FlutterSamplePresetDialog.newInstance(new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, false);
-                    flutterSamplePresetDialog.show(getSupportFragmentManager(), "tag");
+                    FlutterPresetDialog flutterPresetDialog = FlutterPresetDialog.newInstance(new DataLogDetails(), instance, Constants.RECORD_DATA_WIZARD_TYPE.SENSORS_TAB, false);
+                    flutterPresetDialog.show(getSupportFragmentManager(), "tag");
                 }
             }
         });

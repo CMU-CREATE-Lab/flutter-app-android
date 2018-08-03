@@ -155,6 +155,9 @@ public class FlutterTimeRecordDialog extends BaseResizableDialog {
         back.setOnClickListener(backOnClick);
         next.setOnClickListener(nextOnClick);
 
+        flutterAudioPlayer.addAudio(R.raw.a_24);
+        flutterAudioPlayer.playAudio();
+
         return builder.create();
     }
 }

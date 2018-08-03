@@ -1,7 +1,6 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo;
 
 import android.app.Dialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -105,6 +104,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
+
+        flutterAudioPlayer.addAudio(R.raw.a_09);
+        flutterAudioPlayer.playAudio();
 
         // clone old object
         servo = Servo.newInstance((Servo) getArguments().getSerializable(Servo.SERVO_KEY));

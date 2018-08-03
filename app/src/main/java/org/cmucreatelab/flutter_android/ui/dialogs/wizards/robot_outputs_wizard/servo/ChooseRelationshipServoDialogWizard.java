@@ -1,35 +1,17 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.cmucreatelab.flutter_android.R;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
-import org.cmucreatelab.flutter_android.classes.relationships.Amplitude;
-import org.cmucreatelab.flutter_android.classes.relationships.Change;
 import org.cmucreatelab.flutter_android.classes.relationships.Constant;
-import org.cmucreatelab.flutter_android.classes.relationships.Cumulative;
-import org.cmucreatelab.flutter_android.classes.relationships.Frequency;
-import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
-import org.cmucreatelab.flutter_android.classes.relationships.Proportional;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
-import org.cmucreatelab.flutter_android.classes.relationships.Switch;
-import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.ChooseRelationshipOutputDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.OutputWizard;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.LOG_TAG;
 
@@ -73,8 +55,8 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
         ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.servo_relationship_prompt));
 
-        audioPlayer.addAudio(R.raw.a_06);
-        audioPlayer.playAudio();
+        flutterAudioPlayer.addAudio(R.raw.a_06);
+        flutterAudioPlayer.playAudio();
 	}
 
 	public void updateWizardState()

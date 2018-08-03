@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.R;
  * NoWifiDialog
  *
  * An error dialog that shows when there is no WiFi for sending a data log.
- *
  */
 
 public class NoWifiDialog extends ErrorDialog {
@@ -27,8 +26,10 @@ public class NoWifiDialog extends ErrorDialog {
 
         return noWifiDialog;
     }
-    public void onClickDismiss()
-    {
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         dismiss();
     }
 }

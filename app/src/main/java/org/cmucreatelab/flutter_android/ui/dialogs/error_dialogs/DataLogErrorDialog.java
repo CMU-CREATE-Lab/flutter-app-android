@@ -13,16 +13,17 @@ import org.cmucreatelab.flutter_android.R;
  */
 
 public class DataLogErrorDialog extends ErrorDialog {
+    private DataLogErrorType dataLogErrorType;
 
-    public static DataLogErrorDialog newInstance(DataLogErrorTypes dataLogErrorTypes) {
+
+    public static DataLogErrorDialog newInstance(DataLogErrorType dataLogErrorType) {
         DataLogErrorDialog dataLogErrorDialog = new DataLogErrorDialog();
         Bundle args = new Bundle();
 
         args.putSerializable(ERROR_TITLE_KEY, R.string.error_data_log_title);
         args.putSerializable(ERROR_IMAGE_KEY, R.drawable.error_data_log);
 
-        switch (dataLogErrorTypes)
-        {
+        switch (dataLogErrorType) {
             case NONE_AVAILABLE_CLEAN_UP:
                 args.putSerializable(ERROR_TEXT_KEY, R.string.no_data_logs_to_clean_up_details);
                 break;
@@ -34,16 +35,34 @@ public class DataLogErrorDialog extends ErrorDialog {
                 break;
         }
 
+        dataLogErrorDialog.dataLogErrorType = dataLogErrorType;
+
         dataLogErrorDialog.setArguments(args);
 
         return dataLogErrorDialog;
     }
-    public void onClickDismiss()
-    {
+
+
+    @Override
+    public void playAudio() {
+        switch (dataLogErrorType) {
+            case MUST_HAVE_SELECTED:
+                flutterAudioPlayer.addAudio(R.raw.a_36);
+                flutterAudioPlayer.playAudio();
+                break;
+        }
+
+        flutterAudioPlayer.playAudio();
+    }
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         this.dismiss();
     }
 
-    public enum DataLogErrorTypes {
+
+    public enum DataLogErrorType {
         MUST_HAVE_SELECTED, NONE_AVAILABLE_CLEAN_UP, NONE_AVAILABLE_OPEN
     }
 }

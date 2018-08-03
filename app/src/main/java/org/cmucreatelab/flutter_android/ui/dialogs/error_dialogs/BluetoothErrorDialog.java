@@ -11,12 +11,12 @@ import org.cmucreatelab.flutter_android.R;
  * BluetoothErrorDialog
  *
  * An error dialog that shows up when Bluetooth is currently disabled.
- *
  */
 
 public class BluetoothErrorDialog extends ErrorDialog {
 
     private static BluetoothAdapter currentBluetoothAdapter;
+
 
     public static BluetoothErrorDialog newInstance(BluetoothAdapter adapter) {
         BluetoothErrorDialog bluetoothErrorDialog = new BluetoothErrorDialog();
@@ -33,8 +33,16 @@ public class BluetoothErrorDialog extends ErrorDialog {
         return bluetoothErrorDialog;
     }
 
-    public void onClickDismiss()
-    {
+
+    @Override
+    public void playAudio() {
+        flutterAudioPlayer.addAudio(R.raw.a_33);
+        flutterAudioPlayer.playAudio();
+    }
+
+
+    public void onClickDismiss() {
+        super.onClickDismiss();
         if (currentBluetoothAdapter.isEnabled()) {
             this.dismiss();
         }

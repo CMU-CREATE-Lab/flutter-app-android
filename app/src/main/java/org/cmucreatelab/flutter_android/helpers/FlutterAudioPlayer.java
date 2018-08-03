@@ -1,11 +1,11 @@
 package org.cmucreatelab.flutter_android.helpers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
@@ -16,19 +16,22 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by Steve on 5/20/2016.
  *
- * AudioPlayer
+ * FlutterAudioPlayer
  *
- * A helper class to simplify playing audio clips.
- *
+ * A helper class to simplify playing audio clips. (Modified from MFM audio player a bit)
  */
-public class AudioPlayer implements MediaPlayer.OnCompletionListener {
+public class FlutterAudioPlayer implements MediaPlayer.OnCompletionListener {
     private Context appContext;
-    private GlobalHandler globalHandler;
     public MediaPlayer mediaPlayer;
     private ConcurrentLinkedQueue<Integer> fileIds;
+    private static FlutterAudioPlayer classInstance;
+    private static final String VOICE_PROMPTS_ACTIVATED_KEY = "voice_prompts_activated";
+
 
     private void playNext() throws IOException {
-        if (globalHandler.isVoicePromptsActivated()) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
+
+        if (preferences.getBoolean(VOICE_PROMPTS_ACTIVATED_KEY, false)) {
             Uri uri = Uri.parse("android.resource://" + appContext.getPackageName() + "/" + fileIds.poll());
             mediaPlayer.reset();
             mediaPlayer.setDataSource(appContext, uri);
@@ -44,17 +47,19 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
     }
 
 
-    private AudioPlayer(Context context) {
+    private FlutterAudioPlayer(Context context) {
         fileIds = new ConcurrentLinkedQueue<>();
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(this);
         appContext = context;
-        globalHandler = GlobalHandler.getInstance(context);
     }
 
 
-    public static AudioPlayer getInstance(Context context) {
-            return new AudioPlayer(context);
+    public static FlutterAudioPlayer getInstance(Context context) {
+        if (classInstance == null) {
+            classInstance = new FlutterAudioPlayer(context);
+        }
+        return classInstance;
     }
 
 
@@ -64,12 +69,13 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
 
 
     public void playAudio() {
-        stop();
+        classInstance.internalStop();
         if (!fileIds.isEmpty() && !mediaPlayer.isPlaying()) {
             try {
-                playNext();
-            } catch (IOException e) {
-                Log.e(Constants.LOG_TAG, "file I/O error in playAudio - AudioPlayer.");
+                classInstance.playNext();
+            }
+            catch (IOException e) {
+                Log.e(Constants.LOG_TAG, "file I/O error in playAudio - FlutterAudioPlayer.");
             }
         }
     }
@@ -82,6 +88,14 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
             mediaPlayer.reset();
         }
     }
+
+    private void internalStop() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+        }
+    }
+
 
 
     public void release() {
@@ -102,8 +116,9 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
         if (!fileIds.isEmpty()) {
             try {
                 playNext();
-            } catch (IOException e) {
-                Log.e(Constants.LOG_TAG, "file I/O error in onCompletion - AudioPlayer.");
+            }
+            catch (IOException e) {
+                Log.e(Constants.LOG_TAG, "file I/O error in onCompletion - FlutterAudioPlayer.");
             }
         }
     }
