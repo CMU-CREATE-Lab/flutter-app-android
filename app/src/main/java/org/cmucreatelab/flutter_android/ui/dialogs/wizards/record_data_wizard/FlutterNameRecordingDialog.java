@@ -163,7 +163,7 @@ public class FlutterNameRecordingDialog extends BaseResizableDialog {
         back.setOnClickListener(backOnClick);
         next.setOnClickListener(nextOnClick);
 
-        flutterAudioPlayer.addAudio(R.raw.a_25);
+        flutterAudioPlayer.addAudio(R.raw.audio_25);
         flutterAudioPlayer.playAudio();
 
         return builder.create();

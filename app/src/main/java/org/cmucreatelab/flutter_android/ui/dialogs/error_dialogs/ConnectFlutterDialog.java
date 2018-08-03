@@ -47,7 +47,7 @@ public class ConnectFlutterDialog extends ErrorDialog {
 
     @Override
     public void playAudio() {
-        flutterAudioPlayer.addAudio(R.raw.a_04);
+        flutterAudioPlayer.addAudio(R.raw.audio_04);
         flutterAudioPlayer.playAudio();
     }
 

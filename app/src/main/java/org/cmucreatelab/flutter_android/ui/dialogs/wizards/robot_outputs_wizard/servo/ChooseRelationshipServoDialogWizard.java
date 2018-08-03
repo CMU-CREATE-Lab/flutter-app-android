@@ -55,7 +55,7 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
 		((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.servo_icon);
         ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.servo_relationship_prompt));
 
-        flutterAudioPlayer.addAudio(R.raw.a_06);
+        flutterAudioPlayer.addAudio(R.raw.audio_06);
         flutterAudioPlayer.playAudio();
 	}
 

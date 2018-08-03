@@ -47,7 +47,7 @@ public class DataLogErrorDialog extends ErrorDialog {
     public void playAudio() {
         switch (dataLogErrorType) {
             case MUST_HAVE_SELECTED:
-                flutterAudioPlayer.addAudio(R.raw.a_36);
+                flutterAudioPlayer.addAudio(R.raw.audio_36);
                 flutterAudioPlayer.playAudio();
                 break;
         }

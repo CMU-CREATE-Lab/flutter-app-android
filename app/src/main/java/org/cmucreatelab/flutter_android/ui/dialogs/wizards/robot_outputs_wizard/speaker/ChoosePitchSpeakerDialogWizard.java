@@ -125,7 +125,7 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
         ((TextView) view.findViewById(R.id.text_set_pitch)).setText(getPositionPrompt());
 
-        flutterAudioPlayer.addAudio(R.raw.a_21);
+        flutterAudioPlayer.addAudio(R.raw.audio_21);
         flutterAudioPlayer.playAudio();
     }
 

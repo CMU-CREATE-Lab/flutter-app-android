@@ -171,9 +171,9 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         ((TextView) view.findViewById(R.id.text_set_position)).setText(getPositionPrompt());
 
         if (wizardState.relationshipType instanceof Constant)
-            flutterAudioPlayer.addAudio(R.raw.a_10);
+            flutterAudioPlayer.addAudio(R.raw.audio_10);
         else
-            flutterAudioPlayer.addAudio(R.raw.a_08);
+            flutterAudioPlayer.addAudio(R.raw.audio_08);
 
         flutterAudioPlayer.playAudio();
     }

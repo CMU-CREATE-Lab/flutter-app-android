@@ -182,7 +182,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
                             @Override
                             public void run() {
                                 findViewById(R.id.layout_timed_prompt).setVisibility(View.VISIBLE);
-//                                flutterAudioPlayer.addAudio(R.raw.a_03);
+//                                flutterAudioPlayer.addAudio(R.raw.audio_03);
 //                                flutterAudioPlayer.playAudio();
                             }
                         });
@@ -269,7 +269,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
 
-        flutterAudioPlayer.addAudio(R.raw.a_01);
+        flutterAudioPlayer.addAudio(R.raw.audio_01);
         flutterAudioPlayer.playAudio();
 
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
@@ -414,7 +414,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @OnClick(R.id.button_scan)
     public void onClickScan() {
         Log.d(Constants.LOG_TAG, "onClickScan");
-        flutterAudioPlayer.addAudio(R.raw.a_02);
+        flutterAudioPlayer.addAudio(R.raw.audio_02);
         flutterAudioPlayer.playAudio();
         scanForDevice(true);
         if (noFlutterFoundTimer != null) {

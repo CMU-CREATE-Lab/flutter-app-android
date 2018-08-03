@@ -137,7 +137,7 @@ public abstract class ChooseColorDialog extends BaseResizableDialog implements C
         TextView textTitle = (TextView) view.findViewById(R.id.text_output_title);
         textTitle.setText(R.string.choose_color);
 
-        flutterAudioPlayer.addAudio(R.raw.a_11);
+        flutterAudioPlayer.addAudio(R.raw.audio_11);
         flutterAudioPlayer.playAudio();
 
         return builder.create();

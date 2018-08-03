@@ -36,7 +36,7 @@ public class BluetoothErrorDialog extends ErrorDialog {
 
     @Override
     public void playAudio() {
-        flutterAudioPlayer.addAudio(R.raw.a_33);
+        flutterAudioPlayer.addAudio(R.raw.audio_33);
         flutterAudioPlayer.playAudio();
     }
 

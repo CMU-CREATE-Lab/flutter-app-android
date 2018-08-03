@@ -105,7 +105,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         Log.d(Constants.LOG_TAG, "onCreateDialog");
         super.onCreateDialog(savedInstanceState);
 
-        flutterAudioPlayer.addAudio(R.raw.a_09);
+        flutterAudioPlayer.addAudio(R.raw.audio_09);
         flutterAudioPlayer.playAudio();
 
         // clone old object

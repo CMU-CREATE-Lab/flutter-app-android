@@ -81,7 +81,7 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog {
         view.findViewById(R.id.link_buttons_wizard).setVisibility(View.GONE);
         view.findViewById(R.id.text_set_volume).setVisibility(View.GONE);
 
-        flutterAudioPlayer.addAudio(R.raw.a_16);
+        flutterAudioPlayer.addAudio(R.raw.audio_16);
         flutterAudioPlayer.playAudio();
 
         return builder.create();

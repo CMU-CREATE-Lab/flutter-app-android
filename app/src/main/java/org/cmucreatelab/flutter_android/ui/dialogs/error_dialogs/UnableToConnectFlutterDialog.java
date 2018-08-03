@@ -51,10 +51,10 @@ public class UnableToConnectFlutterDialog extends ErrorDialog {
         switch (flutterIssueType) {
             case TIMEOUT_DISCONNECTED:
             case INDETERMINATE:
-                flutterAudioPlayer.addAudio(R.raw.a_37);
+                flutterAudioPlayer.addAudio(R.raw.audio_37);
                 break;
             case UNKNOWN_NOT_CONNECTED:
-                flutterAudioPlayer.addAudio(R.raw.a_35);
+                flutterAudioPlayer.addAudio(R.raw.audio_35);
                 break;
         }
 

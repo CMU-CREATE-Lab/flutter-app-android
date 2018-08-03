@@ -29,7 +29,7 @@ public class RecordingErrorDialog extends ErrorDialog {
 
     @Override
     public void playAudio() {
-        flutterAudioPlayer.addAudio(R.raw.a_27);
+        flutterAudioPlayer.addAudio(R.raw.audio_27);
         flutterAudioPlayer.playAudio();
     }
 

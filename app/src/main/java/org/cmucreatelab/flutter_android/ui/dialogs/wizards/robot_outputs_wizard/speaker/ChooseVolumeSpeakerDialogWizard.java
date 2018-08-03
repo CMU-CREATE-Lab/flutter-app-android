@@ -141,7 +141,7 @@ public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
         ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
         ((TextView) view.findViewById(R.id.text_set_volume)).setText(getPositionPrompt());
 
-        flutterAudioPlayer.addAudio(R.raw.a_16);
+        flutterAudioPlayer.addAudio(R.raw.audio_16);
         flutterAudioPlayer.playAudio();
     }
 

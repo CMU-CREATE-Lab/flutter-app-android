@@ -125,7 +125,7 @@ public class FlutterPresetDialog extends BaseResizableDialog {
 
         ButterKnife.bind(this, view);
 
-        flutterAudioPlayer.addAudio(R.raw.a_22);
+        flutterAudioPlayer.addAudio(R.raw.audio_22);
         flutterAudioPlayer.playAudio();
 
         return builder.create();

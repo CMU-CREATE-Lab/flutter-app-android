@@ -37,7 +37,7 @@ public class EmailErrorDialog extends ErrorDialog {
 
     @Override
     public void playAudio() {
-        flutterAudioPlayer.addAudio(R.raw.a_34);
+        flutterAudioPlayer.addAudio(R.raw.audio_34);
         flutterAudioPlayer.playAudio();
     }
 

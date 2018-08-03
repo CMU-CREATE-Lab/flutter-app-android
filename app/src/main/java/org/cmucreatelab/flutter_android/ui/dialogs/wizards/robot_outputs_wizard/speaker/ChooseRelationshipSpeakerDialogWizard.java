@@ -82,13 +82,13 @@ public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOut
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
             ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.volume_speaker_relationship_prompt));
-            flutterAudioPlayer.addAudio(R.raw.a_15);
+            flutterAudioPlayer.addAudio(R.raw.audio_15);
             flutterAudioPlayer.playAudio();
         } else {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
             ((TextView) view.findViewById(R.id.text_relationship_prompt)).setText(getString(R.string.pitch_speaker_relationship_prompt));
-            flutterAudioPlayer.addAudio(R.raw.a_19);
+            flutterAudioPlayer.addAudio(R.raw.audio_19);
             flutterAudioPlayer.playAudio();
         }
 

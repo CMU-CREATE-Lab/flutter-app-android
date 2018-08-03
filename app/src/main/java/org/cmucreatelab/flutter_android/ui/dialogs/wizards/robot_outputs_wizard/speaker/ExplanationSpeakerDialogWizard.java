@@ -63,13 +63,13 @@ public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_volume_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_volume_high);
             ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_volume));
-            flutterAudioPlayer.addAudio(R.raw.a_14);
+            flutterAudioPlayer.addAudio(R.raw.audio_14);
             flutterAudioPlayer.playAudio();
         } else {
             ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.set_up_pitch_speaker));
             ((ImageView) view.findViewById(R.id.text_output_title_icon)).setImageResource(R.drawable.link_icon_pitch);
             ((TextView) view.findViewById(R.id.text_speaker_explanation)).setText(getString(R.string.create_link_pitch));
-            flutterAudioPlayer.addAudio(R.raw.a_18);
+            flutterAudioPlayer.addAudio(R.raw.audio_18);
             flutterAudioPlayer.playAudio();
         }
     }
