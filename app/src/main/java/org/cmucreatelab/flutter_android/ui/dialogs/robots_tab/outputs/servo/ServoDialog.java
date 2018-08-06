@@ -2,6 +2,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.servo;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
@@ -26,6 +28,7 @@ import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.classes.settings.Settings;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
+import org.cmucreatelab.flutter_android.helpers.LayeringAnimation;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children.AdvancedSettingsDialog;
@@ -56,6 +59,8 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         RelationshipOutputDialog.DialogRelationshipListener,
         DialogMaxPositionListener,
         MinPositionDialog.DialogMinPositionListener {
+    private LinearLayout left;
+    private RelativeLayout middle, right;
 
     public View dialogView;
     public LinearLayout linkedSensor,minPosLayout;
@@ -99,6 +104,7 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
 
         return servoDialog;
     }
+	LayeringAnimation layeringAnimation;
 
 
     @Override
@@ -128,6 +134,9 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         blinkAnimation.setRepeatCount(Animation.INFINITE);
         blinkAnimation.setRepeatMode(Animation.REVERSE);
 
+        left = (LinearLayout) view.findViewById(R.id.linear_left);
+        middle = (RelativeLayout) view.findViewById(R.id.linear_middle);
+		layeringAnimation = new LayeringAnimation(left, middle);
         updateViews();
         return builder.create();
     }
@@ -166,13 +175,18 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         this.dismiss();
     }
 
+	boolean state = false;
 
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
 
-        DialogFragment dialog = AdvancedSettingsDialog.newInstance(this, servo);
-        dialog.show(this.getFragmentManager(), "tag");
+        if (!state) {
+            layeringAnimation.showLeftView();
+        } else {
+            layeringAnimation.hideLeftView();
+        }
+        state = !state;
     }
 
     @OnClick(R.id.button_close)
@@ -337,4 +351,11 @@ public class ServoDialog extends BaseOutputDialog implements Serializable,
         public void onServoLinkListener(MelodySmartMessage message);
     }
 
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		getDialog().getWindow().setLayout(convertDpToPx(800), ViewGroup.LayoutParams.WRAP_CONTENT);
+	}
 }

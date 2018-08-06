@@ -4,7 +4,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg">
 
+    <RelativeLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_middle"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/dialog_bg">
+
     <include android:id="@+id/include_toolbar_dialog"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
         layout="@layout/toolbar_outputs"/>
 
     <RelativeLayout
@@ -16,11 +26,13 @@
         android:layout_marginEnd="50dp">
 
         <include android:id="@+id/include_layout"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
             layout="@layout/list_output_dialog"/>
 
         <LinearLayout
             android:id="@+id/linear_set_min_pos"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/include_layout"
@@ -90,7 +102,7 @@
 
         <LinearLayout
             android:id="@+id/linear_set_max_pos"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@id/linear_set_min_pos"
@@ -162,7 +174,105 @@
 
     <include layout="@layout/link_buttons"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_below="@id/relative_position_container"/>
 
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_left"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/dialog_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/advanced_settings"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/sensor_settings"/>
+
+            <TextView
+                android:id="@+id/text_max_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <SeekBar
+                android:id="@+id/seekbar_max_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"/>
+
+            <TextView
+                android:id="@+id/text_min_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <SeekBar
+                android:id="@+id/seekbar_min_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"/>
+
+            <TextView
+                android:id="@+id/text_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <SeekBar
+                android:id="@+id/seekbar_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="15"/>
+
+            <TextView
+                android:id="@+id/text_sensor_center_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <SeekBar
+                android:id="@+id/seekbar_sensor_center_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/link_settings"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_constant"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_save_link"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:background="@drawable/round_green_button_bottom"/>
+
+    </LinearLayout>
 </RelativeLayout>
