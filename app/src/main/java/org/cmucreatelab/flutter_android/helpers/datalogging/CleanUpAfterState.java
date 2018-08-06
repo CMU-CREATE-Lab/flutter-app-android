@@ -9,8 +9,11 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * CleanUpAfterState
+ *
+ * Helper class to handle state of the data points after a data log is deleted.
  */
-
 public class CleanUpAfterState extends UpdateDataLogState {
 
     private DataSet deletedDataSet;

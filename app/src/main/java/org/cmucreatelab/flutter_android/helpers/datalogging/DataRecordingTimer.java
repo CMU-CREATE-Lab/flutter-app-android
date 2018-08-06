@@ -5,7 +5,9 @@ import android.os.Handler;
 /**
  * Created by Steve on 3/14/2017.
  *
- * A timer for checking if the data logging recording has finished
+ * DataRecordingTimer
+ *
+ * A timer for checking if the data logging recording has finished.
  */
 public class DataRecordingTimer {
 

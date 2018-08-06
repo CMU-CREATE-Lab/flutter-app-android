@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * HumiditySensor
  *
  * A class representing a humidity sensor.
- *
  */
 public class HumiditySensor extends Sensor {
 

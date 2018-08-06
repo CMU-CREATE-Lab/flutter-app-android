@@ -25,7 +25,6 @@ import butterknife.OnClick;
  * FlutterStatusActivity
  *
  * An activity that shows what Flutter is paired with the app and gives the user the ability to disconnect.
- *
  */
 public class FlutterStatusActivity extends BaseNavigationActivity {
 

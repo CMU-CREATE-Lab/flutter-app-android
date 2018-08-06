@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.R;
  * NamingHandler
  *
  * A class that handles naming flutters.
- *
  */
 public class NamingHandler {
 

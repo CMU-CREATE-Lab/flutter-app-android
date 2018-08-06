@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
  * BlueLed
  *
  * A class that represents a blue LED on the flutter.
- *
  */
 public class BlueLed extends Output {
 

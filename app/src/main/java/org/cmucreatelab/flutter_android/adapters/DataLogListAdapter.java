@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * DataLogListAdapter
  *
  * An adapter to display the data logs in the data log screen.
- *
  */
 public class DataLogListAdapter extends BaseAdapter {
 

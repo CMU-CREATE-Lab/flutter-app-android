@@ -20,7 +20,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  * Settings
  *
  * Abstract class for Settings; number of fields depends on the Relationship type.
- *
  */
 public abstract class Settings {
 

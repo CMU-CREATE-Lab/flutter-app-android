@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * WindSpeedSensor
  *
  * A class representing a wind speed sensor.
- *
  */
 public class AirQualitySensor extends Sensor {
 

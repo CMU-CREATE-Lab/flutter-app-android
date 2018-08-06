@@ -8,6 +8,10 @@ import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.CleanUpLogsDial
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * CleanUpBeforeState
+ *
+ * Helper class to handle state of the data points before a data log is deleted.
  */
 public class CleanUpBeforeState extends UpdateDataLogState {
 

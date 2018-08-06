@@ -8,8 +8,11 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * SaveToKindleState
+ *
+ * A helper class for saving a data log to the kindle.
  */
-
 public class SaveToKindleState extends UpdateDataLogState {
 
     private String dataSetName;

@@ -21,8 +21,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Steve on 12/14/2016.
+ *
+ * DataLoggingHandler
+ *
+ * Handler to update points and to use commands for data logging.
  */
-
 public class DataLoggingHandler {
 
     private static final int MAX_INTERVAL = 65535;

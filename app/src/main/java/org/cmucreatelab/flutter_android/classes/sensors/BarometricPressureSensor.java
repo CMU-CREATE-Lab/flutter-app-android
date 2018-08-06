@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * BarometricPressureSensor
  *
  * A class representing a barometric pressure sensor.
- *
  */
 public class BarometricPressureSensor extends Sensor {
 

@@ -8,7 +8,6 @@ import java.io.Serializable;
  * DataLogDetails
  *
  * A class that stores the details of a data log.
- *
  */
 public class DataLogDetails implements Serializable {
 

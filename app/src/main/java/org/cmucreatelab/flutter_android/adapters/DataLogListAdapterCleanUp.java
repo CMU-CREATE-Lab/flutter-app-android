@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * DataLogListAdapterCleanUp
  *
  * An adapter to display the logs that can be cleaned up.
- *
  */
 public class DataLogListAdapterCleanUp extends BaseAdapter {
 

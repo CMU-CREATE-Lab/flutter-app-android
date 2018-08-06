@@ -13,7 +13,6 @@ import java.util.HashMap;
  * Constants
  *
  * A class that handles global constants that is used throughout the app.
- *
  */
 public final class Constants {
 

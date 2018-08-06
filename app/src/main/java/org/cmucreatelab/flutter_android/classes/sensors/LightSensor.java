@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * LightSensor
  *
  * A class representing a light sensor.
- *
  */
 public class LightSensor extends Sensor {
 

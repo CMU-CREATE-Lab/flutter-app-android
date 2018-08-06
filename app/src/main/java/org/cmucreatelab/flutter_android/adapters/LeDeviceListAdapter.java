@@ -20,7 +20,6 @@ import java.util.HashMap;
  * LeDeviceListAdapter
  *
  * An adapter that handles displaying a various amount of flutters to the AppLandingActivity.
- *
  */
 public class LeDeviceListAdapter extends BaseAdapter {
 

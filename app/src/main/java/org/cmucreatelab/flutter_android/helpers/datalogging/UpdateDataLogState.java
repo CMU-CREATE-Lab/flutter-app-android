@@ -13,9 +13,11 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 /**
  * Created by Steve on 3/13/2017.
  *
- * You must call the super equivalent for everything in this class
+ * UpdateDataLogState
+ *
+ * An abstract class for updating the data log state.
+ * You must call the super equivalent for everything in this class.
  */
-
 public abstract class UpdateDataLogState extends DataRecordingTimer implements DataRecordingTimer.TimeExpireListener, Flutter.PopulatedDataSetListener {
 
     protected GlobalHandler globalHandler;

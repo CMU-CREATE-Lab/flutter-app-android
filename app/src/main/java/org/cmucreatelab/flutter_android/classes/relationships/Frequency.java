@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Frequency
  *
  * A class that represents a frequency relationship.
- *
  */
 public class Frequency implements Relationship {
 

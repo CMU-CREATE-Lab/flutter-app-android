@@ -9,9 +9,10 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FileHandler;
 /**
  * Created by Steve on 3/13/2017.
  *
+ * ResumeState
+ *
  * A class to let the DataLogsActivity know how to react after the data logs have been updated.
  */
-
 public class ResumeState extends UpdateDataLogState {
 
     public  ResumeState(DataLogsActivity dataLogsActivity) {

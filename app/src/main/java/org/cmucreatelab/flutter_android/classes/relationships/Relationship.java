@@ -8,7 +8,6 @@ import java.io.Serializable;
  * Relationship
  *
  * An interface which defines the base type of relationship.
- *
  */
 public interface Relationship extends Serializable {
 

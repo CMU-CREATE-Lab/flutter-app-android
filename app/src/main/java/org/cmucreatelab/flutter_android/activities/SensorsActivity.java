@@ -42,7 +42,6 @@ import butterknife.OnClick;
  * SensorsActivity
  *
  * An activity which handles the Sensors tab on the navigation bar.
- *
  */
 public class SensorsActivity extends BaseSensorReadingActivity implements SensorTypeDialog.DialogSensorTypeListener, ReviewRecordingDialog.DialogRecordListener, DismissDialogListener {
 

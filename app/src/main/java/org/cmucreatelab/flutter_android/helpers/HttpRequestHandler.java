@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley;
  *
  * A class for helping with sending an http request for sending an email through the data log tab.
  */
-
 public class HttpRequestHandler {
 
     private GlobalHandler parent;

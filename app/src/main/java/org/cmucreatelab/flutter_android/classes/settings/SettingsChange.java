@@ -11,8 +11,7 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  *
  * SettingsChange
  *
- * A class that represents the generic settings made with Change relationship
- *
+ * A class that represents the generic settings made with Change relationship.
  */
 public class SettingsChange extends Settings {
 

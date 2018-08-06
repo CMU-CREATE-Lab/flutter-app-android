@@ -16,7 +16,6 @@ import java.util.TreeMap;
  * DataSet
  *
  * A class representing the data as a whole.
- *
  */
 public class DataSet implements Serializable {
 

@@ -37,7 +37,6 @@ import java.util.Map;
  * EmailHandler
  *
  * A class that handles the process of sending an email.
- *
  */
 public class EmailHandler {
 

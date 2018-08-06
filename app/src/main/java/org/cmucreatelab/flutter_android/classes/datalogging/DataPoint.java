@@ -8,7 +8,6 @@ import java.io.Serializable;
  * DataPoint
  *
  * A class that represents one data point for data logging.
- *
  */
 public class DataPoint implements Comparable<DataPoint>, Serializable {
 

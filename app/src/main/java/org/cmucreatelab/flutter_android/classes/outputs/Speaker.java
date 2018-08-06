@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  * Speaker
  *
  * A class that represents the speaker on a flutter.
- *
  */
 public class Speaker implements FlutterOutput {
 

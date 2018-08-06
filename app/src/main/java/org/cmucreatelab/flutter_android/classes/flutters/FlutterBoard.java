@@ -11,7 +11,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * FlutterBoard
  *
  * An abstract class that different versions of flutter boards will inherit from.
- *
  */
 public interface FlutterBoard {
 
