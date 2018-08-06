@@ -300,7 +300,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 
 	//onclick listeners for LEDs
 
-	@OnClick({R.id.frame_led_1, R.id.text_led_1, R.id.image_led_1})
+	@OnClick({R.id.image_led_color_1, R.id.text_led_1, R.id.image_led_1})
 	public void onClickLedOne()
 	{
 		String hex;
@@ -315,7 +315,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 		dialog.show(getFragmentManager(), "tag");
 	}
 
-	@OnClick({R.id.frame_led_2, R.id.text_led_2, R.id.image_led_2})
+	@OnClick({R.id.image_led_color_2, R.id.text_led_2, R.id.image_led_2})
 	public void onClickLedTwo()
 	{
 		String hex;
@@ -331,7 +331,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 	}
 
 
-	@OnClick({R.id.frame_led_3, R.id.text_led_3, R.id.image_led_3})
+	@OnClick({R.id.image_led_color_3, R.id.text_led_3, R.id.image_led_3})
 	public void onClickLedThree()
 	{
 		String hex;
