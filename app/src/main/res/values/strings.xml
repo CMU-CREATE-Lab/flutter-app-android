@@ -213,6 +213,7 @@
     <string name="get_data_log">Get Data Log</string>
     <string name="save_data_log_to_kindle">Save Data Log to Tablet</string>
     <string name="select_a_data_log_details">Must have a data log selected before you can send a data log.</string>
+    <string name="too_much_samples">You are trying to sample too many times in one interval. Please reduce the number of samples you take.</string>
     <string name="done_recording">Your Flutter has finished recording data.</string>
     <string name="over_a_year">Over A Year</string>
     <string name="no_data_logs_to_clean_up_details">There must be data logs available if you want to clean up data logs.</string>

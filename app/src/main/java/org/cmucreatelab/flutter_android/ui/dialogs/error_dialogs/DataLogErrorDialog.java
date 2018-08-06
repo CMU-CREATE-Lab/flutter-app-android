@@ -32,6 +32,9 @@ public class DataLogErrorDialog extends ErrorDialog {
             case MUST_HAVE_SELECTED:
                 args.putSerializable(ERROR_TEXT_KEY, R.string.select_a_data_log_details);
                 break;
+            case TOO_MUCH_SAMPLES:
+                args.putSerializable(ERROR_TEXT_KEY, R.string.too_much_samples);
+                break;
         }
 
         dataLogErrorDialog.setArguments(args);
@@ -44,6 +47,6 @@ public class DataLogErrorDialog extends ErrorDialog {
     }
 
     public enum DataLogErrorTypes {
-        MUST_HAVE_SELECTED, NONE_AVAILABLE_CLEAN_UP, NONE_AVAILABLE_OPEN
+        MUST_HAVE_SELECTED, NONE_AVAILABLE_CLEAN_UP, NONE_AVAILABLE_OPEN, TOO_MUCH_SAMPLES
     }
 }
