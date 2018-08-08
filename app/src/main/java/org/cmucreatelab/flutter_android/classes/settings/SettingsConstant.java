@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * SettingsConstant
  *
  * Represents generic settings with a Constant relationship
- *
  */
 public class SettingsConstant extends Settings {
 

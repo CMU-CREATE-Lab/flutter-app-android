@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * TemperatureSensor
  *
  * A class representing a temperature sensor.
- *
  */
 public class TemperatureSensor extends Sensor {
 

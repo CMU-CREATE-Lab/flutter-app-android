@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * SoilMoistureSensor
  *
  * A class representing a soil moisture sensor.
- *
  */
 public class SoilMoistureSensor extends Sensor {
 

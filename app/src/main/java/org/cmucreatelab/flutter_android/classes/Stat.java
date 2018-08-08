@@ -11,9 +11,7 @@ import org.cmucreatelab.flutter_android.ui.PositionTextView;
  * Stat
  *
  * A class to represent statistics of the data set for the data logging tab.
- *
  */
-
 public class Stat {
 
     private String statName;

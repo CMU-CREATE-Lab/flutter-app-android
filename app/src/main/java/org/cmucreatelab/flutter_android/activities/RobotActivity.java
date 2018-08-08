@@ -60,9 +60,9 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve.
- * <p>
+ *
  * RobotActivity
- * <p>
+ *
  * An activity where the user can interact with the flutter board.
  */
 public class RobotActivity extends BaseSensorReadingActivity implements ServoDialog.DialogServoListener, LedDialog.DialogLedListener, SpeakerDialog.DialogSpeakerListener, SensorTypeDialog.DialogSensorTypeListener, SimulateSensorsDialog.SimulateSensorsDismissed {

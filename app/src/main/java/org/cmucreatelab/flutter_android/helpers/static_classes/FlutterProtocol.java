@@ -16,9 +16,10 @@ import org.cmucreatelab.flutter_android.classes.sensors.TemperatureSensor;
 /**
  * Created by mike on 1/4/17.
  *
+ * FlutterProtocol
+ *
  * This is based on Josh's document in Google Docs for how to interface with the Flutter board.
  * Serves as an easy reference to constants found in the protocol.
- *
  */
 // TODO @tasota these will be used later for constructing flutter protocol messages
 public final class FlutterProtocol {

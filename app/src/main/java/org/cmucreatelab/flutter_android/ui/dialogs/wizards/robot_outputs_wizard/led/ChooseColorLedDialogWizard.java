@@ -120,15 +120,20 @@ public class ChooseColorLedDialogWizard extends ChooseColorDialog {
 
 
     @OnClick(R.id.button_back)
-    public void onClickBack() {
-        if (this.outputType == OUTPUT_TYPE.MIN) {
+    public void onClickBack()
+    {
+        if (this.outputType == OUTPUT_TYPE.MIN)
+        {
             wizardState.outputsMin = finalRGB;
             wizard.changeDialog(ChooseSensorLedDialogWizard.newInstance(wizard));
-        } else {
+        } else
+        {
             wizardState.outputsMax = finalRGB;
-            if (wizardState.relationshipType instanceof Constant) {
+            if (wizardState.relationshipType instanceof Constant)
+            {
                 wizard.changeDialog(ChooseRelationshipLedDialogWizard.newInstance(wizard));
-            } else {
+            } else
+            {
                 wizard.changeDialog(ChooseColorLedDialogWizard.newInstance(wizard, ChooseColorLedDialogWizard.OUTPUT_TYPE.MIN));
             }
         }

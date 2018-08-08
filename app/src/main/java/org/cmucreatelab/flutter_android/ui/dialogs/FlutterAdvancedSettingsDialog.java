@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by psdev1 on 5/26/2018.
+ * Created by Parv on 5/26/2018.
  *
  * FlutterAdvancedSettingsDialog
  *

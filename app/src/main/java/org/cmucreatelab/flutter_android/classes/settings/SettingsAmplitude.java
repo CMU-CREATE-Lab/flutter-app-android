@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * SettingsAmplitude
  *
  * A class that represents the generic settings made with Amplitude relationship
- *
  */
 public class SettingsAmplitude extends Settings {
 

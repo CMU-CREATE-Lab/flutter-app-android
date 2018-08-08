@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Cumulative
  *
  * A class that represents a cumulative relationship.
- *
  */
 public class Cumulative implements Relationship {
 

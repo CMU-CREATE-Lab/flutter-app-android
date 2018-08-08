@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
  * RedLed
  *
  * A class that represents a red LED on the flutter.
- *
  */
 public class RedLed extends Output {
 

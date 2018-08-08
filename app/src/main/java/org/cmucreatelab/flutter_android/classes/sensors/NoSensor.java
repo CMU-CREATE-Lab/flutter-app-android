@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * NoSensor
  *
  * A class that represents no sensor.
- *
  */
 public class NoSensor extends Sensor {
 

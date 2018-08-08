@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * SettingsProportional
  *
  * A class that represents the generic settings made with Proportional relationship
- *
  */
 public final class SettingsProportional extends Settings {
 

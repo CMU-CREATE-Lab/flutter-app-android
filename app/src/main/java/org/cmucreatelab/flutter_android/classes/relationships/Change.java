@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Change
  *
  * A class that represents a change relationship.
- *
  */
 public class Change implements Relationship {
 

@@ -22,7 +22,6 @@ import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnect
  * FlutterDeviceListener
  *
  * A listener for when the Flutter is connected and disconnected.
- *
  */
 public class FlutterDeviceListener extends DeviceListener {
 

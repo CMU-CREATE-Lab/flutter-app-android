@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.classes.sensors.Sensor;
  * SettingsFrequency
  *
  * A class that represents the generic settings made with Frequency relationship
- *
  */
 public class SettingsFrequency extends Settings {
 

@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Switch
  *
  * A class that represents the Switch relationship.
- *
  */
 public class Switch implements Relationship {
 

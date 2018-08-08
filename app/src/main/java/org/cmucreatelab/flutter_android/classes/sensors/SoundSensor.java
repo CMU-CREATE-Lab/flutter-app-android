@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * SoundSensor
  *
  * A class representing a sound sensor.
- *
  */
 public class SoundSensor extends Sensor {
 

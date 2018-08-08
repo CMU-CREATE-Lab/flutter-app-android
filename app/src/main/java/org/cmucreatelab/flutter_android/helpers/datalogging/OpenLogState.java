@@ -10,8 +10,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.data_logs_tab.OpenLogDialog;
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * OpenLogState
+ *
+ * A class for opening a data log.
  */
-
 public class OpenLogState extends UpdateDataLogState {
 
 

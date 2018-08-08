@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
 import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
+import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.DataLogErrorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.TooManyDataPointsErrorDialog;
 
 import java.io.Serializable;
@@ -241,7 +242,8 @@ public class ReviewRecordingDialog extends BaseResizableDialog implements Serial
         }
         else
         {
-            //TODO: @psdev1 add a dialog if the user wants to sample too many times in an interval
+            DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.TOO_MUCH_SAMPLES);
+            dataLogErrorDialog.show(getFragmentManager(), "tag");
         }
     }
 

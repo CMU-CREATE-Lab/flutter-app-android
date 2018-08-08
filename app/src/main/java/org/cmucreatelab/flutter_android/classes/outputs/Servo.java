@@ -10,7 +10,6 @@ import org.cmucreatelab.flutter_android.classes.settings.Settings;
  * Servo
  *
  * A class that represents a servo on the flutter.
- *
  */
 public class Servo extends Output implements FlutterOutput {
 

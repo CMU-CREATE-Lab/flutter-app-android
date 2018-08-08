@@ -12,7 +12,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.EmailHandler;
  * GlobalHandler
  *
  * A class that gives access to needed elements throughout various activities.
- *
  */
 public class GlobalHandler {
 

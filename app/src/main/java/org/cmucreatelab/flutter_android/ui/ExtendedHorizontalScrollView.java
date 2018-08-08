@@ -6,8 +6,11 @@ import android.widget.HorizontalScrollView;
 
 /**
  * Created by Paul on 4/22/2017.
+ *
+ * ExtendedHorizontalScrollView
+ *
+ *
  */
-
 public class ExtendedHorizontalScrollView extends HorizontalScrollView {
 
     public OnScrollChangedListener mOnScrollChangedListener;

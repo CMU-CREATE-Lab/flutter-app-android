@@ -15,7 +15,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  * Session Handler
  *
  * A class that handles your session after selecting a device on AppLandingActivity
- *
  */
 public class SessionHandler {
 

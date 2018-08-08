@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Proportional
  *
  * A class that represents a proportional relationship.
- *
  */
 public class Proportional implements Relationship {
 

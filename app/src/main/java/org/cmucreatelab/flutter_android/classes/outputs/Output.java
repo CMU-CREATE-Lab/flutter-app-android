@@ -12,7 +12,6 @@ import java.io.Serializable;
  * Output
  *
  * An abstract class that holds a SettingsProportional object to represent the link between input and output
- *
  */
 public abstract class Output implements Serializable {
 

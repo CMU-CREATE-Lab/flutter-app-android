@@ -26,7 +26,6 @@ import java.util.TreeMap;
  * FileHandler
  *
  * A class for managing files to the tablet.
- *
  */
 public class FileHandler {
 

@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
  * Volume
  *
  * A class that represents the volume of the speaker on the flutter.
- *
  */
 public class Volume extends Output implements FlutterOutput {
 

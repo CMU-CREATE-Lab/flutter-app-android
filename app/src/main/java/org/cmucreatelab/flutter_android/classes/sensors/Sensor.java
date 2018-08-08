@@ -8,7 +8,6 @@ import java.io.Serializable;
  * Sensor
  *
  * An abstract class that implements the sensor readings values and the port number.
- *
  */
 public abstract class Sensor implements Serializable {
 

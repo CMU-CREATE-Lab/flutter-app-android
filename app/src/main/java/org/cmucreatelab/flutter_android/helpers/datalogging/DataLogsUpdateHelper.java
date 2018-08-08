@@ -4,8 +4,11 @@ import org.cmucreatelab.flutter_android.classes.datalogging.DataSet;
 
 /**
  * Created by Steve on 6/8/2017.
+ *
+ * DataLogsUpdateHelper
+ *
+ * A class for helping to update data log points.
  */
-
 public class DataLogsUpdateHelper {
 
     private static DataLogsUpdateHelper instance;

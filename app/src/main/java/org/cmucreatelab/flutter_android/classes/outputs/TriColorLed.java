@@ -21,7 +21,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  *
  * TriColorLed
  *
- * A class t
+ * A class that represents a TriColorLed on the flutter.
  */
 public class TriColorLed implements FlutterOutput {
 

@@ -8,7 +8,6 @@ import org.cmucreatelab.flutter_android.R;
  * Amplitude
  *
  * A class that represents an amplitude relationship.
- *
  */
 public class Amplitude implements Relationship {
 

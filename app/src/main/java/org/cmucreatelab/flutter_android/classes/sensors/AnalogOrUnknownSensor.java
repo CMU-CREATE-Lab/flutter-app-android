@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * AnalogOrUnknownSensor
  *
  * A class representing an analog or unknown sensor.
- *
  */
 public class AnalogOrUnknownSensor extends Sensor {
 

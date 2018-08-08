@@ -9,7 +9,6 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.FlutterProtocol;
  * DistanceSensor
  *
  * A class representing a distance sensor.
- *
  */
 public class DistanceSensor extends Sensor {
 

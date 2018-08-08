@@ -23,7 +23,6 @@ import java.util.List;
  * FlutterDataListener
  *
  * A class for listening to data coming from the Flutter.
- *
  */
 public class FlutterDataListener extends DataListener<MelodySmartMessage, MessageQueue<MelodySmartMessage>> {
 

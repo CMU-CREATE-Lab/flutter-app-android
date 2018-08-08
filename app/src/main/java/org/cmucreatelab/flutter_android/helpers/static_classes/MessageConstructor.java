@@ -20,7 +20,6 @@ import org.cmucreatelab.flutter_android.classes.settings.SettingsProportional;
  * MessageConstructor
  *
  * A static class which will generate the strings depending on the output passed into the appropriate methods
- *
  */
 public class MessageConstructor {
 

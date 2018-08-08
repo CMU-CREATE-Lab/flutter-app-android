@@ -27,7 +27,6 @@ import java.util.Arrays;
  * Flutter
  *
  * A class representing the first released FlutterBoard (3 servos, 3 leds, 1 speaker and 3 sensors).
- *
  */
 public class Flutter implements FlutterBoard, DataLoggingHandler.DataSetListener {
 
