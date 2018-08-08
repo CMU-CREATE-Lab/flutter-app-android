@@ -3,14 +3,17 @@ package org.cmucreatelab.flutter_android.ui.dialogs;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.cmucreatelab.android.melodysmart.models.MelodySmartMessage;
 import org.cmucreatelab.flutter_android.R;
@@ -62,6 +65,14 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_flutter_advanced_settings, null);
+
+        TextView advancedSettingsText = ((TextView) view.findViewById(R.id.text_output_title));
+        advancedSettingsText.setText(getString(R.string.advanced_settings));
+        advancedSettingsText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        advancedSettingsText.setTypeface(Typeface.DEFAULT);
+
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AppTheme));
         builder.setView(view);
         ButterKnife.bind(this, view);
@@ -84,6 +95,14 @@ public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
         Dialog dialog = getDialog();
         if (dialog != null)
             dialog.dismiss();
+    }
+
+
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Log.d(Constants.LOG_TAG, "onClickFlutterReset");
+
+        dismiss();
     }
 
 

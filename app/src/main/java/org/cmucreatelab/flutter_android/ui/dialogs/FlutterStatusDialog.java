@@ -82,6 +82,7 @@ public class FlutterStatusDialog extends BaseResizableDialog {
             flutterStatusIcon.setImageResource(R.drawable.flutterdisconnectgraphic);
             flutterConnectDisconnect.setBackgroundResource(R.drawable.round_green_button);
             flutterConnectDisconnect.setText(R.string.connect_flutter);
+            view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
         } else {
             flutterStatusText.setText(R.string.connection_connected);
             flutterStatusText.setTextColor(getResources().getColor(R.color.fluttergreen));
@@ -131,11 +132,14 @@ public class FlutterStatusDialog extends BaseResizableDialog {
     @OnClick(R.id.image_advanced_settings)
     public void onClickAdvancedSettings() {
         Log.d(Constants.LOG_TAG, "onClickAdvancedSettings");
-        GlobalHandler globalHandler = GlobalHandler.getInstance(getActivity().getApplicationContext());
 
-        if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            FlutterAdvancedSettingsDialog.displayDialog(this, 0);
-        }
+        FlutterAdvancedSettingsDialog.displayDialog(this, 0);
     }
 
+    @OnClick(R.id.button_close)
+    public void onClickClose() {
+        Log.d(Constants.LOG_TAG, "onClickClose");
+
+        dismiss();
+    }
 }
