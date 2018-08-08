@@ -1,0 +1,45 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 125px;
+}
+
+.gray_text {
+    color: #4a4a4a;
+}
+
+.nav_text {
+    color: #63bd6b;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.container {
+    border: 1px solid #ccc;
+    padding: 15px;
+}
+
+.alphabet_divider {
+    margin-top: 45px;
+}
+
+
+p {
+    margin: 0;
+}
+
+h3 {
+    margin-top: 45px;
+    margin-bottom: 5px;
+}
+
+p + p {
+    margin-top: 10px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #EEEEEE;
+}
