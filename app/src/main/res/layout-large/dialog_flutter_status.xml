@@ -8,10 +8,7 @@
 
     <include
         android:id="@+id/include_toolbar_dialog"
-        layout="@layout/toolbar_outputs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        layout="@layout/toolbar_outputs" />
 
     <TextView
         android:id="@+id/text_flutter_status"
