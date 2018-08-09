@@ -29,9 +29,7 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.NamingHandler;
 import org.cmucreatelab.flutter_android.ui.ExtendedHorizontalScrollView;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.BluetoothErrorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.EmailErrorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.LargeScreenErrorDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnableToConnectFlutterDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.UnsupportedBleErrorDialog;
 
 import java.util.Timer;
@@ -195,6 +193,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             scanningTextTimer = new Timer();
             scanningTextTimer.scheduleAtFixedRate(new TimerTask() {
                 int count = 0;
+
+
                 @Override
                 public void run() {
                     runOnUiThread(new Runnable() {
@@ -344,8 +344,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
             float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-            int screenSize = getResources().getConfiguration().screenLayout &
-                    Configuration.SCREENLAYOUT_SIZE_MASK;
+            int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
             String toastMsg;
             switch (screenSize) {
                 case Configuration.SCREENLAYOUT_SIZE_LARGE:
@@ -374,13 +373,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             scanForDevice(false);
         }
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
-                    globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
-                }
-            });
+            globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
+            globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
         }
 
         // alert dialog for notifying user large screen is needed
@@ -391,6 +385,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -399,12 +394,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         globalHandler.sessionHandler.dismissProgressDialog();
     }
+
 
     @Optional
     @OnClick(R.id.button_scan)
@@ -451,8 +448,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onBackPressed() {
         // Disable back button for this Activity except for the nav drawer.
-        if (drawerLayout.isDrawerOpen(Gravity.START))
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
+        }
     }
 
 
@@ -481,8 +479,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
-//        Intent intent = new Intent(this, AppLandingActivity.class);
-//        startActivity(intent);
+        //        Intent intent = new Intent(this, AppLandingActivity.class);
+        //        startActivity(intent);
     }
 
 }
