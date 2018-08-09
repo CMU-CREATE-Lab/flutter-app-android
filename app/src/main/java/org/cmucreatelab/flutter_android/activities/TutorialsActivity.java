@@ -45,6 +45,7 @@ public class TutorialsActivity extends BaseNavigationActivity {
         setSupportActionBar(toolbar);
 
         WebView web = (WebView) findViewById(R.id.web_view_tutorials);
+        web.setBackgroundColor(Color.parseColor("#EEEEEE"));
         web.loadUrl("file:///android_asset/tutorials.html");
     }
 

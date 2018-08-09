@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -263,13 +264,23 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
+    private void preloadWebPage()
+    {
+        WebView glossaryWebView = new WebView(getBaseContext());
+        glossaryWebView.loadUrl("file:///android_asset/glossary.html");
+
+        WebView tutorialsWebView = new WebView(getBaseContext());
+        tutorialsWebView.loadUrl("file:///android_asset/tutorials.html");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_landing);
         ButterKnife.bind(this);
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-
+        preloadWebPage();
         // construct toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         // this is checking for if the layout being used is layout-large. if the view is null, we must be using non-large layout
