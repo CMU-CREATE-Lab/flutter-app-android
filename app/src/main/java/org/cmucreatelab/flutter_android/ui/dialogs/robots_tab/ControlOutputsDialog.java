@@ -502,7 +502,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         textViewNotePitch = (TextView) view.findViewById(R.id.text_current_note_pitch);
         finalPitch = getFrequency(0);
         textViewNotePitch.setText(currentNote + " - " + String.valueOf(finalPitch) + " " + getString(R.string.hz));
-        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetOutput(speaker.getVolume(), finalPitch));
+        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetOutput(speaker.getVolume(), 0));
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetOutput(speaker.getPitch(), finalPitch));
 
         //led
