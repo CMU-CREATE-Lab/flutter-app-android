@@ -149,6 +149,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             textViewVolume.setText(String.format("Volume: " + String.valueOf(i)));
+            isVolumeChanged = true;
         }
 
 
@@ -430,12 +431,16 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
             messages.add(MessageConstructor.constructRemoveRelation(speaker.getVolume()));
 
             messages.add(MessageConstructor.constructRelationshipMessage(speaker.getVolume(), speaker.getVolume().getSettings()));
+            Log.i("Changed", "VOLUME");
         } else {
             messages.add(MessageConstructor.constructSetOutput(speaker.getVolume(), 0));
         }
 
-        //always updates volume and pitch as it is always changed in init
+        //always updates pitch as it is always changed in init
         messages.add(MessageConstructor.constructRemoveRelation(speaker.getPitch()));
+
+        messages.add(MessageConstructor.constructRelationshipMessage(speaker.getPitch(), speaker.getPitch().getSettings()));
+        Log.i("Changed", "PITCH");
 
         for (MelodySmartMessage message : messages) {
             globalHandler.melodySmartDeviceHandler.addMessage(message);
@@ -467,7 +472,6 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         seekBarServo1 = (SeekBar) view.findViewById(R.id.seek_servo_1);
         seekBarServo1.setOnSeekBarChangeListener(seekBarServo1Listener);
         seekBarServo1.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
-
 
         seekBarServo2 = (SeekBar) view.findViewById(R.id.seek_servo_2);
         seekBarServo2.setOnSeekBarChangeListener(seekBarServo2Listener);
@@ -502,8 +506,10 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         textViewNotePitch = (TextView) view.findViewById(R.id.text_current_note_pitch);
         finalPitch = getFrequency(0);
         textViewNotePitch.setText(currentNote + " - " + String.valueOf(finalPitch) + " " + getString(R.string.hz));
+        MelodySmartMessage message = MessageConstructor.constructSetOutput(speaker.getPitch(), finalPitch);
+        globalHandler.melodySmartDeviceHandler.addMessage(message);
         globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetOutput(speaker.getVolume(), 0));
-        globalHandler.melodySmartDeviceHandler.addMessage(MessageConstructor.constructSetOutput(speaker.getPitch(), finalPitch));
+
 
         //led
 
@@ -538,7 +544,6 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
     }
 
 
-    //Allows for the color to be set for the swatches
     public LayerDrawable getCustomSwatchWithBorder(String hexColor) {
         LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
 
