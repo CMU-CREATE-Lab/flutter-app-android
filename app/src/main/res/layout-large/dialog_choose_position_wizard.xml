@@ -114,7 +114,8 @@
             android:layout_marginTop="25dp"
             android:max="180"
             android:paddingLeft="2dp"
-            android:paddingRight="2dp" />
+            android:paddingRight="2dp"
+            android:thumb="@drawable/thumb_green" />
 
     </RelativeLayout>
 

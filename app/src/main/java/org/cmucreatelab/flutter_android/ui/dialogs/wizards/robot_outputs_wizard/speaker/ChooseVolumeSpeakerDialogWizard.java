@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -126,6 +128,8 @@ public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
         // grab info
         currentVolume = (TextView) view.findViewById(R.id.text_current_volume);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_volume);
+        seekBarMaxMin.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
 
         updateViewWithOptions();

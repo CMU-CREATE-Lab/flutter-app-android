@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_current_volume"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:padding="5dp"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:padding="5dp"/>
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="2"
         android:layout_gravity="center"
+        android:layout_weight="2"
         android:padding="5dp">
 
         <ImageView
@@ -27,23 +28,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/link_volume"/>
+            android:src="@drawable/link_volume" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/zero"
+            android:layout_alignParentStart="true"
             android:layout_below="@id/image_volume_incline"
             android:padding="5dp"
-            android:layout_alignParentStart="true"/>
+            android:text="@string/zero" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/one_hundred"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/image_volume_incline"
             android:padding="5dp"
-            android:layout_alignParentEnd="true"/>
+            android:text="@string/one_hundred" />
 
     </RelativeLayout>
 
@@ -51,19 +52,20 @@
         android:id="@+id/seek_volume"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:max="100"
-        android:paddingRight="2dp"
+        android:padding="20dp"
         android:paddingLeft="2dp"
-        android:padding="20dp"/>
+        android:paddingRight="2dp"
+        android:thumb="@drawable/thumb_green" />
 
     <Button
+        android:id="@+id/button_set_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_set_volume"
+        android:background="@drawable/round_green_button_bottom"
         android:text="@string/set_volume"
-        android:textColor="@color/white"
-        android:background="@drawable/round_green_button_bottom"/>
+        android:textColor="@color/white" />
 
 </LinearLayout>

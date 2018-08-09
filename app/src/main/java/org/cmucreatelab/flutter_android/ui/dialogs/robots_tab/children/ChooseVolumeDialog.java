@@ -2,6 +2,8 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -70,6 +72,7 @@ public abstract class ChooseVolumeDialog extends BaseResizableDialog {
 
         currentVolume = (TextView) view.findViewById(R.id.text_current_volume);
         seekBarVolume = (SeekBar) view.findViewById(R.id.seek_volume);
+        seekBarVolume.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         seekBarVolume.setOnSeekBarChangeListener(seekBarChangeListener);
         finalVolume = (Integer) getArguments().getSerializable(VOLUME_KEY);
         seekBarVolume.setProgress(finalVolume);

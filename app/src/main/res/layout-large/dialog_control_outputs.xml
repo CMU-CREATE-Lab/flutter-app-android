@@ -143,22 +143,24 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="54dp"
-                android:max="180" />
+                android:max="180"
+                android:thumb="@drawable/thumb_green" />
 
             <SeekBar
                 android:id="@+id/seek_servo_2"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="71dp"
-                android:max="180" />
+                android:layout_marginTop="78dp"
+                android:max="180"
+                android:thumb="@drawable/thumb_green" />
 
             <SeekBar
                 android:id="@+id/seek_servo_3"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="71dp"
-
-                android:max="180" />
+                android:layout_marginTop="78dp"
+                android:max="180"
+                android:thumb="@drawable/thumb_green" />
 
         </LinearLayout>
 
@@ -311,7 +313,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="25dp"
-                android:max="100" />
+                android:max="100"
+                android:thumb="@drawable/thumb_green" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -347,7 +350,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:max="14" />
+                android:max="14"
+                android:thumb="@drawable/thumb_green" />
 
             <LinearLayout
                 android:layout_width="match_parent"

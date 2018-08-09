@@ -3,6 +3,7 @@ package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -155,16 +156,20 @@ public class SimulateSensorsDialog extends DialogFragment {
         ((TextView) view.findViewById(R.id.text_sensor_1_type)).setText(getSensorTypeString(sensors[0]));
         textViewSensor1Value = (TextView) view.findViewById(R.id.text_sensor_1_value);
         seekBarSensor1 = (SeekBar) view.findViewById(R.id.seekbar_sensor_1);
+        seekBarSensor1.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+
 
         ((ImageView) view.findViewById(R.id.image_sensor_2)).setImageDrawable(ContextCompat.getDrawable(getActivity(), sensors[1].getGreenImageId()));
         ((TextView) view.findViewById(R.id.text_sensor_2_type)).setText(getSensorTypeString(sensors[1]));
         textViewSensor2Value = (TextView) view.findViewById(R.id.text_sensor_2_value);
         seekBarSensor2 = (SeekBar) view.findViewById(R.id.seekbar_sensor_2);
+        seekBarSensor2.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
 
         ((ImageView) view.findViewById(R.id.image_sensor_3)).setImageDrawable(ContextCompat.getDrawable(getActivity(), sensors[2].getGreenImageId()));
         ((TextView) view.findViewById(R.id.text_sensor_3_type)).setText(getSensorTypeString(sensors[2]));
         textViewSensor3Value = (TextView) view.findViewById(R.id.text_sensor_3_value);
         seekBarSensor3 = (SeekBar) view.findViewById(R.id.seekbar_sensor_3);
+        seekBarSensor3.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
 
         textViewSensor1Value.setText(String.valueOf(seekBarSensor1.getProgress()));
         seekBarSensor1.setOnSeekBarChangeListener(seekBarSensor1Listener);

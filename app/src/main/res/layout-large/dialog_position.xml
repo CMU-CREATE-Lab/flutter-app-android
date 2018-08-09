@@ -50,7 +50,8 @@
         android:max="180"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:thumb="@drawable/thumb_green" />
 
     <RelativeLayout
         android:layout_width="match_parent"

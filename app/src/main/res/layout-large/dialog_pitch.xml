@@ -71,7 +71,8 @@
         android:max="14"
         android:paddingBottom="20dp"
         android:paddingLeft="2dp"
-        android:paddingRight="2dp" />
+        android:paddingRight="2dp"
+        android:thumb="@drawable/thumb_green" />
 
     <Button
         android:id="@+id/button_set_pitch"
