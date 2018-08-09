@@ -380,9 +380,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     protected void onResume() {
         super.onResume();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (layoutLarge) {
-            scanForDevice(false);
-        }
+
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
             globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
             globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));

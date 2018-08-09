@@ -598,7 +598,7 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
 		return builder.create();
 	}
 
-
+	//Allows for the color to be set for the swatches
 	public LayerDrawable getCustomSwatchWithBorder(String hexColor)
 	{
 		LayerDrawable layerDrawable = (LayerDrawable) getResources().getDrawable(R.drawable.universal_swatch);
