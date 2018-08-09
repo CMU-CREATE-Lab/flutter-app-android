@@ -11,7 +11,6 @@ def getLatestGitHash = { ->
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 18
