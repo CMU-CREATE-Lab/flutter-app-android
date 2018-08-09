@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,7 @@ public class GlossaryActivity extends BaseNavigationActivity {
         setSupportActionBar(toolbar);
 
         WebView web = (WebView) findViewById(R.id.web_view_glossary);
+        web.setBackgroundColor(Color.parseColor("#EEEEEE"));
         web.loadUrl("file:///android_asset/glossary.html");
     }
 
