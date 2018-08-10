@@ -24,6 +24,7 @@ import org.cmucreatelab.flutter_android.classes.flutters.Flutter;
 import org.cmucreatelab.flutter_android.classes.outputs.Servo;
 import org.cmucreatelab.flutter_android.classes.outputs.Speaker;
 import org.cmucreatelab.flutter_android.classes.outputs.TriColorLed;
+import org.cmucreatelab.flutter_android.classes.settings.SettingsConstant;
 import org.cmucreatelab.flutter_android.helpers.GlobalHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.helpers.static_classes.MessageConstructor;
@@ -377,7 +378,8 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         ArrayList<MelodySmartMessage> messages = new ArrayList<>();
         if (isServo1Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[0]));
-
+            SettingsConstant settingsConstant = (SettingsConstant) servos[0].getSettings();
+            Log.i("SERVO 1 Value", Integer.toString(settingsConstant.getValue()));
             messages.add(MessageConstructor.constructRelationshipMessage(servos[0], servos[0].getSettings()));
             Log.i("Changed", "SERVO 1");
         }
@@ -389,6 +391,8 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
         if (isServo3Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[2]));
+            SettingsConstant settingsConstant = (SettingsConstant) servos[2].getSettings();
+            Log.i("SERVO 3 Value", Integer.toString(settingsConstant.getValue()));
 
             messages.add(MessageConstructor.constructRelationshipMessage(servos[2], servos[2].getSettings()));
             Log.i("Changed", "SERVO 3");
