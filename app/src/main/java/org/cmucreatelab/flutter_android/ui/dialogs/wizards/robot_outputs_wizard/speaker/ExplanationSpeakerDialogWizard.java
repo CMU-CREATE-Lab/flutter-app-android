@@ -20,8 +20,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Parv on 6/28/18.
+ *
+ * ExplanationSpeakerDialogWizard
+ *
+ * A class for the explanation of what the user will do for the long speaker wizard.
  */
-
 public class ExplanationSpeakerDialogWizard extends BaseResizableDialogWizard {
 
     SpeakerWizard.SpeakerWizardState wizardState;

@@ -22,8 +22,11 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 3/13/2017.
+ *
+ * InformationDialog
+ *
+ * A standard information dialog that can be configured.
  */
-
 public class InformationDialog extends BaseResizableDialog {
 
     private static final String TITLE_KEY = "title_key";

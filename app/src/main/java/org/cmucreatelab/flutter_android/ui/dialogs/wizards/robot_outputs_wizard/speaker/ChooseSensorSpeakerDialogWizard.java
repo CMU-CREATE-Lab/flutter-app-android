@@ -17,8 +17,11 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 /**
  * Created by Parv on 7/10/18.
+ *
+ * ChooseSensorSpeakerDialogWizard
+ *
+ * A class for choosing the sensor for the speaker.
  */
-
 public class ChooseSensorSpeakerDialogWizard extends ChooseSensorOutputDialogWizard {
     SpeakerWizard.SpeakerWizardState wizardState;
     private static final String SPEAKER_TYPE = "speaker_type";

@@ -25,8 +25,13 @@ import butterknife.OnClick;
 
 /**
  * Created by Parv on 6/28/18.
+ *
+ * ChooseColorLedDialogWizard
+ *
+ * A class for choosing the led color in the wizard.
+ * Does not extend BaseResizableDialogWizard as it needs
+ * many of the functions and attributes in ChooseColorDialog.
  */
-
 public class ChooseColorLedDialogWizard extends ChooseColorDialog {
 
     LedWizard.LedWizardState wizardState;

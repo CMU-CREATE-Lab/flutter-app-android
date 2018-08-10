@@ -14,8 +14,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 
 /**
  * Created by Parv on 7/10/18.
+ *
+ * SpeakerWizard
+ *
+ * A class to store the parts of the speaker wizard.
  */
-
 public class SpeakerWizard extends OutputWizard<Speaker> {
 
     private SpeakerWizardState currentState;

@@ -29,8 +29,13 @@ import butterknife.OnClick;
 
 /**
  * Created by Parv on 6/28/18.
+ *
+ * ChoosePitchSpeakerDialogWizard
+ *
+ * A class for choosing the pitch for the pitch wizard.
+ * This class extends ChoosePitchDialog instead of the BaseResizableDialogWizard
+ * as it needs many of the functions and attributes in ChoosePitchDialog.
  */
-
 public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
 
     SpeakerWizard.SpeakerWizardState wizardState;

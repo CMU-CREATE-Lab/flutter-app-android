@@ -14,10 +14,13 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 
 import butterknife.OnClick;
 
-/* Created by Mohit.
-Just simply changed the number of pixels for the dialog size.
-*/
-
+/**
+ * Created by Mohit on 6/27/18.
+ *
+ * BaseResizableDialogWizard
+ *
+ * A base class for the wizards that holds the current OutputWizard and resizes the dialog to a bigger size.
+ */
 public class BaseResizableDialogWizard extends BaseResizableDialog {
 
     public OutputWizard wizard;

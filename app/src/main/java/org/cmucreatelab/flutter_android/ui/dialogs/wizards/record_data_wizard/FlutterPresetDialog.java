@@ -20,10 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Steve on 7/11/2017.
+ * Created by Parv on 7/11/2017.
+ *
+ * FlutterPresetDialog
+ *
+ * A class that contains default data log options for users to select.
  */
-
-public class FlutterSamplePresetDialog extends BaseResizableDialog {
+public class FlutterPresetDialog extends BaseResizableDialog {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";
     private static final String SERIALIZABLE_KEY = "serializable_key";
@@ -43,8 +46,8 @@ public class FlutterSamplePresetDialog extends BaseResizableDialog {
      * @param isReviewEnabled - Whether the dialog was navigation from the review recording dialog.
      * @return
      */
-    public static FlutterSamplePresetDialog newInstance(Serializable dataLogDetails, Serializable serializable, Serializable wizardEnum, boolean isReviewEnabled) {
-        FlutterSamplePresetDialog flutterSampleDialog = new FlutterSamplePresetDialog();
+    public static FlutterPresetDialog newInstance(Serializable dataLogDetails, Serializable serializable, Serializable wizardEnum, boolean isReviewEnabled) {
+        FlutterPresetDialog flutterSampleDialog = new FlutterPresetDialog();
         Bundle args = new Bundle();
         args.putSerializable(DATA_LOG_DETAILS_KEY, dataLogDetails);
         args.putSerializable(SERIALIZABLE_KEY, serializable);

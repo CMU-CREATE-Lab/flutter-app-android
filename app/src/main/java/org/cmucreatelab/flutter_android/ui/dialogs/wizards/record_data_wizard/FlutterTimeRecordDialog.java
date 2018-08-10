@@ -23,8 +23,9 @@ import java.util.HashMap;
 
 /**
  * Created by Steve on 7/11/2017.
+ *
+ * A dialog for selecting duration of sampling in the recording wizard.
  */
-
 public class FlutterTimeRecordDialog extends BaseResizableDialog {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";

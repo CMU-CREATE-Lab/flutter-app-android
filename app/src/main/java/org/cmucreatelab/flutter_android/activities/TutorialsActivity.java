@@ -26,7 +26,6 @@ import butterknife.OnClick;
  * TutorialsActivity
  *
  * An activity to display tutorials for flutter.
- *
  */
 public class TutorialsActivity extends BaseNavigationActivity {
 

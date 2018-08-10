@@ -16,8 +16,11 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 /**
  * Created by Parv on 7/10/18.
+ *
+ * ChooseSensorLedDialogWizard
+ *
+ * A class for choosing the sensor for the LED.
  */
-
 public class ChooseSensorLedDialogWizard extends ChooseSensorOutputDialogWizard {
     LedWizard.LedWizardState wizardState;
 

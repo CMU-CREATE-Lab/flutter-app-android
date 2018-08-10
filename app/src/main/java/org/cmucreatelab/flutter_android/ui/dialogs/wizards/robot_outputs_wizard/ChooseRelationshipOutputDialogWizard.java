@@ -29,8 +29,12 @@ import butterknife.OnClick;
 
 /**
  * Created by mike on 6/27/18.
+ *
+ * ChooseRelationshipOutputDialogWizard
+ *
+ * This is the base class for choosing a relationship for the wizard.
+ * This can be extended by the other outputs for their own specific key words and audio.
  */
-
 public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;
@@ -111,6 +115,7 @@ public abstract class ChooseRelationshipOutputDialogWizard extends BaseResizable
 
         return builder.create();
     }
+
 
     @Override
     public void onResume() {

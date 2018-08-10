@@ -21,8 +21,11 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 /**
  * Created by Parv on 6/27/18.
+ *
+ * ChooseRelationshipSpeakerDialogWizard
+ *
+ * A class for choosing the relationship for the speaker.
  */
-
 public class ChooseRelationshipSpeakerDialogWizard extends ChooseRelationshipOutputDialogWizard {
 
     SpeakerWizard.SpeakerWizardState wizardState;

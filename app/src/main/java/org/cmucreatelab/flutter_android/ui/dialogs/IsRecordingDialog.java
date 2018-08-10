@@ -23,6 +23,8 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 2/15/2017.
+ *
+ * IsRecording
  */
 
 public class IsRecordingDialog extends BaseResizableDialog {

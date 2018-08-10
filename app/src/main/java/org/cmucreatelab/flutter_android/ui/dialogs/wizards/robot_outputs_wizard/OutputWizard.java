@@ -4,25 +4,27 @@ import android.util.Log;
 
 import org.cmucreatelab.flutter_android.activities.RobotActivity;
 import org.cmucreatelab.flutter_android.classes.outputs.FlutterOutput;
-import org.cmucreatelab.flutter_android.classes.relationships.NoRelationship;
-import org.cmucreatelab.flutter_android.classes.relationships.Relationship;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.outputs.BaseOutputDialog;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.BaseResizableDialogWizard;
 import org.cmucreatelab.flutter_android.ui.dialogs.wizards.Wizard;
-import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo.ChooseRelationshipServoDialogWizard;
 
 import java.io.Serializable;
 
 /**
  * Created by mike on 6/29/18.
+ *
+ * OutputWizard
+ *
+ * An abstract class for many of the key attributes/methods for the wizard.
+ * Also holds a basic wizard state which can be customized for each FlutterOutput.
+ * This is because there are specific attributes for each Output.
  */
-
 public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
     private RobotActivity activity;
     private T output;
+
 
     public abstract class State implements Serializable {
         private BaseResizableDialog currentDialog;
@@ -41,20 +43,20 @@ public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
 
     public abstract State getCurrentState();
 
-    public T getOutput()
-	{
-		return output;
-	}
+
+    public T getOutput() {
+        return output;
+    }
 
 
     @Override
     public abstract void start();
 
 
-	public void startDialog(BaseResizableDialog startDialog) {
-		getCurrentState().currentDialog = startDialog;
-		getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
-	}
+    public void startDialog(BaseResizableDialog startDialog) {
+        getCurrentState().currentDialog = startDialog;
+        getCurrentState().currentDialog.show(activity.getSupportFragmentManager(), "tag");
+    }
 
 
     @Override

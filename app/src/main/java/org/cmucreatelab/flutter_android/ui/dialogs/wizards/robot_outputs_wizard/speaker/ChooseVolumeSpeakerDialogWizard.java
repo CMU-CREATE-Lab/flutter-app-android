@@ -28,8 +28,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Parv on 6/28/18.
+ *
+ * ChooseVolumeSpeakerDialogWizard
+ *
+ * A class for choosing the volume of the speaker for the speaker wizard.
  */
-
 public class ChooseVolumeSpeakerDialogWizard extends BaseResizableDialogWizard {
 
     SpeakerWizard.SpeakerWizardState wizardState;

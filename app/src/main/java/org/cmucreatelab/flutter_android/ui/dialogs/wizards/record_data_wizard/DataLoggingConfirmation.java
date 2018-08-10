@@ -24,8 +24,11 @@ import java.util.*;
 
 /**
  * Created by Steve on 2/27/2017.
+ *
+ * DataLoggingConfirmation
+ *
+ * A dialog for the final confirmation if the user wants to record data.
  */
-
 public class DataLoggingConfirmation extends BaseResizableDialog {
 
     private static final String WIZARD_ENUM_KEY = "wizard_enum_key";

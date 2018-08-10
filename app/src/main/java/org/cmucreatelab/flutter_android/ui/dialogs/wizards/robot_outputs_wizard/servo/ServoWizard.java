@@ -13,8 +13,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 
 /**
  * Created by mike on 6/27/18.
+ *
+ * ServoWizard
+ *
+ * A class to store the parts of the servo wizard.
  */
-
 public class ServoWizard extends OutputWizard<Servo> {
 
     private ServoWizardState currentState;
