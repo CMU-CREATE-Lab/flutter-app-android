@@ -378,8 +378,6 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         ArrayList<MelodySmartMessage> messages = new ArrayList<>();
         if (isServo1Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[0]));
-            SettingsConstant settingsConstant = (SettingsConstant) servos[0].getSettings();
-            Log.i("SERVO 1 Value", Integer.toString(settingsConstant.getValue()));
             messages.add(MessageConstructor.constructRelationshipMessage(servos[0], servos[0].getSettings()));
             Log.i("Changed", "SERVO 1");
         }
@@ -391,9 +389,6 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         }
         if (isServo3Changed) {
             messages.add(MessageConstructor.constructRemoveRelation(servos[2]));
-            SettingsConstant settingsConstant = (SettingsConstant) servos[2].getSettings();
-            Log.i("SERVO 3 Value", Integer.toString(settingsConstant.getValue()));
-
             messages.add(MessageConstructor.constructRelationshipMessage(servos[2], servos[2].getSettings()));
             Log.i("Changed", "SERVO 3");
         }
@@ -541,6 +536,9 @@ public class ControlOutputsDialog extends DialogFragment implements Serializable
         led1RGB = new Integer[3];
         led2RGB = new Integer[3];
         led3RGB = new Integer[3];
+
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.control_outputs));
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
 
         ButterKnife.bind(this, view);
 

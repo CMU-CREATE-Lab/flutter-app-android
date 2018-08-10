@@ -418,7 +418,7 @@ public class Session implements FlutterMessageListener {
                     // TODO @tasota use a real structure for (constant) SettingsProportional
                     int position;
                     position = parseHex(args[1]);
-
+                    Log.e("pos help", args[1]);
                     SettingsConstant settingsConstant = SettingsConstant.newInstance(output.getSettings());
                     settingsConstant.setValue(position);
                     output.setSettings(settingsConstant);

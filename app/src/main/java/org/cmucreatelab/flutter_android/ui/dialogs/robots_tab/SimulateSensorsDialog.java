@@ -13,6 +13,7 @@ import android.support.v7.internal.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -32,7 +33,7 @@ import java.io.Serializable;
  * Created by Steve on 7/30/2017.
  */
 
-public class SimulateSensorsDialog extends DialogFragment {
+public class SimulateSensorsDialog extends BaseResizableDialog {
 
     private static final String SENSORS_KEY = "sensors_key";
     private static final String SIMULATE_SENSORS_DISMISSED_KEY = "simulate_sensors_dismissed_key";
@@ -182,6 +183,10 @@ public class SimulateSensorsDialog extends DialogFragment {
         seekBarSensor2.setEnabled(sensors[1].getSensorType() == FlutterProtocol.InputTypes.NOT_SET ? false : true);
         seekBarSensor3.setEnabled(sensors[2].getSensorType() == FlutterProtocol.InputTypes.NOT_SET ? false : true);
 
+        ((TextView) view.findViewById(R.id.text_output_title)).setText(getString(R.string.simulate_sensors));
+        view.findViewById(R.id.image_advanced_settings).setVisibility(View.GONE);
+
+        view.findViewById(R.id.button_close).setOnClickListener(doneClickListener);
         view.findViewById(R.id.button_done).setOnClickListener(doneClickListener);
 
         return builder.create();
@@ -191,8 +196,9 @@ public class SimulateSensorsDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getDialog().getWindow().setLayout(convertDpToPx(500), ViewGroup.LayoutParams.WRAP_CONTENT);
     }
+
 
     @Override
     public void onDismiss(DialogInterface dialog) {
