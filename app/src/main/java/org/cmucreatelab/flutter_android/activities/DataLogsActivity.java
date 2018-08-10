@@ -313,7 +313,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
                 }
                 dataLogsUpdateHelper.registerStateAndUpdatePoints(new OpenLogState(instance));
             } else {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.NONE_AVAILABLE_OPEN);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_OPEN);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }
@@ -328,7 +328,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (workingDataSet == null) {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.MUST_HAVE_SELECTED);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.MUST_HAVE_SELECTED);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             } else if (Constants.SEND_EMAIL_AS == Constants.MailerType.HTTP_REQUEST && (wifi == null || !wifi.isConnected())) {
                 NoWifiDialog noWifiDialog = NoWifiDialog.newInstance();
@@ -352,7 +352,7 @@ public class DataLogsActivity extends BaseNavigationActivity implements Serializ
             if (dataLogsUpdateHelper.getDataSetOnFlutter() != null || dataLogsUpdateHelper.getDataSetsOnDevice().length > 0) {
                 dataLogsUpdateHelper.registerStateAndUpdateLogs(new CleanUpBeforeState(instance));
             } else {
-                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorType.NONE_AVAILABLE_CLEAN_UP);
+                DataLogErrorDialog dataLogErrorDialog = DataLogErrorDialog.newInstance(DataLogErrorDialog.DataLogErrorTypes.NONE_AVAILABLE_CLEAN_UP);
                 dataLogErrorDialog.show(getSupportFragmentManager(), "tag");
             }
         }

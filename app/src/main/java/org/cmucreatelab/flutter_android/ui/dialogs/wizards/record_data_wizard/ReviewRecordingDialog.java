@@ -23,7 +23,6 @@ import org.cmucreatelab.flutter_android.helpers.datalogging.DataLoggingHandler;
 import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
 import org.cmucreatelab.flutter_android.ui.dialogs.BaseResizableDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.DismissDialogListener;
-import org.cmucreatelab.flutter_android.ui.dialogs.InformationDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.DataLogErrorDialog;
 import org.cmucreatelab.flutter_android.ui.dialogs.error_dialogs.TooManyDataPointsErrorDialog;
 
