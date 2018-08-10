@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -186,6 +188,11 @@ public class AdvancedSettingsDialog extends BaseResizableDialog {
         textMinInput = (TextView) view.findViewById(R.id.text_min_input);
         textSpeed = (TextView) view.findViewById(R.id.text_speed);
         textSensorCenterValue = (TextView) view.findViewById(R.id.text_sensor_center_value);
+
+        seekBarMaxInput.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        seekBarMinInput.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        seekBarSpeed.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        seekBarSensorCenterValue.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
 
         // populate defaults
         maxInput = advancedSettings.getPercentMax();

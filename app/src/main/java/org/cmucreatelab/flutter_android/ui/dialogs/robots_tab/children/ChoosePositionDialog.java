@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.robots_tab.children;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -83,6 +85,7 @@ public abstract class ChoosePositionDialog extends BaseResizableDialog {
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
+        seekBarMaxMin.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
 
         ((TextView) view.findViewById(R.id.text_output_title)).setText("Set the Position");
 

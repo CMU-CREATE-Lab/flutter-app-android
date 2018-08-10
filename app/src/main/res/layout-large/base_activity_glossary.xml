@@ -9,6 +9,9 @@
 
     <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/web_view_glossary"
+        android:layout_marginStart="170dp"
+        android:layout_marginEnd="170dp"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

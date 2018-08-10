@@ -10,6 +10,7 @@
     <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/web_view_tutorials"
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent" />
 
 </LinearLayout>

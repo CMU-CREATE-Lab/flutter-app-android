@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.servo;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -155,6 +157,7 @@ public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
         curentPosition = (TextView) view.findViewById(R.id.text_current_angle);
         seekBarMaxMin = (SeekBar) view.findViewById(R.id.seek_position);
         seekBarMaxMin.setOnSeekBarChangeListener(seekBarChangeListener);
+        seekBarMaxMin.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
 
         updateViewWithOptions();
         updateTextAndAudio(view);

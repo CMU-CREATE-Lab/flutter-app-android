@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -195,6 +196,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             scanningTextTimer = new Timer();
             scanningTextTimer.scheduleAtFixedRate(new TimerTask() {
                 int count = 0;
+
+
                 @Override
                 public void run() {
                     runOnUiThread(new Runnable() {
@@ -263,6 +266,16 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     }
 
 
+    private void preloadWebPage()
+    {
+        WebView glossaryWebView = new WebView(getBaseContext());
+        glossaryWebView.loadUrl("file:///android_asset/glossary.html");
+
+        WebView tutorialsWebView = new WebView(getBaseContext());
+        tutorialsWebView.loadUrl("file:///android_asset/tutorials.html");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -273,7 +286,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         flutterAudioPlayer.playAudio();
 
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-
+        preloadWebPage();
         // construct toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         // this is checking for if the layout being used is layout-large. if the view is null, we must be using non-large layout
@@ -348,8 +361,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
             DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
             float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
             float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-            int screenSize = getResources().getConfiguration().screenLayout &
-                    Configuration.SCREENLAYOUT_SIZE_MASK;
+            int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
             String toastMsg;
             switch (screenSize) {
                 case Configuration.SCREENLAYOUT_SIZE_LARGE:
@@ -374,17 +386,10 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     protected void onResume() {
         super.onResume();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
-        if (layoutLarge) {
-            scanForDevice(false);
-        }
+
         if (globalHandler.melodySmartDeviceHandler.isConnected()) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
-                    globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
-                }
-            });
+            globalHandler.sessionHandler.createProgressDialog(AppLandingActivity.this);
+            globalHandler.sessionHandler.updateProgressDialogMessage(AppLandingActivity.this, getResources().getString(R.string.reading_data));
         }
 
         // alert dialog for notifying user large screen is needed
@@ -395,6 +400,7 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -403,12 +409,14 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
         }
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
         final GlobalHandler globalHandler = GlobalHandler.getInstance(getApplicationContext());
         globalHandler.sessionHandler.dismissProgressDialog();
     }
+
 
     @Optional
     @OnClick(R.id.button_scan)
@@ -456,8 +464,9 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onBackPressed() {
         // Disable back button for this Activity except for the nav drawer.
-        if (drawerLayout.isDrawerOpen(Gravity.START))
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
+        }
     }
 
 
@@ -486,8 +495,8 @@ public class AppLandingActivity extends BaseNavigationActivity implements Flutte
     @Override
     public void onFlutterDisconnected() {
         Log.d(Constants.LOG_TAG, "AppLandingActivity.onFlutterDisconnected");
-//        Intent intent = new Intent(this, AppLandingActivity.class);
-//        startActivity(intent);
+        //        Intent intent = new Intent(this, AppLandingActivity.class);
+        //        startActivity(intent);
     }
 
 }

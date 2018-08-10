@@ -33,7 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="6dp"
-        android:maxWidth="6dp" />
+        android:maxWidth="6dp"
+        android:thumb="@drawable/thumb_green" />
 
     <Space
         android:layout_width="match_parent"
@@ -43,12 +44,12 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:fontFamily="sans-serif-medium"
-        android:textStyle="normal"
-        android:textColor="#4a4a4a"
         android:text="Dark Light"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#4a4a4a"
+        android:textSize="20sp"
+        android:textStyle="normal" />
 
     <Space
         android:layout_width="match_parent"
@@ -57,8 +58,7 @@
     <include
         layout="@layout/link_buttons_for_wizard_part_two"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

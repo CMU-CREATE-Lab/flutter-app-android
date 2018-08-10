@@ -34,7 +34,7 @@ public class DataSetTest {
     @Test
     public void getMeans_isCorrect() throws Exception {
         for (int i = 0; i < 10; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(i), String.valueOf(i), String.valueOf(i)));
+            //data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(i), String.valueOf(i), String.valueOf(i)));
         }
 
         int[] expectedMeans = new int[3];
@@ -51,7 +51,7 @@ public class DataSetTest {
     @Test
     public void getMedians_isCorrect() throws Exception {
         for (int i = 0; i < 10; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+            //data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
         }
 
         int[] expectedMedians = new int[3];
@@ -68,9 +68,9 @@ public class DataSetTest {
     @Test
     public void getModes_isCorrect() throws Exception {
         for (int i = 0; i < 9; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+            //data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
         }
-        data.put(String.valueOf(9), new DataPoint("", "", String.valueOf(9-1), String.valueOf(9-1), String.valueOf(9-1)));
+        //data.put(String.valueOf(9), new DataPoint("", "", String.valueOf(9-1), String.valueOf(9-1), String.valueOf(9-1)));
 
         int[] expectedModes = new int[3];
         for (int i = 0; i < expectedModes.length; i++) {
@@ -86,7 +86,7 @@ public class DataSetTest {
     @Test
     public void getMinimums_isCorrect() throws Exception {
         for (int i = 0; i < 10; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+            //data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
         }
 
         int[] expectedMins = new int[3];
@@ -103,7 +103,7 @@ public class DataSetTest {
     @Test
     public void getMaximums_isCorrect() throws Exception {
         for (int i = 0; i < 10; i++) {
-            data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
+            //data.put(String.valueOf(i), new DataPoint("", "", String.valueOf(9-i), String.valueOf(9-i), String.valueOf(9-i)));
         }
 
         int[] expectedMaxs = new int[3];

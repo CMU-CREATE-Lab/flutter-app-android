@@ -1,5 +1,6 @@
 package org.cmucreatelab.flutter_android.helpers;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -26,6 +27,7 @@ public class HttpRequestHandler {
 
     public void addRequestToRequestQueue(Request request) {
         request.setTag(VOLLEY_TAG);
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         volleyRequestQueue.add(request);
     }
 

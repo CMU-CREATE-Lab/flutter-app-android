@@ -1,6 +1,8 @@
 package org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.speaker;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -81,6 +83,7 @@ public class ChoosePitchSpeakerDialogWizard extends ChoosePitchDialog {
         currentPitch = (TextView) view.findViewById(R.id.text_current_pitch);
         sheetMusic = (ImageView) view.findViewById(R.id.image_sheet_music);
         seekBarPitch = (SeekBar) view.findViewById(R.id.seek_pitch);
+        seekBarPitch.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         seekBarPitch.setOnSeekBarChangeListener(seekBarChangeListener);
 
         this.wizard = (OutputWizard) (getArguments().getSerializable(KEY_WIZARD));
