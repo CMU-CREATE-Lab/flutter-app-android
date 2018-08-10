@@ -24,8 +24,12 @@ import butterknife.OnClick;
 
 /**
  * Created by mike on 6/27/18.
+ *
+ * ChooseSensorOutputDialogWizard
+ *
+ * This is the base class for choosing a sensor for the wizard.
+ * This can be extended by the other outputs for their own specific words and audio.
  */
-
 public abstract class ChooseSensorOutputDialogWizard extends BaseResizableDialogWizard {
 
     private View dialogView;

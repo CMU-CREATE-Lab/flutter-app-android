@@ -16,8 +16,11 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 /**
  * Created by Parv on 7/10/18.
+ *
+ * ChooseSensorServoDialogWizard
+ *
+ * A class for choosing the sensor for the servo.
  */
-
 public class ChooseSensorServoDialogWizard extends ChooseSensorOutputDialogWizard
 {
 	ServoWizard.ServoWizardState wizardState;

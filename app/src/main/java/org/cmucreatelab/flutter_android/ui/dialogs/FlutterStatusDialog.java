@@ -28,9 +28,9 @@ import butterknife.OnClick;
 
 /**
  * Created by pdille on 3/3/2017.
- * <p>
+ *
  * FlutterStatusDialog
- * <p>
+ *
  * A Dialog that shows the current connection status of a Flutter and allows the user to connect
  * or disconnect depending upon the current state.
  */
@@ -109,8 +109,9 @@ public class FlutterStatusDialog extends BaseResizableDialog {
     public void onPause() {
         super.onPause();
         Dialog dialog = getDialog();
-        if (dialog != null)
+        if (dialog != null) {
             dialog.dismiss();
+        }
     }
 
 
@@ -135,6 +136,7 @@ public class FlutterStatusDialog extends BaseResizableDialog {
 
         FlutterAdvancedSettingsDialog.displayDialog(this, 0);
     }
+
 
     @OnClick(R.id.button_close)
     public void onClickClose() {

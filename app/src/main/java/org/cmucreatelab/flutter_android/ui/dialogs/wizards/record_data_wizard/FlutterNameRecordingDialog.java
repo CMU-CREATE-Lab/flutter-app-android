@@ -26,8 +26,11 @@ import java.io.Serializable;
 
 /**
  * Created by Steve on 7/12/2017.
+ *
+ * FlutterNameRecordingDialog
+ *
+ * A part of the recording wizard to name the data set.
  */
-
 public class FlutterNameRecordingDialog extends BaseResizableDialog {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";

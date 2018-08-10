@@ -8,8 +8,6 @@ import android.widget.ListView;
  * Created by Steve on 3/20/2017.
  *
  * ExtendedHeightListView
- *
- *
  */
 public class ExtendedHeightListView extends ListView {
 

@@ -31,8 +31,11 @@ import butterknife.OnClick;
 
 /**
  * Created by mike on 6/28/18.
+ *
+ * ChoosePositionServoDialogWizard
+ *
+ * A class for choosing the servo position for the servo wizard.
  */
-
 public class ChoosePositionServoDialogWizard extends BaseResizableDialogWizard {
 
     ServoWizard.ServoWizardState wizardState;

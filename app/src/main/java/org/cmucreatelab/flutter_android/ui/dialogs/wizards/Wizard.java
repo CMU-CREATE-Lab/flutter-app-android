@@ -7,6 +7,8 @@ import java.io.Serializable;
 /**
  * Created by mike on 6/27/18.
  *
+ * Wizard
+ *
  * An abstract class that tracks the state of a step-by-step Wizard or setup assistant.
  */
 public abstract class Wizard implements Serializable {

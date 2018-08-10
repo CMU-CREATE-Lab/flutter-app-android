@@ -22,8 +22,9 @@ import java.util.Comparator;
 
 /**
  * Created by Steve on 3/14/2017.
+ *
+ * StatsRelativeLayout
  */
-
 public class StatsRelativeLayout extends RelativeLayout {
 
     private ArrayList<PositionTextView> views;

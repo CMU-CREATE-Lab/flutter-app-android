@@ -21,8 +21,11 @@ import butterknife.OnClick;
 
 /**
  * Created by Parv on 6/28/18.
+ *
+ * ChooseSpeakerTypeDialogWizard
+ *
+ * A class for choosing whether the user wants to enter the volume, pitch, or both wizard.
  */
-
 public class ChooseSpeakerTypeDialogWizard extends BaseResizableDialogWizard {
 
     SpeakerWizard.SpeakerWizardState wizardState;

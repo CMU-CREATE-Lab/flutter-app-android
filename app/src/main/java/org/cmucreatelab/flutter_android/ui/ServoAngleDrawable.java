@@ -34,7 +34,8 @@ import org.cmucreatelab.flutter_android.helpers.static_classes.Constants;
  *
  * ServoAngleDrawable
  *
- * Represents the icon displayed for a Servo with varying angles. Also contains a static helper for refreshing views on RobotActivity
+ * Represents the icon displayed for a Servo with varying angles.
+ * Also can be used to generate any type of circle
  */
 public class ServoAngleDrawable extends Drawable {
 

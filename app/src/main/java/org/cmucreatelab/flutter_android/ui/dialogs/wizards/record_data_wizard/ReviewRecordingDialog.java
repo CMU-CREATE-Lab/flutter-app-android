@@ -34,6 +34,10 @@ import butterknife.OnClick;
 
 /**
  * Created by Steve on 1/17/2017.
+ *
+ * ReviewRecordingDialog
+ *
+ * A dialog for the final step of the recording wizard to confirm the user choices.
  */
 public class ReviewRecordingDialog extends BaseResizableDialog implements Serializable, DataLoggingHandler.DataSetPointsListener,
         EmojiconGridFragment.OnEmojiconClickedListener,

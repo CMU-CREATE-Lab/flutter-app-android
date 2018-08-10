@@ -35,7 +35,6 @@ import butterknife.OnClick;
  * FlutterAdvancedSettingsDialog
  *
  * A dialog that shows the advanced settings of a Flutter.
- *
  */
 public class FlutterAdvancedSettingsDialog extends BaseResizableDialog {
 

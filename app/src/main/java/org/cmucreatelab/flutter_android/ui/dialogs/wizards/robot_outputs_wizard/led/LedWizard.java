@@ -16,8 +16,11 @@ import org.cmucreatelab.flutter_android.ui.dialogs.wizards.robot_outputs_wizard.
 
 /**
  * Created by Parv on 7/10/18.
+ *
+ * LedWizard
+ *
+ *  A class to store the parts of the LED wizard.
  */
-
 public class LedWizard extends OutputWizard<TriColorLed> {
 
     private LedWizardState currentState;

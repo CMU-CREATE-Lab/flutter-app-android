@@ -13,6 +13,10 @@ import org.cmucreatelab.flutter_android.helpers.FlutterAudioPlayer;
 
 /**
  * Created by Steve on 11/4/2016.
+ *
+ * BaseResizableDialog
+ *
+ * Dialog that is resized to a set width and has a transparent background for the rounded dialogs.
  */
 public abstract class BaseResizableDialog extends DialogFragment {
     protected FlutterAudioPlayer flutterAudioPlayer;

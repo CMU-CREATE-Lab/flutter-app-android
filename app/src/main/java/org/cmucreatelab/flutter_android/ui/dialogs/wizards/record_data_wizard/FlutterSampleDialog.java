@@ -24,6 +24,10 @@ import java.util.HashMap;
 
 /**
  * Created by Steve on 7/11/2017.
+ *
+ * FlutterSampleDialog
+ *
+ * A dialog for selecting the time interval for sampling in the recording wizard.
  */
 
 public class FlutterSampleDialog extends BaseResizableDialog {

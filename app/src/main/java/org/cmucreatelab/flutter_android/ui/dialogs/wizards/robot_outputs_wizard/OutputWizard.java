@@ -14,8 +14,13 @@ import java.io.Serializable;
 
 /**
  * Created by mike on 6/29/18.
+ *
+ * OutputWizard
+ *
+ * An abstract class for many of the key attributes/methods for the wizard.
+ * Also holds a basic wizard state which can be customized for each FlutterOutput.
+ * This is because there are specific attributes for each Output.
  */
-
 public abstract class OutputWizard<T extends FlutterOutput> extends Wizard {
     private FlutterAudioPlayer audioPlayer;
     private RobotActivity activity;

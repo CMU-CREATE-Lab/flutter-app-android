@@ -17,11 +17,15 @@ import static org.cmucreatelab.flutter_android.helpers.static_classes.Constants.
 
 /**
  * Created by mike on 6/27/18.
+ *
+ * ChooseRelationshipServoDialogWizard
+ *
+ * A class for choosing the relationship for the servo.
  */
-
 public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutputDialogWizard {
 
-	ServoWizard.ServoWizardState wizardState;
+    ServoWizard.ServoWizardState wizardState;
+
 
     public static ChooseRelationshipServoDialogWizard newInstance(OutputWizard wizard) {
         Bundle args = new Bundle();
@@ -31,6 +35,7 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
 
         return dialogWizard;
     }
+
 
     public void updateViewWithOptions() {
         View selectedView = getViewFromRelationship(wizardState.relationshipType);
@@ -44,6 +49,7 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
             clearSelection();
         }
     }
+
 
     public void updateRelationshipType(View view) {
         wizardState.relationshipType = getRelationshipFromId(view.getId());
@@ -59,13 +65,13 @@ public class ChooseRelationshipServoDialogWizard extends ChooseRelationshipOutpu
         flutterAudioPlayer.playAudio();
 	}
 
-	public void updateWizardState()
-	{
-		wizardState = (ServoWizard.ServoWizardState)(wizard.getCurrentState());
-	}
+
+    public void updateWizardState() {
+        wizardState = (ServoWizard.ServoWizardState) (wizard.getCurrentState());
+    }
 
     public void onClickNext() {
-		Log.d(LOG_TAG, "onClickNext() called");
+        Log.d(LOG_TAG, "onClickNext() called");
 
         if (getViewFromRelationship(wizardState.relationshipType) != null) {
             if (wizardState.relationshipType == Constant.getInstance()) {

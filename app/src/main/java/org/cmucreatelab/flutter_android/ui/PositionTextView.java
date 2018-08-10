@@ -8,8 +8,6 @@ import android.widget.TextView;
  * Created by Steve on 3/14/2017.
  *
  * PositionTextView
- *
- *
  */
 public class PositionTextView extends TextView {
 

@@ -20,9 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Steve on 7/11/2017.
+ * Created by Parv on 7/11/2017.
+ *
+ * FlutterPresetDialog
+ *
+ * A class that contains default data log options for users to select.
  */
-
 public class FlutterPresetDialog extends BaseResizableDialog {
 
     private static final String DATA_LOG_DETAILS_KEY = "data_log_details_key";

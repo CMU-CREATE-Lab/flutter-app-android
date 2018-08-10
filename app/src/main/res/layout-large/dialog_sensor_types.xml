@@ -9,6 +9,8 @@
         android:id="@+id/text_sensor_type_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_gravity="center"
         android:textStyle="bold"
         android:textSize="24sp"/>
@@ -142,6 +144,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="5"
+        android:layout_marginBottom="15dp"
         android:padding="5dp">
 
         <LinearLayout
